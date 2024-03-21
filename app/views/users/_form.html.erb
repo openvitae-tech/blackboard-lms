@@ -17,6 +17,11 @@
   </div>
 
   <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div>
     <%= form.label :role, style: "display: block" %>
     <%= form.select :role, user_role_mapping %>
   </div>

@@ -1,7 +1,10 @@
-require_relative "../services/user_management/roles"
+require_relative "../services/application_service"
 
 class User < ApplicationRecord
   include UserManagement
+
+  devise :database_authenticatable,
+         :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   validates :name, length: { minimum: 2, maximum: 255 }
   validates :role,
