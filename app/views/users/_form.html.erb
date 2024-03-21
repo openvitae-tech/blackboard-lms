@@ -21,12 +21,28 @@
     <%= form.email_field :email %>
   </div>
 
-  <div>
-    <%= form.label :role, style: "display: block" %>
-    <%= form.select :role, user_role_mapping %>
-  </div>
+  <% if @partner.present? %>
+    <p><strong>Partner:</strong> <%= @partner.name %></p>
+    <div>
+      <%= form.label :role, style: "display: block" %>
+      <%= form.select :role, user_role_mapping_for_partner %>
+    </div>
+  <% else %>
+    <div>
+      <%= form.label :role, style: "display: block" %>
+      <%= form.select :role, user_role_mapping %>
+    </div>
+
+    <div>
+      <%= form.label :learning_partner, style: "display: block" %>
+      <%= form.collection_select :learning_partner_id, @partner_list, :id, :name %>
+    </div>
+
+  <% end %>
 
   <div>
-    <%= form.submit %>
+    <p>
+      <%= form.submit %>
+    </p>
   </div>
 <% end %>

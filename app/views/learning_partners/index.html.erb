@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Learning partners</h1>
+
+<%= link_to "New learning partner", new_learning_partner_path %>
+
+<table id="learning_partners">
+  <tr>
+    <td>Partner Name</td>
+    <td>Created At</td>
+  </tr>
+  <% @learning_partners.each do |learning_partner| %>
+    <%= render learning_partner %>
+  <% end %>
+</table>
+

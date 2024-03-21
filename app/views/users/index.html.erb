@@ -4,6 +4,12 @@
 <%= link_to "New user", new_user_path %>
 
 <table id="users">
+  <tr>
+    <td>Name</td>
+    <td>Role</td>
+    <td>Learning Partner</td>
+    <td>Actions</td>
+  </tr>
   <% @users.each do |user| %>
     <tr>
       <td>
@@ -11,6 +17,11 @@
       </td>
       <td>
         <%= role_text(user.role) %>
+      </td>
+      <td>
+        <% if user.learning_partner.present? %>
+          <%= link_to user.learning_partner.name, learning_partner_path(user.learning_partner) %>
+        <% end %>
       </td>
       <td>
         <%= link_to "Edit", edit_user_path(user) %>
