@@ -1,0 +1,25 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Users</h1>
+<%= link_to "New user", new_user_path %>
+
+<table id="users">
+  <% @users.each do |user| %>
+    <tr>
+      <td>
+        <%= link_to user.name, user %>
+      </td>
+      <td>
+        <%= role_text(user.role) %>
+      </td>
+      <td>
+        <%= link_to "Edit", edit_user_path(user) %>
+      </td>
+      <td>
+        <%= button_to "Delete", user, method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
