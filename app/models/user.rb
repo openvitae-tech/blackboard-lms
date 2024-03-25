@@ -15,7 +15,9 @@ class User < ApplicationRecord
 
 
   def get_temp_password
-    Rails.application.message_verifier('temp_password').verify(self.temp_password_enc)
+    if self.temp_password_enc.present?
+      Rails.application.message_verifier('temp_password').verify(self.temp_password_enc)
+    end
   end
 
   def set_temp_password
