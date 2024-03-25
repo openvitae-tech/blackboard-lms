@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all
+    @users = User.includes(:learning_partner).all
   end
 
   # GET /users/1 or /users/1.json
@@ -13,6 +13,12 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    if params[:partner_id].present?
+      @partner = LearningPartner.find(params[:partner_id])
+    else
+      @partner_list = LearningPartner.all
+    end
+
     @user = User.new
   end
 
@@ -23,6 +29,7 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
+    @user.set_temp_password
 
     respond_to do |format|
       if @user.save
@@ -66,6 +73,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :role)
+      params.require(:user).permit(:name, :role, :email, :learning_partner_id)
     end
 end
