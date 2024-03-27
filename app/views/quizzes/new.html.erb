@@ -1,0 +1,9 @@
+<h1>New quiz</h1>
+
+<%= render "form", course: @course, course_module: @course_module, quiz: @quiz %>
+
+<br>
+
+<div>
+  <%= link_to "Back to quizzes", course_module_path(@course, @course_module) %>
+</div>

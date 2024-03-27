@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :quizzes
+
+  resources :courses do
+    resources :course_modules, as: "modules", except: [:index] do
+      resources :lessons, except: [:index]
+      resources :quizzes, except: [:index]
+    end
+  end
+
   resources :learning_partners
   devise_for :users
   resources :users
