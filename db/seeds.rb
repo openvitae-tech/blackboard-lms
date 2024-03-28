@@ -13,15 +13,17 @@ about_text = "Nestled amidst breathtaking landscapes, Grand Hotel stands as an e
 if Rails.env.development?
 
   ActiveRecord::Base.transaction do
-    root = User.create!(name: "Neo", role: "platform_admin", email: "root@example.com", password: "password", password_confirmation: "password")
+    root = User.create!(name: "Neo", role: "super_admin", email: "root@example.com", password: "password", password_confirmation: "password")
     root.confirm
 
     partner = LearningPartner.create!(name: "The Grand Budapest Hotel", about: about_text)
 
-    partner_admin = User.create!(name: "John Master", role: "platform_admin", email: "grand-admin@example.com", password: "password", password_confirmation: "password", learning_partner: partner)
-    partner_admin.confirm
+    owner = User.create!(name: "John Master", role: "owner", email: "owner@example.com", password: "password", password_confirmation: "password", learning_partner: partner)
+    owner.confirm
+    manager = User.create!(name: "Agent Smith", role: "manager", email: "manager@example.com", password: "password", password_confirmation: "password", learning_partner: partner)
+    manager.confirm
 
-    learner = User.create!(name: "Jack Sparrow", role: "platform_admin", email: "grand-learner@example.com", password: "password", password_confirmation: "password", learning_partner: partner)
+    learner = User.create!(name: "Jack Sparrow", role: "learner", email: "learner@example.com", password: "password", password_confirmation: "password", learning_partner: partner)
     learner.confirm
   end
 end

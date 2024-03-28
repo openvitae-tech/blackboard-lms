@@ -9,7 +9,7 @@ module UsersHelper
 
   def user_role_mapping_for_partner
     mapping= UserManagement::USER_ROLE_MAPPING.dup
-    mapping.delete(:platform_admin)
+    mapping.delete(:super_admin)
     mapping.invert
   end
 end
