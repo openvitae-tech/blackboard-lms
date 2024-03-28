@@ -1,0 +1,8 @@
+<%= render @lesson %>
+
+<div>
+  <%= link_to "Edit this lesson", edit_course_module_lesson_path(@course, @course_module, @lesson) %> |
+  <%= link_to "Back", course_module_path(@course, @course_module) %>
+
+  <%= button_to "Destroy this lesson", course_module_lesson_path(@course, @course_module, @lesson), method: :delete %>
+</div>

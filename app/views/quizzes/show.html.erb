@@ -1,0 +1,8 @@
+<%= render @quiz %>
+
+<div>
+  <%= link_to "Edit this lesson", edit_course_module_quiz_path(@course, @course_module, @quiz) %> |
+  <%= link_to "Back", course_module_path(@course, @course_module) %>
+
+  <%= button_to "Destroy this quiz", course_module_quiz_path(@course, @course_module, @quiz), method: :delete %>
+</div>

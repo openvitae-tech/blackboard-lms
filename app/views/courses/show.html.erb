@@ -1,0 +1,20 @@
+
+<%= render @course %>
+
+<div>
+  <%= link_to "Edit this course", edit_course_path(@course) %> |
+  <%= link_to "Back to courses", courses_path %>
+
+  <%= button_to "Destroy this course", @course, method: :delete %>
+</div>
+
+<h2>Modules</h2>
+<%= link_to "New course module", new_course_module_path(@course) %>
+<div id="course_modules">
+  <% @course_modules.each do |course_module| %>
+    <%= render course_module %>
+    <p>
+      <%= link_to "Show this course module", course_module_path(@course, course_module) %>
+    </p>
+  <% end %>
+</div>

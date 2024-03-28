@@ -1,0 +1,31 @@
+<%= render @course_module %>
+
+<div>
+  <%= link_to "Edit this course module", edit_course_module_path(@course_module) %> |
+  <%= link_to "Back", course_path(@course) %>
+
+  <%= button_to "Destroy this course module", course_module_path(@course_module), method: :delete %>
+</div>
+
+
+<h1>Lessons</h1>
+<%= link_to "New lesson", new_course_module_lesson_path(@course, @course_module) %>
+<div id="lessons">
+  <% @course_module.lessons.each do |lesson| %>
+    <%= render lesson %>
+    <p>
+      <%= link_to "Show this lesson", course_module_lesson_path(@course, @course_module, lesson) %>
+    </p>
+  <% end %>
+</div>
+
+<h1>Quizzes</h1>
+<%= link_to "New quiz", new_course_module_quiz_path(@course, @course_module) %>
+<div id="quizzes">
+  <% @course_module.quizzes.each do |quiz| %>
+    <%= render quiz %>
+    <p>
+      <%= link_to "Show this quiz", course_module_quiz_path(@course, @course_module, quiz) %>
+    </p>
+  <% end %>
+</div>

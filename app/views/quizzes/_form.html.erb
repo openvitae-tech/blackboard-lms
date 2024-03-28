@@ -1,0 +1,52 @@
+<%= form_with(url: course_module_quizzes_path(course, course_module), model:  quiz) do |form| %>
+  <% if quiz.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
+
+      <ul>
+        <% quiz.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :question, style: "display: block" %>
+    <%= form.text_field :question %>
+  </div>
+
+  <div>
+    <%= form.label :quiz_type, style: "display: block" %>
+    <%= form.text_field :quiz_type %>
+  </div>
+
+  <div>
+    <%= form.label :option_a, style: "display: block" %>
+    <%= form.text_field :option_a %>
+  </div>
+
+  <div>
+    <%= form.label :option_b, style: "display: block" %>
+    <%= form.text_field :option_b %>
+  </div>
+
+  <div>
+    <%= form.label :option_c, style: "display: block" %>
+    <%= form.text_field :option_c %>
+  </div>
+
+  <div>
+    <%= form.label :option_d, style: "display: block" %>
+    <%= form.text_field :option_d %>
+  </div>
+
+  <div>
+    <%= form.label :answer, style: "display: block" %>
+    <%= form.text_field :answer %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

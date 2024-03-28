@@ -1,0 +1,10 @@
+<h1>Course modules</h1>
+
+<div id="course_modules">
+  <% @course_modules.each do |course_module| %>
+    <%= render course_module %>
+    <p>
+      <%= link_to "Show this course module", course_module %>
+    </p>
+  <% end %>
+</div>
