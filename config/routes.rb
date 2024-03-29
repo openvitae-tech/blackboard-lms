@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :events, only: [:index]
   resources :quizzes
 
   resources :courses do

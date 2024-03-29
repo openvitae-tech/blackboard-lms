@@ -1,0 +1,15 @@
+
+<h1>Events</h1>
+
+<table id="events">
+  <tr>
+    <td>Event name</td>
+    <td>Created At</td>
+    <td>Partner</td>
+    <td>User</td>
+  </tr>
+  <% @events.each do |event| %>
+    <%= render event %>
+  <% end %>
+</table>
+

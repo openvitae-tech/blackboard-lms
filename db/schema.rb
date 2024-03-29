@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_25_132913) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_28_070717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_132913) do
   create_table "courses", force: :cascade do |t|
     t.string "title"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.integer "partner_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -85,9 +93,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_132913) do
     t.string "unconfirmed_email"
     t.bigint "learning_partner_id"
     t.string "temp_password_enc"
+    t.bigint "manager_id"
+    t.string "team_name"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["learning_partner_id"], name: "index_users_on_learning_partner_id"
+    t.index ["manager_id"], name: "index_users_on_manager_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

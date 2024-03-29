@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   belongs_to :learning_partner, optional: true
 
+  belongs_to :manager, class_name: "User", optional: true
+  has_many :learners, class_name: "User", foreign_key: "manager_id"
 
   def get_temp_password
     if self.temp_password_enc.present?
