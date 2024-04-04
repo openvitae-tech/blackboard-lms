@@ -1,8 +1,14 @@
+<div class="mx-4 my-8">
+  <div class="flex">
+    <div class="flex-auto text-sm ">
+      <%= link_to "Back", users_path, class: "underline pointer" %>
+    </div>
+    <div class="flex-auto text-sm text-right">
+      <%= link_to "Edit", edit_user_path(@user), class: "underline pointer mx-4" %>
+      <%= link_to "Delete", @user,data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32 inline-block text-center"%>
+    </div>
+  </div>
+</div>
+
 <%= render @user %>
 
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to "Destroy this user", @user, method: :delete %>
-</div>

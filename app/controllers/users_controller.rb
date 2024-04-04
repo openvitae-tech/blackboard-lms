@@ -24,6 +24,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @partner_list = LearningPartner.all
   end
 
   # POST /users or /users.json

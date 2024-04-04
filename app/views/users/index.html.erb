@@ -1,35 +1,35 @@
 
-<h1>Users</h1>
-<%= link_to "New user", new_user_path %>
+<div class="my-8 mx-4 text-right"><%= link_to "New user", new_user_path, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %></div>
 
-<table id="users">
+<table id="users" class="table-auto w-fit mx-auto">
+  <thead>
   <tr>
-    <td>Name</td>
-    <td>Role</td>
-    <td>Learning Partner</td>
-    <td>Actions</td>
+    <th>Name</th>
+    <th>Role</th>
+    <th>Learning Partner</th>
+    <th>Actions</th>
   </tr>
+  </thead>
   <% @users.each do |user| %>
-    <tr>
-      <td>
-        <%= link_to user.name, user %>
+    <tr class="text-sm border-b">
+      <td class="p-2">
+        <%= link_to user.name, user, class: "underline pointer" %>
       </td>
-      <td>
+      <td class="p-2">
         <%= role_text(user.role) %>
       </td>
-      <td>
+      <td class="p-2">
         <% if user.learning_partner.present? %>
           <%= link_to user.learning_partner.name, learning_partner_path(user.learning_partner) %>
         <% end %>
       </td>
-      <td>
-        <%= link_to "Edit", edit_user_path(user) %>
-      </td>
-      <td>
-        <%= button_to "Delete", user, method: :delete %>
+      <td class="p-2">
+        <%= link_to "edit", edit_user_path(user), class: "text-xs underline pointer"  %>
+        <%= button_to "delete", user, method: :delete, class: "text-xs underline pointer" %>
       </td>
     </tr>
   <% end %>
+  </tbody>
 </table>
 
 

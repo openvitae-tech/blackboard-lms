@@ -4,8 +4,9 @@ class CreateEvents < ActiveRecord::Migration[7.1]
       t.string :name
       t.integer :partner_id
       t.integer :user_id
-
-      t.created_at
+      t.timestamps
     end
+
+    remove_column :events, :updated_at
   end
 end

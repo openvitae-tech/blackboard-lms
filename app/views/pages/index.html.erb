@@ -1,5 +1,5 @@
-<h1 class="text-3xl font-bold underline">
-  Landing page
+<h1 class="my-8 text-3xl font-bold">
+  <p class="auto text-center">Welcome to Blackboard LMS</p>
 </h1>
 
 <% if user_signed_in? %>
@@ -15,5 +15,7 @@
     <li><%= link_to 'Analytic Events Stream', events_path %></li>
   </ul>
 <% else %>
-  <%= link_to 'Sign in', new_user_session_path %>
+  <p class="my-8 text-center">
+    <%= link_to 'Sign in', new_user_session_path, class: "border rounded p-2 min-w-4 min-h-2 auto" %>
+  </p>
 <% end %>

@@ -35,7 +35,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_070717) do
     t.integer "partner_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "learning_partners", force: :cascade do |t|
