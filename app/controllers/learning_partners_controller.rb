@@ -1,6 +1,6 @@
 class LearningPartnersController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_admin!
+  before_action :authorize_admin!
   before_action :set_learning_partner, only: %i[ show edit update destroy ]
 
   # GET /learning_partners or /learning_partners.json
@@ -68,5 +68,9 @@ class LearningPartnersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def learning_partner_params
       params.require(:learning_partner).permit(:name, :about)
+    end
+
+    def authorize_admin!
+      authorize :learning_partner
     end
 end
