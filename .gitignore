@@ -35,3 +35,6 @@
 /config/master.key
 /config/database.yml
 /config/credentials.yml.enc
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
