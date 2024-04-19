@@ -19,6 +19,10 @@ $ rails db:create
 $ rails db:migrate
 $ rails db:seed
 
+# install node & flowbite
+
+$ npm install flowbite
+
 # start server
 $ rails s
 ```
