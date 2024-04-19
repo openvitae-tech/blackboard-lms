@@ -4,15 +4,24 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.includes(:learning_partner).all
+    authorize User
+    if current_user.is_admin?
+      @users = User.includes(:learning_partner).order(:name).page(params[:page])
+    elsif current_user.is_manager? || current_user.is_owner?
+      @users = User.includes(:learning_partner)
+                   .where.not(role: "admin")
+                   .order(:name).page(params[:page])
+    end
   end
 
   # GET /users/1 or /users/1.json
   def show
+    authorize @user
   end
 
   # GET /users/new
   def new
+    authorize User
     if params[:partner_id].present?
       @partner = LearningPartner.find(params[:partner_id])
     else
@@ -24,11 +33,13 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    authorize @user
     @partner_list = LearningPartner.all
   end
 
   # POST /users or /users.json
   def create
+    authorize User
     @user = User.new(user_params)
     @user.set_temp_password
 
@@ -45,6 +56,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
+    authorize @user
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
@@ -58,6 +70,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    authorize @user
     @user.destroy!
 
     respond_to do |format|

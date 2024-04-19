@@ -1,12 +1,8 @@
-<div id="<%= dom_id course_module %>">
-  <p>
-    <strong>Title:</strong>
-    <%= course_module.title %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= course_module.description %>
-  </p>
-
+<div id="<%= dom_id course_module %>" class="p-2">
+  <div>
+    <em><%= course_module.title %></em>
+  </div>
+  <div>
+    <small><%= course_module.description %></small>
+  </div>
 </div>

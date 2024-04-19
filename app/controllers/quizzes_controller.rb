@@ -6,6 +6,7 @@ class QuizzesController < ApplicationController
   # GET /quizzes or /quizzes.json
   # GET /quizzes/1 or /quizzes/1.json
   def show
+    @quizzes = @course_module.quizzes
   end
 
   # GET /quizzes/new

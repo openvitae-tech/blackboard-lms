@@ -1,20 +1,20 @@
 
 <%= render @course %>
 
-<div>
-  <%= link_to "Edit this course", edit_course_path(@course) %> |
-  <%= link_to "Back to courses", courses_path %>
-
-  <%= button_to "Destroy this course", @course, method: :delete %>
+<div class="my-8 mx-4"><%= link_to "All courses", courses_path, class: "underline" %></div>
+<div class="my-8 mx-4 text-right">
+  <%= link_to "New module", new_course_module_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+  <%= link_to "Edit", edit_course_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+  <%= link_to "Delete",  @course, data: { turbo_method: :delete }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
 </div>
 
-<h2>Modules</h2>
-<%= link_to "New course module", new_course_module_path(@course) %>
-<div id="course_modules">
+<div class="my-8 mx-4">Course modules</div>
+<ul id="course_modules">
   <% @course_modules.each do |course_module| %>
-    <%= render course_module %>
-    <p>
-      <%= link_to "Show this course module", course_module_path(@course, course_module) %>
-    </p>
+      <%= link_to course_module_path(@course, course_module) do %>
+        <li class="text-sm border-b m-2">
+          <%= render course_module %>
+        </li>
+      <% end %>
   <% end %>
-</div>
+</ul>

@@ -1,31 +1,53 @@
+<div class="my-8 mx-4">
+  <%= link_to "Courses", course_path(@course), class: "underline" %> >>
+  <%= link_to @course.title, course_path(@course), class: "underline" %> >>
+  <span><%= @course_module.title %></span>
+</div>
+
+<div class="my-8 mx-4 text-right">
+  <%= link_to "Edit", edit_course_module_path(@course, @course_module), class: "border rounded p-2 min-w-4 min-h-2 auto w-32 inline-block text-center" %>
+  <%= link_to "Delete", course_module_path(@course, @course_module), data: { turbo_method: :delete }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32 inline-block text-center" %>
+</div>
+
 <%= render @course_module %>
 
-<div>
-  <%= link_to "Edit this course module", edit_course_module_path(@course_module) %> |
-  <%= link_to "Back", course_path(@course) %>
-
-  <%= button_to "Destroy this course module", course_module_path(@course_module), method: :delete %>
+<div class="my-8 mx-4">
+  <h1>Lessons</h1>
+  <div class="text-right">
+    <%= link_to "New lesson", new_course_module_lesson_path(@course, @course_module), class: "border rounded p-2 min-w-4 min-h-2 auto w-32 inline-block text-center" %>
+  </div>
 </div>
 
-
-<h1>Lessons</h1>
-<%= link_to "New lesson", new_course_module_lesson_path(@course, @course_module) %>
-<div id="lessons">
+<ul id="lessons">
   <% @course_module.lessons.each do |lesson| %>
-    <%= render lesson %>
-    <p>
-      <%= link_to "Show this lesson", course_module_lesson_path(@course, @course_module, lesson) %>
-    </p>
+    <li class="text-sm border-b m-2" id="<%= dom_id lesson %>">
+      <%= link_to course_module_lesson_path(@course, @course_module, lesson) do %>
+        <div class="my-4">
+          <strong><%= lesson.title %></strong>
+        </div>
+        <div class="my-4">
+          <%= lesson.description %>
+        </div>
+      <% end %>
+    </li>
   <% end %>
+</ul>
+
+<div class="my-8 mx-4">
+  <h1>Quizzes</h1>
+  <div class="text-right">
+    <%= link_to "New quiz", new_course_module_quiz_path(@course, @course_module), class: "border rounded p-2 min-w-4 min-h-2 auto w-32 inline-block text-center" %>
+  </div>
 </div>
 
-<h1>Quizzes</h1>
-<%= link_to "New quiz", new_course_module_quiz_path(@course, @course_module) %>
-<div id="quizzes">
+<ul id="quizzes">
   <% @course_module.quizzes.each do |quiz| %>
-    <%= render quiz %>
-    <p>
-      <%= link_to "Show this quiz", course_module_quiz_path(@course, @course_module, quiz) %>
-    </p>
+    <li class="text-sm border-b m-2" id="<%= dom_id quiz %>">
+      <%= link_to course_module_quiz_path(@course, @course_module, quiz) do %>
+        <div class="my-4">
+          <strong><%= quiz.question %></strong>
+        </div>
+      <% end %>
+    </li>
   <% end %>
-</div>
+</ul>

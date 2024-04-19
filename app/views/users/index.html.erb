@@ -10,6 +10,7 @@
     <th>Actions</th>
   </tr>
   </thead>
+  <tbody>
   <% @users.each do |user| %>
     <tr class="text-sm border-b">
       <td class="p-2">
@@ -32,4 +33,7 @@
   </tbody>
 </table>
 
-
+<div class="my-8 mx-4 text-center">
+  <%= link_to_prev_page @users, 'Prev', class: "underline pointer" %>
+  <%= link_to_next_page @users, 'Next', class: "underline pointer" %>
+</div>

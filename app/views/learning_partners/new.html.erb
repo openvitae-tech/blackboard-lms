@@ -1,9 +1,11 @@
-<h1>New learning partner</h1>
+<h1 class="my-8 text-3xl font-bold">
+  <p class="auto text-center">New learning partner</p>
+</h1>
+
+<div class="my-8 mx-4">
+  <%= link_to "Back", learning_partners_path, class: "underline pointer" %>
+</div>
 
 <%= render "form", learning_partner: @learning_partner %>
 
-<br>
 
-<div>
-  <%= link_to "Back to learning partners", learning_partners_path %>
-</div>

@@ -1,47 +1,38 @@
-<%= form_with(url: course_module_lessons_path(course, course_module), model:  lesson) do |form| %>
-  <% if lesson.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>
+<div class="w-full">
+  <div class="my-8 w-80 mx-auto text-left">
+    <% url = lesson.persisted? ? course_module_lesson_path(course, course_module, lesson) : course_module_lessons_path(course, course_module, lesson) %>
+    <%= form_with(url: url, model:  lesson) do |form| %>
+      <% if lesson.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>
 
-      <ul>
-        <% lesson.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+          <ul>
+            <% lesson.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+      <div class="my-8 text-sm" >
+        <%= form.label :title, style: "display: block" %>
+        <%= form.text_field :title %>
+      </div>
+
+      <div class="my-8 text-sm" >
+        <%= form.label :description, style: "display: block" %>
+        <%= form.text_area :description %>
+      </div>
+
+      <div class="my-8 text-sm" >
+        <%= form.label :video_url, style: "display: block" %>
+        <%= form.text_field :video_url %>
+      </div>
+
+      <div class="my-8 text-sm" >
+        <% text = lesson.persisted? ? "Update" : "Create" %>
+        <%= form.submit text, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+      </div>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.label :video_url, style: "display: block" %>
-    <%= form.text_field :video_url %>
-  </div>
-
-  <div>
-    <%= form.label :pdf_url, style: "display: block" %>
-    <%= form.text_field :pdf_url %>
-  </div>
-
-  <div>
-    <%= form.label :lesson_type, style: "display: block" %>
-    <%= form.text_field :lesson_type %>
-  </div>
-
-  <div>
-    <%= form.label :video_streaming_source, style: "display: block" %>
-    <%= form.text_field :video_streaming_source %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

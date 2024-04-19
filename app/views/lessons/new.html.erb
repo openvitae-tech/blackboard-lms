@@ -1,9 +1,10 @@
-<h1>New lesson</h1>
+<div class="my-8 mx-4">
+  <%= link_to @course.title, course_path(@course), class: "underline" %> >>
+  <%= link_to @course_module.title, course_module_path(@course, @course_module), class: "underline" %>
+</div>
 
-<%= render "form", course: @course, course_module: @course_module, lesson: @lesson %>
-
-<br>
-
-<div>
+<div class="my-8 mx-4">
   <%= link_to "Back", course_module_path(@course, @course_module) %>
 </div>
+
+<%= render "form", course: @course, course_module: @course_module, lesson: @lesson %>

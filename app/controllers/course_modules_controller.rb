@@ -22,7 +22,7 @@ class CourseModulesController < ApplicationController
 
     respond_to do |format|
       if @course_module.save
-        format.html { redirect_to course_module_url(@course, @course_module), notice: "Course module was successfully created." }
+        format.html { redirect_to course_url(@course), notice: "Course module was successfully created." }
         format.json { render :show, status: :created, location: @course_module }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -35,7 +35,7 @@ class CourseModulesController < ApplicationController
   def update
     respond_to do |format|
       if @course_module.update(course_module_params)
-        format.html { redirect_to course_module_url(@course_module), notice: "Course module was successfully updated." }
+        format.html { redirect_to course_module_url(@course, @course_module), notice: "Course module was successfully updated." }
         format.json { render :show, status: :ok, location: @course_module }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,7 +49,7 @@ class CourseModulesController < ApplicationController
     @course_module.destroy!
 
     respond_to do |format|
-      format.html { redirect_to course_modules_url, notice: "Course module was successfully destroyed." }
+      format.html { redirect_to course_url(@course), notice: "Course module was successfully destroyed." }
       format.json { head :no_content }
     end
   end

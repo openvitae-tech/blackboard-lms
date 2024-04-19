@@ -1,15 +1,34 @@
+<div class="my-8 mx-4 text-right"><%= link_to "New learning partner", new_learning_partner_path, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %></div>
 
-<h1>Learning partners</h1>
-
-<%= link_to "New learning partner", new_learning_partner_path %>
-
-<table id="learning_partners">
+<table id="users" class="table-auto w-fit mx-auto">
+  <thead>
   <tr>
-    <td>Partner Name</td>
-    <td>Created At</td>
+    <th>Name</th>
+    <th>Created At</th>
+    <th>Actions</th>
   </tr>
-  <% @learning_partners.each do |learning_partner| %>
-    <%= render learning_partner %>
+  </thead>
+  <tbody>
+  <%  @learning_partners.each do |learning_partner| %>
+    <tr class="text-sm border-b">
+      <td class="p-2">
+        <%= link_to learning_partner.name, learning_partner, class: "underline pointer" %>
+      </td>
+      <td class="p-2">
+        <%= learning_partner.created_at %>
+      </td>
+      <td class="p-2">
+        <%= link_to "edit", edit_learning_partner_path(learning_partner), class: "text-xs underline pointer" %>
+        <%= link_to "delete", learning_partner, data: { turbo_method: :delete }, class: "text-xs underline pointer" %>
+      </td>
+    </tr>
   <% end %>
+  </tbody>
 </table>
+
+<div class="my-8 mx-4 text-center">
+  <%= link_to_prev_page @learning_partners, 'Prev', class: "underline pointer" %>
+  <%= link_to_next_page @learning_partners, 'Next', class: "underline pointer" %>
+</div>
+
 

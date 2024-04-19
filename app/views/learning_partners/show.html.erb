@@ -1,11 +1,10 @@
+<div class="my-8 mx-4">
+  <%= link_to "Back", learning_partners_path, class: "underline pointer" %>
+</div>
 
-<p><strong>Name</strong><%= @learning_partner.name %></p>
-<p><strong>About</strong><%= @learning_partner.about %></p>
-
-<div>
-  <%= link_to "Create user", new_user_path(partner_id: @learning_partner) %> |
-  <%= link_to "Edit this learning partner", edit_learning_partner_path(@learning_partner) %> |
-  <%= link_to "Back to learning partners", learning_partners_path %>
-
-  <%= button_to "Destroy this learning partner", @learning_partner, method: :delete %>
+<div class="w-full">
+  <div class="my-8 w-80 mx-auto text-left">
+    <div class="my-8 font-bold"><%= @learning_partner.name %></div>
+    <div class="my-8"><strong>About</strong> <%= @learning_partner.about %></div>
+  </div>
 </div>

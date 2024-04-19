@@ -1,11 +1,16 @@
 <div class="mx-4 my-8">
   <div class="flex">
     <div class="flex-auto text-sm ">
-      <%= link_to "Back", users_path, class: "underline pointer" %>
+      <%= link_to "Back", :back, class: "underline pointer" %>
     </div>
     <div class="flex-auto text-sm text-right">
-      <%= link_to "Edit", edit_user_path(@user), class: "underline pointer mx-4" %>
-      <%= link_to "Delete", @user,data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32 inline-block text-center"%>
+      <% if policy(@user).edit? %>
+        <%= link_to "Edit", edit_user_path(@user), class: "underline pointer mx-4" %>
+      <% end %>
+
+      <% if policy(@user).destroy? %>
+        <%= link_to "Delete", @user,data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32 inline-block text-center" %>
+      <% end %>
     </div>
   </div>
 </div>

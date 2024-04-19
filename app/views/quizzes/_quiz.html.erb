@@ -1,37 +1,28 @@
-<div id="<%= dom_id quiz %>">
-  <p>
-    <strong>Question:</strong>
-    <%= quiz.question %>
-  </p>
+<div class="w-full">
+  <div id="<%= dom_id quiz %>" class="my-8 w-80 mx-auto text-left">
+    <div class="my-4">
+      <strong>Q:</strong>
+      <%= quiz.question %>
+    </div>
 
-  <p>
-    <strong>Quiz type:</strong>
-    <%= quiz.quiz_type %>
-  </p>
+    <div class="my-4">
+      <%= radio_button_tag 'answer', quiz.option_a, id: "opt-a", class: "mx-2" %>
+      <%= label_tag "opt-a", quiz.option_a %>
+    </div>
 
-  <p>
-    <strong>Option a:</strong>
-    <%= quiz.option_a %>
-  </p>
+    <div class="my-4">
+      <%= radio_button_tag 'answer', quiz.option_b, id: "opt-b", class: "mx-2" %>
+      <%= label_tag "opt-b", quiz.option_b %>
+    </div>
 
-  <p>
-    <strong>Option b:</strong>
-    <%= quiz.option_b %>
-  </p>
+    <div class="my-4">
+      <%= radio_button_tag 'answer', quiz.option_c, id: "opt-c", class: "mx-2" %>
+      <%= label_tag "opt-b", quiz.option_c %>
+    </div>
 
-  <p>
-    <strong>Option c:</strong>
-    <%= quiz.option_c %>
-  </p>
-
-  <p>
-    <strong>Option d:</strong>
-    <%= quiz.option_d %>
-  </p>
-
-  <p>
-    <strong>Answer:</strong>
-    <%= quiz.answer %>
-  </p>
-
+    <div class="my-4">
+      <%= radio_button_tag 'answer', quiz.option_d, id: "opt-d", class: "mx-2" %>
+      <%= label_tag "opt-d", quiz.option_d %>
+    </div>
+  </div>
 </div>

@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+
+* {
+    font-family: "Plus Jakarta Sans", serif;
+}

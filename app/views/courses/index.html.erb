@@ -1,12 +1,17 @@
-<h1>Courses</h1>
+<div class="my-8 mx-4">All Courses</div>
+<div class="my-8 mx-4 text-right"><%= link_to "New course", new_course_path, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %></div>
 
-<div id="courses">
+<ul id="courses" class="w-fit mx-auto md:flex md:max-w-[1400px] md:flex-wrap md:justify-left">
   <% @courses.each do |course| %>
-    <%= render course %>
-    <p>
-      <%= link_to "Show this course", course %>
-    </p>
+    <li class="text-sm border rounded m-2 md:w-80">
+      <div class="p-2">
+        <%= link_to course.title, course, class: "underline pointer" %>
+      </div>
+      <div class="p-2">
+        <%= course.description %>
+      </div>
+    </li>
   <% end %>
-</div>
+</ul>
 
-<%= link_to "New course", new_course_path %>
+

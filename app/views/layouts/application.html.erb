@@ -5,15 +5,24 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="w-full">
-    <%= render "shared/header" %>
-
-    <%= yield %>
+  <body class="w-full h-screen flex">
+    <div class="hidden md:block">
+      <%= render "shared/sidebar" %>
+    </div>
+    <div class="">
+      <%= render "shared/header" %>
+      <%= yield %>
+    </div>
   </body>
 </html>

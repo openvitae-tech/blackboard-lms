@@ -11,7 +11,11 @@
     <% end %>
 
     <li><%= link_to 'Course management', courses_path %></li>
-    <li><%= link_to 'User management', users_path %></li>
+
+    <% if policy(:user).index? %>
+      <li><%= link_to 'User management', users_path %></li>
+    <% end %>
+    <li><%= link_to 'Settings', user_path(current_user) %></li>
     <li><%= link_to 'Analytic Events Stream', events_path %></li>
   </ul>
 <% else %>
