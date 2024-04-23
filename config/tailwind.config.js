@@ -11,8 +11,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Plus Jakarta Sans", ...defaultTheme.fontFamily.sans],
+        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
+      backgroundImage: {
+        'course-thumb': "url('course_thumbnail.jpeg')"
+      }
     },
     colors: {
       gray: {
