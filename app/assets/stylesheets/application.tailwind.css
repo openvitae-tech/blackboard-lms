@@ -7,7 +7,19 @@
     @apply border rounded-lg p-2.5 min-w-8 min-h-2 inline-block text-gray-900 text-center;
   }
 
+  .btn-default {
+    @apply border rounded-lg p-2.5 min-w-8 min-h-2 inline-block bg-bl-100 text-gray-50 text-center;
+  }
+
   .btn-icon {
     @apply flex items-center gap-2 border p-2.5 rounded-lg w-fit text-gray-900;
+  }
+
+  .input-text {
+    @apply px-3.5 py-2.5 rounded-md focus:ring-0 w-full;
+  }
+
+  .input-check {
+    @apply rounded focus:ring-0;
   }
 }

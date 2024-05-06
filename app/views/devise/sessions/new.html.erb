@@ -1,32 +1,39 @@
-<h1 class="my-8 text-3xl font-bold">
-  <p class="auto text-center">Login</p>
-</h1>
+<div class="w-full h-screen flex">
+  <div class="md:basis-1/2 w-full flex items-center">
+    <div class="my-10 w-80 border rounded-2xl mx-auto p-10 text-gray-900">
+      <div class="w-full"><div class="w-fit m-auto"><%= render "shared/svg/logo" %></div></div>
+      <h1 class="my-8 text-2xl font-semibold">
+        <p class="auto">Login</p>
+      </h1>
 
-<div class="w-full">
-  <div class="my-8 w-80 border rounded mx-auto text-center">
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="field my-4">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field my-4">
+          <%= f.label :email, class: "font-medium text-sm" %>
+          <%= f.email_field :email, class: "input-text mt-2", autofocus: true, autocomplete: "email" %>
+        </div>
+
+        <div class="field my-4">
+          <%= f.label :password, class: "font-medium text-sm" %>
+          <%= f.password_field :password, class: "input-text mt-2", autocomplete: "current-password" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="field my-4">
+            <%= f.check_box :remember_me, class: "input-check" %>
+            <%= f.label :remember_me, class: "font-medium text-sm" %>
+          </div>
+        <% end %>
+
+        <div class="actions my-4">
+          <%= f.submit "Log in", class: "btn-default w-full" %>
+        </div>
+      <% end %>
+
+      <%= render "devise/shared/links" %>
     </div>
+  </div>
 
-    <div class="field my-4">
-      <%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "current-password" %>
-    </div>
-
-    <% if devise_mapping.rememberable? %>
-      <div class="field my-4">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
-      </div>
-    <% end %>
-
-    <div class="actions my-4">
-      <%= f.submit "Log in", class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
-    </div>
-  <% end %>
-
-  <%= render "devise/shared/links" %>
+  <div class="hidden md:block md:basis-1/2 md:bg-gray-100 md:flex md:items-center md:pl-10">
+    <%= image_tag "login_banner.png", class: "rounded-lg" %>
   </div>
 </div>
