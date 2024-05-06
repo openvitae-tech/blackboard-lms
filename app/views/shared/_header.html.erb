@@ -1,4 +1,4 @@
-<div class="header relative border-b flex">
+<div class="header relative flex">
   <div class="absolute top-0 w-full text-center bg-transparent">
     <% if notice.present? %>
       <div class="p-2 text-xs border rounded w-fit my-2 mx-auto text-yellow-500"><%= notice %></div>
@@ -8,7 +8,11 @@
       <p class="p-2 text-xs border rounded w-fit my-2 mx-auto text-red-500"><%= alert %></p>
     <% end %>
   </div>
-  <div class="font-semibold text-3xl text-gray-900 p-4"><%= title %></div>
+
+  <% if title.present? %>
+    <div class="font-semibold text-3xl text-gray-900 p-4"><%= title %></div>
+  <% end %>
+
   <div class="flex-auto p-4">
     <ul class="flex flex-auto gap-2 justify-end items-center">
       <% if user_signed_in? %>
@@ -29,7 +33,7 @@
           <%= link_to new_course_path, class: "btn-icon" do %>
             <%= render "shared/svg/plus" %>
             <span>Add course</span>
-        <% end %>
+          <% end %>
         </li>
         <li>
           <%= link_to "Logout", destroy_user_session_path, class: "btn-primary", data: { turbo_method: :delete } %>
@@ -42,3 +46,7 @@
     </ul>
   </div>
 </div>
+
+<% unless header_extended %>
+<hr>
+<%  end %>

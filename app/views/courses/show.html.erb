@@ -1,7 +1,11 @@
+<%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
+<%= render "course_header" %>
 
-<%= render @course %>
+<%= image_tag("course.jpeg") %>
 
-<div class="my-8 mx-4"><%= link_to "All courses", courses_path, class: "underline" %></div>
+<div><%= @course.title %></div>
+<div><%= @course.description %></div>
+
 <div class="my-8 mx-4 text-right">
   <%= link_to "New module", new_course_module_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
   <%= link_to "Edit", edit_course_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
