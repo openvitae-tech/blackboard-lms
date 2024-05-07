@@ -1,23 +1,23 @@
-<div class="bg-gray-900 h-full px-4 py-6 relative">
+<div class="bg-gray-900 h-full px-8 py-6 relative">
   <ul class="text-gray-500 text-sm">
     <li class="text-center mb-6">
-      <%= link_to root_path do %>
+      <%= link_to root_path, class: "text-gray-50" do %>
         <%= render "shared/svg/logo" %>
       <% end %>
     </li>
-    <li class="px-3 py-2.5 hover:bg-gray-800 hover:rounded-lg hover:text-gray-100">
+    <li class="px-3 py-2.5 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100">
       <%= link_to  "#", class: "flex items-center gap-2" do %>
         <%= render "shared/svg/home" %>
         <span>Home</span>
       <% end %>
     </li>
-    <li class="px-3 py-2.5 hover:bg-gray-800 hover:rounded-lg hover:text-gray-100">
+    <li class="px-3 py-2.5 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100">
       <%= link_to  "#", class: "flex items-center gap-2" do %>
         <%= render "shared/svg/book" %>
         <span>My Courses</span>
       <% end %>
     </li>
-    <li class="px-3 py-2.5 hover:bg-gray-800 hover:rounded-lg hover:text-gray-100">
+    <li class="px-3 py-2.5 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100">
       <%= link_to  "#", class: "flex items-center gap-2" do %>
         <%= render "shared/svg/bell" %>
         <span>Notifications</span>
