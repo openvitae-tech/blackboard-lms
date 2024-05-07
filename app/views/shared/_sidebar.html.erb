@@ -1,4 +1,4 @@
-<div class="bg-gray-900 h-full px-8 py-6 relative">
+<div class="bg-gray-900 h-full px-4 py-6 relative">
   <ul class="text-gray-500 text-sm">
     <li class="text-center mb-6">
       <%= link_to root_path, class: "text-gray-50" do %>
@@ -26,7 +26,13 @@
   </ul>
 
   <ul class="absolute bottom-0 left-0 w-full px-4 py-6 text-sm">
-    <li class="px-3 py-2.5 text-gray-500 hover:text-gray-100 mb-4">
+    <li class="px-3 py-2.5 text-gray-500 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100 ">
+      <%= link_to  "#", class: "flex items-center gap-2" do %>
+        <%= render "shared/svg/gear" %>
+        <span>Settings</span>
+      <% end %>
+    </li>
+    <li class="px-3 py-2.5 text-gray-500 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100 mb-4">
       <%= link_to  "#", class: "flex items-center gap-2" do %>
         <%= render "shared/svg/help" %>
         <span>Support</span>
