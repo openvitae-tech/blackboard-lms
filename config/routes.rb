@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resource :settings, only: [:index, :update] do
+    collection do
+      get :index
+      put :update_password
+    end
+  end
+
   resources :events, only: [:index]
   resources :quizzes
 
@@ -12,6 +19,7 @@ Rails.application.routes.draw do
   resources :learning_partners
   devise_for :users
   resources :users
+  get "dashboard" => "dashboards#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

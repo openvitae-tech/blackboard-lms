@@ -1,24 +1,27 @@
 <%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
 <%= render "course_header" %>
 
-<%= image_tag("course.jpeg") %>
+<div class="box">
+  <%= image_tag "course.jpeg", class: "w-full" %>
+  <div><%= @course.title %></div>
+  <div><%= @course.description %></div>
+</div>
 
-<div><%= @course.title %></div>
-<div><%= @course.description %></div>
-
-<div class="my-8 mx-4 text-right">
+<div class="box text-right">
   <%= link_to "New module", new_course_module_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
   <%= link_to "Edit", edit_course_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
   <%= link_to "Delete",  @course, data: { turbo_method: :delete }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
 </div>
 
 <div class="my-8 mx-4">Course modules</div>
-<ul id="course_modules">
-  <% @course_modules.each do |course_module| %>
+<div class="box">
+  <ul id="course_modules">
+    <% @course_modules.each do |course_module| %>
       <%= link_to course_module_path(@course, course_module) do %>
         <li class="text-sm border-b m-2">
           <%= render course_module %>
         </li>
       <% end %>
-  <% end %>
-</ul>
+    <% end %>
+  </ul>
+</div>

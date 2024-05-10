@@ -1,5 +1,5 @@
-<div class="w-full">
-  <div class="my-8 w-80 mx-auto text-left">
+<div class="box w-full">
+  <div class="my-8 w-80 text-left">
     <%= form_with(model: learning_partner) do |form| %>
       <% if learning_partner.errors.any? %>
         <div style="color: red">
@@ -15,17 +15,27 @@
 
       <div class="my-8 text-sm">
         <%= form.label :name, style: "display: block" %>
-        <%= form.text_field :name %>
+        <%= form.text_field :name, class: "input-text mt-2" %>
       </div>
 
       <div>
         <%= form.label :about, style: "display: block" %>
-        <%= form.text_area :about %>
+        <%= form.text_area :about, class: "input-text mt-2" %>
+      </div>
+
+      <div class="my-8 text-sm" >
+        <%= form.label :logo, style: "display: block" %>
+        <%= form.file_field :logo, class: "mt-2" %>
+      </div>
+
+      <div class="my-8 text-sm" >
+        <%= form.label :banner, style: "display: block" %>
+        <%= form.file_field :banner, class: "mt-2" %>
       </div>
 
       <div class="my-8 text-sm">
         <% text = learning_partner.persisted? ? "Update" : "Create" %>
-        <%= form.submit text, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+        <%= form.submit text, class: "btn-default" %>
       </div>
     <% end %>
   </div>

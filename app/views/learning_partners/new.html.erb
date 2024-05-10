@@ -1,11 +1,11 @@
-<h1 class="my-8 text-3xl font-bold">
-  <p class="auto text-center">New learning partner</p>
-</h1>
-
-<div class="my-8 mx-4">
-  <%= link_to "Back", learning_partners_path, class: "underline pointer" %>
+<div class="box">
+  <%= link_to learning_partners_path, class: "btn-icon" do %>
+    <%= render "shared/svg/back" %>
+    <span>Back</span>
+  <% end %>
 </div>
 
+<h1 class="box font-semibold text-lg text-gray-800">New learning partner</h1>
 <%= render "form", learning_partner: @learning_partner %>
 
 

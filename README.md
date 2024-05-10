@@ -22,6 +22,7 @@ $ rails db:seed
 # install node & flowbite
 
 $ npm install flowbite
+$ brew install imagemagick
 
 # start server
 $ rails s

@@ -1,10 +1,23 @@
-<div class="my-8 mx-4">
-  <%= link_to "Back", learning_partners_path, class: "underline pointer" %>
+<div class="box flex justify-between">
+  <%= link_to learning_partners_path, class: "btn-icon" do %>
+    <%= render "shared/svg/back" %>
+    <span>Back</span>
+  <% end %>
+
+  <!-- Modal toggle -->
+  <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="btn-default" type="button">Invite</button>
+
 </div>
 
-<div class="w-full">
-  <div class="my-8 w-80 mx-auto text-left">
-    <div class="my-8 font-bold"><%= @learning_partner.name %></div>
-    <div class="my-8"><strong>About</strong> <%= @learning_partner.about %></div>
-  </div>
+<div class="box">
+  <% if @learning_partner.logo.present? %>
+    <div class="my-4"><%= image_tag @learning_partner.logo.variant(resize_to_limit: [150, nil]) %></div>
+  <% end %>
+  <div class="my-4 font-bold"><%= @learning_partner.name %></div>
+  <% if @learning_partner.banner.present? %>
+    <div class="my-4"><%= image_tag @learning_partner.banner.variant(resize_to_limit: [320, nil]) %></div>
+  <% end %>
+  <div class="my-4"><strong>About</strong> <%= @learning_partner.about %></div>
 </div>
+
+<%= render "users/invite_modal", user: User.new, learning_partner: @learning_partner %>

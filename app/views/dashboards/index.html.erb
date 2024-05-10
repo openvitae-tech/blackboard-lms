@@ -1,0 +1,14 @@
+<%= render "shared/header", header_options(title: "Dashboard") %>
+<div class="mx-8 my-8">
+  <% if policy(:learning_partner).show? %>
+    <li><%= link_to 'Learning partners', learning_partners_path %></li>
+  <% end %>
+
+  <li><%= link_to 'Course management', courses_path %></li>
+
+  <% if policy(:user).index? %>
+    <li><%= link_to 'User management', users_path %></li>
+  <% end %>
+  <li><%= link_to 'Settings', user_path(current_user) %></li>
+  <li><%= link_to 'Analytic Events Stream', events_path %></li>
+</div>

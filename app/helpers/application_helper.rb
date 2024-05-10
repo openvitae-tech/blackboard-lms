@@ -8,4 +8,8 @@ module ApplicationHelper
 
     default_header_options.merge!(opts)
   end
+
+  def active(name, link)
+    link == name ? "active" : ""
+  end
 end
