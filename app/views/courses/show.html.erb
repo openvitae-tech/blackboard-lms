@@ -2,26 +2,38 @@
 <%= render "course_header" %>
 
 <div class="box">
-  <%= image_tag "course.jpeg", class: "w-full" %>
-  <div><%= @course.title %></div>
-  <div><%= @course.description %></div>
+  <%= image_tag "course.jpeg", class: " h-80 w-full object-cover rounded-lg" %>
 </div>
 
-<div class="box text-right">
-  <%= link_to "New module", new_course_module_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
-  <%= link_to "Edit", edit_course_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
-  <%= link_to "Delete",  @course, data: { turbo_method: :delete }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+<div class="box flex justify-between">
+  <div>
+    <div class="page-title"><%= @course.title %></div>
+    <div class="page-subtitle my-4"><%= @course.description %></div>
+  </div>
+  <div>
+    <%= link_to "Enroll Course", "#", class: "btn-default"%>
+  </div>
 </div>
 
-<div class="my-8 mx-4">Course modules</div>
 <div class="box">
-  <ul id="course_modules">
-    <% @course_modules.each do |course_module| %>
-      <%= link_to course_module_path(@course, course_module) do %>
-        <li class="text-sm border-b m-2">
-          <%= render course_module %>
-        </li>
-      <% end %>
+  <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white text-gray-900" data-inactive-classes="text-gray-500">
+    <% @course_modules.each_with_index do |course_module, index| %>
+    <h2 id=<%="accordion-flush-heading-#{index+1}" %> >
+      <button type="button" class="px-4 rounded flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-900 border-b border-gray-200 gap-3" data-accordion-target=<%="#accordion-flush-body-#{index+1}"%> aria-expanded="true" aria-controls=<%="accordion-flush-body-#{index+1}"%> >
+        <span><%= course_module.title %><small class="text-xs">(<%= course_module.lessons.count %> lessons)</small></span>
+        <%= render "shared/svg/down" %>
+      </button>
+    </h2>
+    <div id=<%="accordion-flush-body-#{index+1}"%> class="hidden" aria-labelledby=<%="accordion-flush-heading-#{index+1}"%> >
+      <div class="px-4 py-5 border-b border-gray-200">
+        <p class="mb-2 text-gray-900 text-sm"><%= course_module.description %></p>
+        <ul class="px-8">
+        <% course_module.lessons.each do |lesson| %>
+          <li class="border-b text-sm"><%= lesson.title %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
     <% end %>
-  </ul>
+  </div>
 </div>

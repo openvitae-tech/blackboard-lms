@@ -1,10 +1,17 @@
-<div class="flex p-4 items-center gap-4">
-  <%= link_to courses_path, class: "btn-icon" do %>
-    <%= render "shared/svg/back" %>
-    <span>Back</span>
-  <% end %>
-  <span class="text-gray-500 text-sm font-medium">My Courses</span>
-  <span class="text-gray-500 text-sm font-medium"><%= render "shared/svg/right" %></span>
-  <span class="text-gray-900 text-sm font-medium"><%= @course.title %></span>
+<div class="flex justify-between p-4 bg-white items-center">
+  <div class="flex items-center gap-4">
+    <%= link_to courses_path, class: "btn-icon" do %>
+      <%= render "shared/svg/back" %>
+      <span>Back</span>
+    <% end %>
+    <span class="text-gray-500 text-sm font-medium">My Courses</span>
+    <span class="text-gray-500 text-sm font-medium"><%= render "shared/svg/right" %></span>
+    <span class="text-gray-900 text-sm font-medium"><%= @course.title %></span>
+  </div>
+  <div>
+    <%= link_to "New module", new_course_module_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+    <%= link_to "Edit", edit_course_path(@course), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+    <%= link_to "Delete",  @course, data: { turbo_method: :delete }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+  </div>
 </div>
 <hr>

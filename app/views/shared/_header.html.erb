@@ -18,15 +18,15 @@
       <% if user_signed_in? %>
         <li>
           <div class="border rounded-lg border-gray-200 px-2.5 flex gap-1 items-center">
-            <label for="course-search" class="text-gray-500">
-              <%= render "shared/svg/search" %>
-            </label>
+<!--            <label for="course-search" class="text-gray-500">-->
+              <%#= render "shared/svg/search" %>
+<!--            </label>-->
             <input id="course-search" type="text" class="flex-1 px-2 py-2 rounded font-light text-base text-gray-500 border-none border-transparent focus:border-transparent focus:ring-0" style="background: transparent;" placeholder="Search courses ..." />
           </div>
         </li>
         <li>
-          <%= link_to "#", class: "btn-icon" do %>
-            <%= render "shared/svg/gear" %>
+          <%= link_to "#", class: "btn-icon text-gray-500 hover:text-gray-800" do %>
+            <%= render "shared/svg/search" %>
           <% end %>
         </li>
         <li>
