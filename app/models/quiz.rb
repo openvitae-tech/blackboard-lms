@@ -1,3 +1,3 @@
 class Quiz < ApplicationRecord
-  belongs_to :course_module
+  belongs_to :course_module, counter_cache: true
 end

@@ -14,4 +14,16 @@ class Course < ApplicationRecord
   def undo_enroll(user)
     enrollments.where(user: user).delete_all
   end
+
+  def duration
+    course_modules.map(&:duration).reduce(&:+)
+  end
+
+  def lessons_count
+    course_modules.map(&:lessons_count).reduce(:+)
+  end
+
+  def quizzes_count
+    course_modules.map(&:quizzes_count).reduce(:+)
+  end
 end
