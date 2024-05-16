@@ -2,7 +2,7 @@
 <div class="mx-8 my-8">
   <h1 class="font-semibold text-xl tracking-tight my-8">Enrolled courses</h1>
   <ul id="courses" class="w-fit md:flex md:max-w-[1400px] md:flex-wrap md:justify-left md:gap-8">
-    <% @courses.take(3).each do |course| %>
+    <% @enrolled_courses.take(10).each do |course| %>
       <li class="text-sm border my-4 md:m-0 rounded-2xl md:w-80 overflow-hidden flex bg-white">
         <%= link_to course, class: "inline-block border w-full" do %>
           <%= image_tag("course_thumbnail.jpeg", class: "w-full h-max-[200px]") %>
@@ -24,7 +24,7 @@
   <h1 class="font-semibold text-xl tracking-tight my-8">Available courses</h1>
 
   <ul id="courses" class="w-fit md:flex md:max-w-[1400px] md:flex-wrap md:justify-left md:gap-8">
-    <% @courses.each do |course| %>
+    <% @other_courses.each do |course| %>
       <li class="text-sm border my-4 md:m-0 rounded-2xl md:w-80 overflow-hidden flex bg-white">
         <%= link_to course, class: "inline-block border w-full" do %>
           <%= image_tag(course_banner_thumbnail(course), class: "w-full h-max-[200px]") %>
