@@ -1,11 +1,13 @@
-<div class="my-8 mx-4">
-  <%= link_to @course.title, course_path(@course), class: "underline" %> >>
-  <%= link_to @course_module.title, course_module_path(@course, @course_module), class: "underline" %>
-</div>
+<%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
+<%= render "page_header", back_link: course_module_path(@course, @course_module) %>
 
-<div class="my-8 mx-4 text-right">
-  <%= link_to "Edit", edit_course_module_quiz_path(@course, @course_module, @quiz), class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
-  <%= link_to "Delete", course_module_quiz_path(@course, @course_module, @quiz), data: { turbo_method: :delete }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+<div class="box text-right">
+  <% if policy(@quiz).edit? %>
+    <%= link_to "Edit", edit_course_module_quiz_path(@course, @course_module, @quiz), class: "btn-primary" %>
+  <% end %>
+  <% if policy(@quiz).destroy? %>
+    <%= link_to "Delete", course_module_quiz_path(@course, @course_module, @quiz), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-primary" %>
+  <% end %>
 </div>
 
 <%= render @quiz %>

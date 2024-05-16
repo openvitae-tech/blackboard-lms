@@ -1,7 +1,5 @@
-<div class="my-8 mx-4">
-  <%= link_to @course.title, course_path(@course), class: "underline" %> >>
-  <%= link_to @course_module.title, course_module_path(@course, @course_module), class: "underline" %>
-</div>
+<%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
+<%= render "page_header", back_link: course_module_quiz_path(@course, @course_module, @quiz) %>
 
 <%= render "form", course: @course, course_module: @course_module, quiz: @quiz %>
 

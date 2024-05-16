@@ -2,7 +2,7 @@
 <%= render "course_header" %>
 
 <div class="box">
-  <%= image_tag "course.jpeg", class: " h-80 w-full object-cover rounded-lg" %>
+  <%= image_tag course_banner(@course), class: " h-80 w-full object-cover rounded-lg" %>
 </div>
 
 <div class="box flex justify-between">
@@ -26,10 +26,13 @@
     </h2>
     <div id=<%="accordion-flush-body-#{index+1}"%> class="hidden" aria-labelledby=<%="accordion-flush-heading-#{index+1}"%> >
       <div class="px-4 py-5 border-b border-gray-200">
+        <% if policy(:course_module).show? %>
+          <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "View or modify module", course_module_path(@course, course_module), class: "link" %></p>
+        <% end %>
         <p class="mb-2 text-gray-900 text-sm"><%= course_module.description %></p>
         <ul class="px-8">
         <% course_module.lessons.each do |lesson| %>
-          <li class="border-b text-sm"><%= lesson.title %></li>
+          <li class="border-b text-sm"><%= link_to lesson.title, course_module_lesson_path(@course, course_module, lesson) %></li>
         <% end %>
         </ul>
       </div>

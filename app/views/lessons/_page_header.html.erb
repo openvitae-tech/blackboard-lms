@@ -1,0 +1,16 @@
+<div class="flex justify-between p-4 bg-white items-center">
+  <div class="flex items-center gap-4">
+    <%= link_to back_link, class: "btn-icon" do %>
+      <%= render "shared/svg/back" %>
+      <span>Back</span>
+    <% end %>
+    <span class="text-gray-500 text-sm font-medium">My Courses</span>
+    <span class="text-gray-500 text-sm font-medium"><%= render "shared/svg/right" %></span>
+    <span class="text-gray-900 text-sm font-medium"><%= @course.title %></span>
+    <span class="text-gray-500 text-sm font-medium"><%= render "shared/svg/right" %></span>
+    <span class="text-gray-900 text-sm font-medium"><%= @course_module.title %></span>
+  </div>
+  <div>
+  </div>
+</div>
+<hr>

@@ -59,12 +59,12 @@ class QuizzesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
-      @quiz = Quiz.find(params[:id])
+      @quiz = @course_module.quizzes.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def quiz_params
-      params.require(:quiz).permit(:question, :quiz_type, :option_a, :option_b, :option_c, :option_d, :answer)
+      params.require(:quiz).permit(:question, :option_a, :option_b, :option_c, :option_d, :answer)
     end
 
     def set_course

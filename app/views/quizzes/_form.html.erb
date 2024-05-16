@@ -1,5 +1,5 @@
-<div class="w-full">
-  <div class="my-8 w-80 mx-auto text-left">
+<div class="box">
+  <div class="my-8 w-80 text-left">
     <%= form_with(url: course_module_quizzes_path(course, course_module), model:  quiz) do |form| %>
       <% if quiz.errors.any? %>
         <div style="color: red">
@@ -14,43 +14,38 @@
       <% end %>
 
       <div class="my-8 text-sm">
-        <%= form.label :question, style: "display: block" %>
-        <%= form.text_field :question %>
+        <%= form.label :question, class: "text-sm font-medium" %>
+        <%= form.text_field :question, class: "input-text mt-2" %>
       </div>
 
       <div class="my-8 text-sm">
-        <%= form.label :quiz_type, style: "display: block" %>
-        <%= form.text_field :quiz_type %>
+        <%= form.label :option_a, class: "text-sm font-medium" %>
+        <%= form.text_field :option_a, class: "input-text mt-2" %>
       </div>
 
       <div class="my-8 text-sm">
-        <%= form.label :option_a, style: "display: block" %>
-        <%= form.text_field :option_a %>
+        <%= form.label :option_b, class: "text-sm font-medium" %>
+        <%= form.text_field :option_b, class: "input-text mt-2" %>
       </div>
 
       <div class="my-8 text-sm">
-        <%= form.label :option_b, style: "display: block" %>
-        <%= form.text_field :option_b %>
+        <%= form.label :option_c, class: "text-sm font-medium" %>
+        <%= form.text_field :option_c, class: "input-text mt-2" %>
       </div>
 
       <div class="my-8 text-sm">
-        <%= form.label :option_c, style: "display: block" %>
-        <%= form.text_field :option_c %>
+        <%= form.label :option_d, class: "text-sm font-medium" %>
+        <%= form.text_field :option_d, class: "input-text mt-2"%>
       </div>
 
       <div class="my-8 text-sm">
-        <%= form.label :option_d, style: "display: block" %>
-        <%= form.text_field :option_d %>
-      </div>
-
-      <div class="my-8 text-sm">
-        <%= form.label :answer, style: "display: block" %>
-        <%= form.text_field :answer %>
+        <%= form.label :answer, class: "text-sm font-medium" %>
+        <%= form.text_field :answer, class: "input-text mt-2" %>
       </div>
 
       <div class="my-8 text-sm">
         <% text = quiz.persisted? ? "Update" : "Create" %>
-        <%= form.submit text, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+        <%= form.submit text, class: "btn-default" %>
       </div>
     <% end %>
   </div>

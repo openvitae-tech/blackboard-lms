@@ -1,31 +1,16 @@
+<%= render "shared/header", header_options(title: "Learning Partners", header_extended: false) %>
 <div class="box text-right"><%= link_to "New Learning Partner", new_learning_partner_path, class: "btn-default" %></div>
 
 <div class="box">
-<table id="users" class="table-auto w-fit">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Created At</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
+<ul id="users" class="w-fit">
   <%  @learning_partners.each do |learning_partner| %>
-    <tr class="text-base text-gray-800 border-b">
-      <td class="p-2">
+    <li class="text-base text-gray-800 border-b flex">
+      <div class="p-2">
         <%= link_to learning_partner.name, learning_partner, class: "link" %>
-      </td>
-      <td class="p-2">
-        <%= learning_partner.created_at %>
-      </td>
-      <td class="p-2">
-        <%= link_to "edit", edit_learning_partner_path(learning_partner), class: "link" %>
-        <%= link_to "delete", learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "link" %>
-      </td>
-    </tr>
+      </div>
+    </li>
   <% end %>
-  </tbody>
-</table>
+</ul>
 
 <div class="my-8 mx-4 text-center">
   <%= link_to_prev_page @learning_partners, 'Prev', class: "underline pointer" %>

@@ -1,5 +1,5 @@
-<div class="w-full">
-  <div class="my-8 w-80 mx-auto text-left">
+<div class="box">
+  <div class="w-80">
     <%= form_with(model: course) do |form| %>
       <% if course.errors.any? %>
         <div style="color: red">
@@ -14,18 +14,23 @@
       <% end %>
 
       <div class="my-8 text-sm" >
-        <%= form.label :title, style: "display: block" %>
-        <%= form.text_field :title %>
+        <%= form.label :title, class: "text-sm font-medium" %>
+        <%= form.text_field :title, class: "input-text mt-2" %>
       </div>
 
       <div class="my-8 text-sm" >
-        <%= form.label :description, style: "display: block" %>
-        <%= form.text_area :description %>
+        <%= form.label :banner, class: "text-sm font-medium" %>
+        <%= form.file_field :banner, class: "input-file mt-2" %>
+      </div>
+
+      <div class="my-8 text-sm" >
+        <%= form.label :description, class: "text-sm font-medium" %>
+        <%= form.text_area :description, class: "input-text mt-2" %>
       </div>
 
       <div class="my-8 text-sm">
         <% text = course.persisted? ? "Update" : "Create" %>
-        <%= form.submit text, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+        <%= form.submit text, class: "btn-default" %>
       </div>
     <% end %>
   </div>

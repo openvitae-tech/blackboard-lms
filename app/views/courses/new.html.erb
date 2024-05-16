@@ -1,5 +1,7 @@
-<div class="my-8 mx-4">
-  <%= link_to "Back to courses", courses_path, class: "underline pointer" %>
-</div>
+<%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
+<%= render "course_header" %>
 
+<div class="box">
+  <h1 class="font-semibold text-xl">Create course</h1>
+</div>
 <%= render "form", course: @course %>

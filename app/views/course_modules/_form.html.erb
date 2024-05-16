@@ -1,5 +1,5 @@
-<div class="w-full">
-  <div class="my-8 w-80 mx-auto text-left">
+<div class="box">
+  <div class="my-8 w-80 text-left">
     <% url = course_module.persisted? ? course_module_path(course, course_module) : course_modules_path(course, course_module) %>
     <%= form_with(model: [course, course_module], url: url) do |form| %>
     <% if course_module.errors.any? %>
@@ -14,19 +14,19 @@
       </div>
     <% end %>
 
-    <div>
-      <%= form.label :title, style: "display: block" %>
-      <%= form.text_field :title %>
+    <div class="my-8 text-sm">
+      <%= form.label :title, class: "text-sm font-medium" %>
+      <%= form.text_field :title, class: "input-text mt-2" %>
     </div>
 
-    <div>
-      <%= form.label :description, style: "display: block" %>
-      <%= form.text_area :description %>
+    <div class="my-8 text-sm">
+      <%= form.label :description, class: "text-sm font-medium" %>
+      <%= form.text_area :description, class: "input-text mt-2" %>
     </div>
 
-    <div>
+    <div class="my-8 text-sm">
       <% text = course_module.persisted? ? "Update" : "Create" %>
-      <%= form.submit text, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+      <%= form.submit text, class: "btn-default" %>
     </div>
   <% end %>
   </div>

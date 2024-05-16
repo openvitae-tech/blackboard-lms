@@ -29,12 +29,14 @@
             <%= render "shared/svg/search" %>
           <% end %>
         </li>
-        <li>
-          <%= link_to new_course_path, class: "btn-icon" do %>
-            <%= render "shared/svg/plus" %>
-            <span>Add course</span>
-          <% end %>
-        </li>
+        <% if policy(:course).new? %>
+          <li>
+            <%= link_to new_course_path, class: "btn-icon" do %>
+              <%= render "shared/svg/plus" %>
+              <span>Add course</span>
+            <% end %>
+          </li>
+          <% end  %>
         <li>
           <%= link_to "Logout", destroy_user_session_path, class: "btn-primary", data: { turbo_method: :delete } %>
         </li>

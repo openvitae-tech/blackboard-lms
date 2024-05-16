@@ -10,6 +10,15 @@
 </div>
 
 <div class="box">
+  <% if policy(@learning_partner).edit? %>
+    <%= link_to "edit", edit_learning_partner_path(learning_partner), class: "link" %>
+  <% end  %>
+  <% if policy(@learning_partner).destroy? %>
+    <%= link_to "delete", learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "link" %>
+  <% end  %>
+</div>
+
+<div class="box">
   <% if @learning_partner.logo.present? %>
     <div class="my-4"><%= image_tag @learning_partner.logo.variant(resize_to_limit: [150, nil]) %></div>
   <% end %>

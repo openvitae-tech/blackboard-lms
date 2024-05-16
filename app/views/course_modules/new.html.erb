@@ -1,5 +1,4 @@
-<div class="my-8 mx-4">
-  <%= link_to "Back", course_path(@course), class: "underline pointer" %>
-</div>
+<%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
+<%= render "page_header", back_link: course_path(@course) %>
 
 <%= render "form", course: @course, course_module: @course_module %>

@@ -29,7 +29,7 @@
     <li class="px-3 py-2.5 text-gray-500 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100 ">
       <%= link_to  settings_path, class: "flex items-center gap-2" do %>
         <%= render "shared/svg/gear" %>
-        <span>Settings</span>
+        <span>Team</span>
       <% end %>
     </li>
     <li class="px-3 py-2.5 text-gray-500 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100 mb-4">
@@ -39,7 +39,7 @@
       <% end %>
     </li>
     <li class="text-gray-100 border-t border-gray-800 pt-4">
-      <%= link_to "#" do %>
+      <%= link_to settings_path do %>
         <div class="flex items-center">
           <div class="flex justify-center items-center rounded-full w-8 h-8 bg-gray-500 text-gray-100"><%= current_user.name[0] %></div>
           <div class="ml-2"><%= current_user.name %></div>

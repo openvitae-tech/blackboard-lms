@@ -1,4 +1,4 @@
-class CoursePolicy
+class LessonPolicy < ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -10,12 +10,12 @@ class CoursePolicy
     user.is_admin?
   end
 
-  def create?
-    user.is_admin?
-  end
-
   def show?
     user.present?
+  end
+
+  def create?
+    user.is_admin?
   end
 
   def update?
