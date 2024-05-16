@@ -4,15 +4,15 @@
 
 @layer components {
   .btn-primary {
-    @apply border rounded-lg p-2.5 min-w-12 min-h-2 inline-block text-sm text-gray-900 bg-gray-50 text-center;
+    @apply border rounded-lg p-2.5 min-w-12 min-h-2 text-sm text-gray-900 bg-gray-50 text-center;
   }
 
   .btn-default {
-    @apply border rounded-lg p-2.5 min-w-12 min-h-2 inline-block text-sm bg-bl-100 text-gray-50 text-center;
+    @apply border rounded-lg p-2.5 min-w-12 min-h-2 text-sm bg-bl-100 text-gray-50 text-center;
   }
 
   .btn-icon {
-    @apply flex items-center gap-2 justify-center;
+    @apply flex items-center gap-2 justify-center w-fit;
   }
 
   .input-text {
@@ -28,7 +28,7 @@
   }
 
   .box {
-    @apply my-8 mx-8;
+    @apply my-8 px-8;
   }
 
   .link {

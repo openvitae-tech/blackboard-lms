@@ -15,4 +15,12 @@ class CourseManagementService
   def search(term)
     Course.where("title ilike ?", "%#{term}%")
   end
+
+  def set_sequence_number_for_lesson(course_module, lesson)
+    lesson.seq_no = course_module.lessons_count + 1
+  end
+
+  def set_sequence_number_for_module(course, course_module)
+    course_module.seq_no = course.course_modules_count + 1
+  end
 end

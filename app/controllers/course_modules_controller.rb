@@ -19,6 +19,8 @@ class CourseModulesController < ApplicationController
   # POST /course_modules or /course_modules.json
   def create
     @course_module = @course.course_modules.new(course_module_params)
+    service = CourseManagementService.instance
+    service.set_sequence_number_for_module(@course, @course_module)
 
     respond_to do |format|
       if @course_module.save

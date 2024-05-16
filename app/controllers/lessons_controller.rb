@@ -5,6 +5,7 @@ class LessonsController < ApplicationController
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
+    @course_modules = @course.course_modules
   end
 
   # GET /lessons/new
@@ -19,6 +20,8 @@ class LessonsController < ApplicationController
   # POST /lessons or /lessons.json
   def create
     @lesson = @course_module.lessons.new(lesson_params)
+    service = CourseManagementService.instance
+    service.set_sequence_number_for_lesson(@course_module, @lesson)
 
     respond_to do |format|
       if @lesson.save
@@ -49,7 +52,7 @@ class LessonsController < ApplicationController
     @lesson.destroy!
 
     respond_to do |format|
-      format.html { redirect_to lessons_url, notice: "Lesson was successfully destroyed." }
+      format.html { redirect_to course_module_path(@course, @course_module), notice: "Lesson was successfully destroyed." }
       format.json { head :no_content }
     end
   end
