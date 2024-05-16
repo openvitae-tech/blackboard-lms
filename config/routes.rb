@@ -10,6 +10,11 @@ Rails.application.routes.draw do
   resources :quizzes
 
   resources :courses do
+    member do
+      put :enroll
+      put :unenroll
+    end
+
     resources :course_modules, as: "modules", except: [:index] do
       resources :lessons, except: [:index]
       resources :quizzes, except: [:index]

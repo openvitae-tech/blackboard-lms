@@ -11,7 +11,13 @@
     <div class="page-subtitle my-4"><%= @course.description %></div>
   </div>
   <div>
-    <%= link_to "Enroll Course", "#", class: "btn-default"%>
+    <% if policy(@course).enroll? %>
+      <%= link_to "Enroll Course", enroll_course_path(@course), data: { turbo_method: :put }, class: "btn-default"%>
+    <% end %>
+
+    <% if policy(@course).unenroll? %>
+      <%= link_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put }, class: "btn-primary"%>
+    <% end %>
   </div>
 </div>
 

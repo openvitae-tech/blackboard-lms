@@ -16,6 +16,9 @@ class User < ApplicationRecord
   belongs_to :manager, class_name: "User", optional: true
   has_many :learners, class_name: "User", foreign_key: "manager_id"
 
+  has_many :enrollments, dependent: :destroy
+  has_many :courses, through: :enrollments
+
   def get_temp_password
     if self.temp_password_enc.present?
       Rails.application.message_verifier('temp_password').verify(self.temp_password_enc)
@@ -27,5 +30,9 @@ class User < ApplicationRecord
     self.password = self.password_confirmation = temp_password
     enc_password = Rails.application.message_verifier('temp_password').generate(temp_password)
     self.temp_password_enc = enc_password
+  end
+
+  def enrolled_for_course?(course)
+    enrollments.exists?(course: course)
   end
 end

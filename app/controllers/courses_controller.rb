@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[ show edit update destroy ]
+  before_action :set_course, only: %i[ show edit update destroy enroll unenroll]
 
   # GET /courses or /courses.json
   def index
@@ -56,6 +56,32 @@ class CoursesController < ApplicationController
       format.html { redirect_to courses_url, notice: "Course was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def enroll
+    service = CourseManagementService.instance
+    result = service.enroll(current_user, @course)
+
+    if result == :duplicate
+      message = "Already enrolled in this course"
+    elsif result == :ok
+      message = "Successfully enrolled for the course"
+    end
+
+    redirect_to course_url(@course), notice: message
+  end
+
+  def unenroll
+    service = CourseManagementService.instance
+    result = service.undo_enroll(current_user, @course)
+
+    if result == :not_enrolled
+      message = "You are not enrolled in this course"
+    elsif result == :ok
+      message = "Success"
+    end
+
+    redirect_to course_url(@course), notice: message
   end
 
   private
