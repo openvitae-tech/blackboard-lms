@@ -1,5 +1,14 @@
 <%= render "shared/header", header_options(title: "My Courses") %>
 
+<% if policy(:course).new? %>
+  <div class="box flex justify-end">
+    <%= link_to new_course_path, class: "btn-default btn-icon" do %>
+      <%= render "shared/svg/plus" %>
+      <span>Add course</span>
+    <% end %>
+  </div>
+<% end %>
+
 <% if !@search_results.nil? %>
   <div class="box">
     <div class="page-subtitle">No results for search keyword '<%= @keyword %>'</div>
