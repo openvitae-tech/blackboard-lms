@@ -1,4 +1,4 @@
-<div class="header relative flex bg-white">
+<div class="header relative flex bg-white justify-between">
   <div class="absolute top-0 w-full text-center bg-transparent">
     <% if notice.present? %>
       <div class="p-2 text-xs border rounded w-fit my-2 mx-auto text-yellow-500"><%= notice %></div>
@@ -13,20 +13,17 @@
     <div class="font-semibold text-3xl text-gray-900 p-4"><%= title %></div>
   <% end %>
 
-  <div class="flex-auto p-4">
+  <div class="flex p-4">
     <ul class="flex flex-auto gap-2 justify-end items-center">
       <% if user_signed_in? %>
         <li>
-          <div class="border rounded-lg border-gray-200 px-2.5 flex gap-1 items-center">
-<!--            <label for="course-search" class="text-gray-500">-->
-              <%#= render "shared/svg/search" %>
-<!--            </label>-->
-            <input id="course-search" type="text" class="flex-1 px-2 py-2 rounded font-light text-base text-gray-500 border-none border-transparent focus:border-transparent focus:ring-0" style="background: transparent;" placeholder="Search courses ..." />
-          </div>
-        </li>
-        <li>
-          <%= link_to "#", class: "btn-icon text-gray-500 hover:text-gray-800" do %>
-            <%= render "shared/svg/search" %>
+          <%= form_tag search_courses_path, method: :get, class: "px-2.5 flex gap-1 items-center gap-2" do %>
+            <div class="border rounded-lg border-gray-200">
+              <%= text_field_tag :term, "", id: "course-search", class: "flex-1 px-2 py-2 border rounded-lg border-gray-200 font-light text-base text-gray-500 border-none border-transparent focus:border-transparent focus:ring-0", style: "background: transparent;", placeholder: "Search courses ..." %>
+            </div>
+            <%= button_tag type: "submit", class: "btn-icon text-gray-500 hover:text-gray-800" do %>
+              <%= render "shared/svg/search" %>
+            <% end %>
           <% end %>
         </li>
         <% if policy(:course).new? %>

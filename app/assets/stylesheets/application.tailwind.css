@@ -28,7 +28,7 @@
   }
 
   .box {
-    @apply my-8 mx-4;
+    @apply my-8 mx-8;
   }
 
   .link {

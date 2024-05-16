@@ -1,0 +1,20 @@
+<div class="box">
+  <h1 class="font-semibold text-xl tracking-tight my-8"><%= heading %></h1>
+  <ul id="courses" class="w-fit md:flex md:max-w-[1400px] md:flex-wrap md:justify-left md:gap-8">
+    <% courses.each do |course| %>
+      <li class="text-sm border my-4 md:m-0 rounded-2xl md:w-80 overflow-hidden flex bg-white">
+        <%= link_to course, class: "inline-block border w-full" do %>
+          <%= image_tag("course_thumbnail.jpeg", class: "w-full h-max-[200px]") %>
+          <div class="p-4 flex flex-col gap-2">
+            <div class="flex justify-between text-xs text-gray-500 font-normal">
+              <span><%="1,148" %> enrolled</span>
+              <span><%= 6 %> modules - <%= "2 hr 15 min"%></span>
+            </div>
+            <div class="font-semibold text-base text-gray-900"><%= course.title.truncate(80) %></div>
+            <div class="font-normal text-sm text-gray-500"><%= course.description.truncate(120) %></div>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

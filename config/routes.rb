@@ -15,6 +15,10 @@ Rails.application.routes.draw do
       put :unenroll
     end
 
+    collection do
+      get :search
+    end
+
     resources :course_modules, as: "modules", except: [:index] do
       resources :lessons, except: [:index]
       resources :quizzes, except: [:index]

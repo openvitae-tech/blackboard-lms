@@ -11,4 +11,8 @@ class CourseManagementService
     course.undo_enroll(user)
     :ok
   end
+
+  def search(term)
+    Course.where("title ilike ?", "%#{term}%")
+  end
 end

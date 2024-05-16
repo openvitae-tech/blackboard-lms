@@ -85,6 +85,13 @@ class CoursesController < ApplicationController
     redirect_to course_url(@course), notice: message
   end
 
+  def search
+    service = CourseManagementService.instance
+    @keyword = params[:term]
+    @search_results = service.search(@keyword)
+    render :index
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
