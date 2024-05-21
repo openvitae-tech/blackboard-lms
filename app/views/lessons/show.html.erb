@@ -12,9 +12,14 @@
 
 <div class="box flex items-start w-full gap-4">
   <div class="w-full md:w-2/3">
-    <div id="<%= dom_id @lesson %>">
-      <%= video_tag(@lesson.video_url, controls: true, preload: 'none', controlsList: "nodownload", oncontextmenu: "return false;", class: "w-full mx-auto") %>
+<!--    <div id="<%#= dom_id @lesson %>">-->
+      <%#= video_tag(@lesson.video_url, controls: true, preload: 'none', controlsList: "nodownload", oncontextmenu: "return false;", class: "w-full mx-auto") %>
+<!--    </div>-->
+    <div id="<%= dom_id @lesson %>" class="embed-container">
+      <iframe src="<%= vimeo_video_url(@lesson.video_url) %>"  frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen controls=false></iframe>
     </div>
+
+
 
     <div class="flex gap-2 justify-end my-8">
       <%= link_to prev_lesson_path(@course, @course_module, @lesson), class: "btn-primary btn-icon" do %>
