@@ -21,6 +21,9 @@ class QuizzesController < ApplicationController
   # POST /quizzes or /quizzes.json
   def create
     @quiz = @course_module.quizzes.new(quiz_params)
+    service = CourseManagementService.instance
+    service.set_quiz_attributes(@course_module, @quiz)
+
 
     respond_to do |format|
       if @quiz.save

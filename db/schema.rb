@@ -48,8 +48,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_16_173637) do
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "lessons_count"
-    t.integer "quizzes_count"
+    t.integer "lessons_count", default: 0
+    t.integer "quizzes_count", default: 0
     t.integer "seq_no"
     t.index ["course_id"], name: "index_course_modules_on_course_id"
   end
@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_16_173637) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "banner"
-    t.integer "course_modules_count"
+    t.integer "course_modules_count", default: 0
   end
 
   create_table "enrollments", force: :cascade do |t|

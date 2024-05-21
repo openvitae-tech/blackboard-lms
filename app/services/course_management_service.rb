@@ -16,6 +16,22 @@ class CourseManagementService
     Course.where("title ilike ?", "%#{term}%")
   end
 
+  def set_module_attributes(course, course_module)
+    set_sequence_number_for_module(course, course_module)
+  end
+
+  def set_lesson_attributes(course_module, lesson)
+    set_sequence_number_for_lesson(course_module, lesson)
+    lesson.video_streaming_source = "vimeo"
+  end
+
+  def set_quiz_attributes(course_module, quiz)
+    set_sequence_number_for_quiz(course_module, quiz)
+  end
+  def set_sequence_number_for_quiz(course_module, quiz)
+    quiz.seq_no = course_module.lessons_count + 1
+  end
+
   def set_sequence_number_for_lesson(course_module, lesson)
     lesson.seq_no = course_module.lessons_count + 1
   end
