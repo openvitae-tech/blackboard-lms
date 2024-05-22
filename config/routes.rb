@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resource :settings, only: [:index, :update] do
+  resource :settings, only: [:index, :update, :edit] do
     collection do
-      get :index
+      get :team
       put :update_password
     end
   end

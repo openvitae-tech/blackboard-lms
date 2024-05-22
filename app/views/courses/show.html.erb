@@ -5,20 +5,32 @@
   <%= image_tag course_banner(@course), class: " h-80 w-full object-cover rounded-lg" %>
 </div>
 
-<div class="box flex justify-between">
+<div class="box md:flex md:justify-between">
   <div>
     <div class="page-title"><%= @course.title %></div>
-    <div class="page-subtitle my-4"><%= @course.description %></div>
+    <div class="page-subtitle my-4 text-balance"><%= @course.description %></div>
   </div>
-  <div>
-    <% if policy(@course).enroll? %>
-      <%= link_to "Enroll Course", enroll_course_path(@course), data: { turbo_method: :put }, class: "btn-default"%>
-    <% end %>
+  <div class="hidden md:block text-right">
+    <div class="mt-2">
+      <% if policy(@course).enroll? %>
+        <%= link_to "Enroll Course", enroll_course_path(@course), data: { turbo_method: :put }, class: "btn-default"%>
+      <% end %>
 
-    <% if policy(@course).unenroll? %>
-      <%= link_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put }, class: "btn-primary"%>
-    <% end %>
+      <% if policy(@course).unenroll? %>
+        <%= link_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put }, class: "btn-primary"%>
+      <% end %>
+      </div>
   </div>
+</div>
+
+<div class="box md:hidden">
+  <% if policy(@course).enroll? %>
+    <%= link_to "Enroll Course", enroll_course_path(@course), data: { turbo_method: :put }, class: "btn-default"%>
+  <% end %>
+
+  <% if policy(@course).unenroll? %>
+    <%= link_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put }, class: "btn-primary"%>
+  <% end %>
 </div>
 
 <div class="box">
@@ -35,10 +47,10 @@
         <% if policy(:course_module).show? %>
           <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "View or modify module", course_module_path(@course, course_module), class: "link" %></p>
         <% end %>
-        <p class="mb-2 text-gray-900 text-sm"><%= course_module.description %></p>
+        <p class="mb-2 text-gray-900 text-sm md:max-w-[1400px]"><%= course_module.description %></p>
         <ul class="px-8">
         <% course_module.lessons.each do |lesson| %>
-          <li class="border-b text-sm"><%= link_to lesson.title, course_module_lesson_path(@course, course_module, lesson) %></li>
+          <li class="border-b text-sm py-2"><%= link_to lesson.title, course_module_lesson_path(@course, course_module, lesson) %></li>
         <% end %>
         </ul>
       </div>

@@ -4,11 +4,11 @@
 
 @layer components {
   .btn-primary {
-    @apply border rounded-lg p-2.5 min-w-12 min-h-2 text-sm text-gray-900 bg-gray-50 text-center;
+    @apply inline-block border rounded-lg p-2.5 min-w-32  min-h-2 text-sm text-gray-900 bg-gray-50 text-center;
   }
 
   .btn-default {
-    @apply border rounded-lg p-2.5 min-w-12 min-h-2 text-sm bg-bl-100 text-gray-50 text-center;
+    @apply inline-block border rounded-lg p-2.5 min-w-32  min-h-2 text-sm bg-bl-100 text-gray-50 text-center;
   }
 
   .btn-icon {

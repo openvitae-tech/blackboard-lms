@@ -11,6 +11,14 @@
         <span>Home</span>
       <% end %>
     </li>
+    <% if policy(:learning_partner).show? %>
+      <li class="px-3 py-2.5 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100">
+        <%= link_to  learning_partners_path, class: "flex items-center gap-2" do %>
+          <%= render "shared/svg/users" %>
+          <span>Partners</span>
+        <% end %>
+      </li>
+    <% end %>
     <li class="px-3 py-2.5 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100">
       <%= link_to  courses_path, class: "flex items-center gap-2" do %>
         <%= render "shared/svg/book" %>
@@ -27,8 +35,8 @@
 
   <ul class="absolute bottom-0 left-0 w-full px-4 py-6 text-sm">
     <li class="px-3 py-2.5 text-gray-500 hover:bg-bl-100 hover:rounded-lg hover:text-gray-100 ">
-      <%= link_to  settings_path, class: "flex items-center gap-2" do %>
-        <%= render "shared/svg/gear" %>
+      <%= link_to  team_settings_path, class: "flex items-center gap-2" do %>
+        <%= render "shared/svg/users" %>
         <span>Team</span>
       <% end %>
     </li>
@@ -39,7 +47,7 @@
       <% end %>
     </li>
     <li class="text-gray-100 border-t border-gray-800 pt-4">
-      <%= link_to settings_path do %>
+      <%= link_to edit_settings_path do %>
         <div class="flex items-center">
           <div class="flex justify-center items-center rounded-full w-8 h-8 bg-gray-500 text-gray-100"><%= current_user.name[0] %></div>
           <div class="ml-2"><%= current_user.name %></div>

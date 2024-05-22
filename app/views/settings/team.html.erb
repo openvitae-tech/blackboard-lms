@@ -1,0 +1,9 @@
+<%= render "shared/header", header_options(title: "Team management") %>
+
+<div class="box">
+  <ul>
+    <% @members.each do |user| %>
+      <li><%= user.name %> | <%= user.email %> | <%= user.phone %> | <%= user.role %></li>
+    <% end %>
+  </ul>
+</div>

@@ -3,7 +3,6 @@ class EventsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @partners = LearningPartner.all
-    @events = Event.all
+    @events = Event.order('id desc').all
   end
 end

@@ -1,15 +1,17 @@
-
-<h1>Events</h1>
-
-<table id="events">
-  <tr>
-    <td>Event name</td>
-    <td>Created At</td>
-    <td>Partner</td>
-    <td>User</td>
-  </tr>
-  <% @events.each do |event| %>
-    <%= render event %>
-  <% end %>
-</table>
-
+<%= render "shared/header", header_options(title: "Learning Partners", header_extended: false) %>
+<div class="box">
+  <h1 class="page-title">Events</h1>
+</div>
+<div class="box">
+  <table id="events" class="table-auto">
+    <tr>
+      <td>Event name</td>
+      <td>Created At</td>
+      <td>Partner</td>
+      <td>User</td>
+    </tr>
+    <% @events.each do |event| %>
+      <%= render event %>
+    <% end %>
+  </table>
+</div>
