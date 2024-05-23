@@ -1,4 +1,7 @@
 class Event < ApplicationRecord
+
+  include EventDefinitions
+
   VALID_EVENTS = %w(
     onboarding_initiated
     onboarding_completed

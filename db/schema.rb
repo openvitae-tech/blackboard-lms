@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_16_173637) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_23_054924) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,6 +77,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_16_173637) do
     t.integer "partner_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
+    t.jsonb "data", default: {}, null: false
   end
 
   create_table "learning_partners", force: :cascade do |t|

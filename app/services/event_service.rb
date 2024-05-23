@@ -1,17 +1,19 @@
 class EventService
   include Singleton
   # Events are simply published into database.
-  def publish_event(event_data)
-    event = build_event(event_data)
+  def publish_event(user, event_data)
+    event = build_event(user, event_data)
     publish_event_to_database(event) if event.valid?
   end
 
   private
-    def build_event(event_data)
+    def build_event(user, event_data)
+      to_event_name = lambda { |obj| obj.class.name.split("::")[1].underscore }
       Event.new do |e|
-        e.name = event_data[:name]
-        e.partner_id = event_data[:partner_id] || event_data[:partner].id
-        e.user_id = event_data[:user_id] || event_data[:user].id
+        e.name = to_event_name.call(event_data)
+        e.partner_id = user.learning_partner_id
+        e.user_id = user.id
+        e.data = event_data.to_h
       end
     end
     def publish_event_to_database(event)

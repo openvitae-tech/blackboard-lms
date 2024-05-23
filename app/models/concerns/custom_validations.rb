@@ -3,7 +3,6 @@ module CustomValidations
 
   included do
     def acceptable_logo
-      Rails.logger.info "Validating logo"
       return unless logo.attached?
 
       unless logo.blob.byte_size <= 1.megabyte
@@ -12,7 +11,6 @@ module CustomValidations
     end
 
     def acceptable_banner
-      Rails.logger.info "Validating banner"
       return unless banner.attached?
 
       unless banner.blob.byte_size <= 1.megabyte
