@@ -26,7 +26,7 @@ FactoryBot.define do
   factory :learning_partner do
     name { Faker::Restaurant.name }
     about { Faker::Restaurant.description }
-    logo { nil }
-    banner { nil }
+    logo { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+    banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
   end
 end

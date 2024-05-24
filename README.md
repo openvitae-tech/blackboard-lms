@@ -12,6 +12,11 @@ Install ruby 3.2.0 using rbenv or rvm
 $ gem install bundler
 
 # install dependencies
+# install node & flowbite
+$ npm install flowbite
+# install imagemagick
+$ brew install imagemagick
+
 $ bundle install
 
 # create & setup database
@@ -19,11 +24,8 @@ $ rails db:create
 $ rails db:migrate
 $ rails db:seed
 
-# install node & flowbite
-
-$ npm install flowbite
-$ brew install imagemagick
-
 # start server
 $ rails s
+# run tests
+$ rspec 
 ```

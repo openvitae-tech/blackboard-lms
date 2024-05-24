@@ -29,3 +29,5 @@
 
 en:
   hello: "Hello world"
+  pundit:
+    unauthorized: "Sorry you are not authorized to perform that action."

@@ -2,6 +2,7 @@
 require 'spec_helper'
 require_relative 'support/factory_bot'
 require_relative 'support/chrome'
+require_relative 'support/helpers'
 
 ENV['RAILS_ENV'] = 'test'
 
@@ -68,4 +69,5 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Helpers, type: :request
 end

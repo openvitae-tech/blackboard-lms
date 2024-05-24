@@ -3,18 +3,28 @@ module CustomValidations
 
   included do
     def acceptable_logo
-      return unless logo.attached?
-
-      unless logo.blob.byte_size <= 1.megabyte
-        errors.add(:logo, "is too big")
-      end
+      acceptable_image("logo")
     end
 
     def acceptable_banner
-      return unless banner.attached?
+      acceptable_image("banner")
+    end
 
-      unless banner.blob.byte_size <= 1.megabyte
-        errors.add(:banner, "is too big")
+    private
+    def acceptable_image(field_name)
+      # here access the image field by name
+      image_field = send(field_name)
+      return unless image_field.attached?
+
+      acceptable_types = %w(image/jpeg image/png image/jpg)
+
+      unless acceptable_types.include?(image_field.content_type)
+        errors.add(field_name.to_sym, "must be a JPEG, JPG or PNG")
+      end
+
+
+      unless image_field.blob.byte_size <= 1.megabyte
+        errors.add(field_name.to_sym, "is too big")
       end
     end
   end

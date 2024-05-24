@@ -36,8 +36,8 @@ class LearningPartnersController < ApplicationController
         format.html { redirect_to learning_partner_url(@learning_partner), notice: "Learning partner was successfully created." }
         format.json { render :show, status: :created, location: @learning_partner }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @learning_partner.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :bad_request }
+        format.json { render json: @learning_partner.errors, status: :bad_request }
       end
     end
   end
@@ -49,8 +49,8 @@ class LearningPartnersController < ApplicationController
         format.html { redirect_to learning_partner_url(@learning_partner), notice: "Learning partner was successfully updated." }
         format.json { render :show, status: :ok, location: @learning_partner }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @learning_partner.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :bad_request }
+        format.json { render json: @learning_partner.errors, status: :bad_request }
       end
     end
   end
