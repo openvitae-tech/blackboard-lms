@@ -1,14 +1,14 @@
 module UsersHelper
   def role_text(role)
-    UserManagement::USER_ROLE_MAPPING[role.to_sym]
+    User::USER_ROLE_MAPPING[role.to_sym]
   end
 
   def user_role_mapping
-    UserManagement::USER_ROLE_MAPPING.invert
+    User::USER_ROLE_MAPPING.invert
   end
 
   def user_role_mapping_for_partner
-    mapping= UserManagement::USER_ROLE_MAPPING.dup
+    mapping= User::USER_ROLE_MAPPING.dup
     mapping.delete(:admin)
     mapping.invert
   end

@@ -40,4 +40,4 @@
 !/app/assets/builds/.keep
 /node_modules
 .idea/blackboard.iml
-
+Dockerfile.production

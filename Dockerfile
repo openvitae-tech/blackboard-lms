@@ -15,38 +15,37 @@ ENV RAILS_ENV="production" \
     BLACKBOARD_DATABASE="blackboard_development" \
     BLACKBOARD_DATABASE_USERNAME="postgres" \
     BLACKBOARD_DATABASE_PASSWORD="" \
-    BLACKBOARD_DATABASE_HOST="localhost" \
-    BLACKBOARD_DATABASE_PORT="54320"
+    BLACKBOARD_DATABASE_HOST="host.docker.internal" \
+    BLACKBOARD_DATABASE_PORT="54320" \
+    RAILS_MASTER_KEY=""
 
 
-# Throw-away build stage to reduce size of final image
+# Build stage
 FROM base as build
 
-# Install packages needed to build gems
+# Install packages required
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential npm libpq-dev libvips pkg-config
 
-# Install application gems
+# Install gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 RUN bundle exec bootsnap precompile --gemfile
 
+# Install npm dependencies
 COPY package.json package-lock.json ./
 RUN npm install
-## Copy application code
+# Copy application code
 COPY . .
 #
-## Precompile bootsnap code for faster boot times
+# Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
-#
-## Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+# Precompile assets for production without the secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-#
-#
-## Final stage for app image
+# Final stage
 FROM base
-### Install packages needed for deployment
+### Install packages needed for runtime
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libvips postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
@@ -62,7 +61,6 @@ USER deploy:deploy
 
 ## Entrypoint prepares the database.
 ENTRYPOINT ["/deploy/bin/docker-entrypoint"]
-##
-### Start the server by default, this can be overwritten at runtime
+# Start the server by default
 EXPOSE 3000
 CMD ["./bin/rails", "server"]
