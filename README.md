@@ -10,7 +10,6 @@ Install ruby 3.2.0 using rbenv or rvm
 ```
 # install bundler
 $ gem install bundler
-
 # install dependencies
 # install node & flowbite
 $ npm install flowbite
@@ -27,5 +26,7 @@ $ rails db:seed
 # start server
 $ rails s
 # run tests
-$ rspec 
+$ rspec
+$ rspec -f d # view test descriptions
+$ rspec -f d -f focus # view test descriptions and run only focussed sections, usefull for debugging 
 ```
