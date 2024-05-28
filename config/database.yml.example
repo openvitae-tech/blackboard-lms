@@ -79,6 +79,6 @@ test:
 #
 production:
   <<: *default
-  database: blackboard_production
-  username: blackboard
+  database: <%= ENV["BLACKBOARD_DATABASE"] %>
+  username: <%= ENV["BLACKBOARD_DATABASE_USERNAME"] %>
   password: <%= ENV["BLACKBOARD_DATABASE_PASSWORD"] %>
