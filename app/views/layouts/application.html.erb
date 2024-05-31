@@ -11,6 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://player.vimeo.com/api/player.js"></script>
 
+    <% if Rails.env.production? %>
+      <meta name="google-analytics-id" content="<%= Rails.application.credentials.dig(:google, :ga_id) %>">
+      <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.credentials.dig(:google, :ga_id) %>"></script>
+    <% end %>
+
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
