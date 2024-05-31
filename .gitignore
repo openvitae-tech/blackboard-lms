@@ -44,3 +44,5 @@
 production.dockerfile
 /config/credentials/production.key
 env
+docker-build
+/aws/*
