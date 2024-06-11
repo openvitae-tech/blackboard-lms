@@ -40,3 +40,4 @@ env
 README.md
 docker-build
 /aws/*
+/*.env
