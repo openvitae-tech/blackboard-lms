@@ -35,18 +35,22 @@ class User < ApplicationRecord
 
   def get_temp_password
     if self.temp_password_enc.present?
-      Rails.application.message_verifier('temp_password').verify(self.temp_password_enc)
+      Rails.application.message_verifier(password_verifier).verify(self.temp_password_enc)
     end
   end
 
   def set_temp_password
     temp_password = SecureRandom.alphanumeric(8)
     self.password = self.password_confirmation = temp_password
-    enc_password = Rails.application.message_verifier('temp_password').generate(temp_password)
+    enc_password = Rails.application.message_verifier(password_verifier).generate(temp_password)
     self.temp_password_enc = enc_password
   end
 
   def enrolled_for_course?(course)
     enrollments.exists?(course: course)
+  end
+
+  def password_verifier
+    Rails.application.credentials.dig(:password_verifier)
   end
 end

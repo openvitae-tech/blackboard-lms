@@ -5,7 +5,7 @@
     </div>
     <div class="flex-auto text-sm text-right">
       <% if policy(@user).edit? %>
-        <%= link_to "Edit", edit_user_path(@user), class: "underline pointer mx-4" %>
+        <%= link_to "Edit", edit_user_path(@user), class: "btn-primary" %>
       <% end %>
 
       <% if policy(@user).destroy? %>

@@ -9,12 +9,12 @@
 
 </div>
 
-<div class="box">
+<div class="box text-right">
   <% if policy(@learning_partner).edit? %>
-    <%= link_to "edit", edit_learning_partner_path(@learning_partner), class: "link" %>
+    <%= link_to "Edit", edit_learning_partner_path(@learning_partner), class: "btn-primary" %>
   <% end  %>
   <% if policy(@learning_partner).destroy? %>
-    <%= link_to "delete", @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "link" %>
+    <%= link_to "Delete", @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-primary" %>
   <% end  %>
 </div>
 
@@ -28,5 +28,7 @@
   <% end %>
   <div class="my-4"><strong>About</strong> <%= @learning_partner.about %></div>
 </div>
+
+<%= render "users/user_list", users: @learning_partner.users %>
 
 <%= render "users/invite_modal", user: User.new, learning_partner: @learning_partner %>

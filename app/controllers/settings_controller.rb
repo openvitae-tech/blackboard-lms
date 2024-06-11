@@ -1,8 +1,12 @@
 class SettingsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_learning_partner
   def edit
+    authorize :settings
   end
   def update
+    authorize :settings
+
     if current_user.update(profile_params)
       redirect_to edit_settings_path, notice: "Profile updated"
     else
@@ -11,6 +15,8 @@ class SettingsController < ApplicationController
   end
 
   def update_password
+    authorize :settings
+
     current_user.password = current_user.password_confirmation = password_params[:password]
 
     if current_user.save
@@ -21,11 +27,47 @@ class SettingsController < ApplicationController
   end
 
   def team
+    authorize :settings
+
     if current_user.is_admin?
       @members = User.where(role: "admin")
     else
       @members = current_user.learning_partner.users
     end
+  end
+
+  def invite_admin
+    authorize :settings
+
+    user = UserManagementService.instance.invite(invite_admin_params[:email], "admin", nil)
+
+    if user.save
+      redirect_to team_settings_path, notice: "Invitation sent to user"
+    else
+      render :team, status: :unprocessable_entity
+    end
+  end
+
+  def invite_member
+    authorize :settings
+
+    user = UserManagementService.instance.invite(invite_member_params[:email],
+                                                 invite_member_params[:role], @learning_partner)
+
+    if user.save
+      redirect_to team_settings_path, notice: "Invitation sent to user"
+    else
+      render :team, status: :unprocessable_entity
+    end
+  end
+
+  def resend_invitation
+    user = User.find(params[:user_id])
+    authorize user
+    user.set_temp_password
+    user.save!
+    user.send_confirmation_instructions
+    redirect_to team_settings_path, notice: "Invitation sent to user"
   end
 
   private
@@ -36,5 +78,17 @@ class SettingsController < ApplicationController
 
   def password_params
     params.require(:user).permit(:password)
+  end
+
+  def invite_admin_params
+    params.require(:user).permit(:email)
+  end
+
+  def invite_member_params
+    params.require(:user).permit(:email, :role)
+  end
+
+  def set_learning_partner
+    @learning_partner = current_user.learning_partner
   end
 end

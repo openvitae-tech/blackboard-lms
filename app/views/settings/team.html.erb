@@ -1,9 +1,10 @@
-<%= render "shared/header", header_options(title: "Team management") %>
+<%= render "shared/header", header_options(title: "Team management", header_extended: true) %>
+<%= render "page_header" %>
 
-<div class="box">
-  <ul>
-    <% @members.each do |user| %>
-      <li><%= user.name %> | <%= user.email %> | <%= user.phone %> | <%= user.role %></li>
-    <% end %>
-  </ul>
-</div>
+<%= render "users/user_list", users: @members %>
+
+<% if current_user.is_admin? %>
+  <%= render "users/invite_admin_modal", user: User.new %>
+<% else %>
+  <%= render "users/invite_modal", user: User.new, learning_partner: @learning_partner %>
+<% end %>

@@ -2,6 +2,8 @@ class PagesController < ApplicationController
 
   layout "devise"
 
+  # Note: No route added in route definition
+  # Can be used for building a landing page in future
   def index
   end
 
