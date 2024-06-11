@@ -1,0 +1,29 @@
+version: "3"
+services:
+  web:
+    platform: linux/arm64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:15.4-bookworm
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: blackboard_development
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U postgres -d blackboard_development"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5

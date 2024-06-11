@@ -8,32 +8,30 @@ FROM ruby:$RUBY_VERSION-bookworm as base
 WORKDIR /deploy
 
 # Set production environment
-ENV RAILS_ENV="production" \
+ENV RAILS_ENV="development" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development" \
     BLACKBOARD_DATABASE="blackboard_development" \
     BLACKBOARD_DATABASE_USERNAME="postgres" \
-    BLACKBOARD_DATABASE_PASSWORD="" \
+    BLACKBOARD_DATABASE_PASSWORD="postgres" \
     BLACKBOARD_DATABASE_HOST="host.docker.internal" \
-    BLACKBOARD_DATABASE_PORT="54320" \
+    BLACKBOARD_DATABASE_PORT="5432" \
     RAILS_MASTER_KEY=""
 
 
-# Build stage
+# Throw-away build stage to reduce size of final image
 FROM base as build
 
-# Install packages required
+# Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential npm libpq-dev libvips pkg-config
 
-# Install gems
+# Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 RUN bundle exec bootsnap precompile --gemfile
 
-# Install npm dependencies
 COPY package.json package-lock.json ./
 RUN npm install
 # Copy application code
@@ -41,26 +39,37 @@ COPY . .
 #
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
-# Precompile assets for production without the secret RAILS_MASTER_KEY
+#
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-# Final stage
+#
+#
+# Final stage for app image
 FROM base
-### Install packages needed for runtime
+# Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips postgresql-client && \
+    apt-get install --no-install-recommends -y curl libvips  && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-### Copy built artifacts: gems, application
+# Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /deploy /deploy
 #
 # Run and own only the runtime files as a non-root user for security
-RUN useradd deploy --create-home --shell /bin/bash && \
-    chown -R deploy:deploy db log storage tmp
-USER deploy:deploy
+## Note:
+## Docker allows non root used to bind to port 80 and it works perfectly.
+## But tried this in AWS ECS, the application cannot bind to port 80
+## as non root user therefore commenting our the user creation.
+## Tried a work aroud by using port 3000 but the load balancer health check
+## requires port 80 in aws, therefore port 80 seems like a mandatory requirement.
+#
+# RUN useradd deploy --create-home --shell /bin/bash && \
+#     chown -R deploy:deploy db log storage tmp
+# USER deploy:deploy
 
-## Entrypoint prepares the database.
+# Entrypoint prepares the database.
 ENTRYPOINT ["/deploy/bin/docker-entrypoint"]
-# Start the server by default
+#
+# Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 CMD ["./bin/rails", "server"]
