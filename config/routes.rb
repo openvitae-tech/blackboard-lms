@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :notifications, only: [:index]
 
   resource :settings, only: [:index, :update, :edit] do
     collection do

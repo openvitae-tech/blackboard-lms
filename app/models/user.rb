@@ -32,6 +32,7 @@ class User < ApplicationRecord
 
   has_many :enrollments, dependent: :destroy
   has_many :courses, through: :enrollments
+  has_many :notifications, dependent: :destroy
 
   def get_temp_password
     if self.temp_password_enc.present?

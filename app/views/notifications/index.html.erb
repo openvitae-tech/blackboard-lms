@@ -1,0 +1,8 @@
+<%= render "shared/header", header_options(title: "Notifications") %>
+<div class="box">
+  <ul>
+    <% @notifications.each do |notification| %>
+      <li><small><%= notification.ntype %></small>&nbsp;<span><%= notification.text %></span></li>
+    <% end %>
+  </ul>
+</div>
