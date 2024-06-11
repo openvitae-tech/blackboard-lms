@@ -1,6 +1,7 @@
 <%= render "shared/header", header_options(title: "Settings") %>
 
 <div class="box w-80 text-left">
+  <p class="text-sm font-medium">User role: <span class="text-gray-500 text-sm"><%= role_text current_user.role %></span></p>
   <h1 class="font-semibold text-xl">Personal info</h1>
   <%= form_with(model: current_user, url: settings_path, method: :put) do |form| %>
     <% if current_user.errors.any? %>

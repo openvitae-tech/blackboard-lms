@@ -1,0 +1,47 @@
+<div class="box">
+  <h1 class="page-title">Team</h1>
+  <div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          Name
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Role
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Email
+        </th>
+        <th scope="col" class="px-6 py-3">
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% users.each do |user| %>
+        <tr class="bg-white border-b">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+            <% if policy(user).show? %>
+              <%= link_to user.name || "User", user_path(user) %>
+            <% else  %>
+              <%= user.name || "User" %>
+            <% end %>
+          </th>
+          <td class="px-6 py-4">
+            <%= role_text(user.role) %>
+          </td>
+          <td class="px-6 py-4">
+            <%= user.email %>
+            (<%= invite_status(user) %>)
+          </td>
+          <td class="px-6 py-4">
+            <% if policy(user).resend_invitation? %>
+              <%= link_to "Re-invite", resend_invitation_settings_path(user_id: user.id), class: "link" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

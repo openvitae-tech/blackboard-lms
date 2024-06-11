@@ -2,19 +2,19 @@
 <div class="box text-right"><%= link_to "New Learning Partner", new_learning_partner_path, class: "btn-default" %></div>
 
 <div class="box">
-<ul id="users" class="w-fit">
-  <%  @learning_partners.each do |learning_partner| %>
-    <li class="text-base text-gray-800 border-b flex">
-      <div class="p-2">
-        <%= link_to learning_partner.name, learning_partner, class: "link" %>
-      </div>
-    </li>
-  <% end %>
-</ul>
+  <ul id="users" class="w-fit">
+    <%  @learning_partners.each do |learning_partner| %>
+      <li class="text-base text-gray-800 border-b flex">
+        <div class="p-2">
+          <%= link_to learning_partner.name, learning_partner, class: "link" %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
 
-<div class="my-8 mx-4 text-center">
-  <%= link_to_prev_page @learning_partners, 'Prev', class: "underline pointer" %>
-  <%= link_to_next_page @learning_partners, 'Next', class: "underline pointer" %>
-</div>
+  <div class="my-8 mx-4 text-center">
+    <%= link_to_prev_page @learning_partners, 'Prev', class: "underline pointer" %>
+    <%= link_to_next_page @learning_partners, 'Next', class: "underline pointer" %>
+  </div>
 </div>
 

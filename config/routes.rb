@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
+
   resource :settings, only: [:index, :update, :edit] do
     collection do
       get :team
       put :update_password
+      post :invite_admin
+      post :invite_member
+      get :resend_invitation
     end
   end
 
@@ -28,6 +32,8 @@ Rails.application.routes.draw do
   resources :learning_partners
   devise_for :users
   resources :users
+  # for now dashboard path and root path are same.
+  get "error_401" => "pages#unauthorized"
   get "dashboard" => "dashboards#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -36,5 +42,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "pages#index"
+  root "dashboards#index"
 end

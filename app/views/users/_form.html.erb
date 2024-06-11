@@ -27,7 +27,7 @@
         <div class="my-8 text-sm"><strong>Partner:</strong> <%= @partner.name %></div>
         <div class="my-8 text-sm">
           <%= form.label :role, style: "display: block" %>
-          <%= form.select :role, user_role_mapping_for_partner %>
+          <%= form.select :role, user_role_mapping_for_partner(current_user) %>
         </div>
       <% else %>
         <div class="my-8 text-sm">
