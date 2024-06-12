@@ -17,4 +17,12 @@ module UsersHelper
   def invite_status(user)
     user.confirmed_at ? "Verified" : "Invited"
   end
+
+  def user_name(user)
+    user.name.blank? ? "User" : user.name.split(" ").first
+  end
+
+  def user_avatar(user)
+    user.name.blank? ? "U" : user.name[0]
+  end
 end

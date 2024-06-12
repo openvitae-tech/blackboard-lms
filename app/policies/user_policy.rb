@@ -41,7 +41,7 @@ class UserPolicy
   end
 
   def invite_member?
-    user.is_owner? || user.is_manager?
+    user.is_admin? || user.is_owner? || user.is_manager?
   end
 
   def resend_invitation?

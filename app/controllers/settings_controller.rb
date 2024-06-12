@@ -37,7 +37,7 @@ class SettingsController < ApplicationController
   end
 
   def invite_admin
-    authorize :settings
+    authorize :user
 
     user = UserManagementService.instance.invite(invite_admin_params[:email], "admin", nil)
 
@@ -49,13 +49,19 @@ class SettingsController < ApplicationController
   end
 
   def invite_member
-    authorize :settings
+    authorize :user
+
+    partner = if current_user.is_admin?
+                LearningPartner.find(invite_member_params[:learning_partner_id])
+              else
+                @learning_partner
+              end
 
     user = UserManagementService.instance.invite(invite_member_params[:email],
-                                                 invite_member_params[:role], @learning_partner)
+                                                 invite_member_params[:role], partner)
 
     if user.save
-      redirect_to team_settings_path, notice: "Invitation sent to user"
+      redirect_to request.referer, notice: "Invitation sent to user"
     else
       render :team, status: :unprocessable_entity
     end
@@ -67,7 +73,7 @@ class SettingsController < ApplicationController
     user.set_temp_password
     user.save!
     user.send_confirmation_instructions
-    redirect_to team_settings_path, notice: "Invitation sent to user"
+    redirect_to request.referer, notice: "Invitation sent to user"
   end
 
   private
@@ -85,10 +91,14 @@ class SettingsController < ApplicationController
   end
 
   def invite_member_params
-    params.require(:user).permit(:email, :role)
+    params.require(:user).permit(:email, :role, :learning_partner_id)
   end
 
   def set_learning_partner
-    @learning_partner = current_user.learning_partner
+    if current_user.is_admin?
+      @learning_partner = nil
+    else
+      @learning_partner = current_user.learning_partner
+    end
   end
 end

@@ -49,8 +49,8 @@
     <li class="text-gray-100 border-t border-gray-800 pt-4">
       <%= link_to edit_settings_path do %>
         <div class="flex items-center">
-          <div class="flex justify-center items-center rounded-full w-8 h-8 bg-gray-500 text-gray-100"><%= current_user.name[0] %></div>
-          <div class="ml-2"><%= current_user.name %></div>
+          <div class="flex justify-center items-center rounded-full w-8 h-8 bg-gray-500 text-gray-100"><%= user_avatar(current_user) %></div>
+          <div class="ml-2"><%= user_name(current_user) %></div>
           <div class="text-gray-500 grow flex justify-end" data-tooltip-target="tooltip-default">
             <%= render "shared/components/tooltip", text: "Profile settings" %>
             <%= render "shared/svg/right" %>

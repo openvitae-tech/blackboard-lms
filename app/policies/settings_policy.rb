@@ -21,15 +21,4 @@ class SettingsPolicy
   def team?
     user.present?
   end
-
-  def invite_admin?
-    user.is_admin?
-  end
-  def invite_member?
-    user.is_admin? || user.is_owner? || user.is_manager?
-  end
-
-  def resend_invitation?
-    record.confirmed_at.blank? && (user.is_admin? || user.is_owner? || user.is_manager?)
-  end
 end
