@@ -61,7 +61,7 @@ class CoursesController < ApplicationController
 
   def enroll
     service = CourseManagementService.instance
-    result = service.enroll(current_user, @course)
+    result = service.enroll!(current_user, @course)
 
     if result == :duplicate
       message = "Already enrolled in this course"
@@ -74,7 +74,7 @@ class CoursesController < ApplicationController
 
   def unenroll
     service = CourseManagementService.instance
-    result = service.undo_enroll(current_user, @course)
+    result = service.undo_enroll!(current_user, @course)
 
     if result == :not_enrolled
       message = "You are not enrolled in this course"

@@ -29,4 +29,13 @@ FactoryBot.define do
     logo { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
     banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
   end
+
+  factory :course do
+    title { Faker::Movie.title }
+    description { Faker::Lorem.paragraph() }
+
+    trait :with_banner do
+      banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+    end
+  end
 end

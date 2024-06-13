@@ -61,8 +61,8 @@ $ bin/dev
 
 ```# run tests
 $ rspec
-$ rspec -f d # view test descriptions
-$ rspec -f d -f focus # view test descriptions and run only focussed sections, usefull for debugging 
+$ rspec -f d                 # view test descriptions
+$ rspec -f d --tag focus     # view test descriptions and run only focussed sections, usefull for debugging 
 ```
 
 

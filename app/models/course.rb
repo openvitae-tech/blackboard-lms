@@ -8,15 +8,16 @@ class Course < ApplicationRecord
   has_one_attached :banner
   validate :acceptable_banner
 
-  def enroll(user)
+  def enroll!(user)
     enrollments.create!(user: user)
   end
-  def undo_enroll(user)
+  def undo_enroll!(user)
+    # there will be only one enrollment record for a user, course pair
     enrollments.where(user: user).delete_all
   end
 
   def duration
-    course_modules.map(&:duration).reduce(&:+)
+    course_modules.map(&:duration).reduce(&:+) || 0
   end
 
   def lessons_count
