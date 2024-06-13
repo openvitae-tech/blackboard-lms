@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[ show edit update destroy enroll unenroll]
+  before_action :set_course, only: %i[ show edit update destroy enroll unenroll proceed]
 
   # GET /courses or /courses.json
   def index
@@ -85,6 +85,11 @@ class CoursesController < ApplicationController
     redirect_to course_url(@course), notice: message
   end
 
+  def proceed
+    service = CourseManagementService.instance
+    enrollment = service.proceed(current_user, @course)
+    redirect_to course_module_lesson_path(@course, enrollment.current_module_id || 1, enrollment.current_lesson_id || 1)
+  end
   def search
     service = CourseManagementService.instance
     @keyword = params[:term]

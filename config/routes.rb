@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     member do
       put :enroll
       put :unenroll
+      get :proceed
     end
 
     collection do
@@ -25,7 +26,11 @@ Rails.application.routes.draw do
     end
 
     resources :course_modules, as: "modules", except: [:index] do
-      resources :lessons, except: [:index]
+      resources :lessons, except: [:index] do
+        member do
+          get :complete
+        end
+      end
       resources :quizzes, except: [:index]
     end
   end

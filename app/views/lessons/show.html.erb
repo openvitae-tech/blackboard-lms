@@ -26,9 +26,17 @@
         <%= render "shared/svg/back" %>
         <span>Back</span>
       <% end %>
-      <%= link_to next_lesson_path(@course, @course_module, @lesson), class: "btn-default btn-icon" do %>
-        <span>Complete and Continue</span>
-        <%= render "shared/svg/forward" %>
+
+      <% if policy(@course).complete? %>
+        <%= link_to complete_course_module_lesson_path(@course, @course_module, @lesson), class: "btn-default btn-icon" do %>
+          <span>Complete and Continue</span>
+          <%= render "shared/svg/forward" %>
+        <% end %>
+      <% else %>
+        <%= link_to next_lesson_path(@course, @course_module, @lesson), class: "btn-primary btn-icon" do %>
+          <span>Next</span>
+          <%= render "shared/svg/forward" %>
+        <% end %>
       <% end %>
     </div>
   </div>

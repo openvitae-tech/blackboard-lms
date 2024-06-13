@@ -12,6 +12,16 @@ class CourseManagementService
     :ok
   end
 
+  def proceed(user, course)
+    return :not_enrolled unless user.enrolled_for_course?(course)
+    user.enrollments.where(course: course).first
+  end
+
+  def complete!(user, course, course_module, lesson)
+    enrollment = user.enrollments.where(course: course).first
+    enrollment.set_progress!(course_module.id, lesson.id)
+  end
+
   def search(term)
     Course.where("title ilike ?", "%#{term}%")
   end

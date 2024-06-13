@@ -16,6 +16,7 @@ RSpec.describe "Request spec for LearningPartner" do
       non_admin = create :user, :owner
       sign_in non_admin
       get "/learning_partners"
+      follow_redirect!
       expect(response).to have_http_status(:unauthorized)
     end
 
@@ -28,7 +29,7 @@ RSpec.describe "Request spec for LearningPartner" do
     end
   end
 
-  fdescribe "Onboarding partner -> POST /learning_partners" do
+  describe "Onboarding partner -> POST /learning_partners" do
     before(:each) do
       admin_user = create :user, :admin
       sign_in admin_user
@@ -45,6 +46,7 @@ RSpec.describe "Request spec for LearningPartner" do
       non_admin = create :user, :owner
       sign_in non_admin
       post "/learning_partners"
+      follow_redirect!
       expect(response).to have_http_status(:unauthorized)
     end
 

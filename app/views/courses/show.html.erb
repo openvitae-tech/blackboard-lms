@@ -34,6 +34,9 @@
 </div>
 
 <div class="box">
+  <% if policy(@course).proceed? %>
+    <%= link_to "Proceed", proceed_course_path(@course), class: "btn-default"%>
+  <% end %>
   <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white text-gray-900" data-inactive-classes="text-gray-500">
     <% @course_modules.each_with_index do |course_module, index| %>
     <h2 id=<%="accordion-flush-heading-#{index+1}" %> >

@@ -38,4 +38,11 @@ class CoursePolicy
     user.present? && user.enrolled_for_course?(course)
   end
 
+  def proceed?
+    user.present? && user.enrolled_for_course?(course)
+  end
+
+  def complete?
+    user.present? && user.enrolled_for_course?(course)
+  end
 end

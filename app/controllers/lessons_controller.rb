@@ -1,7 +1,7 @@
 class LessonsController < ApplicationController
-  before_action :set_course, only: %i[ new create show edit update destroy ]
-  before_action :set_course_module, only: %i[ new create show edit update destroy ]
-  before_action :set_lesson, only: %i[ show edit update destroy ]
+  before_action :set_course, only: %i[ new create show edit update destroy complete]
+  before_action :set_course_module, only: %i[ new create show edit update destroy complete]
+  before_action :set_lesson, only: %i[ show edit update destroy complete]
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
@@ -55,6 +55,13 @@ class LessonsController < ApplicationController
       format.html { redirect_to course_module_path(@course, @course_module), notice: "Lesson was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def complete
+    authorize @course
+    service = CourseManagementService.instance
+    service.complete!(current_user, @course, @course_module, @lesson)
+    redirect_to helpers.next_lesson_path(@course, @course_module, @lesson)
   end
 
   private
