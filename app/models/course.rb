@@ -21,10 +21,10 @@ class Course < ApplicationRecord
   end
 
   def lessons_count
-    course_modules.map(&:lessons_count).reduce(:+)
+    course_modules.map(&:lessons_count).reduce(:+) || 0
   end
 
   def quizzes_count
-    course_modules.map(&:quizzes_count).reduce(:+)
+    course_modules.map(&:quizzes_count).reduce(:+) || 0
   end
 end

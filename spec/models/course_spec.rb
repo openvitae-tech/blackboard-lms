@@ -52,9 +52,38 @@ RSpec.describe Course, type: :model do
   end
 
   describe "#duration" do
-    it "calculates the total duration of the course recursively" do
+    it "calculates the duration to zero for an empty course" do
       course = create :course
       expect(course.duration).to eq(0)
+    end
+
+    it "calculates the total duration of the course recursively" do
+      course = course_with_associations(modules_count: 3, lessons_count: 2, quizzes_count: 1, duration: 10)
+      expect(course.duration).to eq(3 * 2 * 10)
+    end
+  end
+
+  describe "#lessons_count" do
+    it "calculates number of lessons in an empty course" do
+      course = create :course
+      expect(course.lessons_count).to eq(0)
+    end
+
+    it "calculates number of lessons in a course" do
+      course = course_with_associations
+      expect(course.lessons_count).to eq(1)
+    end
+  end
+
+  describe "#quizzes_count" do
+    it "calculates number of quizzes in an empty course" do
+      course = create :course
+      expect(course.quizzes_count).to eq(0)
+    end
+
+    it "calculates number of quizzes in a course" do
+      course = course_with_associations
+      expect(course.quizzes_count).to eq(1)
     end
   end
 end
