@@ -59,10 +59,17 @@ $ rails db:seed
 $ bin/dev
 ```
 
-```# run tests
+### Testing
+```
 $ rspec
 $ rspec -f d                 # view test descriptions
 $ rspec -f d --tag focus     # view test descriptions and run only focussed sections, usefull for debugging 
+```
+
+You can run guard to keep running the tests during TDD.
+
+```
+$ guard
 ```
 
 
