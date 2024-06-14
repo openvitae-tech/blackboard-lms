@@ -4,7 +4,7 @@ class CourseModule < ApplicationRecord
   has_many :quizzes, dependent: :destroy
 
   def duration
-    lessons.map(&:duration).reduce(&:+)
+    lessons.map(&:duration).reduce(&:+) || 0
   end
 
   def first_lesson
@@ -25,14 +25,6 @@ class CourseModule < ApplicationRecord
     if current_lesson.seq_no > 1
       lessons.where(seq_no: current_lesson.seq_no - 1).first
     end
-  end
-
-  def first_module
-    self.course.course_modules.where(seq_no: 1).first if self.course.course_modules_count > 0
-  end
-
-  def last_module
-    self.course.course_modules.where(seq_no: self.course.course_modules_count).first if self.course.course_modules_count > 0
   end
 
   def next_module
