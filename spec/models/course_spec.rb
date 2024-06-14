@@ -86,4 +86,28 @@ RSpec.describe Course, type: :model do
       expect(course.quizzes_count).to eq(1)
     end
   end
+
+  describe "#first_module" do
+    it "returns nil if there are no modules within a course" do
+      course = create :course
+      expect(course.first_module).to be_nil
+    end
+
+    it "returns the first module within a course" do
+      course = course_with_associations
+      expect(course.first_module.seq_no).to eq(1)
+    end
+  end
+
+  describe "#first_module" do
+    it "returns nil if there are no modules within a course" do
+      course = create :course
+      expect(course.last_module).to be_nil
+    end
+
+    it "returns the first module within a course" do
+      course = course_with_associations
+      expect(course.first_module.seq_no).to eq(course.course_modules_count)
+    end
+  end
 end
