@@ -27,18 +27,13 @@ class User < ApplicationRecord
 
   belongs_to :learning_partner, optional: true
 
+  # This is a self referential relationship, learner and his manager are mapped to same User model.
   belongs_to :manager, class_name: "User", optional: true
   has_many :learners, class_name: "User", foreign_key: "manager_id"
 
   has_many :enrollments, dependent: :destroy
   has_many :courses, through: :enrollments
   has_many :notifications, dependent: :destroy
-
-  def get_temp_password
-    if self.temp_password_enc.present?
-      Rails.application.message_verifier(password_verifier).verify(self.temp_password_enc)
-    end
-  end
 
   def set_temp_password
     temp_password = SecureRandom.alphanumeric(8)
@@ -47,10 +42,17 @@ class User < ApplicationRecord
     self.temp_password_enc = enc_password
   end
 
+  def get_temp_password
+    if self.temp_password_enc.present?
+      Rails.application.message_verifier(password_verifier).verify(self.temp_password_enc)
+    end
+  end
+
   def enrolled_for_course?(course)
     enrollments.exists?(course: course)
   end
 
+  private
   def password_verifier
     Rails.application.credentials.dig(:password_verifier)
   end
