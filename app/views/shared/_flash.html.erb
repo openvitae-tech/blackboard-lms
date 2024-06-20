@@ -1,0 +1,11 @@
+<div class="absolute top-0 w-full text-center bg-transparent">
+  <% turbo_frame_tag "notice" do %>
+    <% if notice.present? %>
+      <div class="p-2 text-xs border rounded w-fit my-2 mx-auto text-yellow-500"><%= notice %></div>
+    <% end %>
+  <% end %>
+
+  <% if alert.present? %>
+    <p class="p-2 text-xs border rounded w-fit my-2 mx-auto text-red-500"><%= alert %></p>
+  <% end %>
+</div>

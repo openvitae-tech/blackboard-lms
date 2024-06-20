@@ -24,6 +24,7 @@ class User < ApplicationRecord
   validates :role,
            inclusion: { in: USER_ROLES ,
                         message: "%{value} is not a valid user role" }
+  validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true
 
   belongs_to :learning_partner, optional: true
 

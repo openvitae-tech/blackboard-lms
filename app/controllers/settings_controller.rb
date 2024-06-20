@@ -6,24 +6,14 @@ class SettingsController < ApplicationController
   end
   def update
     authorize :settings
-
-    if current_user.update(profile_params)
-      redirect_to edit_settings_path, notice: "Profile updated"
-    else
-      redirect_to edit_settings_path
-    end
+    current_user.update(profile_params)
+    @notice = "Profile updated" if current_user.update(profile_params)
   end
 
   def update_password
     authorize :settings
-
     current_user.password = current_user.password_confirmation = password_params[:password]
-
-    if current_user.save
-      redirect_to edit_settings_path, notice: "Password updated"
-    else
-      redirect_to edit_settings_path
-    end
+    @notice = "Password updated"  if current_user.save
   end
 
   def team

@@ -1,59 +1,13 @@
 <%= render "shared/header", header_options(title: "Settings") %>
-
-<div class="box w-80 text-left">
-  <p class="text-sm font-medium">User role: <span class="text-gray-500 text-sm"><%= role_text current_user.role %></span></p>
-  <h1 class="font-semibold text-xl">Personal info</h1>
-  <%= form_with(model: current_user, url: settings_path, method: :put) do |form| %>
-    <% if current_user.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
-
-        <ul>
-          <% current_user.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="my-8 text-sm" >
-      <%= form.label :phone, class: "text-sm font-medium" %>
-      <%= form.text_field :phone, class: "input-text mt-2" %>
-    </div>
-
-    <div class="my-8 text-sm" >
-      <%= form.label :name, class: "text-sm font-medium" %>
-      <%= form.text_field :name, class: "input-text mt-2" %>
-    </div>
-
-    <div class="my-8 text-sm text-right">
-      <%= form.submit "Save Changes", class: "btn-default" %>
-    </div>
-  <% end %>
+<div class="box">
+  <p class="text-sm font-medium">Organization: <span class="text-sm text-gray-500"><%= org_name @learning_partner %></span></p>
+  <p class="text-sm font-medium">User role: <span class="text-sm text-gray-500"><%= role_text current_user.role %></span></p>
 </div>
 
-<div class="box w-80 text-left">
-  <h1 class="font-semibold text-xl">Change password</h1>
-  <%= form_with(model: current_user, url: update_password_settings_path, method: :put) do |form| %>
-    <% if current_user.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+<%= turbo_frame_tag "edit-settings-frame" do %>
+  <%= render "settings/personal_info_form"%>
+<% end %>
 
-        <ul>
-          <% current_user.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="my-8 text-sm" >
-      <%= form.label :password, class: "text-sm font-medium" %>
-      <%= form.password_field :password, class: "input-text mt-2", placeholder: "New password" %>
-    </div>
-
-    <div class="my-8 text-sm text-right">
-      <%= form.submit "Update Password", class: "btn-default" %>
-    </div>
-  <% end %>
-</div>
+<%= turbo_frame_tag "change-password-frame" do %>
+  <%= render "settings/change_password_form"%>
+<% end %>

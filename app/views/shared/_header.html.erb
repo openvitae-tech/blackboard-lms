@@ -1,13 +1,5 @@
 <div class="header relative flex bg-white justify-between">
-  <div class="absolute top-0 w-full text-center bg-transparent">
-    <% if notice.present? %>
-      <div class="p-2 text-xs border rounded w-fit my-2 mx-auto text-yellow-500"><%= notice %></div>
-    <% end %>
-
-    <% if alert.present? %>
-      <p class="p-2 text-xs border rounded w-fit my-2 mx-auto text-red-500"><%= alert %></p>
-    <% end %>
-  </div>
+  <%= render "shared/flash" %>
 
   <% if title.present? %>
     <div class="hidden md:block font-semibold text-3xl text-gray-900 p-4"><%= title %></div>

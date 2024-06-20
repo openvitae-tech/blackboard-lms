@@ -3,6 +3,10 @@ module UsersHelper
     User::USER_ROLE_MAPPING[role.to_sym]
   end
 
+  def org_name(partner)
+    partner && partner.name.present? ? partner.name : ENV["ORG_NAME"]
+  end
+
   def user_role_mapping
     User::USER_ROLE_MAPPING.invert
   end

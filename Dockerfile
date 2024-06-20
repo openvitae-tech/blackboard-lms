@@ -16,7 +16,8 @@ ENV RAILS_ENV="development" \
     BLACKBOARD_DATABASE_PASSWORD="postgres" \
     BLACKBOARD_DATABASE_HOST="host.docker.internal" \
     BLACKBOARD_DATABASE_PORT="5432" \
-    RAILS_MASTER_KEY=""
+    RAILS_MASTER_KEY="" \
+    ORG_NAME="Blackboard"
 
 
 # Throw-away build stage to reduce size of final image
