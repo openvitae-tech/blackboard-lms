@@ -38,6 +38,9 @@
             <% if policy(user).resend_invitation? %>
               <%= link_to "Re-invite", resend_invitation_settings_path(user_id: user.id), class: "link" %>
             <% end %>
+            <% if policy(:course_assigns).list? %>
+              <%= link_to "Assign", list_course_assign_path(user), class: "link", data: { turbo_frame: "assign-course-frame" } %>
+            <% end %>
           </td>
         </tr>
       <% end %>

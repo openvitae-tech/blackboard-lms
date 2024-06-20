@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_13_124845) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_20_052714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,6 +70,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_13_124845) do
     t.datetime "updated_at", null: false
     t.integer "current_module_id"
     t.integer "current_lesson_id"
+    t.bigint "assigned_by_id"
+    t.index ["assigned_by_id"], name: "index_enrollments_on_assigned_by_id"
     t.index ["course_id"], name: "index_enrollments_on_course_id"
     t.index ["user_id", "course_id"], name: "index_enrollments_on_user_id_and_course_id", unique: true
     t.index ["user_id"], name: "index_enrollments_on_user_id"
@@ -168,6 +170,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_13_124845) do
   add_foreign_key "course_modules", "courses"
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"
+  add_foreign_key "enrollments", "users", column: "assigned_by_id"
   add_foreign_key "lessons", "course_modules"
   add_foreign_key "notifications", "users"
   add_foreign_key "quizzes", "course_modules"

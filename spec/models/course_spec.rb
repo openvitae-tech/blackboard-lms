@@ -26,6 +26,12 @@ RSpec.describe Course, type: :model do
     it "add a new enrollment record for the user" do
       expect { subject.enroll!(user) }.to change { user.enrollments.count }.by(1)
     end
+
+    it "add a new enrollment record for the user with an assigned_by user record" do
+      manager = create :user, :manager
+      subject.enroll!(user, manager)
+      expect(user.enrollments.last.assigned_by).to eql(manager)
+    end
   end
 
   describe "#undo_enroll!" do

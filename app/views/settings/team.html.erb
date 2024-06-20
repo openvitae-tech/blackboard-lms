@@ -8,3 +8,5 @@
 <% else %>
   <%= render "users/invite_modal", user: User.new, learning_partner: @learning_partner %>
 <% end %>
+
+<%= turbo_frame_tag "assign-course-frame" %>

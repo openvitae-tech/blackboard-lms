@@ -49,4 +49,10 @@ class CourseManagementService
   def set_sequence_number_for_module(course, course_module)
     course_module.seq_no = course.course_modules_count + 1
   end
+
+  def assign_user_to_courses(user, courses, assigned_by)
+    courses.each do |course|
+      course.enroll!(user, assigned_by) unless user.enrolled_for_course?(course)
+    end
+  end
 end

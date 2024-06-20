@@ -78,7 +78,7 @@ RSpec.describe "Request spec for LearningPartner" do
       params = {
         learning_partner: {
           name: partner.name,
-          about: "a" * 1025
+          about: "a" * 5000
         }
       }
       post "/learning_partners", params: params

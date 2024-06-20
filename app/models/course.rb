@@ -8,8 +8,8 @@ class Course < ApplicationRecord
   has_one_attached :banner
   validate :acceptable_banner
 
-  def enroll!(user)
-    enrollments.create!(user: user)
+  def enroll!(user, assigned_by = nil)
+    enrollments.create!(user: user, assigned_by: assigned_by)
   end
   def undo_enroll!(user)
     # there will be only one enrollment record for a user, course pair

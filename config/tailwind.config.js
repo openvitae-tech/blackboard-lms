@@ -30,7 +30,8 @@ module.exports = {
         800: "#1F2937",
         900: "#111827"
       },
-      bl: { 100: "#3456DA" }
+      bl: { 100: "#3456DA" },
+      notice: { 100: "#C2BF1A"}
     }
   },
   plugins: [
@@ -39,5 +40,5 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
     require('flowbite/plugin')
-  ]
+  ],
 }
