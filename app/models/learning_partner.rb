@@ -4,7 +4,7 @@ class LearningPartner < ApplicationRecord
   has_many :users, dependent: :destroy
 
   validates :name, presence: true, length: { in: 2..255 }
-  validates :about, length: { maximum: 1024 }
+  validates :about, length: { maximum: 4096 }
 
   has_one_attached :logo
   has_one_attached :banner
