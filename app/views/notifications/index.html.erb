@@ -6,7 +6,7 @@
 
   <ul>
     <% @notifications.each do |notification| %>
-      <li><small><%= notification.ntype %></small>&nbsp;<span><%= notification.text %></span></li>
+      <li><small><%= notification.ntype %></small>&nbsp;<span><%= notification.text %></span> <small><i><%= time_ago_in_words notification.created_at %> ago </i></small></li>
     <% end %>
   </ul>
 </div>

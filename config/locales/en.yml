@@ -28,6 +28,7 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
+  course:
+    assigned: "You have been assigned with new course %{course} by %{name}"

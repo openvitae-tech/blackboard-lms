@@ -52,7 +52,10 @@ class CourseManagementService
 
   def assign_user_to_courses(user, courses, assigned_by)
     courses.each do |course|
-      course.enroll!(user, assigned_by) unless user.enrolled_for_course?(course)
+      unless user.enrolled_for_course?(course)
+        course.enroll!(user, assigned_by)
+        Notification.notify(user, I18n.t("course.assigned") % { course: course.title, name: assigned_by.name })
+      end
     end
   end
 end
