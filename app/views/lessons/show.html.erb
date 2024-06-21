@@ -22,9 +22,17 @@
 
 
     <div class="flex gap-2 justify-end my-8">
-      <%= link_to prev_lesson_path(@course, @course_module, @lesson), class: "btn-primary btn-icon" do %>
-        <%= render "shared/svg/back" %>
-        <span>Back</span>
+      <% prev_link = prev_lesson_path(@course, @course_module, @lesson) %>
+      <% if prev_link.blank? %>
+        <%= link_to "javascript:void(0);", class: "btn-primary btn-icon btn-disabled" do %>
+          <%= render "shared/svg/back" %>
+          <span>Back</span>
+        <% end %>
+      <% else %>
+        <%= link_to prev_link, class: "btn-primary btn-icon" do %>
+          <%= render "shared/svg/back" %>
+          <span>Back</span>
+        <% end %>
       <% end %>
 
       <% if policy(@course).complete? %>
@@ -33,9 +41,17 @@
           <%= render "shared/svg/forward" %>
         <% end %>
       <% else %>
-        <%= link_to next_lesson_path(@course, @course_module, @lesson), class: "btn-primary btn-icon" do %>
-          <span>Next</span>
-          <%= render "shared/svg/forward" %>
+        <% next_link = next_lesson_path(@course, @course_module, @lesson) %>
+        <%  if next_link.blank? %>
+          <%= link_to "javascript:void(0);", class: "btn-primary btn-icon btn-disabled" do %>
+            <span>Next</span>
+            <%= render "shared/svg/forward" %>
+          <% end %>
+        <% else %>
+          <%= link_to next_link, class: "btn-primary btn-icon" do %>
+            <span>Next</span>
+            <%= render "shared/svg/forward" %>
+          <% end %>
         <% end %>
       <% end %>
     </div>
@@ -46,7 +62,11 @@
         <h2 id=<%="accordion-flush-heading-#{index+1}" %> >
           <button type="button" class="px-4 rounded flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-900 border-b border-gray-200 gap-3" data-accordion-target=<%="#accordion-flush-body-#{index+1}"%> aria-expanded="true" aria-controls=<%="accordion-flush-body-#{index+1}"%> >
             <span>
-              <%= check_box_tag "", class: "input-check mr-2", disabled: true%>
+              <% if module_completed?(@enrollment, course_module) %>
+                <%= check_box_tag "", checked: true, class: "input-check mr-2", disabled: true%>
+              <% else %>
+                <%= check_box_tag "", class: "input-check mr-2", disabled: true%>
+              <% end %>
               <%= course_module.title %>
               <small class="text-xs ml-2">(<%= course_module.lessons.count %> lessons)</small>
             </span>
@@ -58,7 +78,11 @@
             <ul>
               <% course_module.lessons.each do |lesson| %>
                 <li class="text-sm py-2 flex gap-2 items-center ml-2 border-b">
-                  <%= check_box_tag "", class: "input-check", disabled: true%>
+                  <% if lesson_completed?(@enrollment, lesson) %>
+                    <%= check_box_tag "", checked: true,  class: "input-check", disabled: true %>
+                  <% else %>
+                    <%= check_box_tag "", class: "input-check", disabled: true %>
+                  <% end %>
                   <%= link_to lesson.title, course_module_lesson_path(@course, course_module, lesson) %>
                   <small class="text-xs">(<%= lesson.duration %> minutes)</small>
                 </li>

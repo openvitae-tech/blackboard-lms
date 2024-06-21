@@ -21,8 +21,6 @@ module CoursesHelper
 
     if next_lesson.present?
       course_module_lesson_path(course, course_module, next_lesson)
-    else
-      "javascript:void(0)"
     end
   end
 
@@ -36,8 +34,6 @@ module CoursesHelper
 
     if prev_lesson.present?
       course_module_lesson_path(course, course_module, prev_lesson)
-    else
-      "javascript:void(0)"
     end
   end
 
@@ -61,5 +57,16 @@ module CoursesHelper
     else
       "#{duration} min"
     end
+  end
+
+  def lesson_completed?(enrollment, lesson)
+    enrollment.completed_lessons.include? lesson.id
+  end
+
+  def module_completed?(enrollment, course_module)
+    lesson_ids = course_module.lessons.map(&:id)
+    return false if lesson_ids.empty?
+    diff = lesson_ids - enrollment.completed_lessons
+    diff.empty? ? true : false
   end
 end

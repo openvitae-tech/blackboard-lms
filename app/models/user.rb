@@ -53,6 +53,10 @@ class User < ApplicationRecord
     enrollments.exists?(course: course)
   end
 
+  def get_enrollment_for(course)
+    enrollments.where(course: course).first
+  end
+
   private
   def password_verifier
     Rails.application.credentials.dig(:password_verifier)

@@ -32,4 +32,16 @@ RSpec.describe User, type: :model do
       expect(user.enrolled_for_course?(course)).to be_truthy
     end
   end
+
+  describe "#get_enrollment_for" do
+    subject { User.new }
+
+    it "returns user's enrollment records for a course" do
+      course = create :course
+      user = create :user, :learner
+      expect(user.get_enrollment_for(course)).to be_nil
+      course.enroll!(user)
+      expect(user.get_enrollment_for(course)).not_to be_nil
+    end
+  end
 end
