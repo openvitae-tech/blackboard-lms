@@ -11,4 +11,8 @@ module Helpers
   def pdf_file(name="#{Rails.root}/spec/files/sample.pdf")
     Rack::Test::UploadedFile.new(name)
   end
+
+  def about_text
+    Array.new(rand(5..10)).map { |_| Faker::Lorem.paragraph(sentence_count: rand(10..30)) }.join("\n")
+  end
 end
