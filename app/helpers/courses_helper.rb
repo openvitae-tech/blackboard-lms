@@ -41,4 +41,25 @@ module CoursesHelper
     end
   end
 
+  def enroll_count(course)
+    number_with_delimiter(course.enrollments_count)
+  end
+
+  def modules_count(course)
+    pluralize(course.course_modules_count, "module")
+  end
+
+  def course_duration(course)
+    duration_in_words(course.duration)
+  end
+
+  def duration_in_words(duration)
+    if duration > 60
+      in_hours = duration.in_hours
+      in_minutes = duration - in_hours * 60
+      "#{in_hours} hr #{in_minutes} min"
+    else
+      "#{duration} min"
+    end
+  end
 end

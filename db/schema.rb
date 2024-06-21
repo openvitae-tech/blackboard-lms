@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_20_052714) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_21_062049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_052714) do
     t.datetime "updated_at", null: false
     t.string "banner"
     t.integer "course_modules_count", default: 0
+    t.integer "enrollments_count", default: 0
   end
 
   create_table "enrollments", force: :cascade do |t|
@@ -158,6 +159,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_052714) do
     t.bigint "manager_id"
     t.string "team_name"
     t.string "phone"
+    t.integer "enrollments_count", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["learning_partner_id"], name: "index_users_on_learning_partner_id"
