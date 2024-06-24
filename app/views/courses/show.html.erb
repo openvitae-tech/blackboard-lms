@@ -1,5 +1,5 @@
 <%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
-<%= render "course_header" %>
+<%= render "page_header" %>
 
 <div class="box">
   <%= image_tag course_banner(@course), class: " h-80 w-full object-cover rounded-lg" %>
@@ -17,7 +17,7 @@
       <% end %>
 
       <% if policy(@course).unenroll? %>
-        <%= button_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "btn-primary"%>
+        <%= link_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "btn-primary"%>
       <% end %>
       </div>
   </div>
@@ -29,7 +29,7 @@
   <% end %>
 
   <% if policy(@course).unenroll? %>
-    <%= link_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put }, class: "btn-primary"%>
+    <%= link_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "btn-primary"%>
   <% end %>
 </div>
 
