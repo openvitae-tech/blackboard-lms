@@ -17,7 +17,7 @@
       <% end %>
 
       <% if policy(@course).unenroll? %>
-        <%= link_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put }, class: "btn-primary"%>
+        <%= button_to "Drop Course", unenroll_course_path(@course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "btn-primary"%>
       <% end %>
       </div>
   </div>
@@ -35,7 +35,9 @@
 
 <div class="box">
   <% if policy(@course).proceed? %>
-    <%= link_to "Proceed", proceed_course_path(@course), class: "btn-default"%>
+    <div class="my-8">
+      <%= link_to "Proceed", proceed_course_path(@course), class: "btn-default"%>
+    </div>
   <% end %>
   <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white text-gray-900" data-inactive-classes="text-gray-500">
     <% @course_modules.each_with_index do |course_module, index| %>
@@ -46,14 +48,14 @@
       </button>
     </h2>
     <div id=<%="accordion-flush-body-#{index+1}"%> class="hidden" aria-labelledby=<%="accordion-flush-heading-#{index+1}"%> >
-      <div class="px-4 py-5 border-b border-gray-200">
+      <div class="px-4 py-5 border-b border-gray-200 bg-white">
         <% if policy(:course_module).show? %>
           <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "View or modify module", course_module_path(@course, course_module), class: "link" %></p>
         <% end %>
         <p class="mb-2 text-gray-900 text-sm md:max-w-[1400px]"><%= course_module.description %></p>
         <ul class="px-8">
         <% course_module.lessons.each do |lesson| %>
-          <li class="border-b text-sm py-2"><%= link_to lesson.title, course_module_lesson_path(@course, course_module, lesson) %></li>
+          <li class="border-b text-sm py-4 bg-white"><%= link_to lesson.title, course_module_lesson_path(@course, course_module, lesson) %></li>
         <% end %>
         </ul>
       </div>

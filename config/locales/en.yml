@@ -32,3 +32,4 @@ en:
     unauthorized: "Sorry you are not authorized to perform that action."
   course:
     assigned: "You have been assigned with new course %{course} by %{name}"
+    drop_warning: "Are you sure want to drop out ? Please not that all your progress will be lost!"

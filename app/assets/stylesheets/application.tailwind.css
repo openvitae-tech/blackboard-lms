@@ -5,14 +5,24 @@
 @layer components {
   .btn-primary {
     @apply inline-block border rounded-lg p-2.5 min-w-32  min-h-2 text-sm text-gray-900 bg-gray-50 text-center;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .btn-default {
     @apply inline-block border rounded-lg p-2.5 min-w-32  min-h-2 text-sm bg-bl-100 text-gray-50 text-center;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .btn-icon {
     @apply flex items-center gap-2 justify-center w-fit;
+  }
+
+  .btn-disabled {
+    @apply bg-gray-600 hover:cursor-not-allowed;
   }
 
   .input-text {
@@ -36,10 +46,14 @@
   }
 
   .page-title {
-    @apply font-semibold text-2xl tracking-tight text-gray-900
+    @apply font-semibold text-2xl tracking-tight text-gray-900;
   }
 
   .page-subtitle {
     @apply font-normal text-base text-gray-500;
+  }
+
+  .text-notice {
+    @apply font-normal text-sm text-notice-100;
   }
 }
