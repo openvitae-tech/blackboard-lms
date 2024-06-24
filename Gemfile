@@ -83,3 +83,5 @@ gem "pundit", "~> 2.3"
 gem "tailwindcss-rails", "~> 2.3"
 
 gem 'kaminari'
+
+gem "foreman", "~> 0.88.1"
