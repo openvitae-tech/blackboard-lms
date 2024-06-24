@@ -4,14 +4,16 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-block border rounded-lg p-2.5 min-w-32  min-h-2 text-sm text-gray-900 bg-gray-50 text-center;
+    @apply inline-block border rounded-lg p-2.5 min-w-32 min-h-2 text-sm text-gray-900 bg-gray-50 text-center;
+
     &:hover {
       cursor: pointer;
     }
   }
 
   .btn-default {
-    @apply inline-block border rounded-lg p-2.5 min-w-32  min-h-2 text-sm bg-bl-100 text-gray-50 text-center;
+    @apply inline-block border rounded-lg p-2.5 min-w-32 min-h-2 text-sm bg-bl-100 text-gray-50 text-center;
+
     &:hover {
       cursor: pointer;
     }
@@ -55,5 +57,9 @@
 
   .text-notice {
     @apply font-normal text-sm text-notice-100;
+  }
+
+  .drop-shadow-sm {
+    box-shadow: 0px 2px 6px 0px #1018280f;
   }
 }
