@@ -21,7 +21,8 @@ After installing ruby clone the repo and then you can follow the steps below to 
 ```
 # step1: Copy config files
 $ cp config/database.yml.example config/database.yml
-$ cp env.example  env 
+$ cp env.example env 
+$ source env
 # update these configuration files as per your local config values.
 ```
 
