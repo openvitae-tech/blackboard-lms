@@ -15,7 +15,7 @@ jobs:
     runs-on: ruby:3.3.0
     services:
       postgres:
-        image: postgres:11-alpine
+        image: postgres:15-alpine
         ports:
           - "5432:5432"
         env:
@@ -38,10 +38,10 @@ jobs:
         run: bin/rails db:schema:load
       # Add or replace test runners here
       - name: Run tests
-        run: bin/rake
+        run: rspec
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ruby:3.3.0
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
