@@ -1,12 +1,14 @@
 class QuizzesController < ApplicationController
   before_action :set_course
   before_action :set_course_module
-  before_action :set_quiz, only: %i[ show edit update destroy ]
+  before_action :set_quiz, only: %i[ show edit update destroy submit_answer]
 
   # GET /quizzes or /quizzes.json
   # GET /quizzes/1 or /quizzes/1.json
   def show
+    authorize @quiz
     @quizzes = @course_module.quizzes
+    @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
   end
 
   # GET /quizzes/new
@@ -59,6 +61,15 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def submit_answer
+    authorize @quiz
+    enrollment = current_user.get_enrollment_for(@course)
+    CourseManagementService.instance.record_answer!(enrollment, @quiz, answer_params[:answer].downcase)
+    next_quiz = @course_module.next_quiz(@quiz)
+    next_path = next_quiz.blank? ? course_module_path(@course, @course_module) : course_module_quiz_path(@course, @course_module,next_quiz)
+    redirect_to next_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
@@ -68,6 +79,10 @@ class QuizzesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def quiz_params
       params.require(:quiz).permit(:question, :option_a, :option_b, :option_c, :option_d, :answer)
+    end
+
+    def answer_params
+      params.require(:quiz).permit(:answer)
     end
 
     def set_course

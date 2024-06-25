@@ -5,7 +5,7 @@ class LessonsController < ApplicationController
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
-    @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(course)
+    @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @course_modules = @course.course_modules
   end
 
@@ -59,12 +59,20 @@ class LessonsController < ApplicationController
   end
 
   def complete
-    authorize @course
+    authorize @lesson
     service = CourseManagementService.instance
     service.complete!(current_user, @course, @course_module, @lesson)
-    next_path = helpers.next_lesson_path(@course, @course_module, @lesson)
 
+    enrollment = current_user.get_enrollment_for(@course)
+
+    if helpers.module_completed?(enrollment, @course_module) && @course_module.has_quiz?
+      redirect_to course_module_quiz_path(@course, @course_module, @course_module.first_quiz)
+      return
+    end
+
+    next_path = helpers.next_lesson_path(@course, @course_module, @lesson)
     next_path = course_path(@course) if next_path.blank? # the course is completed
+
     redirect_to next_path
   end
 

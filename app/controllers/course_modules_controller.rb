@@ -5,6 +5,7 @@ class CourseModulesController < ApplicationController
   def show
     @lessons = @course_module.lessons
     @quizzes = @course_module.quizzes
+    @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
   end
 
   # GET /course_modules/new

@@ -11,7 +11,7 @@ class QuizPolicy < ApplicationPolicy
   end
 
   def show?
-    user.present?
+    user.is_admin? || user.enrolled_for_course?(record.course_module.course)
   end
 
   def create?
@@ -28,5 +28,11 @@ class QuizPolicy < ApplicationPolicy
 
   def destroy?
     user.is_admin?
+  end
+
+  def submit_answer?
+    return false if !user.present? && user.enrolled_for_course?(record.course_module.course)
+    enrollment = user.get_enrollment_for(record.course_module.course) if user.enrolled_for_course?(record.course_module.course)
+    !enrollment.quiz_answered?(record)
   end
 end

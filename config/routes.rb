@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   end
 
   resources :events, only: [:index]
-  resources :quizzes
 
   resources :courses do
     member do
@@ -40,7 +39,11 @@ Rails.application.routes.draw do
           get :complete
         end
       end
-      resources :quizzes, except: [:index]
+      resources :quizzes, except: [:index] do
+        member do
+          post :submit_answer
+        end
+      end
     end
   end
 

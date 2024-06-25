@@ -69,4 +69,38 @@ module CoursesHelper
     diff = lesson_ids - enrollment.completed_lessons
     diff.empty? ? true : false
   end
+
+  def next_quiz_path(course, course_module, current_quiz)
+    next_quiz = course_module.next_quiz(current_quiz)
+
+    if next_quiz.present?
+      course_module_quiz_path(course, course_module, next_quiz)
+    end
+  end
+
+  def prev_quiz_path(course, course_module, current_quiz)
+    prev_quiz = course_module.prev_quiz(current_quiz)
+
+    if prev_quiz.present?
+      course_module_quiz_path(course, course_module, prev_quiz)
+    end
+  end
+
+  def answer_text(answer)
+    quiz = answer.quiz
+    correct_answer = quiz.send("option_#{quiz.answer.downcase}".to_sym)
+    your_answer = if answer.answer == "skip"
+                    "You have skipped this question"
+                  else
+                    quiz.send("option_#{answer.answer.downcase}".to_sym)
+                  end
+
+    if answer.status == QuizAnswer::STATUS_MAPPING[:correct]
+      "You have answered #{your_answer} and your answer is correct"
+    elsif answer.status == QuizAnswer::STATUS_MAPPING[:incorrect]
+      "You have answered #{your_answer} and the answer is wrong. Correct answer is #{correct_answer}"
+    else
+      "You have skipped this question"
+    end
+  end
 end

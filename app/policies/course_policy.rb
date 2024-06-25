@@ -41,8 +41,4 @@ class CoursePolicy
   def proceed?
     user.present? && user.enrolled_for_course?(course)
   end
-
-  def complete?
-    user.present? && user.enrolled_for_course?(course)
-  end
 end

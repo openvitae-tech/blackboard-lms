@@ -12,85 +12,10 @@
 
 <div class="box flex items-start w-full gap-4">
   <div class="w-full lg:w-2/3">
-<!--    <div id="<%#= dom_id @lesson %>">-->
-      <%#= video_tag(@lesson.video_url, controls: true, preload: 'none', controlsList: "nodownload", oncontextmenu: "return false;", class: "w-full mx-auto") %>
-<!--    </div>-->
-    <div id="<%= dom_id @lesson %>" class="embed-container">
-      <iframe src="<%= vimeo_video_url(@lesson.video_url) %>"  frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen controls=false></iframe>
-    </div>
-
-
-
-    <div class="flex gap-2 justify-end my-8">
-      <% prev_link = prev_lesson_path(@course, @course_module, @lesson) %>
-      <% if prev_link.blank? %>
-        <%= link_to "javascript:void(0);", class: "btn-primary btn-icon btn-disabled" do %>
-          <%= render "shared/svg/back" %>
-          <span>Back</span>
-        <% end %>
-      <% else %>
-        <%= link_to prev_link, class: "btn-primary btn-icon" do %>
-          <%= render "shared/svg/back" %>
-          <span>Back</span>
-        <% end %>
-      <% end %>
-
-      <% if policy(@course).complete? %>
-        <%= link_to complete_course_module_lesson_path(@course, @course_module, @lesson), class: "btn-default btn-icon" do %>
-          <span>Complete and Continue</span>
-          <%= render "shared/svg/forward" %>
-        <% end %>
-      <% else %>
-        <% next_link = next_lesson_path(@course, @course_module, @lesson) %>
-        <%  if next_link.blank? %>
-          <%= link_to "javascript:void(0);", class: "btn-primary btn-icon btn-disabled" do %>
-            <span>Next</span>
-            <%= render "shared/svg/forward" %>
-          <% end %>
-        <% else %>
-          <%= link_to next_link, class: "btn-primary btn-icon" do %>
-            <span>Next</span>
-            <%= render "shared/svg/forward" %>
-          <% end %>
-        <% end %>
-      <% end %>
+    <%= render "lessons/video_player", video_id: dom_id(@lesson), video_url:  @lesson.video_url %>
+    <div class="my-8">
+      <%= render "lessons/nav_links", course: @course, course_module: @course_module, lesson: @lesson %>
     </div>
   </div>
-  <div class="hidden lg:block lg:w-min-80 p-0 m-0 border">
-    <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white text-gray-900" data-inactive-classes="text-gray-500">
-      <% @course_modules.each_with_index do |course_module, index| %>
-        <h2 id=<%="accordion-flush-heading-#{index+1}" %> >
-          <button type="button" class="px-4 rounded flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-900 border-b border-gray-200 gap-3" data-accordion-target=<%="#accordion-flush-body-#{index+1}"%> aria-expanded="true" aria-controls=<%="accordion-flush-body-#{index+1}"%> >
-            <span>
-              <% if module_completed?(@enrollment, course_module) %>
-                <%= check_box_tag "", checked: true, class: "input-check mr-2", disabled: true%>
-              <% else %>
-                <%= check_box_tag "", class: "input-check mr-2", disabled: true%>
-              <% end %>
-              <%= course_module.title %>
-              <small class="text-xs ml-2">(<%= course_module.lessons.count %> lessons)</small>
-            </span>
-            <%= render "shared/svg/down" %>
-          </button>
-        </h2>
-        <div id=<%="accordion-flush-body-#{index+1}"%> class="hidden" aria-labelledby=<%="accordion-flush-heading-#{index+1}"%> >
-          <div class="px-4 py-5 border-b border-gray-200">
-            <ul>
-              <% course_module.lessons.each do |lesson| %>
-                <li class="text-sm py-2 flex gap-2 items-center ml-2 border-b">
-                  <% if lesson_completed?(@enrollment, lesson) %>
-                    <%= check_box_tag "", checked: true,  class: "input-check", disabled: true %>
-                  <% else %>
-                    <%= check_box_tag "", class: "input-check", disabled: true %>
-                  <% end %>
-                  <%= link_to lesson.title, course_module_lesson_path(@course, course_module, lesson) %>
-                  <small class="text-xs">(<%= lesson.duration %> minutes)</small>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <%= render "lessons/sidebar", course: @course,  enrollment: @enrollment %>
 </div>

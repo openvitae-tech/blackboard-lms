@@ -10,12 +10,20 @@
   <% end %>
 </div>
 
+<% if policy(@course).proceed? %>
+  <div class="box">
+    <%= link_to "Continue", proceed_course_path(@course), class: "btn-default"%>
+  </div>
+<% end %>
+
 <%= render @course_module %>
 
 <div class="box flex justify-between">
   <h1 class="page-subtitle">Lessons</h1>
   <div class="text-right">
-    <%= link_to "New lesson", new_course_module_lesson_path(@course, @course_module), class: "btn-primary" %>
+    <% if policy(@course_module).new? %>
+      <%= link_to "New lesson", new_course_module_lesson_path(@course, @course_module), class: "btn-primary" %>
+    <% end %>
   </div>
 </div>
 <div class="box">
@@ -38,20 +46,40 @@
 <div class="box flex justify-between">
   <h1 class="page-subtitle">Quizzes</h1>
   <div class="text-right">
-    <%= link_to "New quiz", new_course_module_quiz_path(@course, @course_module), class: "btn-primary" %>
+    <% if policy(:quiz).new? %>
+      <%= link_to "New quiz", new_course_module_quiz_path(@course, @course_module), class: "btn-primary" %>
+    <% end  %>
   </div>
 </div>
 
-<div class="box">
-  <ul id="quizzes">
-    <% @course_module.quizzes.each do |quiz| %>
-      <li class="text-sm border-b m-2" id="<%= dom_id quiz %>">
-        <%= link_to course_module_quiz_path(@course, @course_module, quiz) do %>
-          <div class="my-4">
-            <strong><%= quiz.question %></strong>
-          </div>
+<% if current_user.is_admin? %>
+  <div class="box">
+    <ul id="quizzes">
+      <% @course_module.quizzes.each do |quiz| %>
+        <li class="text-sm border-b m-2" id="<%= dom_id quiz %>">
+          <%= link_to course_module_quiz_path(@course, @course_module, quiz) do %>
+            <div class="my-4">
+              <strong><%= quiz.question %></strong>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <% if @enrollment.present? %>
+    <div class="box">
+      <ul>
+        <% @enrollment.quiz_answers.each do |answer| %>
+          <li class="text-sm border-b m-2">
+            <div class="my-4">
+              <div><%= answer.quiz.question %></div>
+              <small><%= answer_text(answer) %></small>
+            </div>
+          </li>
         <% end %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
+

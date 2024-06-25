@@ -29,4 +29,10 @@ class LessonPolicy < ApplicationPolicy
   def destroy?
     user.is_admin?
   end
+
+  def complete?
+    return false unless user.enrolled_for_course?(record.course_module.course)
+    enrollment = user.get_enrollment_for(record.course_module.course)
+    !enrollment.completed_lessons.include?(record.id)
+  end
 end

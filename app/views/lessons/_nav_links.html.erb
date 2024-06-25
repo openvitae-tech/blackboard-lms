@@ -1,0 +1,34 @@
+<div class="flex gap-2 justify-end">
+  <% prev_link = prev_lesson_path(course, course_module, lesson) %>
+  <% if prev_link.blank? %>
+    <%= link_to "javascript:void(0);", class: "btn-primary btn-icon btn-disabled" do %>
+      <%= render "shared/svg/back" %>
+      <span>Back</span>
+    <% end %>
+  <% else %>
+    <%= link_to prev_link, class: "btn-primary btn-icon" do %>
+      <%= render "shared/svg/back" %>
+      <span>Back</span>
+    <% end %>
+  <% end %>
+
+  <% next_link = next_lesson_path(course, course_module, lesson) %>
+  <%  if next_link.blank? %>
+    <%= link_to "javascript:void(0);", class: "btn-primary btn-icon btn-disabled" do %>
+      <span>Next</span>
+      <%= render "shared/svg/forward" %>
+    <% end %>
+  <% else %>
+    <%= link_to next_link, class: "btn-primary btn-icon" do %>
+      <span>Next</span>
+      <%= render "shared/svg/forward" %>
+    <% end %>
+  <% end %>
+
+  <% if policy(lesson).complete? %>
+    <%= link_to complete_course_module_lesson_path(course, course_module, lesson), class: "btn-default btn-icon" do %>
+      <span>Complete and Continue</span>
+      <%= render "shared/svg/forward" %>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,39 @@
+<div class="box">
+  <div id="<%= dom_id quiz %>" class="my-8 w-80 text-left" data-controller="quiz">
+    <div class="my-4">
+      <strong>Q:</strong>
+      <%= quiz.question %>
+    </div>
+
+    <%= form_with model: @quiz, url: submit_answer_course_module_quiz_path(course, course_module, quiz), method: :post do |form| %>
+        <div class="my-4">
+          <%= form.radio_button 'answer', "a", class: "mx-2", id: "quiz_opt-a", data: { action: "change->quiz#valueChanged"} %>
+          <%= form.label "opt-a", quiz.option_a %>
+        </div>
+
+        <div class="my-4">
+          <%= form.radio_button 'answer', "b", id: "quiz_opt-b", class: "mx-2", data: { action: "change->quiz#valueChanged"} %>
+          <%= form.label "opt-b", quiz.option_b %>
+        </div>
+
+        <div class="my-4">
+          <%= form.radio_button 'answer', "c", id: "quiz_opt-c", class: "mx-2", data: { action: "change->quiz#valueChanged"} %>
+          <%= form.label "opt-c", quiz.option_c %>
+        </div>
+
+        <div class="my-4">
+          <%= form.radio_button 'answer', "d", id: "quiz_opt-d", class: "mx-2", data: { action: "change->quiz#valueChanged"} %>
+          <%= form.label "opt-d", quiz.option_d %>
+        </div>
+
+        <div class="my-4">
+          <%= form.radio_button 'answer', "skip", id: "quiz_skip", class: "mx-2", data: { action: "change->quiz#valueChanged"} %>
+          <%= form.label "skip", "Skip this" %>
+        </div>
+
+      <div class="my-4">
+        <%= form.button 'Submit', class: "mx-2 btn-default btn-disabled", id: "quiz-submit-button" %>
+      </div>
+      <% end %>
+  </div>
+</div>

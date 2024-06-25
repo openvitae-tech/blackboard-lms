@@ -39,7 +39,7 @@ class CourseManagementService
     set_sequence_number_for_quiz(course_module, quiz)
   end
   def set_sequence_number_for_quiz(course_module, quiz)
-    quiz.seq_no = course_module.lessons_count + 1
+    quiz.seq_no = course_module.quizzes_count + 1
   end
 
   def set_sequence_number_for_lesson(course_module, lesson)
@@ -57,5 +57,17 @@ class CourseManagementService
         Notification.notify(user, I18n.t("course.assigned") % { course: course.title, name: assigned_by.name })
       end
     end
+  end
+
+  def record_answer!(enrollment, quiz, answer)
+    answer.downcase!
+    status = if answer == "skip"
+               QuizAnswer::STATUS_MAPPING[:skipped]
+             elsif answer == quiz.answer.downcase
+               QuizAnswer::STATUS_MAPPING[:correct]
+             else
+               QuizAnswer::STATUS_MAPPING[:incorrect]
+             end
+    enrollment.quiz_answers.create!(quiz: quiz, status: status, answer: answer)
   end
 end

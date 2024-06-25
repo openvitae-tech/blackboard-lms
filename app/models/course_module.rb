@@ -38,4 +38,28 @@ class CourseModule < ApplicationRecord
       self.course.course_modules.where(seq_no: self.seq_no - 1).first
     end
   end
+
+  def has_quiz?
+    quizzes_count > 0
+  end
+
+  def first_quiz
+    quizzes.where(seq_no: 1).first if quizzes_count > 0
+  end
+
+  def last_quiz
+    quizzes.where(seq_no: quizzes_count).first if quizzes_count > 0
+  end
+
+  def next_quiz(current_quiz)
+    if current_quiz.seq_no < quizzes_count
+      quizzes.where(seq_no: current_quiz.seq_no + 1).first
+    end
+  end
+
+  def prev_quiz(current_quiz)
+    if current_quiz.seq_no > 1
+      quizzes.where(seq_no: current_quiz.seq_no - 1).first
+    end
+  end
 end
