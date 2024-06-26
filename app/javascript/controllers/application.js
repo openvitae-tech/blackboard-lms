@@ -8,8 +8,9 @@ window.Stimulus   = application
 
 export { application }
 document.addEventListener("turbo:load", (event) => {
-    const ga_id = document.querySelector("meta[name='google-analytics-id']").content;
-    if (ga_id) {
+    const metaEl = document.querySelector("meta[name='google-analytics-id']");
+    if (metaEl) {
+        const ga_id = metaEl.content;
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
