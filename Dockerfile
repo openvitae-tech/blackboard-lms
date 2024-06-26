@@ -7,17 +7,12 @@ FROM ruby:$RUBY_VERSION-bookworm as base
 # Rails app lives here
 WORKDIR /deploy
 
-# Set production environment
-ENV RAILS_ENV="development" \
+# Set environment
+ENV RAILS_ENV="docker" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BLACKBOARD_DATABASE="blackboard_development" \
-    BLACKBOARD_DATABASE_USERNAME="postgres" \
-    BLACKBOARD_DATABASE_PASSWORD="postgres" \
-    BLACKBOARD_DATABASE_HOST="host.docker.internal" \
-    BLACKBOARD_DATABASE_PORT="5432" \
-    RAILS_MASTER_KEY="" \
-    ORG_NAME="Blackboard"
+    BUNDLE_WITHOUT="development:test" \
+    RAILS_MASTER_KEY="dee4823f10cb1f3cc02c610f33eab947"
 
 
 # Throw-away build stage to reduce size of final image

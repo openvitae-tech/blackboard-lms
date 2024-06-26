@@ -18,14 +18,14 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
-development:
-  <<: *default
   database: <%= Rails.application.credentials.dig(:db, :database) %>
   username: <%= Rails.application.credentials.dig(:db, :username) %>
   password: <%= Rails.application.credentials.dig(:db, :password) %>
   host: <%= Rails.application.credentials.dig(:db, :host) %>
   port: <%= Rails.application.credentials.dig(:db, :port) %>
+
+development:
+  <<: *default
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -59,8 +59,6 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: blackboard_test
-  port: 5432
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -82,10 +80,8 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+docker:
+  <<: *default
+
 production:
   <<: *default
-  database: <%= Rails.application.credentials.dig(:db, :database) %>
-  username: <%= Rails.application.credentials.dig(:db, :username) %>
-  password: <%= Rails.application.credentials.dig(:db, :password) %>
-  host: <%= Rails.application.credentials.dig(:db, :host) %>
-  port: <%= Rails.application.credentials.dig(:db, :port) %>

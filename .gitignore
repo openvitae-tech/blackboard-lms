@@ -47,3 +47,5 @@ env
 docker-build
 /aws/*
 /*.env
+/config/credentials/docker.key
+/config/credentials/test.key

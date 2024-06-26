@@ -49,6 +49,10 @@ $ export EDITOR="code --wait" # or export EDITOR="vim --wait"
 # generate your master key and edit the credential file
 $ rails credentials:edit
 replace the editor content with the copied content, edit and save then close the file.
+
+# repeat the same for test environment
+$ rails credentials:edit --environment test
+replace the editor content with the copied content, edit and save then close the file.
 ```
 
 ```
