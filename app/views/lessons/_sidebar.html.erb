@@ -4,7 +4,7 @@
       <h2 id=<%="accordion-flush-heading-#{index+1}" %> >
         <button type="button" class="px-4 rounded flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-900 border-b border-gray-200 gap-3" data-accordion-target=<%="#accordion-flush-body-#{index+1}"%> aria-expanded="true" aria-controls=<%="accordion-flush-body-#{index+1}"%> >
             <span>
-              <% if module_completed?(enrollment, course_module) %>
+              <% if enrollment && module_completed?(enrollment, course_module) %>
                 <%= check_box_tag "", checked: true, class: "input-check mr-2", disabled: true%>
               <% else %>
                 <%= check_box_tag "", class: "input-check mr-2", disabled: true%>
@@ -20,7 +20,7 @@
           <ul>
             <% course_module.lessons.each do |lesson| %>
               <li class="text-sm py-2 flex gap-2 items-center ml-2 border-b">
-                <% if lesson_completed?(enrollment, lesson) %>
+                <% if enrollment && lesson_completed?(enrollment, lesson) %>
                   <%= check_box_tag "", checked: true,  class: "input-check", disabled: true %>
                 <% else %>
                   <%= check_box_tag "", class: "input-check", disabled: true %>
