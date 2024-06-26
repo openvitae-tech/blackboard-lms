@@ -19,37 +19,40 @@ Using rbenv or rvm is a personal preference. To use rbenv go to [rbenv](https://
 After installing ruby clone the repo and then you can follow the steps below to setup the application.
 
 ```
-# step1: Copy config files
-$ cp config/database.yml.example config/database.yml
-$ cp env.example env 
-$ source env
-# update these configuration files as per your local config values.
-```
-
-```
-# step2: install bundler
+# Install bundler
 $ gem install bundler
 ```
 
 Go [here](https://nodejs.org/en/download/package-manager) and read about how to install npm and node
 ```
-# step3: install dependencies
+# install dependencies
 # install npm & nodejs 
 $ npm install flowbite
 ```
 
 ```
-# step4: install imagemagick
+# install imagemagick
 $ brew install imagemagick
 ```
 
 ```
-# step5: run bundle install to install ruby dependencies.
+# run bundle install to install ruby dependencies.
 $ bundle install
 ```
 
 ```
-# step6: create & setup database
+# Set your favourite editor to edit credential file
+$ export EDITOR="code --wait" # or export EDITOR="vim --wait"
+
+# generate your master key and edit the credential file 
+# rails credentials:edit
+
+You can copy the contents of config/credentials.yml.enc.example file with your own values to finish the credentials setup. 
+```
+
+```
+# create & setup database
+$ cp config/database.yml.example config/database.yml # upate test db configuration if required 
 $ rails db:create
 $ rails db:migrate
 $ rails db:seed
