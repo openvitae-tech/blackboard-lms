@@ -1,6 +1,6 @@
 # README
 
-## About 
+## About
 
 Blackboard-lms serves as an LMS platform tailored to meet the training demands of the hotel and hospitality industry. Blackboard-lms is an open-source project developed using the Ruby On Rails framework.
 
@@ -24,9 +24,10 @@ $ gem install bundler
 ```
 
 Go [here](https://nodejs.org/en/download/package-manager) and read about how to install npm and node
+
 ```
 # install dependencies
-# install npm & nodejs 
+# install npm & nodejs
 $ npm install flowbite
 ```
 
@@ -44,15 +45,15 @@ $ bundle install
 # Set your favourite editor to edit credential file
 $ export EDITOR="code --wait" # or export EDITOR="vim --wait"
 
-# generate your master key and edit the credential file 
-# rails credentials:edit
-
-You can copy the contents of config/credentials.yml.enc.example file with your own values to finish the credentials setup. 
+# copy the contents of config/credentials.yml.enc.example file and
+# generate your master key and edit the credential file
+$ rails credentials:edit
+replace the editor content with the copied content, edit and save then close the file.
 ```
 
 ```
 # create & setup database
-$ cp config/database.yml.example config/database.yml # upate test db configuration if required 
+$ cp config/database.yml.example config/database.yml # update test db configuration if required
 $ rails db:create
 $ rails db:migrate
 $ rails db:seed
@@ -64,10 +65,11 @@ $ bin/dev
 ```
 
 ### Testing
+
 ```
 $ rspec
 $ rspec -f d                 # view test descriptions
-$ rspec -f d --tag focus     # view test descriptions and run only focussed sections, usefull for debugging 
+$ rspec -f d --tag focus     # view test descriptions and run only focussed sections, usefull for debugging
 ```
 
 You can run guard to keep running the tests during TDD.
@@ -75,7 +77,6 @@ You can run guard to keep running the tests during TDD.
 ```
 $ guard
 ```
-
 
 ## Running using docker
 
