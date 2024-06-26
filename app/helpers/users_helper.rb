@@ -4,7 +4,7 @@ module UsersHelper
   end
 
   def org_name(partner)
-    partner && partner.name.present? ? partner.name : ENV["ORG_NAME"]
+    partner && partner.name.present? ? partner.name : Rails.application.credentials.org_name
   end
 
   def user_role_mapping
