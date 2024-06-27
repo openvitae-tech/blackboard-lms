@@ -26,7 +26,7 @@
   <% end %>
 
   <% if policy(lesson).complete? %>
-    <%= link_to complete_course_module_lesson_path(course, course_module, lesson), class: "btn-default btn-icon" do %>
+    <%= button_to complete_course_module_lesson_path(course, course_module, lesson), params: { time_spent: 0 }, class: "btn-default btn-icon", data: { action: "click->lessons#completeLesson"} do %>
       <span>Complete and Continue</span>
       <%= render "shared/svg/forward" %>
     <% end %>

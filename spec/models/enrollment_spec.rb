@@ -7,10 +7,11 @@ RSpec.describe Enrollment, type: :model do
     it "sets the current module and lesson id in course enrollment" do
       allow(subject).to receive(:save!).and_return(true)
 
-      subject.set_progress!(1, 2)
+      subject.set_progress!(1, 2, 10)
       expect(subject.current_module_id).to eq(1)
       expect(subject.current_lesson_id).to eq(2)
       expect(subject.completed_lessons).to eq([2])
+      expect(subject.time_spent).to eq(10)
     end
   end
 end

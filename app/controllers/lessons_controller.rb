@@ -61,7 +61,8 @@ class LessonsController < ApplicationController
   def complete
     authorize @lesson
     service = CourseManagementService.instance
-    service.complete!(current_user, @course, @course_module, @lesson)
+    time_spent_in_seconds = (params[:time_spent] || 0).to_i
+    service.complete!(current_user, @course, @course_module, @lesson, time_spent_in_seconds)
 
     enrollment = current_user.get_enrollment_for(@course)
 

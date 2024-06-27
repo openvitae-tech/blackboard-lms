@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     resources :course_modules, as: "modules", except: [:index] do
       resources :lessons, except: [:index] do
         member do
-          get :complete
+          post :complete
         end
       end
       resources :quizzes, except: [:index] do

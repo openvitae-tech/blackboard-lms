@@ -17,9 +17,9 @@ class CourseManagementService
     user.enrollments.where(course: course).first
   end
 
-  def complete!(user, course, course_module, lesson)
+  def complete!(user, course, course_module, lesson, time_spent_in_seconds)
     enrollment = user.enrollments.where(course: course).first
-    enrollment.set_progress!(course_module.id, lesson.id)
+    enrollment.set_progress!(course_module.id, lesson.id, time_spent_in_seconds)
   end
 
   def search(term)
