@@ -21,4 +21,24 @@ module ApplicationHelper
     video_id = URI(url).path.slice(1..9)
     "#{VIMEO_BASE_URL}#{video_id}"
   end
+
+  def stats_builder(user_stats)
+    [
+      {
+        icon: "shared/svg/book_open",
+        value: user_stats.no_courses_enrolled.to_s,
+        message: "Courses Enrolled"
+      },
+      {
+        icon: "shared/svg/clock",
+        value: duration_in_words(user_stats.total_time_spent),
+        message: "Time Spent"
+      },
+      {
+        icon: "shared/svg/file_text",
+        value: user_stats.user_score,
+        message: "Score Earned"
+      }
+    ]
+  end
 end

@@ -10,7 +10,7 @@
   <% end %>
 </div>
 
-<div class="box flex items-start w-full gap-4">
+<div class="box flex items-start w-full gap-4" data-controller="lessons">
   <div class="w-full lg:w-2/3">
     <%= render "lessons/video_player", video_id: dom_id(@lesson), video_url:  @lesson.video_url %>
     <div class="my-8">

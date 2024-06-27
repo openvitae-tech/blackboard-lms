@@ -2,59 +2,15 @@
 <%= render "shared/header" , header_options(title: "Dashboard" ) %>
 
 <div>
-  <div class="summary p-6">
+  <div class="p-6">
     <h2 class="capitalize font-semibold text-xl leading-7">
       enrolled courses
     </h2>
 
-    <div class="card-list grid grid-cols-3 gap-6 mt-6">
-      <article class="card drop-shadow-sm p-6 bg-white rounded-lg h-[100px] flex gap-6">
-        <div class="card-icon flex text-[#3456DA] justify-center items-center bg-[#EEF2FF] h-12 w-12 rounded-md">
-          <%= render "shared/svg/book_open" %>
-        </div>
-
-        <div class="card-content">
-          <div class="font-semibold text-xxl color-[#171717]">
-            2
-          </div>
-
-          <div class="font-medium text-sm leading-4 text-[#737373]">
-            Courses Enrolled
-          </div>
-        </div>
-      </article>
-
-      <article class="card drop-shadow-sm p-6 bg-white rounded-lg h-[100px] flex gap-6">
-        <div class="card-icon flex text-[#3456DA] justify-center items-center bg-[#EEF2FF] h-12 w-12 rounded-md">
-          <%= render "shared/svg/clock" %>
-        </div>
-
-        <div class="card-content">
-          <div class="font-semibold text-xxl color-[#171717]">
-            4 hrs
-          </div>
-
-          <div class="font-medium text-sm leading-4 text-[#737373]">
-            Time Spent
-          </div>
-        </div>
-      </article>
-
-      <article class="card drop-shadow-sm p-6 bg-white rounded-lg h-[100px] flex items-center gap-6">
-        <div class="card-icon flex text-[#3456DA] justify-center items-center bg-[#EEF2FF] h-12 w-12 rounded-md">
-          <%= render "shared/svg/file_text" %>
-        </div>
-
-        <div class="card-content flex flex-col justify-between">
-          <div class="font-semibold text-xxl color-[#171717]">
-            3
-          </div>
-
-          <div class="font-medium text-sm leading-4 text-[#737373]">
-            Assignments Pending
-          </div>
-        </div>
-      </article>
+    <div class="grid grid-cols-3 gap-6 mt-6">
+      <% stats_builder(@user_stats).each do |stats| %>
+        <%= render "dashboards/card", stats: stats %>
+      <% end %>
     </div>
   </div>
 
