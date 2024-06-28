@@ -1,6 +1,21 @@
-<p>Welcome <%= @email %>!</p>
+<div style="font-family: Arial, Helvetica, sans-serif; font-size:16px;">
+  <p style="margin: 32px 0">Welcome <em><%= @email %>,</em></p>
 
-<p>You can confirm your account email through the link below:</p>
-<p>Your temporary login password is: <%= @resource.get_temp_password %></p>
+  <p style="margin: 32px 0">We're thrilled to have you on our platform. To confirm your email address and login to the platform please follow these simple steps:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+  <p style="margin: 32px 0">
+    <ol>
+      <li style="margin: 4px 0">
+        Click on the verification link below to confirm your email address:
+        <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+      </li>
+      <li style="margin: 4px 0">
+        Once confirmed, you'll be able to log in to our website using your email address and the following temporary password.
+        <p><small>Your temporary login password is: </small><b><%= @resource.get_temp_password %></b></p>
+      </li>
+    </ol>
+  </p>
+
+  <p style="margin: 32px 0">Welcome once again, and we wish you a great learning path ahead!</p>
+
+</div>
