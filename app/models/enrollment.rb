@@ -7,10 +7,12 @@ class Enrollment < ApplicationRecord
   validates :user_id, uniqueness: { scope: :course_id }
 
   def set_progress!(module_id, lesson_id, time_spent_in_seconds)
-    self.time_spent += time_spent_in_seconds
     self.current_module_id = module_id
     self.current_lesson_id = lesson_id
-    self.completed_lessons.push(lesson_id) unless self.completed_lessons.include? lesson_id
+    unless self.completed_lessons.include? lesson_id
+      self.completed_lessons.push(lesson_id)
+      self.time_spent += time_spent_in_seconds
+    end
     self.save!
   end
 
