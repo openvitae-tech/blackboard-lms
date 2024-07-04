@@ -87,3 +87,5 @@ $ guard
 
 Install docker in your local and then type `docker-compose up` to run the application using docker in local.
 You might have to do some additional setup like generating a master key and setting the RAILS_MASTER_KEY in Dockerfile
+
+You can build the containers using `docker-compose build` command

@@ -10,6 +10,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail localhost:3000/up || exit 1"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   db:
     image: postgres:15.4-bookworm
     ports:
@@ -17,12 +26,12 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: blackboard_development
+      POSTGRES_DB: blackboard_docker
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "pg_isready -U postgres -d blackboard_development"
+          "pg_isready -U postgres -d blackboard_docker"
         ]
       interval: 5s
       timeout: 5s
