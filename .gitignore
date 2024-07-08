@@ -49,3 +49,5 @@ docker-build
 /*.env
 /config/credentials/docker.key
 /config/credentials/test.key
+
+/config/credentials/development.key
