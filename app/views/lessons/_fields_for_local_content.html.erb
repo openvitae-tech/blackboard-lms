@@ -1,0 +1,13 @@
+<div class="field-group">
+  <div class="my-8 text-sm flex">
+    <div class="grow">
+      <%= builder.select :lang, LocalContent::SUPPORTED_LANGUAGES.values, class: "input-select mt-2" %>
+    </div>
+    <%= builder.hidden_field :_destroy, label: "Delete" %>
+    <a href="javascript:void(0);" class="link" data-action="click->lessons-form#removeRecord">Remove</a>
+  </div>
+  <div class="my-8 text-sm">
+    <%= builder.label :video_url, class: "text-sm font-medium" %>
+    <%= builder.text_field :video_url, class: "input-text mt-2", placeholder: "eg: https://vimeo.com/948577869" %>
+  </div>
+</div>
