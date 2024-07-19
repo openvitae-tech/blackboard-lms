@@ -70,4 +70,42 @@ class CourseManagementService
              end
     enrollment.quiz_answers.create!(quiz: quiz, status: status, answer: answer)
   end
+
+  def update_lesson_ordering!(course_module, lesson, action)
+    update_ordering!(course_module, lesson, action)
+  end
+
+  def update_quiz_ordering!(course_module, quiz, action)
+    update_ordering!(course_module, quiz, action)
+  end
+
+  def update_module_ordering(course, course_module, action)
+    update_ordering!(course, course_module, action)
+  end
+
+  private
+  def update_ordering!(parent, record, action)
+    ordering_method = "#{record.class.to_s.downcase.pluralize}_in_order".to_sym
+    ordering = parent.send(ordering_method)
+
+    if action == :destroy
+      ordering.delete(record.id)
+    elsif action == :create
+      ordering.append(record.id) if ordering.include? record.id
+    elsif action == :up
+      i = ordering.find_index(record.id)
+
+      if ordering[i+1].present?
+        ordering[i], ordering[i+1] = ordering[i+1], ordering[i]
+      end
+    elsif action == :down
+      i = ordering.find_index(record.id)
+
+      if ordering[i-1].present?
+        ordering[i], ordering[i-1] = ordering[i-1], ordering[i]
+      end
+    end
+
+    parent.save! if parent.changed?
+  end
 end

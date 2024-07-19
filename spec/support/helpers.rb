@@ -13,6 +13,6 @@ module Helpers
   end
 
   def about_text
-    Array.new(rand(5..10)).map { |_| Faker::Lorem.paragraph(sentence_count: rand(10..30)) }.join("\n")
+    Array.new(rand(5..10)).map { |_| Faker::Lorem.paragraph(sentence_count: rand(10..20)) }.join("\n")
   end
 end

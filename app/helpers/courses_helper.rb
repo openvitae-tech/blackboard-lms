@@ -87,6 +87,7 @@ module CoursesHelper
   end
 
   def answer_text(answer)
+    return "" if answer.blank?
     quiz = answer.quiz
     correct_answer = quiz.send("option_#{quiz.answer.downcase}".to_sym)
     your_answer = if answer.answer == "skip"
@@ -102,5 +103,17 @@ module CoursesHelper
     else
       "You have skipped this question"
     end
+  end
+
+  def lessons_in_order(course_module)
+    records_in_order(course_module.lessons, course_module.lessons_in_order)
+  end
+
+  def quizzes_in_order(course_module)
+    records_in_order(course_module.quizzes, course_module.quizzes_in_order)
+  end
+
+  def modules_in_order(course)
+    records_in_order(course.course_modules, course.course_modules_in_order)
   end
 end

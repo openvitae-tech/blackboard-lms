@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_10_073245) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_19_145902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_073245) do
     t.integer "lessons_count", default: 0
     t.integer "quizzes_count", default: 0
     t.integer "seq_no"
+    t.bigint "lessons_in_order", default: [], array: true
+    t.bigint "quizzes_in_order", default: [], array: true
     t.index ["course_id"], name: "index_course_modules_on_course_id"
   end
 
@@ -62,6 +64,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_073245) do
     t.string "banner"
     t.integer "course_modules_count", default: 0
     t.integer "enrollments_count", default: 0
+    t.bigint "course_modules_in_order", default: [], array: true
   end
 
   create_table "enrollments", force: :cascade do |t|

@@ -1,6 +1,6 @@
 <div class="hidden lg:block lg:w-min-80 p-0 m-0 border">
   <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white text-gray-900" data-inactive-classes="text-gray-500">
-    <% course.course_modules.each_with_index do |course_module, index| %>
+    <% modules_in_order(course).each_with_index do |course_module, index| %>
       <h2 id=<%="accordion-flush-heading-#{index+1}" %> >
         <button type="button" class="px-4 rounded flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-900 border-b border-gray-200 gap-3" data-accordion-target=<%="#accordion-flush-body-#{index+1}"%> aria-expanded="true" aria-controls=<%="accordion-flush-body-#{index+1}"%> >
             <span>
@@ -18,7 +18,7 @@
       <div id=<%="accordion-flush-body-#{index+1}"%> class="hidden" aria-labelledby=<%="accordion-flush-heading-#{index+1}"%> >
         <div class="px-4 py-5 border-b border-gray-200">
           <ul>
-            <% course_module.lessons.each do |lesson| %>
+            <% lessons_in_order(course_module).each do |lesson| %>
               <li class="text-sm py-2 flex gap-2 items-center ml-2 border-b">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
                   <%= check_box_tag "", checked: true,  class: "input-check", disabled: true %>

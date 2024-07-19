@@ -29,10 +29,22 @@ class Course < ApplicationRecord
   end
 
   def first_module
-    course_modules.where(seq_no: 1).first if self.course_modules_count > 0
+    first_module_id = course_modules_in_order.first
+    course_modules.find(first_module_id) if first_module_id.present?
   end
 
   def last_module
-    course_modules.where(seq_no: self.course_modules_count).first if self.course_modules_count > 0
+    last_module_id = course_modules_in_order.last
+    course_modules.find(last_module_id) if last_module_id.present?
+  end
+
+  def next_module(current_module)
+    index = course_modules_in_order.find_index(current_module.id)
+    course_modules.find(course_modules_in_order[index + 1]) if course_modules_in_order[index + 1].present?
+  end
+
+  def prev_module(current_module)
+    index = course_modules_in_order.find_index(current_module.id)
+    course_modules.find(course_modules_in_order[index - 1]) if course_modules_in_order[index - 1].present?
   end
 end

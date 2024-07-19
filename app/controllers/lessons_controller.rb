@@ -6,7 +6,7 @@ class LessonsController < ApplicationController
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
-    @course_modules = @course.course_modules
+    @course_modules = helpers.modules_in_order(@course)
   end
 
   # GET /lessons/new
@@ -23,6 +23,7 @@ class LessonsController < ApplicationController
     @lesson = @course_module.lessons.new(lesson_params)
     service = CourseManagementService.instance
     service.set_sequence_number_for_lesson(@course_module, @lesson)
+    service.update_lesson_ordering!(@course_module, @lesson, :create)
 
     respond_to do |format|
       if @lesson.save
@@ -50,7 +51,9 @@ class LessonsController < ApplicationController
 
   # DELETE /lessons/1 or /lessons/1.json
   def destroy
+    service = CourseManagementService.instance
     @lesson.destroy!
+    service.update_lesson_ordering!(@course_module, @lesson, :destroy)
 
     respond_to do |format|
       format.html { redirect_to course_module_path(@course, @course_module), notice: "Lesson was successfully destroyed." }

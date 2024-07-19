@@ -47,7 +47,9 @@ class DevelopmentSeed
                ["Grooming And Hygiene", "Elevate your personal and professional image with our Grooming and Hygiene course. Designed for individuals seeking to enhance their appearance and health, this program covers essential grooming techniques, skincare routines, and hygiene practices."],
                ["Guest Complaints", "In this session, we're going to delve deep into the strategies that ensure every guest leaves our establishment not just satisfied, but feeling genuinely valued and cared for."]]
 
-    modules.each { |title, description| create_module(title, description, course) }
+    module_ids = modules.map { |title, description| create_module(title, description, course) }.map(&:id)
+    course.course_modules_in_order = module_ids
+    course.save!
 
     course_module = course.first_module
 
@@ -58,14 +60,18 @@ class DevelopmentSeed
       ["Do's and Dont's", "What you should do and what shouldn't", "https://vimeo.com/948577869"]
     ]
 
-    lessons1.each { |title, description, url| create_lesson(title, description, url, course_module) }
+    lesson_ids1 = lessons1.map { |title, description, url| create_lesson(title, description, url, course_module) }.map(&:id)
+    course_module.lessons_in_order = lesson_ids1
+    course_module.save!
 
     lessons2 = [
       ["Handling Guest Complaints", "Order placed incorrectly and wrong orders reaching at a table..", "https://vimeo.com/948577869"],
       ["Service Recovery", "A waiter explaining something to a group of guests at a table in a busy restaurant.", "https://vimeo.com/948577869"]
     ]
-
-    lessons2.each { |title, description, url| create_lesson(title, description, url, course_module.next_module) }
+    course_module = course_module.next_module
+    lesson_ids2 = lessons2.map { |title, description, url| create_lesson(title, description, url, course_module) }.map(&:id)
+    course_module.lessons_in_order = lesson_ids2
+    course_module.save!
 
     quizzes = [
       ["What does crossing your arms typically signify in body language?", "Openness", "Defensiveness", "Happiness", "Interest", "B"],
@@ -74,9 +80,11 @@ class DevelopmentSeed
       ["Standing with hands on hips is generally seen as a gesture of:", "Submission", "Dominance or confidence", "Confusion", "Relaxation", "B"]
     ]
 
-    quizzes.each do |question, a, b, c, d, ans|
+    quizzes_ids = quizzes.map do |question, a, b, c, d, ans|
       create_quiz(question, a, b, c, d, ans, course_module)
-    end
+    end.map(&:id)
+    course_module.quizzes_in_order = quizzes_ids
+    course_module.save!
   end
 
   private
@@ -122,18 +130,21 @@ class DevelopmentSeed
     CourseManagementService.instance.set_module_attributes(course, m)
 
     m.save!
+    m
   end
 
   def create_lesson(title, description, url, course_module)
     l = Lesson.new(title: title, description: description, video_url: url, duration: rand(1..10), course_module: course_module)
     CourseManagementService.instance.set_lesson_attributes(course_module, l)
     l.save!
+    l
   end
 
   def create_quiz(q, a, b, c, d, ans, course_module)
     q = Quiz.new(question: q, option_a: a, option_b: b, option_c: c, option_d: d, answer: ans, course_module: course_module)
     CourseManagementService.instance.set_quiz_attributes(course_module, q)
     q.save!
+    q
   end
 end
 

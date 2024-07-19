@@ -3,8 +3,8 @@ class CourseModulesController < ApplicationController
   before_action :set_course_module, only: %i[show edit update destroy]
   # GET /course_modules/1 or /course_modules/1.json
   def show
-    @lessons = @course_module.lessons
-    @quizzes = @course_module.quizzes
+    @lessons = helpers.lessons_in_order(@course_module)
+    @quizzes = helpers.quizzes_in_order(@course_module)
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
   end
 
@@ -22,6 +22,7 @@ class CourseModulesController < ApplicationController
     @course_module = @course.course_modules.new(course_module_params)
     service = CourseManagementService.instance
     service.set_module_attributes(@course, @course_module)
+    service.update_module_ordering(@course, @course_module, :destroy)
 
     respond_to do |format|
       if @course_module.save
@@ -50,6 +51,8 @@ class CourseModulesController < ApplicationController
   # DELETE /course_modules/1 or /course_modules/1.json
   def destroy
     @course_module.destroy!
+    service = CourseManagementService.instance
+    service.update_module_ordering(@course, @course_module, :destroy)
 
     respond_to do |format|
       format.html { redirect_to course_url(@course), notice: "Course module was successfully destroyed." }

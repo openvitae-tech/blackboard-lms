@@ -8,35 +8,37 @@ class CourseModule < ApplicationRecord
   end
 
   def first_lesson
-    lessons.where(seq_no: 1).first if lessons_count > 0
+    first_lesson_id = lessons_in_order.first
+    lessons.find(first_lesson_id) if first_lesson_id.present?
   end
 
   def last_lesson
-    lessons.where(seq_no: lessons_count).first if lessons_count > 0
+    last_lesson_id = lessons_in_order.last
+    lessons.find(last_lesson_id) if last_lesson_id.present?
   end
 
   def next_lesson(current_lesson)
-    if current_lesson.seq_no < lessons_count
-      lessons.where(seq_no: current_lesson.seq_no + 1).first
+    index = lessons_in_order.find_index(current_lesson.id)
+
+    if lessons_in_order[index + 1].present?
+      lessons.find(lessons_in_order[index + 1])
     end
   end
 
   def prev_lesson(current_lesson)
-    if current_lesson.seq_no > 1
-      lessons.where(seq_no: current_lesson.seq_no - 1).first
+    index = lessons_in_order.find_index(current_lesson.id)
+
+    if lessons_in_order[index - 1].present?
+      lessons.find(lessons_in_order[index - 1])
     end
   end
 
   def next_module
-    if self.seq_no < self.course.course_modules_count
-      self.course.course_modules.where(seq_no: self.seq_no + 1).first
-    end
+    self.course.next_module(self)
   end
 
   def prev_module
-    if self.seq_no > 1
-      self.course.course_modules.where(seq_no: self.seq_no - 1).first
-    end
+    self.course.prev_module(self)
   end
 
   def has_quiz?
@@ -44,22 +46,28 @@ class CourseModule < ApplicationRecord
   end
 
   def first_quiz
-    quizzes.where(seq_no: 1).first if quizzes_count > 0
+    first_quiz_id = quizzes_in_order.first
+    quizzes.find(first_quiz_id) if first_quiz_id.present?
   end
 
   def last_quiz
-    quizzes.where(seq_no: quizzes_count).first if quizzes_count > 0
+    last_quiz_id = quizzes_in_order.last
+    quizzes.find(last_quiz_id) if last_quiz_id.present?
   end
 
   def next_quiz(current_quiz)
-    if current_quiz.seq_no < quizzes_count
-      quizzes.where(seq_no: current_quiz.seq_no + 1).first
+    index = quizzes_in_order.find_index(current_quiz.id)
+
+    if quizzes_in_order[index + 1].present?
+      quizzes.find(quizzes_in_order[index + 1])
     end
   end
 
   def prev_quiz(current_quiz)
-    if current_quiz.seq_no > 1
-      quizzes.where(seq_no: current_quiz.seq_no - 1).first
+    index = quizzes_in_order.find_index(current_quiz.id)
+
+    if quizzes_in_order[index - 1].present?
+      quizzes.find(quizzes_in_order[index - 1])
     end
   end
 end

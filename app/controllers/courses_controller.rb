@@ -10,7 +10,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1 or /courses/1.json
   def show
-    @course_modules = @course.course_modules
+    @course_modules = helpers.modules_in_order(@course)
   end
 
   # GET /courses/new
@@ -89,7 +89,8 @@ class CoursesController < ApplicationController
   def proceed
     service = CourseManagementService.instance
     enrollment = service.proceed(current_user, @course)
-    redirect_to course_module_lesson_path(@course, enrollment.current_module_id || 1, enrollment.current_lesson_id || 1)
+
+    redirect_to course_module_lesson_path(@course, enrollment.current_module_id || @course.first_module.id, enrollment.current_lesson_id || @course.first_module.first_lesson)
   end
   def search
     service = CourseManagementService.instance

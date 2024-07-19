@@ -7,7 +7,7 @@ class QuizzesController < ApplicationController
   # GET /quizzes/1 or /quizzes/1.json
   def show
     authorize @quiz
-    @quizzes = @course_module.quizzes
+    @quizzes = helpers.quizzes_in_order(@course_module)
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
   end
 
@@ -25,6 +25,7 @@ class QuizzesController < ApplicationController
     @quiz = @course_module.quizzes.new(quiz_params)
     service = CourseManagementService.instance
     service.set_quiz_attributes(@course_module, @quiz)
+    service.update_quiz_ordering!(@course_module, @quiz, :create)
 
 
     respond_to do |format|
@@ -54,6 +55,8 @@ class QuizzesController < ApplicationController
   # DELETE /quizzes/1 or /quizzes/1.json
   def destroy
     @quiz.destroy!
+    service = CourseManagementService.instance
+    service.update_quiz_ordering!(@course_module, @quiz, :destroy)
 
     respond_to do |format|
       format.html { redirect_to course_module_path(@course, @course_module), notice: "Quiz was successfully destroyed." }
