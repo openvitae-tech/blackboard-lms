@@ -20,14 +20,14 @@ RSpec.describe CourseModule, type: :model do
     describe "#first_lesson" do
       it "returns the first lesson in a course_module" do
         expect(course_module.first_lesson).not_to be_nil
-        expect(course_module.first_lesson.seq_no).to eq(1)
+        expect(course_module.first_lesson.id).to eq(course_module.lessons_in_order.first)
       end
     end
 
     describe "#last_lesson" do
       it "returns the last lesson in a course_module" do
         expect(course_module.last_lesson).not_to be_nil
-        expect(course_module.last_lesson.seq_no).to eq(course_module.lessons_count)
+        expect(course_module.last_lesson.id).to eq(course_module.lessons_in_order.last)
       end
     end
 
@@ -35,7 +35,8 @@ RSpec.describe CourseModule, type: :model do
       it "returns the next lesson in a course_module after the given lesson" do
         current_lesson = course_module.first_lesson
         expect(course_module.next_lesson(current_lesson)).not_to be_nil
-        expect(course_module.next_lesson(current_lesson).seq_no).to eq(current_lesson.seq_no + 1)
+        index = course_module.lessons_in_order.find_index(current_lesson.id)
+        expect(course_module.next_lesson(current_lesson).id).to eq(course_module.lessons_in_order[index + 1])
       end
 
       it "returns nil if the the current lesson is last lesson" do
@@ -48,7 +49,8 @@ RSpec.describe CourseModule, type: :model do
       it "returns the previous lesson in a course_module before the given lesson" do
         current_lesson = course_module.last_lesson
         expect(course_module.prev_lesson(current_lesson)).not_to be_nil
-        expect(course_module.prev_lesson(current_lesson).seq_no).to eq(current_lesson.seq_no - 1)
+        index = course_module.lessons_in_order.find_index(current_lesson.id)
+        expect(course_module.prev_lesson(current_lesson).id).to eq(course_module.lessons_in_order[index - 1])
       end
 
       it "returns nil if the the current lesson is first lesson" do
@@ -70,7 +72,8 @@ RSpec.describe CourseModule, type: :model do
         course_module = course.first_module
         next_module = course_module.next_module
         expect(next_module).not_to be_nil
-        expect(next_module.seq_no).to eq(course_module.seq_no + 1)
+        index = course.course_modules_in_order.find_index(course_module.id)
+        expect(next_module.id).to eq(course.course_modules_in_order[index + 1])
       end
 
       it "returns nil if there are no next module" do
@@ -85,7 +88,8 @@ RSpec.describe CourseModule, type: :model do
         course_module = course.last_module
         prev_module = course_module.prev_module
         expect(prev_module).not_to be_nil
-        expect(prev_module.seq_no).to eq(course_module.seq_no - 1)
+        index = course.course_modules_in_order.find_index(course_module.id)
+        expect(prev_module.id).to eq(course.course_modules_in_order[index -1])
       end
 
       it "returns nil if there are no prev module" do

@@ -24,7 +24,6 @@ class QuizzesController < ApplicationController
   def create
     @quiz = @course_module.quizzes.new(quiz_params)
     service = CourseManagementService.instance
-    service.set_quiz_attributes(@course_module, @quiz)
     service.update_quiz_ordering!(@course_module, @quiz, :create)
 
 

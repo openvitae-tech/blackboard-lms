@@ -101,11 +101,11 @@ RSpec.describe Course, type: :model do
 
     it "returns the first module within a course" do
       course = course_with_associations
-      expect(course.first_module.seq_no).to eq(1)
+      expect(course.first_module.id).to eq(course.course_modules_in_order.first)
     end
   end
 
-  describe "#first_module" do
+  describe "#last_module" do
     it "returns nil if there are no modules within a course" do
       course = create :course
       expect(course.last_module).to be_nil
@@ -113,7 +113,7 @@ RSpec.describe Course, type: :model do
 
     it "returns the first module within a course" do
       course = course_with_associations
-      expect(course.first_module.seq_no).to eq(course.course_modules_count)
+      expect(course.last_module.id).to eq(course.course_modules_in_order.last)
     end
   end
 end

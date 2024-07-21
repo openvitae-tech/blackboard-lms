@@ -21,7 +21,6 @@ class CourseModulesController < ApplicationController
   def create
     @course_module = @course.course_modules.new(course_module_params)
     service = CourseManagementService.instance
-    service.set_module_attributes(@course, @course_module)
     service.update_module_ordering(@course, @course_module, :destroy)
 
     respond_to do |format|

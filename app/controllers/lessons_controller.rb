@@ -22,7 +22,6 @@ class LessonsController < ApplicationController
   def create
     @lesson = @course_module.lessons.new(lesson_params)
     service = CourseManagementService.instance
-    service.set_sequence_number_for_lesson(@course_module, @lesson)
     service.update_lesson_ordering!(@course_module, @lesson, :create)
 
     respond_to do |format|
