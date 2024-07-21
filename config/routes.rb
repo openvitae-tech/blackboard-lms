@@ -26,6 +26,8 @@ Rails.application.routes.draw do
       put :enroll
       put :unenroll
       get :proceed
+      put :publish
+      put :unpublish
     end
 
     collection do

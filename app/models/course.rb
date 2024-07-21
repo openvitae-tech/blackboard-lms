@@ -8,6 +8,8 @@ class Course < ApplicationRecord
   has_one_attached :banner
   validate :acceptable_banner
 
+  scope :published, -> { where(is_published: true) }
+
   def enroll!(user, assigned_by = nil)
     enrollments.create!(user: user, assigned_by: assigned_by)
   end
@@ -47,4 +49,16 @@ class Course < ApplicationRecord
     index = course_modules_in_order.find_index(current_module.id)
     course_modules.find(course_modules_in_order[index - 1]) if index > 0
   end
+
+  def published?
+    is_published
+  end
+
+  def publish!
+    update(is_published: true)
+  end
+  def undo_publish!
+    update(is_published: false)
+  end
+
 end

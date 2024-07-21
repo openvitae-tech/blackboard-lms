@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_21_142926) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_21_144359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_21_142926) do
     t.integer "course_modules_count", default: 0
     t.integer "enrollments_count", default: 0
     t.bigint "course_modules_in_order", default: [], array: true
+    t.boolean "is_published", default: false
   end
 
   create_table "enrollments", force: :cascade do |t|

@@ -41,4 +41,12 @@ class CoursePolicy
   def proceed?
     user.present? && user.enrolled_for_course?(course)
   end
+
+  def publish?
+    user.present? && user.is_admin? && !course.published?
+  end
+
+  def unpublish?
+    user.present? && user.is_admin? && course.published?
+  end
 end

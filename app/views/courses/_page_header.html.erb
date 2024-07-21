@@ -17,7 +17,13 @@
       <% if policy(@course).destroy? %>
         <%= link_to "Delete",  @course, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
       <% end %>
-    <% end %>
+      <% if policy(@course).publish? %>
+        <%= link_to "Publish",  publish_course_path(@course), data: { turbo_method: :put }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+      <% end %>
+      <% if policy(@course).unpublish? %>
+        <%= link_to "Unpublish",  unpublish_course_path(@course), data: { turbo_method: :put }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32" %>
+      <% end %>
+  <% end %>
   </div>
 </div>
 <hr>

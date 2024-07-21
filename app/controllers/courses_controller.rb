@@ -1,11 +1,16 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_course, only: %i[ show edit update destroy enroll unenroll proceed]
+  before_action :set_course, only: %i[ show edit update destroy enroll unenroll proceed publish unpublish]
 
   # GET /courses or /courses.json
   def index
-    @enrolled_courses = current_user.courses
-    @other_courses = Course.all - @enrolled_courses
+    if current_user.is_admin?
+      @enrolled_courses = current_user.courses
+      @other_courses = Course.all - @enrolled_courses
+    else
+      @enrolled_courses = current_user.courses.published
+      @other_courses = Course.published - @enrolled_courses
+    end
   end
 
   # GET /courses/1 or /courses/1.json
@@ -97,6 +102,32 @@ class CoursesController < ApplicationController
     @keyword = params[:term]
     @search_results = service.search(@keyword)
     render :index
+  end
+
+  def publish
+    service = CourseManagementService.instance
+    result = service.publish!(@course)
+
+    if result == :duplicate
+      message = "Course already published"
+    elsif result == :ok
+      message = "Course is now available to everyone"
+    end
+
+    redirect_to course_url(@course), notice: message
+  end
+
+  def unpublish
+    service = CourseManagementService.instance
+    result = service.undo_publish!(@course)
+
+    if result == :duplicate
+      message = "Course already published"
+    elsif result == :ok
+      message = "Course is now available to everyone"
+    end
+
+    redirect_to course_url(@course), notice: message
   end
 
   private

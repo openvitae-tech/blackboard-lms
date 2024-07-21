@@ -63,6 +63,18 @@ class CourseManagementService
     update_ordering!(course, course_module, action)
   end
 
+  def publish!(course)
+    return :duplicate if course.published?
+    course.publish!
+    :ok
+  end
+
+  def undo_publish!(course)
+    return :duplicate unless course.published?
+    course.undo_publish!
+    :ok
+  end
+
   private
   def update_ordering!(parent, record, action)
     ordering_method = "#{record.class.to_s.downcase.pluralize}_in_order".to_sym
