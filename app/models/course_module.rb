@@ -28,7 +28,7 @@ class CourseModule < ApplicationRecord
   def prev_lesson(current_lesson)
     index = lessons_in_order.find_index(current_lesson.id)
 
-    if lessons_in_order[index - 1].present?
+    if index > 0
       lessons.find(lessons_in_order[index - 1])
     end
   end
@@ -66,7 +66,7 @@ class CourseModule < ApplicationRecord
   def prev_quiz(current_quiz)
     index = quizzes_in_order.find_index(current_quiz.id)
 
-    if quizzes_in_order[index - 1].present?
+    if index > 0
       quizzes.find(quizzes_in_order[index - 1])
     end
   end

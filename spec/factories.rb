@@ -68,20 +68,31 @@ end
 def course_with_associations(modules_count: 1, lessons_count: 1, quizzes_count: 1, duration: 60)
   FactoryBot.create(:course) do |course|
     module_seq_no = 1
+    module_ids = []
     FactoryBot.create_list(:course_module, modules_count, course: course) do |course_module|
       course_module.update(seq_no: module_seq_no)
       module_seq_no += 1
       lesson_seq_no = 1
+      lesson_ids = []
       FactoryBot.create_list(:lesson, lessons_count, course_module: course_module, duration: duration) do |lesson|
         lesson.update(seq_no: lesson_seq_no)
         lesson_seq_no += 1
+        lesson_ids.push(lesson.id)
       end
 
       quiz_seq_no = 1
+      quiz_ids = []
       FactoryBot.create_list(:quiz, quizzes_count, course_module: course_module) do |quiz|
         quiz.update(seq_no: quiz_seq_no)
         quiz_seq_no += 1
+        quiz_ids.push(quiz.id)
       end
+      course_module.lessons_in_order = lesson_ids
+      course_module.quizzes_in_order = quiz_ids
+      course_module.save!
+      module_ids.push(course_module.id)
     end
+    course.course_modules_in_order = module_ids
+    course.save!
   end
 end

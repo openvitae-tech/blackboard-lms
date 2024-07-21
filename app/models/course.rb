@@ -45,6 +45,6 @@ class Course < ApplicationRecord
 
   def prev_module(current_module)
     index = course_modules_in_order.find_index(current_module.id)
-    course_modules.find(course_modules_in_order[index - 1]) if course_modules_in_order[index - 1].present?
+    course_modules.find(course_modules_in_order[index - 1]) if index > 0
   end
 end
