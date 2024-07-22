@@ -35,4 +35,12 @@ class QuizPolicy < ApplicationPolicy
     enrollment = user.get_enrollment_for(record.course_module.course) if user.enrolled_for_course?(record.course_module.course)
     !enrollment.quiz_answered?(record)
   end
+
+  def moveup?
+    user.is_admin?
+  end
+
+  def movedown?
+    user.is_admin?
+  end
 end

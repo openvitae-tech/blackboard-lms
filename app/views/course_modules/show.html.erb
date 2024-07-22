@@ -61,12 +61,18 @@
 <% if current_user.is_admin? %>
   <div class="box">
     <ul id="quizzes">
-      <% @course_module.quizzes.each do |quiz| %>
+      <% quizzes_in_order(@course_module).each do |quiz| %>
         <li class="text-sm border-b m-2" id="<%= dom_id quiz %>">
           <%= link_to course_module_quiz_path(@course, @course_module, quiz) do %>
             <div class="my-4">
               <strong><%= quiz.question %></strong>
             </div>
+          <% end %>
+          <% if policy(:quiz).moveup? %>
+            <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "Move Up", moveup_course_module_quiz_path(@course, @course_module, quiz), data: { turbo_method: :put }, class: "link" %></p>
+          <% end %>
+          <% if policy(:quiz).movedown? %>
+            <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "Move Down", movedown_course_module_quiz_path(@course, @course_module, quiz), data: { turbo_method: :put }, class: "link" %></p>
           <% end %>
         </li>
       <% end %>

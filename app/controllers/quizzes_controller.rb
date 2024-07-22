@@ -1,7 +1,7 @@
 class QuizzesController < ApplicationController
   before_action :set_course
   before_action :set_course_module
-  before_action :set_quiz, only: %i[ show edit update destroy submit_answer]
+  before_action :set_quiz, only: %i[ show edit update destroy submit_answer moveup movedown]
 
   # GET /quizzes or /quizzes.json
   # GET /quizzes/1 or /quizzes/1.json
@@ -13,22 +13,24 @@ class QuizzesController < ApplicationController
 
   # GET /quizzes/new
   def new
+    authorize Quiz
     @quiz = @course_module.quizzes.new
   end
 
   # GET /quizzes/1/edit
   def edit
+    authorize @quiz
   end
 
   # POST /quizzes or /quizzes.json
   def create
+    authorize Quiz
     @quiz = @course_module.quizzes.new(quiz_params)
     service = CourseManagementService.instance
-    service.update_quiz_ordering!(@course_module, @quiz, :create)
-
 
     respond_to do |format|
       if @quiz.save
+        service.update_quiz_ordering!(@course_module, @quiz, :create)
         format.html { redirect_to course_module_path(@course, @course_module), notice: "Quiz was successfully created." }
         format.json { render :show, status: :created, location: @quiz }
       else
@@ -40,6 +42,7 @@ class QuizzesController < ApplicationController
 
   # PATCH/PUT /quizzes/1 or /quizzes/1.json
   def update
+    authorize @quiz
     respond_to do |format|
       if @quiz.update(quiz_params)
         format.html { redirect_to course_module_path(@course, @course_module), notice: "Quiz was successfully updated." }
@@ -53,6 +56,7 @@ class QuizzesController < ApplicationController
 
   # DELETE /quizzes/1 or /quizzes/1.json
   def destroy
+    authorize @quiz
     @quiz.destroy!
     service = CourseManagementService.instance
     service.update_quiz_ordering!(@course_module, @quiz, :destroy)
@@ -70,6 +74,28 @@ class QuizzesController < ApplicationController
     next_quiz = @course_module.next_quiz(@quiz)
     next_path = next_quiz.blank? ? course_module_path(@course, @course_module) : course_module_quiz_path(@course, @course_module,next_quiz)
     redirect_to next_path
+  end
+
+  def moveup
+    authorize @quiz
+    service = CourseManagementService.instance
+    service.update_quiz_ordering!(@course_module, @quiz, :up)
+
+    respond_to do |format|
+      format.html { redirect_to course_module_path(@course, @course_module) }
+      format.json { head :no_content }
+    end
+  end
+
+  def movedown
+    authorize @quiz
+    service = CourseManagementService.instance
+    service.update_quiz_ordering!(@course_module, @quiz, :down)
+
+    respond_to do |format|
+      format.html { redirect_to course_module_path(@course, @course_module) }
+      format.json { head :no_content }
+    end
   end
 
   private

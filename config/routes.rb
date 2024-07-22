@@ -51,6 +51,8 @@ Rails.application.routes.draw do
       resources :quizzes, except: [:index] do
         member do
           post :submit_answer
+          put :moveup
+          put :movedown
         end
       end
     end

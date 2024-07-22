@@ -1,6 +1,6 @@
 class LessonsController < ApplicationController
-  before_action :set_course, only: %i[ new create show edit update destroy complete moveup movedown]
-  before_action :set_course_module, only: %i[ new create show edit update destroy complete moveup movedown]
+  before_action :set_course
+  before_action :set_course_module
   before_action :set_lesson, only: %i[ show edit update destroy complete moveup movedown]
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
