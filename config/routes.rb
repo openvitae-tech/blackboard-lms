@@ -36,6 +36,11 @@ Rails.application.routes.draw do
     end
 
     resources :course_modules, as: "modules", except: [:index] do
+      member do
+        put :moveup
+        put :movedown
+      end
+
       resources :lessons, except: [:index] do
         member do
           post :complete

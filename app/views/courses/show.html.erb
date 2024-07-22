@@ -52,6 +52,12 @@
         <% if policy(:course_module).show? %>
           <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "View or modify module", course_module_path(@course, course_module), class: "link" %></p>
         <% end %>
+        <% if policy(:course_module).movedown? %>
+          <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "Move Up", movedown_course_module_path(@course, course_module), data: { turbo_method: :put }, class: "link" %></p>
+        <% end %>
+        <% if policy(:course_module).moveup? %>
+          <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "Move Down", moveup_course_module_path(@course, course_module), data: { turbo_method: :put }, class: "link" %></p>
+        <% end %>
         <p class="mb-2 text-gray-900 text-sm md:max-w-[1400px]"><%= course_module.description %></p>
         <ul class="px-8">
         <% course_module.lessons.each do |lesson| %>

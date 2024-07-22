@@ -77,7 +77,7 @@ class CourseManagementService
 
   private
   def update_ordering!(parent, record, action)
-    ordering_method = "#{record.class.to_s.downcase.pluralize}_in_order".to_sym
+    ordering_method = "#{record.class.to_s.underscore.pluralize}_in_order".to_sym
     ordering = parent.send(ordering_method)
 
     if action == :destroy
@@ -93,7 +93,7 @@ class CourseManagementService
     elsif action == :down
       i = ordering.find_index(record.id)
 
-      if ordering[i-1].present?
+      if i > 0
         ordering[i], ordering[i-1] = ordering[i-1], ordering[i]
       end
     end

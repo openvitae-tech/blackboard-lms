@@ -29,4 +29,12 @@ class CourseModulePolicy < ApplicationPolicy
   def destroy?
     user.is_admin?
   end
+
+  def moveup?
+    user.is_admin?
+  end
+
+  def movedown?
+    user.is_admin?
+  end
 end
