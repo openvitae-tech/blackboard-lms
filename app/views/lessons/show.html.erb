@@ -16,6 +16,9 @@
     <div class="my-8">
       <%= render "lessons/nav_links", course: @course, course_module: @course_module, lesson: @lesson %>
     </div>
+
+    <div class="page-subtitle my-4 text-balance"><%= render_text(@lesson.description) %></div>
   </div>
   <%= render "lessons/sidebar", course: @course,  enrollment: @enrollment %>
 </div>
+

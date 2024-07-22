@@ -31,11 +31,11 @@ class CoursePolicy
   end
 
   def enroll?
-    user.present? && !user.enrolled_for_course?(course)
+    user.present? && !user.is_admin? && !user.enrolled_for_course?(course)
   end
 
   def unenroll?
-    user.present? && user.enrolled_for_course?(course)
+    user.present? && !user.is_admin? && user.enrolled_for_course?(course)
   end
 
   def proceed?
