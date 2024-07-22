@@ -83,18 +83,18 @@ class CourseManagementService
     if action == :destroy
       ordering.delete(record.id)
     elsif action == :create
-      ordering.append(record.id) if ordering.include? record.id
+      ordering.append(record.id) unless ordering.include? record.id
     elsif action == :up
-      i = ordering.find_index(record.id)
-
-      if ordering[i+1].present?
-        ordering[i], ordering[i+1] = ordering[i+1], ordering[i]
-      end
-    elsif action == :down
       i = ordering.find_index(record.id)
 
       if i > 0
         ordering[i], ordering[i-1] = ordering[i-1], ordering[i]
+      end
+    elsif action == :down
+      i = ordering.find_index(record.id)
+
+      if ordering[i+1].present?
+        ordering[i], ordering[i+1] = ordering[i+1], ordering[i]
       end
     end
 

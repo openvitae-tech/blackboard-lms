@@ -28,11 +28,17 @@
 </div>
 <div class="box">
   <ul id="lessons">
-    <% @course_module.lessons.each do |lesson| %>
+    <% lessons_in_order(@course_module).each do |lesson| %>
       <li class="text-sm border-b m-2" id="<%= dom_id lesson %>">
         <%= link_to course_module_lesson_path(@course, @course_module, lesson) do %>
           <div class="my-4">
             <strong><%= lesson.title %></strong>
+            <% if policy(:lesson).moveup? %>
+              <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "Move Up", moveup_course_module_lesson_path(@course, @course_module, lesson), data: { turbo_method: :put }, class: "link" %></p>
+            <% end %>
+            <% if policy(:lesson).movedown? %>
+              <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "Move Down", movedown_course_module_lesson_path(@course, @course_module, lesson), data: { turbo_method: :put }, class: "link" %></p>
+            <% end %>
           </div>
           <div class="my-4">
             <%= lesson.description %>

@@ -1,31 +1,35 @@
 class LessonsController < ApplicationController
-  before_action :set_course, only: %i[ new create show edit update destroy complete]
-  before_action :set_course_module, only: %i[ new create show edit update destroy complete]
-  before_action :set_lesson, only: %i[ show edit update destroy complete]
+  before_action :set_course, only: %i[ new create show edit update destroy complete moveup movedown]
+  before_action :set_course_module, only: %i[ new create show edit update destroy complete moveup movedown]
+  before_action :set_lesson, only: %i[ show edit update destroy complete moveup movedown]
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
+    authorize @lesson
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @course_modules = helpers.modules_in_order(@course)
   end
 
   # GET /lessons/new
   def new
+    authorize Lesson
     @lesson = @course_module.lessons.new
   end
 
   # GET /lessons/1/edit
   def edit
+    authorize @lesson
   end
 
   # POST /lessons or /lessons.json
   def create
+    authorize Lesson
     @lesson = @course_module.lessons.new(lesson_params)
     service = CourseManagementService.instance
-    service.update_lesson_ordering!(@course_module, @lesson, :create)
 
     respond_to do |format|
       if @lesson.save
+        service.update_lesson_ordering!(@course_module, @lesson, :create)
         format.html { redirect_to course_module_lesson_url(@course, @course_module, @lesson), notice: "Lesson was successfully created." }
         format.json { render :show, status: :created, location: @lesson }
       else
@@ -37,6 +41,7 @@ class LessonsController < ApplicationController
 
   # PATCH/PUT /lessons/1 or /lessons/1.json
   def update
+    authorize @lesson
     respond_to do |format|
       if @lesson.update(lesson_params)
         format.html { redirect_to course_module_lesson_path(@course, @course_module, @lesson), notice: "Lesson was successfully updated." }
@@ -50,6 +55,7 @@ class LessonsController < ApplicationController
 
   # DELETE /lessons/1 or /lessons/1.json
   def destroy
+    authorize @lesson
     service = CourseManagementService.instance
     @lesson.destroy!
     service.update_lesson_ordering!(@course_module, @lesson, :destroy)
@@ -77,6 +83,28 @@ class LessonsController < ApplicationController
     next_path = course_path(@course) if next_path.blank? # the course is completed
 
     redirect_to next_path
+  end
+
+  def moveup
+    authorize @lesson
+    service = CourseManagementService.instance
+    service.update_lesson_ordering!(@course_module, @lesson, :up)
+
+    respond_to do |format|
+      format.html { redirect_to course_module_path(@course, @course_module) }
+      format.json { head :no_content }
+    end
+  end
+
+  def movedown
+    authorize @lesson
+    service = CourseManagementService.instance
+    service.update_lesson_ordering!(@course_module, @lesson, :down)
+
+    respond_to do |format|
+      format.html { redirect_to course_module_path(@course, @course_module) }
+      format.json { head :no_content }
+    end
   end
 
   private

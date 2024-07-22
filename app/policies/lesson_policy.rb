@@ -35,4 +35,12 @@ class LessonPolicy < ApplicationPolicy
     enrollment = user.get_enrollment_for(record.course_module.course)
     !enrollment.completed_lessons.include?(record.id)
   end
+
+  def moveup?
+    user.is_admin?
+  end
+
+  def movedown?
+    user.is_admin?
+  end
 end

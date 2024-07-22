@@ -25,10 +25,10 @@ class CourseModulesController < ApplicationController
     authorize CourseModule
     @course_module = @course.course_modules.new(course_module_params)
     service = CourseManagementService.instance
-    service.update_module_ordering(@course, @course_module, :destroy)
 
     respond_to do |format|
       if @course_module.save
+        service.update_module_ordering(@course, @course_module, :create)
         format.html { redirect_to course_url(@course), notice: "Course module was successfully created." }
         format.json { render :show, status: :created, location: @course_module }
       else

@@ -44,6 +44,8 @@ Rails.application.routes.draw do
       resources :lessons, except: [:index] do
         member do
           post :complete
+          put :moveup
+          put :movedown
         end
       end
       resources :quizzes, except: [:index] do
