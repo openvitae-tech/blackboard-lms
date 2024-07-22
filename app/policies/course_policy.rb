@@ -27,7 +27,7 @@ class CoursePolicy
   end
 
   def destroy?
-    user.is_admin?
+    false
   end
 
   def enroll?

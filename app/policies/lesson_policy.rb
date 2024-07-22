@@ -27,7 +27,7 @@ class LessonPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.is_admin?
+    false
   end
 
   def complete?

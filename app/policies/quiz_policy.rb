@@ -27,7 +27,7 @@ class QuizPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.is_admin?
+    false
   end
 
   def submit_answer?
