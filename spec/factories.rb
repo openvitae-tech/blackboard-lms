@@ -25,7 +25,7 @@ FactoryBot.define do
 
   factory :learning_partner do
     name { Faker::Restaurant.name }
-    about { Faker::Restaurant.description }
+    content { Faker::Restaurant.description }
     logo { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
     banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
   end
@@ -42,7 +42,7 @@ FactoryBot.define do
 
   factory :lesson do
     title { Faker::Lorem.word }
-    description { Faker::Lorem.paragraph() }
+    rich_description { Faker::Lorem.paragraph() }
     video_url { "https://example.com/948577869" }
     video_streaming_source { "example" }
     duration { 60 }
@@ -50,12 +50,12 @@ FactoryBot.define do
 
   factory :course_module do
     title { Faker::Lorem.word }
-    description { Faker::Lorem.paragraph() }
+    rich_description { Faker::Lorem.paragraph() }
   end
 
   factory :course do
     title { Faker::Movie.title }
-    description { Faker::Lorem.paragraph() }
+    rich_description { Faker::Lorem.paragraph() }
 
     trait :with_attachment do
       banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }

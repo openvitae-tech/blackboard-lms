@@ -107,7 +107,7 @@ class DevelopmentSeed
   def create_partner(name, about, logo, banner)
     LearningPartner.create!(
       name: name,
-      about: about,
+      content: about,
       logo: File.open(Rails.root.join("db/data/#{logo}")),
       banner: File.open(Rails.root.join("db/data/#{banner}"))
     )
@@ -116,7 +116,7 @@ class DevelopmentSeed
   def create_course(name, description, banner)
     Course.create!(
       title: name,
-      description: description,
+      rich_description: description,
       banner: File.open(Rails.root.join("db/data/#{banner}"))
     )
   end
@@ -124,7 +124,7 @@ class DevelopmentSeed
   def create_module(name, description, course)
     m = CourseModule.new(
       title: name,
-      description: description,
+      rich_description: description,
       course: course
     )
     CourseManagementService.instance.set_module_attributes(course, m)
@@ -134,7 +134,7 @@ class DevelopmentSeed
   end
 
   def create_lesson(title, description, url, course_module)
-    l = Lesson.new(title: title, description: description, video_url: url, duration: rand(1..10), course_module: course_module)
+    l = Lesson.new(title: title, rich_description: description, video_url: url, duration: rand(1..10), course_module: course_module)
     CourseManagementService.instance.set_lesson_attributes(course_module, l)
     l.save!
     l

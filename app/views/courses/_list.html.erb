@@ -11,7 +11,7 @@
               <span><%= modules_count(course) %> - <%= course_duration(course ) %></span>
             </div>
             <div class="font-semibold text-base text-gray-900"><%= course.title.truncate(80) %></div>
-            <div class="font-normal text-sm text-gray-500"><%= render_text(course.description.truncate(120)) %></div>
+            <div class="font-normal text-sm text-gray-500"><%= course.rich_description.truncate(120) %></div>
           </div>
         <% end %>
       </li>

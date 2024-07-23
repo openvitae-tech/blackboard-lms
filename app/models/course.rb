@@ -8,6 +8,8 @@ class Course < ApplicationRecord
   has_one_attached :banner
   validate :acceptable_banner
 
+  has_rich_text :rich_description
+
   scope :published, -> { where(is_published: true) }
 
   def enroll!(user, assigned_by = nil)
