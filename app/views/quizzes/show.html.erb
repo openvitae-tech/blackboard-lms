@@ -1,5 +1,5 @@
 <%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
-<%= render "page_header", back_link: course_module_path(@course, @course_module) %>
+<%= render "page_header", back_link: course_path(@course) %>
 
 <div class="box text-right">
   <% if policy(@quiz).edit? %>
