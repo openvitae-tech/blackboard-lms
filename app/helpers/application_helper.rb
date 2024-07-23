@@ -50,14 +50,4 @@ module ApplicationHelper
     records.each  { |rec| h[rec.id] = rec }
     h.values
   end
-
-  def render_text(text)
-    return "" if text.blank?
-
-    with_html = text.split("\n").map do |line|
-      ["<p>", line, "</p>"].join("")
-    end.join("")
-
-    sanitize with_html
-  end
 end

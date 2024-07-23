@@ -1,23 +1,22 @@
+<%= render "shared/header", header_options(title: "Partner", header_extended: false) %>
 <div class="box flex justify-between">
   <%= link_to learning_partners_path, class: "btn-primary btn-icon" do %>
     <%= render "shared/svg/back" %>
     <span>Back</span>
   <% end %>
 
-  <!-- Modal toggle -->
-  <% if policy(:user).invite_member? %>
-    <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="btn-default" type="button">Invite</button>
-  <% end %>
-
-</div>
-
-<div class="box text-right">
-  <% if policy(@learning_partner).edit? %>
-    <%= link_to "Edit", edit_learning_partner_path(@learning_partner), class: "btn-primary" %>
-  <% end  %>
-  <% if policy(@learning_partner).destroy? %>
-    <%= link_to "Delete", @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-primary" %>
-  <% end  %>
+  <div class="flex gap-4">
+    <!-- Modal toggle -->
+    <% if policy(@learning_partner).edit? %>
+      <%= link_to "Edit", edit_learning_partner_path(@learning_partner), class: "btn-primary" %>
+    <% end  %>
+    <% if policy(@learning_partner).destroy? %>
+      <%= link_to "Delete", @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-primary" %>
+    <% end  %>
+    <% if policy(:user).invite_member? %>
+      <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="btn-default" type="button">Invite</button>
+    <% end %>
+  </div>
 </div>
 
 <div class="box">

@@ -1,5 +1,12 @@
+<%= render "shared/header", header_options(title: "Partner", header_extended: false) %>
+
 <div class="my-8 mx-4">
-  <%= link_to "Back", learning_partners_path, class: "underline pointer" %>
+  <%= link_to learning_partners_path, class: "btn-primary btn-icon" do %>
+    <%= render "shared/svg/back" %>
+    <span>Back</span>
+  <% end %>
 </div>
 
-<%= render "form", learning_partner: @learning_partner %>
+<div class="box">
+  <%= render "form", learning_partner: @learning_partner %>
+</div>

@@ -1,3 +1,4 @@
+<%= render "shared/header", header_options(title: "Partner", header_extended: false) %>
 <div class="box">
   <%= link_to learning_partners_path, class: "btn-primary btn-icon" do %>
     <%= render "shared/svg/back" %>
@@ -5,7 +6,9 @@
   <% end %>
 </div>
 
-<h1 class="box font-semibold text-lg text-gray-800">New learning partner</h1>
-<%= render "form", learning_partner: @learning_partner %>
+<div class="box">
+  <h1 class="page-subtitle">New learning partner</h1>
+  <%= render "form", learning_partner: @learning_partner %>
+</div>
 
 
