@@ -28,7 +28,7 @@
   <% if @learning_partner.banner.present? %>
     <div class="my-4"><%= image_tag @learning_partner.banner.variant(resize_to_limit: [320, nil]) %></div>
   <% end %>
-  <div class="my-4"><strong>About</strong> <%= @learning_partner.about %></div>
+  <div class="my-4"><strong>About</strong> <%= @learning_partner.content %></div>
 </div>
 
 <%= render "users/user_list", users: @learning_partner.users %>

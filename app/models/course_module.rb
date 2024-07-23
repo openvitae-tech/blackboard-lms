@@ -3,6 +3,8 @@ class CourseModule < ApplicationRecord
   has_many :lessons, dependent: :destroy
   has_many :quizzes, dependent: :destroy
 
+  has_rich_text :rich_description
+
   def duration
     lessons.map(&:duration).reduce(&:+) || 0
   end

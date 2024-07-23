@@ -8,7 +8,7 @@
 <div class="box md:flex md:justify-between">
   <div>
     <div class="page-title"><%= @course.title %></div>
-    <div class="page-subtitle my-4 text-balance"><%= render_text(@course.description) %></div>
+    <div class="page-subtitle my-4 text-balance"><%= @course.rich_description %></div>
   </div>
   <div class="hidden md:block text-right">
     <div class="mt-2">
@@ -58,7 +58,7 @@
         <% if policy(:course_module).movedown? %>
           <p class="mb-2 text-gray-900 text-sm text-right"><%= link_to "Move Down", movedown_course_module_path(@course, course_module), data: { turbo_method: :put }, class: "link" %></p>
         <% end %>
-        <p class="mb-2 text-gray-900 text-sm md:max-w-[1400px]"><%= render_text(course_module.description) %></p>
+        <p class="mb-2 text-gray-900 text-sm md:max-w-[1400px]"><%= course_module.rich_description %></p>
         <ul class="px-8">
         <% course_module.lessons.each do |lesson| %>
           <li class="border-b text-sm py-4 bg-white"><%= link_to lesson.title, course_module_lesson_path(@course, course_module, lesson) %></li>
