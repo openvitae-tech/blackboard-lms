@@ -40,10 +40,6 @@ class UserPolicy
     user.is_admin?
   end
 
-  def invite_member?
-    user.is_admin? || user.is_owner? || user.is_manager?
-  end
-
   def resend_invitation?
     other_user.confirmed_at.nil? && (user.is_admin? || user.is_owner? || user.is_manager?)
   end
