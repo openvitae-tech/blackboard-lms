@@ -1,4 +1,5 @@
 <%= render "shared/header", header_options(title: "Partner", header_extended: false) %>
+
 <div class="box flex justify-between">
   <%= link_to learning_partners_path, class: "btn-primary btn-icon" do %>
     <%= render "shared/svg/back" %>
@@ -6,15 +7,14 @@
   <% end %>
 
   <div class="flex gap-4">
-    <!-- Modal toggle -->
     <% if policy(@learning_partner).edit? %>
       <%= link_to "Edit", edit_learning_partner_path(@learning_partner), class: "btn-primary" %>
     <% end  %>
     <% if policy(@learning_partner).destroy? %>
       <%= link_to "Delete", @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-primary" %>
     <% end  %>
-    <% if policy(:user).invite_member? %>
-      <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="btn-default" type="button">Invite</button>
+    <% if policy(:invite).new? %>
+      <%= link_to "Invite user", new_invite_path(learning_partner_id: @learning_partner.id), data: { turbo_frame: "modal", modal_target: "app-modal" }, class: "btn-primary" %>
     <% end %>
   </div>
 </div>
@@ -30,6 +30,4 @@
   <div class="my-4"><strong>About</strong> <%= @learning_partner.content %></div>
 </div>
 
-<%= render "users/user_list", users: @learning_partner.users %>
-
-<%= render "users/invite_modal", user: User.new, learning_partner: @learning_partner %>
+<%= render "users/user_list", users: @learning_partner.users, learning_partner: @learning_partner %>

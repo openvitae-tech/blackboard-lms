@@ -1,0 +1,7 @@
+<% if policy(:invite).new_admin? %>
+  <div class="box text-right">
+    <%= link_to "Invite admin", new_admin_invites_path, data: { turbo_frame: "modal", modal_target: "app-modal" }, class: "btn-default" %>
+  </div>
+<% end %>
+
+<%= render "users/user_list", users: @members, learning_partner: nil %>

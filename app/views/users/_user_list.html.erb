@@ -19,30 +19,7 @@
       </thead>
       <tbody>
       <% users.each do |user| %>
-        <tr class="bg-white border-b">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-            <% if policy(user).show? %>
-              <%= link_to user.name || "User", user_path(user) %>
-            <% else  %>
-              <%= user.name || "User" %>
-            <% end %>
-          </th>
-          <td class="px-6 py-4">
-            <%= role_text(user.role) %>
-          </td>
-          <td class="px-6 py-4">
-            <%= user.email %>
-            (<%= invite_status(user) %>)
-          </td>
-          <td class="px-6 py-4">
-            <% if policy(user).resend_invitation? %>
-              <%= link_to "Re-invite", resend_invitation_settings_path(user_id: user.id), class: "link" %>
-            <% end %>
-            <% if policy(:course_assigns).list? %>
-              <%= link_to "Assign", list_course_assign_path(user), class: "link", data: { turbo_frame: "assign-course-frame" } %>
-            <% end %>
-          </td>
-        </tr>
+        <%= render "users/user", user: user, learning_partner: learning_partner %>
       <% end %>
       </tbody>
     </table>

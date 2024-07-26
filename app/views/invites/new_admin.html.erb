@@ -1,0 +1,25 @@
+<%= turbo_frame_tag 'modal' do %>
+  <div class="w-full">
+    <%= form_with(url: create_admin_invites_path, method: :post, model: @user, class: "space-y-4") do |form| %>
+      <% if @user.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this lesson from being saved:</h2>
+
+          <ul>
+            <% @user.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div>
+        <%= form.label :email, class: "block mb-2 text-sm font-medium text-gray-900" %>
+        <%= form.email_field :email, placeholder: "yourname@example.com", class: "input-text" %>
+      </div>
+      <div class="flex gap-4">
+        <%= link_to "Close", "javascript:void(0);", data: { action: "modals#close" }, class: "btn btn-primary w-1/2" %>
+        <button type="submit" class="btn-default w-1/2">Send invite</button>
+      </div>
+    <% end %>
+  </div>
+<% end %>

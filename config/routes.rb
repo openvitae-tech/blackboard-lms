@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  resources :invites, only: [:new, :create] do
+    member do
+      get :resend
+    end
+
+    collection do
+      get :new_admin
+      post :create_admin
+    end
+  end
+
   resources :notifications, only: [:index]
 
   resources :course_assigns, param: :user_id, only: [] do
@@ -13,9 +24,6 @@ Rails.application.routes.draw do
     collection do
       get :team
       put :update_password
-      post :invite_admin
-      post :invite_member
-      get :resend_invitation
     end
   end
 
@@ -59,6 +67,7 @@ Rails.application.routes.draw do
   end
 
   resources :learning_partners
+
   devise_for :users
   resources :users
   # for now dashboard path and root path are same.

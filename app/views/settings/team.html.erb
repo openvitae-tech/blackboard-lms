@@ -1,12 +1,7 @@
 <%= render "shared/header", header_options(title: "Team management", header_extended: true) %>
-<%= render "page_header" %>
-
-<%= render "users/user_list", users: @members %>
 
 <% if current_user.is_admin? %>
-  <%= render "users/invite_admin_modal", user: User.new %>
+  <%= render "admin_team" %>
 <% else %>
-  <%= render "users/invite_modal", user: User.new, learning_partner: @learning_partner %>
+  <%= render "user_team" %>
 <% end %>
-
-<%= turbo_frame_tag "assign-course-frame" %>
