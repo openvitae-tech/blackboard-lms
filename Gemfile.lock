@@ -337,18 +337,18 @@ GEM
     stimulus-rails (1.3.3)
       railties (>= 6.0.0)
     stringio (3.1.0)
-    tailwindcss-rails (2.3.0)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.3.0-aarch64-linux)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.3.0-arm-linux)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.3.0-arm64-darwin)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.3.0-x86_64-darwin)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.3.0-x86_64-linux)
-      railties (>= 6.0.0)
+    tailwindcss-rails (2.6.5)
+      railties (>= 7.0.0)
+    tailwindcss-rails (2.6.5-aarch64-linux)
+      railties (>= 7.0.0)
+    tailwindcss-rails (2.6.5-arm-linux)
+      railties (>= 7.0.0)
+    tailwindcss-rails (2.6.5-arm64-darwin)
+      railties (>= 7.0.0)
+    tailwindcss-rails (2.6.5-x86_64-darwin)
+      railties (>= 7.0.0)
+    tailwindcss-rails (2.6.5-x86_64-linux)
+      railties (>= 7.0.0)
     thor (1.3.1)
     timeout (0.4.1)
     turbo-rails (2.0.5)
@@ -404,7 +404,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   stimulus-rails
-  tailwindcss-rails (~> 2.3)
+  tailwindcss-rails (~> 2.6.5)
   turbo-rails
   tzinfo-data
   web-console
