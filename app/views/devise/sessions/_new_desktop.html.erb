@@ -1,6 +1,6 @@
 <%= desktop_view do %>
   <div class="h-full columns-2 size-full">
-    <%= render "devise/sessions/left_side_desktop" %>
+    <%= render "devise/shared/left_side_desktop" %>
 
     <div class="flex h-full items-center justify-center right-side">
       <div class="bg-white w-[528px]">
@@ -41,18 +41,13 @@
           <div class="mt-6">
             <div class="flex justify-between">
               <p>
-                <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-                  <%= link_to "Forgot your password?", new_password_path(resource_name), class: "link-text" %><br/>
-                <% end %>
+                <%= link_to "Forgot your password?", new_password_path(resource_name), class: "link-text" %><br/>
               </p>
               <p><a href="#" class="link-text">Login with OTP</a></p>
             </div>
             <div class="mt-4">
               <p>
-                <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-                  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), class: "link-text" %>
-                  <br/>
-                <% end %>
+                <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), class: "link-text" %>
               </p>
             </div>
           </div>
