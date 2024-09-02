@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :teams
+
   resources :invites, only: [:new, :create] do
     member do
       get :resend
