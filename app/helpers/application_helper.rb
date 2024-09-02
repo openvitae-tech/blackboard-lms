@@ -50,4 +50,15 @@ module ApplicationHelper
     records.each  { |rec| h[rec.id] = rec }
     h.values
   end
+
+  def mobile_view(&block)
+    content_tag "div", class: "block md:hidden h-screen w-full", name: "mobile-view" do
+      yield block
+    end
+  end
+  def desktop_view(&block)
+    content_tag "div", class: "hidden md:block h-screen w-full", name: "desktop-view" do
+      yield block
+    end
+  end
 end
