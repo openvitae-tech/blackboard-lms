@@ -51,3 +51,5 @@ docker-build
 /config/credentials/test.key
 
 /config/credentials/development.key
+.idea/*
+*.md
