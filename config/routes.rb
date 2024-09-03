@@ -68,6 +68,12 @@ Rails.application.routes.draw do
 
   resources :learning_partners
 
+  resources :logins, only: [:new, :create] do
+    collection do
+      post :otp
+    end
+  end
+
   devise_for :users
   resources :users
   # for now dashboard path and root path are same.

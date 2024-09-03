@@ -61,6 +61,15 @@ class User < ApplicationRecord
     confirmed_at.present?
   end
 
+  def set_otp!
+    if otp_generated_at && otp_generated_at < 5.minutes.ago
+      otp = rand(1000..9999)
+      Rails.logger.info "New OTP for #{phone} is #{otp}"
+
+      update(otp: otp, otp_generated_at: DateTime.now)
+    end
+  end
+
   private
   def password_verifier
     Rails.application.credentials.dig(:password_verifier)

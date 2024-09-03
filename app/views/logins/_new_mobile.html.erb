@@ -1,0 +1,34 @@
+<%= mobile_view do %>
+  <%= render "devise/shared/top_mobile" %>
+  <div class="px-4 py-8">
+    <form action="">
+      <div class="mb-8">
+        <h1 class="page-heading">Login</h1>
+      </div>
+
+      <div class="flex flex-col gap-6">
+        <div class="input-group">
+          <label for="" class="label-text">Welcome! Please enter your mobile number</label>
+        </div>
+        <div class="input-group">
+          <label for="number" class="label-text">Mobile Number</label>
+          <div tabindex="-1"
+               class="mt-4 flex border rounded border-gray0 focus-within:border-primary">
+            <div class="h-[52px] w-[96px] border-r border-gray0 focus-within:border-primary flex items-center justify-center">
+              <img src="/assets/india.png" alt="IN" class="w-8 h-8 rounded-full flag-box-shadow"/>
+            </div>
+            <input type="number" class="input-number border-none"/>
+          </div>
+        </div>
+        <div class="mt-20">
+          <button class="w-full btn-primary">
+            <span>Get OTP</span>
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class="mt-6">
+      <%= link_to "Login with email and password", new_session_path('user'), class: "link-text" %><br/>
+    </div>
+  </div>
+<% end %>

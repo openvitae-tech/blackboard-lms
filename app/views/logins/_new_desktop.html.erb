@@ -1,0 +1,40 @@
+<%= desktop_view do %>
+  <div class="h-full columns-2 size-full">
+    <%= render "devise/shared/left_side_desktop" %>
+    <div class="flex h-full items-center justify-center right-side">
+      <div class="bg-white w-[528px]">
+        <img src="/assets/login_page_logo_grey.png" alt="Superskill" class="mx-auto mb-12 h-10"/>
+        <div class="rounded-lg px-8 pt-8 pb-24 login-box-shadow">
+          <h1 class="my-8 page-heading">Login</h1>
+          <%= form_with url: otp_logins_path, method: :post do |form| %>
+            <div class="flex flex-col gap-14">
+              <div class="input-group">
+                <label for="" class="label-text">Welcome! Please enter your mobile number</label>
+              </div>
+              <div class="input-group">
+                <%= form.label "mobile_number", class: "label-text" %>
+                <div tabindex="-1"
+                     class="mt-4 flex rounded border border-gray0 focus-within:border-primary">
+                  <div class="flex items-center justify-center border-r h-[52px] w-[96px] border-gray0 focus-within:border-primary">
+                    <img src="/assets/india.png" alt="IN" class="h-8 w-8 rounded-full flag-box-shadow"/>
+                  </div>
+<!--                  <input type="number" name="id" class="border-none input-number"/>-->
+                  <%= form.text_field "mobile_number", class: "border-none input-number" %>
+                </div>
+              </div>
+              <div class="mt-8">
+                <%= form.button class: "w-full btn-primary"  do %>
+                  <span>Get OTP</span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+          <div class="mt-6">
+            <%= link_to "Login with email and password", new_session_path('user'), class: "link-text" %><br/>
+          </div>
+        </div>
+        <hr class="mt-1 border-y-2 border-primary"/>
+      </div>
+    </div>
+  </div>
+<% end %>
