@@ -7,10 +7,7 @@
         <div class="rounded-lg px-8 pt-8 pb-24 login-box-shadow">
           <h1 class="my-8 text-3xl page-heading">Forgot password?</h1>
           <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-            <div class="text-sm text-gray-700">
-              <%= render "devise/shared/error_messages", resource: resource %>
-            </div>
-
+            <%= render "devise/shared/error_messages", resource: resource %>
             <div class="flex flex-col gap-14">
               <div class="input-group">
                 <label for="" class="label-text">No worries. We&apos;ll send you reset instructions.</label>
@@ -32,7 +29,7 @@
           <% end %>
 
           <div class="mt-6">
-            <%= link_to "Login", new_session_path(resource_name), class: "link-text" %><br/>
+            <%= link_to "Login with email and password", new_session_path(resource_name), class: "link-text" %><br/>
           </div>
         </div>
         <hr class="mt-1 border-y-2 border-primary"/>
