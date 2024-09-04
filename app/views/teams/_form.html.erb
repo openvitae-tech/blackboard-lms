@@ -1,0 +1,36 @@
+<div class="box">
+  <div class="w-80">
+    <%= form_with(model: team) do |form| %>
+      <% if team.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(team.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+          <ul>
+            <% team.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if team.parent_team_id.present? %>
+        <%= form.hidden_field :parent_team_id %>
+      <% end %>
+
+      <div class="my-8 text-sm" >
+        <%= form.label :name, class: "text-sm font-medium" %>
+        <%= form.text_field :name, class: "input-text mt-2" %>
+      </div>
+
+      <div class="my-8 text-sm" >
+        <%= form.label :banner, class: "text-sm font-medium" %>
+        <%= form.file_field :banner, class: "input-file mt-2" %>
+      </div>
+
+      <div class="my-8 text-sm">
+        <% text = team.persisted? ? "Update" : "Create" %>
+        <%= form.submit text, class: "btn-default" %>
+      </div>
+    <% end %>
+  </div>
+</div>

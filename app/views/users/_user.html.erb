@@ -1,11 +1,11 @@
 <tr class="bg-white border-b">
-  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+  <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
     <% if policy(user).show? %>
       <%= link_to user.name || "User", user_path(user) %>
     <% else  %>
       <%= user.name || "User" %>
     <% end %>
-  </th>
+  </td>
   <td class="px-6 py-4">
     <%= role_text(user.role) %>
   </td>

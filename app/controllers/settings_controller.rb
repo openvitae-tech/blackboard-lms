@@ -25,6 +25,7 @@ class SettingsController < ApplicationController
       @members = User.where(role: "admin")
     else
       @members = @learning_partner.users
+      @teams = Team.all
     end
   end
 

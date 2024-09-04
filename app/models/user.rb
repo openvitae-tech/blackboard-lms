@@ -36,6 +36,8 @@ class User < ApplicationRecord
   has_many :courses, through: :enrollments
   has_many :notifications, dependent: :destroy
 
+  belongs_to :team
+
   def set_temp_password
     temp_password = SecureRandom.alphanumeric(8)
     self.password = self.password_confirmation = temp_password
