@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  TEST_OTP = 1212
+
   USER_ROLE_MAPPING  = {
     admin: "Admin",
     owner: "Owner",
@@ -36,7 +38,7 @@ class User < ApplicationRecord
   has_many :courses, through: :enrollments
   has_many :notifications, dependent: :destroy
 
-  belongs_to :team
+  belongs_to :team, optional: true
 
   def set_temp_password
     temp_password = SecureRandom.alphanumeric(8)
@@ -64,16 +66,19 @@ class User < ApplicationRecord
   end
 
   def set_otp!
-    if otp_generated_at && otp_generated_at < 5.minutes.ago
-      otp = rand(1000..9999)
+    if otp_generated_at.blank? || otp_generated_at < 5.minutes.ago
+      otp = test_mobile_number? ? TEST_OTP : rand(1000..9999)
       Rails.logger.info "New OTP for #{phone} is #{otp}"
-
-      update(otp: otp, otp_generated_at: DateTime.now)
+      update!(otp: otp, otp_generated_at: DateTime.now)
     end
   end
 
   private
   def password_verifier
     Rails.application.credentials.dig(:password_verifier)
+  end
+
+  def test_mobile_number?
+    phone.start_with?("11")
   end
 end

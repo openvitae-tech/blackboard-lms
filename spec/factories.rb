@@ -5,6 +5,8 @@ FactoryBot.define do
     password { "password" }
     password_confirmation { "password" }
     confirmed_at { Time.now }
+    # numbers starting with 11 will be considered as test numbers
+    phone { "11#{Faker::Number.number(digits: 8)}" }
 
     trait :admin do
       role { "admin" }
@@ -27,6 +29,11 @@ FactoryBot.define do
     name { Faker::Restaurant.name }
     content { Faker::Restaurant.description }
     logo { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+    banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+  end
+
+  factory :team do
+    name { Faker::Team.name }
     banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
   end
 
