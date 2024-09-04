@@ -3,7 +3,7 @@
     <%= render "devise/shared/left_side_desktop" %>
     <div class="flex h-full items-center justify-center right-side">
       <div class="bg-white w-[528px]">
-        <img src="/assets/login_page_logo_grey.png" alt="Superskill" class="mx-auto mb-12 h-10"/>
+        <%= image_tag "login_page_logo_grey.png",  alt: "Superskill", class: "mx-auto mb-12 h-10" %>
         <div class="rounded-lg px-8 pt-8 pb-24 login-box-shadow">
           <h1 class="my-8 page-heading">Login</h1>
           <%= form_with url: otp_logins_path, method: :post do |form| %>
@@ -16,7 +16,7 @@
                 <div tabindex="-1"
                      class="mt-4 flex rounded border border-gray0 focus-within:border-primary">
                   <div class="flex items-center justify-center border-r h-[52px] w-[96px] border-gray0 focus-within:border-primary">
-                    <img src="/assets/india.png" alt="IN" class="h-8 w-8 rounded-full flag-box-shadow"/>
+                    <%= image_tag "india.png",  alt: "IN", class: "h-8 w-8 rounded-full flag-box-shadow" %>
                   </div>
 <!--                  <input type="number" name="id" class="border-none input-number"/>-->
                   <%= form.text_field "mobile_number", class: "border-none input-number" %>
