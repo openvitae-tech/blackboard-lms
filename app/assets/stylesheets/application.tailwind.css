@@ -132,7 +132,3 @@
 .icon-small { @apply h-4 w-4; }
 .icon-medium { @apply h-8 w-8; }
 .icon-large { @apply h-10 w-10; }
-
-.home-image{
-  background-image: url("assets/home_image.png");
-}

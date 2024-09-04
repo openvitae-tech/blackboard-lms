@@ -1,12 +1,17 @@
 .left-side {
-    background-image: url("/assets/login_banner_teal.png");
+    background-image: url("<%= asset_path('login_banner_teal.png') %>");
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 .mobi-home-banner {
-    background-image: url("/assets/top_banner_teal.png");
+    background-image: url("<%= asset_url('top_banner_teal.png') %>");
     background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.home-image{
+    background-image: url("<%= asset_url('home_image.png') %>");
     background-repeat: no-repeat;
 }
 
@@ -33,3 +38,4 @@
 .select_language {
     box-shadow: 0px 1px 2px 0px #00000040;
 }
+
