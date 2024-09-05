@@ -1,35 +1,30 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Blackboard</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-prefetch" content="false">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html lang="en">
+<head>
+  <title>Blackboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="turbo-prefetch" content="false">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <script src="https://player.vimeo.com/api/player.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <script src="https://player.vimeo.com/api/player.js"></script>
 
-    <% if Rails.env.production? %>
-      <meta name="google-analytics-id" content="<%= Rails.application.credentials.dig(:google, :ga_id) %>">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.credentials.dig(:google, :ga_id) %>"></script>
-    <% end %>
+  <% if Rails.env.production? %>
+    <meta name="google-analytics-id" content="<%= Rails.application.credentials.dig(:google, :ga_id) %>">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.credentials.dig(:google, :ga_id) %>"></script>
+  <% end %>
 
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
 
-  <body class="w-full h-screen flex bg-gray-50">
-    <div class="hidden md:block">
-      <%= render "shared/sidebar" %>
-    </div>
-    <div class="overflow-y-scroll w-full">
-      <%= yield %>
-    </div>
-    <%= render "shared/modal" %>
-  </body>
+<body>
+<%= yield %>
+<%= render "shared/modal" %>
+</body>
 </html>

@@ -1,8 +1,8 @@
 <%= mobile_view do %>
   <%= render "devise/shared/top_mobile" %>
-  <div class="px-4 py-8">
+  <div class="px-4 py-6">
     <form action="">
-      <div class="mb-8">
+      <div class="mb-6">
         <h1 class="page-heading">Login</h1>
       </div>
 
@@ -20,7 +20,7 @@
             <input type="number" class="input-number border-none"/>
           </div>
         </div>
-        <div class="mt-20">
+        <div class="mt-4">
           <button class="w-full btn-primary">
             <span>Get OTP</span>
           </button>
@@ -28,7 +28,7 @@
       </div>
     </form>
     <div class="mt-6">
-      <%= link_to "Login with email and password", new_session_path('user'), class: "link-text" %><br/>
+      <%= render "devise/shared/bottom_links" %>
     </div>
   </div>
 <% end %>

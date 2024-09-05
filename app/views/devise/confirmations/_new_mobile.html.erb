@@ -1,8 +1,8 @@
 <%= mobile_view do %>
   <%= render "devise/shared/top_mobile" %>
-  <div class="px-4 py-8">
+  <div class="px-4 py-6">
     <form action="">
-      <div class="mb-8">
+      <div class="mb-6">
         <h1 class="page-heading">Didn't get confirmation ?</h1>
       </div>
       <div class="flex flex-col gap-6">
@@ -15,15 +15,15 @@
             <input id="email" type="text" class="input-text"/>
           </p>
         </div>
-        <div class="mt-20">
+        <div class="mt-4">
           <button class="btn-primary w-full">
             <span>Resend email confirmation</span>
           </button>
         </div>
       </div>
     </form>
-    <div class="mt-6">
-      <%= link_to "Login with email and password", new_session_path(resource_name), class: "link-text" %><br/>
+    <div class="mt-4">
+      <%= render "devise/shared/bottom_links" %>
     </div>
   </div>
 <% end %>

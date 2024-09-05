@@ -120,14 +120,12 @@
 }
 
 .btn-watch-demo {
-  @apply flex items-center gap-4 px-5 py-4 text-white bg-black1 max-w-[188px] rounded-[32px] md:max-w-[296px] md:gap-6 md:px-6;
+  @apply flex items-center gap-2 px-4 py-2 text-white bg-black1 max-w-[188px] rounded-[32px] md:max-w-[296px] md:gap-6 md:px-6;
 
   &:hover {
     @apply cursor-pointer text-primary;
   }
 }
-
-
 
 .icon-small { @apply h-4 w-4; }
 .icon-medium { @apply h-8 w-8; }

@@ -4,34 +4,42 @@
     <div class="flex h-full flex-col justify-between pt-14">
       <ul class="flex flex-col gap-3">
         <li class="side-bar-item">
-          <button class="side-bar-item-inner">
+          <%= link_to dashboard_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-home h-4 w-4"></span>
             <span class="">Home</span>
-          </button>
+          <% end %>
         </li>
+        <% if policy(:learning_partner).show? %>
+          <li class="side-bar-item">
+            <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>
+              <span class="icon icon-course h-4 w-4"></span>
+              <span class="">Partners</span>
+              <% end %>
+          </li>
+        <% end %>
         <li class="side-bar-item">
-          <button class="side-bar-item-inner">
+          <%= link_to courses_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-course h-4 w-4"></span>
             <span class="">My Course</span>
-          </button>
+          <% end %>
         </li>
         <li class="side-bar-item">
-          <button class="side-bar-item-inner">
+          <%= link_to "#", class: "side-bar-item-inner" do %>
             <span class="icon icon-team h-4 w-4"></span>
             <span class="">Team</span>
-          </button>
+          <% end %>
         </li>
         <li class="side-bar-item">
-          <button class="side-bar-item-inner">
+          <%= link_to "#", class: "side-bar-item-inner" do %>
             <span class="icon icon-support h-4 w-4"></span>
             <span class="">Support</span>
-          </button>
+          <% end %>
         </li>
       </ul>
     </div>
   </div>
-  <footer class="side-bar-footer">
+  <%= button_to destroy_user_session_path, class: "side-bar-footer w-full", method: :delete, data: { turbo_method: :delete } do %>
     <span class="icon icon-logout h-4 w-4"></span>
     <span class="">Logout</span>
-  </footer>
+  <% end %>
 </aside>
