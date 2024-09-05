@@ -37,7 +37,8 @@
     <% end %>
 
     <div class="mt-6">
-      <%= render "devise/shared/bottom_links" %>
+      <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
+      <%= link_to "Forgot your password?", new_password_path('user'), class: "link-text" %><br/>
     </div>
   </div>
 <% end %>

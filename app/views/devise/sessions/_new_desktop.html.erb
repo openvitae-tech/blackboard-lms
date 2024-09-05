@@ -39,19 +39,10 @@
           <% end %>
 
           <div class="mt-6">
-            <div class="flex justify-between">
-              <p>
-                <%= link_to "Forgot your password?", new_password_path(resource_name), class: "link-text" %><br/>
-              </p>
-               <p>
-                <%= link_to "Login with OTP", new_login_path, class: "link-text" %>
-              </p>
-            </div>
-            <div class="mt-4">
-              <p>
-                <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), class: "link-text" %>
-              </p>
-            </div>
+            <p>
+              <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
+              <%= link_to "Forgot your password?", new_password_path(resource_name), class: "link-text" %><br/>
+            </p>
           </div>
         </div>
         <hr class="mt-1 border-y-2 border-primary"/>

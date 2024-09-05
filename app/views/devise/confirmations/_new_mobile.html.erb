@@ -23,7 +23,9 @@
       </div>
     </form>
     <div class="mt-4">
-      <%= render "devise/shared/bottom_links" %>
+      <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
+      <%= link_to "Login with email and password", new_user_session_path, class: "link-text" %><br/>
+      <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path('user'), class: "link-text" %>
     </div>
   </div>
 <% end %>
