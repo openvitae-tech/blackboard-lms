@@ -1,4 +1,4 @@
-RSpec.fdescribe "Login with mobile number" do
+RSpec.describe "Login with mobile number" do
   describe "GET /logins/new" do
     it "renders the login with mobile page" do
       get "/logins/new"
