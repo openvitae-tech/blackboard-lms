@@ -1,0 +1,98 @@
+<%= desktop_view do %>
+  <div class="flex">
+    <%= render "shared/components/fixed_side_bar" %>
+
+    <div class="w-full">
+      <%= render "shared/components/top_header" %>
+      <main class="m-8">
+        <!-- TODO: Refactor hardcoded tailwind styles into a stylesheet -->
+
+        <div>
+          <div class="p-6">
+            <h2 class="capitalize font-semibold text-xl leading-7">
+              enrolled courses
+            </h2>
+
+            <div class="grid grid-cols-3 gap-6 mt-6">
+              <% stats_builder(@user_stats).each do |stats| %>
+                <%= render "dashboards/card", stats: stats %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="relative overflow-x-auto p-6">
+            <h2 class="capitalize font-semibold text-xl leading-7">
+              leaderboard
+            </h2>
+
+            <table class="w-full text-left mt-6">
+              <thead class="text-sm font-medium text-[#101828] capitalize bg-white rounded">
+              <tr>
+                <th scope="col" class="px-2 py-2.5">
+                  Name
+                </th>
+                <th scope="col" class="px-2 py-2.5">
+                  Score
+                </th>
+                <th scope="col" class="px-2 py-2.5">
+                  Rank
+                </th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr class="bg-white">
+                <th scope="row" class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  Jubin Shaju
+                </th>
+                <td class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  999
+                </td>
+                <td class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  1
+                </td>
+              </tr>
+
+              <tr class="bg-white">
+                <th scope="row" class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  Ashik Mathew
+                </th>
+                <td class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  888
+                </td>
+                <td class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  2
+                </td>
+              </tr>
+
+              <tr class="bg-white">
+                <th scope="row" class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  Deepak
+                </th>
+                <td class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  777
+                </td>
+                <td class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  3
+                </td>
+              </tr>
+
+              <tr class="bg-white">
+                <th scope="row" class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  Poornima
+                </th>
+                <td class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  666
+                </td>
+                <td class="font-normal px-2 py-2.5 text-[#475569] whitespace-nowrap">
+                  4
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+<% end %>
