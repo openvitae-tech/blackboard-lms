@@ -1,0 +1,45 @@
+<%= mobile_view do %>
+  <%= render "devise/shared/top_mobile" %>
+  <div class="px-4 py-6">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= f.hidden_field :reset_password_token %>
+      <div class="mb-6">
+        <h1 class="page-heading">Forgot password?</h1>
+      </div>
+
+      <div class="text-sm text-gray-700">
+        <%= render "devise/shared/error_messages", resource: resource %>
+      </div>
+
+      <div class="flex flex-col gap-6">
+        <div class="input-group">
+          <%= f.label :password, "New password", class: "label-text" %><br />
+          <% if @minimum_password_length %>
+            <em class="label-text">(<%= @minimum_password_length %> characters minimum)</em><br />
+          <% end %>
+          <p class="mt-4">
+            <%= f.password_field :password, class: "input-text", autofocus: false, autocomplete: "new-password" %>
+          </p>
+        </div>
+
+        <div class="input-group">
+          <%= f.label :password_confirmation, "Confirm new password", class: "label-text" %>
+          <p class="mt-4">
+            <%= f.password_field :password_confirmation, class: "input-text", autocomplete: "new-password" %>
+          </p>
+        </div>
+
+        <div class="mt-4">
+          <%= f.button class: "btn-primary w-full" do %>
+            <span>Update password</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="mt-6">
+      <p class="mb-2"><%= link_to "Login with OTP", new_login_path, class: "link-text" %></p>
+      <p><%= link_to "Login with email and password", new_user_session_path, class: "link-text" %></p>
+    </div>
+  </div>
+<% end %>
