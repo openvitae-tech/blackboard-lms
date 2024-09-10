@@ -30,8 +30,8 @@ module.exports = {
       slateGrey:"#708090",
       slateGrey50:"#F1F2F4",
 
-      white1: "#F6FAFF",// sidebar bg
-      primary0:"#EAF4F7",//sidebar hover
+      white1: "#F6FAFF",
+      primary0:"#EAF4F7",
       purple0:"#3456DA",   
     },
     dropShadow: {
