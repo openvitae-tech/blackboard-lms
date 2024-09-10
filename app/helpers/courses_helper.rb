@@ -11,6 +11,10 @@ module CoursesHelper
     "course_thumbnail.jpeg"
   end
 
+  def course_description(course)
+    course.description
+  end
+
   def next_lesson_path(course, course_module, current_lesson)
     next_lesson = course_module.next_lesson(current_lesson)
 
@@ -48,7 +52,6 @@ module CoursesHelper
   def course_duration(course)
     duration_in_words(course.duration)
   end
-
   def duration_in_words(duration)
     if duration > 60
       in_hours = duration.in_hours

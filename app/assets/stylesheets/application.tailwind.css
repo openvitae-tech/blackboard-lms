@@ -58,6 +58,10 @@
     span {
       @apply text-xl font-semibold;
     }
+
+    .icon {
+      @apply mr-1;
+    }
   }
 
   .link-text {
