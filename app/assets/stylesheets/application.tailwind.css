@@ -14,20 +14,20 @@
 
 @layer components {
   .input-text {
-    @apply w-full rounded border border-borderColour h-[52px] focus:border-primary focus:ring-0;
+    @apply w-full rounded border border-line-colour h-[52px] focus:border-primary focus:ring-0;
   }
 
   .input-number {
-    @apply w-full rounded border border-borderColour h-[52px] focus:border-primary focus:ring-0;
+    @apply w-full rounded border border-line-colour h-[52px] focus:border-primary focus:ring-0;
   }
 
 
   .input-check {
-    @apply h-5 w-5 border text-primary border-borderColour focus:border-primary focus:ring-0;
+    @apply h-5 w-5 border text-primary border-line-colour focus:border-primary focus:ring-0;
   }
 
   .input-text-otp {
-    @apply h-14 rounded text-center text-xl font-semibold border-borderColour min-w-[70px] text-secondary focus:border-primary focus:ring-0;
+    @apply h-14 rounded text-center text-xl font-semibold border-line-colour min-w-[70px] text-secondary focus:border-primary focus:ring-0;
   }
 
   .label-text {
@@ -50,7 +50,7 @@
   }
 
   .btn-default {
-    @apply rounded border px-4 text-center py-3.5 min-w-40 border-borderColour bg-borderColour;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour bg-line-colour;
     &:hover {
       @apply cursor-pointer opacity-95;
     }
@@ -72,7 +72,7 @@
     @apply h-11 ps-8;
 
     &:hover{
-      @apply cursor-pointer text-primary bg-primaryLight50;
+      @apply cursor-pointer text-primary bg-primary-light-50;
     }
     
     span {
@@ -85,7 +85,7 @@
   }
 
   .side-bar-item:focus-within {
-    @apply cursor-pointer text-primary bg-primaryLight50;
+    @apply cursor-pointer text-primary bg-primary-light-50;
 
     span{
       @apply cursor-pointer text-primary ;
@@ -94,10 +94,10 @@
   }
 
   .side-bar-footer{
-    @apply flex flex-row gap-4 items-center border-t-2 border-borderColour py-8 ps-8;
+    @apply flex flex-row gap-4 items-center border-t-2 border-line-colour py-8 ps-8;
 
     &:hover{
-      @apply cursor-pointer text-primary bg-primaryLight50;
+      @apply cursor-pointer text-primary bg-primary-light-50;
     }
     
     span {
@@ -106,11 +106,11 @@
   }
 
   .header-nav{
-    @apply border-b-2 border-borderColour h-20 flex flex-wrap items-center justify-between py-5;
+    @apply border-b-2 border-line-colour h-20 flex flex-wrap items-center justify-between py-5;
   }
 
   .input-search{
-    @apply block w-64 rounded-md border-0 py-2 pl-10 ring-1 ring-inset ring-borderColour;
+    @apply block w-64 rounded-md border-0 py-2 pl-10 ring-1 ring-inset ring-line-colour;
   }
   
 }

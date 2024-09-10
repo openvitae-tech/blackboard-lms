@@ -23,14 +23,14 @@
 
         <% if @search_results.present? %>
           <p class="text-base font-medium mb-4">
-            <span class="">Enrolled courses</span>&nbsp<span class="text-textLight">(<%= @enrolled_courses.count %> Courses)</span>
+            <span class="">Enrolled courses</span>&nbsp<span class="text-letter-color-light">(<%= @enrolled_courses.count %> Courses)</span>
           </p>
           <%= render "list", heading: "Search results", courses: @search_results %>
         <% end %>
 
         <% if @enrolled_courses.present? %>
           <p class="text-base font-medium mb-4">
-            <span class="">Enrolled courses</span>&nbsp<span class="text-textLight">(<%= @enrolled_courses.count %> Courses)</span>
+            <span class="">Enrolled courses</span>&nbsp<span class="text-letter-color-light">(<%= @enrolled_courses.count %> Courses)</span>
           </p>
 
           <% @enrolled_courses.each do |course| %>
@@ -40,7 +40,7 @@
 
         <% if @other_courses.present? %>
           <p class="text-base font-medium mb-4">
-            <span class="">Available courses</span>&nbsp<span class="text-textLight">(<%= @other_courses.count %> Courses)</span>
+            <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= @other_courses.count %> Courses)</span>
           </p>
           <% @other_courses.each do |course| %>
             <%= render "shared/components/course_card_with_top_image" %>
