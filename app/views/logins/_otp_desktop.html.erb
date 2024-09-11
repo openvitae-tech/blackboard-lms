@@ -4,7 +4,7 @@
     <div class="flex h-full items-center justify-center right-side">
       <div class="bg-white w-[528px]">
         <%= image_tag "login_page_logo_grey.png",  alt: "Superskill", class: "mx-auto mb-12 h-10" %>
-        <div class="rounded-lg p-8 login-box-shadow">
+        <div class="rounded-lg p-8 box-shadow-medium">
           <h1 class="my-8 page-heading">OTP</h1>
           <form action="">
             <div class="flex flex-col gap-8">
@@ -12,7 +12,7 @@
                 <label for="" class="label-text">Please enter the verification code send to</label>
                 <div class="flex justify-between">
                   <label for="number" class="label-text text-primary">+91 <%= @mobile_number %></label>
-                  <%= link_to new_login_path(old_mobile_number: @mobile_number), class: "h-6 w-6 items-center rounded-full p-1.5 edit-box-shadow" do %>
+                  <%= link_to new_login_path(old_mobile_number: @mobile_number), class: "h-6 w-6 items-center rounded-full p-1.5 box-shadow-low" do %>
                     <%= image_tag "edit.svg",  alt: "", class: "h-3 w-3" %>
                   <% end %>
                 </div>

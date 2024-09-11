@@ -30,17 +30,14 @@ module.exports = {
       "slate-grey":"#708090",
       "slate-grey-light":"#F1F2F4",
 
-      white1: "#F6FAFF",
       primary0:"#EAF4F7",
       purple0:"#3456DA",   
     },
     dropShadow: {
       sm: "0px 2px 6px 0px #1018280F",
-      medium:"0px 0px 4px 0px #33333329",
-      high: "0px 2px 12px 0px #33333329",
-      
      
     },
+    
   },
   plugins: [
     require("@tailwindcss/forms"),
