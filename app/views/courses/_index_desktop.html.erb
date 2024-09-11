@@ -6,6 +6,7 @@
       <%= render "shared/components/top_header" %>
       <main class="m-8">
         <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
+        <%= render "shared/components/bread_crumbs" %>
         <% if policy(:course).new? %>
           <div class="box flex justify-end">
             <%= link_to new_course_path, class: "btn-default btn-icon" do %>
