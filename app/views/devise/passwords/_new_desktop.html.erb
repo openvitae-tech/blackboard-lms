@@ -4,7 +4,7 @@
     <div class="flex h-full items-center justify-center right-side">
       <div class="bg-white w-[528px]">
         <%= image_tag "login_page_logo_grey.png",  alt: "Superskill", class: "mx-auto mb-12 h-10" %>
-        <div class="rounded-lg px-8 pt-8 pb-24 drop-shadow-high">
+        <div class="rounded-lg px-8 pt-8 pb-24 box-shadow-large">
           <h1 class="my-8 text-3xl page-heading">Forgot password?</h1>
           <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
             <%= render "devise/shared/error_messages", resource: resource %>

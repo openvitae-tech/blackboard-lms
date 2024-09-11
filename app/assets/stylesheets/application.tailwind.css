@@ -76,7 +76,7 @@
     @apply h-11 ps-8;
 
     &:hover{
-      @apply cursor-pointer text-primary bg-primary-light-50;
+      @apply cursor-pointer text-primary bg-primary-light;
     }
     
     span {
@@ -89,7 +89,7 @@
   }
 
   .side-bar-item:focus-within {
-    @apply cursor-pointer text-primary bg-primary-light-50;
+    @apply cursor-pointer text-primary bg-primary-light;
 
     span{
       @apply cursor-pointer text-primary ;
@@ -101,7 +101,7 @@
     @apply flex flex-row gap-4 items-center border-t-2 border-line-colour py-8 ps-8;
 
     &:hover{
-      @apply cursor-pointer text-primary bg-primary-light-50;
+      @apply cursor-pointer text-primary bg-primary-light;
     }
     
     span {
