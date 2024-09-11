@@ -1,5 +1,5 @@
 <div class="border-line-colour flex flex-row border-b px-6 pt-6" data-controller="course-description-card">
-  <div class="course-card-bg h-[208px] min-w-[140px] rounded border"></div>
+  <%= image_tag course_banner_thumbnail_vertical(course), class: "h-[208px] w-[140px] rounded-l object-cover" %>
   <div class="flex flex-col px-4 pt-2">
     <p class="text-primary mb-4 overflow-hidden text-ellipsis text-2xl font-extrabold italic">
       <%= course.title %>
@@ -34,9 +34,9 @@
 
     <div class="flex justify-end gap-4 py-6">
       <% if policy(course).unenroll? %>
-        <%= button_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "border-gary1 flex items-center gap-2 rounded border p-1 px-3" do %>
+        <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "border-gary1 flex items-center gap-2 rounded border p-1 px-3" do %>
           <span class="icon icon-minus h-4 w-4 items-center"></span>
-          <span class="text-gray1 text-xs">Drop</span>
+          <span class="text-secondary text-xs">Drop</span>
         <% end %>
       <% end %>
 
@@ -47,7 +47,7 @@
       <% end %>
 
       <% if policy(course).proceed? %>
-        <%= link_to enroll_course_path(course), data: { turbo_method: :put }, class: "bg-primary flex items-center gap-2 rounded p-1 px-3" do %>
+        <%= link_to proceed_course_path(course), class: "bg-primary flex items-center gap-2 rounded p-1 px-3" do %>
           <span class="text-xs text-white">Proceed</span>
           <span class="icon icon-next h-4 w-4 items-center"></span>
         <% end %>

@@ -1,33 +1,33 @@
-<div class="relative rounded border w-[472px] h-[252px] flex hover:border-primary">
-  <div class="h-full min-w-[140px] course-card-bg"></div>
-  <div class="relative p-4">
-    <p class="mb-2 overflow-hidden text-ellipsis text-base font-semibold text-primary max-h-[68px]">Health, Safety, and Security in
-      Food and Beverage Service
-    </p>
-    <div class="flex gap-4 items-center py-2">
-      <div class="grow h-1 bg-line-colour-light">
-        <div class="bg-primary h-1" style="width: 16%"></div>
-      </div><span class="text-primary font-bold text-sm">16%</span>
+<%= link_to course_path(course), class: "inline-block" do %>
+  <div class="rounded border w-[472px] h-[252px] flex hover:border-primary hover:cursor-pointer">
+    <%= image_tag course_banner_thumbnail_vertical(course), class: "h-full w-[140px] rounded-l object-cover" %>
+    <div class="p-4">
+      <p class="mb-2 overflow-hidden text-ellipsis text-base font-semibold text-primary max-h-[68px]">
+        <%= course.title %>
+      </p>
+      <div class="flex gap-4 items-center py-2">
+        <div class="grow h-1 bg-line-colour-light">
+          <div class="bg-primary h-1" style="width: 16%"></div>
+        </div><span class="text-primary font-bold text-sm">16%</span>
+      </div>
+      <div class="flex justify-between">
+        <div class="flex items-center">
+          <span class="icon icon-lessons h-3.5 w-3.5"></span>
+          <span class="ml-2 text-xs font-medium"><%= modules_count(course) %></span>
+        </div>
+        <div class="flex items-center">
+          <span class="icon icon-clock h-3.5 w-3.5"></span>
+          <span class="ml-2 text-xs font-medium"><%= course_duration(course) %></span>
+        </div>
+        <div class="flex items-center">
+          <span class="icon icon-user h-3.5 w-3.5"></span>
+          <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
+        </div>
+      </div>
+      <p class="mt-4 overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">Course Description</p>
+      <p class="my-3 overflow-hidden text-ellipsis text-justify text-sm tracking-tight text-letter-color-light max-h-[60px]">
+        <%= course_description(course) %>
+      </p>
     </div>
-    <div class="flex justify-between">
-      <div class="flex items-center">
-        <span class="icon icon-lessons h-3.5 w-3.5"></span>
-        <span class="ml-2 text-xs font-medium">8 Lessons</span>
-      </div>
-      <div class="flex items-center">
-        <span class="icon icon-clock h-3.5 w-3.5"></span>
-        <span class="ml-2 text-xs font-medium">1hr 10min</span>
-      </div>
-      <div class="flex items-center">
-        <span class="icon icon-user h-3.5 w-3.5"></span>
-        <span class="ml-2 text-xs font-medium">5 Enrolled</span>
-      </div>
-    </div>
-    <p class="mt-4 overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">Course Description</p>
-    <p class="my-3 overflow-hidden text-ellipsis text-justify text-sm tracking-tight text-letter-color-light max-h-[60px]">It is a long established fact that a reader will be distracted
-      by the readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted
-      by the readable content of a page when looking at its layout.</p>
   </div>
-  <a href="#" class="absolute right-4 bottom-4 flex items-center gap-1 rounded-sm px-2 py-1 text-xs font-normal tracking-tight bg-primary-light-50 text-primary hover:pointer">Show
-    More<span class="h-4 w-4 icon icon-arrow-right"></span></a>
-</div>
+<% end %>

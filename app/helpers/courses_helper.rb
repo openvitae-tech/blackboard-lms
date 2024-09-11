@@ -11,6 +11,12 @@ module CoursesHelper
     "course_thumbnail.jpeg"
   end
 
+  def course_banner_thumbnail_vertical(course)
+    return course.banner if course && course.banner.variant(resize_to_limit: [140, nil])
+
+    "course_thumbnail.jpeg"
+  end
+
   def course_description(course)
     sanitize course.description.split("\r\n").join("<br/>")
   end
