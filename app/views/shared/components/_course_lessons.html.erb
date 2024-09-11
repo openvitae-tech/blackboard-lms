@@ -29,13 +29,13 @@
           <div class="flex items-center gap-4">
             <% if enrollment && lesson_completed?(enrollment, lesson) %>
               <div class="flex items-center gap-4">
-                <span class="icon bg-primary3 border-gray6 icon-complete h-5 w-5 items-center border"></span>
+                <span class="icon bg-primary-light border-slate-grey icon-complete h-5 w-5 items-center border"></span>
               </div>
             <% end %>
 
             <% if enrollment && !lesson_completed?(enrollment, lesson) %>
               <div class="flex items-center gap-4">
-                <span class="icon bg-sandle border-gray6 icon-incomplete h-5 w-5 items-center border" ></span>
+                <span class="icon bg-gold border-slate-grey icon-incomplete h-5 w-5 items-center border" ></span>
               </div>
             <% end %>
             <span><%= lesson.title %></span>
@@ -48,7 +48,7 @@
   <!-- TODO: Item with progress bar example -->
   <!--    <li class="flex items-center justify-between border-t px-6 py-4 text-sm">-->
   <!--      <div class="flex items-center gap-4">-->
-  <!--        <span class="icon bg-sandle border-gray6 icon-incomplete h-5 w-5 items-center border"></span>-->
+  <!--        <span class="icon bg-gold border-slate-grey icon-incomplete h-5 w-5 items-center border"></span>-->
   <!--        <span>Item with progress bar example</span>-->
   <!--        <div class="flex items-center gap-4 pl-8">-->
   <!--          <div class="bg-primary2 h-1 w-[252px] rounded-full">-->
