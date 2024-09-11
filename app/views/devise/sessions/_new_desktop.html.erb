@@ -5,8 +5,8 @@
     <div class="flex h-full items-center justify-center right-side">
       <div class="bg-white w-[528px]">
         <%= image_tag "login_page_logo_grey.png", alt: "Superskill", class: "mx-auto mb-12 h-10"  %>
-        <div class="rounded-lg p-8 drop-shadow-high">
-          <h1 class="mt-8 mb-2 page-heading text-primary-light">Login</h1>
+        <div class="rounded-lg p-8 login-box-shadow">
+          <h1 class="mt-8 mb-2 page-heading">Login</h1>
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
             <div class="flex flex-col gap-6">
               <%= render "devise/shared/error_messages", resource: resource %>

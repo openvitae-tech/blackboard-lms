@@ -4,7 +4,7 @@
     <div class="right-side flex h-full items-center justify-center">
       <div class="w-[528px] bg-white">
         <%= image_tag "login_page_logo_grey.png",  alt: "Superskill", class: "mx-auto mb-12 h-10" %>
-        <div class="drop-shadow-high rounded-lg px-8 pb-24 pt-8">
+        <div class="login-box-shadow rounded-lg px-8 pb-24 pt-8">
           <h1 class="page-heading my-8 text-3xl">Didn't get confirmation ?</h1>
           <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
             <div class="flex flex-col gap-14">
