@@ -5,7 +5,7 @@
     <div class="w-full">
       <%= render "shared/components/top_header" %>
       <main class="m-8">
-        <h1 class="mb-4 text-xl font-semibold text-black0">My Courses</h1>
+        <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
         <% if policy(:course).new? %>
           <div class="box flex justify-end">
             <%= link_to new_course_path, class: "btn-default btn-icon" do %>
@@ -17,20 +17,20 @@
 
         <% if !@search_results.nil? %>
           <p class="text-base font-medium mb-4">
-            <span class="text-black0">No results for search keyword '<%= @keyword %>'</span>
+            <span class="">No results for search keyword '<%= @keyword %>'</span>
           </p>
         <% end %>
 
         <% if @search_results.present? %>
           <p class="text-base font-medium mb-4">
-            <span class="text-black0">Enrolled courses</span>&nbsp<span class="text-gray2">(<%= @enrolled_courses.count %> Courses)</span>
+            <span class="">Enrolled courses</span>&nbsp<span class="text-letter-color-light">(<%= @enrolled_courses.count %> Courses)</span>
           </p>
           <%= render "list", heading: "Search results", courses: @search_results %>
         <% end %>
 
         <% if @enrolled_courses.present? %>
           <p class="text-base font-medium mb-4">
-            <span class="text-black0">Enrolled courses</span>&nbsp<span class="text-gray2">(<%= @enrolled_courses.count %> Courses)</span>
+            <span class="">Enrolled courses</span>&nbsp<span class="text-letter-color-light">(<%= @enrolled_courses.count %> Courses)</span>
           </p>
 
           <% @enrolled_courses.each do |course| %>
@@ -40,7 +40,7 @@
 
         <% if @other_courses.present? %>
           <p class="text-base font-medium mb-4">
-            <span class="text-black0">Available courses</span>&nbsp<span class="text-gray2">(<%= @other_courses.count %> Courses)</span>
+            <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= @other_courses.count %> Courses)</span>
           </p>
           <% @other_courses.each do |course| %>
             <%= render "shared/components/course_card_with_top_image" %>

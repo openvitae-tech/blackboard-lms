@@ -14,28 +14,28 @@
 
 @layer components {
   .input-text {
-    @apply w-full rounded border border-gray0 h-[52px] focus:border-primary focus:ring-0;
+    @apply w-full rounded border border-line-colour h-[52px] focus:border-primary focus:ring-0;
   }
 
   .input-number {
-    @apply w-full rounded border border-gray0 h-[52px] focus:border-primary focus:ring-0;
+    @apply w-full rounded border border-line-colour h-[52px] focus:border-primary focus:ring-0;
   }
 
 
   .input-check {
-    @apply h-5 w-5 border text-primary border-gray0 focus:border-primary focus:ring-0;
+    @apply h-5 w-5 border text-primary border-line-colour focus:border-primary focus:ring-0;
   }
 
   .input-text-otp {
-    @apply h-14 rounded text-center text-xl font-semibold border-gray0 min-w-[70px] text-secondary focus:border-primary focus:ring-0;
+    @apply h-14 rounded text-center text-xl font-semibold border-line-colour min-w-[70px] text-secondary focus:border-primary focus:ring-0;
   }
 
   .label-text {
-    @apply text-sm font-normal text-gray1;
+    @apply text-sm font-normal;
   }
 
   .page-heading {
-    @apply text-2xl font-bold text-black0 md:text-3xl md:font-semibold;
+    @apply text-2xl font-bold md:text-3xl md:font-semibold;
   }
 
   .btn-primary {
@@ -50,18 +50,18 @@
   }
 
   .btn-default {
-    @apply rounded border px-4 text-center py-3.5 min-w-40 border-gray0 bg-gray0;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour bg-line-colour;
     &:hover {
       @apply cursor-pointer opacity-95;
     }
 
     span {
-      @apply text-xl font-semibold text-black0;
+      @apply text-xl font-semibold;
     }
   }
 
   .link-text {
-    @apply text-xs font-normal text-gray1 md:text-sm;
+    @apply text-xs font-normal md:text-sm;
 
     &:hover {
       @apply cursor-pointer text-primary;
@@ -72,11 +72,11 @@
     @apply h-11 ps-8;
 
     &:hover{
-      @apply cursor-pointer text-primary bg-primary0;
+      @apply cursor-pointer text-primary bg-primary-light-50;
     }
     
     span {
-      @apply text-gray1 text-sm font-medium;
+      @apply text-sm font-medium;
     }
   }
   
@@ -85,7 +85,7 @@
   }
 
   .side-bar-item:focus-within {
-    @apply cursor-pointer text-primary bg-primary0;
+    @apply cursor-pointer text-primary bg-primary-light-50;
 
     span{
       @apply cursor-pointer text-primary ;
@@ -94,23 +94,23 @@
   }
 
   .side-bar-footer{
-    @apply flex flex-row gap-4 items-center border-t-2 border-gray0 py-8 ps-8;
+    @apply flex flex-row gap-4 items-center border-t-2 border-line-colour py-8 ps-8;
 
     &:hover{
-      @apply cursor-pointer text-primary bg-primary0;
+      @apply cursor-pointer text-primary bg-primary-light-50;
     }
     
     span {
-      @apply text-gray1 text-sm font-medium;
+      @apply text-sm font-medium;
     }
   }
 
   .header-nav{
-    @apply border-b-2 border-gray0 h-20 flex flex-wrap items-center justify-between py-5;
+    @apply border-b-2 border-line-colour h-20 flex flex-wrap items-center justify-between py-5;
   }
 
   .input-search{
-    @apply block w-64 rounded-md border-0 py-2 pl-10 ring-1 ring-inset ring-gray0 placeholder:text-gray1;
+    @apply block w-64 rounded-md border-0 py-2 pl-10 ring-1 ring-inset ring-line-colour;
   }
   
 }
@@ -120,7 +120,7 @@
 }
 
 .btn-watch-demo {
-  @apply flex items-center gap-2 px-4 py-2 text-white bg-black1 max-w-[188px] rounded-[32px] md:max-w-[296px] md:gap-6 md:px-6;
+  @apply flex items-center gap-2 px-4 py-2 text-white bg-black max-w-[188px] rounded-[32px] md:max-w-[296px] md:gap-6 md:px-6;
 
   &:hover {
     @apply cursor-pointer text-primary;
