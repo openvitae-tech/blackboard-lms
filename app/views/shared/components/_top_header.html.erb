@@ -1,4 +1,4 @@
-<nav class="px-8 header-nav navbar-box-shadow flex items-center justify-between w-full">
+<nav class="px-8 header-nav box-shadow-medium flex items-center justify-between w-full">
   <div>
     <div class="relative rounded-md shadow-sm">
       <%= form_tag search_courses_path, method: :get do %>
@@ -16,7 +16,7 @@
       <span class="h-6 w-6 icon icon-notification"></span>
     <% end %>
     <%= link_to edit_settings_path, class: "inline-block hover:pointer" do %>
-      <%= image_tag "india.png",  alt: "INT", class: "h-6 w-6 rounded-full flag-box-shadow" %>
+      <%= image_tag "india.png",  alt: "INT", class: "h-6 w-6 rounded-full box-shadow-small" %>
     <% end %>
   </div>
 </nav>
