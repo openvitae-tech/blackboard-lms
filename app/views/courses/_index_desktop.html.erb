@@ -9,7 +9,7 @@
         <% if policy(:course).new? %>
           <div class="box flex justify-end">
             <%= link_to new_course_path, class: "btn-default btn-icon" do %>
-              <%= render "shared/svg/plus" %>
+              <span class="icon icon-plus icon-small"></span>
               <span>Add course</span>
             <% end %>
           </div>
@@ -34,7 +34,7 @@
           </p>
 
           <% @enrolled_courses.each do |course| %>
-            <%= render "shared/components/course_card_with_top_image", course: course %>
+            <%= render "shared/components/course_card_with_left_image", course: course %>
           <% end  %>
         <% end  %>
 
@@ -43,7 +43,7 @@
             <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= @other_courses.count %> Courses)</span>
           </p>
           <% @other_courses.each do |course| %>
-            <%= render "shared/components/course_card_with_top_image" %>
+            <%= render "shared/components/course_card_with_top_image", course: course %>
           <% end  %>
         <% end  %>
       </main>

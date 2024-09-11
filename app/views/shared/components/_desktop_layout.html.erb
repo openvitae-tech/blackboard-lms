@@ -1,0 +1,12 @@
+<%= desktop_view do %>
+  <div class="flex">
+    <%= render "shared/components/fixed_side_bar" %>
+
+    <div class="w-full">
+      <%= render "shared/components/top_header" %>
+      <main class="m-8">
+        <%= yield %>
+      </main>
+    </div>
+  </div>
+<% end %>
