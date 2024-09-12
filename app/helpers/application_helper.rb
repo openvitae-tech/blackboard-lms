@@ -61,4 +61,12 @@ module ApplicationHelper
       yield block
     end
   end
+
+  def supported_languages
+    LocalContent::SUPPORTED_LANGUAGES
+  end
+
+  def selected_language
+    LocalContent::SUPPORTED_LANGUAGES[(@lang || LocalContent::DEFAULT_LANGUAGE).to_sym]
+  end
 end

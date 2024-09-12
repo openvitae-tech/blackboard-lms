@@ -72,4 +72,9 @@ class CourseModule < ApplicationRecord
       quizzes.find(quizzes_in_order[index - 1])
     end
   end
+
+  def progress
+    @temp_progress ||= rand(0..100)
+    @temp_progress > 50 ? @temp_progress : 0
+  end
 end
