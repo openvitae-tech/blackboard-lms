@@ -1,3 +1,13 @@
+<div class="flex justify-end gap-4 py-8">
+  <button class="border-primary rounded border px-4 py-2">
+    <span class="text-primary text-xs">Previous</span>
+  </button>
+  <button class="bg-primary flex items-center gap-2 rounded px-4 py-2">
+    <span class="text-xs text-white">Complete & Continue</span>
+    <span class="icon icon-next h-4 w-4 items-center"></span>
+  </button>
+</div>
+
 <div class="flex gap-2 justify-end">
   <% prev_link = prev_lesson_path(course, course_module, lesson) %>
   <% if prev_link.blank? %>
