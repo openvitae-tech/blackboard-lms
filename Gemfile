@@ -83,3 +83,6 @@ gem "tailwindcss-rails", "~> 2.6.5"
 gem 'kaminari'
 
 gem "aws-sdk-s3", require: false
+gem "chartkick"
+gem "groupdate"
+

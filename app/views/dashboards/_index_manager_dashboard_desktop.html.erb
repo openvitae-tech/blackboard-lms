@@ -1,0 +1,72 @@
+<%= desktop_view do %>
+<div class="flex">
+  <%= render "shared/components/fixed_side_bar" %>
+
+  <div class="w-full">
+    <%= render "shared/components/top_header" %>
+    <main class="m-8">
+      <div class="flex items-center justify-between">
+        <p class="text-base font-medium flex gap-1">
+          <span class="">Welcome</span><span class="">Yuvaraj Singh</span>
+        </p>
+
+        <div class="p-4 flex justify-between relative">
+          <select
+            id="date-filter"
+            class="block appearance-none w-full border border-line-colour-light text-base py-2 px-3 rounded"
+          >
+            <option value="this-week" selected>This Week</option>
+            <option value="last-day">Last Day</option>
+            <option value="last-week">Last Week</option>
+            <option value="this-month">This Month</option>
+            <option value="last-month">Last Month</option>
+            <option value="last-year">Last Year</option>
+          </select>
+        </div>
+      </div>
+      <div class="box-shadow-medium rounded p-6">
+        <div class="flex items-center justify-between">
+          <p class="text-base font-semibold flex gap-1">
+            <span class="">Average Time Spent by the user on Superskill</span>
+          </p>
+          <span class="icon icon-maximize h-4 w-4"></span>
+        </div>
+        <%= render "shared/components/average_time_spend_chart" %>
+      </div>
+
+      <div class="p-6 bg-white border rounded-lg box-shadow-medium mt-6">
+        <p class="text-xl font-semibold">
+            Your team have spent in 
+            <span class="text-primary ">10hr 25 min</span> 
+            Superskill this week
+        </p>
+        <p class="mt-2 text-sm font-medium">
+            That means <span class="text-primary">200% +</span> higher than last week
+        </p>
+    
+        <div class="mt-6 flex flex-row justify-between text-start">
+            <div class="">
+                <p class="text-primary text-2xl font-bold"> 
+                   01<span class="align-baseline text-base text-primary">hr</span> : 12<span class="align-baseline text-base text-primary">min</span>
+                </p>
+                <p class="pt-1 text-sm">AVG Course Watch time</p>
+            </div>
+        
+            <div class="">
+                <p class="text-primary text-2xl font-bold">14,876</p>
+                <p class="pt-1 text-sm">AVG Course Per User</p>
+            </div>
+        
+            <div class="">
+                <p class="text-primary text-2xl font-bold">29,752</p>
+                <p class="pt-1 text-sm">User Course More Than Once</p>
+            </div>
+        </div>
+        
+    </div>
+    <%= render "shared/components/team_progress_chart" %>
+
+    </main>
+  </div>
+</div>
+<% end %>
