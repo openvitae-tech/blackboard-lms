@@ -5,14 +5,22 @@
         </label> 
         <%= image_tag "superskill_logo_teal.png",  alt: "Superskill", class: "h-3 w-16" %>
         <div class="flex gap-5">
-            <span class="h-4 w-4 icon icon-notification"></span>
-            <span class="h-4 w-4 icon icon-user-top"></span>
+          <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
+            <span class="h-6 w-6 icon icon-small icon-notification"></span>
+          <% end %>
+          <%= link_to edit_settings_path, class: "inline-block hover:pointer" do %>
+            <span class="h-6 w-6 icon icon-small icon-user-top"></span>
+          <% end %>
         </div>
     </div> 
     <div class="relative rounded-md shadow-sm w-full">
+      <%= form_tag search_courses_path, method: :get do %>
         <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
-            <span class="h-4 w-4 icon icon-search"></span>
+          <span class="h-4 w-4 icon icon-search"></span>
         </div>
-        <input type="text" name="price" id="price" class="input-search h-12 w-full" placeholder="Search courses"/>
+        <div class="border rounded-lg border-gray-200">
+          <%= text_field_tag :term, "", id: "course-search", class: "input-search w-full", placeholder: "Search courses ..." %>
+        </div>
+      <% end %>
     </div>
 </nav>

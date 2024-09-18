@@ -63,4 +63,8 @@ class Course < ApplicationRecord
     update(is_published: false)
   end
 
+  def progress
+    @course_progress ||= (course_modules.map(&:progress).reduce(&:+) / course_modules.count).round
+  end
+
 end

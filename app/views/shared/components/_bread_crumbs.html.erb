@@ -1,12 +1,10 @@
-<div class="">
+<div class="my-4">
   <ol class="flex items-center space-x-2 text-secondary text-xs">
+    <% links.each do |title| %>
     <li class="flex space-x-1">
-      <a href="#" class="">Basic of hospitality</a>
+      <span><%= title %></span>
       <span class="icon icon-simple-arrow-right h-4 w-4"></span>
     </li>
-    <li class="flex space-x-1">
-      <a href="#" class="">Course details</a>
-      <span class="icon icon-simple-arrow-right h-4 w-4"></span>
-    </li>
+    <% end %>
   </ol>
 </div>

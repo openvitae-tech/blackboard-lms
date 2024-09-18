@@ -74,7 +74,7 @@ class CourseModule < ApplicationRecord
   end
 
   def progress
-    @temp_progress ||= rand(0..100)
-    @temp_progress > 50 ? @temp_progress : 0
+    return 0 if self.lessons.count == 0
+    @temp_progress ||= (self.lessons.map(&:progress).reduce(&:+) / self.lessons.count).round
   end
 end

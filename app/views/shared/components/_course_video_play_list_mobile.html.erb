@@ -1,148 +1,61 @@
 <div class="flex flex-col justify-start text-sm font-semibold py-6">
-    <span class="">Course Overview</span>
-    <div class="flex items-center gap-4">
-      <div class="bg-primary-light-50 h-1 w-full rounded-full">
-        <div class="bg-primary h-1 rounded-full" style="width: 16%"></div>
-      </div>
-      <span class="text-primary text-sm font-bold">16%</span>
+  <span class="">Course Overview</span>
+  <div class="flex items-center gap-4">
+    <div class="bg-primary-light-50 h-1 w-full rounded-full">
+      <div class="bg-primary h-1 rounded-full" style="width: <%= course.progress %>%"></div>
     </div>
+    <span class="text-primary text-sm font-bold"><%= course.progress %>%</span>
   </div>
+</div>
+<% modules_in_order(course).each do |course_module| %>
   <details class="">
     <summary class="border-line-colour rounded border flex cursor-pointer items-center justify-between p-4">
       <h2 class="flex flex-col justify-start text-base font-semibold">
-        <span class="">Basics Of Hospitality</span>
-        <span class="text-primary">(1/8 Lessons)</span>
+        <span class=""><%= course_module.title %></span>
+        <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
       </h2>
       <span class="icon-down h-4 w-4"></span>
       <span class="icon-up hidden h-4 w-4"></span>
     </summary>
     <ul class="border-line-colour rounded border">
-      <li class="flex items-center justify-between px-4 py-4 text-sm">
-        <div class="flex items-center gap-4">
-          <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 items-center border"></span>
-          <span class="text-letter-color-light">Etiquette and Manners</span>
-        </div>
-        <span class="text-primary">Replay</span>
-      </li>
-      <li class="flex items-center justify-between border-t px-4 py-4 text-sm">
-        <div class="flex items-center gap-4">
-          <span class="text-letter-color-light">Grooming and Hygiene</span>
-          <div class="flex flex-col items-center gap-1 pl-2">
-            <span class="text-secondary text-sm font-semibold">16%</span>
-            <div class="bg-primary-light-50 h-1 w-7 rounded-full">
-              <div class="bg-secondary h-1 rounded-full" style="width: 16%"></div>
-            </div>
+      <% lessons_in_order(course_module).each do |lesson| %>
+        <li class="flex items-center justify-between border-t px-4 py-4 text-sm">
+          <div class="flex items-center gap-4">
+            <% if enrollment && lesson_completed?(enrollment, lesson) %>
+              <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 items-center border"></span>
+            <% end %>
+            <% if enrollment && !lesson_completed?(enrollment, lesson) %>
+              <span class="icon bg-gold-light border-gold icon-incomplete h-5 w-5 items-center border"></span>
+            <% end %>
+
+            <span class="text-letter-color-light"><%= lesson.title %></span>
+            <% if enrollment && !lesson_completed?(enrollment, lesson) %>
+              <div class="flex flex-col items-center gap-1 pl-2">
+                <span class="text-secondary text-sm font-semibold"><%= lesson.progress %>%</span>
+                <div class="bg-primary-light-50 h-1 w-7 rounded-full">
+                  <div class="bg-secondary h-1 rounded-full" style="width: <%= lesson.progress %>%"></div>
+                </div>
+              </div>
+            <% end %>
           </div>
-        </div>
-        <span class="icon icon-play h-4 w-4"></span>
-      </li>
-      <li class="flex items-center justify-between border-t px-4 py-4 text-sm">
-        <span class="text-letter-color-light">Guest Relations</span>
-        <span class="icon icon-play h-4 w-4"></span>
-      </li>
-      <li class="flex items-center justify-between border-t px-4 py-4 text-sm">
-        <span class="text-letter-color-light">Effective Communication</span>
-        <span class="icon icon-play h-4 w-4"></span>
-      </li>
-      <li class="flex items-center justify-between border-t px-4 py-4 text-sm">
-        <span class="text-letter-color-light">Body Language</span>
-        <span class="icon icon-play h-4 w-4"></span>
-      </li>
-      <li class="flex items-center justify-between border-t px-4 py-4 text-sm">
-        <span class="text-letter-color-light">Handling Guest Complaints</span>
-        <span class="icon icon-play h-4 w-4"></span>
-      </li>
-    
-      <li class="flex items-center justify-between border-t px-4 py-4 text-sm">
-        <span class="text-letter-color-light">Suggestive Selling and Upselling</span>
-        <span class="icon icon-play h-4 w-4"></span>
-      </li>
-      <li class="flex items-center justify-between border-t px-4 py-4 text-sm">
-        <span class="text-letter-color-light">Telephone etiquette</span>
-        <span class="icon icon-play h-4 w-4"></span>
-      </li>
-     
+          <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
+            <% if enrollment && lesson_completed?(enrollment, lesson) %>
+              <span class="text-primary">Replay</span>
+            <% else %>
+              <span class="icon icon-play h-4 w-4"></span>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
     </ul>
-    <div class="flex items-center justify-end border-t py-6 text-sm">
-      <button class="quiz_button flex items-center gap-6 rounded bg-white px-4 py-1 me-1">
-        <a href="/course-quiz-mobile">
-        <span class="text-primary text-sm">Quiz</span>
-        <span class="icon icon-arrow-right h-5 w-6 items-center"></span></a>
-      </button>
-    </div>
+    <% if course_module.has_quiz? %>
+      <div class="flex items-center justify-end border-t py-6 text-sm">
+        <button class="quiz_button flex items-center gap-6 rounded bg-white px-4 py-1 me-1">
+          <a href="/course-quiz-mobile">
+            <span class="text-primary text-sm">Quiz</span>
+            <span class="icon icon-arrow-right h-5 w-6 items-center"></span></a>
+        </button>
+      </div>
+    <% end %>
   </details>
-  
-  <div class="border-line-colour rounded border mb-2">
-    <div class="flex items-center justify-between p-4">
-      <h2 class="flex flex-col justify-start text-base font-semibold">
-        <span class="">Attributes of Food and Beverages Staff</span>
-        <span class="text-primary">(12 Lessons)</span>
-      </h2>
-      <span class="icon icon-down h-4 w-4"></span>
-    </div>
-  </div>
-  
-  <div class="border-line-colour rounded border mb-2">
-    <div class="flex items-center justify-between p-4">
-      <h2 class="flex flex-col justify-start text-base font-semibold">
-        <span class=""> Food and Beverage Service Conventions</span>
-        <span class="text-primary">(9 Lessons)</span>
-      </h2>
-      <span class="icon icon-down h-4 w-4"></span>
-    </div>
-  </div>
-  
-  <div class="border-line-colour rounded border mb-2">
-    <div class="flex items-center justify-between p-4">
-      <h2 class="flex flex-col justify-start text-base font-semibold">
-        <span class="">
-            Standard Sequence of Food and Beverages Services
-        </span>
-        <span class="text-primary">(12 Lessons)</span>
-      </h2>
-      <span class="icon icon-down h-4 w-4"></span>
-    </div>
-  </div>
-  
-  <div class="border-line-colour rounded border mb-2">
-    <div class="flex items-center justify-between p-4">
-      <h2 class="flex flex-col justify-start text-base font-semibold">
-        <span class="">Dealing with Different Types of Guests</span>
-        <span class="text-primary">(6 Lessons)</span>
-      </h2>
-      <span class="icon icon-down h-4 w-4"></span>
-    </div>
-  </div>
-  
-  <div class="border-line-colour rounded border mb-2">
-    <div class="flex items-center justify-between p-4">
-      <h2 class="flex flex-col justify-start text-base font-semibold">
-        <span class="">Guests with Additional Needs</span>
-        <span class="text-primary">(3 Lessons)</span>
-      </h2>
-      <span class="icon icon-down h-4 w-4"></span>
-    </div>
-  </div>
-  
-  <div class="border-line-colour rounded border mb-2">
-    <div class="flex items-center justify-between p-4">
-      <h2 class="flex flex-col justify-start text-base font-semibold">
-        <span class="">Basic Technical Food and Beverages Skills</span>
-        <span class="text-primary">(5 Lessons)</span>
-      </h2>
-      <span class="icon icon-down h-4 w-4"></span>
-    </div>
-  </div>
-  
-  <div class="border-line-colour rounded border mb-2">
-    <div class="flex items-center justify-between p-4">
-      <h2 class="flex flex-col justify-start text-base font-semibold">
-        <span class="">
-          Health,Safety, and Security in Food and Beverages Service
-          Establishments</span>
-        <span class="text-primary">(4 Lessons)</span>
-      </h2>
-      <span class="icon icon-down h-4 w-4"></span>
-    </div>
-  </div>
-  
+<% end %>

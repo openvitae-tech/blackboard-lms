@@ -20,6 +20,7 @@
     margin: 0;
     box-sizing: border-box;
     color: #333333;
+    letter-spacing: 0.025em;
 }
 
 @import 'actiontext.css';

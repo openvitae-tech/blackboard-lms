@@ -1,4 +1,5 @@
 <%= render "shared/components/desktop_layout" do %>
+  <%= render "shared/components/bread_crumbs", links: [@course.title, @course_module.title] %>
   <% if current_user.is_admin? %>
     <div class="text-right">
       <% if policy(@lesson).edit? %>
@@ -10,7 +11,7 @@
     </div>
   <% end %>
 
-  <p class="text-primary mb-1 overflow-hidden text-ellipsis text-2xl font-extrabold italic py-6 border">
+  <p class="text-primary mb-1 overflow-hidden text-ellipsis text-2xl font-extrabold italic py-6">
     <%= @course.title %>
   </p>
   <div class="flex flex-row gap-6" data-controller="lessons">
