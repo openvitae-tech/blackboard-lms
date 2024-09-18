@@ -1,0 +1,31 @@
+<div id="addTeamPopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden ">
+    <div class="bg-white rounded-lg shadow-lg w-[462px]">
+       <div class="flex items-center justify-between border-b p-6">
+          <span class="text-base font-semibold">Add Your Team</span>
+          <button id="cancelBtnTeam" type="button">          
+          <span class="icon icon-close h-4 w-4"></span>
+          </button>          
+       </div>
+       <form class="flex flex-col gap-6 p-6">
+          <div class="flex flex-col gap-4 items-start justify-center w-full">
+             <div class="flex flex-row gap-2 justify-between w-full">
+                <label class="text-sm" for="csv">Upload Your Logo</label>
+                <label class="text-sm text-[#E0E0E0]" for="csv">No file choosen</label>
+             </div>
+             <div class="flex gap-4 justify-center p-4 w-full border border-dashed border-primary rounded">
+                <span class="icon icon-upload h-4 w-4"></span>
+                <p class="text-sm text-primary">Choose File</p>
+             </div>
+             <input type="file" class="hidden" />                   
+          </div>
+          <div class="flex flex-col gap-4">
+             <label class="block text-sm" for="email">Team Name</label>
+             <input type="email" id="email" class="w-full px-3 py-2 border rounded" placeholder="TATA Hotels & Resorts">
+          </div>
+          <div class="flex flex-col justify-between">
+             <button type="button" class="bg-primary text-white px-4 py-2 rounded">Invite User</button>
+             <button id="teamCancelBtn" type="button" class=" px-4 py-2">Cancel</button>
+          </div>
+       </form>
+    </div>
+ </div>

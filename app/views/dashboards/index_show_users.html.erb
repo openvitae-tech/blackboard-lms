@@ -1,0 +1,37 @@
+<%= render "shared/components/desktop_layout" do %>
+    <main class="">
+       <h1 class="mb-4 pl-0 text-xl font-bold">My Team</h1>
+        <div id="team">
+          <div class="flex justify-between">
+            <!-- <p><span>TATA-Hotels</span>- <span>Top Leaders</span></p> -->
+            <div class="">
+              <ol class="flex items-center space-x-2 text-secondary text-xs">
+                <li class="flex space-x-1">
+                  <a href="#" class="">TATA-Hotels</a>
+                  <span class="icon icon-simple-arrow-right h-4 w-4"></span>
+                </li>
+                <li class="flex space-x-1">
+                  <a href="#" class="">All Users</a>
+                  <span class="icon icon-simple-arrow-right h-4 w-4"></span>
+                </li>
+              </ol>
+            </div>
+            <div class="flex justify-center gap-6">
+                <div class="relative rounded-md shadow-sm">
+                  <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
+                    <span class="icon icon-search h-4 w-4"></span>
+                  </div>
+                  <input
+                    type="text"
+                    value="Search Team Members"
+                    name="price"
+                    id="price"
+                    class="input-search"
+                    placeholder="Search courses"
+                  />
+                </div>
+                </div>
+          </div>
+          <%= render "shared/components/team_list" %> 
+    </main>
+<% end %>
