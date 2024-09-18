@@ -81,8 +81,7 @@ Rails.application.routes.draw do
   # for now dashboard path and root path are same.
   get "error_401" => "pages#unauthorized"
   get "dashboard" => "dashboards#index"
-  get "manager" => "dashboards#index_manager"
-
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
