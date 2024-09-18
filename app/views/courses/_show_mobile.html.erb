@@ -1,0 +1,11 @@
+<%= render "shared/components/mobile_layout" do %>
+<%= render "shared/components/bread_crumbs", links: [@course.title] %>
+<div class="flex">
+  <span class="icon icon-course-teal icon-small"></span>
+  <span class="text-primary ml-2 text-xs font-medium">My Courses</span>
+</div>
+<div class="course-details-box-shadow my-6 rounded">
+  <%= render "shared/components/course_description_card_mobile", course: @course %>
+  <%= render "shared/components/course_lessons_mobile", course: @course, enrollment: @enrollment %>
+</div>
+<% end %>
