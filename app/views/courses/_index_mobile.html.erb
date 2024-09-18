@@ -3,14 +3,6 @@
     <span class="icon icon-small icon-course-teal"></span>
     <h1 class="text-sm font-semibold text-primary">My Courses</h1>
   </div>
-  <% if policy(:course).new? %>
-    <div class="box flex justify-end">
-      <%= link_to new_course_path, class: "btn-default btn-icon" do %>
-        <span class="icon icon-plus icon-small"></span>
-        <span>Add course</span>
-      <% end %>
-    </div>
-  <% end %>
 
   <% if !@search_results.nil? %>
     <p class="text-base font-medium mb-4">
