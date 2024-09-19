@@ -1,0 +1,24 @@
+<div class="box-shadow-medium basis-1/2 p-6">
+    <div class="flex w-full flex-col">
+       <div class="flex flex-row justify-between">
+          <div class="flex flex-col gap-2">
+             <h3 class="text-basic font-semibold">Total views on each videos</h3>
+          </div>
+          <div class="">
+             <span class="icon icon-maximize h-4 w-4"></span>
+          </div>
+       </div>
+       <div class="w-full max-w-4xl bg-white py-6">
+          <%= line_chart [
+             { name: "Total Views", data: { "02 Aug" => 0, "03 Aug" => 50, "04 Aug" => 51, "05 Aug" => 85, "06 Aug" => 76, "07 Aug" => 80, "08 Aug" => 60 } }
+             ], height: "200px", colors: ["#0075A4"], library: {
+                plugins: {
+                   legend: { display: false } 
+                 },scales: {
+                yAxes: [{ ticks: { beginAtZero: true, max: 100, stepSize: 25 } }],
+                xAxes: [{ ticks: { autoSkip: false } }]
+             }
+             } %>
+       </div>
+    </div>
+ </div>
