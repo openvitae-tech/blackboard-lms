@@ -1,8 +1,8 @@
-<%= render "shared/header", header_options(title: "Partner", header_extended: false) %>
+<%= render "shared/components/desktop_layout" do %>
 
 <div class="box flex justify-between">
-  <%= link_to learning_partners_path, class: "btn-primary btn-icon" do %>
-    <%= render "shared/svg/back" %>
+  <%= link_to learning_partners_path, class: "btn-primary" do %>
+    <span class="icon icon-back icon-small"></span>
     <span>Back</span>
   <% end %>
 
@@ -31,3 +31,4 @@
 </div>
 
 <%= render "users/user_list", users: @learning_partner.users, learning_partner: @learning_partner %>
+<% end %>

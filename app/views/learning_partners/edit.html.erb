@@ -1,4 +1,4 @@
-<%= render "shared/header", header_options(title: "Partner", header_extended: false) %>
+<%= render "shared/components/desktop_layout" do %>
 
 <div class="my-8 mx-4">
   <%= link_to learning_partners_path, class: "btn-primary btn-icon" do %>
@@ -10,3 +10,4 @@
 <div class="box">
   <%= render "form", learning_partner: @learning_partner %>
 </div>
+<% end %>

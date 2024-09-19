@@ -1,5 +1,9 @@
-<%= render "shared/header", header_options(title: "Partners", header_extended: false) %>
-<div class="box text-right"><%= link_to "New Learning Partner", new_learning_partner_path, class: "btn-default" %></div>
+<%= render "shared/components/desktop_layout" do %>
+<div class="box text-right">
+  <%= link_to new_learning_partner_path, class: "btn-default" do %>
+    <span>Add Partner</span>
+  <% end %>
+</div>
 
 <div class="box">
   <ul id="users" class="w-fit">
@@ -17,4 +21,4 @@
     <%= link_to_next_page @learning_partners, 'Next', class: "underline pointer" %>
   </div>
 </div>
-
+<% end %>
