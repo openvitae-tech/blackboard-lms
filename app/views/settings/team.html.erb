@@ -1,7 +1,7 @@
-<%= render "shared/header", header_options(title: "Team management", header_extended: true) %>
-
-<% if current_user.is_admin? %>
-  <%= render "admin_team" %>
-<% else %>
-  <%= render "user_team" %>
+<%= render "shared/components/desktop_layout" do %>
+  <% if current_user.is_admin? %>
+    <%= render "admin_team" %>
+  <% else %>
+    <%= render "user_team" %>
+  <% end %>
 <% end %>

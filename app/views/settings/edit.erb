@@ -1,13 +1,2 @@
-<%= render "shared/header", header_options(title: "Settings") %>
-<div class="box">
-  <p class="text-sm font-medium">Organization: <span class="text-sm text-gray-500"><%= org_name @learning_partner %></span></p>
-  <p class="text-sm font-medium">User role: <span class="text-sm text-gray-500"><%= role_text current_user.role %></span></p>
-</div>
-
-<%= turbo_frame_tag "edit-settings-frame" do %>
-  <%= render "settings/personal_info_form"%>
-<% end %>
-
-<%= turbo_frame_tag "change-password-frame" do %>
-  <%= render "settings/change_password_form"%>
-<% end %>
+<%= render "edit_mobile" %>
+<%= render "edit_desktop" %>

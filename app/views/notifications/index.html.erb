@@ -1,12 +1,2 @@
-<%= render "shared/header", header_options(title: "Notifications") %>
-<div class="box">
-  <% if @notifications.empty? %>
-    <p class="text-sm">You don't have any new notification </p>
-  <% end %>
-
-  <ul>
-    <% @notifications.each do |notification| %>
-      <li><small><%= notification.ntype %></small>&nbsp;<span><%= notification.text %></span> <small><i><%= time_ago_in_words notification.created_at %> ago </i></small></li>
-    <% end %>
-  </ul>
-</div>
+<%= render "index_mobile" %>
+<%= render "index_desktop" %>
