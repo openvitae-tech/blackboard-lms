@@ -1,0 +1,38 @@
+<div class="p-6 bg-white border rounded box-shadow-medium mt-6" data-controller="team-user-info">
+    <div class="flex justify-between pb-4">
+       <p class="text-xl font-semibold text-primary">
+          Balaji Balachandran
+       </p>
+       <div class="flex space-x-4">
+          <div class="flex items-center space-x-2 bg-primary-light-50 py-1 px-2 rounded" data-team-user-info-target="active">
+             <span class="bg-cover inline-block icon-green-circle  h-2 w-2"></span>
+             <p class="text-sm text-primary">Active</p>
+          </div>
+          <div class="flex items-center space-x-2 bg-danger-light py-1 px-2 rounded hidden" data-team-user-info-target="deActive">
+            <span class="bg-cover inline-block icon-red-circle  h-2 w-2"></span>
+            <p class="text-sm text-danger">Deactive</p>
+         </div>
+          <label for="" class="flex items-center cursor-pointer" data-action="click->team-user-info#toggleDropdown">
+          <span class="h-4 w-4 icon icon-more-vertical"></span>
+          </label> 
+          <div class="absolute right-6 mt-6 bg-white border rounded shadow-md hidden deactivate-menu">
+            <p class="text-xm cursor-pointer px-2 py-3" data-action="click->team-user-info#showConfirmation" data-team-user-info-target="deActiveMenu">Deactivate</p>
+        </div>
+       </div>
+    </div>
+    <div class="flex items-start space-x-6">
+       <div class="flex items-center">
+          <span class="text-sm  mr-2">Role:</span>
+          <p class="text-sm">Learner</p>
+       </div>
+       <div class="flex items-center space-x-2">
+          <span class="icon icon-at-sign h-4 w-4"></span>
+          <p class="text-sm">Balaji.balachandran@gmail.com</p>
+       </div>
+       <div class="flex items-center space-x-2">
+          <span class="icon icon-smartphone h-4 w-4"></span>
+          <p class="text-sm">9746765250</p>
+       </div>
+    </div>
+    <%= render "shared/components/team_user_status_popup" %>  
+ </div>

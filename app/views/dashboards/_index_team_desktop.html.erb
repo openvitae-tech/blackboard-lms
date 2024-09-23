@@ -1,29 +1,30 @@
 <%= render "shared/components/desktop_layout" do %>
-<main class="">
-   <h1 class="mb-4 pl-0 text-xl font-bold">My Team</h1>
-   <div id="team">
-   <div class="flex justify-between">
-      <div class="">
-         <ol class="flex items-center space-x-2 text-secondary text-xs">
-            <li class="flex space-x-1">
-               <a href="#" class="">TATA-Hotels</a>
-               <span class="icon icon-simple-arrow-right h-4 w-4"></span>
-            </li>
-            <li class="flex space-x-1">
-               <a href="#" class="">Top Leaders</a>
-               <span class="icon icon-simple-arrow-right h-4 w-4"></span>
-            </li>
-         </ol>
+<main class="" >
+   <div data-controller="teams">
+      <h1 class="mb-4 pl-0 text-xl font-bold">My Team</h1>
+      <div class="flex justify-between">
+         <div class="">
+            <ol class="flex items-center space-x-2 text-secondary text-xs">
+               <li class="flex space-x-1">
+                  <a href="#" class="">TATA-Hotels</a>
+                  <span class="icon icon-simple-arrow-right h-4 w-4"></span>
+               </li>
+               <li class="flex space-x-1">
+                  <a href="#" class="">Top Leaders</a>
+                  <span class="icon icon-simple-arrow-right h-4 w-4"></span>
+               </li>
+            </ol>
+         </div>
+         <%= render "shared/components/team_header_part" %>
       </div>
-      <%= render "shared/components/team_header_part" %>
+      <div class="flex justify-end pt-5">
+         <a href="/show-users">
+         Show All Users
+         <span class="icon icon-show-users ms-4 h-4 w-4 items-center"></span>
+         </a>
+      </div>
+      <%= render "shared/components/team_list" %> 
+      <%= render "shared/components/team_add_component" %>
    </div>
-   <div class="flex justify-end pt-5">
-      <a href="/show-users">
-      Show All Users
-      <span class="icon icon-show-users ms-4 h-4 w-4 items-center"></span>
-      </a>
-   </div>
-   <%= render "shared/components/team_list" %> 
-   <%= render "shared/components/team_add_component" %>
 </main>
 <% end %>

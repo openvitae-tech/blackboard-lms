@@ -1,0 +1,29 @@
+<div class="fixed inset-0 bg-black bg-opacity-75 hidden deactivate-confirmation">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white rounded shadow-md">
+            <div class="border-b">
+                <h2 class="text-base font-semibold p-6">Deactivate</h2>
+            </div>
+            <p class="text-sm mb-4 p-6">Do you want Deactivate <span>Balaji Balachandran</span> ?</p>
+            <div class="px-6 pb-6 flex flex-col">
+                <button data-action="click->team-user-info#confirm" id="de-activate-yes" class="bg-danger text-white px-4 py-2 rounded w-[414px] h-14">Yes</button>
+                <button data-action="click->team-user-info#cancel" id="de-activate-no" class="  px-4 py-2 w-[414px] h-14">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fixed inset-0 bg-black bg-opacity-75 hidden activate-confirmation">
+  <div class="flex items-center justify-center min-h-screen">
+      <div class="bg-white rounded shadow-md">
+          <div class="border-b">
+              <h2 class="text-base font-semibold p-6">Activate</h2>
+          </div>
+          <p class="text-sm mb-4 p-6">Do you want Activate <span>Balaji Balachandran</span> ?</p>
+          <div class="px-6 pb-6 flex flex-col">
+              <button data-action="click->team-user-info#confirm" id="activate-yes" class="bg-primary text-white px-4 py-2 rounded w-[414px] h-14">Yes</button>
+              <button data-action="click->team-user-info#cancel" id="activate-no" class="  px-4 py-2 w-[414px] h-14">No</button>
+          </div>
+      </div>
+  </div>
+</div>
