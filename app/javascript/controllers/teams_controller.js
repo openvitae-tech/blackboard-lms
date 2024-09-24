@@ -11,30 +11,24 @@ export default class extends Controller {
   ];
 
   addUser(event) {
-    const buttonId = event.currentTarget.id;
-    console.log("hi");
-
-    if (buttonId === "add-user-btn") {
+    const buttonDataAction = event.currentTarget.dataset.actiontype;
+    if (buttonDataAction === "addUser") {
       this.inviteUserPopupTarget.classList.remove("hidden");
-    } else if (buttonId === "add-team-btn") {
+    } else if (buttonDataAction === "addTeam") {
       this.addTeamPopupTarget.classList.remove("hidden");
     }
   }
 
   closePopup(event) {
-    const buttonId = event.currentTarget.id;
-    if (buttonId === "user-cancel-btn" || buttonId === "cancel-btn-user") {
+    const buttonDataAction = event.currentTarget.dataset.actiontype;
+    if (buttonDataAction === "addUserNo") {
       this.inviteUserPopupTarget.classList.add("hidden");
-    } else if (
-      buttonId === "team-cancel-btn" ||
-      buttonId === "cancel-btn-team"
-    ) {
+    } else if (buttonDataAction === "addTeamNo") {
       this.addTeamPopupTarget.classList.add("hidden");
     }
   }
   chooseFile(event) {
     const containerId = event.currentTarget.getAttribute("data-upload-id");
-
     if (containerId === "upload-logo") {
       this.logoFileInputTarget.click();
     } else if (containerId === "upload-csv") {
@@ -42,12 +36,12 @@ export default class extends Controller {
     }
   }
   handleFileChange(event) {
-    const inputId = event.currentTarget.id;
+    console.log("hi");
+    const inputId = event.currentTarget.dataset.content;
     const fileName = event.target.files[0]?.name || "No file chosen";
-
-    if (inputId === "logo-file-input") {
+    if (inputId === "logoFileInput") {
       this.logoFileLabelTarget.textContent = fileName; 
-    } else if (inputId === "csv-file-input") {
+    } else if (inputId === "csvFileInput") {
       this.csvFileLabelTarget.textContent = fileName; 
     }
   }

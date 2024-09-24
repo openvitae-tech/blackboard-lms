@@ -2,7 +2,7 @@
    <div class="bg-white rounded-lg shadow-lg w-[462px]">
       <div class="flex items-center justify-between border-b p-6">
          <span class="text-base font-semibold">Add Your Team</span>
-         <button id="cancel-btn-team" type="button" data-action="click->teams#closePopup">          
+         <button id="cancel-btn-team" type="button" data-actionType="addTeamNo" data-action="click->teams#closePopup">          
          <span class="icon icon-close h-4 w-4"></span>
          </button>          
       </div>
@@ -16,7 +16,7 @@
               <span class="icon icon-upload h-4 w-4"></span>
               <p class="text-sm text-primary">Choose File</p>
             </div>
-            <input type="file" id="logo-file-input" class="hidden" data-teams-target="logoFileInput" data-action="change->teams#handleFileChange" />
+            <input type="file" id="logo-file-input" class="hidden" data-content="logoFileInput"  data-teams-target="logoFileInput" data-action="change->teams#handleFileChange" />
          </div>
          <div class="flex flex-col gap-4">
             <label class="block text-sm" for="email">Team Name</label>
@@ -24,7 +24,7 @@
          </div>
          <div class="flex flex-col justify-between">
             <button type="button" class="bg-primary text-white px-4 py-2 rounded">Invite User</button>
-            <button id="team-cancel-btn" type="button" class=" px-4 py-2" data-action="click->teams#closePopup">Cancel</button>
+            <button id="team-cancel-btn" type="button" class=" px-4 py-2" data-actionType="addTeamNo" data-action="click->teams#closePopup">Cancel</button>
          </div>
       </form>
    </div>
