@@ -23,14 +23,6 @@ After installing ruby clone the repo and then you can follow the steps below to 
 $ gem install bundler
 ```
 
-Go [here](https://nodejs.org/en/download/package-manager) and read about how to install npm and node
-
-```
-# install dependencies
-# install npm & nodejs
-$ npm install flowbite
-```
-
 ```
 # install imagemagick
 $ brew install imagemagick
@@ -85,7 +77,10 @@ $ guard
 
 ## Running using docker
 
-Install docker in your local and then type `docker-compose up` to run the application using docker in local.
-You might have to do some additional setup like generating a master key and setting the RAILS_MASTER_KEY in Dockerfile
+Install docker in your local and then build and run the application locally as follows
 
 You can build the containers using `docker-compose build` command
+
+`docker-compose up` to run the application using docker in local.
+You might have to do some additional setup like generating a master key and setting the RAILS_MASTER_KEY in Dockerfile
+

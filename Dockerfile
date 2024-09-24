@@ -28,8 +28,10 @@ RUN bundle install
 RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 RUN bundle exec bootsnap precompile --gemfile
 
-COPY package.json package-lock.json ./
-RUN npm install
+# The following steps are no longer needed with importmap
+# COPY package.json package-lock.json ./
+# RUN npm install
+
 # Copy application code
 COPY . .
 #
