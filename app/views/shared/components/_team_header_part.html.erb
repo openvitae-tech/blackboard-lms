@@ -1,22 +1,25 @@
-  <div class="flex justify-center gap-6">
-    <div class="relative rounded-md shadow-sm">
-      <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
-        <span class="icon icon-search h-4 w-4"></span>
-      </div>
-      <input
-        type="text"
-        value="Search Team Members"
-        name="price"
-        id="price"
-        class="input-search"
-        placeholder="Search courses"
-      />
+<div class="flex justify-center gap-6">
+  <div class="relative rounded-md shadow-sm">
+    <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
+      <span class="icon icon-search h-4 w-4"></span>
     </div>
-    <button id="add-user-btn" class="bg-primary flex items-center gap-2 rounded px-4 py-2">
-      <span class="icon icon-plus-white h-4 w-4 items-center"></span>
-      <span class="text-xs text-white">Add User</span>
-    </button>
+    <input
+      type="text"
+      value="Search Team Members"
+      name="price"
+      id="price"
+      class="input-search"
+      placeholder="Search courses"
+    />
   </div>
-  <%= render "shared/components/add_user" %>
-  
+  <button id="add-user-btn" class="bg-primary flex items-center gap-2 rounded px-4 py-2" data-actionType="addUser" data-action="click->teams#addUser">
+    <span class="icon icon-plus-white h-4 w-4 items-center"></span>
+    <span class="text-xs text-white">Add User</span>
+  </button>
+</div>
+<%= render "shared/components/add_user" %>
+
+
+
+
 
