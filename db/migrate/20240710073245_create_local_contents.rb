@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLocalContents < ActiveRecord::Migration[7.1]
   def change
     create_table :local_contents do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TeamManagementService
   include Singleton
 
@@ -6,7 +8,8 @@ class TeamManagementService
       name: team_params[:name],
       banner: team_params[:banner],
       learning_partner: partner,
-      parent_team_id: team_params[:parent_team_id])
+      parent_team_id: team_params[:parent_team_id]
+    )
   end
 
   def update_team!(team, team_params)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserPolicy
   attr_reader :user, :other_user
 
@@ -5,6 +7,7 @@ class UserPolicy
     @user = user
     @other_user = other_user
   end
+
   def index?
     user.is_admin? || user.is_owner? || user.is_manager?
   end
@@ -33,7 +36,7 @@ class UserPolicy
   end
 
   def destroy?
-    user != other_user && user.is_admin? || user.is_owner? || user.is_manager?
+    (user != other_user && user.is_admin?) || user.is_owner? || user.is_manager?
   end
 
   def invite_admin?

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveSeqNoFromTables < ActiveRecord::Migration[7.1]
   def change
     remove_column :course_modules, :seq_no

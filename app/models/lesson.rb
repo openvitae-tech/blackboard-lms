@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Lesson < ApplicationRecord
   belongs_to :course_module, counter_cache: true
   has_many :local_contents, dependent: :destroy
@@ -12,9 +14,9 @@ class Lesson < ApplicationRecord
     if @temp_progress > 80
       100
     elsif @temp_progress > 50
-       @temp_progress
+      @temp_progress
     else
-     0
+      0
     end
   end
 end

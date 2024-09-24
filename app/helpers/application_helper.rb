@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
+  VIMEO_REGEXP = %r{\Ahttps://vimeo\.com/\d{9}?.*}
+  VIMEO_BASE_URL = 'https://player.vimeo.com/video/'
 
-  VIMEO_REGEXP = /\Ahttps:\/\/vimeo\.com\/\d{9}?.*/
-  VIMEO_BASE_URL = "https://player.vimeo.com/video/"
-
-  def header_options(opts={})
+  def header_options(opts = {})
     default_header_options = {
       title: nil,
       header_extended: false
@@ -13,11 +14,12 @@ module ApplicationHelper
   end
 
   def active(name, link)
-    link == name ? "active" : ""
+    link == name ? 'active' : ''
   end
 
   def vimeo_video_url(url)
-    return "" unless url.match VIMEO_REGEXP
+    return '' unless url.match VIMEO_REGEXP
+
     video_id = URI(url).path.slice(1..9)
     "#{VIMEO_BASE_URL}#{video_id}"
   end
@@ -25,19 +27,19 @@ module ApplicationHelper
   def stats_builder(user_stats)
     [
       {
-        icon: "shared/svg/book_open",
+        icon: 'shared/svg/book_open',
         value: user_stats.no_courses_enrolled.to_s,
-        message: "Courses Enrolled"
+        message: 'Courses Enrolled'
       },
       {
-        icon: "shared/svg/clock",
+        icon: 'shared/svg/clock',
         value: duration_in_words(user_stats.total_time_spent),
-        message: "Time Spent"
+        message: 'Time Spent'
       },
       {
-        icon: "shared/svg/file_text",
+        icon: 'shared/svg/file_text',
         value: user_stats.user_score,
-        message: "Score Earned"
+        message: 'Score Earned'
       }
     ]
   end
@@ -47,17 +49,18 @@ module ApplicationHelper
     # record in records must respond to :id
     h = {}
     order.each { |o| h[o] = nil }
-    records.each  { |rec| h[rec.id] = rec }
+    records.each { |rec| h[rec.id] = rec }
     h.values
   end
 
   def mobile_view(&block)
-    content_tag "div", class: "block md:hidden h-screen w-full", name: "mobile-view" do
+    content_tag 'div', class: 'block md:hidden h-screen w-full', name: 'mobile-view' do
       yield block
     end
   end
+
   def desktop_view(&block)
-    content_tag "div", class: "hidden md:block h-screen w-full", name: "desktop-view" do
+    content_tag 'div', class: 'hidden md:block h-screen w-full', name: 'desktop-view' do
       yield block
     end
   end

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class LessonsController < ApplicationController
   before_action :set_course
   before_action :set_course_module
-  before_action :set_lesson, only: %i[ show edit update destroy complete moveup movedown]
+  before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown]
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
@@ -31,7 +33,10 @@ class LessonsController < ApplicationController
     respond_to do |format|
       if @lesson.save
         service.update_lesson_ordering!(@course_module, @lesson, :create)
-        format.html { redirect_to course_module_lesson_url(@course, @course_module, @lesson), notice: "Lesson was successfully created." }
+        format.html do
+          redirect_to course_module_lesson_url(@course, @course_module, @lesson),
+                      notice: 'Lesson was successfully created.'
+        end
         format.json { render :show, status: :created, location: @lesson }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +50,10 @@ class LessonsController < ApplicationController
     authorize @lesson
     respond_to do |format|
       if @lesson.update(lesson_params)
-        format.html { redirect_to course_module_lesson_path(@course, @course_module, @lesson), notice: "Lesson was successfully updated." }
+        format.html do
+          redirect_to course_module_lesson_path(@course, @course_module, @lesson),
+                      notice: 'Lesson was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @lesson }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -62,7 +70,9 @@ class LessonsController < ApplicationController
     service.update_lesson_ordering!(@course_module, @lesson, :destroy)
 
     respond_to do |format|
-      format.html { redirect_to course_module_path(@course, @course_module), notice: "Lesson was successfully destroyed." }
+      format.html do
+        redirect_to course_module_path(@course, @course_module), notice: 'Lesson was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
@@ -109,29 +119,29 @@ class LessonsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      @course = Course.find(params[:course_id])
-    end
 
-    def set_course_module
-      @course_module = @course.course_modules.find(params[:module_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course
+    @course = Course.find(params[:course_id])
+  end
 
-    def set_lesson
-        @lesson = @course_module.lessons.find(params[:id])
-    end
+  def set_course_module
+    @course_module = @course.course_modules.find(params[:module_id])
+  end
 
+  def set_lesson
+    @lesson = @course_module.lessons.find(params[:id])
+  end
 
   # Only allow a list of trusted parameters through.
-    def lesson_params
-      params.require(:lesson).permit(:title,
-                                     :rich_description,
-                                     :video_url,
-                                     :pdf_url,
-                                     :lesson_type,
-                                     :video_streaming_source,
-                                     :course_module_id,
-                                     local_contents_attributes: [:lang, :video_url, :_destroy, :id])
-    end
+  def lesson_params
+    params.require(:lesson).permit(:title,
+                                   :rich_description,
+                                   :video_url,
+                                   :pdf_url,
+                                   :lesson_type,
+                                   :video_streaming_source,
+                                   :course_module_id,
+                                   local_contents_attributes: %i[lang video_url _destroy id])
+  end
 end

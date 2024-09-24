@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 class LearningPartnerPolicy
   attr_reader :user
 
   def initialize(user, _record)
     @user = user
   end
+
   def index?
     user.is_admin?
   end

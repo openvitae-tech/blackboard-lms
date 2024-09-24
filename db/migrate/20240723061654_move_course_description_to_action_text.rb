@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MoveCourseDescriptionToActionText < ActiveRecord::Migration[7.1]
   def change
     Course.all.find_each do |course|

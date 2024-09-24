@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 class PagesController < ApplicationController
+  layout 'devise'
 
-  layout "devise"
-
-  # Note: No route added in route definition
+  # NOTE: No route added in route definition
   # Can be used for building a landing page in future
-  def index
-  end
+  def index; end
 
   # No route added for these pages these pages should not be accessed directly
   def unauthorized

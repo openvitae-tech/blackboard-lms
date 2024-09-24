@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NotificationConcerns
   extend ActiveSupport::Concern
 
@@ -5,7 +7,7 @@ module NotificationConcerns
   end
 
   class_methods do
-    def notify(user, message, ntype="info")
+    def notify(user, message, ntype = 'info')
       notification = Notification.new do |f|
         f.user = user
         f.ntype = ntype

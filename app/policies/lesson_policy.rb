@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LessonPolicy < ApplicationPolicy
   attr_reader :user, :record
 
@@ -32,6 +34,7 @@ class LessonPolicy < ApplicationPolicy
 
   def complete?
     return false unless user.enrolled_for_course?(record.course_module.course)
+
     enrollment = user.get_enrollment_for(record.course_module.course)
     !enrollment.completed_lessons.include?(record.id)
   end

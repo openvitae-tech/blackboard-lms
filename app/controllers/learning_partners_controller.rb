@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class LearningPartnersController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_admin!
-  before_action :set_learning_partner, only: %i[ show edit update destroy ]
+  before_action :set_learning_partner, only: %i[show edit update destroy]
 
   # GET /learning_partners or /learning_partners.json
   def index
@@ -9,8 +11,7 @@ class LearningPartnersController < ApplicationController
   end
 
   # GET /learning_partners/1 or /learning_partners/1.json
-  def show
-  end
+  def show; end
 
   # GET /learning_partners/new
   def new
@@ -18,8 +19,7 @@ class LearningPartnersController < ApplicationController
   end
 
   # GET /learning_partners/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /learning_partners or /learning_partners.json
   def create
@@ -27,13 +27,15 @@ class LearningPartnersController < ApplicationController
 
     event = Event::OnboardingInitiated.new(
       partner_name: @learning_partner.name,
-      partner_id: @learning_partner.id,
+      partner_id: @learning_partner.id
     )
 
     respond_to do |format|
       if @learning_partner.save
         EventService.instance.publish_event(current_user, event)
-        format.html { redirect_to learning_partner_url(@learning_partner), notice: "Learning partner was successfully created." }
+        format.html do
+          redirect_to learning_partner_url(@learning_partner), notice: 'Learning partner was successfully created.'
+        end
         format.json { render :show, status: :created, location: @learning_partner }
       else
         format.html { render :new, status: :bad_request }
@@ -46,7 +48,9 @@ class LearningPartnersController < ApplicationController
   def update
     respond_to do |format|
       if @learning_partner.update(learning_partner_params)
-        format.html { redirect_to learning_partner_url(@learning_partner), notice: "Learning partner was successfully updated." }
+        format.html do
+          redirect_to learning_partner_url(@learning_partner), notice: 'Learning partner was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @learning_partner }
       else
         format.html { render :edit, status: :bad_request }
@@ -60,23 +64,24 @@ class LearningPartnersController < ApplicationController
     @learning_partner.destroy!
 
     respond_to do |format|
-      format.html { redirect_to learning_partners_url, notice: "Learning partner was successfully destroyed." }
+      format.html { redirect_to learning_partners_url, notice: 'Learning partner was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_learning_partner
-      @learning_partner = LearningPartner.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def learning_partner_params
-      params.require(:learning_partner).permit(:name, :content, :logo, :banner)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_learning_partner
+    @learning_partner = LearningPartner.find(params[:id])
+  end
 
-    def authorize_admin!
-      authorize :learning_partner
-    end
+  # Only allow a list of trusted parameters through.
+  def learning_partner_params
+    params.require(:learning_partner).permit(:name, :content, :logo, :banner)
+  end
+
+  def authorize_admin!
+    authorize :learning_partner
+  end
 end

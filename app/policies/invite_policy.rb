@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InvitePolicy < ApplicationPolicy
   attr_reader :user, :record
 
@@ -9,6 +11,7 @@ class InvitePolicy < ApplicationPolicy
   def new?
     user.is_admin? || user.is_manager? || user.is_owner?
   end
+
   def new_admin?
     user.is_admin?
   end

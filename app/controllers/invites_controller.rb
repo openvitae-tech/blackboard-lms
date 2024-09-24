@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Invites Controller is used to invite new partner members by the admin users.
 # This is not meant for inviting other admins.
 class InvitesController < ApplicationController
@@ -15,9 +17,9 @@ class InvitesController < ApplicationController
     @user = service.invite(invite_params[:email], invite_params[:role], @learning_partner)
 
     if @user.save
-      redirect_to request.referer, notice: "Invitation sent to user"
+      redirect_to request.referer, notice: 'Invitation sent to user'
     else
-      render "new", status: :unprocessable_entity
+      render 'new', status: :unprocessable_entity
     end
   end
 
@@ -31,7 +33,7 @@ class InvitesController < ApplicationController
       user.send_confirmation_instructions
       @message = "Invitation sent to #{user.email}"
     else
-      @message = "Failed to invite user, are you sure that this user exists ?"
+      @message = 'Failed to invite user, are you sure that this user exists ?'
     end
   end
 
@@ -43,16 +45,17 @@ class InvitesController < ApplicationController
   def create_admin
     authorize :invite
 
-    @user = UserManagementService.instance.invite(invite_admin_params[:email], "admin", nil)
+    @user = UserManagementService.instance.invite(invite_admin_params[:email], 'admin', nil)
 
     if @user.save
-      redirect_to team_settings_path, notice: "Invitation sent to user"
+      redirect_to team_settings_path, notice: 'Invitation sent to user'
     else
       render :new_admin, status: :unprocessable_entity
     end
   end
 
   private
+
   def invite_params
     params.require(:user).permit(:email, :role, :learning_partner_id)
   end

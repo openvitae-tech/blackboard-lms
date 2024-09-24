@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TeamPolicy < ApplicationPolicy
   attr_reader :user, :record
 

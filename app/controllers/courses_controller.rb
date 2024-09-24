@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class CoursesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_course, only: %i[ show edit update destroy enroll unenroll proceed publish unpublish]
+  before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
 
   # GET /courses or /courses.json
   def index
@@ -24,15 +26,14 @@ class CoursesController < ApplicationController
   end
 
   # GET /courses/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /courses or /courses.json
   def create
     @course = Course.new(course_params)
 
     if @course.save
-      redirect_to course_url(@course), notice: "Course was successfully created."
+      redirect_to course_url(@course), notice: 'Course was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -41,7 +42,7 @@ class CoursesController < ApplicationController
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
     if @course.update(course_params)
-      redirect_to course_url(@course), notice: "Course was successfully updated."
+      redirect_to course_url(@course), notice: 'Course was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -50,7 +51,7 @@ class CoursesController < ApplicationController
   # DELETE /courses/1 or /courses/1.json
   def destroy
     @course.destroy!
-    redirect_to courses_url, notice: "Course was successfully destroyed."
+    redirect_to courses_url, notice: 'Course was successfully destroyed.'
   end
 
   def enroll
@@ -58,9 +59,9 @@ class CoursesController < ApplicationController
     result = service.enroll!(current_user, @course)
 
     if result == :duplicate
-      message = "Already enrolled in this course"
+      message = 'Already enrolled in this course'
     elsif result == :ok
-      message = "Successfully enrolled for the course"
+      message = 'Successfully enrolled for the course'
     end
 
     redirect_to course_url(@course), notice: message
@@ -71,9 +72,9 @@ class CoursesController < ApplicationController
     result = service.undo_enroll!(current_user, @course)
 
     if result == :not_enrolled
-      message = "You are not enrolled in this course"
+      message = 'You are not enrolled in this course'
     elsif result == :ok
-      message = "Success"
+      message = 'Success'
     end
 
     redirect_to course_url(@course), notice: message
@@ -83,8 +84,10 @@ class CoursesController < ApplicationController
     service = CourseManagementService.instance
     enrollment = service.proceed(current_user, @course)
 
-    redirect_to course_module_lesson_path(@course, enrollment.current_module_id || @course.first_module.id, enrollment.current_lesson_id || @course.first_module.first_lesson)
+    redirect_to course_module_lesson_path(@course, enrollment.current_module_id || @course.first_module.id,
+                                          enrollment.current_lesson_id || @course.first_module.first_lesson)
   end
+
   def search
     service = CourseManagementService.instance
     @keyword = params[:term]
@@ -97,9 +100,9 @@ class CoursesController < ApplicationController
     result = service.publish!(@course)
 
     if result == :duplicate
-      message = "Course already published"
+      message = 'Course already published'
     elsif result == :ok
-      message = "Course is now available to everyone"
+      message = 'Course is now available to everyone'
     end
 
     redirect_to course_url(@course), notice: message
@@ -110,22 +113,23 @@ class CoursesController < ApplicationController
     result = service.undo_publish!(@course)
 
     if result == :duplicate
-      message = "Course already published"
+      message = 'Course already published'
     elsif result == :ok
-      message = "Course is now available to everyone"
+      message = 'Course is now available to everyone'
     end
 
     redirect_to course_url(@course), notice: message
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      @course = Course.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def course_params
-      params.require(:course).permit(:title, :rich_description, :banner)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course
+    @course = Course.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def course_params
+    params.require(:course).permit(:title, :rich_description, :banner)
+  end
 end

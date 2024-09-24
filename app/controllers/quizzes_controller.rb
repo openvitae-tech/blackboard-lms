@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class QuizzesController < ApplicationController
   before_action :set_course
   before_action :set_course_module
-  before_action :set_quiz, only: %i[ show edit update destroy submit_answer moveup movedown]
+  before_action :set_quiz, only: %i[show edit update destroy submit_answer moveup movedown]
 
   # GET /quizzes or /quizzes.json
   # GET /quizzes/1 or /quizzes/1.json
@@ -31,7 +33,9 @@ class QuizzesController < ApplicationController
     respond_to do |format|
       if @quiz.save
         service.update_quiz_ordering!(@course_module, @quiz, :create)
-        format.html { redirect_to course_module_path(@course, @course_module), notice: "Quiz was successfully created." }
+        format.html do
+          redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully created.'
+        end
         format.json { render :show, status: :created, location: @quiz }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +49,9 @@ class QuizzesController < ApplicationController
     authorize @quiz
     respond_to do |format|
       if @quiz.update(quiz_params)
-        format.html { redirect_to course_module_path(@course, @course_module), notice: "Quiz was successfully updated." }
+        format.html do
+          redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @quiz }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -62,7 +68,9 @@ class QuizzesController < ApplicationController
     service.update_quiz_ordering!(@course_module, @quiz, :destroy)
 
     respond_to do |format|
-      format.html { redirect_to course_module_path(@course, @course_module), notice: "Quiz was successfully destroyed." }
+      format.html do
+        redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
@@ -72,7 +80,13 @@ class QuizzesController < ApplicationController
     enrollment = current_user.get_enrollment_for(@course)
     CourseManagementService.instance.record_answer!(enrollment, @quiz, answer_params[:answer].downcase)
     next_quiz = @course_module.next_quiz(@quiz)
-    next_path = next_quiz.blank? ? course_module_path(@course, @course_module) : course_module_quiz_path(@course, @course_module,next_quiz)
+    next_path = if next_quiz.blank?
+                  course_module_path(@course,
+                                     @course_module)
+                else
+                  course_module_quiz_path(@course,
+                                          @course_module, next_quiz)
+                end
     redirect_to next_path
   end
 
@@ -99,29 +113,30 @@ class QuizzesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_quiz
-      @quiz = @course_module.quizzes.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def quiz_params
-      params.require(:quiz).permit(:question, :option_a, :option_b, :option_c, :option_d, :answer)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_quiz
+    @quiz = @course_module.quizzes.find(params[:id])
+  end
 
-    def answer_params
-      params.require(:quiz).permit(:answer)
-    end
+  # Only allow a list of trusted parameters through.
+  def quiz_params
+    params.require(:quiz).permit(:question, :option_a, :option_b, :option_c, :option_d, :answer)
+  end
 
-    def set_course
-      @course = Course.find(params[:course_id])
-    end
+  def answer_params
+    params.require(:quiz).permit(:answer)
+  end
 
-    def set_course_module
-      @course_module = @course.course_modules.find(params[:module_id])
-    end
+  def set_course
+    @course = Course.find(params[:course_id])
+  end
 
-    def set_lesson
-      @quiz = @course_module.quizzes.find(params[:id])
-    end
+  def set_course_module
+    @course_module = @course.course_modules.find(params[:module_id])
+  end
+
+  def set_lesson
+    @quiz = @course_module.quizzes.find(params[:id])
+  end
 end

@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 class QuizAnswer < ApplicationRecord
+  STATUS_MAPPING = {
+    correct: 'correct',
+    incorrect: 'incorrect',
+    skipped: 'skipped'
+  }.freeze
 
-  STATUS_MAPPING  = {
-    correct: "correct",
-    incorrect: "incorrect",
-    skipped: "skipped"
-  }
-
-  VALID_OPTIONS = %w[a b c d skip]
+  VALID_OPTIONS = %w[a b c d skip].freeze
 
   belongs_to :quiz
   belongs_to :enrollment

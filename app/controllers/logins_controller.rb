@@ -1,8 +1,8 @@
-class LoginsController < ApplicationController
+# frozen_string_literal: true
 
+class LoginsController < ApplicationController
   layout 'devise'
-  def new
-  end
+  def new; end
 
   def otp
     @mobile_number = params[:mobile_number]
@@ -13,9 +13,10 @@ class LoginsController < ApplicationController
       user = User.where(phone: @mobile_number).last
       service.set_otp!(user)
     else
-      redirect_to new_login_path,  notice: "Incorrect mobile number"
+      redirect_to new_login_path, notice: 'Incorrect mobile number'
     end
   end
+
   def create
     user_exists = User.exists?(phone: login_params[:mobile_number])
 
@@ -28,10 +29,10 @@ class LoginsController < ApplicationController
         build_user_session(user)
         redirect_to after_sign_in_path_for(user)
       else
-        redirect_to new_login_path,  notice: "Incorrect otp or otp expired"
+        redirect_to new_login_path, notice: 'Incorrect otp or otp expired'
       end
     else
-      redirect_to new_login_path,  notice: "Incorrect mobile number or otp"
+      redirect_to new_login_path, notice: 'Incorrect mobile number or otp'
     end
   end
 

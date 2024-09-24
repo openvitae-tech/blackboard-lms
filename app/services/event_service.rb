@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EventService
   include Singleton
   # Events are simply published into database.
@@ -7,20 +9,22 @@ class EventService
   end
 
   private
-    def build_event(user, event_data)
-      to_event_name = lambda { |obj| obj.class.name.split("::")[1].underscore }
-      Event.new do |e|
-        e.name = to_event_name.call(event_data)
-        e.partner_id = user.learning_partner_id
-        e.user_id = user.id
-        e.data = event_data.to_h
-      end
-    end
-    def publish_event_to_database(event)
-      event.save
 
-      unless event.persisted?
-        Rails.logger.error("Event logging failure: #{event.name}")
-      end
+  def build_event(user, event_data)
+    to_event_name = ->(obj) { obj.class.name.split('::')[1].underscore }
+    Event.new do |e|
+      e.name = to_event_name.call(event_data)
+      e.partner_id = user.learning_partner_id
+      e.user_id = user.id
+      e.data = event_data.to_h
     end
+  end
+
+  def publish_event_to_database(event)
+    event.save
+
+    return if event.persisted?
+
+    Rails.logger.error("Event logging failure: #{event.name}")
+  end
 end

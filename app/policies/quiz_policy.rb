@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class QuizPolicy < ApplicationPolicy
   attr_reader :user, :record
 
@@ -32,7 +34,10 @@ class QuizPolicy < ApplicationPolicy
 
   def submit_answer?
     return false if !user.present? && user.enrolled_for_course?(record.course_module.course)
-    enrollment = user.get_enrollment_for(record.course_module.course) if user.enrolled_for_course?(record.course_module.course)
+
+    if user.enrolled_for_course?(record.course_module.course)
+      enrollment = user.get_enrollment_for(record.course_module.course)
+    end
     !enrollment.quiz_answered?(record)
   end
 

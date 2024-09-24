@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCourseModules < ActiveRecord::Migration[7.1]
   def change
     create_table :course_modules do |t|

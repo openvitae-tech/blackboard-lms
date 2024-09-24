@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Course < ApplicationRecord
   include CustomValidations
 
@@ -13,11 +15,12 @@ class Course < ApplicationRecord
   scope :published, -> { where(is_published: true) }
 
   def enroll!(user, assigned_by = nil)
-    enrollments.create!(user: user, assigned_by: assigned_by)
+    enrollments.create!(user:, assigned_by:)
   end
+
   def undo_enroll!(user)
     # there will be only one enrollment record for a user, course pair
-    enrollments.where(user: user).delete_all
+    enrollments.where(user:).delete_all
   end
 
   def duration
@@ -49,7 +52,7 @@ class Course < ApplicationRecord
 
   def prev_module(current_module)
     index = course_modules_in_order.find_index(current_module.id)
-    course_modules.find(course_modules_in_order[index - 1]) if index > 0
+    course_modules.find(course_modules_in_order[index - 1]) if index.positive?
   end
 
   def published?
@@ -59,12 +62,12 @@ class Course < ApplicationRecord
   def publish!
     update(is_published: true)
   end
+
   def undo_publish!
     update(is_published: false)
   end
 
   def progress
-    @course_progress ||= (course_modules.map(&:progress).reduce(&:+) / course_modules.count).round
+    @progress ||= (course_modules.map(&:progress).reduce(&:+) / course_modules.count).round
   end
-
 end

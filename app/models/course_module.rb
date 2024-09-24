@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CourseModule < ApplicationRecord
   belongs_to :course, counter_cache: true
   has_many :lessons, dependent: :destroy
@@ -22,29 +24,29 @@ class CourseModule < ApplicationRecord
   def next_lesson(current_lesson)
     index = lessons_in_order.find_index(current_lesson.id)
 
-    if lessons_in_order[index + 1].present?
-      lessons.find(lessons_in_order[index + 1])
-    end
+    return unless lessons_in_order[index + 1].present?
+
+    lessons.find(lessons_in_order[index + 1])
   end
 
   def prev_lesson(current_lesson)
     index = lessons_in_order.find_index(current_lesson.id)
 
-    if index > 0
-      lessons.find(lessons_in_order[index - 1])
-    end
+    return unless index.positive?
+
+    lessons.find(lessons_in_order[index - 1])
   end
 
   def next_module
-    self.course.next_module(self)
+    course.next_module(self)
   end
 
   def prev_module
-    self.course.prev_module(self)
+    course.prev_module(self)
   end
 
   def has_quiz?
-    quizzes_count > 0
+    quizzes_count.positive?
   end
 
   def first_quiz
@@ -60,21 +62,22 @@ class CourseModule < ApplicationRecord
   def next_quiz(current_quiz)
     index = quizzes_in_order.find_index(current_quiz.id)
 
-    if quizzes_in_order[index + 1].present?
-      quizzes.find(quizzes_in_order[index + 1])
-    end
+    return unless quizzes_in_order[index + 1].present?
+
+    quizzes.find(quizzes_in_order[index + 1])
   end
 
   def prev_quiz(current_quiz)
     index = quizzes_in_order.find_index(current_quiz.id)
 
-    if index > 0
-      quizzes.find(quizzes_in_order[index - 1])
-    end
+    return unless index.positive?
+
+    quizzes.find(quizzes_in_order[index - 1])
   end
 
   def progress
-    return 0 if self.lessons.count == 0
-    @temp_progress ||= (self.lessons.map(&:progress).reduce(&:+) / self.lessons.count).round
+    return 0 if lessons.count.zero?
+
+    @progress ||= (lessons.map(&:progress).reduce(&:+) / lessons.count).round
   end
 end

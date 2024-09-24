@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TeamsController < ApplicationController
   before_action :authenticate_user!
 
@@ -15,9 +17,9 @@ class TeamsController < ApplicationController
   def create
     service = TeamManagementService.instance
 
-    if team_params[:parent_team_id].present? && Team.exists?(team_params[:parent_team_id])
-      service.create_team!(team_params, current_user.learning_partner)
-    end
+    return unless team_params[:parent_team_id].present? && Team.exists?(team_params[:parent_team_id])
+
+    service.create_team!(team_params, current_user.learning_partner)
   end
 
   def edit

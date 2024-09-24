@@ -1,13 +1,14 @@
-class User < ApplicationRecord
+# frozen_string_literal: true
 
+class User < ApplicationRecord
   TEST_OTP = 1212
 
-  USER_ROLE_MAPPING  = {
-    admin: "Admin",
-    owner: "Owner",
-    manager: "Manager",
-    learner: "Learner"
-  }
+  USER_ROLE_MAPPING = {
+    admin: 'Admin',
+    owner: 'Owner',
+    manager: 'Manager',
+    learner: 'Learner'
+  }.freeze
 
   USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
 
@@ -24,15 +25,15 @@ class User < ApplicationRecord
 
   validates :name, length: { minimum: 2, maximum: 255 }, allow_blank: true
   validates :role,
-           inclusion: { in: USER_ROLES ,
-                        message: "%{value} is not a valid user role" }
+            inclusion: { in: USER_ROLES,
+                         message: '%<value>s is not a valid user role' }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true
 
   belongs_to :learning_partner, optional: true
 
   # This is a self referential relationship, learner and his manager are mapped to same User model.
-  belongs_to :manager, class_name: "User", optional: true
-  has_many :learners, class_name: "User", foreign_key: "manager_id"
+  belongs_to :manager, class_name: 'User', optional: true
+  has_many :learners, class_name: 'User', foreign_key: 'manager_id'
 
   has_many :enrollments, dependent: :destroy
   has_many :courses, through: :enrollments
@@ -48,17 +49,17 @@ class User < ApplicationRecord
   end
 
   def get_temp_password
-    if self.temp_password_enc.present?
-      Rails.application.message_verifier(password_verifier).verify(self.temp_password_enc)
-    end
+    return unless temp_password_enc.present?
+
+    Rails.application.message_verifier(password_verifier).verify(temp_password_enc)
   end
 
   def enrolled_for_course?(course)
-    enrollments.exists?(course: course)
+    enrollments.exists?(course:)
   end
 
   def get_enrollment_for(course)
-    enrollments.where(course: course).first
+    enrollments.where(course:).first
   end
 
   def verified?
@@ -66,19 +67,20 @@ class User < ApplicationRecord
   end
 
   def set_otp!
-    if otp_generated_at.blank? || otp_generated_at < 5.minutes.ago
-      otp = test_mobile_number? ? TEST_OTP : rand(1000..9999)
-      Rails.logger.info "New OTP for #{phone} is #{otp}"
-      update!(otp: otp, otp_generated_at: DateTime.now)
-    end
+    return unless otp_generated_at.blank? || otp_generated_at < 5.minutes.ago
+
+    otp = test_mobile_number? ? TEST_OTP : rand(1000..9999)
+    Rails.logger.info "New OTP for #{phone} is #{otp}"
+    update!(otp:, otp_generated_at: DateTime.now)
   end
 
   private
+
   def password_verifier
-    Rails.application.credentials.dig(:password_verifier)
+    Rails.application.credentials[:password_verifier]
   end
 
   def test_mobile_number?
-    phone.start_with?("11")
+    phone.start_with?('11')
   end
 end
