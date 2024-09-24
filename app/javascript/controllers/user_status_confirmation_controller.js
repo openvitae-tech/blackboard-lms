@@ -1,29 +1,31 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["inactiveUser", "activeUser", "deActivateMenu","activateConfirmation","deactivateConfirmation"];
+  static targets = ["inactiveUser", "activeUser", "deactivateMenu","activateConfirmation","deactivateConfirmation"];
 
   confirm(event) {
-    const buttonId = event.currentTarget.id;
-    if (buttonId === "de-activate-yes") {
+    const buttonDataAction = event.currentTarget.dataset.actionType;
+    if (buttonDataAction === "deactivateYes") {
       this.deactivateConfirmationTarget.classList.add("hidden");
       this.inactiveUserTarget.classList.remove("hidden");
       this.activeUserTarget.classList.add("hidden");
-      this.deActivateMenuTarget.children[0].textContent = "Activate";
+      this.deactivateMenuTarget.children[0].textContent = "Activate";
+      this.deactivateMenuTarget.setAttribute("data-activate", "true");
+
     } else {
       this.activateConfirmationTarget.classList.add("hidden");
       this.activeUserTarget.classList.remove("hidden");
       this.inactiveUserTarget.classList.add("hidden");
-      this.deActivateMenuTarget.children[0].textContent = "Deactivate";
+      this.deactivateMenuTarget.children[0].textContent = "Deactivate";
+      this.deactivateMenuTarget.setAttribute("data-activate", "false");
+
     }
   }
-  cancel(event) {
-    const buttonId = event.currentTarget.id;
-    if (buttonId === "de-activate-no" || buttonId==="cancel-btn-deactive") {
-      this.deactivateConfirmationTarget.classList.add("hidden");
-    } else {
-      this.activateConfirmationTarget.classList.add("hidden");
-    }
-  }
+cancel(event) {
+  const buttonDataAction = event.currentTarget.dataset.actionType;
+  buttonDataAction === "deactivateNo"
+      ? this.deactivateConfirmationTarget.classList.add("hidden")
+      : this.activateConfirmationTarget.classList.add("hidden");
+}
 
 }

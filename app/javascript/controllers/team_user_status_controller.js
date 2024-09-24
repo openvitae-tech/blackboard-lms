@@ -1,19 +1,17 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["deActivateMenu","activateConfirmation","deactivateConfirmation"];
+  static targets = ["deactivateMenu","activateConfirmation","deactivateConfirmation"];
 
   toggleDropdown() {
-    this.deActivateMenuTarget.classList.toggle("hidden");
+    this.deactivateMenuTarget.classList.toggle("hidden");
   }
   showConfirmation() {
-    this.deActivateMenuTarget.textContent.trim() === "Activate" 
+    const isActivate = this.deactivateMenuTarget.getAttribute("data-activate") === "true";
+    isActivate 
         ? this.activateConfirmationTarget.classList.remove("hidden")
         : this.deactivateConfirmationTarget.classList.remove("hidden");
-
-
-    this.deActivateMenuTarget.classList.add("hidden");
-  }
-
+    this.deactivateMenuTarget.classList.add("hidden");
+}
  
 }
