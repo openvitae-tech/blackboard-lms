@@ -6,7 +6,7 @@ module.exports = {
     "./app/helpers/**/*.rb",
     "./app/javascript/**/*.js",
     "./app/views/**/*.{erb,haml,html,slim}",
-    "./node_modules/flowbite/**/*.js",
+    // "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {
@@ -29,8 +29,8 @@ module.exports = {
       "gold-light":"#FFFBE5",
       "slate-grey":"#708090",
       "slate-grey-light":"#F1F2F4",
-
-      purple0:"#3456DA",   
+      purple0:"#3456DA",
+      "black": "#000000",
     },
     dropShadow: {
       small: "0px 2px 6px 0px #1018280F", 
@@ -41,6 +41,6 @@ module.exports = {
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/container-queries"),
-    require("flowbite/plugin"),
+    // require("flowbite/plugin"),
   ],
 };
