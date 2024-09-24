@@ -253,7 +253,7 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
-    puma (6.4.2)
+    puma (6.4.3)
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
@@ -312,7 +312,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.6)
+    rexml (3.3.7)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -394,7 +394,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webrick (1.8.1)
+    webrick (1.8.2)
     websocket (1.2.10)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -430,10 +430,11 @@ DEPENDENCIES
   kaminari
   letter_opener
   pg (~> 1.1)
-  puma (>= 5.0)
+  puma (>= 6.4.3)
   pundit (~> 2.3)
   rails (= 7.1.4)
   rails-controller-testing
+  rexml (>= 3.3.3)
   rspec-rails
   rubocop
   selenium-webdriver
@@ -443,6 +444,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
+  webrick (>= 1.8.2)
 
 RUBY VERSION
    ruby 3.3.0p0
