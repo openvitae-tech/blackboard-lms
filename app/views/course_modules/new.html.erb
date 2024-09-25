@@ -1,4 +1,6 @@
-<%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
-<%= render "page_header", back_link: course_path(@course) %>
-
+<%= render "shared/components/desktop_layout" do %>
+<div class="box">
+  <%= link_to "Back", course_path(@course), class: "nav-link" %>
+</div>
 <%= render "form", course: @course, course_module: @course_module %>
+<% end %>

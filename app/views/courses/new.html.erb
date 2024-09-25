@@ -1,7 +1,6 @@
-<%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
-<%= render "page_header" %>
-
-<div class="box">
-  <h1 class="font-semibold text-xl">Create course</h1>
-</div>
-<%= render "form", course: @course %>
+<%= render "shared/components/desktop_layout" do %>
+  <div class="box">
+    <h1 class="font-semibold text-xl">Create course</h1>
+  </div>
+  <%= render "form", course: @course %>
+<% end %>

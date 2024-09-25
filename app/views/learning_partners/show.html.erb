@@ -1,20 +1,23 @@
 <%= render "shared/components/desktop_layout" do %>
 
 <div class="box flex justify-between">
-  <%= link_to learning_partners_path, class: "btn-primary" do %>
-    <span class="icon icon-back icon-small"></span>
-    <span>Back</span>
-  <% end %>
+  <%= link_to "Back", learning_partners_path, class: "nav-link" %>
 
   <div class="flex gap-4">
     <% if policy(@learning_partner).edit? %>
-      <%= link_to "Edit", edit_learning_partner_path(@learning_partner), class: "btn-primary" %>
+      <%= link_to edit_learning_partner_path(@learning_partner), class: "btn-default" do %>
+        <span>Edit</span>
+      <% end %>
     <% end  %>
     <% if policy(@learning_partner).destroy? %>
-      <%= link_to "Delete", @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-primary" %>
+      <%= link_to @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-default" do %>
+        <span>Delete</span>
+      <% end %>
     <% end  %>
     <% if policy(:invite).new? %>
-      <%= link_to "Invite user", new_invite_path(learning_partner_id: @learning_partner.id), data: { turbo_frame: "modal", modal_target: "app-modal" }, class: "btn-primary" %>
+      <%= link_to new_invite_path(learning_partner_id: @learning_partner.id), data: { turbo_frame: "modal", modal_target: "app-modal" }, class: "btn-default" do %>
+        <span>Invite User</span>
+      <% end %>
     <% end %>
   </div>
 </div>

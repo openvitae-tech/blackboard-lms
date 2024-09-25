@@ -1,5 +1,13 @@
 <%= render "shared/components/desktop_layout" do %>
-  <%= render "shared/components/bread_crumbs", links: [[@course.title, course_path(@course)]] %>
+  <% if policy(:course_module).new? %>
+    <div class="box flex justify-end">
+      <%= link_to new_course_module_path(@course), class: "btn-default" do %>
+        <span class="icon icon-plus icon-small"></span>
+        <span>Add module</span>
+      <% end %>
+    </div>
+  <% end %>
+  <%= render "shared/components/bread_crumbs", links: [@course.title] %>
   <div class="box-shadow-medium flex flex-col rounded">
     <%= render "shared/components/course_description_card", course: @course %>
     <br/>

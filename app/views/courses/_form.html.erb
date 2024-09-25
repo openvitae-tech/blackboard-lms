@@ -1,5 +1,5 @@
 <div class="box">
-  <div class="w-80">
+  <div class="w-auto">
     <%= form_with(model: course) do |form| %>
       <% if course.errors.any? %>
         <div style="color: red">
@@ -25,12 +25,14 @@
 
       <div class="my-8 text-sm" >
         <%= form.label :rich_description, "Description", class: "text-sm font-medium" %>
-        <%= form.rich_text_area :rich_description, class: "input-text mt-2" %>
+        <%= form.rich_text_area :rich_description, class: "mt-2" %>
       </div>
 
       <div class="my-8 text-sm">
         <% text = course.persisted? ? "Update" : "Create" %>
-        <%= form.submit text, class: "btn-default" %>
+        <%= form.submit class: "btn-default" do %>
+          <span><%= text %></span>
+        <% end %>
       </div>
     <% end %>
   </div>

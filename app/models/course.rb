@@ -68,6 +68,8 @@ class Course < ApplicationRecord
   end
 
   def progress
+    return 0 if course_modules.count.zero?
+
     @progress ||= (course_modules.map(&:progress).reduce(&:+) / course_modules.count).round
   end
 end

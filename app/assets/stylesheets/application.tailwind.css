@@ -51,12 +51,13 @@
 
   .btn-default {
     @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour bg-line-colour;
+
     &:hover {
       @apply cursor-pointer opacity-95;
     }
 
     span {
-      @apply text-xl font-semibold;
+      @apply text-base font-normal;
     }
 
     .icon {
@@ -134,3 +135,16 @@
 .icon-small { @apply h-4 w-4; }
 .icon-medium { @apply h-8 w-8; }
 .icon-large { @apply h-10 w-10; }
+
+
+.box {
+  @apply my-4;
+}
+
+.nav-link {
+  @apply text-xs font-normal md:text-sm;
+
+  &:hover {
+    @apply cursor-pointer text-secondary underline;
+  }
+}

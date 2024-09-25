@@ -23,8 +23,10 @@
       </div>
       <%= form.hidden_field :learning_partner_id, value: @learning_partner.id %>
       <div class="flex gap-4">
-        <%= link_to "Close", "javascript:void(0);", data: { action: "modals#close" }, class: "btn btn-primary w-1/2" %>
-        <button type="submit" class="btn-default w-1/2">Send invite</button>
+        <%= link_to "javascript:void(0);", data: { action: "modals#close" }, class: "btn-default w-1/2" do %>
+          <span>Cancel</span>
+        <% end %>
+        <button type="submit" class="btn-default w-1/2"><span>Send Invite</span></button>
       </div>
     <% end %>
   </div>

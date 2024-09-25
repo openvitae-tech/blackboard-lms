@@ -1,20 +1,19 @@
-<%= render "shared/header", header_options(title: "My Courses", header_extended: true) %>
-<%= render "page_header", back_link: course_path(@course) %>
-
+<%= render "shared/components/desktop_layout" do %>
+<div class="box">
+  <%= link_to "Back", course_path(@course), class: "nav-link" %>
+</div>
 <div class="my-8 mx-4 text-right">
   <% if policy(@course_module).edit? %>
-    <%= link_to "Edit", edit_course_module_path(@course, @course_module), class: "btn-primary" %>
+    <%= link_to edit_course_module_path(@course, @course_module), class: "btn-default" do %>
+      <span>Edit</span>
+    <% end %>
   <% end %>
   <% if policy(@course_module).destroy? %>
-    <%= link_to "Delete", course_module_path(@course, @course_module), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" }, class: "btn-primary" %>
+    <%= link_to course_module_path(@course, @course_module), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" }, class: "btn-default" do %>
+      <span>Delete</span>
+    <% end %>
   <% end %>
 </div>
-
-<% if policy(@course).proceed? %>
-  <div class="box">
-    <%= link_to "Continue", proceed_course_path(@course), class: "btn-default"%>
-  </div>
-<% end %>
 
 <%= render @course_module %>
 
@@ -22,7 +21,9 @@
   <h1 class="page-subtitle">Lessons</h1>
   <div class="text-right">
     <% if policy(@course_module).new? %>
-      <%= link_to "New lesson", new_course_module_lesson_path(@course, @course_module), class: "btn-primary" %>
+      <%= link_to new_course_module_lesson_path(@course, @course_module), class: "btn-default" do %>
+      <span>New lesson</span>
+      <% end %>
     <% end %>
   </div>
 </div>
@@ -53,7 +54,9 @@
   <h1 class="page-subtitle">Quizzes</h1>
   <div class="text-right">
     <% if policy(:quiz).new? %>
-      <%= link_to "New quiz", new_course_module_quiz_path(@course, @course_module), class: "btn-primary" %>
+      <%= link_to new_course_module_quiz_path(@course, @course_module), class: "btn-default" do %>
+        <span>New quiz</span>
+      <% end %>
     <% end  %>
   </div>
 </div>
@@ -94,4 +97,4 @@
     </div>
   <% end %>
 <% end %>
-
+<% end %>
