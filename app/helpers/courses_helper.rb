@@ -20,7 +20,7 @@ module CoursesHelper
   end
 
   def course_description(course)
-    sanitize course.description.split("\r\n").join('<br/>')
+    sanitize course.description&.split("\r\n")&.join('<br/>')
   end
 
   def next_lesson_path(course, course_module, current_lesson)
