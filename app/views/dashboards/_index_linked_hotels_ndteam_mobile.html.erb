@@ -1,0 +1,41 @@
+<%= render "shared/components/mobile_layout" do %>
+<div data-controller="teams">
+   <div class="inline-flex gap-2">
+      <span class="icon icon-team-green h-4 w-4"></span>
+      <span class="text-primary text-sm font-semibold">Team</span>
+   </div>
+   <div class="flex justify-start gap-6 mt-6">
+      <a href="" class="text-base font-normal">User</a>
+      <a href="" class="active-border text-base font-normal">Team</a>
+   </div>
+   <button class="my-4 flex justify-start">
+   <a href="#" class="text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm">
+   View all analytics
+   <span class="icon icon-arrow-right h-4 w-4"></span>
+   </a>
+   </button>
+   <div class="relative w-full">
+      <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
+         <span class="icon icon-search h-4 w-4"></span>
+      </div>
+      <input
+         type="text"
+         name="price"
+         id="price"
+         class="input-search w-full"
+         placeholder="Search Team Members"
+         />
+   </div>
+   <div class="flex items-center justify-between pt-8">
+      <p class="text-sm font-medium">Linked Hotels & Resorts</p>
+   </div>
+   <%= render "shared/components/team_hotel_list_mobile" %>
+   <div class="bg-primary rounded justify-center sticky bottom-6 end-4 start-4 text-center">
+      <button class="flex gap-2 px-4 py-5 w-full justify-center" data-actionType="addTeam" data-action="click->teams#addUser">
+      <span class="icon icon-plus-white h-4 w-4 items-center"></span>
+      <span class="text-sm text-white">Add Team</span>
+      </button>
+   </div>
+   <%= render "shared/components/add_team" %>
+</div>
+<% end %>

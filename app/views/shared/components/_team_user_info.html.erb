@@ -1,21 +1,21 @@
 <div class="p-6 bg-white  rounded box-shadow-medium mt-6" data-controller="team-user-status user-status-confirmation">
    <div class="flex justify-between pb-4">
-      <p class="text-xl font-semibold text-primary">
+      <p class="text-base font-semibold text-primary">
          Balaji Balachandran
       </p>
-      <div class="flex space-x-4">
+      <div class="flex space-x-3 items-center">
          <div class="flex items-center space-x-2 bg-primary-light-50 py-1 px-2 rounded" data-user-status-confirmation-target="activeUser">
             <span class="bg-cover inline-block icon-green-circle  h-2 w-2"></span>
-            <p class="text-sm text-primary">Active</p>
+            <p class="text-xs text-primary">Active</p>
          </div>
          <div class="flex items-center space-x-2 bg-danger-light py-1 px-2 rounded hidden" data-user-status-confirmation-target="inactiveUser">
             <span class="bg-cover inline-block icon-red-circle  h-2 w-2"></span>
-            <p class="text-sm text-danger">Deactivated</p>
+            <p class="text-xs text-danger">Deactivated</p>
          </div>
          <label for="" class="flex items-center cursor-pointer" data-action="click->team-user-status#toggleDropdown">
          <span class="h-4 w-4 icon icon-more-vertical"></span>
          </label> 
-         <div class="absolute right-6 mt-6 bg-white border rounded shadow-md hidden" 
+         <div class="absolute right-6 mt-6 bg-white rounded box-shadow-medium hidden" 
             data-team-user-status-target="deactivateMenu" 
             data-user-status-confirmation-target="deactivateMenu"
             data-activate="false">
@@ -23,9 +23,9 @@
          </div>
       </div>
    </div>
-   <div class="flex items-start space-x-6">
+   <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
       <div class="flex items-center">
-         <span class="text-sm  mr-2">Role:</span>
+         <span class="text-sm mr-2">Role:</span>
          <p class="text-sm">Learner</p>
       </div>
       <div class="flex items-center space-x-2">

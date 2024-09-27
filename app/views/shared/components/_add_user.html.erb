@@ -1,6 +1,6 @@
-<div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden" data-teams-target="inviteUserPopup">
-   <div class="bg-white rounded-lg shadow-lg w-[462px]">
-      <div class="flex items-center justify-between border-b p-6">
+<div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center md:items-center md:justify-center z-[9999] hidden" data-teams-target="inviteUserPopup">
+   <div class="bg-white rounded-lg w-[326px] md:w-[462px] md:rounded-lg md:relative absolute bottom-4 md:bottom-auto md:inset-auto">
+      <div class="flex items-center justify-between border-b border-line-colour-light p-6">
          <span class="text-base font-semibold">Invite User</span>
          <button id="cancel-btn-user" type="button" data-actionType="addUserNo" data-action="click->teams#closePopup">
          <span class="icon icon-close h-4 w-4"></span>
@@ -20,6 +20,11 @@
                </option>
                <option>Learner</option>
             </select>
+         </div>
+         <div class="flex items-center my-4">
+            <div class="flex-grow border-t border-line-colour"></div>
+            <span class="px-2 text-sm ">Or</span>
+            <div class="flex-grow border-t border-line-colour"></div>
          </div>
          <div class="flex flex-col gap-4 items-start justify-center w-full">
             <div class="flex flex-row gap-2 justify-between w-full">
