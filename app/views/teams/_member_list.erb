@@ -1,0 +1,47 @@
+<table id="teams-list" class="min-w-full rounded px-6 py-4 box-shadow-medium mt-5">
+  <thead class="border-b border-line-colour-light">
+  <tr class="px-8 py-6 text-left text-sm font-medium">
+    <th class="px-6 py-4 ">Name</th>
+    <th class="px-6 py-4 ">Email</th>
+    <th class="px-6 py-4 ">Phone</th>
+    <th class="px-6 py-4 ">Role</th>
+    <th class="px-6 py-4 ">Course</th>
+  </tr>
+  </thead>
+  <tbody class="bg-white divide-y divide-slate-grey-light px-6 py-4 ">
+  <% @team.members.each do |member| %>
+    <tr class="whitespace-nowrap text-xs font">
+      <td class="px-6 py-4  flex  gap-4 items-center">
+        <%= link_to user_path(member), class: "cursor-pointer" do %>
+          <%= image_tag "tiju.png",  alt: "useImage", class: "h-8 w-8 rounded-full" %>
+        <% end %>
+        <span class="ml-2 font-medium text-sm"><%= member.name %></span>
+        <% if user_verified?(member) %>
+          <div class="flex items-center bg-primary-light-50 gap-1 border border-primary-light p-1 rounded-sm">
+            <span class="icon icon-complete h-2 w-2 items-center"></span>
+            <span class="text-primary-light text-xs">Verified</span>
+          </div>
+        <% end %>
+      </td>
+      <td class="px-6 py-4 "><%= member.email %></td>
+      <td class="px-6 py-4 "><%= member.phone %></td>
+      <td class="px-6 py-4 "><%= role_text(member.role) %></td>
+      <td class="px-6 py-4 ">
+        <% if policy(:course_assigns).list? %>
+          <%= link_to list_course_assign_path(member), class: "inline-flex justify-center bg-gold-light gap-1 border border-gold p-1 rounded-sm", data: { turbo_frame: "assign-course-frame" } do %>
+            <span class="icon icon-assign-user h-[10px] w-[10px] items-center"></span>
+            <span class="text-xs">Assign Course</span>
+          <% end %>
+        <% end %>
+        <% if InvitePolicy.new(current_user, member).resend? %>
+          <%= link_to resend_invite_path(member, learning_partner_id: learning_partner.id), class: "inline-flex justify-center bg-primary-light-50 gap-1 border border-primary-light p-1 rounded-sm", data: { turbo_frame: "notice" } do %>
+            <span class="icon icon-re-invite h-[10px] w-[10px] items-center"></span>
+            <span class="text-primary-light text-xs">Re-Invite</span>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+
+  <% end %>
+  </tbody>
+</table>

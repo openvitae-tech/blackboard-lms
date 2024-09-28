@@ -1,0 +1,43 @@
+<%= render "shared/components/desktop_layout" do %>
+  <div data-controller="teams">
+    <div class="flex pb-2 justify-between">
+      <div class="flex items-center gap-4  w-[350px]">
+        <%= image_tag @team.banner, class: "h-8 w-8 object-cover" %>
+        <span class="font-medium text-basic pt-2"><%= @team.name  %></span>
+      </div>
+    </div>
+    <div class="mt-4">
+      <ol class="flex items-center space-x-2 text-secondary text-xs">
+        <% team_list(@team).each do |team| %>
+          <li class="flex space-x-1">
+            <%= link_to team.name, team_path(team) %>
+            <span class="icon icon-simple-arrow-right h-4 w-4"></span>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+    <div class="mb-6 mt-8 flex flex-row gap-6">
+      <%= render "shared/components/course_watch_time_chart" %>
+      <%= render "shared/components/enrolled_ratio_chart" %>
+    </div>
+
+    <div class="flex justify-end">
+      <%= link_to "#", class: "text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm" do %>
+        <span>View all analytics</span>
+        <span class="icon icon-arrow-right h-4 w-4"></span>
+      <% end %>
+    </div>
+
+    <%= render "shared/components/team_header_part" %>
+
+    <div class="flex justify-end mt-4">
+      <a href="javascript:void(0);">
+        Show all users
+        <span class="icon icon-show-users ms-4 h-4 w-4 items-center"></span>
+      </a>
+    </div>
+    <%= render "teams/member_list" %>
+    <%= render "teams/add_team" %>
+    <%= render "teams/sub_teams" %>
+  </div>
+<% end %>

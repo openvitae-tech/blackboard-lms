@@ -1,0 +1,21 @@
+<% if @team.sub_teams.empty? %>
+  <div class="border-primary box-shadow-medium mt-6 flex justify-between gap-60 rounded border border-dashed p-8">
+    <p class="w-[446px] text-sm">
+      Welcome, you can manage departments/teams under your team by adding teams for each department/team here.
+    </p>
+    <%= link_to new_team_path, data: { turbo_frame: "add-new-team-modal" }, class: "border-primary inline-flex items-center gap-2 rounded border px-4 py-2" do %>
+      <span class="icon icon-plus-green h-4 w-4 items-center"></span>
+      <span class="text-primary text-xs">Add Team</span>
+    <% end %>
+  </div>
+<% else %>
+  <div class="flex items-center justify-between pt-8">
+    <p class="text-basic font-medium">Linked Hotels & Resorts</p>
+    <%= link_to new_team_path, data: { turbo_frame: "add-new-team-modal" }, class: "bg-primary flex items-center gap-2 rounded px-4 py-2" do %>
+      <span class="icon icon-plus-white h-4 w-4 items-center"></span>
+      <span class="text-xs text-white">Add Team</span>
+    <% end %>
+  </div>
+<% end %>
+
+<%= turbo_frame_tag "add-new-team-modal" %>

@@ -10,4 +10,8 @@ class Team < ApplicationRecord
 
   belongs_to :parent_team, class_name: 'Team', optional: true
   has_many :sub_teams, class_name: 'Team', foreign_key: 'parent_team_id'
+
+  def members
+    users
+  end
 end

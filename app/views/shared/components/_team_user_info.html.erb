@@ -1,7 +1,7 @@
 <div class="p-6 bg-white  rounded box-shadow-medium mt-6" data-controller="team-user-status user-status-confirmation">
    <div class="flex justify-between pb-4">
       <p class="text-base font-semibold text-primary">
-         Balaji Balachandran
+         <%= @user.name %>
       </p>
       <div class="flex space-x-3 items-center">
          <div class="flex items-center space-x-2 bg-primary-light-50 py-1 px-2 rounded" data-user-status-confirmation-target="activeUser">
@@ -26,15 +26,15 @@
    <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
       <div class="flex items-center">
          <span class="text-sm mr-2">Role:</span>
-         <p class="text-sm">Learner</p>
+         <p class="text-sm"><%= @user.role %></p>
       </div>
       <div class="flex items-center space-x-2">
          <span class="icon icon-at-sign h-4 w-4"></span>
-         <p class="text-sm">Balaji.balachandran@gmail.com</p>
+         <p class="text-sm"><%= @user.email %></p>
       </div>
       <div class="flex items-center space-x-2">
          <span class="icon icon-smartphone h-4 w-4"></span>
-         <p class="text-sm">9746765250</p>
+         <p class="text-sm"><%= @user.phone %></p>
       </div>
    </div>
    <%= render "shared/components/team_user_status_popup" %>  

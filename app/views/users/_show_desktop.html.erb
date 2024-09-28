@@ -1,0 +1,18 @@
+<%= render "shared/components/desktop_layout" do %>
+  <h1 class="mb-4 pl-0 text-xl font-bold">Dashboard</h1>
+  <div class="">
+    <ol class="flex items-center space-x-2 text-secondary text-xs">
+      <% team_list(@user.team).each do |team| %>
+        <li class="flex space-x-1">
+          <%= link_to team.name, team_path(team) %>
+          <span class="icon icon-simple-arrow-right h-4 w-4"></span>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+  <%= render "shared/components/team_user_info" %>
+  <%= render "shared/components/team_user_course_status" %>
+  <div class="mt-4">
+    <h2 class="text-xl font-semibold">Enrolled Courses</h2>
+  </div>
+<% end %>
