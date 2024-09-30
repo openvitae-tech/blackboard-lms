@@ -1,19 +1,2 @@
-<div class="mx-4 my-8">
-  <div class="flex">
-    <div class="flex-auto text-sm ">
-      <%= link_to "Back", :back, class: "underline pointer" %>
-    </div>
-    <div class="flex-auto text-sm text-right">
-      <% if policy(@user).edit? %>
-        <%= link_to "Edit", edit_user_path(@user), class: "btn-primary" %>
-      <% end %>
-
-      <% if policy(@user).destroy? %>
-        <%= link_to "Delete", @user,data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "border rounded p-2 min-w-4 min-h-2 auto w-32 inline-block text-center" %>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<%= render @user %>
-
+<%= render "show_mobile" %>
+<%= render "show_desktop" %>

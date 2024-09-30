@@ -1,4 +1,4 @@
-<div class="flex justify-center gap-6">
+<div class="flex justify-between my-4">
   <div class="relative rounded-md shadow-sm">
     <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
       <span class="icon icon-search h-4 w-4"></span>
@@ -10,16 +10,21 @@
       id="price"
       class="input-search"
       placeholder="Search courses"
-    />
+      />
   </div>
-  <button id="add-user-btn" class="bg-primary flex items-center gap-2 rounded px-4 py-2" data-actionType="addUser" data-action="click->teams#addUser">
-    <span class="icon icon-plus-white h-4 w-4 items-center"></span>
-    <span class="text-xs text-white">Add User</span>
-  </button>
+  <div class="flex justify-center gap-6">
+    <button id="" class="bg-secondary flex items-center gap-2 rounded px-4 py-2">
+      <span class="icon icon-assign-user-white h-4 w-4 items-center"></span>
+      <span class="text-xs text-white">Assign course</span>
+    </button>
+    <% if policy(:invite).new? %>
+      <%= link_to new_invite_path(learning_partner_id: @learning_partner.id), data: { turbo_frame: "add-user-modal" }, class: "bg-primary flex items-center gap-2 rounded px-4 py-2" do %>
+        <span class="icon icon-plus-white h-4 w-4 items-center"></span>
+        <span class="text-xs text-white">Invite user</span>
+      <% end %>
+    <% end %>
+  </div>
 </div>
-<%= render "shared/components/add_user" %>
 
-
-
-
+<%= turbo_frame_tag 'add-user-modal' %>
 

@@ -1,10 +1,2 @@
-<% if policy(:invite).new? %>
-  <div class="box text-right">
-    <%= link_to "Invite user", new_invite_path(learning_partner_id: @learning_partner.id), data: { turbo_frame: "modal", modal_target: "app-modal" }, class: "btn-default" %>
-  </div>
-<% end %>
-
-<%= render "users/user_list", users: @members, learning_partner: @learning_partner %>
-<%= render "teams/team_list", teams: @teams %>
-
-<%= turbo_frame_tag "assign-course-frame" %>
+<%= render "show_mobile" %>
+<%= render "show_desktop" %>
