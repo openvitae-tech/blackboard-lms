@@ -3,8 +3,8 @@
 class UserManagementService
   include Singleton
 
-  def invite(email, role, partner)
-    user = User.new(email:, role:, learning_partner: partner)
+  def invite(email, role, team)
+    user = User.new(email:, role:, team:, learning_partner_id: team.learning_partner_id)
     user.set_temp_password
     user
   end

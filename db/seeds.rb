@@ -137,7 +137,8 @@ class DevelopmentSeed
     Course.create!(
       title: name,
       rich_description: description,
-      banner: File.open(Rails.root.join("db/data/#{banner}"))
+      banner: File.open(Rails.root.join("db/data/#{banner}")),
+      is_published: true
     )
   end
 
