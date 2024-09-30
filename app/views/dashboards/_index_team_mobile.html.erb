@@ -1,12 +1,12 @@
 <%= render "shared/components/mobile_layout" do %>
-<div data-controller="teams">
+<div data-controller="teams teams-tab-change user-show">
    <div class="inline-flex gap-2">
       <span class="icon icon-team-green h-4 w-4"></span>
       <span class="text-primary text-sm font-semibold">Team</span>
    </div>
    <div class="flex justify-start gap-6 mt-6">
-      <a href="" class="active-border text-base font-normal">User</a>
-      <a href="" class="text-base font-normal">Team</a>
+      <a href="#" data-action="click->teams-tab-change#changeTab" data-tab="user" class="active-border text-base font-normal">User</a>
+      <a href="#" data-action="click->teams-tab-change#changeTab" data-tab="team" class="text-base font-normal">Team</a>
    </div>
    <button class="my-4 flex justify-start">
    <a href="#" class="text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm">
@@ -26,22 +26,38 @@
          placeholder="Search Team Members"
          />
    </div>
-   <div class="flex justify-start my-4 hidden">
-      <span class="text-primary text-xs font-semibold">All users</span>
+   <div id="user" data-target="teams-tab-change.content" class="" data-tab="user">
+      <div class="flex justify-start my-4 hidden" data-target="user-show.allUsersSection">
+         <span class="text-primary text-xs font-semibold">All users</span>
+      </div>
+      <div class="flex justify-end my-4" data-target="user-show.showAllLink">
+         <a href="#" data-action="click->user-show#toggleAllUsers" class="text-base font-normal">
+         Show All Users
+         <span class="icon icon-show-users ms-4 h-4 w-4 items-center"></span>
+         </a>
+      </div>
+      <%= render "shared/components/team_list_mobile" %>
+      <div class="bg-primary rounded justify-center sticky bottom-6 end-4 start-4 text-center">
+         <button class="flex gap-2 px-4 py-5 w-full justify-center" data-actionType="addUser" data-action="click->teams#addUser">
+         <span class="icon icon-plus-white h-4 w-4 items-center"></span>
+         <span class="text-sm text-white">Add User</span>
+         </button>
+      </div>
+      <%= render "shared/components/add_user" %>
    </div>
-   <div class="flex justify-end my-4 ">
-      <a href="">
-      Show All Users
-      <span class="icon icon-show-users ms-4 h-4 w-4 items-center"></span>
-      </a>
+   <div id="team" data-target="teams-tab-change.content" class="hidden" data-tab="team">
+      <div class="flex items-center justify-between pt-8">
+         <p class="text-sm font-medium">Linked Hotels & Resorts</p>
+      </div>
+      <%= render "shared/components/team_hotel_list_mobile" %>
+      <div class="bg-primary rounded justify-center sticky bottom-6 end-4 start-4 text-center">
+         <button class="flex gap-2 px-4 py-5 w-full justify-center" data-actionType="addTeam" data-action="click->teams#addUser">
+         <span class="icon icon-plus-white h-4 w-4 items-center"></span>
+         <span class="text-sm text-white">Add Team</span>
+         </button>
+      </div>
+      <%= render "shared/components/add_team" %>
    </div>
-   <%= render "shared/components/team_list_mobile" %>
-   <div class="bg-primary rounded justify-center sticky bottom-6 end-4 start-4 text-center">
-      <button class="flex gap-2 px-4 py-5 w-full justify-center" data-actionType="addUser" data-action="click->teams#addUser">
-      <span class="icon icon-plus-white h-4 w-4 items-center"></span>
-      <span class="text-sm text-white">Add User</span>
-      </button>
-   </div>
-   <%= render "shared/components/add_user" %>
+</div>
 </div>
 <% end %>
