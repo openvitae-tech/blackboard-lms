@@ -3,7 +3,7 @@
     <p class="w-[446px] text-sm">
       Welcome, you can manage departments/teams under your team by adding teams for each department/team here.
     </p>
-    <%= link_to new_team_path, data: { turbo_frame: "add-new-team-modal" }, class: "border-primary inline-flex items-center gap-2 rounded border px-4 py-2" do %>
+    <%= link_to new_team_path(parent_team_id: @team.id), data: { turbo_frame: "add-new-team-modal" }, class: "border-primary inline-flex items-center gap-2 rounded border px-4 py-2" do %>
       <span class="icon icon-plus-green h-4 w-4 items-center"></span>
       <span class="text-primary text-xs">Add Team</span>
     <% end %>
