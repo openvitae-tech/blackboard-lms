@@ -14,4 +14,18 @@ class Team < ApplicationRecord
   def members
     users
   end
+
+  def team_hierarchy
+    return @team_hierarchy if @team_hierarchy.present?
+
+    @team_hierarchy = []
+    temp = self
+
+    while temp
+      @team_hierarchy.push(temp)
+      temp = team.parent_team
+    end
+
+    @team_hierarchy
+  end
 end

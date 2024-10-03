@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-# Invites Controller is used to invite new partner members by the admin users.
+# Invites Controller is used to invite new  members by the manager or owners.
 # This is not meant for inviting other admins.
 class InvitesController < ApplicationController
   before_action :authenticate_user!
   def new
     authorize :invite
-    @learning_partner = LearningPartner.find(params[:learning_partner_id])
+    @team = Team.find(params[:team_id])
     @user = User.new
   end
 
   def create
-    authorize :invite
     service = UserManagementService.instance
-    @learning_partner = LearningPartner.find(invite_params[:learning_partner_id])
-    @user = service.invite(invite_params[:email], invite_params[:role], @learning_partner)
+    @team = Team.find(invite_params[:team_id])
+    authorize @team
+    @user = service.invite(invite_params[:email], invite_params[:role], @team)
 
     if @user.save
       redirect_to request.referer, notice: 'Invitation sent to user'
@@ -57,7 +57,7 @@ class InvitesController < ApplicationController
   private
 
   def invite_params
-    params.require(:user).permit(:email, :role, :learning_partner_id)
+    params.require(:user).permit(:email, :role, :team_id)
   end
 
   def invite_admin_params

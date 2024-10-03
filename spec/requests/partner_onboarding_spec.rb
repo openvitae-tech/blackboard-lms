@@ -144,6 +144,22 @@ RSpec.describe 'Request spec for LearningPartner' do
       expect(assigns(:learning_partner).banner).not_to be_nil
     end
 
+    it 'Creates a default team for a partner' do
+      partner = build :learning_partner
+      params = {
+        learning_partner: {
+          name: partner.name,
+          content: partner.about,
+          logo: image_file,
+          banner: image_file
+        }
+      }
+
+      expect do
+        post('/learning_partners', params:)
+      end.to change { Team.count }.by(1)
+    end
+
     it 'Publishes an event onboarding_initiated' do
       partner = build :learning_partner
       params = {

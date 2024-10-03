@@ -1,34 +1,34 @@
 <%= render "shared/components/mobile_layout" do %>
-  <div data-controller="">
+  <div data-controller="teams teams-tab-change user-show">
     <div class="inline-flex gap-2">
       <span class="icon icon-team-green h-4 w-4"></span>
       <span class="text-primary text-sm font-semibold">Team</span>
     </div>
     <div class="mt-4">
       <ol class="flex flex-wrap items-center gap-1 text-secondary text-[10px]">
-        <li class="flex gap-[2px]">
-          <a href="#" class="">Tata group dashboard</a>
-          <span class="icon icon-simple-arrow-right h-2 w-2"></span>
-        </li>
-        <li class="flex gap-[2px]">
-          <a href="#" class="">Add a Team</a>
-          <span class="icon icon-simple-arrow-right h-2 w-2"></span>
-        </li>
-        <li class="flex gsp-[2px]">
-          <a href="#" class="">Taj Hotels & Resorts</a>
-          <span class="icon icon-simple-arrow-right h-2 w-2"></span>
-        </li>
+        <% team_list(@team).each do |team| %>
+          <li class="flex gap-[2px]">
+            <%= link_to team.name, team_path(team) %>
+            <span class="icon icon-simple-arrow-right h-2 w-2"></span>
+          </li>
+        <% end %>
       </ol>
     </div>
-    <div class="flex items-center gap-4  w-[350px] mt-6">
-      <img class="h-6" src="assets/taj.png" alt="Profile Picture">
-      <span class="font-medium text-sm pt-2">Taj Hotels & Resorts</span>
+    <div class="mt-4 flex flex-col gap-4">
+      <%= render "shared/components/course_watch_time_chart_mobile" %>
+      <%= render "shared/components/enrolled_ratio_chart" %>
     </div>
+    <button class="my-4 flex justify-start">
+      <a href="#" class="text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm">
+        View all metrics
+        <span class="icon icon-arrow-right h-4 w-4"></span>
+      </a>
+    </button>
     <div class="flex justify-start gap-6 mt-6">
-      <a href="" class="active-border text-base font-normal">User</a>
-      <a href="" class="text-base font-normal">Team</a>
+      <a href="#" data-action="click->teams-tab-change#changeTab" data-tab="user" class="active-border text-base font-normal">User</a>
+      <a href="#" data-action="click->teams-tab-change#changeTab" data-tab="team" class="text-base font-normal">Team</a>
     </div>
-    <div class="relative w-full py-4">
+    <div class="relative w-full">
       <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
         <span class="icon icon-search h-4 w-4"></span>
       </div>
@@ -40,18 +40,40 @@
         placeholder="Search Team Members"
         />
     </div>
-    <div class="mt-4 flex flex-col gap-4">
-      <%= render "shared/components/course_watch_time_chart_mobile" %>
-      <%= render "shared/components/enrolled_ratio_chart" %>
-    </div>
-    <div class="flex justify-end">
-      <button class="py-6">
-        <a href="#" class="text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm">
-          View all analytics
-          <span class="icon icon-arrow-right h-4 w-4"></span>
+    <div id="user" data-teams-tab-change-target="teamContent" class="" data-tab="user">
+      <div class="flex justify-start my-4 hidden" data-target="user-show.allUsersSection">
+        <span class="text-primary text-xs font-semibold">All users</span>
+      </div>
+      <div class="flex justify-end my-4" data-user-show-target="showAllUsers">
+        <a href="#" data-action="click->user-show#toggleAllUsers" class="text-base font-normal">
+          Show all users
+          <span class="icon icon-show-users ms-4 h-4 w-4 items-center"></span>
         </a>
-      </button>
+      </div>
+
+      <%= render "teams/member_list_mobile" %>
+
+      <div class="bg-primary rounded justify-center sticky bottom-6 end-4 start-4 text-center">
+        <button class="flex gap-2 px-4 py-5 w-full justify-center" data-actionType="addUser" data-action="click->teams#addUser">
+          <span class="icon icon-plus-white h-4 w-4 items-center"></span>
+          <span class="text-sm text-white">Add User</span>
+        </button>
+      </div>
+      <%= render "shared/components/add_user" %>
     </div>
-    <%= render "shared/components/team_list_mobile" %>
+    <div id="team" data-teams-tab-change-target="teamContent" class="hidden" data-tab="team">
+      <div class="flex items-center justify-between pt-8">
+        <p class="text-sm font-medium">Linked Hotels & Resorts</p>
+      </div>
+      <%= render "teams/sub_teams_mobile" %>
+      <div class="bg-primary rounded justify-center sticky bottom-6 end-4 start-4 text-center">
+        <button class="flex gap-2 px-4 py-5 w-full justify-center" data-actionType="addTeam" data-action="click->teams#addUser">
+          <span class="icon icon-plus-white h-4 w-4 items-center"></span>
+          <span class="text-sm text-white">Add Team</span>
+        </button>
+      </div>
+      <%= render "shared/components/add_team" %>
+    </div>
+  </div>
   </div>
 <% end %>

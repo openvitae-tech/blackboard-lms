@@ -18,7 +18,7 @@
       <span class="text-xs text-white">Assign course</span>
     </button>
     <% if policy(:invite).new? %>
-      <%= link_to new_invite_path(learning_partner_id: @learning_partner.id), data: { turbo_frame: "add-user-modal" }, class: "bg-primary flex items-center gap-2 rounded px-4 py-2" do %>
+      <%= link_to new_invite_path(team_id: @team.id), data: { turbo_frame: "add-user-modal" }, class: "bg-primary flex items-center gap-2 rounded px-4 py-2" do %>
         <span class="icon icon-plus-white h-4 w-4 items-center"></span>
         <span class="text-xs text-white">Invite user</span>
       <% end %>

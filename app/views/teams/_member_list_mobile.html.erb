@@ -1,0 +1,45 @@
+<div class="flex flex-col gap-4 mb-6">
+  <% @team.members.each do |member| %>
+    <div class="flex flex-col box-shadow-medium rounded max-w-md ">
+      <div class="flex gap-4 items-center border-b border-line-colour-light p-4">
+        <img class="h-12 w-12 rounded-full" src="assets/tiju.png" alt="Profile Picture">
+        <div class="flex flex-col w-full">
+          <div class="flex justify-between items-center">
+            <span class="font-medium text-sm"><%= member.name %></span>
+            <% if member.verified? %>
+              <div class="flex items-center bg-primary-light-50 gap-1 border border-primary rounded-sm p-1">
+                <span class="icon icon-complete h-2 w-2"></span>
+                <span class="text-primary text-[8px]">Verified</span>
+              </div>
+            <% end %>
+          </div>
+          <span class="text-secondary text-xs"><%= member.role %></span>
+        </div>
+      </div>
+      <div class="p-4 text-xs">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="icon icon-at-sign"></span>
+          <span class=""><%= member.email %></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="icon icon-phone"></span>
+          <span class=""><%= member.phone %></span>
+        </div>
+        <div class="flex justify-end p-1">
+          <% if policy(:course_assigns).list? %>
+            <%= link_to list_course_assign_path(member), class: "inline-flex justify-center gap-2 bg-gold-light border-gold p-2", data: { turbo_frame: "assign-course-frame" } do %>
+              <span class="icon icon-assign-user h-[10px] w-[10px] items-center"></span>
+              <span class="text-xs">Assign Course</span>
+            <% end %>
+          <% end %>
+          <% if InvitePolicy.new(current_user, member).resend? %>
+            <%= link_to resend_invite_path(member, team_id: @team.id), class: "inline-flex justify-center bg-primary-light-50 gap-1 border border-primary-light p-1 rounded-sm", data: { turbo_frame: "notice" } do %>
+              <span class="icon icon-re-invite h-[10px] w-[10px] items-center"></span>
+              <span class="text-primary text-xs">Re-Invite</span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
