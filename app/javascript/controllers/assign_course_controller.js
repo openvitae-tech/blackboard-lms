@@ -9,9 +9,9 @@ export default class extends Controller {
   ];
 
   toggle(event) {
-    const card = event.target.closest('[data-assign-course-target="card"]');
+    const card = event.target.closest('[data-item="card"]');
     const durationContainer = card.querySelector(
-      '[data-assign-course-target="durationContainer"]'
+      '[data-container="durationContainer"]'
     );
 
     if (event.target.checked) {
@@ -19,36 +19,35 @@ export default class extends Controller {
     } else {
       durationContainer.classList.add("hidden");
       this.hideCustomDate(card);
-      this.showLabel(card);
     }
   }
 
   durationChanged(event) {
-    const card = event.target.closest('[data-assign-course-target="card"]');
+    const card = event.target.closest('[data-item="card"]');
     const labelContainer = card.querySelector(
-      '[data-assign-course-target="labelContainer"]'
+      '[data-label="labelContainer"]'
     );
     const customLabelContainer = card.querySelector(
-      '[data-assign-course-target="customLabelContainer"]'
+      '[data-label="customLabelContainer"]'
     );
 
     if (event.target.value === "custom") {
       labelContainer.classList.add("hidden");
       customLabelContainer.classList.remove("hidden");
     } else {
-      this.hideCustomDate(card);
+      customLabelContainer.classList.add("hidden");
       labelContainer.classList.remove("hidden");
     }
   }
 
   datePicked(event) {
-    const card = event.target.closest('[data-assign-course-target="card"]');
+    const card = event.target.closest('[data-item="card"]');
     const selectedDate = event.target.value;
 
     if (selectedDate) {
       const option = new Option(selectedDate, selectedDate);
       const durationSelect = card.querySelector(
-        '[data-action="change->assign-course#durationChanged"]'
+        '[data-duration="duration"]'
       );
       durationSelect.appendChild(option);
       durationSelect.value = selectedDate;
@@ -57,18 +56,20 @@ export default class extends Controller {
 
   hideCustomDate(card) {
     const customLabelContainer = card.querySelector(
-      '[data-assign-course-target="customLabelContainer"]'
+      '[data-label="customLabelContainer"]'
     );
     customLabelContainer.classList.add("hidden");
     const durationSelect = card.querySelector(
-      '[data-action="change->assign-course#durationChanged"]'
+      '[data-duration="duration"]'
     );
     durationSelect.value = durationSelect.options[0].value;
+    this.showLabel(card);
+
   }
 
   showLabel(card) {
     const labelContainer = card.querySelector(
-      '[data-assign-course-target="labelContainer"]'
+      '[data-label="labelContainer"]'
     );
     labelContainer.classList.remove("hidden");
   }
