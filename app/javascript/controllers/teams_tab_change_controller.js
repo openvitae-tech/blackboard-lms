@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["content", "allUsersSection", "showAllLink"];
+  static targets = ["teamContent", "allUsersSection", "showAllLink"];
   changeTab(event) {
     event.preventDefault();
     const selectedTab = event.currentTarget.dataset.tab;
@@ -10,10 +10,10 @@ export default class extends Controller {
   }
 
   showTab(tab) {
-    this.contentTargets.forEach((el) => {
+    this.teamContentTargets.forEach((el) => {
       el.classList.add("hidden");
     });
-    const selectedContent = this.contentTargets.find(target => target.dataset.tab === tab);
+    const selectedContent = this.teamContentTargets.find(target => target.dataset.tab === tab);
     if (selectedContent) {
       selectedContent.classList.remove("hidden");
     }

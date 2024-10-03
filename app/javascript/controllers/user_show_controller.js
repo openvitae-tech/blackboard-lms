@@ -3,11 +3,11 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = [
     "allUsersSection",
-    "showAllLink"
+    "showAllUsers"
   ];
   toggleAllUsers(event) {
     event.preventDefault();
-    this.showAllLinkTarget.classList.add("hidden");
+    this.showAllUsersTarget.classList.add("hidden");
     this.allUsersSectionTarget.classList.remove("hidden");
 
   }

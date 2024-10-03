@@ -26,11 +26,11 @@
          placeholder="Search Team Members"
          />
    </div>
-   <div id="user" data-target="teams-tab-change.content" class="" data-tab="user">
-      <div class="flex justify-start my-4 hidden" data-target="user-show.allUsersSection">
+   <div id="user" data-teams-tab-change-target="teamContent" class="" data-tab="user">
+      <div class="flex justify-start my-4 hidden" data-user-show-target="allUsersSection">
          <span class="text-primary text-xs font-semibold">All users</span>
       </div>
-      <div class="flex justify-end my-4" data-target="user-show.showAllLink">
+      <div class="flex justify-end my-4" data-user-show-target="showAllUsers">
          <a href="#" data-action="click->user-show#toggleAllUsers" class="text-base font-normal">
          Show All Users
          <span class="icon icon-show-users ms-4 h-4 w-4 items-center"></span>
@@ -45,7 +45,7 @@
       </div>
       <%= render "shared/components/add_user" %>
    </div>
-   <div id="team" data-target="teams-tab-change.content" class="hidden" data-tab="team">
+   <div id="team" data-teams-tab-change-target="teamContent" class="hidden" data-tab="team">
       <div class="flex items-center justify-between pt-8">
          <p class="text-sm font-medium">Linked Hotels & Resorts</p>
       </div>
