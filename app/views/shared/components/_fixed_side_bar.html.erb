@@ -23,12 +23,14 @@
             <span class="">My Course</span>
           <% end %>
         </li>
-        <li class="side-bar-item">
-          <%= link_to my_team_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-team h-4 w-4"></span>
-            <span class="">Team</span>
-          <% end %>
-        </li>
+        <% if current_user&.not_admin? %>
+          <li class="side-bar-item">
+            <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
+              <span class="icon icon-team h-4 w-4"></span>
+              <span class="">Team</span>
+            <% end %>
+          </li>
+        <% end %>
         <li class="side-bar-item">
           <%= link_to "#", class: "side-bar-item-inner" do %>
             <span class="icon icon-support h-4 w-4"></span>

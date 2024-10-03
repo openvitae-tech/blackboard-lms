@@ -74,6 +74,10 @@ class User < ApplicationRecord
     update!(otp:, otp_generated_at: DateTime.now)
   end
 
+  def not_admin?
+    !is_admin?
+  end
+
   private
 
   def password_verifier

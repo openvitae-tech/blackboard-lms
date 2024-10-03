@@ -34,7 +34,7 @@
           <% end %>
         <% end %>
         <% if InvitePolicy.new(current_user, member).resend? %>
-          <%= link_to resend_invite_path(member, learning_partner_id: learning_partner.id), class: "inline-flex justify-center bg-primary-light-50 gap-1 border border-primary-light p-1 rounded-sm", data: { turbo_frame: "notice" } do %>
+          <%= link_to resend_invite_path(member, team_id: @team.id), class: "inline-flex justify-center bg-primary-light-50 gap-1 border border-primary-light p-1 rounded-sm", data: { turbo_frame: "notice" } do %>
             <span class="icon icon-re-invite h-[10px] w-[10px] items-center"></span>
             <span class="text-primary-light text-xs">Re-Invite</span>
           <% end %>
