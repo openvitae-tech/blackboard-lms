@@ -23,7 +23,7 @@ class Team < ApplicationRecord
 
     while temp
       @team_hierarchy.push(temp)
-      temp = team.parent_team
+      temp = temp.parent_team
     end
 
     @team_hierarchy

@@ -15,8 +15,8 @@
       <% end %>
     <% end  %>
     <% if policy(:invite).new? %>
-      <%= link_to new_invite_path(learning_partner_id: @learning_partner.id), data: { turbo_frame: "modal", modal_target: "app-modal" }, class: "btn-default" do %>
-        <span>Invite User</span>
+      <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "add-user-modal" }, class: "btn-default" do %>
+        <span>Invite user</span>
       <% end %>
     <% end %>
   </div>
@@ -35,3 +35,5 @@
 
 <%= render "users/user_list", users: @learning_partner.users, learning_partner: @learning_partner %>
 <% end %>
+
+<%= turbo_frame_tag "add-user-modal" %>

@@ -1,5 +1,4 @@
-<% if @notice.present? %>
-  <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
-    <span class="font-medium">! </span> <%= @notice %>
-  </div>
-<% end %>
+<div class="fixed z-[9999] border border-line-colour" data-controller="notice" data-notice-target="noticeBody">
+  <span class="font-medium"><%= notice %></span>
+  <a href="javascript:void(0);" data-action="click=>notice#closeNotice()"><span class="icon icon-close icon-small"></span></a>
+</div>
