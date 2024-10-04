@@ -15,7 +15,7 @@
       <ul class=" mt-2 rounded box-shadow-small">
         <% supported_languages.each do |key, lang| %>
           <li>
-            <%= link_to lang, course_module_lesson_path(course, course_module, lesson, lang: key), class: "block p-4 text-letter-color-light text-sm border border-b bg-slate-grey-light" %>
+            <%= link_to lang, course_module_lesson_path(course, course_module, lesson, lang: key), class: "block p-4 text-letter-color-light text-sm border-b border-line-colour rounded bg-slate-grey-light" %>
           </li>
         <% end %>
       </ul>
