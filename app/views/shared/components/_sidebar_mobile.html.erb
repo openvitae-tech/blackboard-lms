@@ -4,12 +4,15 @@
   <label for="sidebar-toggle" class="icon icon-close absolute right-6 top-6 h-4 w-4 cursor-pointer"></label>
   <div class="flex h-full flex-col justify-between pt-14">
     <ul class="flex flex-col gap-3">
+      <% if policy(:dashboard).index? %>
       <li class="side-bar-item">
-        <%= link_to dashboard_path, class: "side-bar-item-inner" do %>
+        <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
           <span class="icon icon-home h-4 w-4"></span>
           <span class="">Home</span>
         <% end %>
       </li>
+      <% end %>
+
       <% if policy(:learning_partner).show? %>
         <li class="side-bar-item">
           <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>

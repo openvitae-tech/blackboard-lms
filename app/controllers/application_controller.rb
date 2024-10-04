@@ -14,7 +14,13 @@ class ApplicationController < ActionController::Base
     redirect_to error_401_path
   end
 
-  def after_sign_in_path_for(_user)
-    dashboard_path
+  def after_sign_in_path_for(user)
+    if user.is_manager? || user.is_owner?
+      dashboards_path
+    elsif user.is_admin?
+      learning_partners_path
+    else
+      courses_path
+    end
   end
 end

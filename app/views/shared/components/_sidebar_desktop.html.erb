@@ -3,12 +3,14 @@
     <%= image_tag "superskill_logo_teal.png",  alt: "Superskill", class: "h-6 pe-24 ps-8" %>
     <div class="flex h-full flex-col justify-between pt-14">
       <ul class="flex flex-col gap-3">
-        <li class="side-bar-item">
-          <%= link_to dashboard_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-home h-4 w-4"></span>
-            <span class="">Home</span>
-          <% end %>
-        </li>
+        <% if policy(:dashboard).index? %>
+          <li class="side-bar-item">
+            <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
+              <span class="icon icon-home h-4 w-4"></span>
+              <span class="">Home</span>
+            <% end %>
+          </li>
+        <% end %>
         <% if policy(:learning_partner).show? %>
           <li class="side-bar-item">
             <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>

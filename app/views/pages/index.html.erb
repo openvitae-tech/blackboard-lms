@@ -5,7 +5,7 @@
 <% if user_signed_in? %>
   <ul>
     <li><%= link_to 'Sign Out', destroy_user_session_path, data: { turbo_method: :delete } %></li>
-    <li><%= link_to 'Dashboard', dashboard_path %></li>
+    <li><%= link_to 'Dashboard', dashboards_path %></li>
   </ul>
 <% else %>
   <p class="my-8 text-center">

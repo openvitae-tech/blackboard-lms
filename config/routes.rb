@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   end
 
   resources :learning_partners
+  resources :dashboards, only: %i[index]
 
   resources :logins, only: %i[new create] do
     collection do
@@ -79,7 +80,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users
-  # for now dashboard path and root path are same.
+
   get 'error_401' => 'pages#unauthorized'
   get 'dashboard' => 'dashboards#index'
 
@@ -90,5 +91,5 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  root 'dashboards#index'
+  root 'courses#index'
 end
