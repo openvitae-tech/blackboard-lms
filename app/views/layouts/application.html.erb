@@ -24,7 +24,7 @@
 </head>
 
 <body>
-<%= yield %>
-<%= render "shared/modal" %>
+  <%= yield %>
+  <%= turbo_frame_tag "notice" %>
 </body>
 </html>
