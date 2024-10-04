@@ -1,35 +1,32 @@
-<div class="box-shadow-medium basis-1/2 p-6">
-    <div class="flex w-full flex-col">
-       <div class="flex flex-row justify-between">
-          <div class="flex flex-col gap-2">
-             <h3 class="text-basic font-semibold">Self Enrolled ratio</h3>
-             <div class="flex items-center space-x-6">
-                <div class="flex items-center space-x-2">
-                   <span class="h-2 w-2 bg-[#0075A4]"></span>
-                   <span class="text-xs font-medium">Self Enrolled</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                   <span class="bg-primary h-2 w-2"></span>
-                   <span class="text-xs font-medium">Assigned ratio</span>
-                </div>
-             </div>
-          </div>
-          <div class="">
-             <span class="icon icon-maximize h-4 w-4"></span>
-          </div>
-       </div>
-       <div class="w-full max-w-4xl bg-white py-6">
-          <%= column_chart [
-             { name: "Self Enrolled", data: { "02 Aug" => 25, "03 Aug" => 50, "04 Aug" => 35, "05 Aug" => 75, "06 Aug" => 35 } },
-             { name: "Assigned Ratio", data: { "02 Aug" => 35, "03 Aug" => 60, "04 Aug" => 40, "05 Aug" => 85, "06 Aug" => 40 } }
-             ], colors: ["#0075A4", "#00B48D"],
-             height: "200px", library: {
-                plugins: {
-                   legend: { display: false } 
-                 },scales: {
-                yAxes: [{ ticks: { beginAtZero: true, max: 100 } }]
-             }
-             } %>
-       </div>
-    </div>
- </div>
+<div class="box-shadow-medium p-4 md:basis-1/2 md:p-6">
+   <div class="flex w-full flex-col">
+      <div class="flex flex-row justify-between">
+         <div class="flex flex-col gap-2">
+            <h3 class="text-basic font-semibold">Self Enrolled ratio</h3>
+            <div class="flex items-center space-x-6">
+               <div class="flex items-center space-x-2">
+                  <span class="h-2 w-2 bg-[#0075A4]"></span>
+                  <span class="text-xs font-medium">Self Enrolled</span>
+               </div>
+               <div class="flex items-center space-x-2">
+                  <span class="bg-primary h-2 w-2"></span>
+                  <span class="text-xs font-medium">Assigned ratio</span>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="w-full max-w-4xl bg-white py-6">
+         <%= column_chart [
+            { name: "Self Enrolled", data: { "02 Aug" => 25, "03 Aug" => 50, "04 Aug" => 35, "05 Aug" => 75, "06 Aug" => 35 } },
+            { name: "Assigned Ratio", data: { "02 Aug" => 35, "03 Aug" => 60, "04 Aug" => 40, "05 Aug" => 85, "06 Aug" => 40 } }
+            ], colors: ["#0075A4", "#00B48D"],
+            height: "200px", library: {
+               plugins: {
+                  legend: { display: false } 
+                },scales: {
+               yAxes: [{ ticks: { beginAtZero: true, max: 100 } }]
+            }
+            } %>
+      </div>
+   </div>
+</div>
