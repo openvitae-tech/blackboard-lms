@@ -30,7 +30,7 @@ RSpec.describe 'Login with mobile number' do
       user = create :user, :learner
       user.set_otp!
       post '/logins', params: { login: { mobile_number: user.phone, otp: user.otp } }
-      expect(response).to redirect_to('/dashboard')
+      expect(response).to redirect_to('/courses')
     end
 
     it 'redirects to login page if the otp is a mismatch' do
