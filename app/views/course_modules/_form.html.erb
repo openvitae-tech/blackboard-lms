@@ -1,5 +1,5 @@
 <div class="box">
-  <div class="my-8 w-80 text-left">
+  <div class="my-8 text-left">
     <% url = course_module.persisted? ? course_module_path(course, course_module) : course_modules_path(course, course_module) %>
     <%= form_with(model: [course, course_module], url: url) do |form| %>
     <% if course_module.errors.any? %>

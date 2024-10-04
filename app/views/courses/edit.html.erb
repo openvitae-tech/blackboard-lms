@@ -1,5 +1,8 @@
 <%= render "shared/components/desktop_layout" do %>
   <div class="box">
+    <%= link_to "Back", course_path(@course), class: "nav-link" %>
+  </div>
+  <div class="box">
     <h1 class="font-semibold text-xl">Edit course</h1>
   </div>
   <%= render "form", course: @course %>

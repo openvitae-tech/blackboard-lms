@@ -1,5 +1,5 @@
 <div class="box">
-  <div class="my-8 w-80 text-left" data-controller="lessons-form">
+  <div class="my-8 text-left" data-controller="lessons-form">
     <% url = lesson.persisted? ? course_module_lesson_path(course, course_module, lesson) : course_module_lessons_path(course, course_module, lesson) %>
     <%= form_with(model: lesson, url: url) do |form| %>
       <% if lesson.errors.any? %>

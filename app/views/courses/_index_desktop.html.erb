@@ -1,13 +1,11 @@
 <%= render "shared/components/desktop_layout" do %>
-  <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
   <% if policy(:course).new? %>
-    <div class="box flex justify-end">
-      <%= link_to new_course_path, class: "btn-default btn-icon" do %>
-        <span class="icon icon-plus icon-small"></span>
-        <span>Add course</span>
-      <% end %>
+    <div class="flex gap-4 justify-end">
+      <%= link_to "Add course", new_course_path, class: "nav-link" %>
     </div>
   <% end %>
+
+  <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
 
   <% if !@search_results.nil? %>
     <p class="text-base font-medium mb-4">
