@@ -1,26 +1,17 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
+  static targets = ["modalBox"];
   connect() {
-    const modalEl = document.getElementById("app-modal");
-    this.modal = new Modal(modalEl);
+    console.log("Modal connected");
   }
 
-  open() {
-    if (this.modal.isHidden()) {
-      this.modal.show();
-    }
-  }
-
-  close(event) {
+  closeModal(event) {
     event.preventDefault();
-    if (this.modal.isVisible()) {
-      this.modal.hide();
-      const modalContent = document.getElementById("modal");
-      modalContent.innerHTML = "";
-      modalContent.removeAttribute("src");
-      modalContent.removeAttribute("complete");
-    }
+    this.modalBoxTarget.classList.add("hidden");
+    this.modalBoxTarget.parentElement.removeAttribute("src");
+    this.modalBoxTarget.parentElement.removeAttribute("complete");
+    this.modalBoxTarget.parentElement.innerText = "";
   }
 
   afterSubmit(event) {

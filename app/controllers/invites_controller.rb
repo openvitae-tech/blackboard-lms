@@ -7,17 +7,19 @@ class InvitesController < ApplicationController
   def new
     authorize :invite
     @team = Team.find(params[:team_id])
-    @user = User.new
+    @user = User.new(team: @team)
   end
 
   def create
     service = UserManagementService.instance
     @team = Team.find(invite_params[:team_id])
-    authorize @team
+
+    authorize @team, :create?, policy_class: InvitePolicy
+
     @user = service.invite(invite_params[:email], invite_params[:role], @team)
 
     if @user.save
-      redirect_to request.referer, notice: 'Invitation sent to user'
+      redirect_to request.referer || root_path, notice: 'Invitation sent to user'
     else
       render 'new', status: :unprocessable_entity
     end

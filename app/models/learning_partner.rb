@@ -14,4 +14,8 @@ class LearningPartner < ApplicationRecord
   validate :acceptable_banner
 
   has_rich_text :content
+
+  def parent_team
+    @parent_team ||= Team.where(learning_partner_id: self.id, parent_team_id: nil).first
+  end
 end

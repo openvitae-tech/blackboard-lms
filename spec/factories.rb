@@ -37,6 +37,8 @@ FactoryBot.define do
   factory :team do
     name { Faker::Team.name }
     banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+
+    association :learning_partner, factory: :learning_partner
   end
 
   factory :quiz do
