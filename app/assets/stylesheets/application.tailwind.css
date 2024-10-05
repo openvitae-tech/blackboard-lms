@@ -121,7 +121,7 @@
 }
 
 .icon {
-    @apply inline-block max-h-10 bg-cover bg-no-repeat min-w-4 min-h-4 max-w-10;
+    @apply flex justify-center items-center max-h-10 bg-cover bg-no-repeat min-w-4 min-h-4 max-w-10;
 }
 
 .btn-watch-demo {

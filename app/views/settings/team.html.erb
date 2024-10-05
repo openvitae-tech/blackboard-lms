@@ -1,7 +1,0 @@
-<%= render "shared/components/desktop_layout" do %>
-  <% if current_user.is_admin? %>
-    <%= render "admin_team" %>
-  <% else %>
-    <%= render "user_team" %>
-  <% end %>
-<% end %>

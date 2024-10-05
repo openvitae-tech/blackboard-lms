@@ -72,4 +72,8 @@ module ApplicationHelper
   def selected_language
     LocalContent::SUPPORTED_LANGUAGES[(@lang || LocalContent::DEFAULT_LANGUAGE).to_sym]
   end
+
+  def letter_avatar(user)
+    (user.name || 'U')[0]
+  end
 end

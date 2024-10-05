@@ -8,11 +8,19 @@ class SettingsPolicy
     @record = record
   end
 
+  def show?
+    user.present?
+  end
+
   def edit?
     user.present?
   end
 
   def update?
+    user.present?
+  end
+
+  def change_password?
     user.present?
   end
 
