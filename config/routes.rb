@@ -23,9 +23,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :settings, only: %i[index update edit] do
+  resource :settings, only: %i[show edit update] do
     collection do
-      get :team
+      get :change_password
       put :update_password
     end
   end

@@ -3,20 +3,39 @@
 class SettingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_learning_partner
+  def show
+    authorize :settings
+  end
   def edit
     authorize :settings
+    @user = current_user
   end
 
   def update
     authorize :settings
     current_user.update(profile_params)
-    @notice = 'Profile updated' if current_user.update(profile_params)
+
+    if current_user.update(profile_params)
+      redirect_to settings_path
+    else
+      @user = current_user
+      render :edit
+    end
   end
 
+  def change_password
+    authorize :settings
+    @user = current_user
+  end
   def update_password
     authorize :settings
-    current_user.password = current_user.password_confirmation = password_params[:password]
-    @notice = 'Password updated' if current_user.save
+
+    if current_user.update(password_params)
+      redirect_to settings_path
+    else
+      @user = current_user
+      render 'change_password'
+    end
   end
 
   def team
@@ -39,7 +58,7 @@ class SettingsController < ApplicationController
   end
 
   def password_params
-    params.require(:user).permit(:password)
+    params.require(:user).permit(:password, :password_confirmation)
   end
 
   def set_learning_partner

@@ -13,12 +13,12 @@
      </div>
      <% end %>
   </div>
-  <div class="flex gap-6">
+  <div class="flex gap-6 items-center">
      <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
-     <span class="h-6 w-6 icon icon-notification"></span>
+       <span class="h-6 w-6 icon icon-notification"></span>
      <% end %>
-     <%= link_to edit_settings_path, class: "inline-block hover:pointer" do %>
-     <%= image_tag "india.png",  alt: "INT", class: "h-6 w-6 rounded-full box-shadow-small" %>
+     <%= link_to settings_path do %>
+       <%= render "shared/components/profile_pic", letter: letter_avatar(current_user) %>
      <% end %>
   </div>
 </nav>
