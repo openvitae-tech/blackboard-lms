@@ -21,16 +21,17 @@
       </div>
       <button class="bg-primary-light-50 flex items-center justify-center rounded p-2" data-course-description-card-target="showMoreToggle" data-action="click->course-description-card#showMoreToggle">
         <span class="text-primary text-xs">Show more</span>
-        <span class="icon icon-arrow-up h-4 w-4 items-center"></span>
+        <span class="icon-arrow-up h-4 w-4 items-center flex justify-center bg-cover bg-no-repeat hidden" data-course-description-card-target="upArrow"></span>
+        <span class="icon-arrow-down  h-4 w-4 items-center flex justify-center bg-cover bg-no-repeat" data-course-description-card-target="downArrow"></span>
       </button>
     </div>
     <p class="mb-3 max-h-[20px] overflow-hidden text-ellipsis text-sm font-medium tracking-tight">
       Course Description
     </p>
 
-    <p class="bg-primary-light-50 show-less-desc overflow-hidden text-ellipsis p-4 text-justify text-sm tracking-tight" data-course-description-card-target="courseDescription">
+    <div class="bg-primary-light-50 show-less-desc overflow-hidden text-ellipsis p-4 text-justify text-sm tracking-tight" data-course-description-card-target="courseDescription">        
       <%= course_description(course) %>
-    </p>
+    </div>
 
     <div class="flex justify-end gap-4 py-6">
       <% if policy(course).unenroll? %>
