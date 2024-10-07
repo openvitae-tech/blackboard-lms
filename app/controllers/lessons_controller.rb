@@ -142,6 +142,7 @@ class LessonsController < ApplicationController
                                    :lesson_type,
                                    :video_streaming_source,
                                    :course_module_id,
+                                   :duration,
                                    local_contents_attributes: %i[lang video_url _destroy id])
   end
 end

@@ -1,5 +1,11 @@
 <%= render "shared/components/desktop_layout" do %>
   <div class="flex gap-4 justify-end">
+    <% if policy(@course).publish? %>
+      <%= link_to "Publish", publish_course_path(@course), data: { turbo_method: "put" }, class: "nav-link" %>
+    <% end %>
+    <% if policy(@course).unpublish? %>
+      <%= link_to "Unpublish", unpublish_course_path(@course), data: { turbo_method: "put" }, class: "nav-link" %>
+    <% end %>
     <% if policy(@course).edit? %>
       <%= link_to "Edit", edit_course_path(@course), class: "nav-link" %>
     <% end %>

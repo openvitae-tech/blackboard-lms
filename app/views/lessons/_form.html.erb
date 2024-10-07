@@ -25,6 +25,11 @@
       </div>
 
       <div class="my-8 text-sm" >
+        <%= form.label :duration, class: "text-sm font-medium" %>
+        <%= form.text_field :duration, class: "input-text mt-2", placeholder: "Duration in minutes" %>
+      </div>
+
+      <div class="my-8 text-sm" >
         <%= form.label :video_url, class: "text-sm font-medium" %>
         <%= form.text_field :video_url, class: "input-text mt-2", placeholder: "eg: https://vimeo.com/948577869" %>
       </div>
