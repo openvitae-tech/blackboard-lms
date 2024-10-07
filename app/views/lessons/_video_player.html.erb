@@ -1,7 +1,0 @@
-<!--    <div id="<%#= dom_id @lesson %>">-->
-<%#= video_tag(@lesson.video_url, controls: true, preload: 'none', controlsList: "nodownload", oncontextmenu: "return false;", class: "w-full mx-auto") %>
-<!--    </div>-->
-
-<div id="<%= video_id %>" class="embed-container">
-  <iframe src="<%= vimeo_video_url(video_url) %>"  frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen controls=false></iframe>
-</div>

@@ -1,26 +1,28 @@
 <div class="basis-3/5">
   <div id="<%= dom_id(lesson) %>" class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
-    <iframe src="<%= vimeo_video_url(lesson.video_url) %>" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen controls=false></iframe>
+    <iframe src="<%= vimeo_video_url(@video_url) %>" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen controls=false></iframe>
   </div>
 
-  <div class="flex justify-end">
-    <details class="p-4">
-      <summary class="flex cursor-pointer items-center justify-between select_language bg-slate-grey-light p-[10px]">
-        <h2 class="flex flex-col justify-start text-base pe-1">
-          <span class="text-primary"><%= selected_language %></span>
-        </h2>
-        <span class="icon-down h-4 w-4"></span>
-        <span class="icon-up hidden h-4 w-4"></span>
-      </summary>      
-      <ul class="absolute bg-white border border-line-colour-light mt-2 rounded-lg box-shadow-small  w-[178px]">
-        <% supported_languages.each do |key, lang| %>
-          <li>
-            <%= link_to lang, course_module_lesson_path(course, course_module, lesson, lang: key), class: "block p-4 text-letter-color-light text-sm border-b border-line-colour bg-slate-grey-light" %>
-          </li>
-        <% end %>
-      </ul>
-  </details>
-  </div>
+  <% if supported_languages(lesson).length > 1 %>
+    <div class="flex justify-end">
+      <details class="p-4">
+        <summary class="flex cursor-pointer items-center justify-between select_language bg-slate-grey-light p-[10px]">
+          <h2 class="flex flex-col justify-start text-base pe-1">
+            <span class="text-primary"><%= selected_language %></span>
+          </h2>
+          <span class="icon-down h-4 w-4"></span>
+          <span class="icon-up hidden h-4 w-4"></span>
+        </summary>
+        <ul class="absolute bg-white border border-line-colour-light mt-2 rounded-lg box-shadow-small  w-[178px]">
+          <% supported_languages(lesson).each do |key, lang| %>
+            <li>
+              <%= link_to lang, course_module_lesson_path(course, course_module, lesson, lang: key), class: "block p-4 text-letter-color-light text-sm border-b border-line-colour bg-slate-grey-light" %>
+            </li>
+          <% end %>
+        </ul>
+      </details>
+    </div>
+  <% end %>
   <div class="bg-primary-light-50 mt-2 flex flex-col gap-4 p-6">
     <p class="overflow-hidden text-ellipsis text-xl font-semibold">
       Lesson: <%= lesson.title %>

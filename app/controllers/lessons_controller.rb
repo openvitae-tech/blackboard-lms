@@ -11,6 +11,7 @@ class LessonsController < ApplicationController
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @course_modules = helpers.modules_in_order(@course)
     @lang = params[:lang]
+    @video_url = @lesson.video_url_for_lang(@lang)
   end
 
   # GET /lessons/new

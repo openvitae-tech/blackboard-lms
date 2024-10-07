@@ -19,4 +19,12 @@ class Lesson < ApplicationRecord
       0
     end
   end
+
+  def video_url_for_lang(lang)
+    if lang == LocalContent::DEFAULT_LANGUAGE
+      video_url
+    else
+      local_contents.where(lang: lang).first&.video_url || ''
+    end
+  end
 end

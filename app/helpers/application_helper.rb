@@ -65,12 +65,17 @@ module ApplicationHelper
     end
   end
 
-  def supported_languages
-    LocalContent::SUPPORTED_LANGUAGES
+  def supported_languages(lesson)
+    languages = lesson.local_contents.map(&:lang).append(LocalContent::DEFAULT_LANGUAGE).map(&:to_sym)
+    LocalContent::SUPPORTED_LANGUAGES.slice(*languages)
   end
 
   def selected_language
     LocalContent::SUPPORTED_LANGUAGES[(@lang || LocalContent::DEFAULT_LANGUAGE).to_sym]
+  end
+
+  def language_options
+    LocalContent::SUPPORTED_LANGUAGES.invert.to_a
   end
 
   def letter_avatar(user)

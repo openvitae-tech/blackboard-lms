@@ -1,7 +1,7 @@
 <div class="field-group">
   <div class="my-8 text-sm flex">
     <div class="grow">
-      <%= builder.select :lang, LocalContent::SUPPORTED_LANGUAGES.values, class: "input-select mt-2" %>
+      <%= builder.select :lang, options_for_select(language_options), class: "input-select mt-2" %>
     </div>
     <%= builder.hidden_field :_destroy, label: "Delete" %>
     <a href="javascript:void(0);" class="link" data-action="click->lessons-form#removeRecord">Remove</a>
