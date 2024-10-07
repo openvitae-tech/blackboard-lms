@@ -25,7 +25,7 @@
     </summary>
     <ul>
       <% lessons_in_order(course_module).each do |lesson| %>
-        <li class="flex items-center justify-between border-t px-6 py-4 text-sm">
+        <li class="flex items-center justify-between border-t border-line-colour px-6 py-4 text-sm">
           <div class="flex items-center gap-4">
             <% if enrollment && lesson_completed?(enrollment, lesson) %>
               <div class="flex items-center gap-4">
