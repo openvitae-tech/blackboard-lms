@@ -135,7 +135,7 @@
 .icon-small { @apply h-4 w-4; }
 .icon-medium { @apply h-8 w-8; }
 .icon-large { @apply h-10 w-10; }
-
+.icon-tiny{ @apply flex justify-center items-center bg-cover bg-no-repeat}
 
 .box {
   @apply my-4;
