@@ -115,7 +115,7 @@
   }
 
   .input-search{
-    @apply block w-64 rounded-md border-0 py-2 pl-10 ring-1 ring-inset ring-line-colour;
+    @apply block w-64 rounded-md border-0 py-2 pl-10 ring-1 ring-inset ring-line-colour focus:ring-primary;
   }
   
 }
