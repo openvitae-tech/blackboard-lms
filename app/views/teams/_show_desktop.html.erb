@@ -21,17 +21,17 @@
       <%= render "shared/components/enrolled_ratio_chart" %>
     </div>
 
-    <div class="flex justify-end">
+    <div class="flex justify-end pb-4">
       <%= link_to "#", class: "text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm" do %>
-        <span>View all analytics</span>
+        <span class="text-primary text-sm">View full dashboard</span>
         <span class="icon icon-arrow-right h-4 w-4"></span>
       <% end %>
     </div>
 
     <%= render "shared/components/team_header_part" %>
 
-    <div class="flex justify-end mt-4">
-      <a href="javascript:void(0);">
+    <div class="flex justify-end py-2">
+      <a href="javascript:void(0);" class="flex items-center justify-center">
         Show all users
         <span class="icon icon-show-users ms-4 h-4 w-4 items-center"></span>
       </a>

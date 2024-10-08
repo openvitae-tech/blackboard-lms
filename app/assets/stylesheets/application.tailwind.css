@@ -121,7 +121,7 @@
 }
 
 .icon {
-    @apply flex justify-center items-center max-h-10 bg-cover bg-no-repeat min-w-4 min-h-4 max-w-10;
+    @apply flex justify-center items-center max-h-10 bg-cover bg-no-repeat min-w-2 min-h-2 max-w-10;
 }
 
 .btn-watch-demo {
@@ -135,7 +135,7 @@
 .icon-small { @apply h-4 w-4; }
 .icon-medium { @apply h-8 w-8; }
 .icon-large { @apply h-10 w-10; }
-
+.icon-tiny { @apply h-2 w-2; }
 
 .box {
   @apply my-4;
