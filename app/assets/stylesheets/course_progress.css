@@ -2,6 +2,7 @@
     box-shadow: 0px 0px 4px 0px #20202029;
 }
 
+details .icon-up,
 details[open] .icon-down {
     display: none;
 }
