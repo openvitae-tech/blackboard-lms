@@ -1,5 +1,5 @@
 <div class="flex flex-col border-line-colour border-b">
-  <%= image_tag course_banner_thumbnail_vertical(course), class: "h-[120px] min-w-[328px] rounded-t border object-cover" %>
+  <%= image_tag course_banner_thumbnail_vertical(course), class: "h-[120px] min-w-[328px] rounded-t object-cover" %>
     <div class="flex flex-col m-4">
       <p class="text-primary  overflow-hidden text-ellipsis text-sm font-extrabold italic mb-1">
         <%= @course.title %>
@@ -27,9 +27,9 @@
       <p class="my-3 max-h-[20px] overflow-hidden text-ellipsis text-sm font-medium tracking-tight">
         Course Description
       </p>
-      <p class="text-letter-color-light bg-primary-light-50 max-h-[100px] overflow-hidden text-ellipsis p-4 text-justify text-sm tracking-tight">
+      <div class="text-letter-color-light bg-primary-light-50 max-h-[100px] overflow-hidden text-ellipsis p-4 text-justify text-sm tracking-tight">
         <%= course_description(course) %>
-      </p>
+      </div>
       <div class="flex justify-center gap-4 pt-6">
         <% if policy(course).unenroll? %>
           <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "border-gary1 flex items-center gap-2 rounded border p-1 px-3" do %>
