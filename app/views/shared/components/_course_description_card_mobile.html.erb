@@ -33,7 +33,7 @@
       <div class="flex justify-center gap-4 pt-6">
         <% if policy(course).unenroll? %>
           <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "border-gary1 flex items-center gap-2 rounded border p-1 px-3" do %>
-            <span class="icon icon-minus h-4 w-4 items-center"></span>
+            <span class="icon icon-minus icon-small"></span>
             <span class="text-secondary text-xs">Drop</span>
           <% end %>
         <% end %>
@@ -45,7 +45,7 @@
         <% if policy(course).proceed? %>
           <%= link_to proceed_course_path(course), class: "bg-primary flex items-center gap-2 rounded p-1 px-3" do %>
             <span class="text-xs text-white">Proceed</span>
-            <span class="icon icon-next h-4 w-4 items-center"></span>
+            <span class="icon icon-next icon-small"></span>
           <% end %>
         <% end %>
       </div>

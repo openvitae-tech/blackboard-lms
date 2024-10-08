@@ -14,8 +14,8 @@
         <span class=""><%= course_module.title %></span>
         <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
       </h2>
-      <span class="icon-down h-4 w-4"></span>
-      <span class="icon-up hidden h-4 w-4"></span>
+      <span class="icon icon-down icon-small"></span>
+      <span class="icon-up hidden icon-small"></span>
     </summary>
     <ul class="border-line-colour rounded border">
       <% lessons_in_order(course_module).each do |lesson| %>
@@ -42,7 +42,7 @@
             <% if enrollment && lesson_completed?(enrollment, lesson) %>
               <span class="text-primary">Replay</span>
             <% else %>
-              <span class="icon icon-play h-4 w-4"></span>
+              <span class="icon icon-play icon-small"></span>
             <% end %>
           <% end %>
         </li>

@@ -4,7 +4,7 @@
      <div class="relative rounded-md shadow-sm" name="search">
         <%= form_tag search_courses_path, method: :get do %>
         <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
-           <span class="h-4 w-4 icon icon-search"></span>
+           <span class="icon icon-search icon-small"></span>
         </div>
         <div class="border rounded-lg border-line-colour-light">
            <%= text_field_tag :term, "", id: "course-search", class: "input-search", placeholder: "Search courses ..." %>

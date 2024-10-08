@@ -15,7 +15,7 @@
             <% end %>
           </div>
         </div>
-        <span class="icon icon-down h-4 w-4"></span>
+        <span class="icon icon-down icon-small"></span>
       </summary>
       <ul>
         <% lessons_in_order(course_module).each do |lesson| %>
@@ -32,7 +32,7 @@
                 <span class="text-primary">Replay</span>
               <% end %>
               <%= link_to course_module_lesson_path(course, course_module, lesson) do %>
-                <span class="icon icon-play h-4 w-4"></span>
+                <span class="icon icon-play icon-small"></span>
               <% end %>
             </div>
           </li>

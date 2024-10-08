@@ -6,7 +6,7 @@
         <% if policy(:dashboard).index? %>
           <li class="side-bar-item">
             <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
-              <span class="icon icon-home h-4 w-4"></span>
+              <span class="icon icon-home icon-small"></span>
               <span class="">Home</span>
             <% end %>
           </li>
@@ -14,28 +14,28 @@
         <% if policy(:learning_partner).show? %>
           <li class="side-bar-item">
             <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>
-              <span class="icon icon-course h-4 w-4"></span>
+              <span class="icon icon-course icon-small"></span>
               <span class="">Partners</span>
               <% end %>
           </li>
         <% end %>
         <li class="side-bar-item">
           <%= link_to courses_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-course h-4 w-4"></span>
+            <span class="icon icon-course icon-small"></span>
             <span class="">My Course</span>
           <% end %>
         </li>
         <% if current_user&.not_admin? %>
           <li class="side-bar-item">
             <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
-              <span class="icon icon-team h-4 w-4"></span>
+              <span class="icon icon-team icon-small"></span>
               <span class="">Team</span>
             <% end %>
           </li>
         <% end %>
         <li class="side-bar-item">
           <%= link_to "#", class: "side-bar-item-inner" do %>
-            <span class="icon icon-support h-4 w-4"></span>
+            <span class="icon icon-support icon-small"></span>
             <span class="">Support</span>
           <% end %>
         </li>
@@ -43,7 +43,7 @@
     </div>
   </div>
   <%= button_to destroy_user_session_path, class: "side-bar-footer w-full", method: :delete, data: { turbo_method: :delete } do %>
-    <span class="icon icon-logout h-4 w-4"></span>
+    <span class="icon icon-logout icon-small"></span>
     <span class="">Logout</span>
   <% end %>
 </aside>
