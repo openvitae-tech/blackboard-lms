@@ -21,8 +21,8 @@
       </div>
       <button class="bg-primary-light-50 flex items-center justify-center rounded p-2" data-course-description-card-target="showMoreToggle" data-action="click->course-description-card#showMoreToggle">
         <span class="text-primary text-xs">Show more</span>
-        <span class="icon-arrow-up h-4 w-4 items-center flex justify-center bg-cover bg-no-repeat hidden" data-course-description-card-target="upArrow"></span>
-        <span class="icon-arrow-down  h-4 w-4 items-center flex justify-center bg-cover bg-no-repeat" data-course-description-card-target="downArrow"></span>
+        <span class="icon-arrow-up icon-small hidden" data-course-description-card-target="upArrow"></span>
+        <span class="icon icon-arrow-down icon-small" data-course-description-card-target="downArrow"></span>
       </button>
     </div>
     <p class="mb-3 max-h-[20px] overflow-hidden text-ellipsis text-sm font-medium tracking-tight">
@@ -36,7 +36,7 @@
     <div class="flex justify-end gap-4 py-6">
       <% if policy(course).unenroll? %>
         <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "border-gary1 flex items-center gap-2 rounded border p-1 px-3" do %>
-          <span class="icon icon-minus h-4 w-4 items-center"></span>
+          <span class="icon icon-minus icon-small"></span>
           <span class="text-secondary text-xs">Drop</span>
         <% end %>
       <% end %>
@@ -50,7 +50,7 @@
       <% if policy(course).proceed? %>
         <%= link_to proceed_course_path(course), class: "bg-primary flex items-center gap-2 rounded p-1 px-3" do %>
           <span class="text-xs text-white">Proceed</span>
-          <span class="icon icon-next h-4 w-4 items-center"></span>
+          <span class="icon icon-next icon-small items-center"></span>
         <% end %>
       <% end %>
     </div>

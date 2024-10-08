@@ -5,8 +5,8 @@
         <span class=""><%= course_module.title %></span>
         <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
       </h2>
-      <span class="icon-down h-4 w-4"></span>
-      <span class="icon-up hidden h-4 w-4"></span>
+      <span class="icon-down icon-small"></span>
+      <span class="icon icon-up hidden icon-small"></span>
     </summary>
     <ul>
       <% lessons_in_order(course_module).each do |lesson| %>
@@ -29,7 +29,7 @@
             <% end %>
           </div>
           <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
-            <span class="icon icon-play h-4 w-4"></span>
+            <span class="icon icon-play icon-small"></span>
           <% end %>
         </li>
       <% end %>

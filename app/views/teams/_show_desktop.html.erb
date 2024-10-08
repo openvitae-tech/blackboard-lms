@@ -11,7 +11,7 @@
         <% team_list(@team).each do |team| %>
           <li class="flex space-x-1">
             <%= link_to team.name, team_path(team) %>
-            <span class="icon icon-simple-arrow-right h-4 w-4"></span>
+            <span class="icon icon-simple-arrow-right icon-small"></span>
           </li>
         <% end %>
       </ol>
@@ -24,7 +24,7 @@
     <div class="flex justify-end pb-4">
       <%= link_to "#", class: "text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm" do %>
         <span class="text-primary text-sm">View full dashboard</span>
-        <span class="icon icon-arrow-right h-4 w-4"></span>
+        <span class="icon icon-arrow-right icon-small"></span>
       <% end %>
     </div>
 
@@ -33,7 +33,7 @@
     <div class="flex justify-end py-2">
       <a href="javascript:void(0);" class="flex items-center justify-center">
         Show all users
-        <span class="icon icon-show-users ms-4 h-4 w-4 items-center"></span>
+        <span class="icon icon-show-users ms-4 icon-small"></span>
       </a>
     </div>
     <%= render "teams/member_list" %>

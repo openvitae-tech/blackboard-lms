@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between border-b border-line-colour-light p-6">
         <span class="text-base font-semibold">Invite new user</span>
         <button data-action="click->modals#closeModal">
-          <span class="icon icon-close h-4 w-4"></span>
+          <span class="icon icon-close icon-small"></span>
         </button>
       </div>
 
@@ -41,7 +41,7 @@
             <label class="text-sm text-[#E0E0E0]" data-teams-target="csvFileLabel">No file chosen</label>
           </div>
           <div class="flex gap-4 justify-center p-4 w-full border border-dashed border-primary rounded cursor-pointer" data-action="click->teams#chooseFile" data-upload-id="upload-csv">
-            <span class="icon icon-upload h-4 w-4"></span>
+            <span class="icon icon-upload icon-small"></span>
             <p class="text-sm text-primary">Choose File</p>
           </div>
           <input type="file" id="csv-file-input" class="hidden" data-content="csvFileInput"  data-teams-target="csvFileInput" data-action="change->teams#handleFileChange" />

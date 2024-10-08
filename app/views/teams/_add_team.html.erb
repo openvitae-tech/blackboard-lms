@@ -4,7 +4,7 @@
       Welcome, you can manage departments/teams under your team by adding teams for each department/team here.
     </p>
      <%= link_to new_team_path(parent_team_id: @team.id), data: { turbo_frame: "add-new-team-modal" }, class: "border-primary inline-flex items-center gap-2 rounded border px-4 py-2" do %>
-      <span class="icon icon-plus-green h-4 w-4 items-center"></span>
+      <span class="icon icon-plus-green icon-small"></span>
       <span class="text-primary text-xs">Add Team</span>
     <% end %>
   </div>
@@ -12,7 +12,7 @@
   <div class="flex items-center justify-between pt-8">
     <p class="text-basic font-medium">Linked Hotels & Resorts</p>
     <%= link_to new_team_path, data: { turbo_frame: "add-new-team-modal" }, class: "bg-primary flex items-center gap-2 rounded px-4 py-2" do %>
-      <span class="icon icon-plus-white h-4 w-4 items-center"></span>
+      <span class="icon icon-plus-white icon-small"></span>
       <span class="text-xs text-white">Add Team</span>
     <% end %>
   </div>
