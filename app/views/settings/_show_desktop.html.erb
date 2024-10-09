@@ -1,50 +1,47 @@
 <%= render "shared/components/desktop_layout" do %>
-  <h1 class="font-semibold text-xl my-4">User settings</h1>
-  <div class="box-shadow-medium rounded">
-    <div class="flex gap-8 p-8 border-b border-line-colour">
+  <h1 class="my-4 text-xl font-semibold">User settings</h1>
+  <div class="rounded box-shadow-medium">
+    <div class="flex gap-8 border-b p-8 border-line-colour">
       <div>
         <%= link_to "javascript:void(0);", class: "inline-block w-14 h-14" do %>
           <%= render "shared/components/profile_pic", letter: letter_avatar(current_user) %>
         <% end %>
       </div>
       <div>
-        <div class="flex gap-4 items-center"><span class="font-semibold text-base"><%= current_user.name %></span>
+        <div class="flex items-center gap-4"><span class="text-base font-semibold"><%= current_user.name %></span>
           <% if current_user.team&.banner.present? %>
-            <%= image_tag current_user.team.banner, class: "h-3 w-20 object-cover"%>
+            <%= image_tag current_user.team.banner, class: "h-3 w-20 object-cover" %>
           <% end %>
         </div>
-        <div class="flex gap-4"><span class="font-normal text-sm text-letter-color-light">Organization: <%= org_name(current_user.learning_partner) %></span><span class="font-normal text-sm text-letter-color-light">Role: <%= role_text(current_user.role) %></span></div>
+        <div class="flex gap-4">
+          <span class="text-sm font-normal text-letter-color-light">Organization: <%= org_name(current_user.learning_partner) %></span><span class="text-sm font-normal text-letter-color-light">Role: <%= role_text(current_user.role) %></span>
+        </div>
       </div>
     </div>
-    <div class="flex gap-8 p-8 border-b border-line-colour">
-      <div class="flex flex-col gap-8 w-full">
+    <div class="flex gap-8 border-b p-8 border-line-colour">
+      <div class="flex w-full flex-col gap-8">
         <div class="flex justify-between">
-          <h1 class="font-semibold text-base">Personal information</h1>
+          <h1 class="text-base font-semibold">Personal information</h1>
           <%= link_to edit_settings_path, data: { turbo_frame: "edit-settings-modal" }, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm py-1 px-2" do %>
-            <span class="text-secondary text-xs font-medium">Edit</span>
+            <span class="text-xs font-medium text-secondary">Edit</span>
             <span class="icon icon-edit h-[10px] w-[10px]"></span>
           <% end %>
         </div>
         <div>
-          <div class="font-normal text-sm text-letter-color-light">Email</div>
-          <div class="font-medium text-base mt-2"><%= current_user.email %></div>
+          <div class="text-sm font-normal text-letter-color-light">Email</div>
+          <div class="mt-2 text-base font-medium"><%= current_user.email %></div>
         </div>
         <div>
-          <div class="font-normal text-sm text-letter-color-light">Phone</div>
-          <div class="font-medium text-base mt-2"><%= current_user.phone %></div>
+          <div class="text-sm font-normal text-letter-color-light">Phone</div>
+          <div class="mt-2 text-base font-medium"><%= current_user.phone %></div>
         </div>
       </div>
     </div>
     <div class="p-8">
-      <h1 class="font-semibold text-base">Change password</h1>
+      <h1 class="text-base font-semibold">Change password</h1>
       <div class="mt-4">
         <%= link_to 'Change your password', change_password_settings_path, data: { turbo_frame: 'change-password-modal' }, class: 'link-text' %>
       </div>
     </div>
-
   </div>
-
-  <%= turbo_frame_tag "edit-settings-modal" %>
-  <%= turbo_frame_tag 'change-password-modal' %>
-
 <% end %>
