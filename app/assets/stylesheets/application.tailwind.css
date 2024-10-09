@@ -14,11 +14,11 @@
 
 @layer components {
   .input-text {
-    @apply w-full rounded border border-line-colour h-[52px] focus:border-primary focus:ring-0;
+    @apply w-full px-3 py-2 rounded border border-line-colour h-[48px] md:h-[52px] focus:border-primary focus:ring-0;
   }
 
   .input-number {
-    @apply w-full rounded border border-line-colour h-[52px] focus:border-primary focus:ring-0;
+    @apply w-full px-3 py-2 rounded border border-line-colour h-[52px] focus:border-primary focus:ring-0;
   }
 
 
