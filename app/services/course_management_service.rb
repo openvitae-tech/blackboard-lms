@@ -35,12 +35,18 @@ class CourseManagementService
     lesson.video_streaming_source = 'vimeo'
   end
 
-  def assign_user_to_courses(user, courses, assigned_by)
-    courses.each do |course|
+  def assign_user_to_courses(user, courses_with_deadline, assigned_by)
+    courses_with_deadline.each do |course, deadline|
       unless user.enrolled_for_course?(course)
-        course.enroll!(user, assigned_by)
+        course.enroll!(user, assigned_by, deadline)
         Notification.notify(user, format(I18n.t('course.assigned'), course: course.title, name: assigned_by.name))
       end
+    end
+  end
+
+  def assign_team_to_courses(team, courses_with_deadline, assigned_by)
+    team.members.each do |user|
+      assign_user_to_courses(user, courses_with_deadline, assigned_by)
     end
   end
 

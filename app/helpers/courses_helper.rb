@@ -138,4 +138,15 @@ module CoursesHelper
   def modules_in_order(course)
     records_in_order(course.course_modules, course.course_modules_in_order)
   end
+
+  def options_for_duration
+    {
+      one_day_: '1 Day',
+      two_days: '2 Days',
+      one_week: '1 Week',
+      two_weeks: '2 Weeks',
+      one_month: '1 Month',
+      custom: 'Custom'
+    }.invert
+  end
 end

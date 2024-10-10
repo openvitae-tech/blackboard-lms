@@ -26,8 +26,8 @@
           <span class=""><%= member.phone %></span>
         </div>
         <div class="flex justify-end p-1">
-          <% if policy(:course_assigns).list? %>
-            <%= link_to list_course_assign_path(member), class: "inline-flex justify-center gap-2 bg-gold-light border-gold p-2", data: { turbo_frame: "assign-course-frame" } do %>
+          <% if policy(:course_assigns).new? %>
+            <%= link_to new_course_assign_path(user_id: member), class: "inline-flex justify-center gap-2 bg-gold-light border-gold p-2" do %>
               <span class="icon icon-assign-user h-[10px] w-[10px] items-center"></span>
               <span class="text-xs">Assign Course</span>
             <% end %>

@@ -1,0 +1,11 @@
+<div id="flash">
+  <% flash.each do |flash_type, message| %>
+    <% if flash_type == :success %>
+      <%= render "shared/components/notice_success", message: message %>
+    <% elsif flash_type == :error %>
+      <%= render "shared/components/notice_error", message: message %>
+    <% else %>
+      <%= render "shared/components/notice", message: message %>
+    <% end %>
+  <% end %>
+</div>
