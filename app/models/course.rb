@@ -14,8 +14,8 @@ class Course < ApplicationRecord
 
   scope :published, -> { where(is_published: true) }
 
-  def enroll!(user, assigned_by = nil)
-    enrollments.create!(user:, assigned_by:)
+  def enroll!(user, assigned_by = nil, deadline = nil)
+    enrollments.create!(user:, assigned_by:, deadline_at: deadline)
   end
 
   def undo_enroll!(user)

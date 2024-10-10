@@ -22,8 +22,8 @@
         <%= link_to "Re-invite", resend_invite_path(user), class: "nav-link", data: { turbo_frame: "notice" } %>
       <% end %>
     <% end %>
-    <% if policy(:course_assigns).list? %>
-      <%= link_to "Assign", list_course_assign_path(user), class: "nav-link", data: { turbo_frame: "assign-course-frame" } %>
+    <% if policy(:course_assigns).new? %>
+      <%= link_to "Assign", new_course_assign_path(user), class: "nav-link" %>
     <% end %>
   </td>
 </tr>

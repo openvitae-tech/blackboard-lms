@@ -16,12 +16,7 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index]
 
-  resources :course_assigns, param: :user_id, only: [] do
-    member do
-      get :list
-      post :assign
-    end
-  end
+  resources :course_assigns, param: :user_id, only: [:new, :create]
 
   resource :settings, only: %i[show edit update] do
     collection do
@@ -43,7 +38,6 @@ Rails.application.routes.draw do
 
     collection do
       get :search
-      get :list
     end
 
     resources :course_modules, as: 'modules', except: [:index] do

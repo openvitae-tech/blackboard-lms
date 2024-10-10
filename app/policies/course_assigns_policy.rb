@@ -8,11 +8,11 @@ class CourseAssignsPolicy
     @course = course
   end
 
-  def list?
+  def new?
     user.is_owner? || user.is_manager?
   end
 
-  def assign?
+  def create?
     user.is_owner? || user.is_manager?
   end
 end
