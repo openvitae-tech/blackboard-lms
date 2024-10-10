@@ -2,7 +2,7 @@
   <div data-controller="teams teams-tab-change user-show">
     <div class="inline-flex gap-2">
       <span class="icon icon-team-green icon-small"></span>
-      <span class="text-primary text-sm font-semibold">Team</span>
+      <span class="text-sm font-semibold text-primary">Team</span>
     </div>
     <div class="mt-4">
       <ol class="flex flex-wrap items-center gap-1 text-secondary text-[10px]">
@@ -19,16 +19,16 @@
       <%= render "shared/components/enrolled_ratio_chart" %>
     </div>
     <button class="my-4 flex justify-start">
-      <a href="#" class="text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm">
+      <a href="#" class="flex items-center gap-1 rounded p-2 text-sm text-primary box-shadow-medium">
         View all metrics
         <span class="icon icon-arrow-right icon-small"></span>
       </a>
     </button>
-    <div class="flex justify-start gap-6 my-6">
-      <a href="#" data-action="click->teams-tab-change#changeTab" data-tab="user" class="active-border text-base font-normal">User</a>
-      <a href="#" data-action="click->teams-tab-change#changeTab" data-tab="team" class="text-base font-normal">Team</a>
+    <div class="my-6 flex justify-start gap-6">
+      <a href="javascript:void(0);" data-action="click->teams-tab-change#changeTab" data-tab="user" class="text-base font-normal active-border">User</a>
+      <a href="javascript:void(0);" data-action="click->teams-tab-change#changeTab" data-tab="team" class="text-base font-normal">Team</a>
     </div>
-    <div class="relative w-full mt-4">
+    <div class="relative mt-4 w-full">
       <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
         <span class="icon icon-search icon-small"></span>
       </div>
@@ -36,26 +36,26 @@
         type="text"
         name="price"
         id="price"
-        class="input-search w-full"
+        class="w-full input-search"
         placeholder="Search Team Members"
         />
     </div>
     <div id="user" data-teams-tab-change-target="teamContent" class="" data-tab="user">
-      <div class="flex justify-start my-4 hidden" data-target="user-show.allUsersSection">
-        <span class="text-primary text-xs font-semibold">All users</span>
+      <div class="my-4 flex hidden justify-start" data-target="user-show.allUsersSection">
+        <span class="text-xs font-semibold text-primary">All users</span>
       </div>
-      <div class="flex justify-end my-4" data-user-show-target="showAllUsers">
-        <a href="#" data-action="click->user-show#toggleAllUsers" class="text-base font-normal flex items-center justify-center">
+      <div class="my-4 flex justify-end" data-user-show-target="showAllUsers">
+        <a href="#" data-action="click->user-show#toggleAllUsers" class="flex items-center justify-center text-base font-normal">
           Show all users
-          <span class="icon icon-show-users ms-4 icon-small items-center"></span>
+          <span class="items-center icon icon-show-users ms-4 icon-small"></span>
         </a>
       </div>
 
       <%= render "teams/member_list_mobile" %>
 
-      <div class="bg-primary rounded justify-center sticky bottom-6 end-4 start-4 text-center">
-        <button class="flex gap-2 px-4 py-5 w-full justify-center" data-actionType="addUser" data-action="click->teams#addUser">
-          <span class="icon icon-plus-white icon-small items-center"></span>
+      <div class="sticky bottom-6 justify-center rounded text-center bg-primary end-4 start-4">
+        <button class="flex w-full justify-center gap-2 px-4 py-5" data-actionType="addUser" data-action="click->teams#addUser">
+          <span class="items-center icon icon-plus-white icon-small"></span>
           <span class="text-sm text-white">Add User</span>
         </button>
       </div>
@@ -66,14 +66,13 @@
         <p class="text-sm font-medium">Linked Hotels & Resorts</p>
       </div>
       <%= render "teams/sub_teams_mobile" %>
-      <div class="bg-primary rounded justify-center sticky bottom-6 end-4 start-4 text-center">
-        <button class="flex gap-2 px-4 py-5 w-full justify-center" data-actionType="addTeam" data-action="click->teams#addUser">
-          <span class="icon icon-plus-white icon-small items-center"></span>
+      <div class="sticky bottom-6 justify-center rounded text-center bg-primary end-4 start-4">
+        <button class="flex w-full justify-center gap-2 px-4 py-5" data-actionType="addTeam" data-action="click->teams#addUser">
+          <span class="items-center icon icon-plus-white icon-small"></span>
           <span class="text-sm text-white">Add Team</span>
         </button>
       </div>
       <%= render "shared/components/add_team" %>
     </div>
-  </div>
   </div>
 <% end %>
