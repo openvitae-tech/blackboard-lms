@@ -15,7 +15,7 @@ export default class extends Controller {
     }
 
     removeRecord(event) {
-        const parent = event.target.parentElement.parentElement;
+        const parent = event.target.parentElement.parentElement.parentElement;
         parent.querySelector("input[type='hidden']").value=true;
         parent.classList.add("hidden");
     }
