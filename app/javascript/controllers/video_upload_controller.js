@@ -12,7 +12,7 @@ export default class extends Controller {
 
     if (file) {
       this.videoUploaderTarget.classList.remove("hidden");
-      this.fileLabelTarget.textContent = this.truncateFileName(file.name, 20); // Limit to 20 characters
+      this.fileLabelTarget.textContent = this.truncateFileName(file.name, 20); 
       this.fileSizeTarget.textContent = this.formatBytes(file.size);
       this.loadVideo(file);
     } 
@@ -20,7 +20,7 @@ export default class extends Controller {
 
   truncateFileName(name, maxLength) {
     if (name.length > maxLength) {
-      return name.slice(0, maxLength) + "..."; // Add ellipsis if truncated
+      return name.slice(0, maxLength) + "...";
     }
     return name;
   }
