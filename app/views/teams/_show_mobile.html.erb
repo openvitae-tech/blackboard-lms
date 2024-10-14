@@ -4,15 +4,19 @@
       <span class="icon icon-team-green icon-small"></span>
       <span class="text-sm font-semibold text-primary">Team</span>
     </div>
-    <div class="mt-4">
+    <div class="mt-4 flex justify-between">
       <ol class="flex flex-wrap items-center gap-1 text-secondary text-[10px]">
         <% team_list(@team).each do |team| %>
-          <li class="flex gap-[2px]">
+          <li class="flex items-center gap-[2px]">
             <%= link_to team.name, team_path(team) %>
             <span class="icon icon-simple-arrow-right icon-tiny"></span>
           </li>
         <% end %>
       </ol>
+      <%= link_to "", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm py-1 px-2" do %>
+            <span class="text-xs font-medium text-secondary">Edit</span>
+            <span class="icon icon-edit h-[10px] w-[10px]"></span>
+          <% end %>
     </div>
     <div class="mt-4 flex flex-col gap-4">
       <%= render "shared/components/course_watch_time_chart_mobile" %>
@@ -39,6 +43,13 @@
         class="w-full input-search"
         placeholder="Search Team Members"
         />
+    </div>
+    <div class="pt-8 flex justify-between items-center">
+      <h1 class="mb-4 pl-0 text-base font-bold">Team members</h1>
+      <button id="" class="bg-secondary flex items-center gap-2 rounded px-4 py-2">
+        <span class="icon icon-assign-user-white icon-small"></span>
+        <span class="text-sm text-white font-medium">Assign course</span>
+        </button>
     </div>
     <div id="user" data-teams-tab-change-target="teamContent" class="" data-tab="user">
       <div class="my-4 flex hidden justify-start" data-target="user-show.allUsersSection">
