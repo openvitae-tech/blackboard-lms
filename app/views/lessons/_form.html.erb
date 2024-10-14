@@ -24,7 +24,7 @@
       <div class="text-sm flex flex-row items-center gap-4 justify-between">
         <div class="grow">
           <%= form.label :video_url, class: "text-sm font-medium" %>
-          <%= form.text_field :video_url, class: "input-text mt-2", placeholder: "eg: https://vimeo.com/948577869" %>
+          <%= form.text_field :video_url, class: "input-text mt-2", placeholder: "eg: https://vimeo.com/948577869", data: { video_upload_target: "urlInput" }  %>
         </div>
         <p class="pt-6">OR</p>
         <div class="w-[373px]">
@@ -90,9 +90,9 @@
      </a>
      <div class="my-8 text-sm flex gap-4 items-center" >
         <%= link_to "Cancel", course_module_path(@course, @course_module), class: "nav-link" %>
-        <div class="" >
+        <div class="" data-lessons-form-target="uploadButton">
            <% text = lesson.persisted? ? "Update" : "Create" %>
-           <%= form.submit text, class: "btn-default" %>
+           <%= form.submit text, class: "btn-default",id: "submit-button", data: { action: "video-upload:stateChange->lessons-form#setButtonState" } %>
         </div>
      </div>
      <% end %>
