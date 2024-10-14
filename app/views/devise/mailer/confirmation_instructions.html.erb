@@ -1,21 +1,32 @@
-<div style="font-family: Arial, Helvetica, sans-serif; font-size:16px;">
-  <p style="margin: 32px 0">Welcome <em><%= @email %>,</em></p>
+<div style="width: 100%; background: linear-gradient(to bottom, #585563 50%, #fff 50%); padding:40px 80px; margin: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif;">
+  <h1 style="text-align: center; color: #ffff; font-size:48px;">Welcome to Instruo</h1>
 
-  <p style="margin: 32px 0">We're thrilled to have you on our platform. To confirm your email address and login to the platform please follow these simple steps:</p>
+  <div style="max-width: 968px; margin: 0 auto; padding: 56px; font-size:16px;  color: #333; background-color: #fff; border-radius: 8px; box-shadow: 0px 2px 12px 0px #33333329;">
 
-  <p style="margin: 32px 0">
-    <ol>
-      <li style="margin: 4px 0">
+    <p style="margin-left: 24px;">Welcome <em><%= @user.email %></em>,</p>
+
+    <p style="margin-top: 24px; margin-left: 24px; margin-right: 24px;">We're thrilled to have you on our platform! To confirm your email address and log in to the platform, please follow these simple steps:</p>
+
+    <ol style="margin-right: 24px;">
+      <li style="margin-top: 24px;">
         Click on the verification link below to confirm your email address:
-        <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
       </li>
-      <li style="margin: 4px 0">
-        Once confirmed, you'll be able to log in to our website using your email address and the following temporary password.
-        <p><small>Your temporary login password is: </small><b><%= @resource.get_temp_password %></b></p>
+      <li style="margin-top: 24px;">
+        <%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %>
+        <p style="margin-top: 24px;"><small style="font-size:14px;">Or copy the link below. You can now access Instruo online or on any device by going to:</small></p>
+        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; text-align: center; margin-top: 24px;">
+          <a href="http://instruo.com" style="color: #2A73CC; text-decoration: none;">http://instruo.com</a>
+        </p>
       </li>
+      <li style="margin-top: 24px;">
+        Once confirmed, you’ll be able to log in to our website using your email address and the following temporary password,
+        </li>
+        <li style="margin-top: 24px;">
+          Your temporary login password is: <b><%= @resource.get_temp_password %></b>
+        </li>
     </ol>
-  </p>
 
-  <p style="margin: 32px 0">Welcome once again, and we wish you a great learning path ahead!</p>
+    <p style="margin-left: 24px;">We wish you a great learning path ahead! Welcome once again!</p>
 
+  </div>
 </div>
