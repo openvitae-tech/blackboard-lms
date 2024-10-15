@@ -2,7 +2,9 @@
   <div data-controller="teams">
     <div class="flex pb-2 justify-between">
       <div class="flex items-center gap-4  w-[350px]">
-        <%= image_tag @team.banner, class: "h-8 w-8 object-cover" %>
+        <% if @team.banner.present? %>
+          <%= image_tag @team.banner, class: "h-8 w-8 object-cover" %>
+        <% end  %>
         <span class="font-medium text-basic pt-2"><%= @team.name  %></span>
       </div>
     </div>
