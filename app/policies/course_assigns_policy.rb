@@ -9,10 +9,10 @@ class CourseAssignsPolicy
   end
 
   def new?
-    user.is_owner? || user.is_manager?
+    (user.verified? && user.is_owner?) || user.is_manager?
   end
 
   def create?
-    user.is_owner? || user.is_manager?
+    (user.verified? && user.is_owner?) || user.is_manager?
   end
 end
