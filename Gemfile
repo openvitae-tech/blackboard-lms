@@ -93,3 +93,7 @@ gem 'groupdate'
 
 gem 'rexml', '>= 3.3.3'
 gem 'webrick', '>= 1.8.2'
+
+gem 'stackprof'
+gem 'sentry-ruby'
+gem 'sentry-rails'
