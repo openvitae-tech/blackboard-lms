@@ -26,20 +26,24 @@
       <td class="px-6 py-4 "><%= member.email %></td>
       <td class="px-6 py-4 "><%= member.phone %></td>
       <td class="px-6 py-4 "><%= role_text(member.role) %></td>
-      <td class="px-6 py-4 ">
-        <% if policy(:course_assigns).new? %>
-          <%= link_to new_course_assign_path(user_id: member), class: "inline-flex justify-center bg-gold-light gap-1 border border-gold p-1 rounded-sm" do %>
-            <span class="icon icon-assign-user h-[10px] w-[10px] items-center"></span>
-            <span class="text-xs">Assign Course</span>
+      <td class="px-6 py-4">
+        <div class="flex flex-col gap-2">
+          <% if policy(:course_assigns).new? %>
+            <%= link_to new_course_assign_path(user_id: member), class: "inline-flex justify-center items-center bg-gold-light gap-1 border border-gold p-1 rounded-sm" do %>
+              <span class="icon icon-assign-user h-[10px] w-[10px] items-center"></span>
+              <span class="text-xs">Assign Course</span>
+            <% end %>
           <% end %>
-        <% end %>
-        <% if InvitePolicy.new(current_user, member).resend? %>
-          <%= link_to resend_invite_path(member, team_id: @team.id), class: "inline-flex justify-center bg-primary-light-50 gap-1 border border-primary-light p-1 rounded-sm", data: { turbo_frame: "notice" } do %>
-            <span class="icon icon-re-invite h-[10px] w-[10px] items-center"></span>
-            <span class="text-primary-light text-xs">Re-Invite</span>
+      
+          <% if InvitePolicy.new(current_user, member).resend? %>
+            <%= link_to resend_invite_path(member, team_id: @team.id), class: "inline-flex justify-center items-center bg-primary-light-50 gap-1 border border-primary-light p-1 rounded-sm", data: { turbo_frame: "notice" } do %>
+              <span class="icon icon-re-invite h-[10px] w-[10px] items-center"></span>
+              <span class="text-primary-light text-xs">Re-Invite</span>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
       </td>
+      
     </tr>
 
   <% end %>
