@@ -1,0 +1,12 @@
+<div data-controller="forms" class="inline-block w-full">
+  <div class="flex gap-4 justify-center p-4 w-full border border-dashed border-primary rounded cursor-pointer" data-action="click->forms#chooseFile">
+    <span class="icon icon-upload icon-small"></span>
+    <p class="text-sm text-primary">Choose file</p>
+  </div>
+  <% if hidden_file_field.present? %>
+    <%= hidden_file_field %>
+  <% else %>
+    <input type="file" class="hidden" data-forms-target="fileInput" />
+  <% end %>
+  <label class="text-sm text-[#E0E0E0]" data-forms-target="selectedFileName">No file chosen</label>
+</div>

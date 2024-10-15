@@ -2,7 +2,9 @@
   <% @team.members.each do |member| %>
     <div class="flex flex-col box-shadow-medium rounded max-w-md ">
       <div class="flex gap-4 items-center border-b border-line-colour-light p-4">
-        <img class="h-12 w-12 rounded-full" src="assets/tiju.png" alt="Profile Picture">
+        <div class="inline-block w-12 h-12">
+          <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
+        </div>
         <div class="flex flex-col w-full">
           <div class="flex justify-between items-center">
             <span class="font-medium text-sm"><%= member.name %></span>

@@ -13,7 +13,7 @@
     <tr class="whitespace-nowrap text-xs font">
       <td class="px-6 py-4  flex  gap-4 items-center">
         <%= link_to user_path(member), class: "cursor-pointer" do %>
-          <%= image_tag "tiju.png",  alt: "useImage", class: "h-8 w-8 rounded-full" %>
+          <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
         <% end %>
         <span class="ml-2 font-medium text-sm"><%= member.name %></span>
         <% if user_verified?(member) %>
