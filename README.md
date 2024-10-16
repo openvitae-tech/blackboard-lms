@@ -29,11 +29,6 @@ $ brew install imagemagick
 ```
 
 ```
-# run bundle install to install ruby dependencies.
-$ bundle install
-```
-
-```
 # Set your favourite editor to edit credential file
 $ export EDITOR="code --wait" # or export EDITOR="vim --wait"
 
@@ -41,27 +36,21 @@ $ export EDITOR="code --wait" # or export EDITOR="vim --wait"
 # generate your master key and edit the credential file
 $ rails credentials:edit
 replace the editor content with the copied content, edit and save then close the file.
-
-# repeat the same for test environment
-$ rails credentials:edit --environment test
-replace the editor content with the copied content, edit and save then close the file.
 ```
 
-```
-# create & setup database
-$ cp config/database.yml.example config/database.yml # update test db configuration if required
-$ rails db:create
-$ rails db:migrate
-$ rails db:seed
-```
+To install Rails dependencies and seed the database by running:
 
+```bash
+./bin/setup
 ```
-# start server
-$ bin/dev
+Start the server by executing following command.
+
+```bash
+bin/dev
 ```
 
 ### Testing
-Make sure you have setup the test environment as mentioned in the earlier section 
+Make sure you have setup the test environment as mentioned in the earlier section
 ```
 $ rspec
 $ rspec -f d                 # view test descriptions
@@ -83,4 +72,3 @@ You can build the containers using `docker-compose build` command
 
 `docker-compose up` to run the application using docker in local.
 You might have to do some additional setup like generating a master key and setting the RAILS_MASTER_KEY in Dockerfile
-
