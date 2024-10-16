@@ -1,35 +1,30 @@
-<div class="box">
-  <div class="w-80">
-    <%= form_with(model: team) do |form| %>
-      <% if team.errors.any? %>
-        <div style="color: red">
-          <h2><%= pluralize(team.errors.count, "error") %> prohibited this course from being saved:</h2>
-
-          <ul>
-            <% team.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <% if team.parent_team_id.present? %>
+<div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center md:items-center md:justify-center z-[9999]" data-controller="modals" data-modals-target="modalBox">
+  <div class="bg-white rounded-lg w-[326px] md:w-[462px] md:rounded-lg md:relative absolute bottom-6 md:bottom-auto md:inset-auto">
+    <div class="flex items-center justify-between border-b border-line-colour-light p-6">
+      <span class="text-base font-semibold"><%= model_title_label_for(team) %></span>
+      <button data-action="click->modals#closeModal">
+        <span class="icon icon-close icon-small"></span>
+      </button>
+    </div>
+    <%= form_with model: team, class: "flex flex-col gap-6 p-6" do |form| %>
+      <% if team.new_record? %>
         <%= form.hidden_field :parent_team_id %>
       <% end %>
 
-      <div class="my-8 text-sm" >
-        <%= form.label :name, class: "text-sm font-medium" %>
-        <%= form.text_field :name, class: "input-text mt-2" %>
-      </div>
+      <%= render "shared/components/form_errors", resource: team %>
 
-      <div class="my-8 text-sm" >
-        <%= form.label :banner, class: "text-sm font-medium" %>
-        <%= form.file_field :banner, class: "input-file mt-2" %>
+      <div class="flex flex-col gap-4 items-start justify-center w-full">
+        <label class="text-sm">Upload team banner (< 1 MB)</label>
+        <!-- From component: pass the hidden file input field with data attribute forms_target: "fileInput" for this to work  -->
+        <%= render "shared/components/file_select", hidden_file_field:  form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput" }) %>
       </div>
-
-      <div class="my-8 text-sm">
-        <% text = team.persisted? ? "Update" : "Create" %>
-        <%= form.submit text, class: "btn-default" %>
+      <div class="flex flex-col gap-4">
+        <%= form.label :name, 'Team name', class: "block text-sm" %>
+        <%= form.text_field :name, class: "input-text", placeholder: "Your team name" %>
+      </div>
+      <div class="flex flex-col justify-between">
+        <%= form.button save_button_label_for(team), class: "bg-primary text-white px-4 py-2 rounded" %>
+        <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
       </div>
     <% end %>
   </div>

@@ -8,7 +8,7 @@
         <span class="font-medium text-basic pt-2"><%= @team.name  %></span>
       </div>
     </div>
-    <div class="mt-4">
+    <div class="mt-4 flex justify-between items-start">
       <ol class="flex items-center space-x-2 text-secondary text-xs">
         <% team_list(@team).each do |team| %>
           <li class="flex space-x-1">
@@ -17,6 +17,10 @@
           </li>
         <% end %>
       </ol>
+
+      <%= link_to edit_team_path(@team), data: { turbo_frame: "edit-team-modal" } do %>
+        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+      <% end %>
     </div>
     <div class="mb-6 mt-8 flex flex-row gap-6">
       <%= render "shared/components/course_watch_time_chart" %>
@@ -32,7 +36,8 @@
 
     <%= render "team_actions" %>
 
-    <div class="flex justify-end py-2">
+    <!-- TODO Disabled temporarily -->
+    <div class="flex justify-end py-2 hidden">
       <a href="javascript:void(0);" class="flex items-center justify-center">
         Show all users
         <span class="icon icon-show-users ms-4 icon-small"></span>
