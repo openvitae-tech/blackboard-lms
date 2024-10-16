@@ -3,7 +3,7 @@
     <summary  class="flex items-center justify-between p-6 cursor-pointer">
       <h2 class="text-black0 text-base font-semibold">
         <%= course_module.title %>
-        <span class="text-primary pl-5">(<%= lessons_count(course_module) %>)</span>
+        <span class="text-primary pl-5 text-sm font-medium">(<%= lessons_count(course_module) %>)</span>
         <!-- admin actions start -->
         <% if policy(:course_module).show? %>
           <%= link_to "Edit module", course_module_path(course, course_module), class: "link-text" %>
@@ -41,7 +41,7 @@
             <span><%= lesson.title %></span>
           </div>
           <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
-            <span class="icon icon-play h-5 w-5 "></span>
+            <span class="icon icon-play-lite h-5 w-5 "></span>
           <% end %>
         </li>
       <% end %>

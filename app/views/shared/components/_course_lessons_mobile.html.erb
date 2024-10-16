@@ -1,9 +1,9 @@
 <% modules_in_order(course).each do |course_module| %>
   <details class="border-line-colour border-b border-t">
     <summary class="flex cursor-pointer items-center justify-between p-4">
-      <h2 class="flex flex-col justify-start text-base font-semibold">
+      <h2 class="flex flex-col justify-start text-sm font-semibold">
         <span class=""><%= course_module.title %></span>
-        <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
+        <span class="text-primary text-xs font-normal">(<%= lessons_count(course_module) %>)</span>
       </h2>
       <span class="icon-down icon-small"></span>
       <span class="icon icon-up hidden icon-small"></span>
@@ -29,7 +29,7 @@
             <% end %>
           </div>
           <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
-            <span class="icon icon-play icon-small"></span>
+            <span class="icon icon-play-lite icon-small"></span>
           <% end %>
         </li>
       <% end %>
