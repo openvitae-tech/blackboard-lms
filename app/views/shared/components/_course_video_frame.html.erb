@@ -1,6 +1,10 @@
 <div class="basis-3/5">
   <div id="<%= dom_id(lesson) %>" class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
-    <iframe src="<%= vimeo_video_url(@video_url) %>" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen controls=false></iframe>
+    <% if @video_url.blank? %>
+      <div class="w-full inline-block text-center">Sorry! video is not available</div>
+    <% else %>
+      <iframe src="<%= vimeo_video_url(@video_url) %>" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen controls=false></iframe>
+    <% end %>
   </div>
 
   <% if supported_languages(lesson).length > 1 %>

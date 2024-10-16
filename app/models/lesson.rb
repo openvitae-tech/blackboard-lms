@@ -21,7 +21,7 @@ class Lesson < ApplicationRecord
   end
 
   def video_url_for_lang(lang)
-    if lang == LocalContent::DEFAULT_LANGUAGE
+    if lang.blank? || lang == LocalContent::DEFAULT_LANGUAGE
       video_url
     else
       local_contents.where(lang: lang).first&.video_url || ''
