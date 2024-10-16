@@ -7,9 +7,14 @@
       </button>
     </div>
     <%= form_with model: team, class: "flex flex-col gap-6 p-6" do |form| %>
-      <%= form.hidden_field :parent_team_id %>
+      <% if team.new_record? %>
+        <%= form.hidden_field :parent_team_id %>
+      <% end %>
+
+      <%= render "shared/components/form_errors", resource: team %>
+
       <div class="flex flex-col gap-4 items-start justify-center w-full">
-        <label class="text-sm">Upload team logo</label>
+        <label class="text-sm">Upload team banner (< 1 MB)</label>
         <!-- From component: pass the hidden file input field with data attribute forms_target: "fileInput" for this to work  -->
         <%= render "shared/components/file_select", hidden_file_field:  form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput" }) %>
       </div>
@@ -18,7 +23,7 @@
         <%= form.text_field :name, class: "input-text", placeholder: "Your team name" %>
       </div>
       <div class="flex flex-col justify-between">
-        <%= form.button "Add team", class: "bg-primary text-white px-4 py-2 rounded" %>
+        <%= form.button save_button_label_for(team), class: "bg-primary text-white px-4 py-2 rounded" %>
         <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
       </div>
     <% end %>

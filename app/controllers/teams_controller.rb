@@ -15,10 +15,12 @@ class TeamsController < ApplicationController
 
   def create
     service = TeamManagementService.instance
-    @team = Team.find team_params[:parent_team_id]
+    parent_team = Team.find create_team_params[:parent_team_id]
 
-    if service.create_team(team_params, current_user.learning_partner)
-      redirect_to team_path(@team)
+    @team = Team.new(create_team_params)
+
+    if service.create_team(@team, current_user.learning_partner)
+      redirect_to team_path(parent_team)
     else
       render 'new'
     end
@@ -31,12 +33,17 @@ class TeamsController < ApplicationController
   def update
     team = Team.find(params[:id])
     service = TeamManagementService.instance
-    service.update_team(team, team_params)
+    service.update_team(team, update_team_params)
+    redirect_to team
   end
 
   private
 
-  def team_params
+  def create_team_params
     params.require(:team).permit(:name, :banner, :parent_team_id)
+  end
+
+  def update_team_params
+    params.require(:team).permit(:name, :banner)
   end
 end

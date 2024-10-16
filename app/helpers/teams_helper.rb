@@ -20,4 +20,8 @@ module TeamsHelper
 
     @team_list
   end
+
+  def save_button_label_for(team)
+    team.persisted? ? 'Update team' : 'Create team'
+  end
 end

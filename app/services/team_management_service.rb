@@ -3,8 +3,8 @@
 class TeamManagementService
   include Singleton
 
-  def create_team(team_params, partner)
-    team = Team.new(name: team_params[:name], learning_partner: partner, parent_team_id: team_params[:parent_team_id])
+  def create_team(team, partner)
+    team.learning_partner = partner
     team.save
   end
 

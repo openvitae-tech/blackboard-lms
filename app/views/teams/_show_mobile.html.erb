@@ -13,9 +13,8 @@
           </li>
         <% end %>
       </ol>
-      <%= link_to edit_team_path(@team), data: { turbo_frame: "edit-team-modal" }, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm py-1 px-2" do %>
-        <span class="text-xs font-medium text-secondary">Edit</span>
-        <span class="icon icon-edit h-[10px] w-[10px]"></span>
+      <%= link_to edit_team_path(@team), data: { turbo_frame: "edit-team-modal" } do %>
+        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
       <% end %>
     </div>
     <div class="mt-4 flex flex-col gap-4">
