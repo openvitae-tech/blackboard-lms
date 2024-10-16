@@ -24,4 +24,8 @@ module TeamsHelper
   def save_button_label_for(team)
     team.persisted? ? 'Update team' : 'Create team'
   end
+
+  def model_title_label_for(team)
+    team.persisted? ? 'Update team' : 'Create team'
+  end
 end

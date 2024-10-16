@@ -1,5 +1,5 @@
 <%= render "shared/components/mobile_layout" do %>
-  <div data-controller="teams teams-tab-change user-show">
+  <div data-controller="teams-tab-change user-show">
     <div class="inline-flex gap-2">
       <span class="icon icon-team-green icon-small"></span>
       <span class="text-sm font-semibold text-primary">Team</span>
@@ -55,7 +55,7 @@
         <span class="text-xs font-semibold text-primary">All users</span>
       </div>
       <div class="my-4 flex justify-end hidden" data-user-show-target="showAllUsers">
-        <a href="#" data-action="click->user-show#toggleAllUsers" class="flex items-center justify-center text-base font-normal">
+        <a href="#" data-action="click->user-show#toggleAllUsers" class="hidden flex items-center justify-center text-base font-normal">
           Show all users
           <span class="items-center icon icon-show-users ms-4 icon-small"></span>
         </a>
@@ -63,13 +63,16 @@
 
       <%= render "teams/member_list_mobile" %>
 
-      <div class="sticky bottom-6 justify-center rounded text-center bg-primary end-4 start-4">
-        <button class="flex w-full justify-center gap-2 px-4 py-5" data-actionType="addUser" data-action="click->teams#addUser">
-          <span class="items-center icon icon-plus-white icon-small"></span>
-          <span class="text-sm text-white">Add User</span>
-        </button>
-      </div>
-      <%= render "shared/components/add_user" %>
+      <% if policy(:invite).new? %>
+        <%= link_to new_invite_path(team_id: @team.id), data: { turbo_frame: "add-user-modal" } do %>
+          <div class="sticky bottom-6 justify-center rounded text-center bg-primary end-4 start-4">
+            <button class="flex w-full justify-center gap-2 px-4 py-5">
+              <span class="items-center icon icon-plus-white icon-small"></span>
+              <span class="text-sm text-white">Invite User</span>
+            </button>
+          </div>
+        <% end %>
+      <% end %>
     </div>
     <div id="team" data-teams-tab-change-target="teamContent" class="hidden" data-tab="team">
       <div class="flex items-center justify-between pt-8">
