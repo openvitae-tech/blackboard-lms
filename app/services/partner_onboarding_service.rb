@@ -8,7 +8,9 @@ class PartnerOnboardingService
       success = partner.save
       return unless success
 
-      success = team_management.create_team({ name: partner.name, parent_team_id: nil }, partner)
+      team = Team.new(name: partner.name)
+
+      success = team_management.create_team(team, partner)
 
       unless success
         Rails.logger.info 'Partner creation failed - failed to create default team'
