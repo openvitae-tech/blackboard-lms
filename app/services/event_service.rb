@@ -8,6 +8,15 @@ class EventService
     publish_event_to_database(event) if event.valid?
   end
 
+  def publish_onboarding_initiated(user, partner)
+    event = Event::OnboardingInitiated.new(
+      partner_name: partner.name,
+      partner_id: partner.id
+    )
+
+    publish_event(user, event)
+  end
+
   private
 
   def build_event(user, event_data)
