@@ -1,39 +1,47 @@
 <%= render "shared/components/desktop_layout" do %>
-
-<div class="box flex justify-between">
-  <%= link_to "Back", learning_partners_path, class: "nav-link" %>
-
-  <div class="flex gap-4">
-    <% if policy(@learning_partner).edit? %>
-      <%= link_to edit_learning_partner_path(@learning_partner), class: "btn-default" do %>
-        <span>Edit</span>
+<div class="box flex justify-between pt-4">
+   <div class="flex gap-4 items-center ">
+      <%= link_to learning_partners_path, class: "nav-link" do %>
+      <span class="icon icon-arrow-left-gray icon-small"></span>
       <% end %>
-    <% end  %>
-    <% if policy(@learning_partner).destroy? %>
+      <div class="font-bold"><%= @learning_partner.name %></div>      
+   </div>
+   <div class="flex gap-4 items-center">
+      <% if policy(@learning_partner).destroy? %>
       <%= link_to @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-default" do %>
-        <span>Delete</span>
+      <span>Delete</span>
       <% end %>
-    <% end  %>
-    <% if policy(:invite).new? %>
-      <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "add-user-modal" }, class: "btn-default" do %>
-        <span>Invite user</span>
+      <% end  %>
+
+      <% if policy(@learning_partner).edit? %>
+      <%= link_to edit_learning_partner_path(@learning_partner) do %>
+      <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
       <% end %>
-    <% end %>
-  </div>
-</div>
+      <% end  %>
 
-<div class="box">
-  <% if @learning_partner.logo.present? %>
-    <div class="my-4"><%= image_tag @learning_partner.logo.variant(resize_to_limit: [150, nil]) %></div>
-  <% end %>
-  <div class="my-4 font-bold"><%= @learning_partner.name %></div>
-  <% if @learning_partner.banner.present? %>
-    <div class="my-4"><%= image_tag @learning_partner.banner.variant(resize_to_limit: [320, nil]) %></div>
-  <% end %>
-  <div class="my-4"><strong>About</strong> <%= @learning_partner.content %></div>
+      <% if policy(:invite).new? %>
+      <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "add-user-modal" }, class: "bg-primary rounded px-4 py-2 flex items-center" do %>
+      <span class="text-sm font-medium text-white">Invite user</span>
+      <% end %>
+      <% end %>
+   </div>
 </div>
-
+<div class="box w-full">
+   <% if @learning_partner.logo.present? %>
+   <h3 class="text-sm font-medium">Hotel Logo</h3>
+   <div class="my-4 box-shadow-medium p-6"><%= image_tag @learning_partner.logo.variant(resize_to_limit: [150, nil]) %></div>
+   <% end %>
+   <% if @learning_partner.banner.present? %>
+   <h3 class="text-sm font-medium">Hotel Banner</h3>
+   <div class="my-4 box-shadow-medium p-6"><%= image_tag @learning_partner.banner.variant(resize_to_limit: [320, nil]) %></div>
+   <% end %>
+   <div class="my-4">
+      <h3 class="text-sm font-medium">About</h3>
+      <div class="my-4 box-shadow-medium p-6">
+         <%= @learning_partner.content %>
+      </div>
+   </div>
+</div>
 <%= render "users/user_list", users: @learning_partner.users, learning_partner: @learning_partner %>
 <% end %>
-
 <%= turbo_frame_tag "add-user-modal" %>
