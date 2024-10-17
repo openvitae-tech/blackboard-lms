@@ -1,10 +1,5 @@
 <%= render "shared/components/desktop_layout" do %>
   <div class="box">
-    <%= link_to "Back", learning_partners_path, class: "nav-link" %>
-  </div>
-
-  <div class="box">
-    <h1 class="page-subtitle">New learning partner</h1>
     <%= render "form", learning_partner: @learning_partner %>
   </div>
 <% end %>
