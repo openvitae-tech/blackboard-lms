@@ -4,11 +4,11 @@
     <span class="icon icon-course-teal icon-small"></span>
     <span class="text-primary text-xs font-medium">My Courses</span>
   </div>
-  <p class="text-primary mb-1 overflow-hidden text-ellipsis text-base font-bold italic py-6">
+  <p class="text-primary mb-1 overflow-hidden text-ellipsis text-base font-bold py-6">
     <%= @course.title %>
   </p>
   <div class="flex flex-col">
-    <%= render "shared/components/course_video_frame_mobile", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
-    <%= render "shared/components/course_video_play_list_mobile", course: @course,  enrollment: @enrollment %>
+    <%= render "lessons/course_video_frame_mobile", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
+    <%= render "lessons/course_video_play_list_mobile", course: @course,  enrollment: @enrollment %>
   </div>
 <% end %>
