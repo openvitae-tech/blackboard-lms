@@ -23,7 +23,7 @@
   <div class="my-8 text-sm" >
      <div class="flex justify-between">
         <%= form.label :logo, style: "display: block" %>
-        <label data-file-upload-target="logoLabel" class="text-sm text-[#ADADAD]">No file chosen</label>
+        <label data-file-upload-target="logoLabel" class="text-sm text-line-colour">No file chosen</label>
      </div>
      <div class="relative mt-2">
         <%= form.file_field :logo, class: "input-file opacity-0 absolute inset-0 z-50 h-full cursor-pointer", data: { file_upload_target: "logoInput" }  %>
@@ -41,7 +41,7 @@
   <div class="my-8 text-sm" >
      <div class="flex justify-between">
         <%= form.label :banner, style: "display: block"%>
-        <label data-file-upload-target="bannerLabel" class="text-sm text-[#ADADAD]">No file chosen</label>
+        <label data-file-upload-target="bannerLabel" class="text-sm text-line-colour">No file chosen</label>
      </div>
      <div class="relative mt-2">
         <%= form.file_field :banner, class: "input-file opacity-0 absolute inset-0 z-50 h-full cursor-pointer", data: { file_upload_target: "bannerInput" } %>
