@@ -1,5 +1,8 @@
-<tr class="bg-white border-b">
-  <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+<tr class="bg-white">
+  <td class="px-6 py-4 flex gap-4 items-center font-medium text-gray-900 whitespace-nowrap">
+    <span class="bg-slate-grey-light h-8 w-8 rounded-full flex items-center justify-center text-primary box-shadow-small hover:text-primary-light">
+      A
+    </span>
     <% if policy(user).show? %>
       <%= link_to user.name || "User", user_path(user) %>
     <% else  %>
@@ -7,19 +10,33 @@
     <% end %>
   </td>
   <td class="px-6 py-4">
-    <%= role_text(user.role) %>
-  </td>
-  <td class="px-6 py-4">
     <%= user.email %>
     (<%= invite_status(user) %>)
   </td>
   <td class="px-6 py-4">
+   
+  </td>
+  <td class="px-6 py-4">
+    <%= role_text(user.role) %>
+  </td>
+  
+  <td class="px-6 py-4">
     <!-- when admin visiting his team page -->
     <% if InvitePolicy.new(current_user, user).resend? %>
-      <% if learning_partner.present? %>
-        <%= link_to "Re-invite", resend_invite_path(user, learning_partner_id: learning_partner.id), class: "nav-link", data: { turbo_frame: "notice" } %>
+      <% if learning_partner.present? %>     
+        <%= link_to resend_invite_path(user, learning_partner_id: learning_partner.id),
+          class: "nav-link inline-flex items-center bg-primary-light-50 gap-1 border border-primary p-1",
+          data: { turbo_frame: "notice" } do %>
+          <span class="icon icon-re-invite h-[10px] w-[10px] items-center"></span>
+          <span class="text-primary text-xs">Re-Invite</span>
+        <% end %>
       <% else %>
-        <%= link_to "Re-invite", resend_invite_path(user), class: "nav-link", data: { turbo_frame: "notice" } %>
+        <%= link_to resend_invite_path(user),
+         class: "nav-link inline-flex items-center bg-primary-light-50 gap-1 border border-primary p-1",
+          data: { turbo_frame: "notice" } do %>
+          <span class="icon icon-re-invite h-[10px] w-[10px] items-center"></span>
+          <span class="text-primary text-xs">Re-Invite</span>
+        <% end %>
       <% end %>
     <% end %>
     <% if policy(:course_assigns).new? %>
