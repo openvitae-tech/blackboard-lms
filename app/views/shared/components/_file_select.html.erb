@@ -1,12 +1,33 @@
 <div data-controller="forms" class="inline-block w-full">
   <div class="flex gap-4 justify-center p-4 w-full border border-dashed border-primary rounded cursor-pointer" data-action="click->forms#chooseFile">
-    <span class="icon icon-upload icon-small"></span>
-    <p class="text-sm text-primary">Choose file</p>
+     <span class="icon icon-upload icon-small"></span>
+     <p class="text-sm text-primary">Choose file</p>
   </div>
   <% if hidden_file_field.present? %>
-    <%= hidden_file_field %>
+  <%= hidden_file_field %>
   <% else %>
-    <input type="file" class="hidden" data-forms-target="fileInput" />
+  <input type="file" class="hidden" data-forms-target="fileInput"  />
   <% end %>
-  <label class="text-sm text-[#E0E0E0]" data-forms-target="selectedFileName">No file chosen</label>
+  <label class="text-sm text-line-colour inline-block max-w-xs overflow-hidden whitespace-nowrap overflow-ellipsis" data-forms-target="selectedFileName">No file chosen</label>
+  <% if file_type == "logo" %>
+  <div class="relative mt-4 hidden" data-forms-target="logoPreviewContainer">
+     <img data-forms-target="logoPreview" class="w-24 h-24 object-cover border border-gray-200 rounded-md" alt="Logo Preview" />
+     <button type="button" data-forms-target="logoCloseButton" 
+        data-action="click->forms#resetInput"
+        data-file-type="logo"
+        class="absolute top-0">
+     <span class="icon icon-close icon-small"></span>
+     </button>
+  </div>
+  <% elsif file_type == "banner" %>
+  <div class="relative mt-4 hidden" data-forms-target="bannerPreviewContainer">
+     <img data-forms-target="bannerPreview" class="w-full h-32 object-cover border border-gray-200 rounded-md" alt="Banner Preview" />
+     <button type="button" data-forms-target="bannerCloseButton" 
+        data-action="click->forms#resetInput"
+        data-file-type="banner"
+        class="absolute top-0">
+     <span class="icon icon-close icon-small"></span>
+     </button>
+  </div>
+  <% end %>
 </div>
