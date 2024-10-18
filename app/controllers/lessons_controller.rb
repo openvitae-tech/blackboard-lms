@@ -11,7 +11,9 @@ class LessonsController < ApplicationController
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @course_modules = helpers.modules_in_order(@course)
     @lang = params[:lang]
-    @video_url = @lesson.video_url_for_lang(@lang)
+    video_url = @lesson.video_url_for_lang(@lang)
+    @video_iframe = get_video_iframe(video_url)
+    Rails.logger.info @video_iframe
   end
 
   # GET /lessons/new
@@ -145,5 +147,14 @@ class LessonsController < ApplicationController
                                    :course_module_id,
                                    :duration,
                                    local_contents_attributes: %i[lang video_url _destroy id])
+  end
+
+  def get_video_iframe(video_url)
+    vimeo_service = VimeoService.instance
+
+    if video_url.present?
+      vendor_response = vimeo_service.resolve_video_url(video_url)
+      vendor_response['html'] if vendor_response.has_key?('html')
+    end
   end
 end
