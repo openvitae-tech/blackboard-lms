@@ -1,19 +1,22 @@
 <% if @team.sub_teams.empty? %>
-  <div class="border-primary box-shadow-medium mt-6 flex justify-between gap-60 rounded border border-dashed p-8">
-    <p class="w-[446px] text-sm">
+  <div class="mt-6 flex justify-between gap-60 rounded border border-dashed p-8 border-primary box-shadow-medium">
+    <p class="text-sm w-[446px]">
       Welcome, you can manage departments/teams under your team by adding teams for each department/team here.
     </p>
-     <%= link_to new_team_path(parent_team_id: @team.id), data: { turbo_frame: "add-new-team-modal" }, class: "border-primary inline-flex items-center gap-2 rounded border px-4 py-2" do %>
-      <span class="icon icon-plus-green icon-small"></span>
-      <span class="text-primary text-xs">Add Team</span>
+    <% if policy(@team).new? %>
+      <%= link_to new_team_path(parent_team_id: @team.id), data: { turbo_frame: "add-new-team-modal" } do %>
+        <%= render 'shared/components/icon_button_primary_border', label: 'Add team', icon_name: 'icon-plus-green' %>
+      <% end %>
     <% end %>
   </div>
 <% else %>
   <div class="flex items-center justify-between pt-8">
-    <p class="text-basic font-medium">Linked Hotels & Resorts</p>
-    <%= link_to new_team_path(parent_team_id: @team.id), data: { turbo_frame: "add-new-team-modal" }, class: "bg-primary flex items-center gap-2 rounded px-4 py-2" do %>
-      <span class="icon icon-plus-white icon-small"></span>
-      <span class="text-xs text-white">Add Team</span>
+    <p class="font-medium text-basic">Linked Hotels & Resorts</p>
+    <% if policy(@team).new? %>
+
+      <%= link_to new_team_path(parent_team_id: @team.id), data: { turbo_frame: "add-new-team-modal" } do %>
+        <%= render 'shared/components/icon_button_primary', label: 'Add team', icon_name: 'icon-plus-white' %>
+      <% end %>
     <% end %>
   </div>
 <% end %>

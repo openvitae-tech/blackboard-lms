@@ -18,8 +18,10 @@
         <% end %>
       </ol>
 
-      <%= link_to edit_team_path(@team), data: { turbo_frame: "edit-team-modal" } do %>
-        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+      <% if policy(@team).edit? %>
+        <%= link_to edit_team_path(@team), data: { turbo_frame: "edit-team-modal" } do %>
+          <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+        <% end %>
       <% end %>
     </div>
     <div class="mb-6 mt-8 flex flex-row gap-6">
@@ -28,13 +30,15 @@
     </div>
 
     <div class="flex justify-end pb-4">
-      <%= link_to "#", class: "text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm" do %>
-        <span class="text-primary text-sm">View full dashboard</span>
-        <span class="icon icon-arrow-right icon-small"></span>
+      <% policy(:dashboard).index? do %>
+        <%= link_to "#", class: "text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm" do %>
+          <span class="text-primary text-sm">View full dashboard</span>
+          <span class="icon icon-arrow-right icon-small"></span>
+        <% end %>
       <% end %>
     </div>
 
-    <%= render "team_actions" %>
+    <%= render "teams/team_actions" %>
 
     <!-- TODO Disabled temporarily -->
     <div class="flex justify-end py-2 hidden">

@@ -16,11 +16,8 @@
           <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
         <% end %>
         <span class="ml-2 font-medium text-sm"><%= member.name %></span>
-        <% if user_verified?(member) %>
-          <div class="flex items-center bg-primary-light-50 gap-1 border border-primary-light px-1 rounded-sm">
-            <span class="icon icon-complete icon-tiny"></span>
-            <span class="text-primary-light text-[8px]">Verified</span>
-          </div>
+        <% if member.verified? %>
+          <%= render 'shared/components/label_small_success', label: 'Verified', icon_name: 'icon-complete' %>
         <% end %>
       </td>
       <td class="px-6 py-4 "><%= member.email %></td>
@@ -29,9 +26,8 @@
       <td class="px-6 py-4">
         <div class="flex flex-col gap-2">
           <% if policy(:course_assigns).new? %>
-            <%= link_to new_course_assign_path(user_id: member), class: "inline-flex justify-center items-center bg-gold-light gap-1 border border-gold p-1 rounded-sm" do %>
-              <span class="icon icon-assign-user h-[10px] w-[10px] items-center"></span>
-              <span class="text-xs">Assign Course</span>
+            <%= link_to new_course_assign_path(user_id: member) do %>
+              <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
             <% end %>
           <% end %>
       
@@ -43,9 +39,7 @@
           <% end %>
         </div>
       </td>
-      
     </tr>
-
   <% end %>
   </tbody>
 </table>

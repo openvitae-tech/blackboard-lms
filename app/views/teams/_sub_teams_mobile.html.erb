@@ -1,17 +1,17 @@
 <div class="flex flex-col gap-4 py-6">
   <% @team.sub_teams.each do |team| %>
-  <div class="flex justify-between items-center p-4 border border-line-colour-light rounded-lg box-shadow-small">
-    <div class="flex items-center space-x-6">
-      <% if team.banner.present? %>
-        <%= image_tag team.banner,  alt: "Image", class: "h-4 w-20 object-cover" %>
-      <% end %>
-      <span class="text-sm font-medium"><%= team.name %></span>
+    <div class="flex items-center justify-between rounded-lg border p-4 border-line-colour-light box-shadow-small">
+      <div class="flex items-center space-x-6">
+        <% if team.banner.present? %>
+          <%= image_tag team.banner, alt: "Image", class: "h-4 w-20 object-cover" %>
+        <% end %>
+        <span class="text-sm font-medium"><%= team.name %></span>
+      </div>
+      <div>
+        <%= link_to team_path(team) do %>
+          <span class="icon icon-simple-arrow-right icon-small"></span>
+        <% end %>
+      </div>
     </div>
-    <div>
-      <%= link_to team_path(team) do %>
-        <span class="icon icon-simple-arrow-right icon-small"></span>
-      <% end %>
-    </div>
-  </div>
   <% end %>
 </div>
