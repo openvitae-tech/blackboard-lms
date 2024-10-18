@@ -9,10 +9,7 @@
           <div class="flex justify-between items-center">
             <span class="font-medium text-sm"><%= member.name %></span>
             <% if member.verified? %>
-              <div class="flex items-center bg-primary-light-50 gap-1 border border-primary rounded-sm p-1">
-                <span class="icon icon-complete icon-tiny"></span>
-                <span class="text-primary text-[8px]">Verified</span>
-              </div>
+              <%= render 'shared/components/label_small_success', label: 'Verified', icon_name: 'icon-complete' %>
             <% end %>
           </div>
           <span class="text-secondary text-xs"><%= member.role %></span>
@@ -29,15 +26,13 @@
         </div>
         <div class="flex justify-end p-1">
           <% if policy(:course_assigns).new? %>
-            <%= link_to new_course_assign_path(user_id: member), class: "inline-flex justify-center gap-2 bg-gold-light border-gold p-2" do %>
-              <span class="icon icon-assign-user h-[10px] w-[10px] items-center"></span>
-              <span class="text-xs">Assign Course</span>
+            <%= link_to new_course_assign_path(user_id: member) do %>
+              <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
             <% end %>
           <% end %>
           <% if InvitePolicy.new(current_user, member).resend? %>
-            <%= link_to resend_invite_path(member, team_id: @team.id), class: "inline-flex justify-center bg-primary-light-50 gap-1 border border-primary-light p-1 rounded-sm", data: { turbo_frame: "notice" } do %>
-              <span class="icon icon-re-invite h-[10px] w-[10px] items-center"></span>
-              <span class="text-primary text-xs">Re-Invite</span>
+            <%= link_to resend_invite_path(member, team_id: @team.id), data: { turbo_frame: "notice" } do %>
+              <%= render 'shared/components/label_medium_success', label: 'Re-invite', icon_name: 'icon-re-invite' %>
             <% end %>
           <% end %>
         </div>

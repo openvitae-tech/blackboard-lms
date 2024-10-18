@@ -13,20 +13,26 @@
           </li>
         <% end %>
       </ol>
-      <%= link_to edit_team_path(@team), data: { turbo_frame: "edit-team-modal" } do %>
-        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+      <% if policy(@team).edit? %>
+        <%= link_to edit_team_path(@team), data: { turbo_frame: "edit-team-modal" } do %>
+          <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+        <% end %>
       <% end %>
     </div>
     <div class="mt-4 flex flex-col gap-4">
       <%= render "shared/components/course_watch_time_chart_mobile" %>
       <%= render "shared/components/enrolled_ratio_chart" %>
     </div>
-    <button class="my-4 flex justify-start">
-      <a href="#" class="flex items-center gap-1 rounded p-2 text-sm text-primary box-shadow-medium">
-        View all metrics
-        <span class="icon icon-arrow-right icon-small"></span>
-      </a>
-    </button>
+
+    <% if policy(@team).edit? %>
+      <button class="my-4 flex justify-start">
+        <a href="#" class="flex items-center gap-1 rounded p-2 text-sm text-primary box-shadow-medium">
+          View all metrics
+          <span class="icon icon-arrow-right icon-small"></span>
+        </a>
+      </button>
+    <% end %>
+
     <div class="my-6 flex justify-start gap-6">
       <a href="javascript:void(0);" data-action="click->teams-tab-change#changeTab" data-tab="user" class="text-base font-normal active-border">User</a>
       <a href="javascript:void(0);" data-action="click->teams-tab-change#changeTab" data-tab="team" class="text-base font-normal">Team</a>
@@ -45,10 +51,11 @@
     </div>
     <div class="pt-8 flex justify-between items-center">
       <h1 class="mb-4 pl-0 text-base font-bold">Team members</h1>
-      <button id="" class="bg-secondary flex items-center gap-2 rounded px-4 py-2">
-        <span class="icon icon-assign-user-white icon-small"></span>
-        <span class="text-sm text-white font-medium">Assign course</span>
-      </button>
+      <% if policy(:course_assigns).new? %>
+        <%= link_to new_course_assign_path(team_id: @team.id) do %>
+          <%= render "shared/components/icon_button_secondary", label: 'Assign courses', icon_name: 'icon-assign-user-white' %>
+        <% end %>
+      <% end %>
     </div>
     <div id="user" data-teams-tab-change-target="teamContent" class="" data-tab="user">
       <div class="my-4 flex hidden justify-start" data-target="user-show.allUsersSection">
