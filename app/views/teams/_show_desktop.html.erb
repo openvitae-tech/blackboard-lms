@@ -28,12 +28,10 @@
       <%= render "shared/components/course_watch_time_chart" %>
       <%= render "shared/components/enrolled_ratio_chart" %>
     </div>
-
     <div class="flex justify-end pb-4">
-      <% policy(:dashboard).index? do %>
-        <%= link_to "#", class: "text-primary box-shadow-medium flex items-center gap-1 rounded p-2 text-sm" do %>
-          <span class="text-primary text-sm">View full dashboard</span>
-          <span class="icon icon-arrow-right icon-small"></span>
+      <% if policy(:dashboard).index? %>
+        <%= link_to "#" do %>
+          <%= render 'shared/components/button_default_medium', label: 'View full dashboard', icon_name: 'icon-arrow-right' %>
         <% end %>
       <% end %>
     </div>

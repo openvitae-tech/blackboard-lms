@@ -24,13 +24,10 @@
       <%= render "shared/components/enrolled_ratio_chart" %>
     </div>
 
-    <% if policy(@team).edit? %>
-      <button class="my-4 flex justify-start">
-        <a href="#" class="flex items-center gap-1 rounded p-2 text-sm text-primary box-shadow-medium">
-          View all metrics
-          <span class="icon icon-arrow-right icon-small"></span>
-        </a>
-      </button>
+    <% if policy(:dashboard).index? %>
+      <div class="my-4 flex justify-start">
+        <%= render 'shared/components/button_default_medium', label: 'View full dashboard', icon_name: 'icon-arrow-right' %>
+      </div>
     <% end %>
 
     <div class="my-6 flex justify-start gap-6">
