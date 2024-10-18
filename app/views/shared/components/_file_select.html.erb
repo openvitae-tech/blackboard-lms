@@ -10,21 +10,19 @@
   <% end %>
   <label class="text-sm text-line-colour inline-block max-w-xs overflow-hidden whitespace-nowrap overflow-ellipsis" data-forms-target="selectedFileName">No file chosen</label>
   <% if file_type == "logo" %>
-  <div class="relative mt-4 hidden" data-forms-target="logoPreviewContainer">
-     <img data-forms-target="logoPreview" class="w-24 h-24 object-cover border border-gray-200 rounded-md" alt="Logo Preview" />
-     <button type="button" data-forms-target="logoCloseButton" 
+  <div class="relative mt-4 hidden" data-forms-target="previewContainer">
+     <img data-forms-target="preview" class="w-24 h-24 object-cover border border-gray-200 rounded-md" alt="Preview" />
+     <button type="button"
         data-action="click->forms#resetInput"
-        data-file-type="logo"
         class="absolute top-0">
      <span class="icon icon-close icon-small"></span>
      </button>
   </div>
-  <% elsif file_type == "banner" %>
-  <div class="relative mt-4 hidden" data-forms-target="bannerPreviewContainer">
-     <img data-forms-target="bannerPreview" class="w-full h-32 object-cover border border-gray-200 rounded-md" alt="Banner Preview" />
-     <button type="button" data-forms-target="bannerCloseButton" 
+  <% elsif file_type == "banner" %> 
+  <div class="relative mt-4 hidden" data-forms-target="previewContainer">
+     <img data-forms-target="preview" class="w-full h-32 object-cover border border-gray-200 rounded-md" alt="Preview" />
+     <button type="button"
         data-action="click->forms#resetInput"
-        data-file-type="banner"
         class="absolute top-0">
      <span class="icon icon-close icon-small"></span>
      </button>

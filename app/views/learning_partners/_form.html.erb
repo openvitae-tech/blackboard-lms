@@ -27,7 +27,7 @@
      <div class="relative mt-2">
        
       <%= render "shared/components/file_select", 
-      hidden_file_field: form.file_field(:logo, class: "hidden", data: { forms_target: "fileInput", file_type: "logo", file_upload_target: "logoInput" }), 
+      hidden_file_field: form.file_field(:logo, class: "hidden", data: { forms_target: "fileInput"}), 
       file_type: "logo"  %>
      </div>
      
@@ -39,7 +39,7 @@
      <div class="relative mt-2">
         
       <%= render "shared/components/file_select", 
-      hidden_file_field: form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput", file_type: "banner" }), 
+      hidden_file_field: form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput"}), 
       file_type: "banner" %>
      </div>
   </div>
@@ -49,7 +49,7 @@
     </div>
      <div>
         <% text = learning_partner.persisted? ? "Update" : "Create" %>
-        <%= form.submit text, class: "btn-primary text-white", data: {file_upload_target: "uploadButton"} %>
+        <%= form.submit text, class: "btn-primary"%>
      </div>
   </div>
   <% end %>

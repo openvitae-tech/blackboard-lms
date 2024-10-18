@@ -4,21 +4,20 @@ export default class extends Controller {
   static targets = [
     "fileInput",
     "selectedFileName",
-    "logoPreview",
-    "logoPreviewContainer",
-    "bannerPreview",
-    "bannerPreviewContainer"
+    "preview",
+    "previewContainer",
   ];
 
   connect() {
     this.fileInputTarget.addEventListener("change", (e) => {
-      const fileName = e.target.files[0];
-      this.updateFileName(fileName);
-      this.showPreview(fileName);
+      const file = e.target.files[0];
+      this.updateFileName(file);
+      this.showPreview(file);
     });
   }
 
   updateFileName(file) {
+    this.clearError();
     const fileName = file ? file.name : "No file chosen";
     this.selectedFileNameTarget.innerText = fileName;
   }
@@ -26,31 +25,34 @@ export default class extends Controller {
   showPreview(file) {
     const fileType = this.fileInputTarget.dataset.fileType;
 
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (fileType === "logo") {
-          this.logoPreviewTarget.src = reader.result;
-          this.logoPreviewContainerTarget.classList.remove("hidden");
-        } else if (fileType === "banner") {
-          this.bannerPreviewTarget.src = reader.result;
-          this.bannerPreviewContainerTarget.classList.remove("hidden");
-        }
-      };
-      reader.readAsDataURL(file);
+    if (file) {
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.previewTarget.src = reader.result;
+          this.previewContainerTarget.classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      } else if (file.type.startsWith("video/")) {
+        this.showError("Video files are not allowed.");
+      } else {
+        this.showError("Only image files are allowed.");
+      }
     }
   }
 
-  resetInput(event) {
-    const fileType = event.currentTarget.dataset.fileType;
-
-    if (fileType === "logo") {
-      this.logoPreviewContainerTarget.classList.add("hidden");
-      this.logoPreviewTarget.src = "";
-    } else if (fileType === "banner") {
-      this.bannerPreviewContainerTarget.classList.add("hidden");
-      this.bannerPreviewTarget.src = "";
-    }
+  showError(message) {
+    this.resetInput();
+    this.selectedFileNameTarget.innerText = message;
+    this.selectedFileNameTarget.style.color = "red";
+  }
+  clearError() {
+    this.selectedFileNameTarget.innerText = "No file chosen";
+    this.selectedFileNameTarget.style.color = "";
+  }
+  resetInput() {
+    this.previewContainerTarget.classList.add("hidden");
+    this.previewTarget.src = "";
 
     this.fileInputTarget.value = "";
     this.selectedFileNameTarget.innerText = "No file chosen";
