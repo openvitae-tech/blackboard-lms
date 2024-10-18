@@ -23,37 +23,24 @@
   <div class="my-8 text-sm" >
      <div class="flex justify-between">
         <%= form.label :logo, style: "display: block" %>
-        <label data-file-upload-target="logoLabel" class="text-sm text-line-colour">No file chosen</label>
      </div>
      <div class="relative mt-2">
-        <%= form.file_field :logo, class: "input-file opacity-0 absolute inset-0 z-50 h-full cursor-pointer", data: { file_upload_target: "logoInput" }  %>
-        <%= render "shared/components/choose_file" %>
+       
+      <%= render "shared/components/file_select", 
+      hidden_file_field: form.file_field(:logo, class: "hidden", data: { forms_target: "fileInput"}), 
+      preview: "logo"  %>
      </div>
-     <div class="relative mt-4 hidden" data-file-upload-target="logoPreviewContainer" >
-        <img data-file-upload-target="logoPreview" class=" w-24 h-24 object-cover border border-gray-200 rounded-md" alt="Logo Preview" />
-        <button type="button" data-file-upload-target="logoCloseButton" 
-           data-action="click->file-upload#resetInput"
-           data-file-type="logo" class="absolute top-0">
-        <span class="icon icon-close icon-small"></span>
-        </button>
-     </div>
+     
   </div>
   <div class="my-8 text-sm" >
      <div class="flex justify-between">
         <%= form.label :banner, style: "display: block"%>
-        <label data-file-upload-target="bannerLabel" class="text-sm text-line-colour">No file chosen</label>
      </div>
      <div class="relative mt-2">
-        <%= form.file_field :banner, class: "input-file opacity-0 absolute inset-0 z-50 h-full cursor-pointer", data: { file_upload_target: "bannerInput" } %>
-        <%= render "shared/components/choose_file" %>
-     </div>
-     <div class="relative mt-4 hidden" data-file-upload-target="bannerPreviewContainer">
-        <img data-file-upload-target="bannerPreview" class=" w-full h-32 object-cover border border-gray-200 rounded-md" alt="Banner Preview" />
-        <button type="button" data-file-upload-target="bannerCloseButton" 
-           data-action="click->file-upload#resetInput"
-           data-file-type="banner" class=" absolute top-0">
-        <span class="icon icon-close icon-small"></span>
-        </button>
+        
+      <%= render "shared/components/file_select", 
+      hidden_file_field: form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput"}), 
+      preview: "banner" %>
      </div>
   </div>
   <div class="my-8 text-sm  flex gap-4 items-center" >
@@ -62,7 +49,7 @@
     </div>
      <div>
         <% text = learning_partner.persisted? ? "Update" : "Create" %>
-        <%= form.submit text, class: "btn-default text-white", data: {file_upload_target: "uploadButton"} %>
+        <%= form.submit text, class: "btn-primary"%>
      </div>
   </div>
   <% end %>
