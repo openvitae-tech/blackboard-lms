@@ -1,7 +1,8 @@
-<div class="border border-line-colour basis-2/5 rounded">
+<div class="basis-2/5">
+  <div class="border border-line-colour rounded overflow-auto max-h-screen flex flex-col gap-4">
   <% modules_in_order(course).each do |course_module| %>
     <details class="">
-      <summary class="flex cursor-pointer items-center justify-between p-4 border-b border-line-colour">
+      <summary class="flex cursor-pointer items-center justify-between p-4 border border-line-colour rounded">
         <div class="flex flex-col justify-start text-base font-semibold">
           <span class=""><%= course_module.title %></span>
           <div class="flex items-center gap-4">
@@ -15,11 +16,14 @@
             <% end %>
           </div>
         </div>
-        <span class="icon icon-down icon-small"></span>
+        <div class="flex items-center">
+          <span class="icon icon-down icon-small"></span>
+          <span class="icon icon-up icon-small hidden"></span>
+        </div>
       </summary>
       <ul>
         <% lessons_in_order(course_module).each do |lesson| %>
-          <li class="flex items-center justify-between border-b px-4 py-4 text-sm">
+          <li class="flex items-center justify-between border-b border-line-colour px-4 py-4 text-sm">
             <div class="flex items-center gap-4">
               <% if enrollment && lesson_completed?(enrollment, lesson) %>
                 <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 items-center border"></span>
@@ -32,7 +36,7 @@
                 <span class="text-primary">Replay</span>
               <% end %>
               <%= link_to course_module_lesson_path(course, course_module, lesson) do %>
-                <span class="icon icon-play icon-small"></span>
+                <span class="icon icon-play-lite icon-small"></span>
               <% end %>
             </div>
           </li>
@@ -49,4 +53,5 @@
       </ul>
     </details>
   <% end %>
+</div>
 </div>
