@@ -68,14 +68,12 @@ class EventService
     publish_event(user, event)
   end
 
-  def publish_user_logout(user)
-    event = Event::UserLogout.new(
-      partner_id: user.learning_partner_id,
-      user_id: user.id,
-      team_id: user.team_id
-    )
+  def publish_user_logout(user_id, team_id, partner_id)
+    event = Event::UserLogout.new(partner_id:, user_id:, team_id:)
 
-    publish_event(user, event)
+    tmp_user = User.new(id: user_id, team_id:, learning_partner_id: partner_id)
+
+    publish_event(tmp_user, event)
   end
 
   def publish_course_assigned(user, other_user_id, course_id)
