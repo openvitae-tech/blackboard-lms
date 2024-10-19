@@ -15,7 +15,7 @@ class Event < ApplicationRecord
   ].freeze
 
   OnboardingInitiated = Struct.new(:partner_id, :partner_name,  keyword_init: true)
-  FirstUserJoined = Struct.new(:partner_id, :partner_name, :email, :team_id, :user_id, keyword_init: true)
+  FirstUserJoined = Struct.new(:partner_id, :team_id, :user_id, :partner_name, :email, keyword_init: true)
   UserInvited = Struct.new(:partner_id, :team_id, :user_id, :invite_email, keyword_init: true) # user invited by owner or manager not by admin
   UserJoined = Struct.new(:partner_id, :team_id, :user_id, :invite_email, keyword_init: true) # user joined via an invite
   UserLogin = Struct.new(:partner_id, :team_id, :user_id, keyword_init: true)
