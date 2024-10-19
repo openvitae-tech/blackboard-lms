@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_10_072016) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_19_095102) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,6 +110,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_10_072016) do
     t.string "logo"
     t.string "banner"
     t.string "state", default: "new"
+    t.boolean "first_owner_joined", default: false
   end
 
   create_table "lessons", force: :cascade do |t|

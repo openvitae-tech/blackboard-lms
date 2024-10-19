@@ -20,4 +20,9 @@ class PartnerOnboardingService
       'ok'
     end
   end
+
+  def first_owner_joined(partner, user)
+    partner.update(:first_owner_joined, true)
+    EventService.instance.publish_first_user_joined(user, partner)
+  end
 end

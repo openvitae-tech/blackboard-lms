@@ -26,11 +26,11 @@ class EventService
 
   def publish_first_user_joined(user, partner)
     event = Event::FirstUserJoined.new(
-      partner_name: partner.name,
       partner_id: partner.id,
       email: user.email,
       team_id: user.team_id,
-      user_id: user.id
+      user_id: user.id,
+      partner_name: partner.name
     )
 
     publish_event(user, event)
