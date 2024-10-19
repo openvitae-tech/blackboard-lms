@@ -23,6 +23,7 @@ module.exports = {
       "line-colour-light":"#E6E6E6",
       "danger":"#FF2D1A",
       "danger-light":"#FFF1F0",
+      "letter-color":"#333333",
       "letter-color-light":"#5C5C5C",
       "white": "#FFFFFF",
       "gold":"#FFD700",
