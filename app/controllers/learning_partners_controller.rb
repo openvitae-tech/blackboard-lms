@@ -30,7 +30,7 @@ class LearningPartnersController < ApplicationController
 
     respond_to do |format|
       if status == 'ok'
-        EventLogger.publish_onboarding_initiated(current_user, @learning_partner)
+        EVENT_LOGGER.publish_onboarding_initiated(current_user, @learning_partner)
         format.html do
           redirect_to learning_partner_url(@learning_partner), notice: 'Learning partner was successfully created.'
         end

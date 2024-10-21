@@ -153,5 +153,3 @@ class EventService
     Rails.logger.error "Error: publishing events #{event.name}, failed due to invalid modal object"
   end
 end
-
-EventLogger = EventLogger.instance
