@@ -29,9 +29,11 @@
       Course Description
     </p>
 
-    <div class="bg-primary-light-50 show-less-desc overflow-hidden text-ellipsis p-4 text-justify text-sm tracking-tight" data-course-description-card-target="courseDescription">        
-      <%= course_description(course) %>
-    </div>
+    <div class="bg-primary-light-50 show-less-desc p-4 text-justify text-sm tracking-tight max-h-[75px]" data-course-description-card-target="courseDescription">
+      <div class="overflow-hidden h-full">
+        <%= course_description(course) %>
+      </div>
+  </div>   
 
     <div class="flex justify-end gap-4 py-6">
       <% if policy(course).unenroll? %>
