@@ -84,11 +84,11 @@ module CoursesHelper
   end
 
   def module_completed?(enrollment, course_module)
-    lesson_ids = course_module.lessons.map(&:id)
-    return false if lesson_ids.empty?
+    enrollment.module_completed?(course_module.id)
+  end
 
-    diff = lesson_ids - enrollment.completed_lessons
-    diff.empty?
+  def course_completed?(enrollment)
+    enrollment.course_completed?
   end
 
   def next_quiz_path(course, course_module, current_quiz)

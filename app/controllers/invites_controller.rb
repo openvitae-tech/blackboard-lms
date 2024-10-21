@@ -19,6 +19,7 @@ class InvitesController < ApplicationController
     @user = service.invite(invite_params[:email], invite_params[:role], @team)
 
     if @user.save
+      EVENT_LOGGER.publish_user_invited(current_user, @user)
       redirect_to request.referer || root_path, notice: 'Invitation sent to user'
     else
       render 'new', status: :unprocessable_entity

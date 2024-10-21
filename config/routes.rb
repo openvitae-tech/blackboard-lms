@@ -72,7 +72,11 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
+    sessions: 'users/sessions'
+  }
+
   resources :users
 
   get 'error_401' => 'pages#unauthorized'
