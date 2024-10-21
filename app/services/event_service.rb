@@ -58,11 +58,12 @@ class EventService
     publish_event(user, event)
   end
 
-  def publish_user_login(user)
+  def publish_user_login(user, login_type)
     event = Event::UserLogin.new(
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
+      login_type:
     )
 
     publish_event(user, event)
@@ -88,13 +89,12 @@ class EventService
     publish_event(user, event)
   end
 
-  def publish_course_enrolled(user, course_id, self_enroll)
+  def publish_course_enrolled(user, course_id)
     event = Event::CourseEnrolled.new(
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
       course_id: course_id,
-      self_enroll: self_enroll
     )
 
     publish_event(user, event)
@@ -153,3 +153,5 @@ class EventService
     Rails.logger.error "Error: publishing events #{event.name}, failed due to invalid modal object"
   end
 end
+
+EventLogger = EventLogger.instance
