@@ -4,7 +4,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   def show
     super do |resource|
       if resource.errors.empty?
-        EventService.instance.publish_user_joined(resource)
+        EventLogger.publish_user_joined(resource)
 
         if resource.is_owner?
 

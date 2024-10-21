@@ -5,6 +5,8 @@ class CourseManagementService
   def enroll!(user, course)
     return :duplicate if user.enrolled_for_course?(course)
 
+    EventLogger.publish_course_enrolled(user, course.id)
+
     course.enroll!(user)
     :ok
   end
@@ -13,6 +15,7 @@ class CourseManagementService
     return :not_enrolled unless user.enrolled_for_course?(course)
 
     course.undo_enroll!(user)
+    EventLogger.publish_course_dropped(user, course.id)
     :ok
   end
 
@@ -37,10 +40,11 @@ class CourseManagementService
 
   def assign_user_to_courses(user, courses_with_deadline, assigned_by)
     courses_with_deadline.each do |course, deadline|
-      unless user.enrolled_for_course?(course)
-        course.enroll!(user, assigned_by, deadline)
-        Notification.notify(user, format(I18n.t('course.assigned'), course: course.title, name: assigned_by.name))
-      end
+      next if user.enrolled_for_course?(course)
+
+      course.enroll!(user, assigned_by, deadline)
+      EventLogger.publish_course_assigned(assigned_by, user.id, course.id)
+      Notification.notify(user, format(I18n.t('course.assigned'), course: course.title, name: assigned_by.name))
     end
   end
 

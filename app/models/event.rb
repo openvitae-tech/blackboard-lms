@@ -18,7 +18,7 @@ class Event < ApplicationRecord
   FirstUserJoined = Struct.new(:partner_id, :team_id, :user_id, :partner_name, :email, keyword_init: true)
   UserInvited = Struct.new(:partner_id, :team_id, :user_id, :invite_email, keyword_init: true) # user invited by owner or manager not by admin
   UserJoined = Struct.new(:partner_id, :team_id, :user_id, :invite_email, keyword_init: true) # user joined via an invite
-  UserLogin = Struct.new(:partner_id, :team_id, :user_id, keyword_init: true)
+  UserLogin = Struct.new(:partner_id, :team_id, :user_id, :login_type, keyword_init: true)
   UserLogout = Struct.new(:partner_id, :team_id, :user_id, keyword_init: true)
   CourseAssigned = Struct.new(:partner_id, :team_id, :user_id, :assigned_to_user, :course_id, keyword_init: true)
   CourseEnrolled = Struct.new(:partner_id, :team_id, :user_id, :course_id, :self_enroll, keyword_init: true)
