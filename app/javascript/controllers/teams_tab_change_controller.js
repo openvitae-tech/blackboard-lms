@@ -1,34 +1,23 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["teamContent", "allUsersSection", "showAllLink"];
+  static targets = ["teamContent"];
+
   changeTab(event) {
     event.preventDefault();
     const selectedTab = event.currentTarget.dataset.tab;
-    this.showTab(selectedTab);
+
+    this.teamContentTargets.forEach((el) => {
+      el.classList.toggle("hidden", el.dataset.tab !== selectedTab);
+    });
+
     this.setActiveTab(selectedTab);
   }
 
-  showTab(tab) {
-    this.teamContentTargets.forEach((el) => {
-      el.classList.add("hidden");
-    });
-    const selectedContent = this.teamContentTargets.find(target => target.dataset.tab === tab);
-    if (selectedContent) {
-      selectedContent.classList.remove("hidden");
-    }
-  }
   setActiveTab(activeTab) {
     const tabs = this.element.querySelectorAll("a[data-tab]");
     tabs.forEach((tab) => {
-      tab.classList.remove("active-border");
+      tab.classList.toggle("active-border", tab.dataset.tab === activeTab);
     });
-    const activeTabElement = this.element.querySelector(
-      `a[data-tab="${activeTab}"]`
-    );
-    if (activeTabElement) {
-      activeTabElement.classList.add("active-border");
-    }
   }
- 
 }
