@@ -6,7 +6,7 @@ class Users::SessionsController < Devise::SessionsController
   def create
     super do
       if resource.errors.empty?
-        EventLogger.publish_user_login(resource, 'password')
+        EVENT_LOGGER.publish_user_login(resource, 'password')
       end
     end
   end
@@ -17,7 +17,7 @@ class Users::SessionsController < Devise::SessionsController
     partner_id = current_user&.learning_partner_id
 
     super do
-      EventLogger.publish_user_logout(id, team_id, partner_id)
+      EVENT_LOGGER.publish_user_logout(id, team_id, partner_id)
     end
   end
 

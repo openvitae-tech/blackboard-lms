@@ -84,11 +84,11 @@ class LessonsController < ApplicationController
     authorize @lesson
     service = CourseManagementService.instance
     time_spent_in_seconds = (params[:time_spent] || 0).to_i
-    service.complete!(current_user, @course, @course_module, @lesson, time_spent_in_seconds)
-
     enrollment = current_user.get_enrollment_for(@course)
 
-    if helpers.module_completed?(enrollment, @course_module) && @course_module.has_quiz?
+    service.set_progress!(enrollment, @course_module, @lesson, time_spent_in_seconds)
+
+    if enrollment.module_completed?(@course_module.id) && @course_module.has_quiz?
       redirect_to course_module_quiz_path(@course, @course_module, @course_module.first_quiz)
       return
     end
