@@ -28,10 +28,10 @@
         <%= render 'shared/components/button_default_medium', label: 'View full dashboard', icon_name: 'icon-arrow-right' %>
       </div>
     <% end %>
-    <div data-controller="teams-tab-change">
+    <div data-controller="tab-change">
       <div class="mt-2 mb-6 flex justify-start gap-6">
-        <a href="javascript:void(0);" data-action="click->teams-tab-change#changeTab" data-tab="user" data-teams-tab-change-target="tabLink" class="text-base font-normal active-border">User</a>
-        <a href="javascript:void(0);" data-action="click->teams-tab-change#changeTab" data-tab="team" data-teams-tab-change-target="tabLink" class="text-base font-normal">Team</a>
+        <a href="javascript:void(0);" data-action="click->tab-change#changeTab" data-tab="user" data-tab-change-target="tabLink" class="text-base font-normal active-border">User</a>
+        <a href="javascript:void(0);" data-action="click->tab-change#changeTab" data-tab="team" data-tab-change-target="tabLink" class="text-base font-normal">Team</a>
       </div>      
       <div class="relative mt-4 w-full">
         <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
@@ -47,7 +47,7 @@
           <% end %>
         <% end %>
       </div>
-      <div data-teams-tab-change-target="tabContent" class="pt-6" data-tab="user">
+      <div data-tab-change-target="tabContent" class="pt-6" data-tab="user">
         <div class="my-4 flex hidden justify-start">
           <span class="text-xs font-semibold text-primary">All users</span>
         </div>
@@ -71,7 +71,7 @@
           <% end %>
         <% end %>
       </div>
-      <div data-teams-tab-change-target="tabContent" class="hidden" data-tab="team">
+      <div data-tab-change-target="tabContent" class="hidden" data-tab="team">
         <div class="flex items-center justify-between pt-8">
           <p class="text-sm font-medium">Linked Hotels & Resorts</p>
         </div>
