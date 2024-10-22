@@ -69,8 +69,7 @@ class User < ApplicationRecord
   def set_otp!
     return unless otp_generated_at.blank? || otp_generated_at < 5.minutes.ago
 
-    otp = test_mobile_number? ? TEST_OTP : rand(1000..9999)
-    Rails.logger.info "New OTP for #{phone} is #{otp}"
+    otp = Rails.env.production? ? rand(1000..9999) : TEST_OTP
     update!(otp:, otp_generated_at: DateTime.now)
   end
 
@@ -82,9 +81,5 @@ class User < ApplicationRecord
 
   def password_verifier
     Rails.application.credentials[:password_verifier]
-  end
-
-  def test_mobile_number?
-    phone.start_with?('11')
   end
 end
