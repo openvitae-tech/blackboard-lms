@@ -33,21 +33,14 @@
             </div>
             <div class="flex gap-4">
               <% if enrollment && lesson_completed?(enrollment, lesson) %>
-                <span class="text-primary">Replay</span>
+                <%= link_to replay_course_module_lesson_path(course, course_module, lesson), data: { turbo_method: "put" } do %>
+                  <span class="text-primary">Replay</span>
+                <% end %>
               <% end %>
               <%= link_to course_module_lesson_path(course, course_module, lesson) do %>
                 <span class="icon icon-play-lite icon-small"></span>
               <% end %>
             </div>
-          </li>
-        <% end %>
-        <% if course_module.has_quiz? %>
-          <li class="flex items-center justify-end py-8 text-sm pe-2">
-            <button class="quiz_button rounded bg-white px-4 py-2">
-              <a href="/course-quiz" class="flex items-center gap-6">
-              <span class="text-primary text-xs">Quiz</span>
-              <span class="icon icon-arrow-right h-5 w-6 items-center"></span></a>
-            </button>
           </li>
         <% end %>
       </ul>

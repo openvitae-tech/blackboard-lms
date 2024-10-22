@@ -5,6 +5,8 @@ class CourseManagementService
   def enroll!(user, course)
     return :duplicate if user.enrolled_for_course?(course)
 
+    EVENT_LOGGER.publish_course_enrolled(user, course.id)
+
     course.enroll!(user)
     :ok
   end
@@ -13,6 +15,7 @@ class CourseManagementService
     return :not_enrolled unless user.enrolled_for_course?(course)
 
     course.undo_enroll!(user)
+    EVENT_LOGGER.publish_course_dropped(user, course.id)
     :ok
   end
 
@@ -22,9 +25,33 @@ class CourseManagementService
     user.enrollments.where(course:).first
   end
 
-  def complete!(user, course, course_module, lesson, time_spent_in_seconds)
-    enrollment = user.enrollments.where(course:).first
-    enrollment.set_progress!(course_module.id, lesson.id, time_spent_in_seconds)
+  # should be used only during completing a lesson otherwise use enrollment.module_completed?
+  def module_completed?(enrollment, course_module)
+    lesson_ids = course_module.lessons.map(&:id)
+    return false if lesson_ids.empty?
+
+    diff = lesson_ids - enrollment.completed_lessons
+    diff.empty?
+  end
+
+  # should be used only during completing a lesson otherwise user enrollment.course_completed?
+  def course_completed?(enrollment)
+    module_ids = enrollment.course.course_modules.map(&:id)
+    return false if module_ids.empty?
+
+    diff = module_ids - enrollment.completed_modules
+    diff.empty?
+  end
+
+  def set_progress!(user, enrollment, course_module, lesson, time_spent_in_seconds)
+    enrollment.complete_lesson!(course_module.id, lesson.id, time_spent_in_seconds)
+
+    enrollment.complete_module!(course_module.id) if module_completed?(enrollment, course_module)
+
+    if course_completed?(enrollment)
+      enrollment.complete_course!
+      EVENT_LOGGER.publish_course_completed(user, enrollment.course_id)
+    end
   end
 
   def search(term)
@@ -37,10 +64,11 @@ class CourseManagementService
 
   def assign_user_to_courses(user, courses_with_deadline, assigned_by)
     courses_with_deadline.each do |course, deadline|
-      unless user.enrolled_for_course?(course)
-        course.enroll!(user, assigned_by, deadline)
-        Notification.notify(user, format(I18n.t('course.assigned'), course: course.title, name: assigned_by.name))
-      end
+      next if user.enrolled_for_course?(course)
+
+      course.enroll!(user, assigned_by, deadline)
+      EVENT_LOGGER.publish_course_assigned(assigned_by, user.id, course.id)
+      Notification.notify(user, format(I18n.t('course.assigned'), course: course.title, name: assigned_by.name))
     end
   end
 
@@ -86,6 +114,12 @@ class CourseManagementService
 
     course.undo_publish!
     :ok
+  end
+
+  def replay!(enrollment, lesson)
+    return false unless enrollment.lesson_completed?(lesson.id)
+
+    enrollment.mark_as_incomplete!(lesson)
   end
 
   private

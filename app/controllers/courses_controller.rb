@@ -83,7 +83,7 @@ class CoursesController < ApplicationController
   def proceed
     service = CourseManagementService.instance
     enrollment = service.proceed(current_user, @course)
-
+    EVENT_LOGGER.publish_course_started(current_user, @course.id)
     redirect_to course_module_lesson_path(@course, enrollment.current_module_id || @course.first_module.id,
                                           enrollment.current_lesson_id || @course.first_module.first_lesson)
   end
