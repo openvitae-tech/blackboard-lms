@@ -21,8 +21,7 @@ RSpec.describe 'Login with mobile number' do
     it 'redirects the user to login screen if the mobile number is invalid' do
       create :user, :learner
       post '/logins/otp', params: { login: { mobile_number: Faker::Number.number(digits: 10) } }
-      expect(response).to render_template(:new)
-      expect(response.status).to eq(404)
+      expect(response).to redirect_to('/logins/new')
     end
   end
 
