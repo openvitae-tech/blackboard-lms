@@ -1,42 +1,44 @@
 <%= mobile_view do %>
   <%= render "devise/shared/top_mobile" %>
   <div class="px-4 py-6">
-    <form action="">
       <div class="mb-6">
         <h1 class="page-heading">OTP</h1>
       </div>
+      <%= form_with url: logins_path, scope: :login, method: :post, data: { controller: "otp", action: "input->otp#handleOtp" } do |form| %>
+        <div class="flex flex-col gap-6">
+          <div class="input-group">
+            <label for="" class="label-text">Please enter the verification code send to</label>
+            <div class="flex justify-between">
+              <label for="number" class="label-text text-primary">+91 <%= @mobile_number %></label>
+              <%= link_to new_login_path(old_mobile_number: @mobile_number), class: "h-6 w-6 items-center rounded-full p-1.5 box-shadow-small" do %>
+                <%= image_tag "edit.svg",  alt: "", class: "h-3 w-3" %>
+                <%= form.hidden_field :mobile_number, value: @mobile_number %>
+              <% end %>
+            </div>
+          </div>
 
-      <div class="flex flex-col gap-6">
-        <div class="input-group">
-          <label for="" class="label-text">Please enter the verification code send to</label>
-          <div class="flex justify-between">
-            <label for="number" class="label-text text-primary">+91 9656284605</label>
-            <a href="#" class="rounded-full items-center p-1.5 w-6 h-6 box-shadow-small">
-              <%= image_tag "edit.svg",  alt: "", class: "h-3 w-3" %>
-            </a>
+          <div class="input-group">
+            <label for="" class="label-text">Verification code (OTP)</label>
+            <div id="otp" class="mt-4 flex gap-4 justify-between">
+              <%= form.text_field :otp_value_one, class: "input-text-otp", maxlength: 1  %>
+              <%= form.text_field :otp_value_two, class: "input-text-otp", maxlength: 1  %>
+              <%= form.text_field :otp_value_three, class: "input-text-otp", maxlength: 1  %>
+              <%= form.text_field :otp_value_four, class: "input-text-otp", maxlength: 1  %>
+            </div>
+          </div>
+          <%= form.hidden_field :otp, data: { otp_target: "hiddenOtp" } %>
+
+          <div class="input-group">
+            <a href="#" class="link-text text-danger float-right">Resend OTP</a>
           </div>
         </div>
-
-        <div class="input-group">
-          <label for="" class="label-text">Verification code (OTP)</label>
-          <div id="otp" class="mt-4 flex gap-4 justify-between">
-            <input class="input-text-otp" type="text" id="first"/>
-            <input class="input-text-otp" type="text" id="second"/>
-            <input class="input-text-otp" type="text" id="third"/>
-            <input class="input-text-otp" type="text" id="fourth"/>
-          </div>
+        <div class="mt-10">
+          <button class="w-full btn-default">
+            <span class="text-dark">Verify</span>
+          </button>
         </div>
+      <% end %>
 
-        <div class="input-group">
-          <a href="#" class="link-text text-danger float-right">Resend OTP</a>
-        </div>
-      </div>
-      <div class="mt-10">
-        <button class="w-full btn-default">
-          <span class="text-dark">Verify</span>
-        </button>
-      </div>
-    </form>
     <div class="mt-6">
       <p class="text-center text-xs font-normal">OTP will be valid for 5min</p>
     </div>

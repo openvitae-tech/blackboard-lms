@@ -1,7 +1,7 @@
 <%= mobile_view do %>
   <%= render "devise/shared/top_mobile" %>
   <div class="px-4 py-6">
-    <form action="">
+    <%= form_with url: otp_logins_path, method: :post, data: { turbo: false } do |form| %>
       <div class="mb-6">
         <h1 class="page-heading">Login</h1>
       </div>
@@ -11,22 +11,22 @@
           <label for="" class="label-text">Welcome! Please enter your mobile number</label>
         </div>
         <div class="input-group">
-          <label for="number" class="label-text">Mobile Number</label>
+          <%= form.label "mobile_number", class: "label-text" %>
           <div tabindex="-1"
                class="mt-4 flex border rounded border-line-colour-light focus-within:border-primary">
             <div class="h-[52px] w-[96px] border-r border-line-colour-light focus-within:border-primary flex items-center justify-center">
               <%= image_tag "india.png",  alt: "IN", class: "w-8 h-8 rounded-full box-shadow-small" %>
             </div>
-            <input type="number" class="input-number border-none"/>
+            <%= form.text_field "mobile_number", class: "border-none input-number", placeholder: "Your 10 digit mobile number" %>
           </div>
         </div>
         <div class="mt-4">
-          <button class="w-full btn-primary">
+          <%= form.button class: "w-full btn-primary"  do %>
             <span>Get OTP</span>
-          </button>
+          <% end %>
         </div>
       </div>
-    </form>
+    <% end %>
     <div class="mt-6">
       <%= link_to "Login with email and password", new_user_session_path, class: "link-text" %><br/>
     </div>
