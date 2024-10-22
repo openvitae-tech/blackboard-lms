@@ -6,13 +6,13 @@ class LoginsController < ApplicationController
   def new; end
 
   def otp
-    @mobile_number = params[:mobile_number]
+    @mobile_number = login_params[:mobile_number]
     user = User.find_by!(phone: @mobile_number)
 
     service = LoginWithOtpService.instance
     service.set_and_send_otp(@mobile_number, user)
   rescue ActiveRecord::RecordNotFound
-    render :new, status: :not_found, notice: t('login.incorrect_phone')
+    redirect_to new_login_path, notice: t('login.incorrect_phone')
   end
 
   def create
@@ -21,7 +21,7 @@ class LoginsController < ApplicationController
 
     if service.valid_otp?(user, login_params[:otp])
       build_user_session(user)
-      redirect_to after_sign_in_path_for(user), notice: t('devise.confirmations.sessions.signed_in')
+      redirect_to after_sign_in_path_for(user), notice: t('devise.sessions.signed_in')
     else
       redirect_to new_login_path, notice: t('login.invalid_or_incorrect_otp')
     end

@@ -11,7 +11,7 @@ RSpec.describe 'Login with mobile number' do
   describe 'POST /logins/otp' do
     it 'requests otp for the give mobile number and renders the otp page' do
       user = create :user, :learner
-      post '/logins/otp', params: { mobile_number: user.phone }
+      post '/logins/otp', params: { login: { mobile_number: user.phone } }
       expect(response).to render_template(:otp)
       user.reload
       expect(user.otp).to eq(User::TEST_OTP)
@@ -20,7 +20,7 @@ RSpec.describe 'Login with mobile number' do
 
     it 'redirects the user to login screen if the mobile number is invalid' do
       create :user, :learner
-      post '/logins/otp', params: { mobile_number: Faker::Number.number(digits: 10) }
+      post '/logins/otp', params: { login: { mobile_number: Faker::Number.number(digits: 10) } }
       expect(response).to render_template(:new)
       expect(response.status).to eq(404)
     end
