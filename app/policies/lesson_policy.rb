@@ -46,4 +46,12 @@ class LessonPolicy < ApplicationPolicy
   def movedown?
     user.is_admin?
   end
+
+  # Note: avoid using this in view policy(lesson).replay? could trigger n+1 queries
+  def replay?
+    return false unless user.enrolled_for_course?(record.course_module.course)
+
+    enrollment = user.get_enrollment_for(record.course_module.course)
+    enrollment.completed_lessons.include?(record.id)
+  end
 end

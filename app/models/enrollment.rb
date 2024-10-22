@@ -46,4 +46,15 @@ class Enrollment < ApplicationRecord
   def module_completed?(module_id)
     completed_modules.include? module_id
   end
+
+  def lesson_completed?(lesson_id)
+    completed_lessons.include? lesson_id
+  end
+
+  def mark_as_incomplete!(lesson)
+    completed_lessons.delete(lesson.id)
+    completed_modules.delete(lesson.course_module_id)
+    self.course_completed = false
+    save!
+  end
 end

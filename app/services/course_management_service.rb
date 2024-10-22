@@ -25,6 +25,7 @@ class CourseManagementService
     user.enrollments.where(course:).first
   end
 
+  # should be used only during completing a lesson otherwise use enrollment.module_completed?
   def module_completed?(enrollment, course_module)
     lesson_ids = course_module.lessons.map(&:id)
     return false if lesson_ids.empty?
@@ -33,6 +34,7 @@ class CourseManagementService
     diff.empty?
   end
 
+  # should be used only during completing a lesson otherwise user enrollment.course_completed?
   def course_completed?(enrollment)
     module_ids = enrollment.course.course_modules.map(&:id)
     return false if module_ids.empty?
@@ -41,7 +43,7 @@ class CourseManagementService
     diff.empty?
   end
 
-  def set_progress!(enrollment, course_module, lesson, time_spent_in_seconds)
+  def set_progress!(user, enrollment, course_module, lesson, time_spent_in_seconds)
     enrollment.complete_lesson!(course_module.id, lesson.id, time_spent_in_seconds)
 
     enrollment.complete_module!(course_module.id) if module_completed?(enrollment, course_module)
@@ -112,6 +114,12 @@ class CourseManagementService
 
     course.undo_publish!
     :ok
+  end
+
+  def replay!(enrollment, lesson)
+    return false unless enrollment.lesson_completed?(lesson.id)
+
+    enrollment.mark_as_incomplete!(lesson)
   end
 
   private

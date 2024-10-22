@@ -51,6 +51,7 @@ Rails.application.routes.draw do
           post :complete
           put :moveup
           put :movedown
+          put :replay
         end
       end
       resources :quizzes, except: [:index] do

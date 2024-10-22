@@ -3,7 +3,7 @@
 class LessonsController < ApplicationController
   before_action :set_course
   before_action :set_course_module
-  before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown]
+  before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
@@ -86,7 +86,7 @@ class LessonsController < ApplicationController
     time_spent_in_seconds = (params[:time_spent] || 0).to_i
     enrollment = current_user.get_enrollment_for(@course)
 
-    service.set_progress!(enrollment, @course_module, @lesson, time_spent_in_seconds)
+    service.set_progress!(current_user, enrollment, @course_module, @lesson, time_spent_in_seconds)
 
     if enrollment.module_completed?(@course_module.id) && @course_module.has_quiz?
       redirect_to course_module_quiz_path(@course, @course_module, @course_module.first_quiz)
@@ -119,6 +119,14 @@ class LessonsController < ApplicationController
       format.html { redirect_to course_module_path(@course, @course_module) }
       format.json { head :no_content }
     end
+  end
+
+  def replay
+    authorize @lesson
+    service = CourseManagementService.instance
+    enrollment = current_user.get_enrollment_for(@course)
+    service.replay!(enrollment, @lesson)
+    redirect_to course_module_lesson_url(@course, @course_module, @lesson)
   end
 
   private

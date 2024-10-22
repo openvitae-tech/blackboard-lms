@@ -22,7 +22,7 @@ class PartnerOnboardingService
   end
 
   def first_owner_joined(partner, user)
-    partner.update(:first_owner_joined, true)
+    partner.update(first_owner_joined: true)
     EVENT_LOGGER.publish_first_user_joined(user, partner)
   end
 end
