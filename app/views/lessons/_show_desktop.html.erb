@@ -21,7 +21,7 @@
     <%= @course.title %>
   </p>
   <div class="flex flex-row gap-6" data-controller="lessons">
-    <%= render "lessons/course_video_frame", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
-    <%= render "lessons/course_video_play_list", course: @course,  enrollment: @enrollment %>
+    <%= render "lessons/video_frame", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
+    <%= render "lessons/play_list", course: @course,  enrollment: @enrollment %>
   </div>
 <% end %>

@@ -8,13 +8,27 @@ class Enrollment < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :course_id }
 
-  def set_progress!(module_id, lesson_id, time_spent_in_seconds)
+  def complete_lesson!(module_id, lesson_id, time_spent_in_seconds)
     self.current_module_id = module_id
     self.current_lesson_id = lesson_id
     unless completed_lessons.include? lesson_id
       completed_lessons.push(lesson_id)
       self.time_spent += time_spent_in_seconds
     end
+    save!
+  end
+
+  def complete_module!(module_id)
+    return if completed_modules.include? module_id
+
+    completed_modules.push(module_id)
+    save!
+  end
+
+  def complete_course!
+    return if course_completed
+
+    self.course_completed = true
     save!
   end
 
@@ -27,5 +41,20 @@ class Enrollment < ApplicationRecord
 
   def get_answer(quiz)
     quiz_answers.where(quiz:).first
+  end
+
+  def module_completed?(module_id)
+    completed_modules.include? module_id
+  end
+
+  def lesson_completed?(lesson_id)
+    completed_lessons.include? lesson_id
+  end
+
+  def mark_as_incomplete!(lesson)
+    completed_lessons.delete(lesson.id)
+    completed_modules.delete(lesson.course_module_id)
+    self.course_completed = false
+    save!
   end
 end

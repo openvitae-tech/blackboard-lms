@@ -1,5 +1,4 @@
 <%= render "shared/components/mobile_layout" do %>
-  <div data-controller="teams-tab-change user-show">
     <div class="inline-flex gap-2">
       <span class="icon icon-team-green icon-small"></span>
       <span class="text-sm font-semibold text-primary">Team</span>
@@ -29,61 +28,55 @@
         <%= render 'shared/components/button_default_medium', label: 'View full dashboard', icon_name: 'icon-arrow-right' %>
       </div>
     <% end %>
-
-    <div class="my-6 flex justify-start gap-6">
-      <a href="javascript:void(0);" data-action="click->teams-tab-change#changeTab" data-tab="user" class="text-base font-normal active-border">User</a>
-      <a href="javascript:void(0);" data-action="click->teams-tab-change#changeTab" data-tab="team" class="text-base font-normal">Team</a>
-    </div>
-    <div class="relative mt-4 w-full">
-      <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
-        <span class="icon icon-search icon-small"></span>
+    <div data-controller="tab-change">
+      <div class="mt-2 mb-6 flex justify-start gap-6">
+        <a href="javascript:void(0);" data-action="click->tab-change#changeTab" data-tab="user" data-tab-change-target="tabLink" class="text-base font-normal active-border">User</a>
+        <a href="javascript:void(0);" data-action="click->tab-change#changeTab" data-tab="team" data-tab-change-target="tabLink" class="text-base font-normal">Team</a>
+      </div>      
+      <div class="relative mt-4 w-full">
+        <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
+          <span class="icon icon-search icon-small"></span>
+        </div>
+        <input type="text" name="price" id="price" class="w-full input-search" placeholder="Search Team Members" />
       </div>
-      <input
-        type="text"
-        name="price"
-        id="price"
-        class="w-full input-search"
-        placeholder="Search Team Members"
-        />
-    </div>
-    <div class="pt-8 flex justify-between items-center">
-      <h1 class="mb-4 pl-0 text-base font-bold">Team members</h1>
-      <% if policy(:course_assigns).new? %>
-        <%= link_to new_course_assign_path(team_id: @team.id) do %>
-          <%= render "shared/components/icon_button_secondary", label: 'Assign courses', icon_name: 'icon-assign-user-white' %>
+      <div class="pt-8 flex justify-between items-center">
+        <h1 class="mb-4 pl-0 text-base font-bold">Team members</h1>
+        <% if policy(:course_assigns).new? %>
+          <%= link_to new_course_assign_path(team_id: @team.id) do %>
+            <%= render "shared/components/icon_button_secondary", label: 'Assign courses', icon_name: 'icon-assign-user-white' %>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-    <div id="user" data-teams-tab-change-target="teamContent" class="" data-tab="user">
-      <div class="my-4 flex hidden justify-start" data-target="user-show.allUsersSection">
-        <span class="text-xs font-semibold text-primary">All users</span>
       </div>
-      <div class="my-4 flex justify-end hidden" data-user-show-target="showAllUsers">
-        <a href="#" data-action="click->user-show#toggleAllUsers" class="hidden flex items-center justify-center text-base font-normal">
-          Show all users
-          <span class="items-center icon icon-show-users ms-4 icon-small"></span>
-        </a>
-      </div>
+      <div data-tab-change-target="tabContent" class="pt-6" data-tab="user">
+        <div class="my-4 flex hidden justify-start">
+          <span class="text-xs font-semibold text-primary">All users</span>
+        </div>
+        <div class="my-4 flex justify-end hidden">
+          <a href="#" class="flex items-center justify-center text-base font-normal">
+            Show all users
+            <span class="items-center icon icon-show-users ms-4 icon-small"></span>
+          </a>
+        </div>
 
-      <%= render "teams/member_list_mobile" %>
+        <%= render "teams/member_list_mobile" %>
 
-      <% if policy(:invite).new? %>
-        <%= link_to new_invite_path(team_id: @team.id), data: { turbo_frame: "add-user-modal" } do %>
-          <div class="sticky bottom-6 justify-center rounded text-center bg-primary end-4 start-4">
-            <button class="flex w-full justify-center gap-2 px-4 py-5">
-              <span class="items-center icon icon-plus-white icon-small"></span>
-              <span class="text-sm text-white">Invite User</span>
-            </button>
-          </div>
+        <% if policy(:invite).new? %>
+          <%= link_to new_invite_path(team_id: @team.id), data: { turbo_frame: "add-user-modal" } do %>
+            <div class="sticky bottom-6 justify-center rounded text-center bg-primary end-4 start-4">
+              <button class="flex w-full justify-center gap-2 px-4 py-5">
+                <span class="items-center icon icon-plus-white icon-small"></span>
+                <span class="text-sm text-white">Invite User</span>
+              </button>
+            </div>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-    <div id="team" data-teams-tab-change-target="teamContent" class="hidden" data-tab="team">
-      <div class="flex items-center justify-between pt-8">
-        <p class="text-sm font-medium">Linked Hotels & Resorts</p>
       </div>
-      <%= render "teams/sub_teams_mobile" %>
-      <%= render "teams/add_team_mobile" %>
+      <div data-tab-change-target="tabContent" class="hidden" data-tab="team">
+        <div class="flex items-center justify-between pt-8">
+          <p class="text-sm font-medium">Linked Hotels & Resorts</p>
+        </div>
+        <%= render "teams/sub_teams_mobile" %>
+        <%= render "teams/add_team_mobile" %>
+      </div>
     </div>
-  </div>
 <% end %>

@@ -51,6 +51,7 @@ Rails.application.routes.draw do
           post :complete
           put :moveup
           put :movedown
+          put :replay
         end
       end
       resources :quizzes, except: [:index] do
@@ -72,7 +73,11 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
+    sessions: 'users/sessions'
+  }
+
   resources :users
 
   get 'error_401' => 'pages#unauthorized'

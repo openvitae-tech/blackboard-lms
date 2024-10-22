@@ -8,7 +8,7 @@
     <%= @course.title %>
   </p>
   <div class="flex flex-col">
-    <%= render "lessons/course_video_frame_mobile", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
-    <%= render "lessons/course_video_play_list_mobile", course: @course,  enrollment: @enrollment %>
+    <%= render "lessons/video_frame_mobile", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
+    <%= render "lessons/play_list_mobile", course: @course,  enrollment: @enrollment %>
   </div>
 <% end %>

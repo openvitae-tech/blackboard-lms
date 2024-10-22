@@ -25,17 +25,12 @@ class LearningPartnersController < ApplicationController
   def create
     @learning_partner = LearningPartner.new(learning_partner_params)
 
-    event = Event::OnboardingInitiated.new(
-      partner_name: @learning_partner.name,
-      partner_id: @learning_partner.id
-    )
-
     service = PartnerOnboardingService.instance
     status = service.create_partner(@learning_partner)
 
     respond_to do |format|
       if status == 'ok'
-        EventService.instance.publish_event(current_user, event)
+        EVENT_LOGGER.publish_onboarding_initiated(current_user, @learning_partner)
         format.html do
           redirect_to learning_partner_url(@learning_partner), notice: 'Learning partner was successfully created.'
         end

@@ -81,8 +81,8 @@ class QuizzesController < ApplicationController
     CourseManagementService.instance.record_answer!(enrollment, @quiz, answer_params[:answer].downcase)
     next_quiz = @course_module.next_quiz(@quiz)
     next_path = if next_quiz.blank?
-                  course_module_path(@course,
-                                     @course_module)
+                  # TODO: Show quiz summary page
+                  course_path(@course)
                 else
                   course_module_quiz_path(@course,
                                           @course_module, next_quiz)
