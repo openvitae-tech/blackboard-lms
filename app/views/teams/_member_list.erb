@@ -1,45 +1,16 @@
-<table id="teams-list" class=" min-w-full rounded px-6 py-4 box-shadow-medium mt-5 teams-list">
-  <thead class="border-b border-line-colour-light sticky top-0 z-10">
+<table id="teams-list" class="mt-5 min-w-full rounded px-6 py-4 box-shadow-medium teams-list">
+  <thead class="sticky top-0 z-10 border-b border-line-colour-light">
   <tr class="text-left text-sm font-medium">
-    <th class="px-6 py-4 ">Name</th>
-    <th class="px-6 py-4 ">Email</th>
-    <th class="px-6 py-4 ">Phone</th>
-    <th class="px-6 py-4 ">Role</th>
-    <th class="px-6 py-4 ">Course</th>
+    <th class="px-6 py-4">Name</th>
+    <th class="px-6 py-4">Email</th>
+    <th class="px-6 py-4">Phone</th>
+    <th class="px-6 py-4">Role</th>
+    <th class="px-6 py-4">Course</th>
   </tr>
   </thead>
-  <tbody class="bg-white divide-y divide-slate-grey-light">
+  <tbody id="team-member-list-desktop" class="bg-white divide-y divide-slate-grey-light">
   <% @team.members.each do |member| %>
-    <tr class="whitespace-nowrap text-xs font">
-      <td class="px-6 py-4  flex  gap-4 items-center">
-        <%= link_to user_path(member), class: "cursor-pointer" do %>
-          <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
-        <% end %>
-        <span class="ml-2 font-medium text-sm"><%= member.name %></span>
-        <% if member.verified? %>
-          <%= render 'shared/components/label_small_success', label: 'Verified', icon_name: 'icon-complete' %>
-        <% end %>
-      </td>
-      <td class="px-6 py-4 "><%= member.email %></td>
-      <td class="px-6 py-4 "><%= member.phone %></td>
-      <td class="px-6 py-4 "><%= role_text(member.role) %></td>
-      <td class="px-6 py-4">
-        <div class="flex flex-col gap-2">
-          <% if policy(:course_assigns).new? %>
-            <%= link_to new_course_assign_path(user_id: member) do %>
-              <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
-            <% end %>
-          <% end %>
-      
-          <% if InvitePolicy.new(current_user, member).resend? %>
-            <%= link_to resend_invite_path(member, team_id: @team.id), class: "inline-flex justify-center items-center bg-primary-light-50 gap-1 border border-primary-light p-1 rounded-sm", data: { turbo_frame: "notice" } do %>
-              <span class="icon icon-re-invite h-[10px] w-[10px] items-center"></span>
-              <span class="text-primary-light text-xs">Re-Invite</span>
-            <% end %>
-          <% end %>
-        </div>
-      </td>
-    </tr>
+    <%= render "teams/member_desktop", team: @team, member: member %>
   <% end %>
   </tbody>
 </table>

@@ -3,7 +3,7 @@
 class UserManagementService
   include Singleton
 
-  def invite(email, role, team, invited_by_user = nil)
+  def invite(invited_by_user, email, role, team)
     user = User.new(email:, role:, team:, learning_partner_id: team.learning_partner_id)
     user.set_temp_password
 
@@ -16,7 +16,7 @@ class UserManagementService
 
   def bulk_invite(invited_by_user, emails, role, team)
     emails.each do
-      invite(email, role, team, invited_by_user)
+      invite(invited_by_user, email, role, team)
     end
   end
 end

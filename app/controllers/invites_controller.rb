@@ -13,41 +13,39 @@ class InvitesController < ApplicationController
   def create
     service = UserManagementService.instance
     @team = Team.find(invite_params[:team_id])
-
     authorize @team, :create?, policy_class: InvitePolicy
 
-    bulk_invite = invite_params[:bulk_invite].present?
+    @bulk_invite = invite_params[:bulk_invite].present?
 
     status =
-      if bulk_invite
+      if @bulk_invite
         # Bulk invite users as learners
         emails = process_bulk_invite(invite_params[:bulk_invite])
         service.bulk_invite(current_user, emails, :learner, @team)
         :ok
       else
-        @user = service.invite(invite_params[:email], invite_params[:role], @team)
+        @user = service.invite(current_user, invite_params[:email], invite_params[:role], @team)
         @user.persisted? ? :ok : :error
       end
 
     if status == :ok
-      notice = bulk_invite ? I18n.t('invite.bulk') : I18n.t('invite.single')
-      redirect_to request.referer || root_path, notice:
+      flash.now[:success] = @bulk_invite ? I18n.t('invite.bulk') : I18n.t('invite.single')
     else
       render 'new', status: :unprocessable_entity
     end
   end
 
   def resend
-    user = User.where(id: params[:id], learning_partner_id: params[:learning_partner_id]).first
-    authorize(user, :resend?, policy_class: InvitePolicy)
+    user = User.where(id: params[:id], team_id: params[:team_id]).first
 
     if user.present?
+      authorize user,:resend?, policy_class: InvitePolicy
       user.set_temp_password
       user.save!
       user.send_confirmation_instructions
-      @message = "Invitation sent to #{user.email}"
+      flash.now[:success] = "Invitation sent to #{user.email}"
     else
-      @message = 'Failed to invite user, are you sure that this user exists ?'
+      flash.now[:error] = 'Failed to invite user, are you sure that this user exists ?'
     end
   end
 
