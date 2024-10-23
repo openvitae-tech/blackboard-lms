@@ -16,11 +16,22 @@ class InvitesController < ApplicationController
 
     authorize @team, :create?, policy_class: InvitePolicy
 
-    @user = service.invite(invite_params[:email], invite_params[:role], @team)
+    bulk_invite = invite_params[:bulk_invite].present?
 
-    if @user.save
-      EVENT_LOGGER.publish_user_invited(current_user, @user)
-      redirect_to request.referer || root_path, notice: 'Invitation sent to user'
+    status =
+      if bulk_invite
+        # Bulk invite users as learners
+        emails = process_bulk_invite(invite_params[:bulk_invite])
+        service.bulk_invite(current_user, emails, :learner, @team)
+        :ok
+      else
+        @user = service.invite(invite_params[:email], invite_params[:role], @team)
+        @user.persisted? ? :ok : :error
+      end
+
+    if status == :ok
+      notice = bulk_invite ? I18n.t('invite.bulk') : I18n.t('invite.single')
+      redirect_to request.referer || root_path, notice:
     else
       render 'new', status: :unprocessable_entity
     end
@@ -60,10 +71,26 @@ class InvitesController < ApplicationController
   private
 
   def invite_params
-    params.require(:user).permit(:email, :role, :team_id)
+    params.require(:user).permit(:email, :role, :team_id, :bulk_invite)
   end
 
   def invite_admin_params
     params.require(:user).permit(:email)
+  end
+
+  def process_bulk_invite(file_input)
+    if file_input.respond_to? :read
+      begin
+        contents = file_input.read
+        contents
+          .split("\n")
+          .map(&:strip).map(&:downcase)
+          .filter { |email| User::EMAIL_REGEXP.match?(email) }
+      rescue IOError => _e
+        []
+      end
+    else
+      []
+    end
   end
 end

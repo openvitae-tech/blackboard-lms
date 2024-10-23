@@ -33,3 +33,6 @@ en:
   course:
     assigned: "You have been assigned with new course %{course} by %{name}"
     drop_warning: "Are you sure want to drop out ? Please note that all your progress will be lost!"
+  invite:
+    bulk: 'An email invitation will be sent to each of the users in the input file'
+    single: 'Invitation sent to user.'
