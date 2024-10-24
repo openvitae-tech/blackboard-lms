@@ -1,0 +1,38 @@
+<div class="flex flex-col box-shadow-medium rounded max-w-md ">
+  <div class="flex gap-4 items-center border-b border-line-colour-light p-4">
+    <div class="inline-block w-12 h-12">
+      <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
+    </div>
+    <div class="flex flex-col w-full">
+      <div class="flex justify-between items-center">
+        <span class="font-medium text-sm"><%= member.name %></span>
+        <% if member.verified? %>
+          <%= render 'shared/components/label_small_success', label: 'Verified', icon_name: 'icon-complete' %>
+        <% end %>
+      </div>
+      <span class="text-secondary text-xs"><%= member.role %></span>
+    </div>
+  </div>
+  <div class="p-4 text-xs">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="icon icon-at-sign"></span>
+      <span class=""><%= member.email %></span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="icon icon-phone"></span>
+      <span class=""><%= member.phone %></span>
+    </div>
+    <div class="flex justify-end p-1">
+      <% if member.verified? && policy(:course_assigns).new? %>
+        <%= link_to new_course_assign_path(user_id: member) do %>
+          <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
+        <% end %>
+      <% end %>
+      <% if InvitePolicy.new(current_user, member).resend? %>
+        <%= link_to resend_invite_path(member, team_id: team.id), data: { turbo_method: "put"  } do %>
+          <%= render 'shared/components/label_medium_success', label: 'Re-invite', icon_name: 'icon-re-invite' %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

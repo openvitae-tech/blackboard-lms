@@ -9,16 +9,17 @@
       </div>
 
       <%= form_with(url: invites_path, method: :post, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
-
-        <% if @user.errors.any? %>
-          <div>
-            <ul>
-              <% @user.errors.each do |error| %>
-                <li class="text-danger"><%= error.full_message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
+        <div id="modal-flash">
+          <% if @user.errors.any? %>
+            <div>
+              <ul>
+                <% @user.errors.each do |error| %>
+                  <li class="text-danger"><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
 
         <%= form.hidden_field :team_id %>
 
@@ -36,15 +37,7 @@
           <div class="flex-grow border-t border-line-colour"></div>
         </div>
         <div class="flex flex-col gap-4 items-start justify-center w-full">
-          <div class="flex flex-row gap-2 justify-between w-full">
-            <label class="text-sm">Upload CSV</label>
-            <label class="text-sm text-[#E0E0E0]" data-teams-target="csvFileLabel">No file chosen</label>
-          </div>
-          <div class="flex gap-4 justify-center p-4 w-full border border-dashed border-primary rounded cursor-pointer" data-action="click->teams#chooseFile" data-upload-id="upload-csv">
-            <span class="icon icon-upload icon-small"></span>
-            <p class="text-sm text-primary">Choose File</p>
-          </div>
-          <input type="file" id="csv-file-input" class="hidden" data-content="csvFileInput"  data-teams-target="csvFileInput" data-action="change->teams#handleFileChange" />
+          <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:bulk_invite, class: "hidden", data: { forms_target: "fileInput"}) %>
         </div>
         <div class="flex flex-col justify-between">
           <%= form.button "Invite user", class: "bg-primary text-white px-4 py-2 rounded" %>
