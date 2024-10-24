@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :invites, only: %i[new create] do
     member do
-      get :resend
+      put :resend
     end
 
     collection do
