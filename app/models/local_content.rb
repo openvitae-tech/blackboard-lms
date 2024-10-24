@@ -14,4 +14,12 @@ class LocalContent < ApplicationRecord
   }.freeze
 
   belongs_to :lesson
+
+
+  # Example code for choosing video service specifically in this model
+  # has_one_attached :file
+  # # Override the service for video files
+  # def file_attachment
+  #   file.service_name = :s3_video_store
+  # end
 end
