@@ -9,9 +9,10 @@ class LoginsController < ApplicationController
 
   def otp
     @mobile_number = login_params[:mobile_number]
+    service = LoginWithOtpService.instance
+
     if @user_exists
       user = User.where(phone: @mobile_number).first
-      service = LoginWithOtpService.instance
       service.set_and_send_otp(@mobile_number, user)
     else
       redirect_to new_login_path, notice: t('login.incorrect_phone')
