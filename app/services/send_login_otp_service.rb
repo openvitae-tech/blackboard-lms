@@ -9,15 +9,17 @@ class SendLoginOtpService
   end
 
   def process
-    send_sms
+    response = send_sms
+    log_error_to_sentry(response) unless response.is_a?(Net::HTTPSuccess)
+    response
   end
 
   private
 
   def send_sms
-    url = URI.parse('https://control.msg91.com/api/v5/flow')
+    url = URI.parse(Rails.application.credentials.dig(:msg91, :url))
     request = build_request_url(url)
-    Net::HTTP.start(url.hostname, url.port, use_ssl: true) { |http| http.request(request) }
+    Net::HTTP.start(url.hostname, url.port, use_ssl: true, read_timeout: 60) { |http| http.request(request) }
   end
 
   def build_request_url(url)
@@ -37,5 +39,12 @@ class SendLoginOtpService
     }.to_json
 
     request
+  end
+
+  def log_error_to_sentry(response)
+    Sentry.capture_message('Failed to send OTP via SMS', level: :error, extra: {
+                             status: response.code,
+                             body: response.body
+                           })
   end
 end
