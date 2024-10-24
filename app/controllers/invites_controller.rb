@@ -77,17 +77,16 @@ class InvitesController < ApplicationController
   end
 
   def process_bulk_invite(file_input)
-    if file_input.respond_to? :read
-      begin
-        contents = file_input.read
-        contents
-          .split("\n")
-          .map(&:strip).map(&:downcase)
-          .filter { |email| User::EMAIL_REGEXP.match?(email) }
-      rescue IOError => _e
-        []
-      end
-    else
+    return [] unless file_input.respond_to? :read
+    return [] unless file_input.content_type == 'text/csv' || file.content_type == 'text/plain'
+
+    begin
+      contents = file_input.read
+      contents
+        .split("\n")
+        .map(&:strip).map(&:downcase)
+        .filter { |email| User::EMAIL_REGEXP.match?(email) }
+    rescue IOError => _e
       []
     end
   end
