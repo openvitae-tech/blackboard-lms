@@ -19,10 +19,18 @@ class InvitesController < ApplicationController
 
     status =
       if @bulk_invite
+        # user object is required in the form where there is an error
+        @user = User.new(team: @team)
         # Bulk invite users as learners
         emails = process_bulk_invite(invite_params[:bulk_invite])
-        service.bulk_invite(current_user, emails, :learner, @team)
-        :ok
+
+        if emails.present?
+          service.bulk_invite(current_user, emails, :learner, @team)
+          :ok
+        else
+          @user.errors.add(:base, I18n.t('invite.invalid_csv'))
+          :error
+        end
       else
         @user = service.invite(current_user, invite_params[:email], invite_params[:role], @team)
         @user.persisted? ? :ok : :error
@@ -43,9 +51,9 @@ class InvitesController < ApplicationController
       user.set_temp_password
       user.save!
       user.send_confirmation_instructions
-      flash.now[:success] = "Invitation sent to #{user.email}"
+      flash.now[:success] = format(I18n.t('invite.invite_sent'), email: user.email)
     else
-      flash.now[:error] = 'Failed to invite user, are you sure that this user exists ?'
+      flash.now[:error] = I18n.t('invite.invalid_user')
     end
   end
 
@@ -78,7 +86,7 @@ class InvitesController < ApplicationController
 
   def process_bulk_invite(file_input)
     return [] unless file_input.respond_to? :read
-    return [] unless file_input.content_type == 'text/csv' || file.content_type == 'text/plain'
+    return [] unless file_input.content_type == 'text/csv' || file_input.content_type == 'text/plain'
 
     begin
       contents = file_input.read
