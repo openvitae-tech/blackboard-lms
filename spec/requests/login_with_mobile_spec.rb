@@ -14,7 +14,7 @@ RSpec.describe 'Login with mobile number' do
       post '/logins/otp', params: { login: { mobile_number: user.phone } }
       expect(response).to render_template(:otp)
       user.reload
-      expect(user.otp).to eq(User::TEST_OTP)
+      expect(user.authenticate_otp(User::TEST_OTP)).to be user
       expect(user.otp_generated_at).not_to be_nil
     end
 

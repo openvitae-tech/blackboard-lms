@@ -9,6 +9,6 @@ class LoginWithOtpService
   end
 
   def valid_otp?(user, otp)
-    user.otp_generated_at > 5.minute.ago && user.otp.to_s == otp
+    user.otp_generated_at > 5.minute.ago && user.authenticate_otp(otp)
   end
 end
