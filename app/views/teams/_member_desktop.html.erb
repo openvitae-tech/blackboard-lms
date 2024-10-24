@@ -13,7 +13,7 @@
   <td class="px-6 py-4 "><%= role_text(member.role) %></td>
   <td class="px-6 py-4">
     <div class="flex flex-col gap-2">
-      <% if policy(:course_assigns).new? %>
+      <% if member.verified? && policy(:course_assigns).new? %>
         <%= link_to new_course_assign_path(user_id: member) do %>
           <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
         <% end %>

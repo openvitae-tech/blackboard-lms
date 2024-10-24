@@ -5,12 +5,12 @@
     <th class="px-6 py-4">Email</th>
     <th class="px-6 py-4">Phone</th>
     <th class="px-6 py-4">Role</th>
-    <th class="px-6 py-4">Course</th>
+    <th class="px-6 py-4">Actions</th>
   </tr>
   </thead>
   <tbody id="team-member-list-desktop" class="bg-white divide-y divide-slate-grey-light">
-  <% @team.members.each do |member| %>
-    <%= render "teams/member_desktop", team: @team, member: member %>
+  <% team.members.each do |member| %>
+    <%= render "teams/member_desktop", team: team, member: member %>
   <% end %>
   </tbody>
 </table>
