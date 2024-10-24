@@ -37,7 +37,15 @@ class VimeoService
     uri.query = URI.encode_www_form({ url: })
 
     begin
-      response = Net::HTTP.get_response(uri)
+      Net::HTTP::Get.new(uri)
+
+      response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+        http.open_timeout = 5
+        http.read_timeout = 5
+
+        request = Net::HTTP::Get.new uri
+        http.request request
+      end
 
       if response.is_a?(Net::HTTPSuccess)
         JSON.parse(response.body) # Parse the response body into JSON
