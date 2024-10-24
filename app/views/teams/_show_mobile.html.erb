@@ -5,7 +5,7 @@
     </div>
     <div class="mt-4 flex justify-between">
       <ol class="flex flex-wrap items-center gap-1 text-secondary text-[10px]">
-        <% team_list(@team).each do |team| %>
+        <% team_list(current_user.team, @team).each do |team| %>
           <li class="flex items-center gap-[2px]">
             <%= link_to team.name, team_path(team) %>
             <span class="icon icon-simple-arrow-right icon-tiny"></span>

@@ -1,9 +1,11 @@
-<% if resource.errors.any? %>
-  <div>
-    <ul>
-      <% resource.errors.each do |error| %>
-        <li class="text-danger"><%= error.full_message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<div id="modal-flash">
+  <% if resource.errors.any? %>
+    <div>
+      <ul>
+        <% resource.errors.each do |error| %>
+          <li class="text-danger"><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
