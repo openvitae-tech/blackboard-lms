@@ -98,3 +98,15 @@ gem 'webrick', '>= 1.8.2'
 gem 'stackprof'
 gem 'sentry-ruby'
 gem 'sentry-rails'
+
+# Background jobs
+gem "sidekiq"
+
+# For periodic jobs on sidekiq
+gem "sidekiq-cron"
+
+# For seeing failed jobs in sidekiq
+gem "sidekiq-failures"
+
+# adds unique constraints to sidekiq jobs
+gem "sidekiq-unique-jobs"

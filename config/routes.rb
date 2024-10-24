@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index]
 
-  resources :course_assigns, param: :user_id, only: [:new, :create]
+  resources :course_assigns, param: :user_id, only: %i[new create]
 
   resource :settings, only: %i[show edit update] do
     collection do
@@ -91,4 +91,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'courses#index'
+
+  draw :sidekiq_web
 end
