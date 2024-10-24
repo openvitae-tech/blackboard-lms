@@ -19,7 +19,7 @@ class SendLoginOtpService
   def send_sms
     url = URI.parse(Rails.application.credentials.dig(:msg91, :url))
     request = build_request_url(url)
-    Net::HTTP.start(url.hostname, url.port, use_ssl: true, read_timeout: 60) { |http| http.request(request) }
+    Net::HTTP.start(url.hostname, url.port, use_ssl: true, read_timeout: 1) { |http| http.request(request) }
   end
 
   def build_request_url(url)
