@@ -5,6 +5,8 @@ require 'spec_helper'
 require_relative 'support/factory_bot'
 require_relative 'support/chrome'
 require_relative 'support/helpers'
+require 'webmock/rspec'
+require 'stubs/msg91_stubs'
 
 ENV['RAILS_ENV'] = 'test'
 

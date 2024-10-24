@@ -33,6 +33,10 @@ en:
   course:
     assigned: "You have been assigned with new course %{course} by %{name}"
     drop_warning: "Are you sure want to drop out ? Please note that all your progress will be lost!"
+  login:
+    invalid_or_incorrect_otp: "Incorrect otp or otp expired"
+    incorrect_phone: "Incorrect mobile number"
+    incorrect_mobile_or_otp: "Incorrect mobile number or otp"
   invite:
     bulk: 'An email invitation will be sent to each of the users in the input file'
     single: 'Invitation sent to user.'
