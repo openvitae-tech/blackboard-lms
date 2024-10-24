@@ -9,6 +9,8 @@ if Rails.env.test?
   Sidekiq::Testing.inline!
 end
 
+Sidekiq.logger.level = Logger::WARN if Rails.env.test?
+
 Sidekiq.configure_server do |config|
   config.redis = { url: Rails.application.credentials.dig(:redis, :url), size: 9, reconnect_attempts: 2,
                    network_timeout: 10 }
