@@ -1,17 +1,14 @@
-<div class="flex flex-col gap-4 py-6">
-  <% @team.sub_teams.each do |team| %>
-    <div class="flex items-center justify-between rounded-lg border p-4 border-line-colour-light box-shadow-small">
-      <div class="flex items-center space-x-6">
-        <% if team.banner.present? %>
-          <%= image_tag team.banner, alt: "Image", class: "h-4 w-20 object-cover" %>
-        <% end %>
-        <span class="text-sm font-medium"><%= team.name %></span>
-      </div>
-      <div>
-        <%= link_to team_path(team) do %>
-          <span class="icon icon-simple-arrow-right icon-small"></span>
-        <% end %>
-      </div>
-    </div>
+<div id="team-list-mobile" class="flex flex-col gap-4 py-6">
+  <% team.sub_teams.each do |sub_team| %>
+    <%= render "teams/team_mobile", team: sub_team %>
+  <% end %>
+</div>
+
+<div class="sticky bottom-6 justify-center rounded text-center bg-primary end-4 start-4">
+  <% if policy(team).new?  %>
+    <%= link_to new_team_path(parent_team_id: team.id), data: { turbo_frame: "add-new-team-modal" }, class: "flex w-full justify-center gap-2 px-4 py-5" do %>
+      <span class="items-center icon icon-plus-white icon-small"></span>
+      <span class="text-sm text-white">Add Team</span>
+    <% end %>
   <% end %>
 </div>
