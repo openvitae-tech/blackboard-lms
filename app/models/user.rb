@@ -30,6 +30,8 @@ class User < ApplicationRecord
                          message: '%<value>s is not a valid user role' }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true
 
+  has_secure_password :otp, validations: false
+
   belongs_to :learning_partner, optional: true
 
   # This is a self referential relationship, learner and his manager are mapped to same User model.
@@ -71,7 +73,7 @@ class User < ApplicationRecord
     return unless otp_generated_at.blank? || otp_generated_at < 5.minutes.ago
 
     otp = Rails.env.production? ? rand(1000..9999) : TEST_OTP
-    update!(otp:, otp_generated_at: DateTime.now)
+    update!(otp: otp.to_s, otp_generated_at: DateTime.now)
   end
 
   def not_admin?
