@@ -43,3 +43,6 @@ en:
     invalid_csv: 'Failed to send invite. Please check the csv file format.'
     invite_sent: 'Invitation sent to %{email}'
     invalid_user: 'Failed to invite user, are you sure that this user exists ?'
+  team:
+    created: 'Team created successfully'
+    updated: 'Team updated successfully'

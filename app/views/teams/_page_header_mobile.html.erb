@@ -1,0 +1,21 @@
+<div id="team-page-header-mobile">
+  <div class="inline-flex gap-2">
+    <span class="icon icon-team-green icon-small"></span>
+    <span class="text-sm font-semibold text-primary">Team</span>
+  </div>
+  <div class="mt-4 flex justify-between">
+    <ol class="flex flex-wrap items-center gap-1 text-secondary text-[10px]">
+      <% team_list(current_user.team, team).each do |team| %>
+        <li class="flex items-center gap-[2px]">
+          <%= link_to team.name, team_path(team) %>
+          <span class="icon icon-simple-arrow-right icon-tiny"></span>
+        </li>
+      <% end %>
+    </ol>
+    <% if policy(team).edit? %>
+      <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
+        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

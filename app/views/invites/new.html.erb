@@ -9,18 +9,8 @@
       </div>
 
       <%= form_with(url: invites_path, method: :post, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
-        <div id="modal-flash">
-          <% if @user.errors.any? %>
-            <div>
-              <ul>
-                <% @user.errors.each do |error| %>
-                  <li class="text-danger"><%= error.full_message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-        </div>
 
+        <%= render "shared/components/form_errors", resource: @user %>
         <%= form.hidden_field :team_id %>
 
         <div class="flex flex-col gap-4">

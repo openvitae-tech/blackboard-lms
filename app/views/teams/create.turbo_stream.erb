@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "modal-flash", partial: "shared/components/modal_flash" %>
+<%= turbo_stream.prepend "team-list-desktop", partial: "teams/team_desktop", locals: { team: @team } %>
+<%= turbo_stream.prepend "team-list-mobile", partial: "teams/team_mobile", locals: { team: @team } %>

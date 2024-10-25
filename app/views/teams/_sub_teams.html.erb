@@ -1,17 +1,27 @@
-<div class="flex flex-col gap-4 pt-6">
-  <% @team.sub_teams.each do |team| %>
-    <div class="flex justify-between items-center p-4 border border-line-colour-light rounded-lg box-shadow-small">
-      <div class="flex items-center space-x-8">
-        <% if team.banner.present? %>
-          <%= image_tag team.banner,  alt: "Image", class: "h-4 w-20 object-cover" %>
-        <% end %>
-        <span class="text-basic font-medium"><%= team.name %></span>
-      </div>
-      <div>
-        <%= link_to team_path(team) do %>
-          <span class="icon icon-simple-arrow-right icon-small"></span>
-        <% end %>
-      </div>
-    </div>
+<% if team.sub_teams.empty? %>
+  <div class="mt-6 flex justify-between gap-60 rounded border border-dashed p-8 border-primary box-shadow-medium">
+    <p class="text-sm w-[446px]">
+      Welcome, you can manage departments/teams under your team by adding teams for each department/team here.
+    </p>
+    <% if policy(team).new? %>
+      <%= link_to new_team_path(parent_team_id: team.id), data: { turbo_frame: "add-new-team-modal" } do %>
+        <%= render 'shared/components/icon_button_primary_border', label: 'Add team', icon_name: 'icon-plus-green' %>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="flex items-center justify-between pt-8">
+    <p class="font-medium text-basic">Linked Hotels & Resorts</p>
+    <% if policy(team).new? %>
+      <%= link_to new_team_path(parent_team_id: team.id), data: { turbo_frame: "add-new-team-modal" } do %>
+        <%= render 'shared/components/icon_button_primary', label: 'Add team', icon_name: 'icon-plus-white' %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="team-list-desktop" class="flex flex-col gap-4 pt-6">
+  <% team.sub_teams.each do |sub_team| %>
+    <%= render "teams/team_desktop", team: sub_team %>
   <% end %>
 </div>
