@@ -18,10 +18,27 @@
         <% end %>
         <!-- admin actions end -->
       </h2>
-      <div class="flex items-center">
-        <span class="icon icon-down icon-small"></span>
-        <span class="icon icon-up icon-small hidden"></span>
-    </div>
+      <div class="flex gap-4">
+        <% if policy(@course).edit? %>
+          <%= link_to course_module_path(course, course_module), class: "link-text" do %>
+            <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+          <% end %>
+        <% end %>
+        <div class="flex flex-col gap-1 items-center">
+          <button>
+            <span class="icon icon-arrow-up icon-small block"></span>
+          </button>
+          <button>
+            <span class="icon icon-arrow-down icon-small block"></span>
+          </button>
+        </div>
+
+        <div class="flex items-center">
+          <span class="icon icon-down icon-small down-arrow"></span>
+          <span class="icon icon-up icon-small hidden up-arrow"></span>
+        </div>
+      </div>
+      
     </summary>
     <ul>
       <% lessons_in_order(course_module).each do |lesson| %>

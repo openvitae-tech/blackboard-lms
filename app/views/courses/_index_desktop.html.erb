@@ -1,7 +1,9 @@
 <%= render "shared/components/desktop_layout" do %>
   <% if policy(:course).new? %>
     <div class="flex gap-4 justify-end">
-      <%= link_to "Add course", new_course_path, class: "nav-link" %>
+      <%= link_to new_course_path, class: "nav-link" do %>
+        <%= render 'shared/components/icon_button_primary', label: 'Add course', icon_name: 'icon-plus-white' %>
+      <% end %>
     </div>
   <% end %>
 
