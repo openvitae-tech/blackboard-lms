@@ -1,5 +1,13 @@
 <div style="width: 100%; background: linear-gradient(to bottom, #585563 50%, #fff 50%); padding:40px 80px; margin: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; color:#333333;">
-  <h1 style="text-align: center; color: #ffff; font-size:48px;">Welcome to <%= Rails.application.credentials.dig(:org_name) %></h1>
+  <div style="display: flex;
+  align-items: center;
+  flex-flow: column;
+  justify-content: center;">
+   <!-- <%= image_tag "instruo.png",  alt: "Logo", class: "h-2" %> -->
+
+    <h1 style="text-align: center; color: #ffff; font-size:32px;">Welcome to <%= Rails.application.credentials.dig(:org_name) %></h1>
+
+  </div>
 
   <div style="max-width: 968px; margin: 0 auto; padding: 56px; font-size:16px;  color: #333; background-color: #fff; border-radius: 8px; box-shadow: 0px 2px 12px 0px #33333329;">
 
