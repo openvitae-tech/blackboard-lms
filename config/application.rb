@@ -18,6 +18,10 @@ module Blackboard
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    config.active_job.queue_adapter = :sidekiq
+    config.active_job.default_queue_name = :default
+    config.active_storage.variant_processor = :mini_magick
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
