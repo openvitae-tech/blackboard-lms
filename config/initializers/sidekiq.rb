@@ -21,6 +21,13 @@ Sidekiq.configure_server do |config|
                                       YAML.load_file(schedule_file, aliases: true)
   end
 
+  config.death_handlers << lambda { |job, ex|
+    Sidekiq.logger.warn "Failed #{job['class']} with #{job['args']}: #{ex.message}"
+    extra = { class: job['class'], args: message['args'], error_message: ex.message }
+
+    Sentry.capture_exception(exception: ex, extra:)
+  }
+
   config.client_middleware do |chain|
     chain.add SidekiqUniqueJobs::Middleware::Client
   end

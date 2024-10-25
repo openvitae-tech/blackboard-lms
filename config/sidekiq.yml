@@ -1,5 +1,6 @@
 default: &default
   :concurrency: 5
+  :max_retries: 3
 development:
   <<: *default
 production:
