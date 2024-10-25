@@ -21,11 +21,11 @@ Sidekiq.configure_server do |config|
                                       YAML.load_file(schedule_file, aliases: true)
   end
 
-  config.death_handlers << lambda { |job, ex|
-    Sidekiq.logger.warn "Failed #{job['class']} with #{job['args']}: #{ex.message}"
-    extra = { class: job['class'], args: message['args'], error_message: ex.message }
+  config.error_handlers << proc { |ex, ctx_hash|
+    Sidekiq.logger.warn "Failed #{ctx_hash[:job]['class']} with error: #{ex.message}"
+    extra = { class: ctx_hash[:job]['class'], error_message: ex.message }
 
-    Sentry.capture_exception(exception: ex, extra:)
+    Sentry.capture_exception(ex, extra:)
   }
 
   config.client_middleware do |chain|
