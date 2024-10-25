@@ -30,7 +30,7 @@ class SettingsController < ApplicationController
     authorize :settings
 
     if @user.update(password_params)
-      flash.now[:success] = I18n.t('settings.password_updated')
+      redirect_to new_user_session_path, notice: I18n.t('settings.password_updated')
     else
       render 'change_password'
     end
