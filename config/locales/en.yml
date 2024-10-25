@@ -46,3 +46,7 @@ en:
   team:
     created: 'Team created successfully'
     updated: 'Team updated successfully'
+  settings:
+    updated: 'User settings updated successfully'
+    password_updated: 'Password updated successfully'
+    password_change: 'After changing the password you will be logged out and need to login with new password.'
