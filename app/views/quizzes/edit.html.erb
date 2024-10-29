@@ -1,6 +1,9 @@
 <%= render "shared/components/desktop_layout" do %>
-  <div class="box">
-    <%= link_to "Back", course_module_quiz_path(@course, @course_module, @quiz), class: "nav-link" %>
+  <div class="flex gap-4 items-center ">
+    <%= link_to course_module_path(@course, @course_module), class: "nav-link" do %>
+      <span class="icon icon-arrow-left-gray icon-small"></span>
+    <% end %>
+    <div class="font-medium text-sm">Backs</div>
   </div>
 <%= render "form", course: @course, course_module: @course_module, quiz: @quiz %>
 <% end %>
