@@ -13,10 +13,11 @@ module UsersHelper
     User::USER_ROLE_MAPPING.invert
   end
 
-  def user_role_mapping_for_partner(current_user)
+  def user_role_mapping_for_partner(current_user, team)
     mapping = User::USER_ROLE_MAPPING.dup
     mapping.delete(:admin)
     mapping.delete(:owner) if current_user.is_manager?
+    mapping.delete(:owner) unless team.parent_team?
     mapping.invert
   end
 

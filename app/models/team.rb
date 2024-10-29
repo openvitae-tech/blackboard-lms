@@ -3,6 +3,8 @@
 class Team < ApplicationRecord
   include CustomValidations
 
+  validates :name, presence: true
+
   has_one_attached :banner
 
   belongs_to :learning_partner
@@ -15,17 +17,21 @@ class Team < ApplicationRecord
     users
   end
 
-  def team_hierarchy
-    return @team_hierarchy if @team_hierarchy.present?
+  def ancestors
+    return @ancestors if @ancestors.present?
 
-    @team_hierarchy = []
+    @ancestors = []
     temp = self
 
     while temp
-      @team_hierarchy.push(temp)
+      @ancestors.push(temp)
       temp = temp.parent_team
     end
 
-    @team_hierarchy
+    @ancestors
+  end
+
+  def parent_team?
+    parent_team_id.blank?
   end
 end

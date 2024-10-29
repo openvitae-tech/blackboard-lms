@@ -27,7 +27,7 @@
           <span class="">My Course</span>
         <% end %>
       </li>
-      <% if current_user&.not_admin? %>
+      <% if policy(current_user.team).show? %>
         <li class="side-bar-item">
           <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
             <span class="icon icon-team icon-small"></span>

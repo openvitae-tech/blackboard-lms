@@ -19,7 +19,7 @@
         </div>
         <div class="flex flex-col gap-4">
           <%= form.label :role, 'Select role',  class: "block text-sm" %>
-          <%= form.select :role, user_role_mapping_for_partner(current_user),{}, class: "input-text" %>
+          <%= form.select :role, user_role_mapping_for_partner(current_user, @team),{}, class: "input-text" %>
         </div>
         <div class="flex items-center my-4">
           <div class="flex-grow border-t border-line-colour"></div>
