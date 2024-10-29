@@ -1,33 +1,41 @@
 <div class="box">
   <div class="my-8 text-left">
-    <% url = course_module.persisted? ? course_module_path(course, course_module) : course_modules_path(course, course_module) %>
-    <%= form_with(model: [course, course_module], url: url) do |form| %>
-    <% if course_module.errors.any? %>
-      <div style="color: red">
+     <% url = course_module.persisted? ? course_module_path(course, course_module) : course_modules_path(course, course_module) %>
+     <%= form_with(model: [course, course_module], url: url) do |form| %>
+     <% if course_module.errors.any? %>
+     <div style="color: red">
         <h2><%= pluralize(course_module.errors.count, "error") %> prohibited this course_module from being saved:</h2>
-
         <ul>
-          <% course_module.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
+           <% course_module.errors.each do |error| %>
+           <li><%= error.full_message %></li>
+           <% end %>
         </ul>
-      </div>
-    <% end %>
-
-    <div class="my-8 text-sm">
-      <%= form.label :title, class: "text-sm font-medium" %>
-      <%= form.text_field :title, class: "input-text mt-2" %>
-    </div>
-
-    <div class="my-8 text-sm">
-      <%= form.label :rich_description, 'Description', class: "text-sm font-medium" %>
-      <%= form.rich_text_area :rich_description, class: "mt-2" %>
-    </div>
-
-    <div class="my-8 text-sm">
-      <% text = course_module.persisted? ? "Update" : "Create" %>
-      <%= form.submit text, class: "btn-default" %>
-    </div>
-  <% end %>
+     </div>
+     <% end %>
+     <div class="my-8 text-sm">
+        <%= form.label :title, class: "text-sm font-medium" %>
+        <%= form.text_field :title, class: "input-text mt-2" %>
+     </div>
+     <div class="my-8 text-sm flex flex-col gap-4">
+        <%= form.label :rich_description, "Description" , class: "text-sm font-medium" %>
+        <%= form.rich_text_area :content, class: "input-text mt-2 font-sm" ,
+           style: "min-height: 300px; max-height: 500px; overflow-y: auto;" ,
+           oninput: "this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 500) + 'px';"
+           %>
+     </div>
+     <div class="my-8 text-sm  flex gap-6 items-center">
+        <div class="my-8">
+           <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
+        </div>
+        <div>
+           <% text = course_module.persisted? ? "Update" : "Create" %>
+           <%= form.submit text, class: "btn-primary" do %>
+           <span>
+           <%= text %>
+           </span>
+           <% end %>
+        </div>
+     </div>
+     <% end %>
   </div>
 </div>
