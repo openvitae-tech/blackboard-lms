@@ -14,9 +14,9 @@
             <%= image_tag "vivanta.png",  alt: "useImage", class: "" %>
             <%= link_to learning_partner.name, learning_partner, class: "link" %>
          </div>
-         <a href="">  
-           <span class="icon icon-simple-arrow-right icon-small"></span>
-         </a>
+         <%= link_to learning_partner, class: "link" do%>
+          <span class="icon icon-simple-arrow-right icon-small"></span>
+         <% end %>
       </li>
       <% end %>
    </ul>
