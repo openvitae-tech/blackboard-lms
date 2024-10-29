@@ -58,6 +58,8 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem "rubocop", require: false
+  gem "rubocop-rails", require: false
 end
 
 group :development do
@@ -77,7 +79,6 @@ group :test do
   gem 'brakeman'
   gem 'bundler-audit'
   gem 'capybara'
-  gem 'rubocop'
   gem 'selenium-webdriver'
   gem "webmock"
 end

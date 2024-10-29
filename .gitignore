@@ -53,3 +53,4 @@ docker-build
 /config/credentials/development.key
 .idea/*
 *.md
+package.json
