@@ -148,9 +148,6 @@
     @apply cursor-pointer text-secondary underline;
   }
 }
-.page-title{
-  @apply text-xl font-semibold;
-}
 
 .page-subtitle{
   @apply text-sm font-medium;

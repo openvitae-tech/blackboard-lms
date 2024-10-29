@@ -57,9 +57,7 @@
         <div>
           <% text = quiz.persisted? ? "Update" : "Create" %>
           <%= form.submit text, class: "btn-primary" do %>
-            <span>
-              <%= text %>
-            </span>
+            <span><%= text %></span>
           <% end %>
         </div>
       </div>
