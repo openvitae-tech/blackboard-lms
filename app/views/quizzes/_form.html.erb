@@ -16,8 +16,8 @@
       </div>
       <div class="my-8 text-sm">
         <%= form.label :question, class: "text-sm font-medium" %>
-        <%= form.text_field :question, class: "input-text mt-2" %>
-      </div>
+        <%= form.text_area :question, class: "input-text mt-2 resize-none h-20", rows: 2, placeholder: "Enter your question here..." %>
+      </div>      
 
       <div class="my-8 text-sm">
         <%= form.label :option_a, class: "text-sm font-medium" %>
