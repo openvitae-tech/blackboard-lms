@@ -92,7 +92,7 @@ gem 'aws-sdk-s3', require: false
 gem 'chartkick'
 gem 'groupdate'
 
-gem 'rexml', '>= 3.3.3'
+gem 'rexml', '>= 3.3.9'
 gem 'webrick', '>= 1.8.2'
 
 gem 'stackprof'
@@ -110,3 +110,4 @@ gem "sidekiq-failures"
 
 # adds unique constraints to sidekiq jobs
 gem "sidekiq-unique-jobs"
+

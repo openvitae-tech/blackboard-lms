@@ -320,7 +320,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.7)
+    rexml (3.3.9)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -470,7 +470,7 @@ DEPENDENCIES
   pundit (~> 2.3)
   rails (= 7.2.1.1)
   rails-controller-testing
-  rexml (>= 3.3.3)
+  rexml (>= 3.3.9)
   rspec-rails
   rubocop
   selenium-webdriver

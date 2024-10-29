@@ -19,16 +19,22 @@
         </div>
         <div class="flex flex-col gap-4">
           <%= form.label :role, 'Select role',  class: "block text-sm" %>
-          <%= form.select :role, user_role_mapping_for_partner(current_user),{}, class: "input-text" %>
+          <%= form.select :role, user_role_mapping_for_partner(current_user, @team),{}, class: "input-text" %>
         </div>
-        <div class="flex items-center my-4">
-          <div class="flex-grow border-t border-line-colour"></div>
-          <span class="px-2 text-sm ">Or</span>
-          <div class="flex-grow border-t border-line-colour"></div>
-        </div>
-        <div class="flex flex-col gap-4 items-start justify-center w-full">
-          <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:bulk_invite, class: "hidden", data: { forms_target: "fileInput"}) %>
-        </div>
+
+        <!-- admin cannot bulk import users, admin invites users to the top level team.
+        Inviting in bulk can be done by managers or owners of the company -->
+        <% if current_user.is_manager? || current_user.is_owner? %>
+          <div class="flex items-center my-4">
+            <div class="flex-grow border-t border-line-colour"></div>
+            <span class="px-2 text-sm ">Or</span>
+            <div class="flex-grow border-t border-line-colour"></div>
+          </div>
+          <div class="flex flex-col gap-4 items-start justify-center w-full">
+            <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:bulk_invite, class: "hidden", data: { forms_target: "fileInput"}) %>
+          </div>
+        <% end %>
+
         <div class="flex flex-col justify-between">
           <%= form.button "Invite user", class: "bg-primary text-white px-4 py-2 rounded" %>
           <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>

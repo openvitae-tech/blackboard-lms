@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class TeamsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_manager!
 
   def new
+    authorize :team
     @team = Team.new(parent_team_id: params[:parent_team_id])
   end
 
   def show
     @team = Team.find params[:id]
+    authorize @team
     @learning_partner = current_user.learning_partner
     @members = @team.users
   end
