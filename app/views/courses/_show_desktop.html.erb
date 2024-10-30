@@ -2,12 +2,12 @@
   <div class="flex gap-4 justify-end">
     <% if policy(@course).publish? %>
       <%= link_to publish_course_path(@course), data: { turbo_method: "put" }, class: "nav-link" do %>
-        <%= render 'shared/components/outline_primary_button', label: 'Publish' %>
+        <%= render 'shared/components/outline_button_secondary', label: 'Publish' %>
       <% end %>
     <% end %>
     <% if policy(@course).unpublish? %>
       <%= link_to  unpublish_course_path(@course), data: { turbo_method: "put" }, class: "nav-link" do %>
-        <%= render 'shared/components/outline_primary_button', label: 'Unpublish' %>
+        <%= render 'shared/components/outline_button_secondary', label: 'Unpublish' %>
       <% end %>
     <% end %>
     <% if policy(:course_module).new? %>
