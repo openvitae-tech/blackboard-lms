@@ -1,12 +1,12 @@
 <%= render "shared/components/desktop_layout" do %>
   <div class="flex gap-4 items-center ">
     <%= link_to course_path(@course),  class: "nav-link" do %>
-    <span class="icon icon-arrow-left-gray icon-small"></span>
+      <span class="icon icon-arrow-left-gray icon-small"></span>
     <% end %>
     <div class="font-medium text-sm">Back</div>
   </div>
   <div class="box">
-    <h1 class="font-semibold text-xl">Edit course</h1>
+    <h1 class="page-heading-medium">Edit course</h1>
   </div>
   <%= render "form", course: @course %>
 <% end %>

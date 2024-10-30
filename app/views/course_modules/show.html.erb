@@ -6,8 +6,8 @@
     <div class="font-medium text-sm">Back</div>
   </div>
   <%= render @course_module %>
-  <div class="box flex justify-between pt-6">
-    <h1 class="page-subtitle">Lessons</h1>
+  <div class="flex justify-between mt-10">
+    <h1 class="page-sub-heading">Lessons</h1>
     <div class="text-right">
       <% if policy(@course_module).new? %>
         <%= link_to new_course_module_lesson_path(@course, @course_module), class: "nav-link" do %>
@@ -20,45 +20,44 @@
     <ul id="lessons">
       <% lessons_in_order(@course_module).each do |lesson| %>
         <li class="text-sm border border-line-colour-light rounded p-6 mb-4" id="<%= dom_id lesson %>">
-            <%= link_to course_module_lesson_path(@course, @course_module, lesson) do %>
-              <div class="flex justify-between items-center">
-                <strong class="text-base font-medium">
-                  <%= lesson.title %>
-                </strong>
-                <div class="flex gap-6 items-center">
-                  <% if policy(@course_module).edit? %>
-                    <%= link_to edit_course_module_lesson_path(@course, @course_module, lesson) do %>
-                      <%= render "shared/components/button_default_small" , label: "Edit" , icon_name: "icon-edit" %>
+          <%= link_to course_module_lesson_path(@course, @course_module, lesson) do %>
+            <div class="flex justify-between items-center">
+              <strong class="text-base font-medium">
+                <%= lesson.title %>
+              </strong>
+              <div class="flex gap-6 items-center">
+                <% if policy(@course_module).edit? %>
+                  <%= link_to edit_course_module_lesson_path(@course, @course_module, lesson) do %>
+                    <%= render "shared/components/button_default_small" , label: "Edit" , icon_name: "icon-edit" %>
+                  <% end %>
+                <% end %>
+                <div class="flex flex-col items-center">
+                  <% if policy(:lesson).moveup? %>
+                    <%= link_to moveup_course_module_lesson_path(@course, @course_module, lesson), data: {
+                          turbo_method: :put }, class: "link" do%>
+                      <button>
+                        <span class="icon icon-arrow-up icon-small block"></span>
+                      </button>
                     <% end %>
                   <% end %>
-                  <div class="flex flex-col items-center">
-                    <% if policy(:lesson).moveup? %>
-                      <%= link_to moveup_course_module_lesson_path(@course, @course_module, lesson), data: {
-                          turbo_method: :put }, class: "link" do%>
-                        <button>
-                        <span class="icon icon-arrow-up icon-small block"></span>
-                        </button>
-                      <% end %>
-                    <% end %>
-                    <% if policy(:lesson).movedown? %>
-                      <%= link_to movedown_course_module_lesson_path(@course, @course_module,
+                  <% if policy(:lesson).movedown? %>
+                    <%= link_to movedown_course_module_lesson_path(@course, @course_module,
                           lesson), data: { turbo_method: :put }, class: "link" do%>
-                        <button>
+                      <button>
                         <span class="icon icon-arrow-down icon-small block"></span>
-                        </button>
-                      <% end %>
+                      </button>
                     <% end %>
-                  </div>
+                  <% end %>
                 </div>
               </div>
-            <% end %>
+            </div>
+          <% end %>
         </li>
       <% end %>
     </ul>
   </div>
-
-  <div class="box flex justify-between pt-6">
-    <h1 class="page-subtitle">Quizzes</h1>
+  <div class="flex justify-between mt-10">
+    <h1 class="page-sub-heading">Quizzes</h1>
     <div class="text-right">
       <% if policy(:quiz).new? %>
         <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
@@ -67,7 +66,6 @@
       <% end %>
     </div>
   </div>
-
   <% if current_user.is_admin? %>
     <div class="box pt-2">
       <ul id="quizzes">

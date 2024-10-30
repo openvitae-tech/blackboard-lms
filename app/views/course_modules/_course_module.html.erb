@@ -1,7 +1,6 @@
 <div id="<%= dom_id course_module %>" class="box flex flex-col gap-6 pt-2">
   <div class="flex justify-between items-center">
-    <div class="text-xl font-semibold"><%= course_module.title %></div>
-
+    <div class="page-heading-medium"><%= course_module.title %></div>
     <div class="mx-4 text-right flex justify-end">
       <% if policy(@course_module).edit? %>
         <%= link_to edit_course_module_path(@course, @course_module) do %>
@@ -17,5 +16,3 @@
   </div>
   <div class="text-paragraph box-shadow-medium p-4 rounded"><%= course_module.rich_description %></div>
 </div>
-
-
