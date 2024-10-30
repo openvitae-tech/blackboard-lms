@@ -5,8 +5,6 @@ AllCops:
   NewCops: enable
   Exclude:
     - "db/schema.rb"
-    - "Gemfile"
-    - "lib/tasks/*.rake"
     - "bin/*"
     - "config/puma.rb"
     - "config/spring.rb"
@@ -17,9 +15,7 @@ AllCops:
     - "docker-build"
     - "db/seeds.rb"
     - "db/migrate/*"
-    - "spec/**"
     - "app/**/*"
-    - "config/"
 
 Style/Documentation:
   Enabled: false
@@ -35,59 +31,9 @@ Lint/MissingSuper:
   Enabled: false
 Layout/LineLength:
   Enabled: false
-Layout/TrailingEmptyLines:
-  Enabled: false
-Layout/EmptyLineBetweenDefs:
-  Enabled: false
-Lint/EmptyBlock:
-  Enabled: false
 Metrics/CyclomaticComplexity:
-  Enabled: false
-Naming/MethodParameterName:
-  Enabled: false
-Style/ClassAndModuleChildren:
-  Enabled: false
-Style/GuardClause:
-  Enabled: false
-Style/IfUnlessModifier:
-  Enabled: false
-Style/TrailingCommaInArguments:
-  Enabled: false
-Layout/ClosingParenthesisIndentation:
-  Enabled: false
-Layout/EmptyLineAfterMagicComment:
-  Enabled: false
-Layout/EmptyLines:
-  Enabled: false
-Layout/EmptyLinesAroundExceptionHandlingKeywords:
-  Enabled: false
-Layout/SpaceAfterComma:
-  Enabled: false
-Lint/SafeNavigationChain:
-  Enabled: false
-Style/HashSyntax:
-  Enabled: false
-Lint/UnusedBlockArgument:
   Enabled: false
 Metrics/ModuleLength:
   Enabled: false
 Metrics/PerceivedComplexity:
   Enabled: false
-Naming/AccessorMethodName:
-  Enabled: false
-Naming/PredicateName:
-  Enabled: false
-Style/CommentAnnotation:
-  Enabled: false
-Style/PreferredHashMethods:
-  Enabled: false
-Style/RedundantSelf:
-  Enabled: false
-Style/StringLiterals:
-  Enabled: true
-Style/SymbolArray:
-  Enabled: false
-Style/TrailingCommaInHashLiteral:
-  Enabled: false
-Rails/FilePath:
-  Enabled: true
