@@ -84,10 +84,10 @@ Style/PreferredHashMethods:
 Style/RedundantSelf:
   Enabled: false
 Style/StringLiterals:
-  Enabled: false
+  Enabled: true
 Style/SymbolArray:
   Enabled: false
 Style/TrailingCommaInHashLiteral:
   Enabled: false
 Rails/FilePath:
-  Enabled: false
+  Enabled: true
