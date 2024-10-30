@@ -1,10 +1,7 @@
 <%= render "shared/components/desktop_layout" do %>
-  <div class="flex gap-4 items-center ">
-    <%= link_to course_path(@course), class: "nav-link" do %>
-      <span class="icon icon-arrow-left-gray icon-small"></span>
-    <% end %>
-    <div class="font-medium text-sm">Back</div>
-  </div>
+  <%= link_to course_path(@course), class: "nav-link" do %>
+    <%= render 'shared/components/back_button' %>
+  <% end %>
   <%= render @course_module %>
   <div class="flex justify-between mt-10">
     <h1 class="page-sub-heading">Lessons</h1>
@@ -33,19 +30,15 @@
                 <% end %>
                 <div class="flex flex-col items-center">
                   <% if policy(:lesson).moveup? %>
-                    <%= link_to moveup_course_module_lesson_path(@course, @course_module, lesson), data: {
+                    <%= link_to moveup_course_module_lesson_path(@course, @course_module, lesson), data: { 
                           turbo_method: :put }, class: "link" do%>
-                      <button>
-                        <span class="icon icon-arrow-up icon-small block"></span>
-                      </button>
+                      <span class="icon icon-arrow-up icon-small block"></span>
                     <% end %>
                   <% end %>
                   <% if policy(:lesson).movedown? %>
                     <%= link_to movedown_course_module_lesson_path(@course, @course_module,
                           lesson), data: { turbo_method: :put }, class: "link" do%>
-                      <button>
-                        <span class="icon icon-arrow-down icon-small block"></span>
-                      </button>
+                      <span class="icon icon-arrow-down icon-small block"></span>
                     <% end %>
                   <% end %>
                 </div>
@@ -87,19 +80,15 @@
               <% end %>
               <div class="flex flex-col items-center">
                 <% if policy(:lesson).moveup? %>
-                  <%= link_to moveup_course_module_quiz_path(@course, @course_module, quiz), data: { turbo_method:
-                    :put }, class: "link" do%>
-                    <button>
-                      <span class="icon icon-arrow-up icon-small block"></span>
-                    </button>
+                  <%= link_to moveup_course_module_quiz_path(@course, @course_module, quiz), data: { 
+                        turbo_method: :put }, class: "link" do%>
+                    <span class="icon icon-arrow-up icon-small block"></span>
                   <% end %>
                 <% end %>
                 <% if policy(:lesson).movedown? %>
                   <%= link_to movedown_course_module_quiz_path(@course, @course_module, quiz), data: {
-                    turbo_method: :put }, class: "link" do%>
-                    <button>
-                      <span class="icon icon-arrow-down icon-small block"></span>
-                    </button>
+                        turbo_method: :put }, class: "link" do%>
+                    <span class="icon icon-arrow-down icon-small block"></span>
                   <% end %>
                 <% end %>
               </div>

@@ -1,10 +1,7 @@
 <%= render "shared/components/desktop_layout" do %>
-  <div class="flex gap-4 items-center ">
-    <%= link_to courses_path, class: "nav-link" do %>
-      <span class="icon icon-arrow-left-gray icon-small"></span>
-    <% end %>
-    <div class="font-medium text-sm">Back</div>
-  </div>
+  <%= link_to courses_path, class: "nav-link" do %>
+    <%= render 'shared/components/back_button' %>
+  <% end %>
   <div class="box">
     <h1 class="page-heading-medium">Create course</h1>
   </div>
