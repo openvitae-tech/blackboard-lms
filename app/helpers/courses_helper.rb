@@ -1,22 +1,15 @@
 # frozen_string_literal: true
 
 module CoursesHelper
-  def course_banner(course)
-    return course.banner if course && course.banner.present?
+  # @param version [Symbol] Values are :vertical or :horizontal
+  def course_banner(course, version)
+    if version == :vertical
+      course&.banner&.variant(resize_to_limit: [140, nil])
+    elsif version == :horizontal
+      course&.banner&.variant(resize_to_limit: [nil, 200])
+    end
 
-    'course.jpeg'
-  end
-
-  def course_banner_thumbnail(course)
-    return course.banner if course&.banner&.variant(resize_to_limit: [nil, 200])
-
-    STATIC_ASSETS[:placeholders][:course_banner]
-  end
-
-  def course_banner_thumbnail_vertical(course)
-    return course.banner if course&.banner&.variant(resize_to_limit: [140, nil])
-
-    STATIC_ASSETS[:placeholders][:course_banner]
+    course.banner || STATIC_ASSETS[:placeholders][:course_banner]
   end
 
   def course_description(course, limit = nil)
