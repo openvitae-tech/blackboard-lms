@@ -36,4 +36,9 @@ module TeamsHelper
   def model_title_label_for(team)
     team.persisted? ? 'Update team' : 'Create team'
   end
+
+  def team_banner(user)
+    asset = user.is_admin? ? nil : user.team.banner
+    asset || STATIC_ASSETS[:placeholders][:team_banner]
+  end
 end
