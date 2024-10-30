@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 module CoursesHelper
+  def has_search_results?
+    defined?(@search_results)
+  end
+
+  def has_enrolled_courses?
+    defined?(@enrolled_courses) && @enrolled_courses.present?
+  end
+
+  def has_available_courses?
+    defined?(@available_courses) && @available_courses.present?
+  end
+
   # @param version [Symbol] Values are :vertical or :horizontal
   def course_banner(course, version)
     if version == :vertical

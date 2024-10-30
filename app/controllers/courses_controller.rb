@@ -6,34 +6,40 @@ class CoursesController < ApplicationController
 
   # GET /courses or /courses.json
   def index
+    authorize :course
+
     if current_user.is_admin?
-      @enrolled_courses = current_user.courses
-      @other_courses = Course.all - @enrolled_courses
+      @available_courses = Course.all
     else
       @enrolled_courses = current_user.courses.published
-      @other_courses = Course.published - @enrolled_courses
+      @available_courses = Course.published - @enrolled_courses
     end
   end
 
   # GET /courses/1 or /courses/1.json
   def show
+    authorize @course
     @course_modules = helpers.modules_in_order(@course)
   end
 
   # GET /courses/new
   def new
+    authorize :course
     @course = Course.new
   end
 
   # GET /courses/1/edit
-  def edit; end
+  def edit
+    authorize @course
+  end
 
   # POST /courses or /courses.json
   def create
+    authorize :course
     @course = Course.new(course_params)
 
     if @course.save
-      redirect_to course_url(@course), notice: 'Course was successfully created.'
+      redirect_to course_url(@course), notice: I18n.t('course.created')
     else
       render :new, status: :unprocessable_entity
     end
@@ -41,8 +47,9 @@ class CoursesController < ApplicationController
 
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
+    authorize @course
     if @course.update(course_params)
-      redirect_to course_url(@course), notice: 'Course was successfully updated.'
+      redirect_to course_url(@course), notice: I18n.t('course.updated')
     else
       render :edit, status: :unprocessable_entity
     end
@@ -50,37 +57,44 @@ class CoursesController < ApplicationController
 
   # DELETE /courses/1 or /courses/1.json
   def destroy
+    authorize @course
     @course.destroy!
-    redirect_to courses_url, notice: 'Course was successfully destroyed.'
+    redirect_to courses_url, notice: I18n.t('course.deleted')
   end
 
   def enroll
+    authorize @course
+
     service = CourseManagementService.instance
     result = service.enroll!(current_user, @course)
 
     if result == :duplicate
-      message = 'Already enrolled in this course'
+      message = I18n.t('course.duplicate_enrolled')
     elsif result == :ok
-      message = 'Successfully enrolled for the course'
+      message = I18n.t('course.enrolled')
     end
 
     redirect_to course_url(@course), notice: message
   end
 
   def unenroll
+    authorize @course
+
     service = CourseManagementService.instance
     result = service.undo_enroll!(current_user, @course)
 
     if result == :not_enrolled
-      message = 'You are not enrolled in this course'
+      message = I18n.t('course.not_enrolled')
     elsif result == :ok
-      message = 'Success'
+      message = I18n.t('course.unenrolled')
     end
 
     redirect_to course_url(@course), notice: message
   end
 
   def proceed
+    authorize @course
+
     service = CourseManagementService.instance
     enrollment = service.proceed(current_user, @course)
     EVENT_LOGGER.publish_course_started(current_user, @course.id)
@@ -89,33 +103,38 @@ class CoursesController < ApplicationController
   end
 
   def search
+    authorize :course
     service = CourseManagementService.instance
     @keyword = params[:term]
-    @search_results = service.search(@keyword)
+    @search_results = service.search(current_user, @keyword)
     render :index
   end
 
   def publish
+    authorize @course
+
     service = CourseManagementService.instance
     result = service.publish!(@course)
 
     if result == :duplicate
-      message = 'Course already published'
+      message = I18n.t('course.duplicate_publish')
     elsif result == :ok
-      message = 'Course is now available to everyone'
+      message = I18n.t('course.published')
     end
 
     redirect_to course_url(@course), notice: message
   end
 
   def unpublish
+    authorize @course
+
     service = CourseManagementService.instance
     result = service.undo_publish!(@course)
 
     if result == :duplicate
-      message = 'Course already published'
+      message = I18n.t('course.duplicate_unpublish')
     elsif result == :ok
-      message = 'Course is now available to everyone'
+      message = I18n.t('course.unpublished')
     end
 
     redirect_to course_url(@course), notice: message

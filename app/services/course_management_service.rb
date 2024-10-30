@@ -54,8 +54,12 @@ class CourseManagementService
     end
   end
 
-  def search(term)
-    Course.where('title ilike ?', "%#{term}%")
+  def search(user, term)
+    if user.is_admin?
+      Course.where('title ilike ?', "%#{term}%")
+    else
+      Course.published.where('title ilike ?', "%#{term}%")
+    end
   end
 
   def set_lesson_attributes(_course_module, lesson)
