@@ -20,8 +20,8 @@
   <%= render "shared/components/bread_crumbs", links: [@course.title] %>
 
   <div class="flex flex-col rounded box-shadow-medium">
-    <%= render "shared/components/course_description_card", course: @course %>
+    <%= render "courses/course_description_card", course: @course %>
     <br/>
-    <%= render "shared/components/course_lessons", course: @course, enrollment: @enrollment %>
+    <%= render "courses/course_lessons", course: @course, enrollment: @enrollment %>
   </div>
 <% end %>
