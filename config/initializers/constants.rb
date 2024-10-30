@@ -7,5 +7,6 @@ EVENT_LOGGER = EventService.instance
 STATIC_ASSETS = {
   placeholders: {
     team_banner: 'team_banner_placeholder.jpeg',
+    course_banner: 'course_banner_placeholder.jpeg'
   }
 }.freeze

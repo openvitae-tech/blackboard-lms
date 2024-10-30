@@ -10,13 +10,13 @@ module CoursesHelper
   def course_banner_thumbnail(course)
     return course.banner if course&.banner&.variant(resize_to_limit: [nil, 200])
 
-    'course_thumbnail.jpeg'
+    STATIC_ASSETS[:placeholders][:course_banner]
   end
 
   def course_banner_thumbnail_vertical(course)
     return course.banner if course&.banner&.variant(resize_to_limit: [140, nil])
 
-    'course_thumbnail.jpeg'
+    STATIC_ASSETS[:placeholders][:course_banner]
   end
 
   def course_description(course, limit = nil)
