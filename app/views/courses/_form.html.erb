@@ -1,17 +1,7 @@
 <div class="my-8 w-full md:max-w-3xl text-left">
   <div class="w-auto">
     <%= form_with(model: course) do |form| %>
-      <% if course.errors.any? %>
-        <div style="color: red">
-          <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
-
-          <ul>
-            <% course.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+      <%= render "shared/components/form_errors", resource: course %>
      <div class="my-8 text-sm">
         <%= form.label :title, class: "text-sm font-medium" %>
         <%= form.text_field :title, class: "input-text mt-2" %>
