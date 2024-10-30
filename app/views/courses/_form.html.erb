@@ -1,8 +1,8 @@
-<div class="my-8 w-full md:max-w-3xl text-left">
+<div class="my-8 w-full text-left md:max-w-3xl">
   <div class="w-auto">
     <%= form_with(model: course) do |form| %>
       <%= render "shared/components/form_errors", resource: course %>
-     <div class="my-8 text-sm">
+      <div class="my-8 text-sm">
         <%= form.label :title, class: "text-sm font-medium" %>
         <%= form.text_field :title, class: "input-text mt-2" %>
       </div>
@@ -11,27 +11,26 @@
           <%= form.label :banner, class: "text-sm font-medium" %>
         </div>
         <div class="relative mt-2">
-          <%= render "shared/components/file_select" , hidden_file_field: form.file_field(:logo,
-            class: "hidden" , data: { forms_target: "fileInput" }), preview: "logo" %>
+          <%= render "shared/components/file_select", hidden_file_field: form.file_field(:banner,
+                                                                                         class: "hidden", data: { forms_target: "fileInput" }), preview: "logo" %>
         </div>
       </div>
-      <div>
-       <%= form.label :rich_description, "Description" , class: "text-sm font-medium" %>
-         <%= form.rich_text_area :content, class: "input-text mt-2 font-sm" ,
-            style: "min-height: 300px; max-height: 500px; overflow-y: auto;" ,
-            oninput: "this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 500) + 'px';"
-            %>
+
+      <div class="my-8 text-sm">
+        <%= form.label :description, class: "text-sm font-medium" %>
+        <%= form.text_area :description, class: "input-textarea mt-2", rows: "5" %>
       </div>
-      <div class="my-8 text-sm  flex gap-6 items-center">
-         <div class="my-8">
-           <%= link_to "Cancel" , courses_path, class: "nav-link" %>
-         </div>
-         <div>
-           <% text=course.persisted? ? "Update" : "Create" %>
-           <%= form.submit class: "btn-primary" do %>
+
+      <div class="my-8 flex items-center gap-6 text-sm">
+        <div class="my-8">
+          <%= link_to "Cancel", courses_path, class: "nav-link" %>
+        </div>
+        <div>
+          <% text = course.persisted? ? "Update" : "Create" %>
+          <%= form.submit class: "btn-primary" do %>
             <span><%= text %></span>
-           <% end %>
-         </div>
+          <% end %>
+        </div>
       </div>
     <% end %>
   </div>

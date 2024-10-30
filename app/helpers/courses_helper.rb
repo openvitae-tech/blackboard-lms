@@ -20,11 +20,10 @@ module CoursesHelper
   end
 
   def course_description(course, limit = nil)
-    if limit.present?
-      sanitize course.rich_description&.to_plain_text[0..limit]
-    else
-      course.rich_description
-    end
+    return "" if course.description.blank?
+
+    text = limit.present? ? course.description[0..limit] : course.description
+    sanitize text
   end
 
   def next_lesson_path(course, course_module, current_lesson)
