@@ -22,7 +22,7 @@
 
     <div class="flex flex-wrap gap-4">
       <% @search_results.each do |course| %>
-        <%= render "shared/components/course_card_with_top_image", course: course %>
+        <%= render "courses/course_card_with_top_image", course: course %>
       <% end  %>
     </div>
   <% end %>
@@ -34,7 +34,7 @@
 
     <div class="flex flex-wrap gap-4">
       <% @enrolled_courses.each do |course| %>
-        <%= render "shared/components/course_card_with_left_image", course: course %>
+        <%= render "courses/course_card_with_left_image", course: course %>
       <% end  %>
     </div>
   <% end  %>
@@ -45,7 +45,7 @@
     </p>
     <div class="flex flex-wrap gap-4">
       <% @other_courses.each do |course| %>
-        <%= render "shared/components/course_card_with_top_image", course: course %>
+        <%= render "courses/course_card_with_top_image", course: course %>
       <% end  %>
     </div>
   <% end  %>
