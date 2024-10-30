@@ -1,6 +1,18 @@
-<div id="<%= dom_id course_module %>" class="box">
-  <div class="page-title"><%= course_module.title %></div>
-  <div class="text-paragraph"><%= course_module.rich_description %></div>
+<div id="<%= dom_id course_module %>" class="box flex flex-col gap-6 pt-2">
+  <div class="flex justify-between items-center">
+    <div class="page-heading-medium"><%= course_module.title %></div>
+    <div class="mx-4 text-right flex justify-end">
+      <% if policy(@course_module).edit? %>
+        <%= link_to edit_course_module_path(@course, @course_module) do %>
+          <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+        <% end %>
+      <% end %>
+      <% if policy(@course_module).destroy? %>
+        <%= link_to course_module_path(@course, @course_module), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" }, class: "btn-default" do %>
+          <%= render "shared/components/button_default_small", label: "Delete", icon_name: "icon-trash" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="text-paragraph box-shadow-medium p-4 rounded"><%= course_module.rich_description %></div>
 </div>
-
-

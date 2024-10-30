@@ -2,99 +2,99 @@
   <div class="my-8 text-left" data-controller="lessons-form">
      <% url = lesson.persisted? ? course_module_lesson_path(course, course_module, lesson) : course_module_lessons_path(course, course_module, lesson) %>
      <%= form_with(model: lesson, url: url) do |form| %>
-     <% if lesson.errors.any? %>
-     <div style="color: red">
-        <h2><%= pluralize(lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>
-        <ul>
+       <% if lesson.errors.any? %>
+       <div style="color: red">
+         <h2><%= pluralize(lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>
+         <ul>
            <% lesson.errors.each do |error| %>
            <li><%= error.full_message %></li>
            <% end %>
-        </ul>
-     </div>
-     <% end %>
-     <div class="my-8 text-sm" >
-        <%= form.label :title, class: "text-sm font-medium" %>
-        <%= form.text_field :title, class: "input-text mt-2", placeholder: "Title for lesson eg: Wine serving" %>
-     </div>
-     <div class="my-8 text-sm flex flex-col gap-2" >
-        <%= form.label :rich_description, 'Description', class: "text-sm font-medium" %>
-        <%= form.rich_text_area :rich_description, class: "input-text mt-2", placeholder: "A short description about the lesson." %>
-     </div>
-     <div data-controller="video-upload" class="my-8 flex flex-col">
-      <div class="text-sm flex flex-row items-center gap-4 justify-between">
-        <div class="grow">
-          <%= form.label :video_url, class: "text-sm font-medium" %>
-          <%= form.text_field :video_url, class: "input-text mt-2", placeholder: "eg: https://vimeo.com/948577869", data: { video_upload_target: "urlInput" }  %>
-        </div>
-        <p class="pt-6">OR</p>
-        <div class="w-[373px]">
-          <div class="flex justify-between">
-            <%= form.label :video, "Upload Video", class: "text-sm font-medium" %>
-            <label data-video-upload-target="fileLabel" class="text-sm text-[#E0E0E0">No file chosen</label>
-          </div>
-          <div class="relative mt-2">
-            <%= form.file_field :video, accept: 'video/*', class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer", data: { video_upload_target: "fileInput" } %>
-            <div class="file-input bg-white border border-dashed border-primary-light rounded-md p-4 text-center flex items-center justify-center">
-              <span class="icon icon-upload icon-small"></span>
-              <span class="file-label text-primary">Choose File</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mt-4 flex flex-col gap-4 hidden" data-video-upload-target="videoUploader">
-        <div class="flex justify-end">
-          <div class="w-[373px] flex gap-3">
-            <button id="" class="flex items-center gap-2 rounded px-2 py-2 border border-primary-light">
-              <span class="icon icon-upload icon-small"></span>
-              <span class="text-xs leading-3 text-primary">Upload video</span>
-            </button>
-            <div class="flex items-center gap-3">
-              <div class="bg-primary-light h-2 w-[198px]">
-                <div class="bg-primary h-2" style="width: 50%"></div>
-              </div>
-              <span class="text-secondary text-xs font-medium">50%</span>
-            </div>
-          </div>
-        </div>
-        <div class="flex items-center justify-center">
-          <div class="w-4/6 flex flex-col gap-4">
-            <div class="border border-line-colour-light rounded p-2">
-              <video data-video-upload-target="videoPlayer" id="video" class="w-full" controls></video>
-            </div>
-            <div class="flex gap-4">
-              <label class="text-sm">File size: <span data-video-upload-target="fileSize"></span></label>
-              <label class="text-sm">Duration: <span data-video-upload-target="duration"></span></label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-     <div class="my-8 text-sm flex flex-col" >
-        <%= form.label :duration, class: "text-sm font-medium" %>
-        <%= form.text_field :duration, class: "input-text mt-2 w-60", placeholder: "Duration in minutes" %>
-     </div>
-     <template data-lessons-form-target="nestedRecordTemplate">
-        <%= form.fields_for :local_contents, LocalContent.new, { child_index: "new-index" } do |f| %>
-        <%= render "lessons/fields_for_local_content", builder: f %>
-        <% end %>
-     </template>
-     <div data-lessons-form-target="nestedRecordContainer">
-        <%= form.fields_for :local_contents do |f| %>
-        <%= render "lessons/fields_for_local_content", builder: f %>
-        <% end %>
-     </div>
-     <a href="javascript:void(0);" data-action="click->lessons-form#addRecord" class="link bg-primary-light-50 text-white p-2 flex items-center gap-2 rounded px-4 py-2 w-60">
-     <span class="icon icon-plus-green icon-small"></span>
-     <span class="text-xs text-primary">Add another language</span>
-     </a>
-     <div class="my-8 text-sm flex gap-4 items-center" >
-        <%= link_to "Cancel", course_module_path(@course, @course_module), class: "nav-link" %>
-        <div class="" data-lessons-form-target="uploadButton">
+         </ul>
+       </div>
+       <% end %>
+       <div class="my-8 text-sm" >
+         <%= form.label :title, class: "text-sm font-medium" %>
+         <%= form.text_field :title, class: "input-text mt-2", placeholder: "Title for lesson eg: Wine serving" %>
+       </div>
+       <div class="my-8 text-sm flex flex-col gap-2" >
+         <%= form.label :rich_description, 'Description', class: "text-sm font-medium" %>
+         <%= form.rich_text_area :rich_description, class: "input-text mt-2", placeholder: "A short description about the lesson." %>
+       </div>
+       <div data-controller="video-upload" class="my-8 flex flex-col">
+         <div class="text-sm flex flex-row items-center gap-4 justify-between">
+           <div class="grow">
+             <%= form.label :video_url, class: "text-sm font-medium" %>
+             <%= form.text_field :video_url, class: "input-text mt-2", placeholder: "eg: https://vimeo.com/948577869", data: { video_upload_target: "urlInput" }  %>
+           </div>
+           <p class="pt-6">OR</p>
+           <div class="w-[373px]">
+             <div class="flex justify-between">
+               <%= form.label :video, "Upload Video", class: "text-sm font-medium" %>
+               <label data-video-upload-target="fileLabel" class="text-sm text-[#E0E0E0">No file chosen</label>
+             </div>
+             <div class="relative mt-2">
+               <%= form.file_field :video, accept: 'video/*', class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer", data: { video_upload_target: "fileInput" } %>
+               <div class="file-input bg-white border border-dashed border-primary-light rounded-md p-4 text-center flex items-center justify-center">
+                 <span class="icon icon-upload icon-small"></span>
+                 <span class="file-label text-primary">Choose File</span>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="mt-4 flex flex-col gap-4 hidden" data-video-upload-target="videoUploader">
+           <div class="flex justify-end">
+             <div class="w-[373px] flex gap-3">
+               <button id="" class="flex items-center gap-2 rounded px-2 py-2 border border-primary-light">
+                 <span class="icon icon-upload icon-small"></span>
+                 <span class="text-xs leading-3 text-primary">Upload video</span>
+               </button>
+               <div class="flex items-center gap-3">
+                 <div class="bg-primary-light h-2 w-[198px]">
+                   <div class="bg-primary h-2" style="width: 50%"></div>
+                 </div>
+                 <span class="text-secondary text-xs font-medium">50%</span>
+               </div>
+             </div>
+           </div>
+           <div class="flex items-center justify-center">
+             <div class="w-4/6 flex flex-col gap-4">
+               <div class="border border-line-colour-light rounded p-2">
+                 <video data-video-upload-target="videoPlayer" id="video" class="w-full" controls></video>
+               </div>
+               <div class="flex gap-4">
+                 <label class="text-sm">File size: <span data-video-upload-target="fileSize"></span></label>
+                 <label class="text-sm">Duration: <span data-video-upload-target="duration"></span></label>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       
+       <div class="my-8 text-sm flex flex-col" >
+         <%= form.label :duration, class: "text-sm font-medium" %>
+         <%= form.text_field :duration, class: "input-text mt-2 w-60", placeholder: "Duration in minutes" %>
+       </div>
+       <template data-lessons-form-target="nestedRecordTemplate">
+         <%= form.fields_for :local_contents, LocalContent.new, { child_index: "new-index" } do |f| %>
+           <%= render "lessons/fields_for_local_content", builder: f %>
+         <% end %>
+       </template>
+       <div data-lessons-form-target="nestedRecordContainer">
+         <%= form.fields_for :local_contents do |f| %>
+           <%= render "lessons/fields_for_local_content", builder: f %>
+         <% end %>
+       </div>
+       <a href="javascript:void(0);" data-action="click->lessons-form#addRecord" class="link bg-primary-light-50 text-white p-2 flex items-center gap-2 rounded px-4 py-2 w-60">
+       <span class="icon icon-plus-green icon-small"></span>
+       <span class="text-xs text-primary">Add another language</span>
+       </a>
+       <div class="my-8 text-sm flex gap-4 items-center" >
+         <%= link_to "Cancel", course_module_path(@course, @course_module), class: "nav-link" %>
+         <div data-lessons-form-target="uploadButton">
            <% text = lesson.persisted? ? "Update" : "Create" %>
            <%= form.submit text, class: "btn-default",id: "submit-button", data: { action: "video-upload:stateChange->lessons-form#setButtonState" } %>
-        </div>
-     </div>
+         </div>
+       </div>
      <% end %>
   </div>
 </div>

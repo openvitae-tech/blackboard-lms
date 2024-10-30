@@ -1,6 +1,6 @@
 <%= render "shared/components/desktop_layout" do %>
-  <div class="box">
-    <%= link_to "Back", course_module_path(@course, @course_module), class: "nav-link" %>
-  </div>
-<%= render "form", course: @course, course_module: @course_module, quiz: @quiz %>
+  <%= link_to  course_module_path(@course, @course_module),  class: "nav-link" do %>
+    <%= render 'shared/components/back_button' %>
+  <% end %>
+  <%= render "form", course: @course, course_module: @course_module, quiz: @quiz %>
 <% end %>
