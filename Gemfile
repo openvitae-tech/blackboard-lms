@@ -58,8 +58,8 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'rails-controller-testing'
   gem 'rspec-rails'
-  gem "rubocop", require: false
-  gem "rubocop-rails", require: false
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
 end
 
 group :development do
@@ -80,7 +80,7 @@ group :test do
   gem 'bundler-audit'
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem "webmock"
+  gem 'webmock'
 end
 
 gem 'pundit', '~> 2.3'
@@ -96,19 +96,18 @@ gem 'groupdate'
 gem 'rexml', '>= 3.3.9'
 gem 'webrick', '>= 1.8.2'
 
-gem 'stackprof'
-gem 'sentry-ruby'
 gem 'sentry-rails'
+gem 'sentry-ruby'
+gem 'stackprof'
 
 # Background jobs
-gem "sidekiq"
+gem 'sidekiq'
 
 # For periodic jobs on sidekiq
-gem "sidekiq-cron"
+gem 'sidekiq-cron'
 
 # For seeing failed jobs in sidekiq
-gem "sidekiq-failures"
+gem 'sidekiq-failures'
 
 # adds unique constraints to sidekiq jobs
-gem "sidekiq-unique-jobs"
-
+gem 'sidekiq-unique-jobs'

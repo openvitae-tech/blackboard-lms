@@ -25,7 +25,7 @@ RSpec.describe 'Request spec for feature team' do
     it 'Allows manager to update a team' do
       params = {
         team: {
-          name: Faker::Restaurant.name,
+          name: Faker::Restaurant.name
         }
       }
 

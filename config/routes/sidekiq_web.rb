@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   require 'sidekiq/cron/web'
 
-  def _secure_compare(s1, s2)
-    ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(s1), Digest::SHA256.hexdigest(s2))
+  def _secure_compare(sig1, sig2)
+    ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(sig1), Digest::SHA256.hexdigest(sig2))
   end
 
   if Rails.env.production?

@@ -6,7 +6,7 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { 'password' }
     password_confirmation { 'password' }
-    confirmed_at { Time.now }
+    confirmed_at { Time.zone.now }
     # numbers starting with 11 will be considered as test numbers
     phone { "11#{Faker::Number.number(digits: 8)}" }
 
@@ -30,13 +30,13 @@ FactoryBot.define do
   factory :learning_partner do
     name { Faker::Restaurant.name }
     content { Faker::Restaurant.description }
-    logo { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
-    banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+    logo { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
+    banner { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
   end
 
   factory :team do
     name { Faker::Team.name }
-    banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+    banner { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
 
     association :learning_partner, factory: :learning_partner
   end
@@ -69,7 +69,7 @@ FactoryBot.define do
     rich_description { Faker::Lorem.paragraph }
 
     trait :with_attachment do
-      banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+      banner { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
     end
   end
 end
