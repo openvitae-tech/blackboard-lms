@@ -9,44 +9,45 @@
 
   <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
 
-  <% if !@search_results.nil? %>
+  <% if has_search_results? %>
     <p class="text-base font-medium mb-4">
-      <span class="">No results for search keyword '<%= @keyword %>'</span>
-    </p>
-  <% end %>
-
-  <% if @search_results.present? %>
-    <p class="text-base font-medium mb-4">
-      <span class="">Search results</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@search_results.count, "result") %>)</span>
+      <% if @search_results.blank? %>
+        <span class="">No results for search keyword '<%= @keyword %>'</span>
+      <% else %>
+        <span class="">Search results</span>&nbsp
+        <span class="text-letter-color-light">(<%= pluralize(@search_results.count, 'result') %>)</span>
+      <% end %>
     </p>
 
     <div class="flex flex-wrap gap-4">
       <% @search_results.each do |course| %>
         <%= render "courses/course_card_with_top_image", course: course %>
-      <% end  %>
+      <% end %>
     </div>
   <% end %>
 
-  <% if @enrolled_courses.present? %>
+  <% if has_enrolled_courses? %>
     <p class="text-base font-medium mb-4">
-      <span class="">Enrolled courses</span>&nbsp<span class="text-letter-color-light">(<%= @enrolled_courses.count %> Courses)</span>
+      <span class="">Enrolled courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'enrollment') %>
+      Courses)</span>
     </p>
 
     <div class="flex flex-wrap gap-4">
       <% @enrolled_courses.each do |course| %>
         <%= render "courses/course_card_with_left_image", course: course %>
-      <% end  %>
+      <% end %>
     </div>
-  <% end  %>
+  <% end %>
 
-  <% if @other_courses.present? %>
+  <% if has_available_courses? %>
     <p class="text-base font-medium mb-4">
-      <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= @other_courses.count %> Courses)</span>
+      <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses.count, 'course') %>
+      )</span>
     </p>
     <div class="flex flex-wrap gap-4">
-      <% @other_courses.each do |course| %>
+      <% @available_courses.each do |course| %>
         <%= render "courses/course_card_with_top_image", course: course %>
-      <% end  %>
+      <% end %>
     </div>
-  <% end  %>
+  <% end %>
 <% end %>

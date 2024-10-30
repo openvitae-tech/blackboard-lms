@@ -1,6 +1,6 @@
-<%= link_to course_path(course), class: "inline-block rounded box-shadow-medium hover:border border-line-colour-light" do %>
+<%= link_to course_path(course), class: "inline-block rounded box-shadow-medium border border-line-colour-light" do %>
   <div class="w-full rounded max-h-[363px] md:w-[310px]">
-    <%= image_tag course_banner(course, :horizontal), class: "w-full h-[120px] rounded-t" %>
+    <%= image_tag course_banner(course, :horizontal), class: "w-full h-[120px] rounded-t object-cover" %>
     <div class="p-4">
       <p class="mb-2 overflow-hidden text-ellipsis text-base font-semibold text-primary max-h-[68px]">
         <%= course.title %>

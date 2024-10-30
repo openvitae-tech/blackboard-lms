@@ -31,8 +31,19 @@ en:
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
   course:
+    created: 'Course was successfully created.'
+    updated: 'Course was successfully updated.'
+    deleted: 'Course was deleted successfully.'
+    enrolled: 'Successfully enrolled for the course'
+    duplicate_enrolled: 'Already enrolled in this course'
+    unenrolled: 'Successfully dropped out of the course'
+    not_enrolled: 'You are not enrolled in this course'
     assigned: "You have been assigned with new course %{course} by %{name}"
     drop_warning: "Are you sure want to drop out ? Please note that all your progress will be lost!"
+    published: 'Course is now available to everyone'
+    unpublished: 'Course is unpublished and is not available for new enrollments'
+    duplicate_publish: 'Course is already published.'
+    duplicate_unpublish: 'Course is not published yet.'
   login:
     invalid_or_incorrect_otp: "Incorrect otp or otp expired"
     incorrect_phone: "Incorrect mobile number"

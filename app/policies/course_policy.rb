@@ -8,6 +8,10 @@ class CoursePolicy
     @course = course
   end
 
+  def index?
+    user.present?
+  end
+
   def new?
     user.is_admin?
   end
@@ -17,7 +21,8 @@ class CoursePolicy
   end
 
   def show?
-    user.present?
+    return true if user.is_admin?
+    @course.published? || user.enrolled_for_course?(course)
   end
 
   def update?
@@ -33,22 +38,26 @@ class CoursePolicy
   end
 
   def enroll?
-    user.present? && !user.is_admin? && !user.enrolled_for_course?(course)
+    !user.is_admin? && !user.enrolled_for_course?(course)
   end
 
   def unenroll?
-    user.present? && !user.is_admin? && user.enrolled_for_course?(course)
+    !user.is_admin? && user.enrolled_for_course?(course)
   end
 
   def proceed?
-    user.present? && user.enrolled_for_course?(course)
+    user.enrolled_for_course?(course)
   end
 
   def publish?
-    user.present? && user.is_admin? && !course.published?
+    user.is_admin? && !course.published?
   end
 
   def unpublish?
-    user.present? && user.is_admin? && course.published?
+    user.is_admin? && course.published?
+  end
+
+  def search?
+    user.present?
   end
 end
