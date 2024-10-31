@@ -14,6 +14,7 @@ RSpec.describe 'Request spec for GET /courses/:id' do
       it "Fails when #{role} user tries to access an unpublisehd course" do
         get("/courses/#{subject.id}")
         expect(response.status).to be(302)
+        expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       end
 
       it "Success when #{role} user tries to access an published course" do

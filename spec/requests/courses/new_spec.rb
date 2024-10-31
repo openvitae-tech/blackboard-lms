@@ -11,6 +11,7 @@ RSpec.describe 'Request spec for GET /courses/new' do
       it "Fails when #{role} user tries to create a course" do
         get('/courses/new')
         expect(response.status).to be(302)
+        expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       end
     end
   end

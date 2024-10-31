@@ -19,6 +19,7 @@ RSpec.describe 'Request spec for PUT /course' do
 
         put("/courses/#{subject.id}", params:)
         expect(response.status).to be(302)
+        expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       end
     end
   end

@@ -15,6 +15,7 @@ RSpec.describe 'Request spec for PUT /courses/:id/unpublish' do
       it "Fails when #{role} user tries to unpublish a course" do
         put("/courses/#{subject.id}/unpublish")
         expect(response.status).to be(302)
+        expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
         expect(subject.reload.published?).to be_truthy
       end
     end
@@ -35,6 +36,13 @@ RSpec.describe 'Request spec for PUT /courses/:id/unpublish' do
       expect(response.status).to be(302)
       expect(flash[:notice]).to eq(I18n.t('course.unpublished'))
       expect(subject.reload.published?).to be_falsey
+    end
+
+    it 'Fails when admin unpublishes an already unpublished course' do
+      subject.undo_publish!
+      put("/courses/#{subject.id}/unpublish")
+      expect(response.status).to be(302)
+      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
 end

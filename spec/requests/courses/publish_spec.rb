@@ -14,6 +14,7 @@ RSpec.describe 'Request spec for PUT /courses/:id/publish' do
       it "Fails when #{role} user tries to publish a course" do
         put("/courses/#{subject.id}/publish")
         expect(response.status).to be(302)
+        expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
         expect(subject.reload.published?).to be_falsey
       end
     end
@@ -33,6 +34,13 @@ RSpec.describe 'Request spec for PUT /courses/:id/publish' do
       expect(response.status).to be(302)
       expect(flash[:notice]).to eq(I18n.t('course.published'))
       expect(subject.reload.published?).to be_truthy
+    end
+
+    it 'Fails when admin publishes an already published course' do
+      subject.publish!
+      put("/courses/#{subject.id}/publish")
+      expect(response.status).to be(302)
+      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
 end
