@@ -20,7 +20,7 @@ RSpec.describe 'Request spec for POST /course' do
         expect do
           post('/courses', params:)
         end.to change { Course.count }.by(0)
-
+        expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
         expect(response.status).to be(302)
       end
     end
