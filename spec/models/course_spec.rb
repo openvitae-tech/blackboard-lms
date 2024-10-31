@@ -118,4 +118,57 @@ RSpec.describe Course, type: :model do
       expect(course.last_module.id).to eq(course.course_modules_in_order.last)
     end
   end
+
+  describe '#next_module' do
+    it 'returns nil if there are no further modules' do
+      course = course_with_associations
+      expect(course.next_module(course.last_module)).to be_nil
+    end
+
+    it 'returns next module if there are other modules' do
+      course = course_with_associations(modules_count: 2)
+      expect(course.next_module(course.first_module)).to eq(course.last_module)
+    end
+  end
+
+  describe '#prev_module' do
+    it 'returns nil if there are no previous modules' do
+      course = course_with_associations
+      expect(course.prev_module(course.first_module)).to be_nil
+    end
+
+    it 'returns previous module' do
+      course = course_with_associations(modules_count: 2)
+      expect(course.prev_module(course.last_module)).to eq(course.first_module)
+    end
+  end
+
+  describe '#published?' do
+    it 'returns false if the module is not published' do
+      course = course_with_associations
+      expect(course.published?).to be_falsey
+    end
+
+    it 'returns true if the module is not published' do
+      course = course_with_associations
+      course.update(is_published: true)
+      expect(course.published?).to be_truthy
+    end
+  end
+
+  describe '#publish!' do
+    it 'marks the course as published' do
+      course = course_with_associations
+      course.publish!
+      expect(course.published?).to be_truthy
+    end
+  end
+
+  describe '#undo_publish!' do
+    it 'marks the course as unpublished' do
+      course = course_with_associations
+      course.undo_publish!
+      expect(course.published?).to be_falsey
+    end
+  end
 end
