@@ -71,11 +71,21 @@ FactoryBot.define do
     trait :with_attachment do
       banner { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
     end
+
+    trait :published do
+      is_published { true }
+    end
+
+    trait :unpublished do
+      is_published { false }
+    end
   end
 end
 
-def course_with_associations(modules_count: 1, lessons_count: 1, quizzes_count: 1, duration: 60)
-  FactoryBot.create(:course) do |course|
+def course_with_associations(modules_count: 1, lessons_count: 1, quizzes_count: 1, duration: 60, published: false)
+  course_trait = published ? :published : :unpublished
+
+  FactoryBot.create(:course, course_trait) do |course|
     module_ids = []
     FactoryBot.create_list(:course_module, modules_count, course:) do |course_module|
       lesson_ids = []
