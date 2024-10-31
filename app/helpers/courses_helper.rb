@@ -78,7 +78,7 @@ module CoursesHelper
 
   def duration_in_words(duration)
     if duration > 60
-      in_hours = duration.in_hours
+      in_hours = duration / 60
       in_minutes = duration - (in_hours * 60)
       "#{in_hours} hr #{in_minutes} min"
     else
