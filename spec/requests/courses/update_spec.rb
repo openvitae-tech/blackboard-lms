@@ -6,10 +6,9 @@ RSpec.describe 'Request spec for PUT /course' do
       before(:each) do
         user = create :user, role
         sign_in user
-        @course = course_with_associations
       end
 
-      subject { @course }
+      subject { course_with_associations }
 
       it "Fails when #{role} user tries to update a course" do
         params = {
