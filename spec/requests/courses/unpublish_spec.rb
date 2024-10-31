@@ -33,6 +33,7 @@ RSpec.describe 'Request spec for PUT /courses/:id/unpublish' do
     it 'Success when admin unpublish a course' do
       put("/courses/#{subject.id}/unpublish")
       expect(response.status).to be(302)
+      expect(flash[:notice]).to eq(I18n.t('course.unpublished'))
       expect(subject.reload.published?).to be_falsey
     end
   end
