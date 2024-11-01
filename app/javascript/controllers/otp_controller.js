@@ -16,6 +16,7 @@ export default class extends Controller {
     input.addEventListener("input", this.handleInputOrKeyDown.bind(this));
     input.addEventListener("keydown", this.handleInputOrKeyDown.bind(this));
   }
+
   handleInputOrKeyDown(event) {
     const input = event.target;
 
@@ -27,16 +28,32 @@ export default class extends Controller {
       this.updateHiddenOtp();
     }
 
-    if (event.type === "keydown" && event.key === "Backspace") {
-      if (input.value === "") {
+    if (event.type === "keydown") {
+      if (event.key === "Backspace") {
+        if (input.value === "") {
+          const previousInput = this.previousInput(input);
+          if (previousInput) {
+            previousInput.focus();
+            this.updateHiddenOtp();
+          }
+        } else {
+          input.value = "";
+          this.updateHiddenOtp();
+        }
+      }
+
+      if (event.key === "ArrowLeft") {
         const previousInput = this.previousInput(input);
         if (previousInput) {
           previousInput.focus();
-          this.updateHiddenOtp();
         }
-      } else {
-        input.value = "";
-        this.updateHiddenOtp();
+      }
+
+      if (event.key === "ArrowRight") {
+        const nextInput = this.nextInput(input);
+        if (nextInput) {
+          nextInput.focus();
+        }
       }
     }
 
