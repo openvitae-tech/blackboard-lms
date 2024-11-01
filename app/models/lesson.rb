@@ -3,6 +3,8 @@
 class Lesson < ApplicationRecord
   belongs_to :course_module, counter_cache: true
 
+  validates :title, presence: true
+
   has_many :local_contents, dependent: :destroy
 
   has_rich_text :rich_description

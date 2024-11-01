@@ -19,7 +19,7 @@ class UploadVideoToVimeoService
     vimeo_link = response_data['link']
 
     upload_to_vimeo(upload_url)
-    file.blob.update!(metadata: file.blob.metadata.merge(url: vimeo_link))
+    file.update!(metadata: file.metadata.merge(url: vimeo_link))
   end
 
   private

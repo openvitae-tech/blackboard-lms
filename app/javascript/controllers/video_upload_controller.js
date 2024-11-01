@@ -13,7 +13,8 @@ export default class extends Controller {
     "progressBar",
     "progressText",
     "hiddenBlobId",
-    "hideCancelUploadButton"
+    "hideCancelUploadButton",
+    "durationField"
   ];
 
   connect() {
@@ -51,6 +52,7 @@ export default class extends Controller {
     videoElement.addEventListener("loadedmetadata", () => {
       const duration = videoElement.duration;
       this.durationTarget.textContent = this.formatTime(duration);
+      this.durationFieldTarget.value = duration;
     });
   }
 

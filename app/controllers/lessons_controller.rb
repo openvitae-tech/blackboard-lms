@@ -11,7 +11,7 @@ class LessonsController < ApplicationController
     authorize @lesson
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @course_modules = helpers.modules_in_order(@course)
-    @video_iframe = get_video_iframe(@video)
+    @video_iframe = get_video_iframe
   end
 
   # GET /lessons/new
@@ -152,8 +152,8 @@ class LessonsController < ApplicationController
                                    local_contents_attributes: %i[id blob_id lang _destroy])
   end
 
-  def get_video_iframe(video)
-    video_url = video.blob.metadata['url']
+  def get_video_iframe
+    video_url = @video.blob.metadata['url']
 
     return unless video_url.present?
 

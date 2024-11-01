@@ -16,6 +16,7 @@
           <%= builder.label :video, "Upload Video", class: "text-sm font-medium" %>
           <label data-video-upload-target="fileLabel" class="text-sm text-[#E0E0E0">No file chosen</label>
           <%= builder.hidden_field :blob_id, data: { video_upload_target: "hiddenBlobId" }%>
+          <input name="lesson[duration]" type="hidden" data-video-upload-target="durationField"/>
         </div>
         <div class="relative mt-2">
           <%= builder.file_field :video, accept: 'video/*', class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer", data: { video_upload_target: "fileInput" } %>
