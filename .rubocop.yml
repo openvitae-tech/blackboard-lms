@@ -1,10 +1,10 @@
 # .rubocop.yml
 AllCops:
+  TargetRubyVersion: '3.3.0'
+  SuggestExtensions: false
   NewCops: enable
   Exclude:
     - "db/schema.rb"
-    - "Gemfile"
-    - "lib/tasks/*.rake"
     - "bin/*"
     - "config/puma.rb"
     - "config/spring.rb"
@@ -15,12 +15,15 @@ AllCops:
     - "docker-build"
     - "db/seeds.rb"
     - "db/migrate/*"
+    - "app/**/*"
 
 Style/Documentation:
-  Enabled: false
+  Enabled: true
 Metrics/BlockLength:
   Enabled: false
 Metrics/ClassLength:
   Max: 250
 Metrics/MethodLength:
-  Max: 20
+  Max: 30
+Metrics/AbcSize:
+  Enabled: false

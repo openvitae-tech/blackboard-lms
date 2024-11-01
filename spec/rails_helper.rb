@@ -7,6 +7,7 @@ require_relative 'support/chrome'
 require_relative 'support/helpers'
 require 'webmock/rspec'
 require 'stubs/msg91_stubs'
+require 'sidekiq/testing'
 
 ENV['RAILS_ENV'] = 'test'
 

@@ -1,22 +1,27 @@
 <%= render "shared/components/desktop_layout" do %>
-  <div class="flex gap-4 justify-end">
+  <div class="flex justify-end gap-4">
     <% if policy(@course).publish? %>
-      <%= link_to "Publish", publish_course_path(@course), data: { turbo_method: "put" }, class: "nav-link" %>
+      <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
+        <%= render 'shared/components/outline_button_secondary', label: 'Publish' %>
+      <% end %>
     <% end %>
     <% if policy(@course).unpublish? %>
-      <%= link_to "Unpublish", unpublish_course_path(@course), data: { turbo_method: "put" }, class: "nav-link" %>
-    <% end %>
-    <% if policy(@course).edit? %>
-      <%= link_to "Edit", edit_course_path(@course), class: "nav-link" %>
+      <%= link_to unpublish_course_path(@course), data: { turbo_method: "put" } do %>
+        <%= render 'shared/components/outline_button_secondary', label: 'Unpublish' %>
+      <% end %>
     <% end %>
     <% if policy(:course_module).new? %>
-      <%= link_to "Add module", new_course_module_path(@course), class: "nav-link" %>
+      <%= link_to new_course_module_path(@course) do %>
+        <%= render 'shared/components/icon_button_primary', label: 'Add module', icon_name: 'icon-plus-white' %>
+      <% end %>
     <% end %>
   </div>
+
   <%= render "shared/components/bread_crumbs", links: [@course.title] %>
-  <div class="box-shadow-medium flex flex-col rounded">
-    <%= render "shared/components/course_description_card", course: @course %>
+
+  <div class="flex flex-col rounded box-shadow-medium">
+    <%= render "courses/course_description_card", course: @course %>
     <br/>
-    <%= render "shared/components/course_lessons", course: @course, enrollment: @enrollment %>
+    <%= render "courses/course_lessons", course: @course, enrollment: @enrollment %>
   </div>
 <% end %>

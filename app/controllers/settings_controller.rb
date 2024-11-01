@@ -2,52 +2,37 @@
 
 class SettingsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_user
   before_action :set_learning_partner
+
   def show
     authorize :settings
   end
   def edit
     authorize :settings
-    @user = current_user
   end
 
   def update
     authorize :settings
-    current_user.update(profile_params)
+    @user.update(profile_params)
 
-    if current_user.update(profile_params)
-      redirect_to settings_path
+    if @user.update(profile_params)
+      flash.now[:success] = I18n.t('settings.updated')
     else
-      @user = current_user
       render :edit
     end
   end
 
   def change_password
     authorize :settings
-    @user = current_user
   end
   def update_password
     authorize :settings
 
-    if current_user.update(password_params)
-      redirect_to settings_path
+    if @user.update(password_params)
+      redirect_to new_user_session_path, notice: I18n.t('settings.password_updated')
     else
-      @user = current_user
       render 'change_password'
-    end
-  end
-
-  def team
-    authorize :settings
-
-    @learning_partner = current_user.learning_partner
-
-    if current_user.is_admin?
-      @members = User.where(role: 'admin')
-    else
-      @members = @learning_partner.users
-      @teams = Team.all
     end
   end
 
@@ -62,10 +47,14 @@ class SettingsController < ApplicationController
   end
 
   def set_learning_partner
-    @learning_partner = if current_user.is_admin?
+    @learning_partner = if @user.is_admin?
                           nil
                         else
-                          current_user.learning_partner
+                          @user.learning_partner
                         end
+  end
+
+  def set_user
+    @user = current_user
   end
 end

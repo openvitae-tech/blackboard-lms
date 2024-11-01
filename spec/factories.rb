@@ -6,7 +6,7 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { 'password' }
     password_confirmation { 'password' }
-    confirmed_at { Time.now }
+    confirmed_at { Time.zone.now }
     # numbers starting with 11 will be considered as test numbers
     phone { "11#{Faker::Number.number(digits: 8)}" }
 
@@ -30,13 +30,13 @@ FactoryBot.define do
   factory :learning_partner do
     name { Faker::Restaurant.name }
     content { Faker::Restaurant.description }
-    logo { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
-    banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+    logo { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
+    banner { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
   end
 
   factory :team do
     name { Faker::Team.name }
-    banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+    banner { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
 
     association :learning_partner, factory: :learning_partner
   end
@@ -65,17 +65,27 @@ FactoryBot.define do
   end
 
   factory :course do
-    title { Faker::Movie.title }
-    rich_description { Faker::Lorem.paragraph }
+    title { Faker::Lorem.sentence(word_count: 6) }
+    description { Faker::Lorem.paragraph_by_chars(number: 140) }
 
     trait :with_attachment do
-      banner { Rack::Test::UploadedFile.new("#{Rails.root}/spec/files/less_than_1_mb.jpg") }
+      banner { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
+    end
+
+    trait :published do
+      is_published { true }
+    end
+
+    trait :unpublished do
+      is_published { false }
     end
   end
 end
 
-def course_with_associations(modules_count: 1, lessons_count: 1, quizzes_count: 1, duration: 60)
-  FactoryBot.create(:course) do |course|
+def course_with_associations(modules_count: 1, lessons_count: 1, quizzes_count: 1, duration: 60, published: false)
+  course_trait = published ? :published : :unpublished
+
+  FactoryBot.create(:course, course_trait) do |course|
     module_ids = []
     FactoryBot.create_list(:course_module, modules_count, course:) do |course_module|
       lesson_ids = []

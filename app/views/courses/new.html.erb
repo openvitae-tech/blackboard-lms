@@ -1,9 +1,9 @@
 <%= render "shared/components/desktop_layout" do %>
+  <%= link_to courses_path, class: "nav-link" do %>
+    <%= render 'shared/components/back_button' %>
+  <% end %>
   <div class="box">
-    <%= link_to "Back", courses_path, class: "nav-link" %>
-  </div>
-  <div class="box">
-    <h1 class="font-semibold text-xl">Create course</h1>
+    <h1 class="page-heading-medium">Create course</h1>
   </div>
   <%= render "form", course: @course %>
 <% end %>

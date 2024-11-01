@@ -132,6 +132,8 @@ GEM
     diff-lcs (1.5.1)
     drb (2.2.1)
     erubi (1.13.0)
+    et-orbi (1.2.11)
+      tzinfo
     factory_bot (6.5.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
@@ -141,6 +143,9 @@ GEM
       i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
     formatador (1.1.0)
+    fugit (1.11.1)
+      et-orbi (~> 1, >= 1.2.11)
+      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     groupdate (6.4.0)
@@ -257,6 +262,7 @@ GEM
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
+    raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.8)
     rack-session (2.0.0)
@@ -306,13 +312,15 @@ GEM
       ffi (~> 1.0)
     rdoc (6.7.0)
       psych (>= 4.0.0)
+    redis-client (0.22.2)
+      connection_pool
     regexp_parser (2.9.0)
     reline (0.5.10)
       io-console (~> 0.5)
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.7)
+    rexml (3.3.9)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -346,6 +354,11 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.32.3)
       parser (>= 3.3.1.0)
+    rubocop-rails (2.27.0)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 1.52.0, < 2.0)
+      rubocop-ast (>= 1.31.1, < 2.0)
     ruby-progressbar (1.13.0)
     ruby-vips (2.2.1)
       ffi (~> 1.12)
@@ -363,6 +376,21 @@ GEM
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shellany (0.0.1)
+    sidekiq (7.3.4)
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
+    sidekiq-cron (1.12.0)
+      fugit (~> 1.8)
+      globalid (>= 1.0.1)
+      sidekiq (>= 6)
+    sidekiq-failures (1.0.4)
+      sidekiq (>= 4.0.0)
+    sidekiq-unique-jobs (8.0.10)
+      concurrent-ruby (~> 1.0, >= 1.0.5)
+      sidekiq (>= 7.0.0, < 8.0.0)
+      thor (>= 1.0, < 3.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -447,12 +475,17 @@ DEPENDENCIES
   pundit (~> 2.3)
   rails (= 7.2.1.1)
   rails-controller-testing
-  rexml (>= 3.3.3)
+  rexml (>= 3.3.9)
   rspec-rails
   rubocop
+  rubocop-rails
   selenium-webdriver
   sentry-rails
   sentry-ruby
+  sidekiq
+  sidekiq-cron
+  sidekiq-failures
+  sidekiq-unique-jobs
   sprockets-rails
   stackprof
   stimulus-rails

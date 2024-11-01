@@ -20,7 +20,7 @@ class InvitePolicy < ApplicationPolicy
   def create?
     return true if user.is_admin?
 
-    return record.team_hierarchy.include?(user.team) if user.is_manager? || user.is_owner?
+    return record.ancestors.include?(user.team) if user.is_manager? || user.is_owner?
 
     false
   end

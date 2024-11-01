@@ -1,30 +1,37 @@
 # frozen_string_literal: true
 
 module CoursesHelper
-  def course_banner(course)
-    return course.banner if course && course.banner.present?
-
-    'course.jpeg'
+  def has_search_results?
+    defined?(@search_results)
   end
 
-  def course_banner_thumbnail(course)
-    return course.banner if course&.banner&.variant(resize_to_limit: [nil, 200])
-
-    'course_thumbnail.jpeg'
+  def has_enrolled_courses?
+    defined?(@enrolled_courses) && @enrolled_courses.present?
   end
 
-  def course_banner_thumbnail_vertical(course)
-    return course.banner if course&.banner&.variant(resize_to_limit: [140, nil])
+  def has_available_courses?
+    defined?(@available_courses) && @available_courses.present?
+  end
 
-    'course_thumbnail.jpeg'
+  # @param version [Symbol] Values are :vertical or :horizontal
+  def course_banner(course, version)
+    variant =
+      if version == :vertical
+        course&.banner&.variant(resize_to_limit: [140, nil])
+      elsif version == :horizontal
+        course&.banner&.variant(resize_to_limit: [nil, 200])
+      else
+        course.banner
+      end
+
+    variant || STATIC_ASSETS[:placeholders][:course_banner]
   end
 
   def course_description(course, limit = nil)
-    if limit.present?
-      sanitize course.rich_description&.to_plain_text[0..limit]
-    else
-      course.rich_description
-    end
+    return "" if course.description.blank?
+
+    text = limit.present? ? course.description[0..limit] : course.description
+    sanitize text
   end
 
   def next_lesson_path(course, course_module, current_lesson)
@@ -71,7 +78,7 @@ module CoursesHelper
 
   def duration_in_words(duration)
     if duration > 60
-      in_hours = duration.in_hours
+      in_hours = duration / 60
       in_minutes = duration - (in_hours * 60)
       "#{in_hours} hr #{in_minutes} min"
     else

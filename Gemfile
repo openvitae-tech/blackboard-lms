@@ -49,6 +49,8 @@ gem 'image_processing', '~> 1.2'
 gem 'devise', '~> 4.9.2'
 
 # gem 'vimeo_me2', :git => "https://github.com/bo-oz/vimeo_me2.git"
+gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -77,9 +79,8 @@ group :test do
   gem 'brakeman'
   gem 'bundler-audit'
   gem 'capybara'
-  gem 'rubocop'
   gem 'selenium-webdriver'
-  gem "webmock"
+  gem 'webmock'
 end
 
 gem 'pundit', '~> 2.3'
@@ -92,9 +93,21 @@ gem 'aws-sdk-s3', require: false
 gem 'chartkick'
 gem 'groupdate'
 
-gem 'rexml', '>= 3.3.3'
+gem 'rexml', '>= 3.3.9'
 gem 'webrick', '>= 1.8.2'
 
-gem 'stackprof'
-gem 'sentry-ruby'
 gem 'sentry-rails'
+gem 'sentry-ruby'
+gem 'stackprof'
+
+# Background jobs
+gem 'sidekiq'
+
+# For periodic jobs on sidekiq
+gem 'sidekiq-cron'
+
+# For seeing failed jobs in sidekiq
+gem 'sidekiq-failures'
+
+# adds unique constraints to sidekiq jobs
+gem 'sidekiq-unique-jobs'

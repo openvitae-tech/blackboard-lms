@@ -2,7 +2,7 @@
   <h1 class="mb-4 pl-0 text-xl font-bold">Dashboard</h1>
   <div class="">
     <ol class="flex items-center space-x-2 text-secondary text-xs">
-      <% team_list(@user.team).each do |team| %>
+      <% team_list(current_user.team, @user.team).each do |team| %>
         <li class="flex space-x-1">
           <%= link_to team.name, team_path(team) %>
           <span class="icon icon-simple-arrow-right icon-small"></span>

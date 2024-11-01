@@ -1,0 +1,13 @@
+<div class="flex justify-between items-center p-4 border border-line-colour-light rounded-lg box-shadow-small">
+  <div class="flex items-center space-x-8">
+    <% if team.banner.present? %>
+      <%= image_tag team.banner,  alt: "Image", class: "h-4 w-20 object-cover" %>
+    <% end %>
+    <span class="text-basic font-medium"><%= team.name %></span>
+  </div>
+  <div>
+    <%= link_to team_path(team) do %>
+      <span class="icon icon-simple-arrow-right icon-small"></span>
+    <% end %>
+  </div>
+</div>

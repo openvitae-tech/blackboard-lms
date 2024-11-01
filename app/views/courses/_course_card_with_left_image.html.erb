@@ -1,14 +1,15 @@
 <%= link_to course_path(course), class: "inline-block" do %>
-  <div class="rounded w-[472px] h-[252px] box-shadow-medium flex hover:border border-line-colour-light hover:cursor-pointer">
-    <%= image_tag course_banner_thumbnail_vertical(course), class: "h-full w-[140px] rounded-l object-cover" %>
+  <div class="flex rounded w-[472px] h-[252px] box-shadow-medium border-line-colour-light hover:cursor-pointer hover:border">
+    <%= image_tag course_banner(course, :vertical), class: "h-full w-[140px] rounded-l object-cover" %>
     <div class="p-4">
       <p class="mb-2 overflow-hidden text-ellipsis text-base font-semibold text-primary max-h-[68px]">
         <%= course.title %>
       </p>
-      <div class="flex gap-4 items-center py-2">
-        <div class="grow h-1 bg-line-colour-light">
-          <div class="bg-primary h-1" style="width: 16%"></div>
-        </div><span class="text-primary font-bold text-sm">16%</span>
+      <div class="flex items-center gap-4 py-2">
+        <div class="h-1 grow bg-line-colour-light">
+          <div class="h-1 bg-primary" style="width: 16%"></div>
+        </div>
+        <span class="text-sm font-bold text-primary">16%</span>
       </div>
       <div class="flex justify-between">
         <div class="flex items-center">
@@ -24,7 +25,8 @@
           <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
         </div>
       </div>
-      <p class="mt-4 overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">Course Description</p>
+      <p class="mt-4 overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">Course
+        Description</p>
       <p class="my-3 overflow-hidden text-ellipsis text-justify text-sm tracking-tight text-letter-color-light max-h-[60px]">
         <%= course_description(course, 250) %>
       </p>

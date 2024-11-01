@@ -8,9 +8,9 @@ class Course < ApplicationRecord
   has_many :users, through: :enrollments
 
   has_one_attached :banner
+  validates :title, presence: true, length: { minimum: 6, maximum: 255 }
+  validates :description, presence: true, length: { minimum: 140, maximum: 1024 }
   validate :acceptable_banner
-
-  has_rich_text :rich_description
 
   scope :published, -> { where(is_published: true) }
 

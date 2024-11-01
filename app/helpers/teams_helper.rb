@@ -8,17 +8,25 @@ module TeamsHelper
     end
   end
 
-  def team_list(team)
-    return @team_list if @team_list.present?
+  def team_list(root_team, team)
+    return [] if team.nil?
 
-    @team_list = []
+    return [team] if team.parent_team.nil? || root_team.id == team.id
 
-    while team && team.parent_team != current_user.team
-      @team_list.push(team)
+    team_list = []
+
+    while team
+      team_list.push(team)
+
+      if team.parent_team&.id == root_team.id
+        team_list.push(team.parent_team)
+        break
+      end
+
       team = team.parent_team
     end
 
-    @team_list
+    team_list.reverse
   end
 
   def save_button_label_for(team)
@@ -27,5 +35,10 @@ module TeamsHelper
 
   def model_title_label_for(team)
     team.persisted? ? 'Update team' : 'Create team'
+  end
+
+  def team_banner(user)
+    asset = user.is_admin? ? nil : user.team.banner
+    asset || STATIC_ASSETS[:placeholders][:team_banner]
   end
 end

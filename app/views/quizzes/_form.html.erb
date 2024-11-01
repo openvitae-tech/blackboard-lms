@@ -4,7 +4,6 @@
       <% if quiz.errors.any? %>
         <div style="color: red">
           <h2><%= pluralize(quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
-
           <ul>
             <% quiz.errors.each do |error| %>
               <li><%= error.full_message %></li>
@@ -12,40 +11,51 @@
           </ul>
         </div>
       <% end %>
-
+      <div>
+        <h1 class="page-heading-medium">Create New Quiz</h1>
+      </div>
       <div class="my-8 text-sm">
         <%= form.label :question, class: "text-sm font-medium" %>
-        <%= form.text_field :question, class: "input-text mt-2" %>
+        <%= form.text_area :question, class: "input-text mt-2 resize-none h-20", rows: 2, placeholder: "Enter your question here..." %>
       </div>
-
       <div class="my-8 text-sm">
         <%= form.label :option_a, class: "text-sm font-medium" %>
-        <%= form.text_field :option_a, class: "input-text mt-2" %>
+        <div class="relative">
+          <%= form.text_field :option_a, class: "input-text mt-2 pr-10" %>
+          <%= form.radio_button :correct_option, "A", class: "radio-check-button" %>
+        </div>
       </div>
-
       <div class="my-8 text-sm">
         <%= form.label :option_b, class: "text-sm font-medium" %>
-        <%= form.text_field :option_b, class: "input-text mt-2" %>
+        <div class="relative">
+          <%= form.text_field :option_b, class: "input-text mt-2 pr-10" %>
+          <%= form.radio_button :correct_option, "B", class: "radio-check-button" %>
+        </div>
       </div>
-
       <div class="my-8 text-sm">
         <%= form.label :option_c, class: "text-sm font-medium" %>
-        <%= form.text_field :option_c, class: "input-text mt-2" %>
+        <div class="relative">
+          <%= form.text_field :option_c, class: "input-text mt-2 pr-10" %>
+          <%= form.radio_button :correct_option, "C", class: "radio-check-button" %>
+        </div>
       </div>
-
       <div class="my-8 text-sm">
         <%= form.label :option_d, class: "text-sm font-medium" %>
-        <%= form.text_field :option_d, class: "input-text mt-2"%>
+        <div class="relative">
+          <%= form.text_field :option_d, class: "input-text mt-2 pr-10" %>
+          <%= form.radio_button :correct_option, "D", class: "radio-check-button" %>
+        </div>
       </div>
-
-      <div class="my-8 text-sm">
-        <%= form.label :answer, class: "text-sm font-medium" %>
-        <%= form.text_field :answer, class: "input-text mt-2" %>
-      </div>
-
-      <div class="my-8 text-sm">
-        <% text = quiz.persisted? ? "Update" : "Create" %>
-        <%= form.submit text, class: "btn-default" %>
+      <div class="my-8 text-sm  flex gap-6 items-center">
+        <div class="my-8">
+          <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
+        </div>
+        <div>
+          <% text = quiz.persisted? ? "Update" : "Create" %>
+          <%= form.submit text, class: "btn-primary" do %>
+            <span><%= text %></span>
+          <% end %>
+        </div>
       </div>
     <% end %>
   </div>
