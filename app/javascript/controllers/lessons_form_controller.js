@@ -4,8 +4,9 @@ export default class extends Controller {
   static targets = [
     "nestedRecordContainer",
     "nestedRecordTemplate",
-    "uploadButton",
-  ];
+    "uploadButton"
+    ];
+
   initialize() {
     this.videoFieldCount = 1;
   }
@@ -17,26 +18,16 @@ export default class extends Controller {
 
       this.setButtonState(event.detail.isActive);
     });
+    this.addRecord();
+    this.shouldShowRemoveButton();
   }
 
-  addRecord(event) {
+  addRecord() {
     const newNode = this.nestedRecordTemplate.content.cloneNode(true);
     this.replaceNewIndex(newNode);
     this.nestedRecordContainer.appendChild(newNode);
     this.videoFieldCount++;
     this.resetButtonState();
-  }
-
-  removeRecord(event) {
-    const parent = event.target.parentElement.parentElement.parentElement;
-    const fileInput = parent.querySelector("input[type='file']");
-    parent.querySelector("input[type='hidden']").value = true;
-    parent.classList.add("hidden");
-    if (fileInput) {
-      fileInput.value = "";
-      this.videoFieldCount--;
-    }
-    this.setButtonState(true);
   }
 
   replaceNewIndex(obj) {
@@ -74,5 +65,15 @@ export default class extends Controller {
     } else {
       this.resetButtonState();
     }
+  }
+
+  removeRecord(event) {
+    event.preventDefault();
+
+    const languageSection = event.target.closest(".field-group");
+    languageSection.querySelector('[name*="_destroy"]').value = "1";
+    languageSection.style.display = "none";
+
+    this.videoFieldCount--;
   }
 }

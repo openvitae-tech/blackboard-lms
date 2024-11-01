@@ -1,25 +1,37 @@
 # frozen_string_literal: true
 
 class LocalContent < ApplicationRecord
-  DEFAULT_LANGUAGE = 'english'
+  attr_accessor :blob_id
 
   SUPPORTED_LANGUAGES = {
+    english: 'English',
     hindi: 'Hindi',
     tamil: 'Tamil',
     marathi: 'Marathi',
     bengali: 'Bengali',
     kannada: 'Kannada',
-    malayalam: 'Malayalam',
-    english: 'English'
+    malayalam: 'Malayalam'
   }.freeze
+
+  DEFAULT_LANGUAGE = SUPPORTED_LANGUAGES[:english]
 
   belongs_to :lesson
 
+  has_one_attached :video
 
-  # Example code for choosing video service specifically in this model
-  # has_one_attached :file
-  # # Override the service for video files
-  # def file_attachment
-  #   file.service_name = :s3_video_store
-  # end
+  before_create :attach_blob_to_video
+
+  validates :lang, presence: true
+  validate :presence_of_blob_id
+
+  private
+
+  def presence_of_blob_id
+    errors.add(:base, I18n.t('local_content.video_not_found', lang:)) if blob_id.empty?
+  end
+
+  def attach_blob_to_video
+    blob = ActiveStorage::Blob.find(blob_id)
+    video.attach(blob)
+  end
 end

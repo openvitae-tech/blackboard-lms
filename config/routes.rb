@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   resources :teams
 
+  resources :direct_uploads, only: :create
+
   resources :invites, only: %i[new create] do
     member do
       put :resend
@@ -16,7 +18,7 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index]
 
-  resources :course_assigns, param: :user_id, only: [:new, :create]
+  resources :course_assigns, param: :user_id, only: %i[new create]
 
   resource :settings, only: %i[show edit update] do
     collection do

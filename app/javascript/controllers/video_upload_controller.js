@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { DirectUpload } from "@rails/activestorage"
 
 export default class extends Controller {
   static targets = [
@@ -9,6 +10,10 @@ export default class extends Controller {
     "videoPlayer",
     "fileSize",
     "duration",
+    "progressBar",
+    "progressText",
+    "hiddenBlobId",
+    "hideCancelUploadButton"
   ];
 
   connect() {
@@ -26,6 +31,8 @@ export default class extends Controller {
       this.fileSizeTarget.textContent = this.formatBytes(file.size);
       this.loadVideo(file);
     }
+
+    this.uploadFile(file)
     this.checkActiveState();
   }
 
@@ -70,5 +77,55 @@ export default class extends Controller {
     });
 
     this.element.dispatchEvent(event);
+  }
+
+  toggleCancelUploadButtons(hidden) {
+    this.hideCancelUploadButtonTargets.forEach(item => {
+      item.hidden = hidden;
+    });
+  }
+
+  uploadFile(file) {
+    this.toggleCancelUploadButtons(false);
+
+    const upload = new DirectUpload(file, '/direct_uploads?service=video', this);
+
+    upload.create((error,blob) => {
+      if (error) {
+        console.error({error});
+      } else {
+        this.hiddenBlobIdTarget.value = blob.id;
+        this.toggleCancelUploadButtons(true);
+      }
+    });
+  }
+
+  directUploadWillStoreFileWithXHR(request) {
+    this.currentXHR = request;
+
+    request.upload.addEventListener("progress", (event) => this.directUploadDidProgress(event));
+  }
+
+  directUploadDidProgress(event) {
+    const progress = (event.loaded / event.total) * 100;
+    this.progressBarTarget.style.width = `${progress}%`;
+    this.progressTextTarget.textContent = `${Math.round(progress)}%`;
+  }
+
+  abortUpload(event) {
+    event.preventDefault();
+
+    if (this.currentXHR) {
+      this.currentXHR.abort();
+      this.currentXHR = null;
+      this.resetUploader();
+    }
+  }
+
+  resetUploader() {
+    this.videoUploaderTarget.classList.add('hidden');
+    this.fileLabelTarget.textContent = 'No file chosen';
+    this.hiddenBlobIdTarget.value = '';
+    this.fileInputTarget.value = '';
   }
 }

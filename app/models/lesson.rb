@@ -2,6 +2,7 @@
 
 class Lesson < ApplicationRecord
   belongs_to :course_module, counter_cache: true
+
   has_many :local_contents, dependent: :destroy
 
   has_rich_text :rich_description
@@ -17,14 +18,6 @@ class Lesson < ApplicationRecord
       @temp_progress
     else
       0
-    end
-  end
-
-  def video_url_for_lang(lang)
-    if lang.blank? || lang == LocalContent::DEFAULT_LANGUAGE
-      video_url
-    else
-      local_contents.where(lang: lang).first&.video_url || ''
     end
   end
 end

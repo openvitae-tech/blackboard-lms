@@ -1,12 +1,13 @@
 <div class="basis-3/5">
   <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
-    <% if @video_iframe.blank? %>
-      <div class="w-full inline-block text-center">Sorry! video is not available</div>
-    <% else %>
+    <% if Rails.env.production? && @video.attached? %>
       <%= @video_iframe.html_safe %>
+    <% elsif @video.attached? %>
+      <%= video_tag rails_blob_path(@video), controls: true %>
+    <% else %>
+      <div class="w-full inline-block text-center">Sorry! video is not available</div>
     <% end %>
   </div>
-
   <% if supported_languages(lesson).length > 1 %>
     <div class="flex justify-end">
       <details class="p-4">
@@ -47,7 +48,6 @@
           <span class="text-primary text-xs">Previous</span>
         <% end %>
       <% end %>
-
       <% next_link = next_lesson_path(course, course_module, lesson) %>
       <%  if next_link.blank? %>
         <%= link_to "javascript:void(0);", class: "border-primary rounded border px-4 py-2 btn-disabled" do %>
@@ -59,7 +59,6 @@
         <% end %>
       <% end %>
     <% end %>
-
     <% if policy(lesson).complete? %>
       <%= link_to complete_course_module_lesson_path(course, course_module, lesson), params: { time_spent: 0 }, class: "bg-primary flex items-center gap-2 rounded px-4 py-2", data: { action: "click->lessons#completeLesson", turbo_method: :post } do %>
         <span class="text-xs text-white">Complete & Continue</span>
