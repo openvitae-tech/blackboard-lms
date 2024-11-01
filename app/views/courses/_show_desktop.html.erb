@@ -1,5 +1,10 @@
 <%= render "shared/components/desktop_layout" do %>
   <div class="flex justify-end gap-4">
+    <% if policy(@course).destroy? %>
+      <%= link_to course_path(@course), data: { turbo_method: "delete" } do %>
+        <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
+      <% end %>
+    <% end %>
     <% if policy(@course).publish? %>
       <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
         <%= render 'shared/components/outline_button_secondary', label: 'Publish' %>

@@ -72,4 +72,8 @@ class Course < ApplicationRecord
 
     @progress ||= (course_modules.map(&:progress).reduce(&:+) / course_modules.count).round
   end
+
+  def has_enrollments?
+    enrollments_count > 0
+  end
 end
