@@ -6,7 +6,7 @@
         <%= image_tag "login_page_logo_grey.png", alt: "Superskill", class: "mx-auto mb-12 h-10" %>
         <div class="rounded-lg p-8 box-shadow-large">
           <h1 class="my-8 page-heading">OTP</h1>
-          <%= form_with url: logins_path, scope: :login, method: :post, data: { controller: "otp", action: "input->otp#handleOtp" } do |form| %>
+          <%= form_with url: logins_path, scope: :login, method: :post, data: { controller: "otp", action: "input->otp#updateHiddenOtp" } do |form| %>
             <div class="flex flex-col gap-8">
               <div class="input-group">
                 <label for="" class="label-text">Please enter the verification code sent to</label>
@@ -18,24 +18,22 @@
                   <% end %>
                 </div>
               </div>
-
               <div class="input-group">
                 <label for="otp" class="label-text">Verification code (OTP)</label>
                 <div id="otp" class="mt-6 flex justify-between gap-6">
-                  <%= form.text_field :otp_value_one, class: "input-text-otp", maxlength: 1  %>
-                  <%= form.text_field :otp_value_two, class: "input-text-otp", maxlength: 1  %>
-                  <%= form.text_field :otp_value_three, class: "input-text-otp", maxlength: 1  %>
-                  <%= form.text_field :otp_value_four, class: "input-text-otp", maxlength: 1  %>
+                  <%= form.text_field :otp_value_one, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" } %>
+                  <%= form.text_field :otp_value_two, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" } %>
+                  <%= form.text_field :otp_value_three, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" } %>
+                  <%= form.text_field :otp_value_four, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" } %>
                 </div>
                 <a href="#" class="float-right pt-6 link-text text-danger">Resend OTP</a>
               </div>
               <%= form.hidden_field :otp, data: { otp_target: "hiddenOtp" } %>
-              <button type="submit" class="w-full btn-default">
+              <button type="submit" class="w-full btn-default" data-otp-target="submitButton" disabled>
                 <span>Verify</span>
               </button>
             </div>
           <% end %>
-
           <div class="mt-8 pb-5">
             <p class="text-center font-normal">OTP will be valid for 5min</p>
           </div>
