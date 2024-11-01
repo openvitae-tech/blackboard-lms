@@ -26,9 +26,10 @@ class UploadVideoToVimeoService
 
   def generate_upload_url
     url = URI.parse('https://api.vimeo.com/me/videos')
+    access_token = Rails.application.credentials.dig(:vimeo, :access_token)
 
     request = Net::HTTP::Post.new(url)
-    request['Authorization'] = 'bearer 625ac4dda12fbb329f09f0647e497548'
+    request['Authorization'] = `bearer #{access_token}`
     request['Content-Type'] = 'application/json'
     request['Accept'] = 'application/vnd.vimeo.*+json;version=3.4'
 
