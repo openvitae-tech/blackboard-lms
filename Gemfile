@@ -49,6 +49,8 @@ gem 'image_processing', '~> 1.2'
 gem 'devise', '~> 4.9.2'
 
 # gem 'vimeo_me2', :git => "https://github.com/bo-oz/vimeo_me2.git"
+gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -58,8 +60,6 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'rails-controller-testing'
   gem 'rspec-rails'
-  gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false
 end
 
 group :development do
