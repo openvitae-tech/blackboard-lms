@@ -71,4 +71,8 @@ module ApplicationHelper
   def letter_avatar(user)
     (user.name || 'U')[0]
   end
+
+  def submit_label_for(resource)
+    resource.persisted? ? "Update" : "Create"
+  end
 end

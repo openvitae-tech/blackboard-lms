@@ -2,93 +2,112 @@
   <%= link_to course_path(@course), class: "nav-link" do %>
     <%= render 'shared/components/back_button' %>
   <% end %>
-  <%= render @course_module %>
-  <div class="flex justify-between mt-10">
-    <h1 class="page-sub-heading">Lessons</h1>
-    <div class="text-right">
-      <% if policy(@course_module).new? %>
-        <%= link_to new_course_module_lesson_path(@course, @course_module), class: "nav-link" do %>
-          <%= render 'shared/components/icon_button_primary' , label: 'New lesson' , icon_name: 'icon-plus-white' %>
+
+  <div class="flex justify-between my-4">
+    <%= render "shared/components/bread_crumbs", links: [@course.title, @course_module.title] %>
+    <div class="flex justify-end gap-4">
+      <% if policy(@course_module).destroy? %>
+        <%= link_to course_module_path(@course, @course_module), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete this module along with its lessons?" } do %>
+          <%= render "shared/components/outline_button_danger", label: "Delete" %>
         <% end %>
       <% end %>
-    </div>
-  </div>
-  <div class="box pt-2">
-    <ul id="lessons">
-      <% lessons_in_order(@course_module).each do |lesson| %>
-        <li class="text-sm border border-line-colour-light rounded p-6 mb-4" id="<%= dom_id lesson %>">
-          <%= link_to course_module_lesson_path(@course, @course_module, lesson) do %>
-            <div class="flex justify-between items-center">
-              <strong class="text-base font-medium">
-                <%= lesson.title %>
-              </strong>
-              <div class="flex gap-6 items-center">
-                <% if policy(@course_module).edit? %>
-                  <%= link_to edit_course_module_lesson_path(@course, @course_module, lesson) do %>
-                    <%= render "shared/components/button_default_small" , label: "Edit" , icon_name: "icon-edit" %>
-                  <% end %>
-                <% end %>
-                <div class="flex flex-col items-center">
-                  <% if policy(:lesson).moveup? %>
-                    <%= link_to moveup_course_module_lesson_path(@course, @course_module, lesson), data: { 
-                          turbo_method: :put }, class: "link" do%>
-                      <span class="icon icon-arrow-up icon-small block"></span>
-                    <% end %>
-                  <% end %>
-                  <% if policy(:lesson).movedown? %>
-                    <%= link_to movedown_course_module_lesson_path(@course, @course_module,
-                          lesson), data: { turbo_method: :put }, class: "link" do%>
-                      <span class="icon icon-arrow-down icon-small block"></span>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </li>
+
+      <% if policy(:lesson).new? %>
+        <%= link_to new_course_module_lesson_path(@course, @course_module), class: "nav-link" do %>
+          <%= render 'shared/components/icon_button_primary', label: 'New lesson', icon_name: 'icon-plus-white' %>
+        <% end %>
       <% end %>
-    </ul>
-  </div>
-  <div class="flex justify-between mt-10">
-    <h1 class="page-sub-heading">Quizzes</h1>
-    <div class="text-right">
+
       <% if policy(:quiz).new? %>
         <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
-          <%= render 'shared/components/icon_button_primary' , label: 'New quiz' , icon_name: 'icon-plus-white' %>
+          <%= render 'shared/components/icon_button_primary', label: 'New quiz', icon_name: 'icon-plus-white' %>
         <% end %>
       <% end %>
     </div>
   </div>
-  <% if current_user.is_admin? %>
-    <div class="box pt-2">
-      <ul id="quizzes">
-        <% quizzes_in_order(@course_module).each do |quiz| %>
-          <li class="text-sm flex justify-between border border-line-colour-light rounded p-6 mb-4"
-              id="<%= dom_id quiz %>">
-            <%= link_to course_module_quiz_path(@course, @course_module, quiz) do %>
-              <div class="flex justify-between items-center">
-                <strong class="text-base font-medium">
-                  <%= quiz.question %>
-                </strong>
-              </div>
+
+  <div class="my-4 flex items-center justify-between">
+    <div class="page-heading"><%= @course_module.title %></div>
+    <div class="flex justify-end gap-4 text-right">
+      <% if policy(@course_module).edit? %>
+        <%= link_to edit_course_module_path(@course, @course_module) do %>
+          <%= render "shared/components/button_default_small", label: "Edit module", icon_name: "icon-edit" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <h1 class="page-sub-heading">Lessons</h1>
+
+  <div class="my-4">
+    <ul>
+      <% lessons_in_order(@course_module).each do |lesson| %>
+        <li class="mb-4 rounded border p-6 text-sm border-line-colour-light">
+
+          <div class="flex items-center justify-between">
+            <%= link_to course_module_lesson_path(@course, @course_module, lesson, class: "nav-link") do %>
+                <span class="text-base font-medium hover:underline">
+                  <%= lesson.title %>
+                </span>
             <% end %>
-            <div class="flex gap-6 items-center">
+            <div class="flex items-center gap-6">
               <% if policy(@course_module).edit? %>
-                <%= link_to edit_course_module_quiz_path(@course, @course_module, quiz) do %>
-                  <%= render "shared/components/button_default_small" , label: "Edit" , icon_name: "icon-edit" %>
+                <%= link_to edit_course_module_lesson_path(@course, @course_module, lesson) do %>
+                  <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
                 <% end %>
               <% end %>
               <div class="flex flex-col items-center">
                 <% if policy(:lesson).moveup? %>
-                  <%= link_to moveup_course_module_quiz_path(@course, @course_module, quiz), data: { 
-                        turbo_method: :put }, class: "link" do%>
-                    <span class="icon icon-arrow-up icon-small block"></span>
+                  <%= link_to moveup_course_module_lesson_path(@course, @course_module, lesson), data: {
+                    turbo_method: :put }, class: "link" do %>
+                    <span class="block icon icon-arrow-up icon-small"></span>
+                  <% end %>
+                <% end %>
+                <% if policy(:lesson).movedown? %>
+                  <%= link_to movedown_course_module_lesson_path(@course, @course_module,
+                                                                 lesson), data: { turbo_method: :put }, class: "link" do %>
+                    <span class="block icon icon-arrow-down icon-small"></span>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <h1 class="page-sub-heading">Quizzes</h1>
+
+  <% if current_user.is_admin? %>
+    <div class="my-4">
+      <ul>
+        <% quizzes_in_order(@course_module).each do |quiz| %>
+          <li class="mb-4 flex justify-between rounded border p-6 text-sm border-line-colour-light">
+            <%= link_to course_module_quiz_path(@course, @course_module, quiz) do %>
+              <div class="flex items-center justify-between">
+                <span class="text-base font-medium hover:underline">
+                  <%= quiz.question %>
+                </span>
+              </div>
+            <% end %>
+            <div class="flex items-center gap-6">
+              <% if policy(@course_module).edit? %>
+                <%= link_to edit_course_module_quiz_path(@course, @course_module, quiz) do %>
+                  <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+                <% end %>
+              <% end %>
+              <div class="flex flex-col items-center">
+                <% if policy(:lesson).moveup? %>
+                  <%= link_to moveup_course_module_quiz_path(@course, @course_module, quiz), data: {
+                    turbo_method: :put }, class: "link" do %>
+                    <span class="block icon icon-arrow-up icon-small"></span>
                   <% end %>
                 <% end %>
                 <% if policy(:lesson).movedown? %>
                   <%= link_to movedown_course_module_quiz_path(@course, @course_module, quiz), data: {
-                        turbo_method: :put }, class: "link" do%>
-                    <span class="icon icon-arrow-down icon-small block"></span>
+                    turbo_method: :put }, class: "link" do %>
+                    <span class="block icon icon-arrow-down icon-small"></span>
                   <% end %>
                 <% end %>
               </div>
@@ -102,7 +121,7 @@
       <div class="box">
         <ul>
           <% @enrollment.quiz_answers.each do |answer| %>
-            <li class="text-sm border-b m-2">
+            <li class="m-2 border-b text-sm">
               <div class="my-4">
                 <div>
                   <%= answer.quiz.question %>

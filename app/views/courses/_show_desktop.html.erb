@@ -1,28 +1,29 @@
 <%= render "shared/components/desktop_layout" do %>
-  <div class="flex justify-end gap-4">
-    <% if policy(@course).destroy? %>
-      <%= link_to course_path(@course), data: { turbo_method: "delete" } do %>
-        <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
+  <div class="flex justify-between my-4">
+    <%= render "shared/components/bread_crumbs", links: [@course.title] %>
+    <div class="flex justify-between gap-4">
+      <% if policy(@course).destroy? %>
+        <%= link_to course_path(@course), data: { turbo_method: "delete" } do %>
+          <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
+        <% end %>
       <% end %>
-    <% end %>
-    <% if policy(@course).publish? %>
-      <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
-        <%= render 'shared/components/outline_button_secondary', label: 'Publish' %>
+      <% if policy(@course).publish? %>
+        <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
+          <%= render 'shared/components/outline_button_secondary', label: 'Publish' %>
+        <% end %>
       <% end %>
-    <% end %>
-    <% if policy(@course).unpublish? %>
-      <%= link_to unpublish_course_path(@course), data: { turbo_method: "put" } do %>
-        <%= render 'shared/components/outline_button_secondary', label: 'Unpublish' %>
+      <% if policy(@course).unpublish? %>
+        <%= link_to unpublish_course_path(@course), data: { turbo_method: "put" } do %>
+          <%= render 'shared/components/outline_button_secondary', label: 'Unpublish' %>
+        <% end %>
       <% end %>
-    <% end %>
-    <% if policy(:course_module).new? %>
-      <%= link_to new_course_module_path(@course) do %>
-        <%= render 'shared/components/icon_button_primary', label: 'Add module', icon_name: 'icon-plus-white' %>
+      <% if policy(:course_module).new? %>
+        <%= link_to new_course_module_path(@course) do %>
+          <%= render 'shared/components/icon_button_primary', label: 'Add module', icon_name: 'icon-plus-white' %>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-
-  <%= render "shared/components/bread_crumbs", links: [@course.title] %>
 
   <div class="flex flex-col rounded box-shadow-medium">
     <%= render "courses/course_description_card", course: @course %>

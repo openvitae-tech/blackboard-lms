@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class CourseModulePolicy < ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :user, :course_module
 
   def initialize(user, record)
     @user = user
-    @record = record
+    @course_module = record
   end
 
   def new?
@@ -29,7 +29,7 @@ class CourseModulePolicy < ApplicationPolicy
   end
 
   def destroy?
-    false
+    CoursePolicy.new(user, course_module.course).destroy?
   end
 
   def moveup?
