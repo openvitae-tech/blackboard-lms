@@ -94,7 +94,7 @@ export default class extends Controller {
 
     upload.create((error,blob) => {
       if (error) {
-        console.error({error});
+        //raise sentry error
       } else {
         this.hiddenBlobIdTarget.value = blob.id;
         this.toggleCancelUploadButtons(true);

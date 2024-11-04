@@ -13,12 +13,24 @@ class UploadVideoToVimeoService
 
   def process
     response = generate_upload_url
+
+    unless response.is_a?(Net::HTTPSuccess)
+      log_error_to_sentry(response, "Failed to generate upload url")
+      return
+    end
+
     response_data = JSON.parse(response.body)
 
     upload_url = response_data.dig('upload', 'upload_link')
     vimeo_link = response_data['link']
 
     upload_response = upload_to_vimeo(upload_url)
+
+    unless upload_response.is_a?(Net::HTTPSuccess)
+      log_error_to_sentry(response, "Failed upload video to vimeo")
+      return
+    end
+
     file.update!(metadata: file.metadata.merge(url: vimeo_link))
     upload_response
   end
@@ -60,5 +72,12 @@ class UploadVideoToVimeoService
       request.body = tempfile.read
       Net::HTTP.start(url.hostname, url.port, use_ssl: true) { |http| http.request(request) }
     end
+  end
+
+  def log_error_to_sentry(response, msg)
+    Sentry.capture_message(msg, level: :error, extra: {
+                             status: response.code,
+                             body: response.body
+                           })
   end
 end
