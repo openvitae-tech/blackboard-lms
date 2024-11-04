@@ -3,7 +3,7 @@
     <%= render "devise/shared/left_side_desktop" %>
     <div class="flex h-full items-center justify-center right-side">
       <div class="bg-white w-[528px]">
-        <%= image_tag "login_page_logo_grey.png",  alt: "Superskill", class: "mx-auto mb-12 h-10" %>
+        <%= image_tag "instruo_logo_blue.png", alt: "Instruo", class: "mx-auto mb-12 h-10" %>
         <div class="rounded-lg px-8 pt-8 pb-24 box-shadow-large">
           <h1 class="my-8 text-3xl page-heading">Forgot password?</h1>
           <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
@@ -19,14 +19,12 @@
                   <%= f.password_field :password, class: "input-text", autofocus: true, autocomplete: "new-password" %>
                 </p>
               </div>
-
               <div class="input-group">
                 <%= f.label :password_confirmation, "Confirm new password", class: "label-text" %>
                 <p class="mt-4">
                   <%= f.password_field :password_confirmation, class: "input-text", autocomplete: "new-password" %>
                 </p>
               </div>
-
               <div class="my-4 actions">
                 <%= f.button class: "btn-primary w-full" do %>
                   <span>Update password</span>
@@ -34,7 +32,6 @@
               </div>
             </div>
           <% end %>
-
           <div class="mt-6">
             <p class="mb-2"><%= link_to "Login with OTP", new_login_path, class: "link-text" %></p>
             <p><%= link_to "Login with email and password", new_user_session_path, class: "link-text" %></p>
