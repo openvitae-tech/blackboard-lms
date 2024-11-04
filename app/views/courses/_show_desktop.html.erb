@@ -24,10 +24,8 @@
       <% end %>
     </div>
   </div>
-
   <div class="flex flex-col rounded box-shadow-medium">
     <%= render "courses/course_description_card", course: @course %>
-    <br/>
     <%= render "courses/course_lessons", course: @course, enrollment: @enrollment %>
   </div>
 <% end %>
