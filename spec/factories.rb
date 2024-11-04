@@ -54,7 +54,6 @@ FactoryBot.define do
   factory :lesson do
     title { Faker::Lorem.word }
     rich_description { Faker::Lorem.paragraph }
-    video_url { 'https://example.com/948577869' }
     video_streaming_source { 'example' }
     duration { 60 }
     course_module
