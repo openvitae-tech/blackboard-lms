@@ -28,7 +28,7 @@ class LocalContent < ApplicationRecord
   private
 
   def presence_of_blob_id
-    errors.add(:base, I18n.t('local_content.video_not_found', lang:)) if blob_id.empty?
+    errors.add(:base, I18n.t('local_content.video_not_found', lang:)) if blob_id.blank?
   end
 
   def attach_blob_to_video

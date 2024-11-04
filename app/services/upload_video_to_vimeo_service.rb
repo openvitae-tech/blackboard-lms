@@ -18,8 +18,9 @@ class UploadVideoToVimeoService
     upload_url = response_data.dig('upload', 'upload_link')
     vimeo_link = response_data['link']
 
-    upload_to_vimeo(upload_url)
+    upload_response = upload_to_vimeo(upload_url)
     file.update!(metadata: file.metadata.merge(url: vimeo_link))
+    upload_response
   end
 
   private
@@ -29,7 +30,7 @@ class UploadVideoToVimeoService
     access_token = Rails.application.credentials.dig(:vimeo, :access_token)
 
     request = Net::HTTP::Post.new(url)
-    request['Authorization'] = `bearer #{access_token}`
+    request['Authorization'] = "bearer #{access_token}"
     request['Content-Type'] = 'application/json'
     request['Accept'] = 'application/vnd.vimeo.*+json;version=3.4'
 

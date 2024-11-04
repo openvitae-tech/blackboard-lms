@@ -28,6 +28,8 @@
 #       enabled: "ON"
 
 en:
+  must_exist: "%{entity} must exist"
+  cant_blank: "%{field} can't be blank"
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
   course:
