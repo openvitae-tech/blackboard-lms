@@ -1,7 +1,8 @@
+<%= mobile_view do %>
+  <%= render 'shared/components/admin_not_available'%>
+<% end %>
 <%= render "shared/components/desktop_layout" do %>
   <div class="box">
     <%= render "form", learning_partner: @learning_partner %>
   </div>
 <% end %>
-
-
