@@ -66,7 +66,8 @@ class DevelopmentSeed
       ]
 
       lesson_ids1 = lessons1.map do |title, description|
-        create_lesson(title, description, course_module)
+        lesson = create_lesson(title, description, course_module)
+        create_local_content(lesson)
       end.map(&:id)
       course_module.lessons_in_order = lesson_ids1
       course_module.save!
@@ -77,7 +78,8 @@ class DevelopmentSeed
       ]
       course_module = course_module.next_module
       lesson_ids2 = lessons2.map do |title, description|
-        create_lesson(title, description, course_module)
+       lesson = create_lesson(title, description, course_module)
+       create_local_content(lesson)
       end.map(&:id)
       course_module.lessons_in_order = lesson_ids2
       course_module.save!
@@ -155,6 +157,15 @@ class DevelopmentSeed
     CourseManagementService.instance.set_lesson_attributes(course_module, l)
     l.save!
     l
+  end
+
+  def create_local_content(lesson)
+    blob = ActiveStorage::Blob.create_and_upload!(
+      io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
+      filename: 'sample_video.mp4',
+      content_type: 'video/mp4'
+    )
+    lesson.local_contents.create!(lang: "english", blob_id: blob.id)
   end
 
   def create_quiz(q, a, b, c, d, ans, course_module)
