@@ -1,3 +1,6 @@
+<%= mobile_view do %>
+  <%= render 'shared/components/admin_not_available'%>
+<% end %>
 <%= render "shared/components/desktop_layout" do %>
   <div class="flex justify-between pt-4 box">
     <div class="flex items-center gap-4">
@@ -12,13 +15,11 @@
           <span>Delete</span>
         <% end %>
       <% end %>
-
       <% if policy(@learning_partner).edit? %>
         <%= link_to edit_learning_partner_path(@learning_partner) do %>
           <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
         <% end %>
       <% end %>
-
       <% if policy(:invite).new? %>
         <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "add-user-modal" } do %>
           <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus-white' %>
