@@ -61,8 +61,6 @@ FactoryBot.define do
   end
 
   factory :course_module do
-    title { Faker::Lorem.word }
-    rich_description { Faker::Lorem.paragraph }
     title { Faker::Lorem.sentence(word_count: 6) }
     course
   end
