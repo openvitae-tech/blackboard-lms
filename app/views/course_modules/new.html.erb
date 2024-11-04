@@ -1,6 +1,10 @@
+<%= mobile_view do %>
+  <%= render 'shared/components/admin_not_available'%>
+<% end %>
 <%= render "shared/components/desktop_layout" do %>
   <%= link_to course_path(@course), class: "nav-link" do %>
     <%= render 'shared/components/back_button' %>
   <% end %>
+  <div class="page-heading my-4">Add new module</div>
   <%= render "form", course: @course, course_module: @course_module %>
 <% end %>

@@ -54,7 +54,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_182028) do
 
   create_table "course_modules", force: :cascade do |t|
     t.string "title"
-    t.text "description"
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

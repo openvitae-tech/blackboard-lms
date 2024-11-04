@@ -45,22 +45,20 @@
 
     <div class="flex justify-end gap-4 py-6">
       <% if policy(course).unenroll? %>
-        <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") }, class: "border-gary1 flex items-center gap-2 rounded border p-1 px-3" do %>
-          <span class="icon icon-minus icon-small"></span>
-          <span class="text-xs text-secondary">Drop</span>
+        <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
+          <%= render "shared/components/outline_icon_button_secondary_small", icon_name: 'icon-minus', label: 'Drop' %>
         <% end %>
       <% end %>
 
       <% if policy(course).enroll? %>
-        <%= link_to enroll_course_path(course), data: { turbo_method: :put }, class: "bg-primary flex items-center gap-2 rounded p-1 px-3" do %>
-          <span class="text-xs text-white">Enroll</span>
+        <%= link_to enroll_course_path(course), data: { turbo_method: :put }  do %>
+          <%= render "shared/components/button_primary_small", label: 'Enroll' %>
         <% end %>
       <% end %>
 
       <% if policy(course).proceed? %>
-        <%= link_to proceed_course_path(course), class: "bg-primary flex items-center gap-2 rounded p-1 px-3" do %>
-          <span class="text-xs text-white">Proceed</span>
-          <span class="items-center icon icon-next icon-small"></span>
+        <%= link_to proceed_course_path(course) do %>
+          <%= render "shared/components/icon_button_primary_small", label: 'Continue', icon_name: 'icon-next', icon_right: true %>
         <% end %>
       <% end %>
     </div>

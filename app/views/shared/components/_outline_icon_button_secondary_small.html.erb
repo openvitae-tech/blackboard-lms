@@ -1,0 +1,9 @@
+<button class="flex items-center gap-2 rounded border p-1 px-3 border-secondary">
+  <% if local_assigns[:icon_right] %>
+    <span class="text-xs text-secondary"><%= label %></span>
+    <span class="icon <%= icon_name %> icon-small"></span>
+  <% else %>
+    <span class="icon <%= icon_name %> icon-small"></span>
+    <span class="text-xs text-secondary"><%= label %></span>
+  <% end %>
+</button>

@@ -13,7 +13,7 @@ class CourseModulesController < ApplicationController
 
   # GET /course_modules/new
   def new
-    authorize CourseModule
+    authorize :course_module
     @course_module = @course.course_modules.new
   end
 
@@ -24,35 +24,25 @@ class CourseModulesController < ApplicationController
 
   # POST /course_modules or /course_modules.json
   def create
-    authorize CourseModule
+    authorize :course_module
     @course_module = @course.course_modules.new(course_module_params)
     service = CourseManagementService.instance
 
-    respond_to do |format|
-      if @course_module.save
-        service.update_module_ordering(@course, @course_module, :create)
-        format.html { redirect_to course_url(@course), notice: 'Course module was successfully created.' }
-        format.json { render :show, status: :created, location: @course_module }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @course_module.errors, status: :unprocessable_entity }
-      end
+    if @course_module.save
+      service.update_module_ordering(@course, @course_module, :create)
+      redirect_to course_url(@course), notice: I18n.t('course.module_created')
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /course_modules/1 or /course_modules/1.json
   def update
     authorize @course_module
-    respond_to do |format|
-      if @course_module.update(course_module_params)
-        format.html do
-          redirect_to course_module_url(@course, @course_module), notice: 'Course module was successfully updated.'
-        end
-        format.json { render :show, status: :ok, location: @course_module }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @course_module.errors, status: :unprocessable_entity }
-      end
+    if @course_module.update(course_module_params)
+      redirect_to course_module_url(@course, @course_module), notice: I18n.t('course.module_updated')
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -63,10 +53,7 @@ class CourseModulesController < ApplicationController
     service = CourseManagementService.instance
     service.update_module_ordering(@course, @course_module, :destroy)
 
-    respond_to do |format|
-      format.html { redirect_to course_url(@course), notice: 'Course module was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to course_url(@course), notice: I18n.t('course.module_deleted')
   end
 
   def moveup
@@ -74,10 +61,7 @@ class CourseModulesController < ApplicationController
     service = CourseManagementService.instance
     service.update_module_ordering(@course, @course_module, :up)
 
-    respond_to do |format|
-      format.html { redirect_to course_url(@course) }
-      format.json { head :no_content }
-    end
+    redirect_to course_url(@course)
   end
 
   def movedown
@@ -85,15 +69,11 @@ class CourseModulesController < ApplicationController
     service = CourseManagementService.instance
     service.update_module_ordering(@course, @course_module, :down)
 
-    respond_to do |format|
-      format.html { redirect_to course_url(@course) }
-      format.json { head :no_content }
-    end
+    redirect_to course_url(@course)
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_course_module
     @course_module = @course.course_modules.find(params[:id])
   end
@@ -104,6 +84,6 @@ class CourseModulesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_module_params
-    params.require(:course_module).permit(:title, :rich_description)
+    params.require(:course_module).permit(:title)
   end
 end

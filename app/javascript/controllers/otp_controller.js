@@ -1,16 +1,87 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["hiddenOtp"]
+  static targets = ["input", "submitButton", "hiddenOtp"];
 
-  handleOtp() {
-    const otp1 = this.element.querySelector(".input-text-otp:nth-child(1)").value;
-    const otp2 = this.element.querySelector(".input-text-otp:nth-child(2)").value;
-    const otp3 = this.element.querySelector(".input-text-otp:nth-child(3)").value;
-    const otp4 = this.element.querySelector(".input-text-otp:nth-child(4)").value;
+  connect() {
+    console.log("OTP controller");
+  }
 
-    const otp = [otp1, otp2, otp3, otp4].join('');
+  updateHiddenOtp() {
+    const otpValues = this.inputTargets.map((input) => input.value).join("");
+    this.hiddenOtpTarget.value = otpValues;
+  }
 
-    this.hiddenOtpTarget.value = otp
+  inputTargetConnected(input) {
+    input.addEventListener("input", this.handleInputOrKeyDown.bind(this));
+    input.addEventListener("keydown", this.handleInputOrKeyDown.bind(this));
+  }
+
+  handleInputOrKeyDown(event) {
+    const input = event.target;
+
+    if (event.type === "input") {
+      if (input.value.length === 1) {
+        const nextInput = this.nextInput(input);
+        if (nextInput) nextInput.focus();
+      }
+      this.updateHiddenOtp();
+    }
+
+    if (event.type === "keydown") {
+      if (event.key === "Backspace") {
+        if (input.value === "") {
+          const previousInput = this.previousInput(input);
+          if (previousInput) {
+            previousInput.focus();
+            this.updateHiddenOtp();
+          }
+        } else {
+          input.value = "";
+          this.updateHiddenOtp();
+        }
+      }
+
+      if (event.key === "ArrowLeft") {
+        const previousInput = this.previousInput(input);
+        if (previousInput) {
+          previousInput.focus();
+        }
+      }
+
+      if (event.key === "ArrowRight") {
+        const nextInput = this.nextInput(input);
+        if (nextInput) {
+          nextInput.focus();
+        }
+      }
+    }
+
+    this.updateButtonState();
+  }
+
+  updateButtonState() {
+    const allFilled = this.inputTargets.every(
+      (input) => input.value.length === 1
+    );
+    if (allFilled) {
+      this.submitButtonTarget.classList.remove("btn-default");
+      this.submitButtonTarget.classList.add("btn-primary");
+      this.submitButtonTarget.removeAttribute("disabled");
+    } else {
+      this.submitButtonTarget.classList.remove("btn-primary");
+      this.submitButtonTarget.classList.add("btn-default");
+      this.submitButtonTarget.setAttribute("disabled", "true");
+    }
+  }
+
+  nextInput(input) {
+    const currentIndex = this.inputTargets.indexOf(input);
+    return this.inputTargets[currentIndex + 1];
+  }
+
+  previousInput(input) {
+    const currentIndex = this.inputTargets.indexOf(input);
+    return this.inputTargets[currentIndex - 1];
   }
 }
