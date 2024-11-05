@@ -66,8 +66,7 @@ class DevelopmentSeed
       ]
 
       lesson_ids1 = lessons1.map do |title, description|
-        lesson = create_lesson(title, description, course_module)
-        create_local_content(lesson)
+        create_lesson(title, description, course_module)
       end.map(&:id)
       course_module.lessons_in_order = lesson_ids1
       course_module.save!
@@ -78,8 +77,7 @@ class DevelopmentSeed
       ]
       course_module = course_module.next_module
       lesson_ids2 = lessons2.map do |title, description|
-       lesson = create_lesson(title, description, course_module)
-       create_local_content(lesson)
+        create_lesson(title, description, course_module)
       end.map(&:id)
       course_module.lessons_in_order = lesson_ids2
       course_module.save!
@@ -152,20 +150,19 @@ class DevelopmentSeed
 
   def create_lesson(title, description, course_module)
     Lesson.reset_column_information
-    l = Lesson.new(title:, rich_description: description, duration: rand(1..10),
-                   course_module:)
-    CourseManagementService.instance.set_lesson_attributes(course_module, l)
-    l.save!
-    l
-  end
 
-  def create_local_content(lesson)
     blob = ActiveStorage::Blob.create_and_upload!(
       io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
       filename: 'sample_video.mp4',
       content_type: 'video/mp4'
     )
-    lesson.local_contents.create!(lang: "english", blob_id: blob.id)
+    l = Lesson.new(title:, rich_description: description, duration: rand(1..10),
+                   course_module:, local_contents_attributes: [{
+                    lang: "english", blob_id: blob.id
+                  }])
+    CourseManagementService.instance.set_lesson_attributes(course_module, l)
+    l.save!
+    l
   end
 
   def create_quiz(q, a, b, c, d, ans, course_module)
