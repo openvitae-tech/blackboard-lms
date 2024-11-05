@@ -6,7 +6,7 @@ RSpec.describe LocalContent, type: :model do
   let(:local_content) { create :local_content }
 
   describe '#title' do
-    it 'should not be valid without title' do
+    it 'should not be valid without language' do
       local_content.lang = ''
       expect(local_content).not_to be_valid
       expect(local_content.errors.full_messages.to_sentence).to include(t('cant_blank',
