@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe LocalContent, type: :model do
-  let(:local_content) { create :local_content }
+  let(:lesson) { create :lesson }
+  let(:local_content) { lesson.local_contents.first }
 
   describe '#title' do
     it 'should not be valid without language' do
