@@ -6,7 +6,7 @@
       <% elsif Rails.env.development? %>
         <%= video_tag rails_blob_path(@video), controls: true %>
       <% else %>
-        <div class="w-full inline-block text-center">Uploaded video is under process!</div>
+        <div class="w-full inline-block text-center">Uploaded video is under process. Please refresh the page after some time.</div>
       <% end %>
     <% else %>
       <div class="w-full inline-block text-center">Sorry! Video is not available</div>
