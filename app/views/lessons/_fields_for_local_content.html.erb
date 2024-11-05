@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="my-4 flex flex-col gap-4 hidden" data-video-upload-target="videoUploader">
-      <div class="flex justify-end">
+      <div class="flex justify-end" data-video-upload-target="uploadControls">
         <div class="flex items-center gap-3">
           <button data-action="video-upload#abortUpload" data-video-upload-target="hideCancelUploadButton">
             Cancel Upload
@@ -39,6 +39,7 @@
           <span class="text-secondary text-xs font-medium" data-video-upload-target="progressText">0%</span>
         </div>
       </div>
+      <h3 class="flex justify-end hidden text-danger" data-video-upload-target="failedUploadMessage">Upload failed</h3>
       <div class="flex items-center justify-center">
         <div class="w-4/6 flex flex-col gap-4">
           <div class="border border-line-colour-light rounded p-2">

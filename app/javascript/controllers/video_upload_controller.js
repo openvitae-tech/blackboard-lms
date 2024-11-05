@@ -14,7 +14,9 @@ export default class extends Controller {
     "progressText",
     "hiddenBlobId",
     "hideCancelUploadButton",
-    "durationField"
+    "durationField",
+    "uploadControls",
+    "failedUploadMessage"
   ];
 
   connect() {
@@ -94,7 +96,8 @@ export default class extends Controller {
 
     upload.create((error,blob) => {
       if (error) {
-        //raise sentry error
+        this.failedUploadMessageTarget.classList.remove("hidden");
+        this.uploadControlsTarget.classList.add("hidden");
       } else {
         this.hiddenBlobIdTarget.value = blob.id;
         this.toggleCancelUploadButtons(true);
