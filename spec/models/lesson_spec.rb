@@ -34,4 +34,14 @@ RSpec.describe Lesson, type: :model do
                                                                    langs: 'English'))
     end
   end
+
+  describe '#has_local_contents' do
+    it 'should not create lesson without local content' do
+      course_module = create :course_module
+      new_lesson = Lesson.new(title: 'Body language', course_module:)
+      new_lesson.save
+      expect(new_lesson).not_to be_valid
+      expect(new_lesson.errors.full_messages.to_sentence).to include(t('lesson.must_have_local_content'))
+    end
+  end
 end
