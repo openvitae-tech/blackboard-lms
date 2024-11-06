@@ -90,7 +90,11 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  root 'courses#index'
+  devise_scope :user do
+    root 'users/sessions#new'
+  end
+
+  get '*path' => redirect('/')
 
   draw :sidekiq_web
 end
