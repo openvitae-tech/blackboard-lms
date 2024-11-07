@@ -96,7 +96,5 @@ Rails.application.routes.draw do
     root 'users/sessions#new'
   end
 
-  get '*path' => redirect('/')
-
   draw :sidekiq_web
 end
