@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_04_045830) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_06_134840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -115,9 +115,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_045830) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.text "description"
-    t.string "video_url"
     t.string "pdf_url"
     t.string "lesson_type"
     t.string "video_streaming_source"
@@ -129,11 +128,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_045830) do
   end
 
   create_table "local_contents", force: :cascade do |t|
-    t.string "lang"
-    t.string "video_url"
+    t.string "lang", null: false
     t.bigint "lesson_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["lesson_id", "lang"], name: "index_local_contents_on_lesson_id_and_lang", unique: true
     t.index ["lesson_id"], name: "index_local_contents_on_lesson_id"
   end
 

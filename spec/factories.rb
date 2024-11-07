@@ -54,13 +54,14 @@ FactoryBot.define do
   factory :lesson do
     title { Faker::Lorem.word }
     rich_description { Faker::Lorem.paragraph }
-    video_url { 'https://example.com/948577869' }
     video_streaming_source { 'example' }
     duration { 60 }
+    course_module
   end
 
   factory :course_module do
     title { Faker::Lorem.sentence(word_count: 6) }
+    course
   end
 
   factory :course do
@@ -91,7 +92,6 @@ def course_with_associations(modules_count: 1, lessons_count: 1, quizzes_count: 
       FactoryBot.create_list(:lesson, lessons_count, course_module:, duration:) do |lesson|
         lesson_ids.push(lesson.id)
       end
-
       quiz_ids = []
       FactoryBot.create_list(:quiz, quizzes_count, course_module:) do |quiz|
         quiz_ids.push(quiz.id)

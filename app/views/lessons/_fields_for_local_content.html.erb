@@ -1,62 +1,56 @@
 <div class="field-group">
   <div class="my-8 text-sm flex">
-     <div class="grow">
-        <%= builder.select :lang, options_for_select(language_options), class: "input-select mt-2 rounded box-shadow-medium" %>
-     </div>
-     <%= builder.hidden_field :_destroy, label: "Delete" %>
-     <a href="javascript:void(0);" class="link flex items-center gap-2 rounded px-2 py-1 box-shadow-medium" data-action="click->lessons-form#removeRecord"> 
-     <span class="text-xs text-secondary">Remove</span>
-     <span class="icon icon-trash icon-small"></span>
-     </a>
+    <div class="grow">
+      <%= builder.select :lang, options_for_select(language_options), class: "input-select mt-2 rounded box-shadow-medium" %>
+    </div>
+    <%= builder.hidden_field :_destroy, label: "Delete" %>
+    <a href="javascript:void(0);" class="link flex items-center gap-2 rounded px-2 py-1 box-shadow-medium" data-action="click->lessons-form#removeRecord">
+      <span class="text-xs text-secondary">Remove</span>
+      <span class="icon icon-trash icon-small"></span>
+    </a>
   </div>
   <div data-controller="video-upload" class="my-8 flex flex-col">
-
     <div class="text-sm flex flex-row items-center gap-4 justify-between">
-      <div class="grow">
-        <%= builder.label :video_url, class: "text-sm font-medium" %>
-        <%= builder.text_field :video_url, class: "input-text mt-2", placeholder: "eg: https://vimeo.com/948577869" %>
-     </div>
-     <p class="pt-6">OR</p>
-     <div class="w-[373px]">
+      <div class="w-[373px]">
         <div class="flex justify-between">
-           <%= builder.label :video, "Upload Video", class: "text-sm font-medium" %>
-           <label data-video-upload-target="fileLabel" class="text-sm text-[#E0E0E0">No file chosen</label>
-          </div>
+          <%= builder.label :video, "Upload Video", class: "text-sm font-medium" %>
+          <label data-video-upload-target="fileLabel" class="text-sm text-[#E0E0E0">No file chosen</label>
+          <%= builder.hidden_field :blob_id, data: { video_upload_target: "hiddenBlobId" }%>
+          <input name="lesson[duration]" type="hidden" data-video-upload-target="durationField"/>
+        </div>
         <div class="relative mt-2">
-           <%= builder.file_field :video, accept: 'video/*', class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer", data: { video_upload_target: "fileInput" } %>
-           <div class="file-input bg-white border border-dashed border-primary-light rounded-md p-4 text-center flex items-center justify-center">
-              <span class="icon icon-upload icon-small"></span>
-              <span class="file-label text-primary">Choose File</span>
-           </div>
+          <%= builder.file_field :video, accept: 'video/*', class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer", data: { video_upload_target: "fileInput" } %>
+          <div class="file-input bg-white border border-dashed border-primary-light rounded-md p-4 text-center flex items-center justify-center">
+            <span class="icon icon-upload icon-small"></span>
+            <span class="file-label text-primary">Choose File</span>
+          </div>
         </div>
-     </div>
-  </div>
-  <div class="my-4 flex flex-col gap-4 hidden" data-video-upload-target="videoUploader">
-     <div class="flex justify-end ">
-        <div class="w-[373px] flex gap-3">
-           <button id="" class="flex items-center gap-2 rounded px-2 py-2 border border-primary-light">
-           <span class="icon icon-upload icon-small"></span>
-           <span class="text-xs leading-3 text-primary">Upload video</span>
-           </button>
-           <div class="flex items-center gap-3">
-              <div class="bg-primary-light h-2 w-[198px] ">
-                 <div class="bg-primary h-2 " style="width: 50%"></div>
-              </div>
-              <span class="text-secondary text-xs font-medium">50%</span>
-           </div>
+      </div>
+    </div>
+    <div class="my-4 flex flex-col gap-4 hidden" data-video-upload-target="videoUploader">
+      <div class="flex justify-end" data-video-upload-target="uploadControls">
+        <div class="flex items-center gap-3">
+          <button data-action="video-upload#abortUpload" data-video-upload-target="hideCancelUploadButton">
+            Cancel Upload
+          </button>
+          <div class="bg-primary-light h-2 w-[198px] ">
+            <div class="bg-primary h-2" data-video-upload-target="progressBar" style="width: 0%"></div>
+          </div>
+          <span class="text-secondary text-xs font-medium" data-video-upload-target="progressText">0%</span>
         </div>
-     </div>
-     <div class="flex items-center justify-center">
-      <div class="w-4/6 flex flex-col gap-4">
-        <div class="border border-line-colour-light rounded p-2">
-          <video data-video-upload-target="videoPlayer" id="video" class="w-full" controls></video>
-        </div>
-        <div class="flex gap-4">
-          <label class="text-sm">File size: <span data-video-upload-target="fileSize"></span></label>
-          <label class="text-sm">Duration: <span data-video-upload-target="duration"></span></label>
+      </div>
+      <h3 class="flex justify-end hidden text-danger" data-video-upload-target="failedUploadMessage">Upload failed</h3>
+      <div class="flex items-center justify-center">
+        <div class="w-4/6 flex flex-col gap-4">
+          <div class="border border-line-colour-light rounded p-2">
+            <video data-video-upload-target="videoPlayer" id="video" class="w-full" controls></video>
+          </div>
+          <div class="flex gap-4">
+            <label class="text-sm">File size: <span data-video-upload-target="fileSize"></span></label>
+            <label class="text-sm">Duration: <span data-video-upload-target="duration"></span></label>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>

@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   resources :teams
 
+  resources :direct_uploads, only: :create
+
   resources :invites, only: %i[new create] do
     member do
       put :resend
@@ -93,8 +95,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     root 'users/sessions#new'
   end
-
-  get '*path' => redirect('/')
 
   draw :sidekiq_web
 end

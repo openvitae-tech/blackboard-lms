@@ -47,40 +47,39 @@ class DevelopmentSeed
 
       course = Course.first
 
-      modules = [['Body Language', "Welcome to your next lesson on body language. The key to unlocking genuine warmth and hospitality with our guests lies in mastering positive body language. It's about the silent messages we send through our gestures, facial expressions, and posture."],
-                 ['Etiquette & Manners',
-                  "Welcome to your new lesson on Etiquette and Manners. Etiquette and manners are the silent ambassadors of our hotel's reputation. They speak volumes about our dedication to excellence, ensuring every guest feels welcomed and respected."],
-                 ['Grooming And Hygiene',
-                  'Elevate your personal and professional image with our Grooming and Hygiene course. Designed for individuals seeking to enhance their appearance and health, this program covers essential grooming techniques, skincare routines, and hygiene practices.'],
-                 ['Guest Complaints',
-                  "In this session, we're going to delve deep into the strategies that ensure every guest leaves our establishment not just satisfied, but feeling genuinely valued and cared for."]]
+      modules = ['Body Language',
+                 'Etiquette & Manners',
+                 'Grooming And Hygiene',
+                 'Guest Complaints']
 
-      module_ids = modules.map { |title, description| create_module(title, description, course) }.map(&:id)
+      module_ids = modules.map { |title| create_module(title, course) }.map(&:id)
       course.course_modules_in_order = module_ids
       course.save!
 
       course_module = course.first_module
 
       lessons1 = [
-        ['Overview', 'It is the unspoken communication between human beings', 'https://vimeo.com/948577869'],
-        ['Gestures', 'Right gestures nails it all', 'https://vimeo.com/948577869'],
-        ['Zone Distance', 'Each person has his own personal territory', 'https://vimeo.com/948577869'],
-        ["Do's and Dont's", "What you should do and what shouldn't", 'https://vimeo.com/948577869']
+        ['Overview', 'It is the unspoken communication between human beings'],
+        ['Gestures', 'Right gestures nails it all'],
+        ['Zone Distance', 'Each person has his own personal territory'],
+        ["Do's and Dont's", "What you should do and what shouldn't"]
       ]
 
-      lesson_ids1 = lessons1.map do |title, description, url|
-        create_lesson(title, description, url, course_module)
+      lesson_ids1 = lessons1.map do |title, description|
+        lesson = create_lesson(title, description, course_module)
+        create_local_content(lesson)
       end.map(&:id)
       course_module.lessons_in_order = lesson_ids1
       course_module.save!
 
       lessons2 = [
-        ['Handling Guest Complaints', 'Order placed incorrectly and wrong orders reaching at a table..', 'https://vimeo.com/948577869'],
-        ['Service Recovery', 'A waiter explaining something to a group of guests at a table in a busy restaurant.', 'https://vimeo.com/948577869']
+        ['Handling Guest Complaints', 'Order placed incorrectly and wrong orders reaching at a table..'],
+        ['Service Recovery', 'A waiter explaining something to a group of guests at a table in a busy restaurant.']
       ]
       course_module = course_module.next_module
-      lesson_ids2 = lessons2.map do |title, description, url|
-        create_lesson(title, description, url, course_module)
+      lesson_ids2 = lessons2.map do |title, description|
+       lesson = create_lesson(title, description, course_module)
+       create_local_content(lesson)
       end.map(&:id)
       course_module.lessons_in_order = lesson_ids2
       course_module.save!
@@ -136,29 +135,37 @@ class DevelopmentSeed
   def create_course(name, description, banner)
     Course.create!(
       title: name,
-      rich_description: description,
+      description:,
       banner: File.open(Rails.root.join("db/data/#{banner}")),
       is_published: true
     )
   end
 
-  def create_module(name, description, course)
-    m = CourseModule.new(
+  def create_module(name, course)
+    CourseModule.reset_column_information
+    m = CourseModule.create!(
       title: name,
-      rich_description: description,
       course:
     )
-
-    m.save!
     m
   end
 
-  def create_lesson(title, description, url, course_module)
-    l = Lesson.new(title:, rich_description: description, video_url: url, duration: rand(1..10),
+  def create_lesson(title, description, course_module)
+    Lesson.reset_column_information
+    l = Lesson.new(title:, rich_description: description, duration: rand(1..10),
                    course_module:)
     CourseManagementService.instance.set_lesson_attributes(course_module, l)
     l.save!
     l
+  end
+
+  def create_local_content(lesson)
+    blob = ActiveStorage::Blob.create_and_upload!(
+      io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
+      filename: 'sample_video.mp4',
+      content_type: 'video/mp4'
+    )
+    lesson.local_contents.create!(lang: "english", blob_id: blob.id)
   end
 
   def create_quiz(q, a, b, c, d, ans, course_module)

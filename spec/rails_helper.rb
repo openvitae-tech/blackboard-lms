@@ -7,6 +7,7 @@ require_relative 'support/chrome'
 require_relative 'support/helpers'
 require 'webmock/rspec'
 require 'stubs/msg91_stubs'
+require 'stubs/vimeo_api_stubs'
 require 'sidekiq/testing'
 
 ENV['RAILS_ENV'] = 'test'
@@ -49,7 +50,7 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
-
+  config.include ActionView::Helpers::TranslationHelper
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
