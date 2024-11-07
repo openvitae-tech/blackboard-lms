@@ -12,7 +12,17 @@
   </div>
   <%= render "shared/components/team_user_info" %>
   <%= render "shared/components/team_user_course_status" %>
-  <div class="mt-4">
-    <h2 class="text-xl font-semibold">Enrolled Courses</h2>
+  <div class="my-8">
+    <% if has_enrolled_courses? %>
+      <p class="text-base font-medium mb-4">
+        <span class="">Enrolled courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'enrollment') %>)</span>
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <% @enrolled_courses.each do |course| %>
+          <%= render "courses/course_card_with_left_image", course: course %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 <% end %>
