@@ -6,6 +6,8 @@ Blackboard-lms serves as an LMS platform tailored to meet the training demands o
 
 ## Running in local
 
+Clone the repo and install the dependencies
+
 ### Install postgresql database version 15.x
 
 You can either refer this https://www.postgresql.org/ or use package manager of your os to install postgres. In case of a mac os you can use https://postgresapp.com/ to set it up very easily.
@@ -22,24 +24,33 @@ Using rbenv or rvm is a personal preference. To use rbenv go to [rbenv](https://
 
 After installing ruby clone the repo and then you can follow the steps below to setup the application.
 
+### Install bundler
+
 ```
-# Install bundler
 $ gem install bundler
 ```
 
+### install imagemagick
+
 ```
-# install imagemagick
 $ brew install imagemagick
 ```
 
+### Set your favourite editor to edit credential file
 ```
-# Set your favourite editor to edit credential file
 $ export EDITOR="code --wait" # or export EDITOR="vim --wait"
 
 # copy the contents of config/credentials.yml.enc.example file and
 # generate your master key and edit the credential file
 $ rails credentials:edit
 replace the editor content with the copied content, edit and save then close the file.
+```
+
+### Setup git hooks
+You can either install [husky](https://typicode.github.io/husky/get-started.html) or use the git command below to setup the git precommits hooks
+
+```
+git config core.hooksPath .husky
 ```
 
 To install Rails dependencies and seed the database by running:
@@ -53,7 +64,7 @@ Start the server by executing following command.
 bin/dev
 ```
 
-### Testing
+## Testing
 Make sure you have setup the test environment as mentioned in the earlier section
 ```
 $ rspec
