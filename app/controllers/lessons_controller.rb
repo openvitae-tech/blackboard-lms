@@ -174,7 +174,7 @@ class LessonsController < ApplicationController
   end
 
   def load_default_video
-    default_languge = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE)
-    default_languge.present? ? default_languge.video : @lesson.local_contents.first.video
+    default_language = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE)
+    default_language.present? ? default_languge.video : @lesson.local_contents.first.video
   end
 end
