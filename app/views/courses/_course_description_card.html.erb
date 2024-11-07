@@ -1,6 +1,6 @@
-<div class="flex flex-row border-b px-6 pt-6 border-line-colour" data-controller="course-description-card">
-  <%= image_tag course_banner(course, :vertical), class: "h-[208px] w-[140px] rounded-l object-cover" %>
-  <div class="flex w-full flex-col px-4 pt-2">
+<div class="flex flex-row border-b px-6 py-6 border-line-colour" data-controller="course-description-card">
+  <%= image_tag course_banner(course, :vertical), class: "h-[216px] w-[140px] rounded-l object-cover" %>
+  <div class="flex w-full flex-col px-4 py-1 max-h-[216px]">
     <div class="flex justify-between">
       <p class="mb-4 overflow-hidden text-ellipsis text-2xl font-extrabold text-primary">
         <%= course.title %>
@@ -11,7 +11,6 @@
         <% end %>
       <% end %>
     </div>
-
     <div class="mb-5 flex justify-between space-x-2">
       <div class="flex justify-between space-x-4">
         <div class="flex items-center">
@@ -36,26 +35,22 @@
     <p class="mb-3 overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">
       Course Description
     </p>
-
     <div class="p-4 text-justify text-sm tracking-tight bg-primary-light-50 show-less-desc max-h-[75px]" data-course-description-card-target="courseDescription">
       <div class="h-full overflow-hidden">
         <%= course_description(course) %>
       </div>
     </div>
-
     <div class="flex justify-end gap-4 py-6">
       <% if policy(course).unenroll? %>
         <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
           <%= render "shared/components/outline_icon_button_secondary_small", icon_name: 'icon-minus', label: 'Drop' %>
         <% end %>
       <% end %>
-
       <% if policy(course).enroll? %>
         <%= link_to enroll_course_path(course), data: { turbo_method: :put }  do %>
           <%= render "shared/components/button_primary_small", label: 'Enroll' %>
         <% end %>
       <% end %>
-
       <% if policy(course).proceed? %>
         <%= link_to proceed_course_path(course) do %>
           <%= render "shared/components/icon_button_primary_small", label: 'Continue', icon_name: 'icon-next', icon_right: true %>

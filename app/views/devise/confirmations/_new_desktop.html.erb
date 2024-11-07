@@ -3,7 +3,7 @@
     <%= render "devise/shared/left_side_desktop" %>
     <div class="right-side flex h-full items-center justify-center">
       <div class="w-[528px] bg-white">
-        <%= image_tag "login_page_logo_grey.png",  alt: "Superskill", class: "mx-auto mb-12 h-10" %>
+        <%= image_tag "instruo_logo_blue.png", alt: "Instruo", class: "mx-auto mb-12 h-10" %>
         <div class="box-shadow-large rounded-lg px-8 pb-24 pt-8">
           <h1 class="page-heading my-8 text-3xl">Didn't get confirmation ?</h1>
           <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
@@ -11,16 +11,13 @@
               <div class="input-group">
                 <label for="" class="label-text">No worries. We&apos;ll send you reset instructions.</label>
               </div>
-
               <%= render "devise/shared/error_messages", resource: resource %>
-
               <div class="input-group">
                 <%= f.label :email, 'Enter your email', class: "label-text" %>
                 <p class="mt-4">
                   <%= f.email_field :email, class: "input-text", autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
                 </p>
               </div>
-
               <div class="mt-8">
                 <%= f.button class: "btn-primary w-full" do %>
                   <span>Resend email confirmation</span>
@@ -32,7 +29,6 @@
             <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
             <%= link_to "Login with email and password", new_session_path(resource_name), class: "link-text" %><br/>
           </div>
-
         </div>
         <hr class="border-primary mt-1 border-y-2"/>
       </div>

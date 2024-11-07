@@ -20,8 +20,8 @@
   </div>
 <% end %>
 
-<div id="team-list-desktop" class="flex flex-col gap-4 pt-6">
+<ul id="team-list-desktop" class="flex flex-col gap-4 mt-6 overflow-y-auto max-h-[240px]">
   <% team.sub_teams.each do |sub_team| %>
     <%= render "teams/team_desktop", team: sub_team %>
   <% end %>
-</div>
+</ul>
