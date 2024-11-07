@@ -152,7 +152,7 @@ class DevelopmentSeed
     Lesson.reset_column_information
 
     blob = ActiveStorage::Blob.create_and_upload!(
-      io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
+      io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
       filename: 'sample_video.mp4',
       content_type: 'video/mp4'
     )
@@ -166,8 +166,8 @@ class DevelopmentSeed
   end
 
   def create_local_content(lesson)
-    blob = ActiveStorage::Blob.create_and_upload!(
-      io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
+    blob =  ActiveStorage::Blob.create_and_upload!(
+      io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
       filename: 'sample_video.mp4',
       content_type: 'video/mp4'
     )

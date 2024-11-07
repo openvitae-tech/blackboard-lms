@@ -5,7 +5,7 @@ class Lesson < ApplicationRecord
 
   validates :title, presence: true
   validate :unique_local_content_lang
-  validate :has_local_contents
+  validate :has_local_contents?
 
   has_many :local_contents, dependent: :destroy
 
@@ -34,7 +34,7 @@ class Lesson < ApplicationRecord
     errors.add(:base, I18n.t("lesson.duplicate_lesson", langs: duplicate_langs.join(', '))) if duplicate_langs.any?
   end
 
-  def has_local_contents
+  def has_local_contents?
     errors.add(:base, I18n.t("lesson.must_have_local_content")) if local_contents.empty?
   end
 end
