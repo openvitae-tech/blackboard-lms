@@ -7,9 +7,6 @@ export default class extends Controller {
     "downArrow",
     "courseDescription",
   ];
-  connect() {
-    console.log("Course card controller active");
-  }
 
   showMoreToggle(event) {
     if (this.courseDescriptionTarget.classList.contains("show-more-desc")) {

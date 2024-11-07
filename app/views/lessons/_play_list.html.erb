@@ -1,11 +1,11 @@
 <div class="basis-2/5">
-  <div class="border border-line-colour rounded overflow-auto max-h-screen flex flex-col gap-4" data-controller="details">
+  <div class="border border-line-colour rounded overflow-auto max-h-screen flex flex-col gap-4">
     <% modules_in_order(course).each do |course_module| %>
-      <!---- TODO Disabled temporarily ----->
+      <!-- TODO value hard coded temporarily -->
       <details class="<%= 'highlighted' if course_module.title == 'Body Language' %>"
-             data-details-target="details"
-             data-current-module="<%= 'true' if course_module.title == 'Body Language' %>">
-        <!--------------------------------------------------->
+        data-controller="module-lesson-toggler"
+        data-module-lesson-toggler-target="details"
+        data-current-module="<%= 'true' if course_module.title == 'Body Language' %>">
         <summary class="flex cursor-pointer items-center justify-between p-4 border border-line-colour rounded">
           <div class="flex flex-col justify-start text-base font-semibold">
             <span class=""><%= course_module.title %></span>
@@ -27,10 +27,9 @@
         </summary>
         <ul>
           <% lessons_in_order(course_module).each do |lesson| %>
-            <!---- TODO Disabled temporarily ----->
+            <!-- TODO value hard coded temporarily -->
             <li class="flex items-center justify-between border-b border-line-colour px-4 py-4 text-sm
-                  <%= 'highlighted' if lesson.title == 'Zone Distance' %>">
-              <!--------------------------------------------------->
+              <%= 'highlighted' if lesson.title == 'Zone Distance' %>">
               <div class="flex items-center gap-4">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
                   <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 items-center border"></span>

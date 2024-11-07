@@ -8,55 +8,52 @@
   </div>
 </div>
 <% modules_in_order(course).each do |course_module| %>
-  <div data-controller="details">
-    <!---- TODO Disabled temporarily ----->
-    <details class="<%= 'highlighted' if course_module.title == 'Body Language' %>"
-             data-details-target="details"
-             data-current-module="<%= 'true' if course_module.title == 'Body Language' %>">
-      <!--------------------------------------------------->
-      <summary class="border-line-colour rounded border flex cursor-pointer items-center justify-between p-4">
-        <h2 class="flex flex-col justify-start text-base font-semibold">
-          <span class=""><%= course_module.title %></span>
-          <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
-        </h2>
-        <span class="icon icon-down icon-small"></span>
-        <span class="icon-up hidden icon-small"></span>
-      </summary>
-      <ul class="border-line-colour rounded border">
-        <% lessons_in_order(course_module).each do |lesson| %>
-          <!---- TODO Disabled temporarily ----->
-          <li class="flex items-center justify-between border-t border-line-colour-light px-4 py-4 text-sm
-                <%= 'highlighted' if lesson.title == 'Zone Distance' %>">
-            <!--------------------------------------------------->
-            <div class="flex items-center gap-4">
-              <% if enrollment && lesson_completed?(enrollment, lesson) %>
-                <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 items-center border"></span>
-              <% end %>
-              <% if enrollment && !lesson_completed?(enrollment, lesson) %>
-                <span class="icon bg-gold-light border-gold icon-incomplete h-5 w-5 items-center border"></span>
-              <% end %>
-              <span class="text-letter-color-light"><%= lesson.title %></span>
-              <% if enrollment && !lesson_completed?(enrollment, lesson) %>
-                <div class="flex flex-col items-center gap-1 pl-2">
-                  <span class="text-secondary text-sm font-semibold"><%= lesson.progress %>%</span>
-                  <div class="bg-primary-light-50 h-1 w-7 rounded-full">
-                    <div class="bg-secondary h-1 rounded-full" style="width: <%= lesson.progress %>%"></div>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-            <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
-              <% if enrollment && lesson_completed?(enrollment, lesson) %>
-                <%= link_to replay_course_module_lesson_path(course, course_module, lesson), data: { turbo_method: "put" } do %>
-                  <span class="text-primary">Replay</span>
-                <% end %>
-              <% else %>
-                <span class="icon icon-play icon-small"></span>
-              <% end %>
+  <!-- TODO value hard coded temporarily -->
+  <details class="<%= 'highlighted' if course_module.title == 'Body Language' %>"
+    data-controller="module-lesson-toggler"
+    data-module-lesson-toggler-target="details"
+    data-current-module="<%= 'true' if course_module.title == 'Body Language' %>">
+    <summary class="border-line-colour rounded border flex cursor-pointer items-center justify-between p-4">
+      <h2 class="flex flex-col justify-start text-base font-semibold">
+        <span class=""><%= course_module.title %></span>
+        <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
+      </h2>
+      <span class="icon icon-down icon-small"></span>
+      <span class="icon-up hidden icon-small"></span>
+    </summary>
+    <ul class="border-line-colour rounded border">
+      <% lessons_in_order(course_module).each do |lesson| %>
+        <!-- TODO value hard coded temporarily -->
+        <li class="flex items-center justify-between border-t border-line-colour-light px-4 py-4 text-sm
+          <%= 'highlighted' if lesson.title == 'Zone Distance' %>">
+          <div class="flex items-center gap-4">
+            <% if enrollment && lesson_completed?(enrollment, lesson) %>
+              <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 items-center border"></span>
             <% end %>
-          </li>
-        <% end %>
-      </ul>
-    </details>
-  </div>
+            <% if enrollment && !lesson_completed?(enrollment, lesson) %>
+              <span class="icon bg-gold-light border-gold icon-incomplete h-5 w-5 items-center border"></span>
+            <% end %>
+            <span class="text-letter-color-light"><%= lesson.title %></span>
+            <% if enrollment && !lesson_completed?(enrollment, lesson) %>
+              <div class="flex flex-col items-center gap-1 pl-2">
+                <span class="text-secondary text-sm font-semibold"><%= lesson.progress %>%</span>
+                <div class="bg-primary-light-50 h-1 w-7 rounded-full">
+                  <div class="bg-secondary h-1 rounded-full" style="width: <%= lesson.progress %>%"></div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
+            <% if enrollment && lesson_completed?(enrollment, lesson) %>
+              <%= link_to replay_course_module_lesson_path(course, course_module, lesson), data: { turbo_method: "put" } do %>
+                <span class="text-primary">Replay</span>
+              <% end %>
+            <% else %>
+              <span class="icon icon-play icon-small"></span>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </details>
 <% end %>
