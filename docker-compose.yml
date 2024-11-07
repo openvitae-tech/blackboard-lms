@@ -36,3 +36,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+  cache:
+    image: redis:7.2.6-alpine
+    restart: always
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "redis-cli", "--raw", "incr", "ping"
+      ]
+    ports:
+      - '6379:6379'
+    command: redis-server --loglevel warning

@@ -1,6 +1,5 @@
 <%= render "shared/components/desktop_layout" do %>
-  <h1 class="mb-4 pl-0 text-xl font-bold">Dashboard</h1>
-  <div class="">
+  <div>
     <ol class="flex items-center space-x-2 text-secondary text-xs">
       <% team_list(current_user.team, @user.team).each do |team| %>
         <li class="flex space-x-1">
@@ -10,9 +9,19 @@
       <% end %>
     </ol>
   </div>
-  <%= render "shared/components/team_user_info" %>
-  <%= render "shared/components/team_user_course_status" %>
-  <div class="mt-4">
-    <h2 class="text-xl font-semibold">Enrolled Courses</h2>
+  <%= render "users/team_user_info" %>
+  <%= render "users/team_user_course_status" %>
+  <div class="my-8">
+    <% if has_enrolled_courses? %>
+      <p class="text-base font-medium mb-4">
+        <span class="">Enrolled courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'enrollment') %>)</span>
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <% @enrolled_courses.each do |course| %>
+          <%= render "courses/course_card_with_left_image", course: course %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 <% end %>

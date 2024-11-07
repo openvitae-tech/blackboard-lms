@@ -11,7 +11,7 @@
       </h2>
       <div class="flex gap-4 items-center">
         <% if policy(@course).edit? %>
-          <%= link_to edit_course_module_path(course, course_module) do %>
+          <%= link_to course_module_path(course, course_module) do %>
             <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
           <% end %>
         <% end %>

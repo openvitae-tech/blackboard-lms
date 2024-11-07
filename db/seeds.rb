@@ -165,6 +165,15 @@ class DevelopmentSeed
     l
   end
 
+  def create_local_content(lesson)
+    blob = ActiveStorage::Blob.create_and_upload!(
+      io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
+      filename: 'sample_video.mp4',
+      content_type: 'video/mp4'
+    )
+    lesson.local_contents.create!(lang: "english", blob_id: blob.id)
+  end
+
   def create_quiz(q, a, b, c, d, ans, course_module)
     q = Quiz.new(question: q, option_a: a, option_b: b, option_c: c, option_d: d, answer: ans,
                  course_module:)

@@ -80,7 +80,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  resources :users
+  resources :users, only: [:show], as: 'members', path: 'member'
 
   get 'error_401' => 'pages#unauthorized'
   get 'dashboard' => 'dashboards#index'
