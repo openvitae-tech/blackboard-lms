@@ -1,18 +1,29 @@
 .course-card-bg {
-    background-image: url("<%= asset_url('course_card_image1.png') %>");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-image: url("<%= asset_url('course_card_image1.png') %>");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .show-less-desc {
-    max-height: 95px;
+  max-height: 95px;
 }
 
 .show-more-desc {
-    max-height: max-content;
+  max-height: max-content;
 }
 
 input[type="date"]::-webkit-datetime-edit {
-    display:none;
+  display: none;
+}
+
+details.highlighted {
+  border: 2px solid #efeff1;
+}
+
+details.highlighted summary {
+  background-color: #eef7f7;
+}
+li.highlighted {
+  border: 1px solid #4c9a9a;
 }
