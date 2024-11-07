@@ -10,6 +10,10 @@ Blackboard-lms serves as an LMS platform tailored to meet the training demands o
 
 You can either refer this https://www.postgresql.org/ or use package manager of your os to install postgres. In case of a mac os you can use https://postgresapp.com/ to set it up very easily.
 
+### Install redis server
+
+You can refer to [this](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/) and install redis. Start the redis server in your local machine
+
 ### Install ruby 3.3.0
 
 The first step is to install ruby. In order to install ruby use rbenv or rvm so that you can easily manage the different ruby versions.
