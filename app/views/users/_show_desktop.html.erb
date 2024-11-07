@@ -1,6 +1,5 @@
 <%= render "shared/components/desktop_layout" do %>
-  <h1 class="mb-4 pl-0 text-xl font-bold">Dashboard</h1>
-  <div class="">
+  <div>
     <ol class="flex items-center space-x-2 text-secondary text-xs">
       <% team_list(current_user.team, @user.team).each do |team| %>
         <li class="flex space-x-1">
@@ -10,8 +9,8 @@
       <% end %>
     </ol>
   </div>
-  <%= render "shared/components/team_user_info" %>
-  <%= render "shared/components/team_user_course_status" %>
+  <%= render "users/team_user_info" %>
+  <%= render "users/team_user_course_status" %>
   <div class="my-8">
     <% if has_enrolled_courses? %>
       <p class="text-base font-medium mb-4">
