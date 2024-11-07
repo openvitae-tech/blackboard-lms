@@ -5,15 +5,10 @@ require 'open-uri'
 require 'tempfile'
 
 class UploadVideoToVimeoService
-  attr_reader :file
+  include Singleton
 
-  def initialize(file)
-    @file = file
-  end
-
-  def process
-    response = generate_upload_url
-
+  def upload_video(file)
+    response = generate_upload_url(file)
     unless response.is_a?(Net::HTTPSuccess)
       log_error_to_sentry(response, "Failed to generate upload url")
       return
@@ -24,7 +19,7 @@ class UploadVideoToVimeoService
     upload_url = response_data.dig('upload', 'upload_link')
     vimeo_link = response_data['link']
 
-    upload_response = upload_to_vimeo(upload_url)
+    upload_response = upload_to_vimeo(upload_url, file)
 
     unless upload_response.is_a?(Net::HTTPSuccess)
       log_error_to_sentry(response, "Failed upload video to vimeo")
@@ -37,7 +32,7 @@ class UploadVideoToVimeoService
 
   private
 
-  def generate_upload_url
+  def generate_upload_url(file)
     url = URI.parse('https://api.vimeo.com/me/videos')
     access_token = Rails.application.credentials.dig(:vimeo, :access_token)
 
@@ -57,10 +52,10 @@ class UploadVideoToVimeoService
     Net::HTTP.start(url.hostname, url.port, use_ssl: true) { |http| http.request(request) }
   end
 
-  def upload_to_vimeo(upload_url)
+  def upload_to_vimeo(upload_url, file)
     Tempfile.create(['video', File.extname(file.filename.to_s)]) do |tempfile|
       tempfile.binmode
-      tempfile.write(URI.open(@file.url, 'rb').read)
+      tempfile.write(URI.open(file.url, 'rb').read)
       tempfile.rewind
       url = URI.parse(upload_url)
       request = Net::HTTP::Patch.new(url)

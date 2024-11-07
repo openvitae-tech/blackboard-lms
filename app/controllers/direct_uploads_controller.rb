@@ -3,6 +3,8 @@
 class DirectUploadsController < ActiveStorage::DirectUploadsController
   protect_from_forgery with: :null_session
 
+  before_action :authenticate_user!
+
   def create
     blob = ActiveStorage::Blob.create_before_direct_upload!(**upload_blob_attributes)
 

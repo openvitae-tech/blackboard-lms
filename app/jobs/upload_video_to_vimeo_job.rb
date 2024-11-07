@@ -4,6 +4,7 @@ class UploadVideoToVimeoJob < BaseJob
     return if id.nil?
 
     file = ActiveStorage::Blob.find(id)
-    UploadVideoToVimeoService.new(file).process
+    service = UploadVideoToVimeoService.instance
+    service.upload_video(file)
   end
 end

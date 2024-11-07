@@ -20,7 +20,6 @@ class LocalContent < ApplicationRecord
   has_one_attached :video
 
   before_create :attach_blob_to_video
-  after_create :upload_to_vimeo, if: -> { Rails.env.production? }
 
   validates :lang, presence: true
   validate :presence_of_blob_id
@@ -34,9 +33,5 @@ class LocalContent < ApplicationRecord
   def attach_blob_to_video
     blob = ActiveStorage::Blob.find(blob_id)
     video.attach(blob)
-  end
-
-  def upload_to_vimeo
-    UploadVideoToVimeoJob.perform_async(video.blob.id)
   end
 end

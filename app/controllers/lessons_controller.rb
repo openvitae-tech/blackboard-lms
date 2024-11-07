@@ -2,9 +2,9 @@
 
 class LessonsController < ApplicationController
   before_action :set_course
-  before_action :load_course_module
+  before_action :set_course_module
   before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]
-  before_action :load_video, only: :show
+  before_action :set_video, only: :show
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
@@ -28,20 +28,23 @@ class LessonsController < ApplicationController
   # POST /lessons or /lessons.json
   def create
     authorize Lesson
-    @lesson = @course_module.lessons.create!(lesson_params)
+    service = Lessons::CreateService.instance
 
-    service = CourseManagementService.instance
-
-    respond_to do |format|
-      service.update_lesson_ordering!(@course_module, @lesson, :create)
-      format.html do
-        redirect_to course_module_lesson_url(@course, @course_module, @lesson),
-                    notice: 'Lesson was successfully created.'
+    begin
+      @lesson = service.create_lesson!(lesson_params, @course_module)
+      respond_to do |format|
+        format.html do
+          redirect_to course_module_lesson_url(@course, @course_module, @lesson),
+                      notice: 'Lesson was successfully created.'
+        end
+        format.json { render :show, status: :created, location: @lesson }
       end
-      format.json { render :show, status: :created, location: @lesson }
-    rescue ActiveRecord::RecordInvalid
-      format.html { render :new, status: :unprocessable_entity }
-      format.json { render json: @lesson.errors, status: :unprocessable_entity }
+    rescue ActiveRecord::RecordInvalid => exception
+      @lesson = exception.record
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @lesson.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -133,7 +136,7 @@ class LessonsController < ApplicationController
     @course = Course.find(params[:course_id])
   end
 
-  def load_course_module
+  def set_course_module
     @course_module = @course.course_modules.find(params[:module_id])
   end
 
@@ -162,11 +165,16 @@ class LessonsController < ApplicationController
     vendor_response['html'] if vendor_response.has_key?('html')
   end
 
-  def load_video
+  def set_video
     @video = if params[:lang].blank?
-               @lesson.local_contents.first.video
+                load_default_video
              else
                @lesson.local_contents.find_by!(lang: params[:lang]).video
              end
+  end
+
+  def load_default_video
+    default_languge = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE)
+    default_languge.present? ? default_languge.video : @lesson.local_contents.first.video
   end
 end

@@ -4,7 +4,8 @@ export default class extends Controller {
   static targets = [
     "nestedRecordContainer",
     "nestedRecordTemplate",
-    "uploadButton"
+    "uploadButton",
+    "hasError"
     ];
 
   initialize() {
@@ -18,7 +19,7 @@ export default class extends Controller {
 
       this.setButtonState(event.detail.isActive);
     });
-    this.addRecord();
+    this.hasErrorTarget.value === "false" && this.addRecord();
     this.shouldShowRemoveButton();
   }
 
