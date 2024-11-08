@@ -26,9 +26,9 @@ export default class extends Controller {
     const fileType = this.fileInputTarget.dataset.fileType;
 
     if (file) {
+      const reader = new FileReader();
       if (this.hasPreviewContainerTarget) {
         if (file.type.startsWith("image/")) {
-          const reader = new FileReader();
           reader.onload = () => {
             this.previewTarget.src = reader.result;
             this.previewContainerTarget.classList.remove("hidden");
