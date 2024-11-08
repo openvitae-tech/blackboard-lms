@@ -1,4 +1,6 @@
 # .rubocop.yml
+require:
+  - rubocop-rails
 AllCops:
   TargetRubyVersion: '3.3.0'
   SuggestExtensions: false
