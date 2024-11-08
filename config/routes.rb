@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   resources :teams
 
+  resources :direct_uploads, only: :create
+
   resources :invites, only: %i[new create] do
     member do
       put :resend
@@ -78,7 +80,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  resources :users
+  resources :users, only: [:show], as: 'members', path: 'member'
 
   get 'error_401' => 'pages#unauthorized'
   get 'dashboard' => 'dashboards#index'
@@ -90,7 +92,9 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  root 'courses#index'
+  devise_scope :user do
+    root 'users/sessions#new'
+  end
 
   draw :sidekiq_web
 end

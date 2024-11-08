@@ -28,6 +28,8 @@
 #       enabled: "ON"
 
 en:
+  must_exist: "%{entity} must exist"
+  cant_blank: "%{field} can't be blank"
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
   course:
@@ -57,6 +59,11 @@ en:
     invalid_csv: 'Failed to send invite. Please check the csv file format.'
     invite_sent: 'Invitation sent to %{email}'
     invalid_user: 'Failed to invite user, are you sure that this user exists ?'
+  local_content:
+    video_not_found: 'Video for %{lang} must exists'
+    lang_exists: '%{lang} already exists'
+  lesson:
+    duplicate_lesson: 'Lesson cannot have multiple local contents for the same language: %{langs}'
   team:
     created: 'Team created successfully'
     updated: 'Team updated successfully'

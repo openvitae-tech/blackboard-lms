@@ -1,6 +1,6 @@
 <tr class="whitespace-nowrap text-xs font">
   <td class="px-6 py-4  flex  gap-4 items-center">
-    <%= link_to user_path(member), class: "cursor-pointer" do %>
+    <%= link_to member_path(member), class: "cursor-pointer" do %>
       <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
     <% end %>
     <span class="ml-2 font-medium text-sm"><%= member.name %></span>

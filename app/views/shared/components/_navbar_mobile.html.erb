@@ -1,19 +1,19 @@
 <nav class="p-4 flex flex-wrap box-shadow-medium  items-center justify-between w-full gap-4">
   <div class="flex flex-row justify-between items-center w-full">
-        <label for="sidebar-toggle" class="flex items-center cursor-pointer">
-            <span class="icon icon-menu icon-small"></span>
-        </label> 
-        <%= image_tag "superskill_logo_teal.png",  alt: "Superskill", class: "h-3 w-16" %>
-        <div class="flex gap-5">
-          <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
-            <span class="h-6 w-6 icon icon-small icon-notification"></span>
-          <% end %>
-          <%= link_to settings_path, class: "inline-block hover:pointer" do %>
-            <span class="h-6 w-6 icon icon-small icon-user-top"></span>
-          <% end %>
-        </div>
-    </div> 
-    <%- if controller_name == 'courses' %>
+    <label for="sidebar-toggle" class="flex items-center cursor-pointer">
+      <span class="icon icon-menu icon-small"></span>
+    </label>
+    <%= image_tag "instruo_logo_blue_small.png",  alt: "Instruo", class: "h-4 w-16" %>
+    <div class="flex gap-5">
+      <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
+        <span class="h-6 w-6 icon icon-small icon-notification"></span>
+      <% end %>
+      <%= link_to settings_path, class: "inline-block hover:pointer" do %>
+        <span class="h-6 w-6 icon icon-small icon-user-top"></span>
+      <% end %>
+    </div>
+  </div>
+  <%- if controller_name == 'courses' %>
     <div class="relative rounded-md shadow-sm w-full">
       <%= form_tag search_courses_path, method: :get do %>
         <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
@@ -24,5 +24,5 @@
         </div>
       <% end %>
     </div>
-    <% end %>
+  <% end %>
 </nav>

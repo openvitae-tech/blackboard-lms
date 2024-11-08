@@ -3,7 +3,7 @@
     <%= render "devise/shared/left_side_desktop" %>
     <div class="flex h-full items-center justify-center right-side">
       <div class="bg-white w-[528px]">
-        <%= image_tag "login_page_logo_grey.png", alt: "Superskill", class: "mx-auto mb-12 h-10" %>
+        <%= image_tag "instruo_logo_blue.png", alt: "Instruo", class: "mx-auto mb-12 h-10" %>
         <div class="rounded-lg p-8 box-shadow-large">
           <h1 class="my-8 page-heading">OTP</h1>
           <%= form_with url: logins_path, scope: :login, method: :post, data: { controller: "otp", action: "input->otp#updateHiddenOtp" } do |form| %>

@@ -1,1 +1,2 @@
+echo "Running precommit hooks"
 bundle exec rails rubocop

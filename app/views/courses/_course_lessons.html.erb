@@ -1,5 +1,5 @@
 <% modules_in_order(course).each do |course_module| %>
-  <details class="border-line-colour mx-4 mb-6 rounded border">
+  <details class="border-line-colour mx-4 my-6 rounded border">
     <summary class="flex items-center justify-between p-6 cursor-pointer">
       <h2 class="text-black0 text-base font-semibold">
         <% if policy(course_module).show? %>
@@ -11,7 +11,7 @@
       </h2>
       <div class="flex gap-4 items-center">
         <% if policy(@course).edit? %>
-          <%= link_to edit_course_module_path(course, course_module) do %>
+          <%= link_to course_module_path(course, course_module) do %>
             <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
           <% end %>
         <% end %>

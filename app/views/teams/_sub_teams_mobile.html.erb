@@ -1,8 +1,8 @@
-<div id="team-list-mobile" class="flex flex-col gap-4 py-6">
+<ul id="team-list-desktop" class="flex flex-col gap-4 mt-6 overflow-y-auto max-h-[240px]">
   <% team.sub_teams.each do |sub_team| %>
-    <%= render "teams/team_mobile", team: sub_team %>
+    <%= render 'teams/team_mobile', team: sub_team %>
   <% end %>
-</div>
+</ul>
 
 <div class="sticky bottom-6 justify-center rounded text-center bg-primary end-4 start-4">
   <% if policy(team).new?  %>

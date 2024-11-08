@@ -1,0 +1,41 @@
+<div class="p-6 bg-white  rounded box-shadow-medium mt-6" data-controller="team-user-status user-status-confirmation">
+   <div class="flex justify-between pb-4">
+      <p class="text-base font-semibold text-primary">
+         <%= @user.name %>
+      </p>
+      <div class="flex space-x-3 items-center">
+         <div class="flex items-center space-x-2 bg-primary-light-50 py-1 px-2 rounded" data-user-status-confirmation-target="activeUser">
+            <span class="bg-cover inline-block icon-green-circle icon-tiny"></span>
+            <p class="text-xs text-primary">Active</p>
+         </div>
+         <div class="flex items-center space-x-2 bg-danger-light py-1 px-2 rounded hidden" data-user-status-confirmation-target="inactiveUser">
+            <span class="bg-cover inline-block icon-red-circle icon-tiny"></span>
+            <p class="text-xs text-danger">Deactivated</p>
+         </div>
+         <label for="" class="flex items-center cursor-pointer" data-action="click->team-user-status#toggleDropdown">
+         <span class="icon icon-more-vertical icon-small"></span>
+         </label> 
+         <div class="absolute right-6 mt-6 bg-white rounded box-shadow-medium hidden" 
+            data-team-user-status-target="deactivateMenu" 
+            data-user-status-confirmation-target="deactivateMenu"
+            data-activate="false">
+            <p class="text-xm cursor-pointer px-2 py-3" data-action="click->team-user-status#showConfirmation">Deactivate</p>
+         </div>
+      </div>
+   </div>
+   <div class="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+      <div class="flex items-center">
+         <span class="text-sm mr-2">Role:</span>
+         <p class="text-sm"><%= @user.role %></p>
+      </div>
+      <div class="flex items-center space-x-2">
+         <span class="icon icon-at-sign icon-small"></span>
+         <p class="text-sm"><%= @user.email %></p>
+      </div>
+      <div class="flex items-center space-x-2">
+         <span class="icon icon-smartphone icon-small"></span>
+         <p class="text-sm"><%= @user.phone %></p>
+      </div>
+   </div>
+   <%= render "shared/components/confirmation_modal" %>
+</div>

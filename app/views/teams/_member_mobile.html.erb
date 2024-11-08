@@ -1,7 +1,9 @@
-<div class="flex flex-col box-shadow-medium rounded max-w-md ">
+<li class="flex flex-col box-shadow-medium rounded max-w-md">
   <div class="flex gap-4 items-center border-b border-line-colour-light p-4">
     <div class="inline-block w-12 h-12">
-      <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
+      <%= link_to member_path(member), class: "cursor-pointer" do %>
+        <%= render 'shared/components/profile_pic', letter: letter_avatar(member) %>
+      <% end %>
     </div>
     <div class="flex flex-col w-full">
       <div class="flex justify-between items-center">
@@ -35,4 +37,4 @@
       <% end %>
     </div>
   </div>
-</div>
+</li>
