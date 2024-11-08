@@ -3,7 +3,7 @@
 RSpec.describe 'Request spec for GET /courses/new' do
   describe 'accessing new course page by non admin' do
     %i[owner manager learner].each do |role|
-      before(:each) do
+      before do
         user = create :user, role
         sign_in user
       end
@@ -17,7 +17,7 @@ RSpec.describe 'Request spec for GET /courses/new' do
   end
 
   describe 'access new course by admin' do
-    before(:each) do
+    before do
       admin = create :user, :admin
       sign_in admin
     end

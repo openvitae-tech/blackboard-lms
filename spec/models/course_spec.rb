@@ -6,7 +6,7 @@ RSpec.describe Course, type: :model do
   describe '#enroll!' do
     subject { create :course }
 
-    before(:each) do
+    before do
       @user = create :user, :learner
     end
 
@@ -39,7 +39,7 @@ RSpec.describe Course, type: :model do
   describe '#undo_enroll!' do
     subject { create :course }
 
-    before(:each) do
+    before do
       @user = create :user, :learner
       subject.enroll!(@user)
     end
@@ -146,13 +146,13 @@ RSpec.describe Course, type: :model do
   describe '#published?' do
     it 'returns false if the module is not published' do
       course = course_with_associations
-      expect(course.published?).to be_falsey
+      expect(course).not_to be_published
     end
 
     it 'returns true if the module is not published' do
       course = course_with_associations
       course.update(is_published: true)
-      expect(course.published?).to be_truthy
+      expect(course).to be_published
     end
   end
 
@@ -160,7 +160,7 @@ RSpec.describe Course, type: :model do
     it 'marks the course as published' do
       course = course_with_associations
       course.publish!
-      expect(course.published?).to be_truthy
+      expect(course).to be_published
     end
   end
 
@@ -168,7 +168,7 @@ RSpec.describe Course, type: :model do
     it 'marks the course as unpublished' do
       course = course_with_associations
       course.undo_publish!
-      expect(course.published?).to be_falsey
+      expect(course).not_to be_published
     end
   end
 end

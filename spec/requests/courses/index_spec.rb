@@ -2,7 +2,7 @@
 
 RSpec.describe 'Request spec for GET /courses' do
   describe 'accessing index page by learner' do
-    before(:each) do
+    before do
       @team = create :team
       @user = create :user, :learner, team: @team
       sign_in @user
@@ -19,7 +19,7 @@ RSpec.describe 'Request spec for GET /courses' do
 
     it 'for learners results contains only published courses' do
       get('/courses')
-      expect(assigns[:available_courses].all?(&:published?)).to be_truthy
+      expect(assigns[:available_courses]).to be_all(&:published?)
     end
 
     it 'for learners results contains any enrolled courses' do
@@ -31,7 +31,7 @@ RSpec.describe 'Request spec for GET /courses' do
 
   describe 'accessing index page by manager or owner' do
     %i[manager owner].each do |role|
-      before(:each) do
+      before do
         @team = create :team
         @user = create :user, role, team: @team
         sign_in @user
@@ -48,13 +48,13 @@ RSpec.describe 'Request spec for GET /courses' do
 
       it "for #{role} results contains only published courses" do
         get('/courses')
-        expect(assigns[:available_courses].all?(&:published?)).to be_truthy
+        expect(assigns[:available_courses]).to be_all(&:published?)
       end
     end
   end
 
   describe 'accessing index page by admin' do
-    before(:each) do
+    before do
       admin = create :user, :admin
       sign_in admin
       @courses = Array.new(4) { |index| course_with_associations(published: index.even?) }

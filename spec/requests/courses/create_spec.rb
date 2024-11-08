@@ -3,7 +3,7 @@
 RSpec.describe 'Request spec for POST /course' do
   describe 'Creating course by non admin' do
     %i[owner manager learner].each do |role|
-      before(:each) do
+      before do
         user = create :user, role
         sign_in user
       end
@@ -19,7 +19,7 @@ RSpec.describe 'Request spec for POST /course' do
 
         expect do
           post('/courses', params:)
-        end.to change { Course.count }.by(0)
+        end.not_to(change(Course, :count))
         expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
         expect(response.status).to be(302)
       end
@@ -27,7 +27,7 @@ RSpec.describe 'Request spec for POST /course' do
   end
 
   describe 'Create a new course by admin' do
-    before(:each) do
+    before do
       admin = create :user, :admin
       sign_in admin
     end
@@ -43,7 +43,7 @@ RSpec.describe 'Request spec for POST /course' do
 
       expect do
         post('/courses', params:)
-      end.to change { Course.count }.by(0)
+      end.not_to(change(Course, :count))
 
       expect(response.status).to be(422)
     end
@@ -59,7 +59,7 @@ RSpec.describe 'Request spec for POST /course' do
 
       expect do
         post('/courses', params:)
-      end.to change { Course.count }.by(0)
+      end.not_to(change(Course, :count))
       expect(response.status).to be(422)
     end
 
@@ -74,7 +74,7 @@ RSpec.describe 'Request spec for POST /course' do
 
       expect do
         post('/courses', params:)
-      end.to change { Course.count }.by(0)
+      end.not_to(change(Course, :count))
 
       expect(response.status).to be(422)
     end
@@ -90,7 +90,7 @@ RSpec.describe 'Request spec for POST /course' do
 
       expect do
         post('/courses', params:)
-      end.to change { Course.count }.by(1)
+      end.to change(Course, :count).by(1)
 
       expect(response.status).to be(302) # redirect to course details page
     end

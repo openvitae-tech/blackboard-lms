@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe UploadVideoToVimeoJob do
-  after(:each) do
+  after do
     Sidekiq::Job.clear_all
   end
 
@@ -11,8 +11,8 @@ RSpec.describe UploadVideoToVimeoJob do
     it 'ensures the job is enqueued' do
       Sidekiq::Testing.fake! do
         expect do
-          UploadVideoToVimeoJob.perform_async
-        end.to change(UploadVideoToVimeoJob.jobs, :size).by(1)
+          described_class.perform_async
+        end.to change(described_class.jobs, :size).by(1)
       end
     end
   end

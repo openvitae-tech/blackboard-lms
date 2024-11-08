@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Enrollment, type: :model do
   describe '#complete_lesson!' do
-    subject { Enrollment.new }
+    subject { described_class.new }
 
     it 'sets the current module and lesson id in course enrollment' do
       allow(subject).to receive(:save!).and_return(true)
