@@ -169,3 +169,9 @@
 .radio-check-button {
   @apply absolute right-2 top-1/2 transform -translate-y-1/2  text-primary hover:ring-white hover:border-primary focus:ring-white focus:border-primary checked:bg-primary checked:ring-white;
 }
+.item-selected {
+  @apply bg-primary text-white;
+}
+.item-selected span {
+  @apply text-white;
+}
