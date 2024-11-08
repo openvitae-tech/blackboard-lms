@@ -15,7 +15,7 @@ class UserManagementService
   end
 
   def bulk_invite(invited_by_user, emails, role, team)
-    emails.each do
+    emails.each do |email|
       invite(invited_by_user, email, role, team)
     end
   end
