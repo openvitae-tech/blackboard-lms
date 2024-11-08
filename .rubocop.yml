@@ -15,7 +15,7 @@ AllCops:
     - "config/environments/production.rb"
     - "spec/spec_helper.rb"
     - "tmp/*"
-    - "vendor/*"
+    - "vendor/**/*"
     - "docker-build"
     - "db/seeds.rb"
     - "db/migrate/*"
