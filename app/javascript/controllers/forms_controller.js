@@ -40,11 +40,7 @@ export default class extends Controller {
           this.showError("Only image files are allowed.");
         }
       } else {
-        if (
-          file.type === "text/csv" ||
-          file.type === "text/plain" ||
-          file.type === "application/json"
-        ) {
+        if (file.type === "text/csv" || file.type === "text/plain") {
           reader.readAsDataURL(file);
         } else {
           this.showError("Only CSV files are allowed.");
