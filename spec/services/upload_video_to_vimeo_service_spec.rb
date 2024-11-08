@@ -7,6 +7,8 @@ RSpec.describe UploadVideoToVimeoService do
   let(:local_content) { lesson.local_contents.first }
   subject { described_class.instance }
 
+  let(:local_content) { create :local_content }
+
   describe '#upload_to_vimeo' do
     before do
       stub_vimeo_generate_upload_url_api(local_content.video.blob)

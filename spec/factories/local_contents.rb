@@ -11,5 +11,7 @@ FactoryBot.define do
       )
       local_content.blob_id = blob.id
     end
+
+    lesson
   end
 end

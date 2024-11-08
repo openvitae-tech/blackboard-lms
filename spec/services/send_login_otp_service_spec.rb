@@ -9,6 +9,7 @@ RSpec.describe SendLoginOtpService do
     before do
       stub_msg91_sms_api(user.phone, user.otp)
     end
+
     it 'should_send_otp_as_sms' do
       response = send_login_otp_service(user.phone, user).process
 

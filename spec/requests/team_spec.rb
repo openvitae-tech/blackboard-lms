@@ -2,7 +2,7 @@
 
 RSpec.describe 'Request spec for feature team' do
   describe 'Create a new team by manager' do
-    before(:each) do
+    before do
       @team = create :team
       manager = create :user, :manager, team: @team, learning_partner: @team.learning_partner
       sign_in manager
@@ -19,7 +19,7 @@ RSpec.describe 'Request spec for feature team' do
 
       expect do
         post('/teams', params:)
-      end.to change { Team.count }.by(1)
+      end.to change(Team, :count).by(1)
     end
 
     it 'Allows manager to update a team' do

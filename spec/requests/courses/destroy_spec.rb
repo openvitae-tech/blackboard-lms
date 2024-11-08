@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-RSpec.fdescribe 'Request spec for DELETE /courses/:id' do
+RSpec.describe 'Request spec for DELETE /courses/:id' do
   describe 'delete a course by non admin' do
     %i[owner manager learner].each do |role|
-      before(:each) do
+      subject { @course }
+
+      before do
         user = create :user, role
         sign_in user
         @course = course_with_associations
       end
-
-      subject { @course }
 
       it "Fails when #{role} user tries to unpublish a course" do
         delete("/courses/#{subject.id}")
@@ -20,7 +20,7 @@ RSpec.fdescribe 'Request spec for DELETE /courses/:id' do
   end
 
   describe 'delete a course by by admin' do
-    before(:each) do
+    before do
       admin = create :user, :admin
       sign_in admin
     end
@@ -28,7 +28,7 @@ RSpec.fdescribe 'Request spec for DELETE /courses/:id' do
     it 'Success when admin deletes a course' do
       course = course_with_associations
 
-      expect { delete("/courses/#{course.id}") }.to change { Course.count }.by(-1)
+      expect { delete("/courses/#{course.id}") }.to change(Course, :count).by(-1)
 
       expect(flash[:notice]).to eq(I18n.t('course.deleted'))
     end

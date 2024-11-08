@@ -3,12 +3,12 @@
 RSpec.describe 'Request spec for PUT /course' do
   describe 'Creating course by non admin' do
     %i[owner manager learner].each do |role|
-      before(:each) do
+      subject { course_with_associations }
+
+      before do
         user = create :user, role
         sign_in user
       end
-
-      subject { course_with_associations }
 
       it "Fails when #{role} user tries to update a course" do
         params = {
@@ -25,13 +25,13 @@ RSpec.describe 'Request spec for PUT /course' do
   end
 
   describe 'Update a course by admin' do
-    before(:each) do
+    subject { @course }
+
+    before do
       admin = create :user, :admin
       sign_in admin
       @course = course_with_associations
     end
-
-    subject { @course }
 
     it 'fails when the title is blank' do
       params = {

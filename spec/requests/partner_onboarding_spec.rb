@@ -2,7 +2,7 @@
 
 RSpec.describe 'Request spec for LearningPartner' do
   describe 'Listing partners -> GET /learning_partners' do
-    before(:each) do
+    before do
       admin_user = create :user, :admin
       sign_in admin_user
     end
@@ -32,7 +32,7 @@ RSpec.describe 'Request spec for LearningPartner' do
   end
 
   describe 'Onboarding partner -> POST /learning_partners' do
-    before(:each) do
+    before do
       admin_user = create :user, :admin
       sign_in admin_user
     end
@@ -157,7 +157,7 @@ RSpec.describe 'Request spec for LearningPartner' do
 
       expect do
         post('/learning_partners', params:)
-      end.to change { Team.count }.by(1)
+      end.to change(Team, :count).by(1)
     end
 
     it 'Publishes an event onboarding_initiated' do
@@ -171,7 +171,7 @@ RSpec.describe 'Request spec for LearningPartner' do
 
       expect do
         post '/learning_partners', params:
-      end.to change { Event.count }.by(1)
+      end.to change(Event, :count).by(1)
 
       event = Event.last
       expect(event.name).to eq('onboarding_initiated')
