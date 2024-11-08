@@ -5,12 +5,11 @@ FactoryBot.define do
     lang { 'english' }
     after(:build) do |local_content|
       blob = ActiveStorage::Blob.create_and_upload!(
-        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
+        io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
         filename: 'sample_video.mp4',
         content_type: 'video/mp4'
       )
       local_content.blob_id = blob.id
     end
-    lesson
   end
 end

@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe LocalContent, type: :model do
-  let(:local_content) { create :local_content }
+  let(:lesson) { create :lesson }
+  let(:local_content) { lesson.local_contents.first }
 
   describe '#title' do
     it 'should not be valid without language' do
@@ -24,7 +25,7 @@ RSpec.describe LocalContent, type: :model do
 
     it 'should attach blob to video' do
       blob = ActiveStorage::Blob.create_and_upload!(
-        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
+        io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
         filename: 'sample_video.mp4',
         content_type: 'video/mp4'
       )
