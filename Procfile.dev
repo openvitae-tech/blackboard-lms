@@ -1,2 +1,3 @@
 web: bin/rails server
 css: bin/rails tailwindcss:watch
+sidekiq: bundle exec sidekiq -e development -C config/sidekiq.yml
