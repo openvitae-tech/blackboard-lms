@@ -24,7 +24,7 @@ RSpec.describe LocalContent, type: :model do
 
     it 'should attach blob to video' do
       blob = ActiveStorage::Blob.create_and_upload!(
-        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
+        io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
         filename: 'sample_video.mp4',
         content_type: 'video/mp4'
       )

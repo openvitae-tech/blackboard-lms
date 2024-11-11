@@ -9,7 +9,7 @@ RSpec.describe Lessons::CreateService do
   describe '#create_lesson' do
     it 'should create lesson' do
       blob = ActiveStorage::Blob.create_and_upload!(
-        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'sample_video.mp4')),
+        io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
         filename: 'sample_video.mp4',
         content_type: 'video/mp4'
       )

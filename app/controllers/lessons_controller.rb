@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class LessonsController < ApplicationController
+  include LessonsHelper
+
   before_action :set_course
   before_action :set_course_module
   before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]
@@ -11,7 +13,7 @@ class LessonsController < ApplicationController
     authorize @lesson
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @course_modules = helpers.modules_in_order(@course)
-    @video_iframe = get_video_iframe
+    @video_iframe = get_video_iframe(@video)
   end
 
   # GET /lessons/new
@@ -155,15 +157,7 @@ class LessonsController < ApplicationController
                                    local_contents_attributes: %i[id blob_id lang _destroy])
   end
 
-  def get_video_iframe
-    video_url = @video.blob.metadata['url']
 
-    return unless video_url.present?
-
-    vimeo_service = VimeoService.instance
-    vendor_response = vimeo_service.resolve_video_url(video_url)
-    vendor_response['html'] if vendor_response.has_key?('html')
-  end
 
   def set_video
     @video = if params[:lang].blank?

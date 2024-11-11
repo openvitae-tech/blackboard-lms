@@ -10,6 +10,7 @@ export default class extends Controller {
 
   initialize() {
     this.videoFieldCount = 1;
+    this.isValidForAddRecord = this.hasErrorTarget.value === "false" && this.data.get("actionName") !== "edit";
   }
   connect() {
     this.nestedRecordTemplate = this.nestedRecordTemplateTarget;
@@ -19,7 +20,7 @@ export default class extends Controller {
 
       this.setButtonState(event.detail.isActive);
     });
-    this.hasErrorTarget.value === "false" && this.addRecord();
+    this.isValidForAddRecord && this.addRecord();
     this.shouldShowRemoveButton();
   }
 

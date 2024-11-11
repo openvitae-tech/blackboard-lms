@@ -8,6 +8,8 @@ class Lesson < ApplicationRecord
 
   has_many :local_contents, dependent: :destroy
 
+  validate :has_local_contents?
+
   has_rich_text :rich_description
 
   accepts_nested_attributes_for :local_contents, allow_destroy: true
@@ -27,9 +29,13 @@ class Lesson < ApplicationRecord
   private
 
   def unique_local_content_lang
-    langs = local_contents.map(&:lang)
+    langs = local_contents.reject(&:marked_for_destruction?).map(&:lang)
     duplicate_langs = langs.select { |lang| langs.count(lang) > 1 }.uniq
 
     errors.add(:base, I18n.t("lesson.duplicate_lesson", langs: duplicate_langs.join(', '))) if duplicate_langs.any?
+  end
+
+  def has_local_contents?
+    errors.add(:base, I18n.t("lesson.must_have_local_content")) if local_contents.reject(&:marked_for_destruction?).empty?
   end
 end
