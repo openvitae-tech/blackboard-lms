@@ -59,8 +59,8 @@ class LessonsController < ApplicationController
       service.update_lesson!(@lesson, lesson_params)
       respond_to do |format|
         format.html do
-            redirect_to course_module_lesson_path(@course, @course_module, @lesson),
-                        notice: 'Lesson was successfully updated.'
+          redirect_to course_module_lesson_path(@course, @course_module, @lesson),
+                      notice: 'Lesson was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @lesson }
       end
