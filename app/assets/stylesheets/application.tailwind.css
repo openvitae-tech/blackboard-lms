@@ -85,11 +85,11 @@
   }
 
   .side-bar-item {
-    @apply h-11 ps-8;
+    @apply h-11 ps-8 cursor-pointer text-primary bg-primary-light-50;
 
-    &:hover {
+    /* &:hover {
       @apply cursor-pointer text-primary bg-primary-light-50;
-    }
+    } */
 
     span {
       @apply text-sm font-medium;
@@ -101,10 +101,10 @@
   }
 
   .side-bar-item:focus-within {
-    @apply cursor-pointer text-primary bg-primary-light-50;
+    /* @apply cursor-pointer text-primary bg-primary-light-50; */
 
     span {
-      @apply cursor-pointer text-primary;
+      /* @apply cursor-pointer text-primary; */
     }
   }
 
@@ -174,4 +174,11 @@
 }
 .item-selected span {
   @apply text-white;
+}
+.item-selected svg {
+  @apply text-white fill-white stroke-white stroke-1;
+}
+
+.item-selected svg use + path {
+  @apply text-white fill-white stroke-white stroke-1 !important;
 }
