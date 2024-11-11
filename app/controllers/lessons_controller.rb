@@ -53,14 +53,20 @@ class LessonsController < ApplicationController
   # PATCH/PUT /lessons/1 or /lessons/1.json
   def update
     authorize @lesson
-    respond_to do |format|
-      if @lesson.update(lesson_params)
+    service = Lessons::UpdateService.instance
+
+    begin
+      service.update_lesson!(@lesson, lesson_params)
+      respond_to do |format|
         format.html do
-          redirect_to course_module_lesson_path(@course, @course_module, @lesson),
-                      notice: 'Lesson was successfully updated.'
+            redirect_to course_module_lesson_path(@course, @course_module, @lesson),
+                        notice: 'Lesson was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @lesson }
-      else
+      end
+    rescue ActiveRecord::RecordInvalid => exception
+      @lesson = exception.record
+      respond_to do |format|
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @lesson.errors, status: :unprocessable_entity }
       end
