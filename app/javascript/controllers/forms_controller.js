@@ -26,17 +26,25 @@ export default class extends Controller {
     const fileType = this.fileInputTarget.dataset.fileType;
 
     if (file) {
-      if (file.type.startsWith("image/")) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.previewTarget.src = reader.result;
-          this.previewContainerTarget.classList.remove("hidden");
-        };
-        reader.readAsDataURL(file);
-      } else if (file.type.startsWith("video/")) {
-        this.showError("Video files are not allowed.");
+      const reader = new FileReader();
+      if (this.hasPreviewContainerTarget) {
+        if (file.type.startsWith("image/")) {
+          reader.onload = () => {
+            this.previewTarget.src = reader.result;
+            this.previewContainerTarget.classList.remove("hidden");
+          };
+          reader.readAsDataURL(file);
+        } else if (file.type.startsWith("video/")) {
+          this.showError("Video files are not allowed.");
+        } else {
+          this.showError("Only image files are allowed.");
+        }
       } else {
-        this.showError("Only image files are allowed.");
+        if (file.type === "text/csv" || file.type === "text/plain") {
+          reader.readAsDataURL(file);
+        } else {
+          this.showError("Only CSV files are allowed.");
+        }
       }
     }
   }
@@ -51,8 +59,10 @@ export default class extends Controller {
     this.selectedFileNameTarget.style.color = "";
   }
   resetInput() {
-    this.previewContainerTarget.classList.add("hidden");
-    this.previewTarget.src = "";
+    if (this.hasPreviewContainerTarget) {
+      this.previewContainerTarget.classList.add("hidden");
+      this.previewTarget.src = "";
+    }
 
     this.fileInputTarget.value = "";
     this.selectedFileNameTarget.innerText = "No file chosen";

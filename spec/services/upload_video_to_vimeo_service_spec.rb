@@ -3,8 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe UploadVideoToVimeoService do
-  let(:local_content) { create :local_content }
   subject { described_class.instance }
+
+  let(:lesson) { create :lesson }
+  let(:local_content) { lesson.local_contents.first }
 
   describe '#upload_to_vimeo' do
     before do

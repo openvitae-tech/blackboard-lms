@@ -2,7 +2,7 @@
 
 RSpec.describe 'Request spec for user invites' do
   describe 'Invite new partner users by Admin' do
-    before(:each) do
+    before do
       admin_user = create :user, :admin
       @team = create :team
       sign_in admin_user
@@ -19,12 +19,12 @@ RSpec.describe 'Request spec for user invites' do
 
       expect do
         post '/invites', params:
-      end.to change { User.count }.by(1)
+      end.to change(User, :count).by(1)
     end
   end
 
   describe 'Invite new partner users by Manager' do
-    before(:each) do
+    before do
       @team = create :team
       manager_user = create :user, :manager, team: @team, learning_partner: @team.learning_partner
       sign_in manager_user
@@ -41,7 +41,7 @@ RSpec.describe 'Request spec for user invites' do
 
       expect do
         post '/invites', params:
-      end.to change { User.count }.by(1)
+      end.to change(User, :count).by(1)
     end
   end
 end

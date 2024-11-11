@@ -1,4 +1,7 @@
 # .rubocop.yml
+require:
+  - rubocop-rails
+  - rubocop-rspec
 AllCops:
   TargetRubyVersion: '3.3.0'
   SuggestExtensions: false
@@ -12,6 +15,7 @@ AllCops:
     - "config/environments/production.rb"
     - "spec/spec_helper.rb"
     - "tmp/*"
+    - "vendor/**/*"
     - "docker-build"
     - "db/seeds.rb"
     - "db/migrate/*"
@@ -26,4 +30,18 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 30
 Metrics/AbcSize:
+  Enabled: false
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/InstanceVariable:
+  Enabled: false
+RSpec/ExampleLength:
+  Max: 30
+RSpec/SubjectStub:
+  Enabled: false
+RSpec/AnyInstance:
+  Enabled: false
+RSpec/BeforeAfterAll:
   Enabled: false

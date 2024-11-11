@@ -5,6 +5,7 @@ class Lesson < ApplicationRecord
 
   validates :title, presence: true
   validate :unique_local_content_lang
+  validate :has_local_contents?
 
   has_many :local_contents, dependent: :destroy
 

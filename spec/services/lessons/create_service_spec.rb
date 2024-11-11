@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Lessons::CreateService do
-  let(:course_module) { create :course_module }
   subject { described_class.instance }
 
+  let(:course_module) { create :course_module }
+
   describe '#create_lesson' do
-    it 'should create lesson' do
+    it 'creates lesson' do
       blob = ActiveStorage::Blob.create_and_upload!(
         io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
         filename: 'sample_video.mp4',
@@ -16,7 +17,7 @@ RSpec.describe Lessons::CreateService do
 
       expect do
         subject.create_lesson!(lesson_params(blob), course_module)
-      end.to change { Lesson.count }.by(1).and change { LocalContent.count }.by(1)
+      end.to change(Lesson, :count).by(1).and change(LocalContent, :count).by(1)
     end
   end
 

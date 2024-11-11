@@ -3,13 +3,13 @@
 RSpec.describe 'Request spec for GET /courses/:id' do
   describe 'accessing new course page by non admin' do
     %i[owner manager learner].each do |role|
-      before(:each) do
+      subject { @course }
+
+      before do
         user = create :user, role
         sign_in user
         @course = course_with_associations
       end
-
-      subject { @course }
 
       it "Fails when #{role} user tries to access an unpublisehd course" do
         get("/courses/#{subject.id}")
@@ -27,13 +27,13 @@ RSpec.describe 'Request spec for GET /courses/:id' do
   end
 
   describe 'access course details by admin' do
-    before(:each) do
+    subject { @course }
+
+    before do
       admin = create :user, :admin
       sign_in admin
       @course = course_with_associations
     end
-
-    subject { @course }
 
     it 'Success when admin user tries to access an unpublisehd course' do
       get("/courses/#{subject.id}")

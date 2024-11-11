@@ -51,14 +51,6 @@ FactoryBot.define do
     answer { 'c' }
   end
 
-  factory :lesson do
-    title { Faker::Lorem.word }
-    rich_description { Faker::Lorem.paragraph }
-    video_streaming_source { 'example' }
-    duration { 60 }
-    course_module
-  end
-
   factory :course_module do
     title { Faker::Lorem.sentence(word_count: 6) }
     course
