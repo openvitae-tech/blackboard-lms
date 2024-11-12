@@ -97,4 +97,5 @@ Rails.application.routes.draw do
   end
 
   draw :sidekiq_web
+  draw :catch_all
 end
