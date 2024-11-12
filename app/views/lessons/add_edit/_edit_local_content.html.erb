@@ -1,0 +1,28 @@
+<% if builder.object.video.attached? %>
+  <div class="field-group mb-5">
+    <div class="my-8 text-sm flex">
+      <div class="grow text-slate-grey" style="pointer-events: none;">
+        <%= builder.select :lang, options_for_select(language_options, selected: builder.object.lang) %>
+      </div>
+      <%= builder.hidden_field :_destroy, label: "Delete" %>
+      <a href="javascript:void(0);" class="link flex items-center gap-2 rounded px-2 py-1 box-shadow-medium" data-action="click->lessons-form#removeRecord">
+        <span class="text-xs text-secondary">Remove</span>
+        <span class="icon icon-trash icon-small"></span>
+      </a>
+    </div>
+    <div class="flex items-center justify-center">
+      <div class="w-4/6 flex flex-col gap-4">
+        <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
+          <% video_iframe = get_video_iframe(builder.object.video) %>
+          <% if Rails.env.production? && video_iframe.present? %>
+            <%= video_iframe.html_safe %>
+          <% elsif Rails.env.development? %>
+            <%= video_tag rails_blob_path(builder.object.video), controls: true %>
+          <% else %>
+            <div class="w-full inline-block text-center">Uploaded video is under process. Please refresh the page after some time.</div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
