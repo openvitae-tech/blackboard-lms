@@ -13,7 +13,7 @@ class LessonsController < ApplicationController
     authorize @lesson
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @course_modules = helpers.modules_in_order(@course)
-    @video_iframe = get_video_iframe(@video)
+    @video_iframe = get_video_iframe(@local_content)
   end
 
   # GET /lessons/new

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module LessonsHelper
-  def get_video_iframe(video)
-    video_url = video.blob.metadata['url']
+  def get_video_iframe(local_content)
+    video_url = local_content.video.blob.metadata['url']
 
     return unless video_url.present?
 
