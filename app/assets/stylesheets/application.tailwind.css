@@ -87,25 +87,22 @@
   .side-bar-item {
     @apply h-11 ps-8;
 
-    &:hover {
-      @apply cursor-pointer text-primary bg-primary-light-50;
-    }
-
     span {
       @apply text-sm font-medium;
     }
   }
 
-  .side-bar-item-inner {
-    @apply flex  w-full h-11 flex-row items-center gap-4;
+  .side-bar-item-inner:hover{
+    span{
+      @apply text-primary
+    }
+    .icon{
+      @apply bg-primary
+    }
   }
 
-  .side-bar-item:focus-within {
-    @apply cursor-pointer text-primary bg-primary-light-50;
-
-    span {
-      @apply cursor-pointer text-primary;
-    }
+  .side-bar-item-inner {
+    @apply flex  w-full h-11 flex-row items-center gap-4;
   }
 
   .side-bar-footer {
@@ -168,4 +165,27 @@
 
 .radio-check-button {
   @apply absolute right-2 top-1/2 transform -translate-y-1/2  text-primary hover:ring-white hover:border-primary focus:ring-white focus:border-primary checked:bg-primary checked:ring-white;
+}
+
+.item-selected {
+  @apply bg-primary text-white;
+
+  span {
+    @apply text-white;
+  }
+  
+  .icon {
+    @apply bg-white;
+  }
+}
+
+.item-selected:hover{
+
+  span {
+    @apply text-primary-light-50;
+  }
+
+  .icon {
+    @apply bg-primary-light-50;
+  }
 }

@@ -5,37 +5,37 @@
   <div class="flex h-full flex-col justify-between pt-14">
     <ul class="flex flex-col gap-3">
       <% if policy(:dashboard).index? %>
-      <li class="side-bar-item">
-        <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
-          <span class="icon icon-home icon-small"></span>
-          <span class="">Home</span>
-        <% end %>
-      </li>
+        <li class="side-bar-item <%= 'item-selected' if  'teams' == 'Home' %>">
+          <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
+            <span class="icon icon-home icon-small"></span>
+            <span class="">Home</span>
+          <% end %>
+        </li>
       <% end %>
 
       <% if policy(:learning_partner).show? %>
-        <li class="side-bar-item">
+        <li class="side-bar-item <%= 'item-selected' if  'teams' == 'Partners' %>">
           <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-course icon-small"></span>
             <span class="">Partners</span>
           <% end %>
         </li>
       <% end %>
-      <li class="side-bar-item">
+      <li class="side-bar-item <%= 'item-selected' if  'teams' == 'My Course' %>">
         <%= link_to courses_path, class: "side-bar-item-inner" do %>
           <span class="icon icon-course icon-small"></span>
           <span class="">My Course</span>
         <% end %>
       </li>
       <% if policy(current_user.team || :team).show? %>
-        <li class="side-bar-item">
+        <li class="side-bar-item <%= 'item-selected' if  'teams' == 'teams' %>">
           <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
             <span class="icon icon-team icon-small"></span>
             <span class="">Team</span>
           <% end %>
         </li>
       <% end %>
-      <li class="side-bar-item">
+      <li class="side-bar-item <%= 'item-selected' if  'teams' == 'Support' %>">
         <%= link_to "#", class: "side-bar-item-inner" do %>
           <span class="icon icon-support icon-small"></span>
           <span class="">Support</span>
