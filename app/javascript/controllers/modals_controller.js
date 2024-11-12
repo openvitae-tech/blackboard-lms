@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["modalBox"];
+  static targets = ["modalBox","submitButton"];
   connect() {
     console.log("Modal connected");
   }
@@ -13,7 +13,12 @@ export default class extends Controller {
     this.modalBoxTarget.parentElement.removeAttribute("complete");
     this.modalBoxTarget.parentElement.innerText = "";
   }
-
+  submitModal(){
+    this.submitButtonTarget.classList.remove("bg-primary");
+    this.submitButtonTarget.classList.add("btn-default");
+    this.submitButtonTarget.innerHTML = "Submitting...";
+ 
+  }
   afterSubmit(event) {
     if (event.detail.success) {
       const fetchResponse = event.detail.fetchResponse
@@ -25,5 +30,8 @@ export default class extends Controller {
 
       Turbo.visit(fetchResponse.response.url)
     }
+    this.submitButtonTarget.classList.add("btn-default");
+
+    this.submitButtonTarget.setAttribute("disabled");
   }
 }
