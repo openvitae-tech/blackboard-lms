@@ -1,10 +1,10 @@
 <div class="basis-3/5">
   <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
-    <% if @video.attached? %>
+    <% if @local_content.video.attached? %>
       <% if Rails.env.production? && @video_iframe.present? %>
         <%= @video_iframe.html_safe %>
       <% elsif Rails.env.development? %>
-        <%= video_tag rails_blob_path(@video), controls: true %>
+        <%= video_tag rails_blob_path(@local_content.video), controls: true %>
       <% else %>
         <div class="w-full inline-block text-center">Uploaded video is under process. Please refresh the page after some time.</div>
       <% end %>

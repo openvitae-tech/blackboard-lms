@@ -61,7 +61,7 @@ module ApplicationHelper
   end
 
   def selected_language
-    LocalContent::SUPPORTED_LANGUAGES[(@lang || LocalContent::DEFAULT_LANGUAGE).to_sym]
+    LocalContent::SUPPORTED_LANGUAGES[@local_content.lang.to_sym]
   end
 
   def language_options
