@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class LessonsController < ApplicationController
+  include LessonsHelper
+
   before_action :set_course
   before_action :set_course_module
   before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]
@@ -11,7 +13,7 @@ class LessonsController < ApplicationController
     authorize @lesson
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @course_modules = helpers.modules_in_order(@course)
-    @video_iframe = get_video_iframe
+    @video_iframe = get_video_iframe(@video)
   end
 
   # GET /lessons/new
@@ -51,14 +53,20 @@ class LessonsController < ApplicationController
   # PATCH/PUT /lessons/1 or /lessons/1.json
   def update
     authorize @lesson
-    respond_to do |format|
-      if @lesson.update(lesson_params)
+    service = Lessons::UpdateService.instance
+
+    begin
+      service.update_lesson!(@lesson, lesson_params)
+      respond_to do |format|
         format.html do
           redirect_to course_module_lesson_path(@course, @course_module, @lesson),
                       notice: 'Lesson was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @lesson }
-      else
+      end
+    rescue ActiveRecord::RecordInvalid => exception
+      @lesson = exception.record
+      respond_to do |format|
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @lesson.errors, status: :unprocessable_entity }
       end
@@ -153,16 +161,6 @@ class LessonsController < ApplicationController
                                    :course_module_id,
                                    :duration,
                                    local_contents_attributes: %i[id blob_id lang _destroy])
-  end
-
-  def get_video_iframe
-    video_url = @local_content.video.blob.metadata['url']
-
-    return unless video_url.present?
-
-    vimeo_service = VimeoService.instance
-    vendor_response = vimeo_service.resolve_video_url(video_url)
-    vendor_response['html'] if vendor_response.has_key?('html')
   end
 
   def set_local_content
