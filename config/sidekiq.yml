@@ -3,6 +3,8 @@ default: &default
   :max_retries: 3
 development:
   <<: *default
+docker:
+  <<: *default
 production:
   <<: *default
 :queues:

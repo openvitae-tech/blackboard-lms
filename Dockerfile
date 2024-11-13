@@ -11,9 +11,7 @@ WORKDIR /deploy
 ENV RAILS_ENV="docker" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development:test" \
-    RAILS_MASTER_KEY="dee4823f10cb1f3cc02c610f33eab947"
-
+    BUNDLE_WITHOUT="development:test"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
