@@ -6,14 +6,14 @@ class LessonsController < ApplicationController
   before_action :set_course
   before_action :set_course_module
   before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]
-  before_action :set_video, only: :show
+  before_action :set_local_content, only: :show
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
     authorize @lesson
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @course_modules = helpers.modules_in_order(@course)
-    @video_iframe = get_video_iframe(@video)
+    @video_iframe = get_video_iframe(@local_content)
   end
 
   # GET /lessons/new
@@ -163,18 +163,16 @@ class LessonsController < ApplicationController
                                    local_contents_attributes: %i[id blob_id lang _destroy])
   end
 
-
-
-  def set_video
-    @video = if params[:lang].blank?
-                load_default_video
+  def set_local_content
+    @local_content = if params[:lang].blank?
+                default_local_content
              else
-               @lesson.local_contents.find_by!(lang: params[:lang]).video
+               @lesson.local_contents.find_by!(lang: params[:lang])
              end
   end
 
-  def load_default_video
+  def default_local_content
     default_language = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE)
-    default_language.present? ? default_languge.video : @lesson.local_contents.first.video
+    default_language.present? ? default_language : @lesson.local_contents.first
   end
 end

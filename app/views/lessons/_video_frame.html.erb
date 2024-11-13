@@ -1,10 +1,10 @@
 <div class="basis-3/5">
   <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
-    <% if @video.attached? %>
+    <% if @local_content.video.attached? %>
       <% if Rails.env.production? && @video_iframe.present? %>
         <%= @video_iframe.html_safe %>
       <% elsif Rails.env.development? %>
-        <%= video_tag rails_blob_path(@video), controls: true %>
+        <%= video_tag rails_blob_path(@local_content.video), controls: true %>
       <% else %>
         <div class="w-full inline-block text-center">Uploaded video is under process. Please refresh the page after some time.</div>
       <% end %>
@@ -12,8 +12,8 @@
       <div class="w-full inline-block text-center">Sorry! Video is not available</div>
     <% end %>
   </div>
-  <% if supported_languages(lesson).length > 1 %>
-    <div class="flex justify-end">
+  <div class="flex justify-end">
+    <% if lesson.local_contents.size > 1 %>
       <details class="p-4">
         <summary class="flex cursor-pointer items-center justify-between select_language bg-slate-grey-light p-[10px]">
           <h2 class="flex flex-col justify-start text-base pe-1">
@@ -30,8 +30,14 @@
           <% end %>
         </ul>
       </details>
-    </div>
-  <% end %>
+    <% else %>
+      <div class="p-4">
+        <div class="select_language bg-slate-grey-light p-[10px]">
+          <h2 class="text-primary"><%= selected_language %></h2>
+        </div>
+      </div>
+    <% end %>
+  </div>
   <div class="bg-primary-light-50 mt-2 flex flex-col gap-4 p-6">
     <p class="overflow-hidden text-ellipsis text-xl font-semibold">
       Lesson: <%= lesson.title %>
