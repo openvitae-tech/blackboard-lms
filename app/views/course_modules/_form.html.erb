@@ -2,17 +2,14 @@
   <div class="my-8 text-left">
     <% url = course_module.persisted? ? course_module_path(course, course_module) : course_modules_path(course, course_module) %>
     <%= form_with(model: [course, course_module], url: url) do |form| %>
-
       <%= render "shared/components/form_errors", resource: course_module %>
-
       <div class="my-8 text-sm">
         <%= form.label :title, class: "text-sm font-medium" %>
         <%= form.text_field :title, class: "input-text mt-2" %>
       </div>
-
       <div class="my-8 text-sm  flex gap-6 items-center">
         <div>
-          <%= link_to "Cancel" , course_path(@course), class: "nav-link" %>
+          <%= link_to "Cancel" , course_module_path(@course), class: "nav-link" %>
         </div>
         <div>
           <%= form.submit submit_label_for(course_module), class: "btn-primary" do %>
