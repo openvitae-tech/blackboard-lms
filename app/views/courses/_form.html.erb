@@ -21,7 +21,11 @@
       </div>
       <div class="my-8 flex items-center gap-6 text-sm">
         <div class="my-8">
-          <%= link_to "Cancel", course_path(@course), class: "nav-link" %>
+          <% if @course.persisted? %>
+            <%= link_to "Cancel", course_path(@course), class: "nav-link" %>
+          <% else %>
+            <%= link_to "Cancel", courses_path, class: "nav-link" %>
+          <% end %>
         </div>
         <div>
           <% text = course.persisted? ? "Update" : "Create" %>
