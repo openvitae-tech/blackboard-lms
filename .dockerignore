@@ -41,3 +41,6 @@ README.md
 docker-build
 /aws/*
 /*.env
+*.dockerfile
+docker-compose.yml
+aws/*
