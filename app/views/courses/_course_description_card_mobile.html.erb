@@ -2,14 +2,12 @@
   <%= image_tag course_banner(course, :vertical), class: "h-[120px] min-w-[328px] rounded-t object-cover" %>
   <div class="m-4 flex flex-col">
     <p class="mb-1 overflow-hidden text-ellipsis text-sm font-extrabold italic text-primary">
-      <%= @course.title %>
+      <%= course.title %>
     </p>
-    <div class="flex items-center gap-4">
-      <div class="h-1 rounded-full bg-primary-light-50 w-[252px]">
-        <div class="h-1 rounded-full bg-secondary" style="width: <%= @course.progress %>%"></div>
-      </div>
-      <span class="text-sm font-semibold text-secondary"><%= @course.progress %>%</span>
-    </div>
+    <% if enrollment && (enrollment.progress > 0) %>
+      <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+    <% end %>
+
     <div class="mt-2 flex justify-between space-x-4">
       <div class="flex items-center space-x-2">
         <span class="icon icon-lessons h-3.5 w-3.5"></span>
@@ -43,7 +41,7 @@
       <% end %>
       <% if policy(course).proceed? %>
         <%= link_to proceed_course_path(course) do %>
-        <%= render "shared/components/icon_button_primary_small", icon_name: "icon-next", label: "Continue", icon_right: true %>
+          <%= render "shared/components/icon_button_primary_small", icon_name: "icon-next", label: "Continue", icon_right: true %>
         <% end %>
       <% end %>
     </div>

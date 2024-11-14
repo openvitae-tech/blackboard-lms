@@ -73,10 +73,4 @@ class CourseModule < ApplicationRecord
 
     quizzes.find(quizzes_in_order[index - 1])
   end
-
-  def progress
-    return 0 if lessons.count.zero?
-
-    @progress ||= (lessons.map(&:progress).reduce(&:+) / lessons.count).round
-  end
 end

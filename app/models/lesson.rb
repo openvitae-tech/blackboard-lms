@@ -13,18 +13,6 @@ class Lesson < ApplicationRecord
 
   accepts_nested_attributes_for :local_contents, allow_destroy: true
 
-  def progress
-    @temp_progress ||= rand(0..100)
-
-    if @temp_progress > 80
-      100
-    elsif @temp_progress > 50
-      @temp_progress
-    else
-      0
-    end
-  end
-
   private
 
   def unique_local_content_lang

@@ -19,14 +19,6 @@
               <span class="icon bg-gold-light border-gold icon-incomplete h-5 w-5 items-center border"></span>
             <% end %>
             <span class="text-letter-color-light"><%= lesson.title %></span>
-            <% if enrollment && !lesson_completed?(enrollment, lesson) %>
-              <div class="flex flex-col items-center gap-1 pl-2">
-                <span class="text-secondary text-sm font-semibold"><%= lesson.progress %>%</span>
-                <div class="bg-primary-light-50 h-1 w-7 rounded-full">
-                  <div class="bg-secondary h-1 rounded-full" style="width: <%= lesson.progress %>%"></div>
-                </div>
-              </div>
-            <% end %>
           </div>
           <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
             <span class="icon icon-play-lite icon-small"></span>

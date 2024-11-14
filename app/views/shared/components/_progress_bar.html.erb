@@ -1,0 +1,8 @@
+<% if local_assigns[:progress].present? %>
+  <div class="flex items-center gap-4 py-2">
+    <div class="h-1 grow bg-line-colour-light">
+      <div class="h-1 bg-primary" style="width: <%= progress %>%"></div>
+    </div>
+    <span class="text-sm font-bold text-primary"><%= progress %>%</span>
+  </div>
+<% end %>

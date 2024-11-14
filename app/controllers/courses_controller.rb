@@ -11,7 +11,7 @@ class CoursesController < ApplicationController
     if current_user.is_admin?
       @available_courses = Course.all
     else
-      @enrolled_courses = current_user.courses.published
+      @enrolled_courses = current_user.courses.includes(:enrollments)
       @available_courses = Course.published - @enrolled_courses
     end
   end
@@ -20,6 +20,7 @@ class CoursesController < ApplicationController
   def show
     authorize @course
     @course_modules = helpers.modules_in_order(@course)
+    @enrollment = current_user.get_enrollment_for(@course)
   end
 
   # GET /courses/new
