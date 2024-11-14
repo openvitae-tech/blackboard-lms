@@ -19,7 +19,7 @@
 
       <div class="flex flex-wrap gap-4">
         <% @enrolled_courses.each do |course| %>
-          <%= render "courses/course_card_with_left_image", course: course %>
+          <%= render "courses/course_card_with_left_image", course: course, enrollment: course.enrollments.first %>
         <% end %>
       </div>
     <% end %>

@@ -5,12 +5,11 @@
       <p class="mb-2 overflow-hidden text-ellipsis text-base font-semibold text-primary max-h-[68px]">
         <%= course.title %>
       </p>
-      <div class="flex items-center gap-4 py-2">
-        <div class="h-1 grow bg-line-colour-light">
-          <div class="h-1 bg-primary" style="width: 16%"></div>
-        </div>
-        <span class="text-sm font-bold text-primary">16%</span>
-      </div>
+
+      <% if local_assigns[:enrollment].present? %>
+        <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+      <% end %>
+
       <div class="flex justify-between">
         <div class="flex items-center">
           <span class="icon icon-lessons h-3.5 w-3.5"></span>

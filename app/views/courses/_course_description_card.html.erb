@@ -1,16 +1,22 @@
 <div class="flex flex-row border-b px-6 py-6 border-line-colour" data-controller="course-description-card">
   <%= image_tag course_banner(course, :vertical), class: "h-[216px] w-[140px] rounded-l object-cover" %>
-  <div class="flex w-full flex-col px-4 py-1 max-h-[216px]">
+  <div class="flex w-full flex-col px-4 py-1">
     <div class="flex justify-between">
       <p class="mb-4 overflow-hidden text-ellipsis text-2xl font-extrabold text-primary">
         <%= course.title %>
       </p>
-      <% if policy(@course).edit? %>
-        <%= link_to edit_course_path(@course), class: "nav-link" do %>
+      <% if policy(course).edit? %>
+        <%= link_to edit_course_path(course), class: "nav-link" do %>
           <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
         <% end %>
       <% end %>
     </div>
+
+    <% if enrollment && (enrollment.progress > 0) %>
+      <div class="w-80">
+        <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+      </div>
+    <% end %>
     <div class="mb-5 flex justify-between space-x-2">
       <div class="flex justify-between space-x-4">
         <div class="flex items-center">

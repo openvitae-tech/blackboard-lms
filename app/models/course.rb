@@ -24,7 +24,7 @@ class Course < ApplicationRecord
   end
 
   def duration
-    course_modules.map(&:duration).reduce(&:+) || 0
+    course_modules.includes(:lessons).map(&:duration).reduce(&:+) || 0
   end
 
   def lessons_count
@@ -65,12 +65,6 @@ class Course < ApplicationRecord
 
   def undo_publish!
     update(is_published: false)
-  end
-
-  def progress
-    return 0 if course_modules.count.zero?
-
-    @progress ||= (course_modules.map(&:progress).reduce(&:+) / course_modules.count).round
   end
 
   def has_enrollments?
