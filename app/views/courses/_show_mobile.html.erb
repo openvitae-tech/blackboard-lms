@@ -5,7 +5,7 @@
     <span class="ml-2 text-xs font-medium text-primary">My Courses</span>
   </div>
   <div class="my-6 rounded course-details-box-shadow">
-    <%= render "courses/course_description_card_mobile", course: @course %>
+    <%= render "courses/course_description_card_mobile", course: @course, enrollment: @enrollment %>
     <%= render "courses/course_lessons_mobile", course: @course, enrollment: @enrollment %>
   </div>
 <% end %>

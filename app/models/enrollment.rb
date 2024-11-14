@@ -57,4 +57,16 @@ class Enrollment < ApplicationRecord
     self.course_completed = false
     save!
   end
+
+  def progress
+    @progress ||= (course.lessons_count) > 0 ? (completed_lessons.size / course.lessons_count.to_f * 100).floor : 0
+  end
+
+  def module_progress(course_module)
+    @module_progress ||= {}
+    return @module_progress[course_module.id] if @module_progress[course_module.id].present?
+
+    finished_lessons_of_module = completed_lessons & course_module.lessons.map(&:id)
+    @module_progress[course_module.id] = course_module.lessons_count > 0 ? (finished_lessons_of_module.size / course_module.lessons_count.to_f * 100).floor : 0
+  end
 end

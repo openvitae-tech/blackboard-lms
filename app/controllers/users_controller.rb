@@ -12,6 +12,6 @@ class UsersController < ApplicationController
 
     def set_user
       @user = User.find(params[:id])
-      @enrolled_courses = @user.courses.published
+      @enrolled_courses = @user.courses.includes(:enrollments)
     end
   end
