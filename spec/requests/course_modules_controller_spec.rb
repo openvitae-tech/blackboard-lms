@@ -63,7 +63,7 @@ RSpec.describe CourseModulesController, type: :request do
   end
 
   describe 'POST /course_modules' do
-    it 'Allow creating a new course module by admin' do
+    it 'Allow creating course module by admin' do
       expect do
         post course_modules_path(@course.id), params: course_module_params
       end.to change(@course.course_modules, :count).by(1)
@@ -87,7 +87,7 @@ RSpec.describe CourseModulesController, type: :request do
       expect(response).to have_http_status(:not_found)
     end
 
-    it 'create course module failure' do
+    it 'Create course module failure' do
       post course_modules_path(@course.id), params: { course_module: { title: nil } }
 
       expect(response.status).to eq(422)
