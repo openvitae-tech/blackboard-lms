@@ -6,11 +6,11 @@
           <div class="flex flex-col justify-start text-base font-semibold">
             <span class=""><%= course_module.title %></span>
             <div class="flex items-center gap-4">
-              <% if course_module.progress > 0 %>
+              <% if enrollment.present? && enrollment.module_progress(course_module) > 0 %>
                 <div class="bg-primary-light-50 h-1 w-[252px] rounded-full">
-                  <div class="bg-secondary h-1 rounded-full" style="width: 16%"></div>
+                  <div class="bg-secondary h-1 rounded-full" style="width: <% enrollment.module_progress(course_module) %>%"></div>
                 </div>
-                <span class="text-secondary text-sm font-semibold"><%= course_module.progress %>%</span>
+                <span class="text-secondary text-sm font-semibold"><%= enrollment.module_progress(course_module) %>%</span>
               <% else %>
                 <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
               <% end %>
