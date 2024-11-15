@@ -1,39 +1,61 @@
-<div class="box">
-  <div id="<%= dom_id quiz %>" class="my-8 w-80 text-left" data-controller="quiz">
-    <div class="my-4">
-      <strong>Q:</strong>
-      <%= quiz.question %>
-    </div>
 
-    <%= form_with model: @quiz, url: submit_answer_course_module_quiz_path(course, course_module, quiz), method: :post do |form| %>
-        <div class="my-4">
-          <%= form.radio_button 'answer', "a", class: "mx-2", id: "quiz_opt-a", data: { action: "change->quiz#valueChanged"} %>
-          <%= form.label "opt-a", quiz.option_a %>
-        </div>
-
-        <div class="my-4">
-          <%= form.radio_button 'answer', "b", id: "quiz_opt-b", class: "mx-2", data: { action: "change->quiz#valueChanged"} %>
-          <%= form.label "opt-b", quiz.option_b %>
-        </div>
-
-        <div class="my-4">
-          <%= form.radio_button 'answer', "c", id: "quiz_opt-c", class: "mx-2", data: { action: "change->quiz#valueChanged"} %>
-          <%= form.label "opt-c", quiz.option_c %>
-        </div>
-
-        <div class="my-4">
-          <%= form.radio_button 'answer', "d", id: "quiz_opt-d", class: "mx-2", data: { action: "change->quiz#valueChanged"} %>
-          <%= form.label "opt-d", quiz.option_d %>
-        </div>
-
-        <div class="my-4">
-          <%= form.radio_button 'answer', "skip", id: "quiz_skip", class: "mx-2", data: { action: "change->quiz#valueChanged"} %>
-          <%= form.label "skip", "Skip this" %>
-        </div>
-
-      <div class="my-4">
-        <%= form.button 'Submit', class: "mx-2 btn-default btn-disabled", id: "quiz-submit-button" %>
-      </div>
-      <% end %>
+<div class="box-shadow-medium flex flex-col rounded">
+  <div class="flex items-center justify-between border-b border-line-colour-light p-6">
+    <span class="text-gray5 text-base font-semibold">Quiz</span>
+    <span class="icon icon-close h-4 w-4"></span>
   </div>
+  <div class="flex justify-center gap-4 pt-6">
+    <div class="indicator active"></div>
+    <div class="indicator"></div>
+    <div class="indicator"></div>
+  </div>
+  <h2 class="text-black0 flex items-center justify-center pt-4 text-base font-medium">
+    1/5 Questions
+  </h2>
+  <ul class="w-full pb-6">
+    <li id="<%= dom_id quiz %>" class="carousel-container m-6 rounded box-shadow-medium">
+      <h2 class="bg-primary-light-50 p-6 text-base font-medium">
+       <span>1.</span> <%= quiz.question %>
+      </h2>
+
+      <div class="carousel-item active pt-6">
+      <%= form_with model: @quiz, url: submit_answer_course_module_quiz_path(course, course_module, quiz), method: :post do |form| %>
+        <ul class="flex flex-col gap-2">
+            <li class="box-shadow-medium rounded p-6">
+              <label class="flex items-center justify-between">
+                <%= form.label "opt-a", quiz.option_a %>
+                <%= form.radio_button 'answer', "a", class: "mx-2 form-radio", id: "quiz_opt-a", data: { action: "change->quiz#valueChanged"} %>
+              </label>
+            </li>
+            <li class="box-shadow-medium rounded p-6">
+              <label class="flex items-center justify-between">
+                <%= form.label "opt-b", quiz.option_b %>
+                <%= form.radio_button 'answer', "b", class: "mx-2 form-radio", id: "quiz_opt-b", data: { action: "change->quiz#valueChanged"} %>
+
+              </label>
+            </li>
+            <li class="box-shadow-medium rounded p-6">
+              <label class="flex items-center justify-between">
+                <%= form.label "opt-c", quiz.option_c %>
+                <%= form.radio_button 'answer', "c", class: "mx-2 form-radio", id: "quiz_opt-c", data: { action: "change->quiz#valueChanged"} %>
+
+              </label>
+            </li>
+            <li class="box-shadow-medium rounded p-6">
+              <label class="flex items-center justify-between">
+                <%= form.label "opt-d", quiz.option_a %>
+                <%= form.radio_button 'answer', "d", class: "mx-2 form-radio", id: "quiz_opt-d", data: { action: "change->quiz#valueChanged"} %>
+              </label>
+            </li>
+          </ul>
+          <div class="py-4 flex items-center justify-center">
+            <%= form.button 'Submit', class: "bg-primary rounded px-20 py-2 text-sm text-white", id: "quiz-submit-button" %>
+          </div>
+        <% end %>
+        </div>
+    </li>
+    
+  </ul>
 </div>
+
+  
