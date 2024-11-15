@@ -29,11 +29,11 @@ class DevelopmentSeed
       ]
 
       partners = [
-        ['The Grand Budapest Hotel', about_text, 'hotel_logo.jpg', 'hotel_banner.jpg'],
-        [Faker::Restaurant.name, about_text, 'hotel_logo.jpg', 'hotel_banner.jpg']
+        ['The Grand Budapest Hotel', about_text],
+        [Faker::Restaurant.name, about_text]
       ]
 
-      partners.each { |name, about, logo, banner| create_partner(name, about, logo, banner) }
+      partners.each { |name, about| create_partner(name, about) }
 
       partner = LearningPartner.first
       team = Team.where(learning_partner_id: partner.id).first
@@ -41,9 +41,10 @@ class DevelopmentSeed
       other_users.each { |name, role| create_user(name, role, partner, team) }
 
       courses = [['F & B Fundamentals',
-                  "Discover the art and science of food and beverages with our comprehensive course. Designed for aspiring chefs, hospitality professionals, and food enthusiasts, this program covers essential culinary techniques, advanced cooking methods, and beverage pairing principles. Learn from industry experts through hands-on practice and interactive lessons. Explore global cuisines, master presentation skills, and understand the business aspects of the food and beverage industry. Enhance your knowledge of food safety, nutrition, and sustainable practices. Whether you're starting a new career or refining your skills, this course provides the tools and knowledge needed to excel. Join us and embark on a flavorful journey that blends passion with professionalism.", 'course_banner.jpeg']]
+                  "Discover the art and science of food and beverages with our comprehensive course. Designed for aspiring chefs, hospitality professionals, and food enthusiasts, this program covers essential culinary techniques, advanced cooking methods, and beverage pairing principles. Learn from industry experts through hands-on practice and interactive lessons. Explore global cuisines, master presentation skills, and understand the business aspects of the food and beverage industry. Enhance your knowledge of food safety, nutrition, and sustainable practices. Whether you're starting a new career or refining your skills, this course provides the tools and knowledge needed to excel. Join us and embark on a flavorful journey that blends passion with professionalism."]
+        ]
 
-      courses.each { |title, description, banner| create_course(title, description, banner) }
+      courses.each { |title, description, banner| create_course(title, description) }
 
       course = Course.first
 
@@ -119,22 +120,22 @@ class DevelopmentSeed
     end
   end
 
-  def create_partner(name, about, logo, banner)
+  def create_partner(name, about)
     partner = LearningPartner.create!(
       name:,
       content: about,
-      logo: File.open(Rails.root.join("db/data/#{logo}")),
-      banner: File.open(Rails.root.join("db/data/#{banner}"))
+      logo: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:hotel_logo]}")),
+      banner: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:team_banner]}"))
     )
 
-    Team.create!(name: "Default Team", banner: File.open(Rails.root.join("db/data/#{banner}")), learning_partner_id: partner.id)
+    Team.create!(name: "Default Team", banner: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:team_banner]}")), learning_partner_id: partner.id)
   end
 
-  def create_course(name, description, banner)
+  def create_course(name, description)
     Course.create!(
       title: name,
       description:,
-      banner: File.open(Rails.root.join("db/data/#{banner}")),
+      banner: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:course_banner]}")),
       is_published: true
     )
   end

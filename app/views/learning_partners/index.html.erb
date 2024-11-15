@@ -14,7 +14,7 @@
       <%  @learning_partners.each do |learning_partner| %>
         <li class="text-base box-shadow-medium p-6 flex my-6 justify-between items-center">
           <div class="p-2 flex items-center gap-8">
-            <%= image_tag "vivanta.png",  alt: "useImage", class: "" %>
+            <%= image_tag partner_logo(learning_partner, :small),  alt: "Logo", class: "h-full w-[80px] rounded-l object-cover" %>
             <%= link_to learning_partner.name, learning_partner, class: "link" %>
           </div>
           <%= link_to learning_partner, class: "link" do%>
