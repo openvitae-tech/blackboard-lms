@@ -89,6 +89,10 @@ export default class extends Controller {
     });
   }
 
+  removeVideoNameAttribute() {
+    this.fileInputTarget.removeAttribute("name")
+  }
+
   uploadFile(file) {
     this.toggleCancelUploadButtons(false);
 
