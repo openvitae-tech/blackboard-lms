@@ -5,74 +5,50 @@ class QuizzesController < ApplicationController
   before_action :set_course_module
   before_action :set_quiz, only: %i[show edit update destroy submit_answer moveup movedown]
 
-  # GET /quizzes or /quizzes.json
-  # GET /quizzes/1 or /quizzes/1.json
   def show
     authorize @quiz
     @quizzes = helpers.quizzes_in_order(@course_module)
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
   end
 
-  # GET /quizzes/new
   def new
     authorize Quiz
     @quiz = @course_module.quizzes.new
   end
 
-  # GET /quizzes/1/edit
   def edit
     authorize @quiz
   end
 
-  # POST /quizzes or /quizzes.json
   def create
     authorize Quiz
     @quiz = @course_module.quizzes.new(quiz_params)
     service = CourseManagementService.instance
 
-    respond_to do |format|
-      if @quiz.save
-        service.update_quiz_ordering!(@course_module, @quiz, :create)
-        format.html do
-          redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully created.'
-        end
-        format.json { render :show, status: :created, location: @quiz }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @quiz.errors, status: :unprocessable_entity }
-      end
+    if @quiz.save
+      service.update_quiz_ordering!(@course_module, @quiz, :create)
+      redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /quizzes/1 or /quizzes/1.json
   def update
     authorize @quiz
-    respond_to do |format|
       if @quiz.update(quiz_params)
-        format.html do
           redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully updated.'
-        end
-        format.json { render :show, status: :ok, location: @quiz }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @quiz.errors, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity
       end
-    end
   end
 
-  # DELETE /quizzes/1 or /quizzes/1.json
   def destroy
     authorize @quiz
+
     @quiz.destroy!
     service = CourseManagementService.instance
     service.update_quiz_ordering!(@course_module, @quiz, :destroy)
-
-    respond_to do |format|
-      format.html do
-        redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully destroyed.'
-      end
-      format.json { head :no_content }
-    end
+    redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully destroyed.'
   end
 
   def submit_answer
@@ -94,27 +70,18 @@ class QuizzesController < ApplicationController
     authorize @quiz
     service = CourseManagementService.instance
     service.update_quiz_ordering!(@course_module, @quiz, :up)
-
-    respond_to do |format|
-      format.html { redirect_to course_module_path(@course, @course_module) }
-      format.json { head :no_content }
-    end
+    redirect_to course_module_path(@course, @course_module)
   end
 
   def movedown
     authorize @quiz
     service = CourseManagementService.instance
     service.update_quiz_ordering!(@course_module, @quiz, :down)
-
-    respond_to do |format|
-      format.html { redirect_to course_module_path(@course, @course_module) }
-      format.json { head :no_content }
-    end
+    redirect_to course_module_path(@course, @course_module)
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_quiz
     @quiz = @course_module.quizzes.find(params[:id])
   end
