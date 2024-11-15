@@ -1,13 +1,9 @@
 <div class="flex flex-col justify-start text-sm font-semibold py-6">
   <span class="">Course Overview</span>
-  <div class="flex items-center gap-4">
-    <div class="bg-primary-light-50 h-1 w-full rounded-full">
-      <div class="bg-primary h-1 rounded-full" style="width: <%= enrollment.progress %>%"></div>
-    </div>
-    <span class="text-primary text-sm font-bold"><%= enrollment.progress %>%</span>
-  </div>
+  <% if enrollment.present? && enrollment.progress > 0 %>
+    <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+  <% end %>
 </div>
-
 <% modules_in_order(course).each do |course_module| %>
   <details class="">
     <summary class="border-line-colour rounded border flex cursor-pointer items-center justify-between p-4">
@@ -35,8 +31,8 @@
             <% if enrollment && !lesson_completed?(enrollment, lesson) %>
               <span class="icon bg-gold-light border-gold icon-incomplete h-5 w-5 items-center border"></span>
             <% end %>
-
             <span class="text-letter-color-light"><%= lesson.title %></span>
+            <span class="text-primary-light">(<%= duration_in_words(lesson.duration) %>)</span>
           </div>
           <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
             <% if enrollment && lesson_completed?(enrollment, lesson) %>
