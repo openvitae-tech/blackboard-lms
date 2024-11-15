@@ -2,14 +2,9 @@
 
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+  include HandleNotFound
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  rescue_from ActiveRecord::RecordNotFound, with: :not_found
-
-  def not_found
-    render template: "pages/not_found", layout: false, status: :not_found
-  end
-
   protected
 
   def authenticate_manager!
