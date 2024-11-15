@@ -4,7 +4,7 @@
     <div class="flex h-full flex-col justify-between pt-14">
       <ul class="flex flex-col gap-3">
         <% if policy(:dashboard).index? %>
-          <li class="side-bar-item <%= 'item-selected' if  'teams' == 'Home' %>">
+          <li class="side-bar-item <%= sidebar_active('dashboards') %>">
             <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
               <span class="icon icon-home icon-small"></span>
               <span class="">Home</span>
@@ -12,28 +12,28 @@
           </li>
         <% end %>
         <% if policy(:learning_partner).show? %>
-          <li class="side-bar-item <%= 'item-selected' if  'teams' == 'Partners' %>">
+          <li class="side-bar-item <%= sidebar_active('learning_partners') %>">
             <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>
               <span class="icon icon-course icon-small"></span>
               <span class="">Partners</span>
             <% end %>
           </li>
         <% end %>
-        <li class="side-bar-item <%= 'item-selected' if  'teams' == 'My Course' %>">
+        <li class="side-bar-item <%= sidebar_active('courses') %>">
           <%= link_to courses_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-course icon-small"></span>
             <span class="">My Course</span>
           <% end %>
       </li>
       <% if policy(current_user.team || :team).show? %>
-        <li class="side-bar-item <%= 'item-selected' if  'teams' == 'teams' %>">
+        <li class="side-bar-item <%= sidebar_active('teams') %>">
           <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
             <span class="icon icon-team icon-small"></span>
             <span class="">Team</span>
           <% end %>
         </li>
       <% end %>
-      <li class="side-bar-item <%= 'item-selected' if  'teams' == 'Support' %>">
+      <li class="side-bar-item">
         <%= link_to "#", class: "side-bar-item-inner" do %>
           <span class="icon icon-support icon-small"></span>
           <span class="">Support</span>

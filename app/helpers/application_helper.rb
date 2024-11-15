@@ -75,4 +75,8 @@ module ApplicationHelper
   def submit_label_for(resource)
     resource.persisted? ? "Update" : "Create"
   end
+
+  def sidebar_active(page)
+    "item-selected" if page == controller_name
+  end
 end
