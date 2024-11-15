@@ -1,19 +1,8 @@
 <div class="box">
   <div class="my-8 w-80 text-left">
-    <%= form_with(url: course_module_quizzes_path(course, course_module), model:  quiz) do |form| %>
-      <% if quiz.errors.any? %>
-        <div style="color: red">
-          <h2><%= pluralize(quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
-          <ul>
-            <% quiz.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      <div>
-        <h1 class="page-heading-medium">Create New Quiz</h1>
-      </div>
+    <% form_url = quiz.persisted? ? course_module_quiz_path(course, course_module, quiz) :  course_module_quizzes_path(course, course_module) %>
+    <%= form_with(url: form_url, model:  quiz) do |form| %>
+      <%= render "shared/components/form_errors", resource: quiz %>
       <div class="my-8 text-sm">
         <%= form.label :question, class: "text-sm font-medium" %>
         <%= form.text_area :question, class: "input-text mt-2 resize-none h-20", rows: 2, placeholder: "Enter your question here..." %>
@@ -22,28 +11,28 @@
         <%= form.label :option_a, class: "text-sm font-medium" %>
         <div class="relative">
           <%= form.text_field :option_a, class: "input-text mt-2 pr-10" %>
-          <%= form.radio_button :correct_option, "A", class: "radio-check-button" %>
+          <%= form.radio_button :answer, "a", class: "radio-check-button" %>
         </div>
       </div>
       <div class="my-8 text-sm">
         <%= form.label :option_b, class: "text-sm font-medium" %>
         <div class="relative">
           <%= form.text_field :option_b, class: "input-text mt-2 pr-10" %>
-          <%= form.radio_button :correct_option, "B", class: "radio-check-button" %>
+          <%= form.radio_button :answer, "b", class: "radio-check-button" %>
         </div>
       </div>
       <div class="my-8 text-sm">
         <%= form.label :option_c, class: "text-sm font-medium" %>
         <div class="relative">
           <%= form.text_field :option_c, class: "input-text mt-2 pr-10" %>
-          <%= form.radio_button :correct_option, "C", class: "radio-check-button" %>
+          <%= form.radio_button :answer, "c", class: "radio-check-button" %>
         </div>
       </div>
       <div class="my-8 text-sm">
         <%= form.label :option_d, class: "text-sm font-medium" %>
         <div class="relative">
           <%= form.text_field :option_d, class: "input-text mt-2 pr-10" %>
-          <%= form.radio_button :correct_option, "D", class: "radio-check-button" %>
+          <%= form.radio_button :answer, "d", class: "radio-check-button" %>
         </div>
       </div>
       <div class="my-8 text-sm  flex gap-6 items-center">
