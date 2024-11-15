@@ -76,16 +76,6 @@ module CoursesHelper
     duration_in_words(course.duration)
   end
 
-  def duration_in_words(duration)
-    if duration > 60
-      in_hours = duration / 60
-      in_minutes = duration - (in_hours * 60)
-      "#{in_hours} hr #{in_minutes} min"
-    else
-      "#{duration} min"
-    end
-  end
-
   def lesson_completed?(enrollment, lesson)
     enrollment.completed_lessons.include? lesson.id
   end

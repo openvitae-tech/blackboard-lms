@@ -79,4 +79,14 @@ module ApplicationHelper
   def sidebar_active(page)
     "item-selected" if page == controller_name
   end
+
+  def duration_in_words(duration)
+    return "< 1 min" if duration < 60
+
+    duration = (duration.to_f / 60).round * 60
+
+    ["#{duration / 3600} #{duration / 3600 == 1 ? 'hr' : 'hrs'}",
+     "#{duration / 60 % 60} #{duration / 60 % 60 == 1 ? 'min' : 'mins'}"]
+      .select { |str| str =~ /^[1-9]/ }.join(" ")
+  end
 end

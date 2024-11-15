@@ -4,7 +4,6 @@
     <%= render "shared/components/progress_bar", progress: enrollment.progress %>
   <% end %>
 </div>
-
 <% modules_in_order(course).each do |course_module| %>
   <details class="">
     <summary class="border-line-colour rounded border flex cursor-pointer items-center justify-between p-4">
@@ -32,8 +31,8 @@
             <% if enrollment && !lesson_completed?(enrollment, lesson) %>
               <span class="icon bg-gold-light border-gold icon-incomplete h-5 w-5 items-center border"></span>
             <% end %>
-
             <span class="text-letter-color-light"><%= lesson.title %></span>
+            <span class="text-primary-light">(<%= duration_in_words(lesson.duration) %>)</span>
           </div>
           <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
             <% if enrollment && lesson_completed?(enrollment, lesson) %>
