@@ -1,11 +1,8 @@
 <div class="flex flex-col justify-start text-sm font-semibold py-6">
   <span class="">Course Overview</span>
-  <div class="flex items-center gap-4">
-    <div class="bg-primary-light-50 h-1 w-full rounded-full">
-      <div class="bg-primary h-1 rounded-full" style="width: <%= enrollment.progress %>%"></div>
-    </div>
-    <span class="text-primary text-sm font-bold"><%= enrollment.progress %>%</span>
-  </div>
+  <% if enrollment.present? && enrollment.progress > 0 %>
+    <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+  <% end %>
 </div>
 
 <% modules_in_order(course).each do |course_module| %>
