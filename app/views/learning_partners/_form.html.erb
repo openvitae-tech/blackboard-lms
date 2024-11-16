@@ -1,56 +1,47 @@
-<div class="my-8 w-full md:max-w-3xl text-left" data-controller="file-upload">
+<div class="my-8 w-full text-left md:max-w-3xl" data-controller="file-upload">
   <%= form_with(model: learning_partner) do |form| %>
-  <% if learning_partner.errors.any? %>
-  <div style="color: red">
-     <h2><%= pluralize(learning_partner.errors.count, "error") %> prohibited this user from being saved:</h2>
-     <ul>
-        <% learning_partner.errors.each do |error| %>
-        <li><%= error.full_message %></li>
-        <% end %>
-     </ul>
-  </div>
-  <% end %>
-  <div class="my-8 text-sm">
-     <%= form.label :name, style: "display: block" %>
-     <%= form.text_field :name, class: "input-text mt-2" %>
-  </div>
-  <div>
-     <%= form.label :content, "About", style: "display: block" %>
-     <%= form.rich_text_area :content, 
-     class: "input-text mt-2 font-sm", 
-     style: "min-height: 300px; max-height: 500px; overflow-y: auto;", 
-     oninput: "this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 500) + 'px';" %>  </div>
-  <div class="my-8 text-sm" >
-     <div class="flex justify-between">
-        <%= form.label :logo, style: "display: block" %>
-     </div>
-     <div class="relative mt-2">
-       
-      <%= render "shared/components/file_select", 
-      hidden_file_field: form.file_field(:logo, class: "hidden", data: { forms_target: "fileInput"}), 
-      preview: "logo"  %>
-     </div>
-     
-  </div>
-  <div class="my-8 text-sm" >
-     <div class="flex justify-between">
-        <%= form.label :banner, style: "display: block"%>
-     </div>
-     <div class="relative mt-2">
-        
-      <%= render "shared/components/file_select", 
-      hidden_file_field: form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput"}), 
-      preview: "banner" %>
-     </div>
-  </div>
-  <div class="my-8 text-sm  flex gap-4 items-center" >
-     <div class="my-8 mx-4">
-      <%= link_to "Back", learning_partners_path, class: "nav-link" %>
+    <%= render "shared/components/form_errors", resource: learning_partner %>
+
+    <div class="my-8 text-sm">
+      <%= form.label :name, style: "display: block" %>
+      <%= form.text_field :name, class: "input-text mt-2" %>
     </div>
-     <div>
-        <% text = learning_partner.persisted? ? "Update" : "Create" %>
-        <%= form.submit text, class: "btn-primary"%>
-     </div>
-  </div>
+    <div>
+      <%= form.label :content, "About", style: "display: block" %>
+      <%= form.rich_text_area :content,
+                              class: "input-text mt-2 font-sm",
+                              style: "min-height: 300px; max-height: 500px; overflow-y: auto;",
+                              oninput: "this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 500) + 'px';" %>  </div>
+    <div class="my-8 text-sm">
+      <div class="flex justify-between">
+        <%= form.label :logo, style: "display: block" %>
+      </div>
+      <div class="relative mt-2">
+
+        <%= render "shared/components/file_select",
+                   hidden_file_field: form.file_field(:logo, class: "hidden", data: { forms_target: "fileInput" }),
+                   preview: "logo" %>
+      </div>
+
+    </div>
+    <div class="my-8 text-sm">
+      <div class="flex justify-between">
+        <%= form.label :banner, style: "display: block" %>
+      </div>
+      <div class="relative mt-2">
+
+        <%= render "shared/components/file_select",
+                   hidden_file_field: form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput" }),
+                   preview: "banner" %>
+      </div>
+    </div>
+    <div class="my-8 flex items-center gap-4 text-sm">
+      <div class="mx-4 my-8">
+        <%= link_to "Cancel", learning_partners_path, class: "nav-link" %>
+      </div>
+      <div>
+        <%= form.submit submit_label_for(learning_partner), class: "btn-primary" %>
+      </div>
+    </div>
   <% end %>
 </div>

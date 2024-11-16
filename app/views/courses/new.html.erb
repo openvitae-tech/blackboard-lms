@@ -2,9 +2,8 @@
   <%= render 'shared/components/admin_not_available'%>
 <% end %>
 <%= render "shared/components/desktop_layout" do %>
-  <%= link_to courses_path, class: "nav-link" do %>
-    <%= render 'shared/components/back_button' %>
-  <% end %>
+  <%= render 'shared/components/back_button', back_link: courses_path %>
+
   <div class="box">
     <h1 class="page-heading-medium">Create course</h1>
   </div>

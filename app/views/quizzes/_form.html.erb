@@ -40,8 +40,7 @@
           <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
         </div>
         <div>
-          <% text = quiz.persisted? ? "Update" : "Create" %>
-          <%= form.submit text, class: "btn-primary" do %>
+          <%= form.submit submit_label_for(quiz), class: "btn-primary" do %>
             <span><%= text %></span>
           <% end %>
         </div>

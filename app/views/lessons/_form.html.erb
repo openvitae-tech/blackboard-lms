@@ -3,16 +3,7 @@
     <% url = lesson.persisted? ? course_module_lesson_path(course, course_module, lesson) : course_module_lessons_path(course, course_module, lesson) %>
     <%= form_with(model: lesson, url: url) do |form| %>
       <%= form.hidden_field :has_error, value: @lesson.errors.any?, data: { lessons_form_target: "hasError" } %>
-      <% if lesson.errors.any? %>
-        <div style="color: red">
-          <h2><%= pluralize(lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>
-          <ul>
-            <% lesson.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+      <%= render "shared/components/form_errors", resource: lesson %>
       <div class="my-8 text-sm" >
         <%= form.label :title, class: "text-sm font-medium" %>
         <%= form.text_field :title, class: "input-text mt-2", placeholder: "Title for lesson eg: Wine serving" %>
@@ -42,8 +33,7 @@
       <div class="my-8 text-sm flex gap-4 items-center" >
         <%= link_to "Cancel", course_module_path(@course, @course_module), class: "nav-link" %>
         <div data-lessons-form-target="uploadButton">
-          <% text = lesson.persisted? ? "Update" : "Create" %>
-          <%= form.submit text, class: "btn-default",id: "submit-button", data: { action: "video-upload:stateChange->lessons-form#setButtonState" } %>
+          <%= form.submit submit_label_for(lesson), class: "btn-default",id: "submit-button", data: { action: "video-upload:stateChange->lessons-form#setButtonState" } %>
         </div>
       </div>
     <% end %>
