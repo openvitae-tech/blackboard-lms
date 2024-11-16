@@ -2,12 +2,8 @@
   <%= render 'shared/components/admin_not_available' %>
 <% end %>
 <%= render "shared/components/desktop_layout" do %>
-  <div class="flex justify-between pt-4">
-    <div class="flex items-center gap-4">
-      <%= link_to learning_partners_path, class: "nav-link" do %>
-        <%= render "shared/components/back_button" %>
-      <% end %>
-    </div>
+  <div class="flex justify-between pt-4 items-center">
+    <%= render "shared/components/back_button", back_link: learning_partners_path %>
 
     <div class="flex items-center gap-4">
       <% if policy(@learning_partner).destroy? %>

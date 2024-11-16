@@ -2,7 +2,6 @@
   <%= render 'shared/components/admin_not_available'%>
 <% end %>
 <%= render "shared/components/desktop_layout" do %>
-  <div class="box">
-    <%= render "form", learning_partner: @learning_partner %>
-  </div>
+  <%= render "shared/components/back_button", back_link: learning_partner_path(@learning_partner) %>
+  <%= render "form", learning_partner: @learning_partner %>
 <% end %>
