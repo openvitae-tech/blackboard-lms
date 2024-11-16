@@ -28,9 +28,8 @@
           <% end %>
         </div>
         <div>
-          <% text = course.persisted? ? "Update" : "Create" %>
           <%= form.submit class: "btn-primary" do %>
-            <span><%= text %></span>
+            <span><%= submit_label_for(course) %></span>
           <% end %>
         </div>
       </div>
