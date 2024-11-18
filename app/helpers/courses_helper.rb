@@ -18,9 +18,9 @@ module CoursesHelper
     return STATIC_ASSETS[:course_banner] unless course.banner.attached?
 
     if version == :vertical
-      course&.banner&.variant(resize_to_limit: [140, nil])
+      course.banner&.variant(resize_to_limit: [140, nil])
     elsif version == :horizontal
-      course&.banner&.variant(resize_to_limit: [nil, 200])
+      course.banner&.variant(resize_to_limit: [nil, 200])
     else
       course.banner
     end
