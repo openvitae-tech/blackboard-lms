@@ -1,0 +1,50 @@
+<div class="basis-3/5">
+  <div class="box text-right">
+  <% if policy(@quiz).edit? %>
+    <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz), class: "btn-default" do %>
+      <span>Edit</span>
+    <% end %>
+  <% end %>
+  <% if policy(@quiz).destroy? %>
+    <%= link_to course_module_quiz_path(@course, @course_module, @quiz), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-default" do %>
+      <span>Delete</span>
+    <% end %>
+  <% end %>
+  </div>
+
+  <% if current_user.is_admin? || @enrollment.quiz_answered?(@quiz) %>
+    <%= render "quizzes/quiz", course: @course, course_module: @course_module, quiz: @quiz %>
+  <% else %>
+    <%= render "quizzes/quiz_submit_form", course: @course, course_module: @course_module, quiz: @quiz %>
+  <% end %>
+
+  <div class="box">
+    <div class="flex gap-4 justify-between my-8">
+      <% prev_link = prev_quiz_path(@course, @course_module, @quiz) %>
+        <%  if prev_link.blank? %>
+          <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
+            <span class="icon icon-arrow-left-gray icon-small"></span>
+            <span class="text-sm font-semibold">Previous</span>
+          <% end %>      
+        <% else %>
+          <%= link_to prev_link, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
+            <span class="icon icon-arrow-left-gray icon-small"></span>
+            <span class="text-sm font-semibold">Previous</span>
+          <% end %>
+      <% end %>
+      <% next_link = next_quiz_path(@course, @course_module, @quiz) %>
+        <%  if next_link.blank? %>
+          <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
+            <span class="text-sm font-semibold">Skip</span>
+            <%= render "shared/svg/forward" %>
+          <% end %>
+        <% else %>
+          <%= link_to next_link, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
+            <span class="text-sm font-semibold">Skip</span>
+            <%= render "shared/svg/forward" %>
+          <% end %>
+        <% end %>
+    </div>
+  </div>
+</div>
+ 

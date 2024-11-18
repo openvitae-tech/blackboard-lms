@@ -2,8 +2,6 @@
   <%= render 'shared/components/admin_not_available'%>
 <% end %>
 <%= render "shared/components/desktop_layout" do %>
-  <%= link_to course_module_path(@course, @course_module),  class: "nav-link" do %>
-    <%= render 'shared/components/back_button' %>
-  <% end %>
+  <%= render 'shared/components/back_button', back_link: course_module_path(@course, @course_module) %>
   <%= render "form", course: @course, course_module: @course_module, lesson: @lesson %>
 <% end %>

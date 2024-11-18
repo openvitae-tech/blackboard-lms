@@ -39,6 +39,21 @@ module TeamsHelper
 
   def team_banner(user)
     asset = user.is_admin? ? nil : user.team.banner
-    asset || STATIC_ASSETS[:placeholders][:team_banner]
+    asset || STATIC_ASSETS[:team_banner]
+  end
+
+  def partner_logo(learning_partner, version)
+    return STATIC_ASSETS[:hotel_logo] unless learning_partner.logo.attached?
+
+    if version == :small
+      learning_partner.logo.variant(resize_to_limit: [80, nil])
+    else
+      learning_partner.logo.variant(resize_to_limit: [150, nil])
+    end
+  end
+
+  def partner_banner(learning_partner)
+    return STATIC_ASSETS[:team_banner] unless learning_partner.banner.attached?
+    learning_partner.banner.variant(resize_to_limit: [320, nil])
   end
 end

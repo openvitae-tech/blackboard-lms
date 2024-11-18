@@ -15,16 +15,15 @@ module CoursesHelper
 
   # @param version [Symbol] Values are :vertical or :horizontal
   def course_banner(course, version)
-    variant =
-      if version == :vertical
-        course&.banner&.variant(resize_to_limit: [140, nil])
-      elsif version == :horizontal
-        course&.banner&.variant(resize_to_limit: [nil, 200])
-      else
-        course.banner
-      end
+    return STATIC_ASSETS[:course_banner] unless course.banner.attached?
 
-    variant || STATIC_ASSETS[:placeholders][:course_banner]
+    if version == :vertical
+      course&.banner&.variant(resize_to_limit: [140, nil])
+    elsif version == :horizontal
+      course&.banner&.variant(resize_to_limit: [nil, 200])
+    else
+      course.banner
+    end
   end
 
   def course_description(course, limit = nil)
