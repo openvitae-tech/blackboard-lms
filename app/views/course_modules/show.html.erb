@@ -5,7 +5,7 @@
   <%= render 'shared/components/back_button', back_link: course_path(@course) %>
 
   <div class="flex justify-between my-4">
-    <%= render "shared/components/bread_crumbs", links: [@course.title, @course_module.title] %>
+    <%= render "shared/components/bread_crumbs", links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
     <div class="flex justify-end gap-4">
       <% if policy(@course_module).destroy? %>
         <%= link_to course_module_path(@course, @course_module), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete this module along with its lessons?" } do %>

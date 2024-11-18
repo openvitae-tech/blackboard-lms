@@ -1,5 +1,5 @@
 <%= render "shared/components/mobile_layout" do %>
-  <%= render "shared/components/bread_crumbs", links: [@course.title, @course_module.title] %>
+  <%= render "shared/components/bread_crumbs", links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
   <p class="text-primary mb-1 overflow-hidden text-ellipsis text-base font-bold py-6">
     <%= @lesson.title %>
   </p>
