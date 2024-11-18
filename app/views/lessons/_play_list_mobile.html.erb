@@ -5,7 +5,13 @@
   <% end %>
 </div>
 <% modules_in_order(course).each do |course_module| %>
-  <details class="">
+  <details
+    <% if current_module?(course_module, enrollment) %>
+    class="border-line-colour mx-4 my-6 rounded border highlighted" open="open"
+    <% else %>
+    class="border-line-colour mx-4 my-6 rounded border"
+    <% end %>
+    >
     <summary class="border-line-colour rounded border flex cursor-pointer items-center justify-between p-4">
       <h2 class="flex flex-col justify-start text-base font-semibold">
         <span class=""><%= course_module.title %></span>
@@ -23,7 +29,7 @@
     </summary>
     <ul class="border-line-colour rounded border">
       <% lessons_in_order(course_module).each do |lesson| %>
-        <li class="flex items-center justify-between border-t px-4 py-4 text-sm">
+        <li class="flex items-center justify-between border-t px-4 py-4 text-sm <%= 'highlighted' if current_lesson?(lesson, enrollment) %>">
           <div class="flex items-center gap-4">
             <% if enrollment && lesson_completed?(enrollment, lesson) %>
               <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 items-center border"></span>
