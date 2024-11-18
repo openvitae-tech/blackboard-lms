@@ -138,8 +138,8 @@ class DevelopmentSeed
     )
     Thread.new do
       course.banner.attach(
-        io: Rails.root.join("app/assets/images/#{STATIC_ASSETS[:course_banner]}").open,
-        filename: "course_banner.jpg",
+        io: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:course_banner]}")),
+        filename: "course_banner.jpeg",
         content_type: "image/jpeg"
       )
     end
