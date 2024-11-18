@@ -54,8 +54,7 @@ class DevelopmentSeed
                  'Guest Complaints']
 
       module_ids = modules.map { |title| create_module(title, course) }.map(&:id)
-      course.course_modules_in_order = module_ids
-      course.save!
+      course.update!(course_modules_in_order: module_ids)
 
       course_module = course.first_module
 
@@ -132,12 +131,18 @@ class DevelopmentSeed
   end
 
   def create_course(name, description)
-    Course.create!(
+   course = Course.create!(
       title: name,
       description:,
-      banner: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:course_banner]}")),
       is_published: true
     )
+    Thread.new do
+      course.banner.attach(
+        io: Rails.root.join("app/assets/images/#{STATIC_ASSETS[:course_banner]}").open,
+        filename: "course_banner.jpg",
+        content_type: "image/jpeg"
+      )
+    end
   end
 
   def create_module(name, course)
