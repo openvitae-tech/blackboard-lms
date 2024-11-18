@@ -14,7 +14,7 @@
         <%= link_to learning_partner, class: "link" do %>
           <div class="flex items-center gap-4 p-2 text-base box-shadow-medium">
             <%= image_tag partner_logo(learning_partner, :small), alt: "Logo", class: "h-full w-[80px] rounded-l object-cover" %>
-            <span class="text-sm font-medium">Add Partner</span>
+            <span class="text-sm font-medium"><%= learning_partner.name %></span>
           </div>
         <% end %>
       </li>
