@@ -29,7 +29,7 @@ class LessonPolicy < ApplicationPolicy
   end
 
   def destroy?
-    false
+    CoursePolicy.new(user, record.course_module.course).destroy?
   end
 
   def complete?
