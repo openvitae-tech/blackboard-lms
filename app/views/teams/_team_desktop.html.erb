@@ -1,15 +1,15 @@
-<li class="flex justify-between items-center  border border-line-colour-light rounded-lg box-shadow-small">
-  <div class="flex items-center space-x-8 py-2 px-4 h-16">
-    <div class="flex items-center w-28">
-      <% if team.banner.present? %>
-        <%= image_tag team.banner, alt: "Image", class: "max-h-full max-w-full object-contain bg-cover bg-center" %>
-      <% end %>
+<li class="border border-line-colour-light rounded-lg box-shadow-small">
+  <%= link_to team_path(team) do %>
+    <div class="flex justify-between items-center py-2 px-4">
+      <div class="flex items-center space-x-8 h-16">
+          <% if team.banner.present? %>
+            <%= image_tag team.banner, alt: "Image", class: "max-h-full w-28 object-contain bg-cover bg-center" %>
+          <% end %>
+        <span class="text-basic font-medium"><%= team.name %></span>
+      </div>
+      <div>
+        <span class="icon icon-simple-arrow-right icon-small"></span>
+      </div>
     </div>
-    <span class="text-basic font-medium"><%= team.name %></span>
-  </div>
-  <div>
-    <%= link_to team_path(team) do %>
-      <span class="icon icon-simple-arrow-right icon-small"></span>
-    <% end %>
-  </div>
+  <% end %>
 </li>
