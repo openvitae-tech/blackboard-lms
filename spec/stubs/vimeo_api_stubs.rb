@@ -36,3 +36,14 @@ def stub_vimeo_video_upload_api
            status: 200
          )
 end
+
+def stub_vimeo_delete_api(video_id)
+  stub_request(
+    :delete,
+    "https://api.vimeo.com/videos/#{video_id}"
+  ).with(headers: {
+           'Authorization' => "bearer #{Rails.application.credentials.dig(:vimeo, :access_token)}"
+         }).to_return(
+           status: 200
+         )
+end

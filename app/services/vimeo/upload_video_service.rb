@@ -4,7 +4,7 @@ require 'uri'
 require 'open-uri'
 require 'tempfile'
 
-class UploadVideoToVimeoService
+class Vimeo::UploadVideoService
   include Singleton
 
   def upload_video(file)

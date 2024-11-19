@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe UploadVideoToVimeoService do
+RSpec.describe Vimeo::UploadVideoService do
   subject { described_class.instance }
 
   let(:lesson) { create :lesson }
