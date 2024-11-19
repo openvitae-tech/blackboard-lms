@@ -31,14 +31,12 @@
               <label class="flex items-center justify-between">
                 <%= form.label "opt-b", quiz.option_b %>
                 <%= form.radio_button 'answer', "b", class: "mx-2 form-radio", id: "quiz_opt-b", data: { action: "change->quiz#valueChanged"} %>
-
               </label>
             </li>
             <li class="box-shadow-medium rounded p-6">
               <label class="flex items-center justify-between">
                 <%= form.label "opt-c", quiz.option_c %>
                 <%= form.radio_button 'answer', "c", class: "mx-2 form-radio", id: "quiz_opt-c", data: { action: "change->quiz#valueChanged"} %>
-
               </label>
             </li>
             <li class="box-shadow-medium rounded p-6">
