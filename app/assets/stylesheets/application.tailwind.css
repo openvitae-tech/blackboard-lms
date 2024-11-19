@@ -180,7 +180,6 @@
 }
 
 .item-selected:hover{
-
   span {
     @apply text-primary-light-50;
   }
@@ -188,4 +187,12 @@
   .icon {
     @apply bg-primary-light-50;
   }
+}
+
+details.highlighted summary {
+  @apply bg-primary-light-50;
+}
+
+li.highlighted {
+  @apply border border-primary-light;
 }

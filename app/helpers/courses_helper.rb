@@ -145,4 +145,12 @@ module CoursesHelper
       custom: 'Custom'
     }.invert
   end
+
+  def current_module?(course_module, enrollment)
+    course_module.id == enrollment&.current_module_id
+  end
+
+  def current_lesson?(lesson, enrollment)
+    lesson.id == enrollment&.current_lesson_id
+  end
 end

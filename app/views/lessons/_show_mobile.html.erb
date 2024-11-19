@@ -1,11 +1,7 @@
 <%= render "shared/components/mobile_layout" do %>
-  <%= render "shared/components/bread_crumbs", links: [@course.title, @course_module.title] %>
-  <div class="flex gap-2">
-    <span class="icon icon-course-teal icon-small"></span>
-    <span class="text-primary text-xs font-medium">My Courses</span>
-  </div>
+  <%= render "shared/components/bread_crumbs", links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
   <p class="text-primary mb-1 overflow-hidden text-ellipsis text-base font-bold py-6">
-    <%= @course.title %>
+    <%= @lesson.title %>
   </p>
   <div class="flex flex-col">
     <%= render "lessons/video_frame_mobile", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>

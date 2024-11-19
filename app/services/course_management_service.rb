@@ -44,6 +44,10 @@ class CourseManagementService
   end
 
   def set_progress!(user, enrollment, course_module, lesson, time_spent_in_seconds)
+    # do nothing if the lesson is already complete, only the first time complete will be
+    # considered
+    return if enrollment.lesson_completed?(lesson.id)
+
     enrollment.complete_lesson!(course_module.id, lesson.id, time_spent_in_seconds)
 
     enrollment.complete_module!(course_module.id) if module_completed?(enrollment, course_module)

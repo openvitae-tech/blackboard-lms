@@ -1,6 +1,6 @@
 <%= render "shared/components/desktop_layout" do %>
   <div class="flex justify-between my-4">
-    <%= render "shared/components/bread_crumbs", links: [@course.title] %>
+    <%= render "shared/components/bread_crumbs", links: [[@course.title, nil]] %>
     <div class="flex justify-between gap-4">
       <% if policy(@course).destroy? %>
         <%= link_to course_path(@course), data: { turbo_method: "delete" } do %>
