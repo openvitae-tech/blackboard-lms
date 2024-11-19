@@ -1,7 +1,7 @@
 <div class="flex flex-col border-b px-6 py-6 border-line-colour" data-controller="course-description-card">
 <div class="flex h-[216px]">
   <%= image_tag course_banner(course, :vertical), class: "h-[216px] w-[140px] object-cover" %>
-  <div class="flex w-full flex-col px-4">
+  <div class="flex w-full flex-col pl-4">
     <div class="flex justify-between">
       <p class="mb-4 overflow-hidden text-ellipsis text-2xl font-extrabold text-primary">
         <%= course.title %>
@@ -50,7 +50,7 @@
     
   </div>
 </div>
-<div class="flex justify-end gap-4 py-6">
+<div class="flex justify-end gap-4 mt-6">
       <% if policy(course).unenroll? %>
         <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
           <%= render "shared/components/outline_icon_button_secondary_small", icon_name: 'icon-minus', label: 'Drop' %>
