@@ -43,6 +43,9 @@ class CoursePolicy
   end
 
   def unenroll?
+    # once enrolled a course cannot be dropped by users in production
+    # but this will be very useful for testing
+    return false if Rails.env.production?
     !user.is_admin? && user.enrolled_for_course?(course)
   end
 

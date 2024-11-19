@@ -5,7 +5,7 @@ class QuizPolicy < ApplicationPolicy
 
   def initialize(user, record)
     @user = user
-    @record = record
+    @quiz = record
   end
 
   def new?
@@ -13,7 +13,7 @@ class QuizPolicy < ApplicationPolicy
   end
 
   def show?
-    user.is_admin? || user.enrolled_for_course?(record.course_module.course)
+    user.is_admin? || user.enrolled_for_course?(quiz.course_module.course)
   end
 
   def create?
@@ -29,15 +29,14 @@ class QuizPolicy < ApplicationPolicy
   end
 
   def destroy?
-    false
+    return false unless user.is_admin?
+    course = quiz.course_module.course
+    CoursePolicy.new(user, course).destroy?
   end
 
   def submit_answer?
-    return false if !user.present? && user.enrolled_for_course?(record.course_module.course)
-
-    if user.enrolled_for_course?(record.course_module.course)
-      enrollment = user.get_enrollment_for(record.course_module.course)
-    end
+    return false unless user.enrolled_for_course?(quiz.course_module.course)
+    enrollment = user.get_enrollment_for(record.course_module.course)
     !enrollment.quiz_answered?(record)
   end
 
