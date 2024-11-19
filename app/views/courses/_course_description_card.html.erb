@@ -1,6 +1,7 @@
-<div class="flex flex-row border-b px-6 py-6 border-line-colour" data-controller="course-description-card">
-  <%= image_tag course_banner(course, :vertical), class: "h-[216px] w-[140px] rounded-l object-cover" %>
-  <div class="flex w-full flex-col px-4 py-1">
+<div class="flex flex-col border-b px-6 py-6 border-line-colour" data-controller="course-description-card">
+<div class="flex h-[216px]">
+  <%= image_tag course_banner(course, :vertical), class: "h-[216px] w-[140px] object-cover" %>
+  <div class="flex w-full flex-col px-4">
     <div class="flex justify-between">
       <p class="mb-4 overflow-hidden text-ellipsis text-2xl font-extrabold text-primary">
         <%= course.title %>
@@ -17,7 +18,7 @@
         <%= render "shared/components/progress_bar", progress: enrollment.progress %>
       </div>
     <% end %>
-    <div class="mb-5 flex justify-between space-x-2">
+    <div class="mb-4 flex justify-between space-x-2">
       <div class="flex justify-between space-x-4">
         <div class="flex items-center">
           <span class="icon icon-lessons h-3.5 w-3.5"></span>
@@ -41,12 +42,15 @@
     <p class="mb-3 overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">
       Course Description
     </p>
-    <div class="p-4 text-justify text-sm tracking-tight bg-primary-light-50 show-less-desc max-h-[75px]" data-course-description-card-target="courseDescription">
+    <div class="p-4 text-justify text-sm tracking-tight bg-primary-light-50 show-less-desc rounded-lg" data-course-description-card-target="courseDescription">
       <div class="h-full overflow-hidden">
         <%= course_description(course) %>
       </div>
     </div>
-    <div class="flex justify-end gap-4 py-6">
+    
+  </div>
+</div>
+<div class="flex justify-end gap-4 py-6">
       <% if policy(course).unenroll? %>
         <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
           <%= render "shared/components/outline_icon_button_secondary_small", icon_name: 'icon-minus', label: 'Drop' %>
@@ -63,5 +67,4 @@
         <% end %>
       <% end %>
     </div>
-  </div>
 </div>
