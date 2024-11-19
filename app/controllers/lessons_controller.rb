@@ -141,7 +141,7 @@ class LessonsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course
-    @course = Course.find(params[:course_id])
+    @course = Course.includes(course_modules: { lessons: :local_contents }).find(params[:course_id])
   end
 
   def set_course_module

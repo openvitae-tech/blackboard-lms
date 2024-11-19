@@ -30,6 +30,7 @@ class LessonPolicy < ApplicationPolicy
 
   def destroy?
     return false unless user.is_admin?
+
     course = lesson.course_module.course
     CoursePolicy.new(user, course).destroy?
   end
