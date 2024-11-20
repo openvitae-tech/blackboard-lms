@@ -3,7 +3,17 @@
     <span class="icon icon-team-green icon-small"></span>
     <span class="text-sm font-semibold text-primary">Team</span>
   </div>
-  <div class="mt-4 flex justify-between">
+  <div class="flex pb-2 justify-between">
+    <div class="flex items-center gap-4  w-[350px]">
+      <span class="font-medium text-basic pt-2"><%= team.name  %></span>
+    </div>
+    <% if policy(team).edit? %>
+      <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
+        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+      <% end %>
+    <% end %>  
+  </div>
+  <div class="my-4 flex justify-between">
     <ol class="flex flex-wrap items-center gap-1 text-secondary text-[10px]">
       <% team_list(current_user.team, team).each do |team| %>
         <li class="flex items-center gap-[2px]">
@@ -12,10 +22,10 @@
         </li>
       <% end %>
     </ol>
-    <% if policy(team).edit? %>
-      <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
-        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
-      <% end %>
-    <% end %>
   </div>
+  <% if team.banner.present? %>
+    <%= image_tag 'banner_placeholder.png', class: "max-h-[162px] 2xl:max-h-[200px] w-full object-fill rounded" %>
+  <% else %>
+    <%= image_tag 'banner_placeholder.png', class: "max-h-[162px] 2xl:max-h-[200px] w-full object-fill rounded" %>
+  <% end %>
 </div>

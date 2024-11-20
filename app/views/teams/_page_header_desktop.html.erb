@@ -1,13 +1,15 @@
 <div id="team-page-header-desktop">
   <div class="flex pb-2 justify-between">
     <div class="flex items-center gap-4  w-[350px]">
-      <% if team.banner.present? %>
-        <%= image_tag team.banner, class: "h-8 w-8 object-cover" %>
-      <% end  %>
       <span class="font-medium text-basic pt-2"><%= team.name  %></span>
     </div>
+    <% if policy(team).edit? %>
+      <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
+        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+      <% end %>
+    <% end %>  
   </div>
-  <div class="mt-4 flex justify-between items-start">
+  <div class="my-4 flex justify-between items-start">
     <ol class="flex items-center space-x-2 text-secondary text-xs">
       <% team_list(current_user.team, team).each do |team_item| %>
         <li class="flex space-x-1">
@@ -15,12 +17,11 @@
           <span class="icon icon-simple-arrow-right icon-small"></span>
         </li>
       <% end %>
-    </ol>
-
-    <% if policy(team).edit? %>
-      <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
-        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
-      <% end %>
-    <% end %>
+    </ol>     
   </div>
+  <% if team.banner.present? %>
+    <%= image_tag team.banner, class: "max-h-[162px] 2xl:max-h-[200px] w-full object-fill rounded" %>
+  <% else %>
+    <%= image_tag 'banner_placeholder.png', class: "max-h-[162px] 2xl:max-h-[200px] w-full object-fill rounded" %>
+  <% end %>
 </div>
