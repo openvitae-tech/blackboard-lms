@@ -6,6 +6,6 @@
   </div>
   <div class="my-6 rounded flex flex-col gap-6">
     <%= render "courses/course_description_card_mobile", course: @course, enrollment: @enrollment %>
-    <%= render "courses/course_lessons_mobile", course: @course, enrollment: @enrollment %>
+    <%= render "courses/course_lessons", course: @course, enrollment: @enrollment %>
   </div>
 <% end %>
