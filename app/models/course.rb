@@ -20,7 +20,7 @@ class Course < ApplicationRecord
 
   def undo_enroll!(user)
     # there will be only one enrollment record for a user, course pair
-    enrollments.where(user:).delete_all
+    enrollments.where(user:).each(&:destroy)
   end
 
   def duration
