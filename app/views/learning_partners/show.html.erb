@@ -26,7 +26,7 @@
   <div class="w-full">
     <h1 class="mb-4 text-xl font-semibold"><%= @learning_partner.name %></h1>
     <h3 class="text-sm font-medium">Hotel Logo</h3>
-    <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_logo(@learning_partner, :large), class: "h-[80px] w-[80px] rounded-l object-center" %></div>
+    <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_logo(@learning_partner, :large), class: "h-[80px] w-[80px] object-contain" %></div>
     <h3 class="text-sm font-medium">Hotel Banner</h3>
     <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_banner(@learning_partner), class: "max-h-[120px] max-w-full rounded-l object-center" %></div>
     <div class="my-4">
