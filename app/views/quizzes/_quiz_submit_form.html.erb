@@ -5,15 +5,16 @@
     <span class="icon icon-close h-4 w-4"></span>
   </div>
   <div class="flex justify-center gap-4 pt-6">
-    <div class="indicator active"></div>
-    <div class="indicator"></div>
-    <div class="indicator"></div>
+    <% current_index = position_of_quiz(course_module, quiz) - 1 %>
+    <% course_module.quizzes_count.times do |index| %>
+      <div class="indicator <%= 'active' if index == current_index %>"></div>
+    <% end %>
   </div>
   <h2 class="text-black0 flex items-center justify-center pt-4 text-base font-medium">
-    1/5 Questions
+    <%= quiz_position_text(course_module, quiz) %> Questions
   </h2>
   <ul class="w-full pb-6">
-    <li id="<%= dom_id quiz %>" class="carousel-container m-6 rounded box-shadow-medium">
+    <li class="carousel-container m-6 rounded box-shadow-medium">
       <h2 class="bg-primary-light-50 p-6 text-base font-medium">
        <span>1.</span> <%= quiz.question %>
       </h2>

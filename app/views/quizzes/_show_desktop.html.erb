@@ -1,13 +1,5 @@
 <%= render "shared/components/desktop_layout" do %>
-  <div class="box">
-    <h1 class="mb-6 text-xl font-semibold">My Courses</h1>
-    <%= render "shared/components/bread_crumbs", links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
-    <p class="text-primary py-6 overflow-hidden text-ellipsis text-2xl font-extrabold">
-      <%= @course.title %>
-    </p>
-  </div>
-  <div class="flex flex-row gap-6" data-controller="lessons">
-    <%= render "quizzes/quizz_box", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
-    <%= render "lessons/play_list", course: @course,  enrollment: @enrollment %>
+  <div class="flex flex-row gap-6">
+    <%= render "quizzes/quizz_box", course: @course, course_module: @course_module, quiz: @quiz %>
   </div>
 <% end %>

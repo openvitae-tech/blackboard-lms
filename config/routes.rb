@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       member do
         put :moveup
         put :movedown
+        get :summary
       end
 
       resources :lessons, except: [:index] do
