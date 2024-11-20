@@ -24,7 +24,7 @@
     </ol>
   </div>
   <% if team.banner.present? %>
-    <%= image_tag 'banner_placeholder.png', class: "max-h-[162px] 2xl:max-h-[200px] w-full object-fill rounded" %>
+    <%= image_tag team.banner, class: "max-h-[162px] 2xl:max-h-[200px] w-full object-fill rounded" %>
   <% else %>
     <%= image_tag 'banner_placeholder.png', class: "max-h-[162px] 2xl:max-h-[200px] w-full object-fill rounded" %>
   <% end %>
