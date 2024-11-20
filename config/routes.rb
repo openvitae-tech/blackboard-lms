@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     collection do
       get :new_admin
       post :create_admin
+      get :download
     end
   end
 

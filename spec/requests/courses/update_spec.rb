@@ -56,10 +56,10 @@ RSpec.describe 'Request spec for PUT /course' do
       expect(response.status).to be(422)
     end
 
-    it 'fails when the description is less than 140 chars' do
+    it 'fails when the description is less than 32 chars' do
       params = {
         course: {
-          description: Faker::Lorem.paragraph_by_chars(number: 120)
+          description: Faker::Lorem.paragraph_by_chars(number: 20)
         }
       }
 
