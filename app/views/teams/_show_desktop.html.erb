@@ -23,5 +23,5 @@
     </a>
   </div>
   <%= render "teams/member_list", team: @team %>
-  <%= render "teams/sub_teams", team: @team %>
+  <%= render "teams/sub_teams", team: @team, sub_teams: @team.sub_teams.includes(:banner_attachment) %>
 <% end %>

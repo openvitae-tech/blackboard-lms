@@ -58,7 +58,7 @@
       <div class="flex items-center justify-between pt-8">
         <p class="text-sm font-medium">Linked Hotels & Resorts</p>
       </div>
-      <%= render "teams/sub_teams_mobile", team: @team %>
+      <%= render "teams/sub_teams_mobile", team: @team, sub_teams: @team.sub_teams.includes(:banner_attachment) %>
     </div>
   </div>
 <% end %>

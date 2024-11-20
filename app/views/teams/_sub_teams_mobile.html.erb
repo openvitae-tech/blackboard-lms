@@ -1,5 +1,5 @@
-<ul id="team-list-desktop" class="flex flex-col gap-4 mt-6 overflow-y-auto max-h-[240px]">
-  <% team.sub_teams.each do |sub_team| %>
+<ul id="team-list-mobile" class="flex flex-col gap-4 mt-6 overflow-y-auto max-h-[240px]">
+  <% sub_teams.each do |sub_team| %>
     <%= render 'teams/team_mobile', team: sub_team %>
   <% end %>
 </ul>

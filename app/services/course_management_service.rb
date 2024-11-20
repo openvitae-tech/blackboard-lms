@@ -77,6 +77,7 @@ class CourseManagementService
       course.enroll!(user, assigned_by, deadline)
       EVENT_LOGGER.publish_course_assigned(assigned_by, user.id, course.id)
       Notification.notify(user, format(I18n.t('course.assigned'), course: course.title, name: assigned_by.name))
+      UserMailer.course_assignment(user, assigned_by, course).deliver_later
     end
   end
 
