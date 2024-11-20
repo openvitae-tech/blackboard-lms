@@ -19,20 +19,20 @@ class InvitesController < ApplicationController
 
     status =
       if @bulk_invite
-        # user object is required in the form where there is an error
+        # user object is required in the form when there is an error
         @user = User.new(team: @team)
         # Bulk invite users as learners
-        emails = process_bulk_invite(invite_params[:bulk_invite])
+        valid_records = BulkInviteInputService.instance.process(invite_params[:bulk_invite])
 
-        if emails.present?
-          service.bulk_invite(current_user, emails, :learner, @team)
+        if valid_records.present?
+          service.bulk_invite(current_user, valid_records, :learner, @team)
           :ok
         else
           @user.errors.add(:base, I18n.t('invite.invalid_csv'))
           :error
         end
       else
-        @user = service.invite(current_user, invite_params[:email], invite_params[:role], @team)
+        @user = service.invite(current_user, invite_params, @team)
         @user.persisted? ? :ok : :error
       end
 
@@ -74,28 +74,17 @@ class InvitesController < ApplicationController
     end
   end
 
+  def download
+    send_file(Rails.root.join("app/views/invites/learner_bulk_invite_sample.csv"), type: "text/csv", disposition: "inline")
+  end
+
   private
 
   def invite_params
-    params.require(:user).permit(:email, :role, :team_id, :bulk_invite)
+    params.require(:user).permit(:name, :email, :role, :team_id, :bulk_invite)
   end
 
   def invite_admin_params
     params.require(:user).permit(:email)
-  end
-
-  def process_bulk_invite(file_input)
-    return [] unless file_input.respond_to? :read
-    return [] unless file_input.content_type == 'text/csv' || file_input.content_type == 'text/plain'
-
-    begin
-      contents = file_input.read
-      contents
-        .split("\n")
-        .map(&:strip).map(&:downcase)
-        .filter { |email| User::EMAIL_REGEXP.match?(email) }
-    rescue IOError => _e
-      []
-    end
   end
 end

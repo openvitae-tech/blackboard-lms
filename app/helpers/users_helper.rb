@@ -30,10 +30,10 @@ module UsersHelper
   end
 
   def user_name(user)
-    user.name.blank? ? 'User' : user.name.split.first
+    user.name.blank? ? role_text(user.role) : user.name.split.first
   end
 
   def user_avatar(user)
-    user.name.blank? ? 'U' : user.name[0]
+    user_name(user)[0]&.upcase
   end
 end
