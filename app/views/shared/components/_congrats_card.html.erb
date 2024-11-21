@@ -1,31 +1,33 @@
-<div class="flex flex-col border border-b">
+<div class="flex flex-col box-shadow-medium">
   <div class="bg-primary relative flex flex-col items-center justify-center py-8 text-white rounded-t">
-    <span class="icon icon-stars absolute left-64 top-8 h-6 w-6"></span>
-    <span class="icon icon-stars absolute right-72 top-6 h-6 w-6"></span>
-    <span class="icon icon-star-fall absolute left-32 top-24 h-6 w-6"></span>
-    <span class="icon icon-star-fall absolute right-40 top-20 h-6 w-6"></span>
-    <%= image_tag "winner_cup.png",  alt: "Instruo", class: "h-24 w-24" %>
-    <h1 class="pt-4 text-4xl font-bold text-white">Congrats</h1>
-    <p class="mt-5 flex items-center text-base font-medium">
-      <span class="icon icon-winner mr-2 h-6 w-6"></span>
-      <span class="text-white">You have completed the lesson on Basics of Hospitality</span>
-    </p>
+    <%= image_tag "congrats_cup.png", alt: "Congrats", class: "absolute inset-0 w-full h-full object-cover rounded-t" %>
+    <div class="relative z-10 text-center mt-32 sm:mt-24"> 
+      <h1 class="text-2xl sm:text-4xl font-bold text-white">Congrats</h1>
+      <p class="mt-5 sm:mt-8 flex flex-col gap-2 sm:flex-row items-center text-base font-medium">
+        <span class="icon icon-winner h-6 w-6"></span>
+        <span class="text-white text-sm sm:text-base">You have completed the lesson on Basics of Hospitality</span>
+      </p>
+    </div>
   </div>
-  <div class="flex flex-col p-6">
-    <h2 class="text-2xl font-medium">Basics of Hospitality</h2>
-    <p class="text-pretty pt-4 pb-6 text-sm text-letter-color-light">
-      Morem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis
-      molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla
-      accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.
-      Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent
-      taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-      himenaeos.
-    </p>
-    <div class="flex justify-end">
-      <a href="#"
-        class="bg-primary-light-50 text-primary hover:pointer relative right-0 flex items-center gap-1 rounded-sm px-2 py-1 text-xs font-normal tracking-tight">
-        Read More<span class="icon icon-arrow-right icon-small"></span>
-      </a>
+  <div class="bg-secondary flex flex-col justify-between gap-2 p-8">  
+    <div class="relative flex justify-center">
+      <span class="icon icon-celebration left-0 top-8 h-6 w-6"></span>
+      <div
+        class="border-slate-grey flex h-[172px] w-[172px] items-center rounded-full border-8 bg-white">
+        <div
+          class="border-slate-grey-light flex h-[156px] w-[156px] flex-col gap-2 items-center rounded-full border-8 bg-white px-6 py-8">
+          <span class="text-sm font-medium sm:text-xs sm:font-semibold">Score</span>
+          <span class="text-5xl sm:text-3xl font-bold">5/10</span>
+        </div>
+      </div>
+      <span class="icon icon-celebration right-0 top-8 h-6 w-6 scale-x-[-1]"></span>      
+    </div>
+    <div class="text-center">
+      <h2 class="">
+        <span class="text-gold text-xl font-extrabold sm:text-base">
+          You have earned 20 coins in this module.
+        </span>
+      </h2>
     </div>
   </div>
 </div>
