@@ -1,1 +1,13 @@
-Quiz summary
+
+  <div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center md:items-center md:justify-center z-[9999] max-h-full">
+    <div class="mx-4 bg-white max-h-[95vh] overflow-y-auto w-[full md:w-auto">
+      <%= render "shared/components/congrats_card" %>
+      <div id="quiz" class="tab-content">
+        <%= render "shared/components/course_completion_quiz" %>
+      </div>
+      <div class="flex flex-row justify-between gap-4 p-4 sm:p-6">
+        <%= render "shared/components/button_default_small", label: "Retry", icon_name: "icon-retry" %>
+        <%= render "shared/components/icon_button_primary_small", icon_name: "icon-next", label: "Continue", icon_right: true %>
+      </div>
+    </div> 
+</div>
