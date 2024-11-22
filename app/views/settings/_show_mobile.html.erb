@@ -1,7 +1,14 @@
 <%= render "shared/components/mobile_layout" do %>
-  <h1 class="my-4 text-sm font-medium">User settings</h1>
-      <h2 class="text-xs text-primary font-semibold">My Profile</h2>
-
-  <%= render "settings/page_header_mobile", user: @user %>
-  <%= render "settings/page_body_mobile", user: @user %>
+  <h1 class="text-sm font-medium">User settings</h1>
+  <h2 class="my-4 text-xs text-primary font-semibold">My Profile</h2>
+  <div class="rounded box-shadow-medium">
+    <%= render "settings/page_header", user: @user %>
+    <%= render "settings/page_body", user: @user %>
+    <div class="p-8">
+      <h1 class="text-base font-semibold">Change password</h1>
+      <div class="mt-4">
+        <%= link_to 'Change your password', change_password_settings_path, data: { turbo_frame: 'change-password-modal' }, class: 'link-text' %>
+      </div>
+    </div>
+   </div 
 <% end %>

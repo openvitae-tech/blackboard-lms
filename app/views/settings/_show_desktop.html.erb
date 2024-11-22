@@ -1,10 +1,9 @@
 <%= render "shared/components/desktop_layout" do %>
   <h1 class="my-4 text-xl font-semibold">User settings</h1>
-    <h2 class="my-6 text-base text-primary font-medium">My Profile</h2>
-
+  <h2 class="my-6 text-base text-primary font-medium">My Profile</h2>
   <div class="rounded box-shadow-medium">
-    <%= render "settings/page_header_desktop", user: @user %>
-    <%= render "settings/page_body_desktop", user: @user %>
+    <%= render "settings/page_header", user: @user %>
+    <%= render "settings/page_body", user: @user %>
     <div class="p-8">
       <h1 class="text-base font-semibold">Change password</h1>
       <div class="mt-4">
