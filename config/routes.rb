@@ -48,6 +48,7 @@ Rails.application.routes.draw do
         put :moveup
         put :movedown
         get :summary
+        delete :redo_quiz
       end
 
       resources :lessons, except: [:index] do

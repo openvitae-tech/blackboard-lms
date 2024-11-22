@@ -1,15 +1,15 @@
 <div class="basis-3/5">
   <div class="box text-right">
-  <% if policy(@quiz).edit? %>
-    <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz), class: "btn-default" do %>
-      <span>Edit</span>
+    <% if policy(@quiz).edit? %>
+      <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz), class: "btn-default" do %>
+        <span>Edit</span>
+      <% end %>
     <% end %>
-  <% end %>
-  <% if policy(@quiz).destroy? %>
-    <%= link_to course_module_quiz_path(@course, @course_module, @quiz), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-default" do %>
-      <span>Delete</span>
+    <% if policy(@quiz).destroy? %>
+      <%= link_to course_module_quiz_path(@course, @course_module, @quiz), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-default" do %>
+        <span>Delete</span>
+      <% end %>
     <% end %>
-  <% end %>
   </div>
 
   <% if current_user.is_admin? || @enrollment.quiz_answered?(@quiz) %>
