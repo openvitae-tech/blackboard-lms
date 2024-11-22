@@ -1,11 +1,11 @@
 <div class="flex flex-col box-shadow-medium">
   <div class="bg-primary relative flex flex-col items-center justify-center py-8 text-white rounded-t">
     <%= image_tag "congrats_cup.png", alt: "Congrats", class: "absolute inset-0 w-full h-full object-cover rounded-t" %>
-    <div class="relative z-10 text-center mt-32 sm:mt-24"> 
-      <h1 class="text-2xl sm:text-4xl font-bold text-white">Congrats</h1>
-      <p class="mt-5 sm:mt-8 flex flex-col gap-2 sm:flex-row items-center text-base font-medium">
+    <div class="relative z-10 text-center mt-32 md:mt-24">
+      <h1 class="text-2xl md:text-4xl font-bold text-white">Congrats</h1>
+      <p class="mt-5 md:mt-8 flex flex-col gap-2 md:flex-row items-center text-base font-medium">
         <span class="icon icon-winner h-6 w-6"></span>
-        <span class="text-white text-sm sm:text-base">You have completed the lesson on Basics of Hospitality</span>
+        <span class="text-white text-sm md:text-base">You have completed the module <%= course_module.title %></span>
       </p>
     </div>
   </div>
@@ -16,18 +16,19 @@
         class="border-slate-grey flex h-[172px] w-[172px] items-center rounded-full border-8 bg-white">
         <div
           class="border-slate-grey-light flex h-[156px] w-[156px] flex-col gap-2 items-center rounded-full border-8 bg-white px-6 py-8">
-          <span class="text-sm font-medium sm:text-xs sm:font-semibold">Score</span>
-          <span class="text-5xl sm:text-3xl font-bold">5/10</span>
+          <span class="text-sm font-medium md:text-xs md:font-semibold">Score</span>
+          <span class="text-5xl md:text-3xl font-bold"><%= enrollment.score_earned_for(course_module) %></span>
         </div>
       </div>
       <span class="icon icon-celebration right-0 top-8 h-6 w-6 scale-x-[-1]"></span>      
     </div>
-    <div class="text-center">
-      <h2 class="">
-        <span class="text-gold text-xl font-extrabold sm:text-base">
-          You have earned 20 coins in this module.
-        </span>
-      </h2>
-    </div>
+<!-- disabled until gamification -->
+<!--    <div class="text-center hidden">-->
+<!--      <h2 class="">-->
+<!--        <span class="text-gold text-xl font-extrabold md:text-base">-->
+<!--          You have earned 20 coins in this module.-->
+<!--        </span>-->
+<!--      </h2>-->
+<!--    </div>-->
   </div>
 </div>

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class QuizzesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_course
   before_action :set_course_module
   before_action :set_quiz, only: %i[show edit update destroy submit_answer moveup movedown]

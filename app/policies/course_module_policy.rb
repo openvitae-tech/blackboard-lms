@@ -43,4 +43,8 @@ class CourseModulePolicy < ApplicationPolicy
   def summary?
     true
   end
+
+  def redo_quiz?
+    true
+  end
 end

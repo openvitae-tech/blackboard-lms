@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class CourseModulesController < ApplicationController
-  before_action :set_course, only: %i[new create show edit update destroy moveup movedown summary]
-  before_action :set_course_module, only: %i[show edit update destroy moveup movedown summary]
-  # GET /course_modules/1 or /course_modules/1.json
+  before_action :authenticate_user!
+  before_action :set_course, only: %i[new create show edit update destroy moveup movedown summary redo_quiz]
+  before_action :set_course_module, only: %i[show edit update destroy moveup movedown summary redo_quiz]
   def show
     authorize @course_module
     @lessons = helpers.lessons_in_order(@course_module)
@@ -74,6 +74,15 @@ class CourseModulesController < ApplicationController
 
   def summary
     authorize @course_module
+    @enrollment = current_user.get_enrollment_for(@course)
+  end
+
+  def redo_quiz
+    authorize @course_module
+    @enrollment = current_user.get_enrollment_for(@course)
+    service = CourseManagementService.instance
+    service.redo_quiz(@course_module, @enrollment)
+    redirect_to course_module_quiz_path(@course, @course_module, @course_module.first_quiz)
   end
 
   private
