@@ -4,7 +4,7 @@ export default class extends Controller {
 
     static targets = ["showMoreToggle","upArrow","downArrow", "courseDescription"];
     connect() {
-        console.log("Course card controller active")
+        console.log("Course card controller active") 
     }
 
     showMoreToggle(event) {
@@ -16,6 +16,7 @@ export default class extends Controller {
             this.upArrowTarget.classList.remove("icon")
             this.downArrowTarget.classList.remove("hidden")
             this.downArrowTarget.classList.add("icon")
+            this.courseDescriptionTarget.classList.add("show-less-desc");
 
             this.courseDescriptionTarget.classList.remove("show-more-desc");
         } else {
@@ -25,6 +26,7 @@ export default class extends Controller {
             this.upArrowTarget.classList.add("icon")
             this.downArrowTarget.classList.add("hidden")
             this.downArrowTarget.classList.remove("icon")
+            this.courseDescriptionTarget.classList.remove("show-less-desc");
 
             this.courseDescriptionTarget.classList.add("show-more-desc");
         }
