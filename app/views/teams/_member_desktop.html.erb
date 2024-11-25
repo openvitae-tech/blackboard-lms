@@ -1,9 +1,11 @@
 <tr class="whitespace-nowrap text-xs font">
   <td class="px-6 py-4  flex  gap-4 items-center">
     <%= link_to member_path(member), class: "cursor-pointer" do %>
-      <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
+      <div class="flex gap-2 items-center">
+        <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
+        <span class="ml-2 font-medium text-sm"><%= member.name %></span>
+      </div>
     <% end %>
-    <span class="ml-2 font-medium text-sm"><%= member.name %></span>
     <% if member.verified? %>
       <%= render 'shared/components/label_small_success', label: 'Verified', icon_name: 'icon-complete' %>
     <% end %>
