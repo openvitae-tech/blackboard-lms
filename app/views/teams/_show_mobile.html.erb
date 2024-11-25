@@ -1,16 +1,6 @@
 <%= render "shared/components/mobile_layout" do %>
   <%= render "teams/page_header_mobile", team: @team %>
 
-  <div class="mt-4 flex flex-col gap-4">
-    <%= render "shared/components/course_watch_time_chart_mobile" %>
-    <%= render "shared/components/enrolled_ratio_chart" %>
-  </div>
-
-  <% if policy(:dashboard).index? %>
-    <div class="my-4 flex justify-start">
-      <%= render 'shared/components/button_default_medium', label: 'View full dashboard', icon_name: 'icon-arrow-right' %>
-    </div>
-  <% end %>
   <div data-controller="tab-change">
     <div class="mt-2 mb-6 flex justify-start gap-6">
       <a href="javascript:void(0);" data-action="click->tab-change#changeTab" data-tab="user" data-tab-change-target="tabLink" class="text-base font-normal active-border">User</a>
@@ -56,7 +46,7 @@
     </div>
     <div data-tab-change-target="tabContent" class="hidden" data-tab="team">
       <div class="flex items-center justify-between pt-8">
-        <p class="text-sm font-medium">Linked Hotels & Resorts</p>
+        <p class="text-sm font-medium">Your sub teams</p>
       </div>
       <%= render "teams/sub_teams_mobile", team: @team, sub_teams: @team.sub_teams.includes(:banner_attachment) %>
     </div>

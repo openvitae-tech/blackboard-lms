@@ -1,4 +1,4 @@
-<div id="team-page-header-desktop">
+<div id="team-page-header-desktop" class="mb-8">
   <div class="flex pb-2 justify-between">
     <div class="flex items-center gap-4  w-[350px]">
       <% if team.banner.present? %>
@@ -17,10 +17,18 @@
       <% end %>
     </ol>
 
-    <% if policy(team).edit? %>
-      <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
-        <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+    <div class="flex gap-4 items-start">
+      <% if policy(team).edit? %>
+        <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
+          <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+        <% end %>
       <% end %>
-    <% end %>
+
+      <% if policy(:dashboard).index? %>
+        <%= link_to dashboard_path do %>
+          <%= render 'shared/components/button_default_small', label: 'Team dashboard', icon_name: 'icon-arrow-right' %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
