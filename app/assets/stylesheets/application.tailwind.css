@@ -60,6 +60,17 @@
     }
   }
 
+  .btn-secondary {
+    @apply rounded border px-4 text-center shadow-xl py-3.5 min-w-40 border-secondary bg-secondary text-white;
+    &:hover {
+      @apply cursor-pointer opacity-95;
+    }
+
+    span {
+      @apply text-xl font-semibold text-white;
+    }
+  }
+
   .btn-default {
     @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour bg-line-colour;
 
