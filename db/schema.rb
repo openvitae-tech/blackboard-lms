@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_06_134840) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_22_093202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,6 +89,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_06_134840) do
     t.datetime "deadline_at"
     t.bigint "completed_modules", default: [], array: true
     t.boolean "course_completed", default: false
+    t.integer "score", default: 0
     t.index ["assigned_by_id"], name: "index_enrollments_on_assigned_by_id"
     t.index ["course_id"], name: "index_enrollments_on_course_id"
     t.index ["user_id", "course_id"], name: "index_enrollments_on_user_id_and_course_id", unique: true
@@ -152,7 +153,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_06_134840) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "answer"
+    t.integer "course_module_id", null: false
     t.index ["enrollment_id"], name: "index_quiz_answers_on_enrollment_id"
+    t.index ["quiz_id", "enrollment_id"], name: "index_quiz_answers_on_quiz_id_and_enrollment_id", unique: true
     t.index ["quiz_id"], name: "index_quiz_answers_on_quiz_id"
   end
 

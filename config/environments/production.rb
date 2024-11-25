@@ -111,4 +111,6 @@ Rails.application.configure do
     open_timeout: 5,
     read_timeout: 5
   }
+
+  config.action_mailer.asset_host = Rails.application.credentials.dig(:app, :base_url)
 end

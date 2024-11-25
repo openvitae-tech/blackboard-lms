@@ -1,0 +1,38 @@
+
+<div class="box-shadow-medium md:m-6 flex flex-col gap-6 p-4 m-4 md:p-6">
+  <div class="flex flex-col gap-4 md:px-4 pb-4 ">
+    <div class="flex md:flex-row flex-col gap-6 justify-between">
+      <div class="flex  justify-start">
+        <span class="text-primary text-sm md:text-xl font-bold">Quiz from <%= course_module.title %></span>
+      </div>
+      <div class="flex justify-between text-xs md:text-sm md:gap-8 gap-3">
+        <span class="text-primary-light bg-primary-light-50 p-2 text-center">
+          Correct answers - <span class="text-primary-light"><%= enrollment.correct_quiz_count_for(course_module) %></span>
+        </span>
+        <span class="text-danger bg-danger-light p-2 text-center">
+          Incorrect answers - <span class="text-danger"><%= enrollment.incorrect_quiz_count_for(course_module) %></span>
+        </span>
+      </div>
+    </div>    
+    <ul class="mt-4 space-y-4 text-sm md:text-base">
+      <% enrollment.quiz_answers_for(course_module).each_with_index do |answer, index| %>
+        <li class="flex flex-col md:flex-row items-start gap-4 md:flex-row md:items-center md:gap-6">
+          <div class="bg-primary-light-50 p-2 rounded w-full md:w-1/2">
+            <span><%= index + 1 %>.</span>
+            <span><%= answer.question %></span>
+          </div>
+          <div class="flex justify-between border-line-colour-light w-full border p-2 md:w-1/2">
+            <span><%= answer.answer.upcase %>. <%= answer.answer_text %></span>
+            <% if answer.correct? %>
+              <span class="icon icon-green-tick h-5 w-5"></span>
+            <% elsif answer.incorrect? %>
+              <span class="icon icon-x h-5 w-5"></span>
+            <% else %>
+              <span>S</span>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>   
+</div>

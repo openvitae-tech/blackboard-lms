@@ -3,6 +3,7 @@
 class LessonsController < ApplicationController
   include LessonsHelper
 
+  before_action :authenticate_user!
   before_action :set_course
   before_action :set_course_module
   before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]
@@ -96,13 +97,14 @@ class LessonsController < ApplicationController
 
     service.set_progress!(current_user, enrollment, @course_module, @lesson, time_spent_in_seconds)
 
-    if enrollment.module_completed?(@course_module.id) && @course_module.has_quiz?
+    if enrollment.module_completed?(@course_module.id) && @course_module.has_quiz? && !enrollment.quiz_completed_for?(@course_module)
       redirect_to course_module_quiz_path(@course, @course_module, @course_module.first_quiz)
       return
     end
 
-    next_path = helpers.next_lesson_path(@course, @course_module, @lesson)
-    next_path = course_path(@course) if next_path.blank? # the course is completed
+    next_path = enrollment.course_completed? ? course_path(@course) : helpers.next_lesson_path(@course, @course_module, @lesson)
+
+    next_path = course_path(@course) if next_path.blank?
 
     redirect_to next_path
   end
@@ -141,7 +143,7 @@ class LessonsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course
-    @course = Course.find(params[:course_id])
+    @course = Course.includes(course_modules: { lessons: :local_contents }).find(params[:course_id])
   end
 
   def set_course_module

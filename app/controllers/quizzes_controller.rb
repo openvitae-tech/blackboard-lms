@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class QuizzesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_course
   before_action :set_course_module
   before_action :set_quiz, only: %i[show edit update destroy submit_answer moveup movedown]
 
   def show
     authorize @quiz
-    @quizzes = helpers.quizzes_in_order(@course_module)
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
   end
 
@@ -57,8 +57,7 @@ class QuizzesController < ApplicationController
     CourseManagementService.instance.record_answer!(enrollment, @quiz, answer_params[:answer].downcase)
     next_quiz = @course_module.next_quiz(@quiz)
     next_path = if next_quiz.blank?
-                  # TODO: Show quiz summary page
-                  course_path(@course)
+                  summary_course_module_path(@course, @course_module)
                 else
                   course_module_quiz_path(@course,
                                           @course_module, next_quiz)

@@ -77,6 +77,7 @@ class CourseManagementService
       course.enroll!(user, assigned_by, deadline)
       EVENT_LOGGER.publish_course_assigned(assigned_by, user.id, course.id)
       Notification.notify(user, format(I18n.t('course.assigned'), course: course.title, name: assigned_by.name))
+      UserMailer.course_assignment(user, assigned_by, course).deliver_later
     end
   end
 
@@ -95,7 +96,10 @@ class CourseManagementService
              else
                QuizAnswer::STATUS_MAPPING[:incorrect]
              end
-    enrollment.quiz_answers.create!(quiz:, status:, answer:)
+
+    quiz_answer = enrollment.quiz_answers.new(quiz:, status:, answer:, course_module_id: quiz.course_module_id)
+    quiz_answer.save!
+    enrollment.update_score!(quiz_answer.score)
   end
 
   def update_lesson_ordering!(course_module, lesson, action)
@@ -128,6 +132,12 @@ class CourseManagementService
     return false unless enrollment.lesson_completed?(lesson.id)
 
     enrollment.mark_as_incomplete!(lesson)
+  end
+
+  def redo_quiz(course_module, enrollment)
+    score = enrollment.score_earned_for(course_module)
+    enrollment.delete_recorded_answers_for(course_module)
+    enrollment.update_score!(score)
   end
 
   private

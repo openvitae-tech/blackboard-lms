@@ -153,4 +153,12 @@ module CoursesHelper
   def current_lesson?(lesson, enrollment)
     lesson.id == enrollment&.current_lesson_id
   end
+
+  def position_of_quiz(course_module, quiz)
+    course_module.quizzes_in_order.index(quiz.id) + 1
+  end
+
+  def quiz_position_text(course_module, quiz)
+    "#{position_of_quiz(course_module, quiz)}/#{course_module.quizzes_count}"
+  end
 end

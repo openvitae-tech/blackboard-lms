@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center">
     <%= render "shared/components/bread_crumbs", links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
     <% if current_user.is_admin? %>
-      <div>
+      <div class="flex justify-end gap-4">
         <% if policy(@lesson).edit? %>
           <%= link_to edit_course_module_lesson_path(@course, @course_module, @lesson) do %>
             <%= render "shared/components/button_default_small", label: 'Edit', icon_name: 'icon-edit' %>
@@ -16,7 +16,6 @@
       </div>
     <% end %>
   </div>
-
   <p class="text-primary mb-1 overflow-hidden text-ellipsis text-2xl font-extrabold py-6">
     <%= @lesson.title %>
   </p>

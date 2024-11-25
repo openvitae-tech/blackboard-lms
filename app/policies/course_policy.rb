@@ -50,7 +50,9 @@ class CoursePolicy
   end
 
   def proceed?
-    user.enrolled_for_course?(course)
+    return false unless user.enrolled_for_course?(course)
+    enrollment = user.get_enrollment_for(course)
+    !enrollment.course_completed?
   end
 
   def publish?

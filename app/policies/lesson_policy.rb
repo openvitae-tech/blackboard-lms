@@ -30,6 +30,7 @@ class LessonPolicy < ApplicationPolicy
 
   def destroy?
     return false unless user.is_admin?
+
     course = lesson.course_module.course
     CoursePolicy.new(user, course).destroy?
   end
@@ -51,6 +52,6 @@ class LessonPolicy < ApplicationPolicy
     return false unless user.enrolled_for_course?(lesson.course_module.course)
 
     enrollment = user.get_enrollment_for(lesson.course_module.course)
-    enrollment.completed_lessons.include?(record.id)
+    enrollment.completed_lessons.include?(lesson.id)
   end
 end

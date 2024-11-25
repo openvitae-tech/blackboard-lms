@@ -16,8 +16,14 @@ class CourseAssignsController < ApplicationController
 
   def create
     authorize :course_assigns
-    course_ids = params[:course_ids].filter { |id| !id.empty? }
-    deadlines = params[:duration].map { |d| to_deadline(d) }
+    course_ids = (params[:course_ids] || []).filter { |id| !id.empty? }
+    deadlines = (params[:duration] || []).map { |d| to_deadline(d) }
+
+    if course_ids.empty?
+      flash.now[:error] = 'No courses selected'
+      return render
+    end
+
     courses = Course.find(course_ids)
 
     courses_with_deadline = courses.zip(deadlines)

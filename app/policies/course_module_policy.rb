@@ -39,4 +39,12 @@ class CourseModulePolicy < ApplicationPolicy
   def movedown?
     user.is_admin?
   end
+
+  def summary?
+    true
+  end
+
+  def redo_quiz?
+    true
+  end
 end
