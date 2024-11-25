@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     collection do
       get :new_admin
       post :create_admin
+      get :download
     end
   end
 
@@ -46,6 +47,8 @@ Rails.application.routes.draw do
       member do
         put :moveup
         put :movedown
+        get :summary
+        delete :redo_quiz
       end
 
       resources :lessons, except: [:index] do

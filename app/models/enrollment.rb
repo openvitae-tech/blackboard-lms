@@ -69,4 +69,37 @@ class Enrollment < ApplicationRecord
     finished_lessons_of_module = completed_lessons & course_module.lessons.map(&:id)
     @module_progress[course_module.id] = course_module.lessons_count > 0 ? (finished_lessons_of_module.size / course_module.lessons_count.to_f * 100).floor : 0
   end
+
+  def quiz_completed_for?(course_module)
+    (course_module.quizzes.map(&:id) & quiz_answers_for(course_module).map(&:quiz_id)).size == course_module.quizzes_count
+  end
+
+  def correct_quiz_count_for(course_module)
+    quiz_answers_for(course_module).filter(&:correct?).size
+  end
+
+  def incorrect_quiz_count_for(course_module)
+    quiz_answers_for(course_module).filter(&:incorrect?).size
+  end
+
+  def skipped_quiz_count_for(course_module)
+    quiz_answers_for(course_module).filter(&:skipped?).size
+  end
+
+  def score_earned_for(course_module)
+    quiz_answers_for(course_module).map(&:score).reduce(:+)
+  end
+
+  def delete_recorded_answers_for(course_module)
+    quiz_answers_for(course_module).each(&:destroy)
+  end
+
+  def quiz_answers_for(course_module)
+    quiz_answers.includes(:quiz).where(course_module_id: course_module.id)
+  end
+
+  def update_score!(score)
+    self.score - score
+    save!
+  end
 end

@@ -12,8 +12,12 @@
     <% @learning_partners.each do |learning_partner| %>
       <li class="my-6">
         <%= link_to learning_partner, class: "link" do %>
-          <div class="flex items-center gap-4 p-2 text-base box-shadow-medium">
-            <%= image_tag partner_logo(learning_partner, :small), alt: "Logo", class: "h-full w-[80px] rounded-l object-cover" %>
+          <div class="flex items-center gap-4 py-2 px-6 text-base box-shadow-medium rounded-lg">
+            <% if learning_partner.logo.attached? %>
+              <%= image_tag partner_logo(learning_partner, :small), alt: "Logo", class: "h-[80px] w-[80px] object-contain" %>
+            <% else %>
+              <%= image_tag 'logo_placeholder.png', class: "h-[80px] w-[80px] object-contain" %>
+            <% end %>
             <span class="text-sm font-medium"><%= learning_partner.name %></span>
           </div>
         <% end %>

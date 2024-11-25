@@ -9,7 +9,7 @@ class Course < ApplicationRecord
 
   has_one_attached :banner
   validates :title, presence: true, length: { minimum: 6, maximum: 255 }
-  validates :description, presence: true, length: { minimum: 140, maximum: 1024 }
+  validates :description, presence: true, length: { minimum: 32, maximum: 1024 }
   validate :acceptable_banner
 
   scope :published, -> { where(is_published: true) }
@@ -20,7 +20,7 @@ class Course < ApplicationRecord
 
   def undo_enroll!(user)
     # there will be only one enrollment record for a user, course pair
-    enrollments.where(user:).delete_all
+    enrollments.where(user:).each(&:destroy)
   end
 
   def duration

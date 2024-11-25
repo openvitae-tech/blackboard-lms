@@ -24,7 +24,7 @@ class User < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
-  validates :name, length: { minimum: 2, maximum: 255 }, allow_blank: true
+  validates :name, presence: true, length: { minimum: 2, maximum: 64 }
   validates :role,
             inclusion: { in: USER_ROLES,
                          message: '%<value>s is not a valid user role' }

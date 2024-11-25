@@ -14,6 +14,11 @@
         <%= form.hidden_field :team_id %>
 
         <div class="flex flex-col gap-4">
+          <%= form.label :name, class: "block text-sm" %>
+          <%= form.text_field :name, placeholder: "Your name", class: "input-text" %>
+        </div>
+
+        <div class="flex flex-col gap-4">
           <%= form.label :email, class: "block text-sm" %>
           <%= form.email_field :email, placeholder: "yourname@yourdomain.com", class: "input-text" %>
         </div>
@@ -27,8 +32,11 @@
         <% if current_user.is_manager? || current_user.is_owner? %>
           <div class="flex items-center my-4">
             <div class="flex-grow border-t border-line-colour"></div>
-            <span class="px-2 text-sm ">Or</span>
+            <span class="px-2 text-sm ">Or invite multiple learners to the team</span>
             <div class="flex-grow border-t border-line-colour"></div>
+          </div>
+          <div>
+            <%= link_to "Download sample csv file", download_invites_path, class: "nav-link", target: "_blank" %>
           </div>
           <div class="flex flex-col gap-4 items-start justify-center w-full">
             <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:bulk_invite, class: "hidden", data: { forms_target: "fileInput"}) %>
