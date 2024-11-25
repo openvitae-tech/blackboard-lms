@@ -11,7 +11,7 @@ module HandleNotFound
       if request.format != :html
         render status: :not_found, plain: "Not found"
       else
-        render template: "pages/not_found", layout: false, status: :not_found
+        render template: "pages/not_found", status: :not_found
       end
     end
 
