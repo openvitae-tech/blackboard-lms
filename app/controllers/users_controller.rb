@@ -6,6 +6,8 @@ class UsersController < ApplicationController
 
   def show
     authorize @user
+    service = UserStatisticsService.instance
+    @user_stats = service.build_stats_for(current_user)
   end
 
   private

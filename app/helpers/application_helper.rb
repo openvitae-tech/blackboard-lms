@@ -14,26 +14,6 @@ module ApplicationHelper
     link == name ? 'active' : ''
   end
 
-  def stats_builder(user_stats)
-    [
-      {
-        icon: 'shared/svg/book_open',
-        value: user_stats.no_courses_enrolled.to_s,
-        message: 'Courses Enrolled'
-      },
-      {
-        icon: 'shared/svg/clock',
-        value: duration_in_words(user_stats.total_time_spent),
-        message: 'Time Spent'
-      },
-      {
-        icon: 'shared/svg/file_text',
-        value: user_stats.user_score,
-        message: 'Score Earned'
-      }
-    ]
-  end
-
   def records_in_order(records, order)
     # sorts a list of records as per the order defined in order array
     # record in records must respond to :id
