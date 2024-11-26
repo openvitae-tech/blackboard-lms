@@ -23,7 +23,9 @@
       </div>
     </form>
     <div class="mt-4">
-      <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
+      <% if FLAG_LOGIN_WITH_OTP %>
+        <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
+      <% end %>
       <%= link_to "Login with email and password", new_user_session_path, class: "link-text" %><br/>
       <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path('user'), class: "link-text" %>
     </div>

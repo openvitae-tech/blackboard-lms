@@ -1,4 +1,4 @@
-<div id="team-page-header-mobile">
+<div id="team-page-header-mobile" class="mb-6">
   <div class="inline-flex gap-2">
     <span class="icon icon-team-green icon-small"></span>
     <span class="text-sm font-semibold text-primary">Team</span>
@@ -12,10 +12,17 @@
         </li>
       <% end %>
     </ol>
+    <div class="flex gap-4">
     <% if policy(team).edit? %>
       <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
         <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
       <% end %>
     <% end %>
+    <% if policy(:dashboard).index? %>
+      <%= link_to dashboard_path do %>
+        <%= render 'shared/components/button_default_small', label: 'Team dashboard', icon_name: 'icon-arrow-right' %>
+      <% end %>
+    <% end %>
+    </div>
   </div>
 </div>

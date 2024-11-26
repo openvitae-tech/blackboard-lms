@@ -36,7 +36,9 @@
           <% end %>
           <div class="mt-6">
             <p>
-              <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
+              <% if FLAG_LOGIN_WITH_OTP %>
+                <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
+              <% end %>
               <%= link_to "Forgot your password?", new_password_path(resource_name), class: "link-text" %><br/>
             </p>
           </div>

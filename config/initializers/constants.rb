@@ -9,3 +9,5 @@ STATIC_ASSETS = {
   course_banner: 'course_banner_placeholder.jpeg',
   hotel_logo: 'hotel_logo_placeholder.jpg'
 }.freeze
+
+FLAG_LOGIN_WITH_OTP = false

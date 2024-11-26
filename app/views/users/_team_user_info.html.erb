@@ -36,6 +36,10 @@
          <span class="icon icon-smartphone icon-small"></span>
          <p class="text-sm"><%= @user.phone %></p>
       </div>
+     <div class="flex items-center space-x-2">
+       <span class="icon icon-team icon-small"></span>
+       <p class="text-sm"><%= @user.team.name %></p>
+     </div>
    </div>
    <%= render "shared/components/confirmation_modal" %>
 </div>
