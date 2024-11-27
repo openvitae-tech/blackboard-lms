@@ -43,8 +43,9 @@
 }
 
 .icon-logout {
-    background-image: url("<%= asset_url('logout.svg') %>");
-    background-repeat: no-repeat;
+    background-color: black;
+    -webkit-mask:  url("<%= asset_url('logout.svg') %>") no-repeat;
+    mask: url("<%= asset_url('logout.svg') %>") no-repeat;
 }
 
 .icon-search {
