@@ -3,11 +3,14 @@
 }
 
 details .icon-up,
-details[open] .icon-down {
-    display: none;
+details .icon-up-arrow-green,
+details[open] .icon-down,
+details[open] .icon-down-arrow-green {
+  display: none;
 }
 
-details[open] .icon-up {
+details[open] .icon-up,
+details[open] .icon-up-arrow-green {
     display: inline;
 }
 .indicator{

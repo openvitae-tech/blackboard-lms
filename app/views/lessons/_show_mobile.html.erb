@@ -1,10 +1,13 @@
 <%= render "shared/components/mobile_layout" do %>
-  <%= render "shared/components/bread_crumbs", links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
+  <%= render 'shared/components/bread_crumbs', links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
   <p class="text-primary mb-1 overflow-hidden text-ellipsis text-base font-bold py-6">
     <%= @lesson.title %>
   </p>
   <div class="flex flex-col">
-    <%= render "lessons/video_frame_mobile", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
-    <%= render "lessons/play_list_mobile", course: @course,  enrollment: @enrollment %>
+    <%= render 'lessons/video_frame', course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
+    <div class="flex flex-col justify-start text-sm font-semibold py-6">
+      <span class="">Course Overview</span>
+    </div>
+    <%= render 'lessons/play_list', course: @course, enrollment: @enrollment %>
   </div>
 <% end %>
