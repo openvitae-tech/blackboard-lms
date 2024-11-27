@@ -19,17 +19,17 @@
     <p class="mb-1 overflow-hidden text-ellipsis text-sm font-extrabold italic text-primary">
       <%= course.title %>
     </p>
-    <div class="mt-2 flex justify-between space-x-4">
+    <div class="mt-2 flex justify-between space-x-3">
       <div class="flex items-center space-x-2">
-        <span class="h-2 w-3 icon icon-lessons"></span>
+        <span class="icon-small icon icon-lessons"></span>
         <span class="ml-2 text-xs font-medium"><%= modules_count(course) %></span>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="h-2 w-3 icon icon-clock"></span>
+        <span class="icon-small icon icon-clock"></span>
         <span class="ml-2 text-xs font-medium"><%= course_duration(course) %></span>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="h-2 w-3 icon icon-user"></span>
+        <span class="icon-small icon icon-user"></span>
         <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
       </div>
     </div>

@@ -17,12 +17,12 @@
         <span class="icon icon-search icon-small"></span>
       </div>
       <div class="border rounded-lg border-line-colour-light">
-        <%= text_field_tag :term, "", id: "course-search", class: "input-search w-full", placeholder: "Search courses ..." %>
+        <%= text_field_tag :term, '', id: 'course-search', class: 'input-search w-full', placeholder: 'Search courses ...' %>
       </div>
     <% end %>
   </div>
   <% if @courses.empty? %>
-    <div class="text-notice"> No courses to assign </div>
+    <div class="text-notice">No courses to assign</div>
   <% else %>
     <%= form_with url: course_assigns_path, method: :post do |form| %>
       <% if @team_assign %>
@@ -32,12 +32,12 @@
       <% end %>
       <ul class="overflow-y-auto p-1 flex flex-col gap-4 h-[400px]">
         <% @courses.each do |course| %>
-          <%= render "course_assigns/course_card_mobile", course: course, f: form %>
+          <%= render 'course_assigns/course_card_mobile', course: course, f: form %>
         <% end %>
       </ul>
-      <div id="mobileFooter" class="bg-white bottom-0">
-        <%= form.button 'Assign Course', class: "bg-primary rounded w-full p-4 text-white text-base font-medium" %>
-        <%= link_to 'Cancel', request.referer, class: "text-center w-full p-4 text-base font-medium" %>
+      <div id="mobileFooter" class="bg-white bottom-0 flex flex-col items-center">
+        <%= form.button 'Assign Course', class: 'bg-primary rounded w-full p-4 text-white text-base font-medium' %>
+        <%= link_to 'Cancel', request.referer, class: 'text-center w-full p-4 text-base font-medium' %>
       </div>
     <% end %>
   <% end %>
