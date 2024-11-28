@@ -41,7 +41,7 @@
       </summary>
       <ul>
         <% lessons_in_order(course_module).each do |lesson| %>
-          <li class="flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6<%= 'highlighted' if current_lesson?(lesson, enrollment) %>">
+          <li class="flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6 <%= 'highlighted' if current_lesson?(lesson, enrollment) %>">
             <div class="flex items-center gap-4">
               <% if enrollment && lesson_completed?(enrollment, lesson) %>
                 <div class="flex items-center gap-4">
