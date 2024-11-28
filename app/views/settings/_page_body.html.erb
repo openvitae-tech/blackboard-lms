@@ -1,0 +1,19 @@
+<div class="flex gap-8 border-b p-8 border-line-colour ">
+  <div class="flex w-full flex-col gap-8">
+    <div class="flex justify-between">
+      <h1 class="text-base font-semibold">Personal information</h1>
+      <%= link_to edit_settings_path, data: { turbo_frame: "edit-settings-modal" }, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm py-1 px-2" do %>
+        <span class="text-xs font-medium text-secondary">Edit</span>
+        <span class="icon icon-edit h-[10px] w-[10px]"></span>
+      <% end %>
+    </div>
+    <div>
+      <div class="text-sm font-normal text-letter-color-light">Email</div>
+      <div class="mt-2 text-base font-medium"><%= user.email %></div>
+    </div>
+    <div>
+      <div class="text-sm font-normal text-letter-color-light">Phone</div>
+      <div class="mt-2 text-base font-medium"><%= user.phone %></div>
+    </div>
+  </div>
+</div>
