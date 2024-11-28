@@ -35,7 +35,7 @@
           <%= render 'course_assigns/course_card_mobile', course: course, f: form %>
         <% end %>
       </ul>
-      <div id="mobileFooter" class="bg-white bottom-0 flex flex-col items-center">
+      <div class="bg-white bottom-0 flex flex-col items-center">
         <%= form.button 'Assign Course', class: 'bg-primary rounded w-full p-4 text-white text-base font-medium' %>
         <%= link_to 'Cancel', request.referer, class: 'text-center w-full p-4 text-base font-medium' %>
       </div>
