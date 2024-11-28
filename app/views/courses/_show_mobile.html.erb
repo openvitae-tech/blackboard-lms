@@ -4,7 +4,7 @@
     <span class="icon icon-course-teal icon-small"></span>
     <span class="ml-2 text-xs font-medium text-primary">My Courses</span>
   </div>
-  <div class="my-6 rounded flex flex-col gap-6">
+  <div class="my-6 rounded flex flex-col gap-4">
     <%= render "courses/course_description_card_mobile", course: @course, enrollment: @enrollment %>
     <%= render "courses/course_lessons", course: @course, enrollment: @enrollment %>
   </div>

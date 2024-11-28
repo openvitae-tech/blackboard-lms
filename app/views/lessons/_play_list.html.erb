@@ -1,17 +1,18 @@
-<div class="basis-2/5">
-  <div class="border border-line-colour rounded overflow-auto max-h-screen flex flex-col gap-4">
+<div class="md:basis-2/5">
+  <div class="md:border md:border-line-colour md:rounded md:overflow-auto md:max-h-screen flex flex-col gap-4 md:py-2">
     <% modules_in_order(course).each do |course_module| %>
       <details
         <% if current_module?(course_module, enrollment) %>
-        class="border-line-colour mx-4 my-6 rounded border highlighted" open="open"
+          class="border border-line-colour md:mx-2 rounded  highlighted"
+          open="open"
         <% else %>
-        class="border-line-colour mx-4 my-6 rounded border"
+          class="border border-line-colour md:mx-2 rounded"
         <% end %>
-        >
-        <summary class="flex cursor-pointer items-center justify-between p-4 border border-line-colour rounded">
+      >
+        <summary class="flex cursor-pointer items-center justify-between p-4 focus:outline-none">
           <div class="flex flex-col justify-start text-base font-semibold">
             <span class=""><%= course_module.title %></span>
-            <div class="flex items-center gap-4">
+            <div class="md:flex md:items-center md:gap-4">
               <% if enrollment.present? && enrollment.module_progress(course_module) > 0 %>
                 <div class="bg-primary-light-50 h-1 w-[252px] rounded-full">
                   <div class="bg-secondary h-1 rounded-full" style="width: <% enrollment.module_progress(course_module) %>%"></div>
@@ -29,13 +30,16 @@
         </summary>
         <ul>
           <% lessons_in_order(course_module).each do |lesson| %>
-            <li class="flex items-center justify-between border-b border-line-colour px-4 py-4 text-sm <%= 'highlighted' if current_lesson?(lesson, enrollment) %>">
+            <li class="flex gap-4 items-center justify-between border-t border-line-colour px-4 py-4 text-sm <%= 'highlighted' if current_lesson?(lesson, enrollment) %>">
               <div class="flex items-center gap-4">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
-                  <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 items-center border"></span>
+                  <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 flex-shrink-0 items-center border"></span>
                 <% end %>
-                <span class="text-letter-color-light"><%= lesson.title %></span>
-                <span class="text-primary-light">(<%= duration_in_words(lesson.duration) %>)</span>
+                <p class="flex flex-col md:flex-row md:gap-4 items-start">
+                  <span class="text-letter-color-light text-sm md:text-base">
+                    <%= lesson.title %> <span class="text-primary-light text-xs">(<%= duration_in_words(lesson.duration) %>)</span>
+                  </span>
+                </p>
               </div>
               <div class="flex gap-4">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>

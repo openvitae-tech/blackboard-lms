@@ -1,4 +1,4 @@
-<div class="flex flex-col border-b px-6 py-6 border-line-colour" data-controller="course-description-card">
+<div class="flex flex-col border-b px-6 py-6 border-line-colour">
   <div class="flex">
     <%= image_tag course_banner(course, :vertical), class: "h-[216px] w-[140px] object-cover" %>
     <div class="flex w-full flex-col pl-4">
@@ -32,17 +32,12 @@
             <span class="icon icon-user h-3.5 w-3.5"></span>
             <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
           </div>
-        </div>
-        <button class="flex items-center justify-center rounded p-2 bg-primary-light-50" data-course-description-card-target="showMoreToggle" data-action="click->course-description-card#showMoreToggle">
-          <span class="text-xs text-primary">Show more</span>
-          <span class="hidden icon-arrow-up icon-small" data-course-description-card-target="upArrow"></span>
-          <span class="icon icon-arrow-down icon-small" data-course-description-card-target="downArrow"></span>
-        </button>
+        </div>     
       </div>
       <p class="my-2 overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">
         Course Description
       </p>
-      <div class="p-4 text-justify text-sm tracking-tight bg-primary-light-50 rounded-lg" data-course-description-card-target="courseDescription">
+      <div class="p-4 text-justify text-sm tracking-tight bg-primary-light-50 rounded-lg">
         <div class="h-full overflow-hidden flex items-center text-base">
           <%= course_description(course) %>
         </div>
