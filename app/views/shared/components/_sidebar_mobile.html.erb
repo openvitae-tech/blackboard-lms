@@ -35,12 +35,16 @@
           <% end %>
         </li>
       <% end %>
-      <li class="side-bar-item <%= 'item-selected' if  'teams' == 'Support' %>">
+      <li class="side-bar-item <%= 'item-selected' if 'teams' == 'Support' %>">
         <%= link_to "#", class: "side-bar-item-inner" do %>
           <span class="icon icon-support icon-small"></span>
           <span class="">Support</span>
         <% end %>
       </li>
     </ul>
+    <%= button_to destroy_user_session_path, class: "side-bar-footer py-4 w-full", method: :delete, data: { turbo_method: :delete } do %>
+      <span class="icon icon-logout icon-small"></span>
+      <span class="text-sm">Logout</span>
+    <% end %>
   </div>
 </div>
