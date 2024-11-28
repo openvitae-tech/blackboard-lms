@@ -21,7 +21,7 @@
 
     <div class="flex flex-wrap gap-4">
       <% @search_results.each do |course| %>
-        <%= render "courses/course_card_with_top_image", course: course %>
+        <%= render 'courses/course_card_with_top_image', course: course %>
       <% end %>
     </div>
   <% end %>
@@ -33,19 +33,18 @@
 
     <div class="flex flex-wrap gap-4">
       <% @enrolled_courses.each do |course| %>
-        <%= render "courses/course_card_with_left_image", course: course, enrollment: course.enrollments.first %>
+        <%= render 'courses/course_card_with_left_image', course: course, enrollment: course.enrollments.first %>
       <% end %>
     </div>
   <% end %>
 
   <% if has_available_courses? %>
-    <p class="text-base font-medium mb-4">
-      <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses.count, 'course') %>
-      )</span>
+    <p class="text-base font-medium my-4">
+      <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses.count, 'course') %> )</span>
     </p>
     <div class="flex flex-wrap gap-4">
       <% @available_courses.each do |course| %>
-        <%= render "courses/course_card_with_top_image", course: course %>
+        <%= render 'courses/course_card_with_top_image', course: course %>
       <% end %>
     </div>
   <% end %>
