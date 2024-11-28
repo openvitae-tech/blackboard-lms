@@ -10,7 +10,9 @@ class LocalContent < ApplicationRecord
     marathi: 'Marathi',
     bengali: 'Bengali',
     kannada: 'Kannada',
-    malayalam: 'Malayalam'
+    malayalam: 'Malayalam',
+    telugu: 'Telugu',
+    assamese: 'Assamese'
   }.freeze
 
   DEFAULT_LANGUAGE = SUPPORTED_LANGUAGES[:english]
