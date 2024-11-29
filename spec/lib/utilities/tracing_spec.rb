@@ -18,6 +18,13 @@ class TracingTestClass
     end
   end
 
+  def perform_with_trace_object(logger = Rails.logger)
+    with_tracing 'my_message', logger do |trace|
+      do_some_work
+      trace
+    end
+  end
+
   def do_some_work
     # doing some operation
     10 * 10
@@ -54,6 +61,10 @@ describe Tracing do
       end.to raise_error(StandardError)
 
       expect(logger).to have_received(:info).twice.with(any_args)
+    end
+
+    it 'allows to access trace object within the block' do
+      expect(TracingTestClass.new.perform_with_trace_object).to be_an_instance_of(Tracing::TraceData)
     end
   end
 end

@@ -4,15 +4,16 @@
 module Tracing
   # Data class for storing trace data
   class TraceData
-    attr_reader :trace_id, :start_time, :end_time
+    attr_reader :name, :trace_id, :start_time
 
-    def initialize
+    def initialize(name)
+      @name = name
       @trace_id = SecureRandom.uuid
       @start_time = time_in_milliseconds
     end
 
     def duration
-      @end_time ||= time_in_milliseconds
+      end_time = time_in_milliseconds
       (end_time - start_time).round(2)
     end
 
@@ -23,14 +24,16 @@ module Tracing
     end
   end
 
-  def with_tracing(message = '', logger = Rails.logger, &block)
-    trace = TraceData.new
-    logger.info "Trace: #{trace.trace_id} #{self.class.name} #{message}"
-    result = yield block
-    logger.info "Trace: #{trace.trace_id} #{self.class.name} Duration(ms): #{trace.duration} #{message}"
+  def with_tracing(name = '', logger = Rails.logger, &)
+    trace = TraceData.new(name)
+    logger.info "Trace: #{trace.trace_id} #{self.class.name} #{trace.name}"
+    result = yield(trace)
+    logger.info "Trace: #{trace.trace_id} #{self.class.name} Duration(ms): #{trace.duration} #{trace.name}"
     result
   rescue StandardError => e
-    logger.info "Trace: #{trace&.trace_id} #{self.class.name} Duration(ms): #{trace&.duration} #{message}, Error: #{e}"
+    logger.info(
+      "Trace: #{trace&.trace_id} #{self.class.name} Duration(ms): #{trace&.duration} #{trace&.name} Error: #{e}"
+    )
     raise e
   end
 end
