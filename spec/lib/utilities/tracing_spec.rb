@@ -4,7 +4,7 @@ require 'rails_helper'
 
 class TracingTestClass
   require 'utilities/tracing'
-  include Tracing
+  include Utilities::Tracing
 
   def perform(logger = Rails.logger)
     with_tracing 'my_message', logger do
@@ -35,7 +35,7 @@ class TracingTestClass
   end
 end
 
-describe Tracing do
+describe Utilities::Tracing do
   describe '#with_tracing' do
     it 'traces the the code and returns the result' do
       expect(TracingTestClass.new.perform).to eq(100)
@@ -64,7 +64,7 @@ describe Tracing do
     end
 
     it 'allows to access trace object within the block' do
-      expect(TracingTestClass.new.perform_with_trace_object).to be_an_instance_of(Tracing::TraceData)
+      expect(TracingTestClass.new.perform_with_trace_object).to be_an_instance_of(Utilities::Tracing::TraceData)
     end
   end
 end
