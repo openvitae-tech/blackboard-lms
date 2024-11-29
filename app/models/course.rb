@@ -70,4 +70,10 @@ class Course < ApplicationRecord
   def has_enrollments?
     enrollments_count > 0
   end
+
+  def ready_to_publish?
+    rule_at_least_one_module = course_modules_count > 0
+    rule_at_least_one_lesson_per_module = course_modules.map { |course_module|  course_module.lessons_count > 0 }.all?
+    [rule_at_least_one_module, rule_at_least_one_lesson_per_module].all?
+  end
 end

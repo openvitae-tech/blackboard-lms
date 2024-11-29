@@ -56,7 +56,8 @@ class CoursePolicy
   end
 
   def publish?
-    user.is_admin? && !course.published?
+    return false if !user.is_admin? || course.published?
+    course.ready_to_publish?
   end
 
   def unpublish?
