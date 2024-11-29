@@ -4,7 +4,7 @@
 module Tracing
   # Data class for storing trace data
   class TraceData
-    attr_accessor :trace_id, :start_time, :end_time
+    attr_reader :trace_id, :start_time, :end_time
 
     def initialize
       @trace_id = SecureRandom.uuid
@@ -29,5 +29,8 @@ module Tracing
     result = yield block
     logger.info "Trace: #{trace.trace_id} #{self.class.name} Duration(ms): #{trace.duration} #{message}"
     result
+  rescue StandardError => e
+    logger.info "Trace: #{trace&.trace_id} #{self.class.name} Duration(ms): #{trace&.duration} #{message}, Error: #{e}"
+    raise e
   end
 end
