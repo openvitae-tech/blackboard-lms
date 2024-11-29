@@ -84,6 +84,10 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  def display_name
+    name.downcase.split.first&.capitalize
+  end
+
   private
 
   def password_verifier

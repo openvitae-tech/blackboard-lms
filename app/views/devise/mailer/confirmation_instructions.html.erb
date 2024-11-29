@@ -1,12 +1,12 @@
 <body>
   <div style="width: 100%;padding: 20px 10px; font-family: Arial, Helvetica, sans-serif; color: #333; box-sizing: border-box;">
     <div style="background:#585563; text-align: center; padding: 40px 20px;">
-      <h1 style="color: #ffffff; font-size: 28px; margin: 0;">Welcome to <%= Rails.application.credentials.dig(:org_name) %><</h1>
+      <h1 style="color: #ffffff; font-size: 28px; margin: 0;">Welcome to <%= Rails.application.credentials.dig(:org_name) %></h1>
     </div>
 
     <div style="margin: 0 auto; background-color: #ffffff; padding: 20px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); border:1px solid #E6E6E6">
       <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.5;">
-        Welcome <em><%= @user.name %></em>,
+        Welcome <em><%= @user.display_name %></em>,
       </p>
       <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.5;">We're thrilled to have you on our platform! To confirm your email address and log in to the platform, please follow these simple steps:</p>
 

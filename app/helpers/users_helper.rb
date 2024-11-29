@@ -30,6 +30,10 @@ module UsersHelper
   end
 
   def user_name(user)
+    ActiveSupport::Deprecation.warn(
+      "UsersHelper#user_name is deprecated. " \
+        "Use User#display_name instead."
+    )
     user.name.blank? ? role_text(user.role) : user.name.split.first
   end
 
