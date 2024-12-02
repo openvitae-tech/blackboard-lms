@@ -184,7 +184,7 @@ class DevelopmentSeed
   end
 
   def video_blob
-    @sample_blob ||= ActiveStorage::Blob.create_and_upload!(
+    @video_blob ||= ActiveStorage::Blob.create_and_upload!(
       io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
       filename: 'sample_video.mp4',
       content_type: 'video/mp4'
