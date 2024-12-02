@@ -133,6 +133,18 @@ class EventService
     publish_event(user, event)
   end
 
+  def publish_time_spent(user, course_id, time_spent_in_seconds)
+    event = Event::LearningTimeSpent.new(
+      partner_id: user.learning_partner_id,
+      user_id: user.id,
+      team_id: user.team_id,
+      course_id: course_id,
+      time_spent: time_spent_in_seconds
+    )
+
+    publish_event(user, event)
+  end
+
   private
 
   def build_event(user, event_data)
