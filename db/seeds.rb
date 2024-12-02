@@ -40,64 +40,9 @@ class DevelopmentSeed
 
       other_users.each { |name, role| create_user(name, role, partner, team) }
 
-      courses = [['F & B Fundamentals',
-                  "Discover the art and science of food and beverages with our comprehensive course. Designed for aspiring chefs, hospitality professionals, and food enthusiasts, this program covers essential culinary techniques, advanced cooking methods, and beverage pairing principles. Learn from industry experts through hands-on practice and interactive lessons. Explore global cuisines, master presentation skills, and understand the business aspects of the food and beverage industry. Enhance your knowledge of food safety, nutrition, and sustainable practices. Whether you're starting a new career or refining your skills, this course provides the tools and knowledge needed to excel. Join us and embark on a flavorful journey that blends passion with professionalism."]
-        ]
-
-      courses.each { |title, description, banner| create_course(title, description) }
-
-      course = Course.first
-
-      modules = ['Body Language',
-                 'Etiquette & Manners',
-                 'Grooming And Hygiene',
-                 'Guest Complaints']
-
-      module_ids = modules.map { |title| create_module(title, course) }.map(&:id)
-      course.update!(course_modules_in_order: module_ids)
-
-      course_module = course.first_module
-
-      lessons1 = [
-        ['Overview', 'It is the unspoken communication between human beings'],
-        ['Gestures', 'Right gestures nails it all'],
-        ['Zone Distance', 'Each person has his own personal territory'],
-        ["Do's and Dont's", "What you should do and what shouldn't"]
-      ]
-
-      lesson_ids1 = lessons1.map do |title, description|
-        create_lesson(title, description, course_module)
-      end.map(&:id)
-      course_module.lessons_in_order = lesson_ids1
-      course_module.save!
-
-      lessons2 = [
-        ['Handling Guest Complaints', 'Order placed incorrectly and wrong orders reaching at a table..'],
-        ['Service Recovery', 'A waiter explaining something to a group of guests at a table in a busy restaurant.']
-      ]
-      course_module = course_module.next_module
-      lesson_ids2 = lessons2.map do |title, description|
-        create_lesson(title, description, course_module)
-      end.map(&:id)
-      course_module.lessons_in_order = lesson_ids2
-      course_module.save!
-
-      quizzes = [
-        ['What does crossing your arms typically signify in body language?', 'Openness', 'Defensiveness', 'Happiness',
-         'Interest', 'B'],
-        ['Which of the following body language cues often indicates that a person is nervous or anxious?',
-         'Leaning forward', 'Making direct eye contact', 'Fidgeting with objects', 'Smiling broadly', 'C'],
-        ['When someone mirrors your body language, it generally means they are', 'Distracted', 'Disinterested',
-         'Opposing you', 'Building rapport', 'D'],
-        ['Standing with hands on hips is generally seen as a gesture of:', 'Submission', 'Dominance or confidence',
-         'Confusion', 'Relaxation', 'B']
-      ]
-
-      quizzes_ids = quizzes.map do |question, a, b, c, d, ans|
-        create_quiz(question, a, b, c, d, ans, course_module)
-      end.map(&:id)
-      course_module.quizzes_in_order = quizzes_ids
-      course_module.save!
+      (0..10).each do
+        setup_course
+      end
     end
   end
 
@@ -130,12 +75,47 @@ class DevelopmentSeed
     Team.create!(name: "Default Team", banner: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:team_banner]}")), learning_partner_id: partner.id)
   end
 
-  def create_course(name, description)
-   course = Course.create!(
-      title: name,
+  def setup_course
+    course = create_course
+    course_modules = sample_modules.sample(rand(1..10)).map do |name|
+      setup_course_module(name, course)
+    end
+    course.update!(course_modules_in_order: course_modules.map(&:id))
+  end
+
+  def setup_course_module(name, course)
+    course_module = create_module(name, course)
+
+    lessons = setup_lesson(course_module)
+    quizzes = setup_quiz(course_module)
+
+    course_module.update!(
+      lessons_in_order: lessons.map(&:id),
+      quizzes_in_order: quizzes.map(&:id)
+    )
+
+    course_module
+  end
+
+  def setup_lesson(course_module)
+    Array.new(rand(1..10)) { create_lesson(course_module) }
+  end
+
+
+  def setup_quiz(course_module)
+    sample_quizzes.map { |quiz_data| create_quiz(*quiz_data, course_module) }
+  end
+
+  def create_course
+    title = Faker::Lorem.sentence(word_count: 3)
+    description = Faker::Lorem.paragraph(sentence_count: 4, supplemental: true)
+
+    course = Course.create!(
+      title:,
       description:,
       is_published: true
     )
+
     Thread.new do
       course.banner.attach(
         io: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:course_banner]}")),
@@ -143,48 +123,72 @@ class DevelopmentSeed
         content_type: "image/jpeg"
       )
     end
+    course
   end
 
   def create_module(name, course)
     CourseModule.reset_column_information
-    m = CourseModule.create!(
+    CourseModule.create!(
       title: name,
       course:
     )
-    m
   end
 
-  def create_lesson(title, description, course_module)
+  def create_lesson(course_module)
     Lesson.reset_column_information
 
-    blob = ActiveStorage::Blob.create_and_upload!(
-      io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
-      filename: 'sample_video.mp4',
-      content_type: 'video/mp4'
-    )
-    l = Lesson.new(title:, rich_description: description, duration: rand(1..10),
+    title = Faker::Lorem.sentence(word_count: 3)
+    description = Faker::Lorem.paragraph(sentence_count: 4, supplemental: true)
+
+    lesson = Lesson.new(title:, rich_description: description, duration: rand(1..10),
                    course_module:, local_contents_attributes: [{
-                    lang: "english", blob_id: blob.id
+                    lang: "english", blob_id: video_blob.id
                   }])
-    CourseManagementService.instance.set_lesson_attributes(course_module, l)
-    l.save!
-    l
+    CourseManagementService.instance.set_lesson_attributes(course_module, lesson)
+    lesson.save!
+    lesson
   end
 
-  def create_local_content(lesson)
-    blob =  ActiveStorage::Blob.create_and_upload!(
+  def create_quiz(question, a, b, c, d, answer, course_module)
+    Quiz.create!(
+      question:,
+      option_a: a,
+      option_b: b,
+      option_c: c,
+      option_d: d,
+      answer:,
+      course_module:
+    )
+  end
+
+  def sample_modules
+    [
+      'Body Language', 'Etiquette & Manners', 'Grooming And Hygiene',
+      'Guest Complaints', 'Communication Skills', 'Conflict Resolution',
+      'Customer Service Excellence', 'Time Management', 'Workplace Ethics',
+      'Emotional Intelligence'
+    ]
+  end
+
+  def sample_quizzes
+    [
+    ['What does crossing your arms typically signify in body language?', 'Openness', 'Defensiveness', 'Happiness',
+      'Interest', 'B'],
+    ['Which of the following body language cues often indicates that a person is nervous or anxious?',
+      'Leaning forward', 'Making direct eye contact', 'Fidgeting with objects', 'Smiling broadly', 'C'],
+    ['When someone mirrors your body language, it generally means they are', 'Distracted', 'Disinterested',
+      'Opposing you', 'Building rapport', 'D'],
+    ['Standing with hands on hips is generally seen as a gesture of:', 'Submission', 'Dominance or confidence',
+      'Confusion', 'Relaxation', 'B']
+  ]
+  end
+
+  def video_blob
+    @sample_blob ||= ActiveStorage::Blob.create_and_upload!(
       io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
       filename: 'sample_video.mp4',
       content_type: 'video/mp4'
     )
-    lesson.local_contents.create!(lang: "english", blob_id: blob.id)
-  end
-
-  def create_quiz(q, a, b, c, d, ans, course_module)
-    q = Quiz.new(question: q, option_a: a, option_b: b, option_c: c, option_d: d, answer: ans,
-                 course_module:)
-    q.save!
-    q
   end
 end
 
