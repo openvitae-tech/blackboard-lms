@@ -1,14 +1,21 @@
 <%= render "shared/components/mobile_layout" do %>
   <h1 class="text-sm font-medium">User settings</h1>
+  <div class="mt-4 bg-line-colour-light rounded">
+    <% if "banner"=="banner" %>
+      <%= image_tag 'banner_place_holder_mobile.png', class: 'h-[194px] w-full object-cover rounded-lg box-shadow-medium' %>
+    <% else %>
+      <%= image_tag 'banner_place_holder_mobile.png', class: 'h-[194px] w-full object-cover rounded-lg box-shadow-medium' %>
+    <% end %>
+  </div>
   <h2 class="my-4 text-xs text-primary font-semibold">My Profile</h2>
   <div class="rounded box-shadow-medium">
-    <%= render "settings/page_header_mobile"%>
-    <%= render "settings/page_body_mobile"%>
+    <%= render 'settings/page_header_mobile' %>
+    <%= render 'settings/page_body_mobile' %>
     <div class="p-8">
       <h1 class="text-base font-semibold">Change password</h1>
       <div class="mt-4">
         <%= link_to 'Change your password', change_password_settings_path, data: { turbo_frame: 'change-password-modal' }, class: 'link-text' %>
       </div>
     </div>
-  </div> 
+  </div>
 <% end %>

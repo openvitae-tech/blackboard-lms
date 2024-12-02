@@ -1,9 +1,18 @@
 <%= render "shared/components/desktop_layout" do %>
   <h1 class="my-4 text-xl font-semibold">User settings</h1>
+  <div class="flex flex-col pb-2">
+    <div class="mt-2 bg-line-colour-light rounded">
+      <% if "banner"=="banner" %>
+        <%= image_tag 'banner_placeholder.png', class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
+      <% else %>
+        <%= image_tag 'banner_placeholder.png', class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
+      <% end %>
+    </div>
+  </div>
   <h2 class="my-6 text-base text-primary font-medium">My Profile</h2>
   <div class="rounded box-shadow-medium">
-    <%= render "settings/page_header_desktop" %>
-    <%= render "settings/page_body_desktop" %>
+    <%= render 'settings/page_header_desktop' %>
+    <%= render 'settings/page_body_desktop' %>
     <div class="p-8">
       <h1 class="text-base font-semibold">Change password</h1>
       <div class="mt-4">
