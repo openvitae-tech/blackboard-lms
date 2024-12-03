@@ -68,6 +68,7 @@ en:
   team:
     created: 'Team created successfully'
     updated: 'Team updated successfully'
+    banner_file_tip: 'File size should be less than 1MB and use a good resolution image of minimum 1120 X 194px'
   settings:
     updated: 'User settings updated successfully'
     password_updated: 'Password updated successfully, please login with your new password.'

@@ -37,13 +37,22 @@ module TeamsHelper
     team.persisted? ? 'Update team' : 'Create team'
   end
 
-  def team_banner(user)
-    asset = user.is_admin? ? nil : user.team.banner
-    asset || STATIC_ASSETS[:team_banner]
+  def team_banner(team, version)
+    if team.banner.attached?
+      if version == 'desktop'
+        team.banner&.variant(resize_to_fill: [1120, 194])
+      elsif version == 'mobile'
+        team.banner&.variant(resize_to_fill: [328, 194])
+      else
+        team.banner
+      end
+    else
+      version == 'mobile' ? STATIC_ASSETS[:banner_mobile] : STATIC_ASSETS[:banner_desktop]
+    end
   end
 
   def partner_logo(learning_partner, version)
-    return STATIC_ASSETS[:hotel_logo] unless learning_partner.logo.attached?
+    return STATIC_ASSETS[:logo] unless learning_partner.logo.attached?
 
     if version == :small
       learning_partner.logo.variant(resize_to_limit: [80, nil])

@@ -1,19 +1,11 @@
 <div id="team-page-header-desktop" class="mb-8">
   <div class="flex flex-col pb-6">
     <div class="bg-line-colour-light rounded">
-      <% if team.banner.present? %>
-        <%= image_tag team.banner, class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
-      <% else %>
-        <%= image_tag 'banner_placeholder.png', class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
-      <% end %>
+      <%= image_tag team_banner(team, 'desktop'), class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
     </div>
 
     <div class="flex justify-start -mt-10 ml-4">
-      <% if "logo"=="logo" %>
-        <%= image_tag 'logo_place_holder.png', class: 'h-20 w-20 object-cover rounded-full border border-line-colour-light box-shadow-medium' %>
-      <% else %>
-        <%= image_tag 'logo_place_holder.png', class: 'h-20 w-20 object-cover rounded-full border border-line-colour-light box-shadow-medium' %>
-      <% end %>
+      <%= image_tag partner_logo(team.learning_partner, :medium), class: 'h-20 w-20 object-cover rounded-full border border-line-colour-light box-shadow-medium' %>
     </div>
   </div>
   <span class="font-medium text-basic"><%= team.name %></span>
