@@ -1,19 +1,27 @@
 <%= render "shared/components/mobile_layout" do %>
   <h1 class="text-sm font-medium">User settings</h1>
-  <div class="mt-4 bg-line-colour-light rounded">
-    <% if "banner"=="banner" %>
-      <%= image_tag 'banner_place_holder_mobile.png', class: 'h-[194px] w-full object-cover rounded-lg box-shadow-medium' %>
-    <% else %>
-      <%= image_tag 'banner_place_holder_mobile.png', class: 'h-[194px] w-full object-cover rounded-lg box-shadow-medium' %>
-    <% end %>
+  <div class="flex flex-col">
+    <div class="mt-4 bg-line-colour-light rounded">
+      <% if "banner"=="banner" %>
+        <%= image_tag 'banner_placeholder.png', class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
+      <% else %>
+        <%= image_tag 'banner_placeholder.png', class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
+      <% end %>
+    </div>
+    <div class="flex justify-start -mt-8 ml-4">
+      <%= link_to "javascript:void(0);", class: "inline-block w-16 h-16" do %>
+        <%= render 'shared/components/profile_pic', letter: letter_avatar(@user) %>
+      <% end %>
+    </div>
   </div>
+
   <h2 class="my-4 text-xs text-primary font-semibold">My Profile</h2>
   <div class="rounded box-shadow-medium">
     <%= render 'settings/page_header_mobile' %>
     <%= render 'settings/page_body_mobile' %>
-    <div class="p-8">
+    <div class="p-6">
       <h1 class="text-base font-semibold">Change password</h1>
-      <div class="mt-4">
+      <div class="mt-2">
         <%= link_to 'Change your password', change_password_settings_path, data: { turbo_frame: 'change-password-modal' }, class: 'link-text' %>
       </div>
     </div>

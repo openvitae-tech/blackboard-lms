@@ -8,14 +8,20 @@
         <%= image_tag 'banner_placeholder.png', class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
       <% end %>
     </div>
+    <div class="flex justify-start -mt-8 ml-4">
+      <%= link_to "javascript:void(0);", class: "inline-block w-16 h-16" do %>
+        <%= render 'shared/components/profile_pic', letter: letter_avatar(@user) %>
+      <% end %>
+    </div>
   </div>
+
   <h2 class="my-6 text-base text-primary font-medium">My Profile</h2>
   <div class="rounded box-shadow-medium">
     <%= render 'settings/page_header_desktop' %>
     <%= render 'settings/page_body_desktop' %>
-    <div class="p-8">
+    <div class="p-6">
       <h1 class="text-base font-semibold">Change password</h1>
-      <div class="mt-4">
+      <div class="mt-2">
         <%= link_to 'Change your password', change_password_settings_path, data: { turbo_frame: 'change-password-modal' }, class: 'link-text' %>
       </div>
     </div>
