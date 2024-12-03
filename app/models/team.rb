@@ -34,4 +34,12 @@ class Team < ApplicationRecord
   def parent_team?
     parent_team_id.blank?
   end
+
+  def score
+    return @score if @score.present?
+
+    member_score = members.map(&:score).sum
+    sub_team_score = sub_teams.map(&:score).sum
+    @score = member_score + sub_team_score
+  end
 end

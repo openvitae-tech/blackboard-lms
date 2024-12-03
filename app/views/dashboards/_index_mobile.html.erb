@@ -16,14 +16,9 @@
         </select>
      </div>
     </div>
-    <div class="box-shadow-medium rounded p-4">
-        <div class="flex items-center justify-between">
-           <p class="text-base font-semibold flex gap-1">
-              <span class="">Time spent by the users</span>
-           </p>
-        </div>
-        <%= render "shared/components/average_time_spend_chart" %>
-     </div>
+
+    <%= render "dashboards/average_time_spend_chart", dashboard: @dashboard %>
+
      <div class="p-4 bg-white box-shadow-medium rounded-lg my-4">
         <p class="text-base font-medium">
           Your team have spent
@@ -50,6 +45,7 @@
            </div>
         </div>
      </div>
-     <%= render "shared/components/team_progress_chart_mobile" %>
+
+     <%= render "dashboards/team_progress_chart_mobile", dashboard: @dashboard %>
 
 <% end %>
