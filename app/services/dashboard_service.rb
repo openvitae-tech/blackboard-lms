@@ -86,6 +86,30 @@ class DashboardService
       data
     end
 
+    def course_started_series
+      events = course_started_query.call
+      data = {}
+      grouped_data = events.group_by { |event| to_grouping_key(event) }
+
+      grouped_data.each do |key, values|
+        data[key] = values.count
+      end
+
+      data
+    end
+
+    def course_completed_series
+      events = course_completed_query.call
+      data = {}
+      grouped_data = events.group_by { |event| to_grouping_key(event) }
+
+      grouped_data.each do |key, values|
+        data[key] = values.count
+      end
+
+      data
+    end
+
     private
 
     def to_grouping_key(event)
@@ -102,6 +126,13 @@ class DashboardService
 
     def user_enrolled_query
       @user_enrolled_query ||= UserEnrolledQuery.new(@team.learning_partner_id, @duration)
+    end
+
+    def course_started_query
+      @course_started_query ||= CourseStartedQuery.new(@team.learning_partner_id, @duration)
+    end
+    def course_completed_query
+      @course_completed_query ||= CourseCompletedQuery.new(@team.learning_partner_id, @duration)
     end
   end
 
