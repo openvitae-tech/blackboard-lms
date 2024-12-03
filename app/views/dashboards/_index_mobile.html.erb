@@ -22,25 +22,24 @@
      <div class="p-4 bg-white box-shadow-medium rounded-lg my-4">
         <p class="text-base font-medium">
           Your team have spent
-           <span class="text-primary ">10hr 25 min</span>
-          this week
+           <span class="text-primary "><%= duration_in_words(@dashboard.total_time_spent_metric) %></span> during this period
         </p>
-        <p class="text-xs font-medium mt-4">
-           That means <span class="text-primary">200% +</span> higher than last week
-        </p>
+<!--        <p class="text-xs font-medium mt-4">-->
+<!--           That means <span class="text-primary">200% +</span> higher than last week-->
+<!--        </p>-->
         <div class="mt-6 flex flex-col gap-6 items-center text-center">
            <div class="">
-              <p class="text-primary text-xl font-bold"> 
-                 01<span class="align-baseline text-base text-primary">hr</span> : 12<span class="align-baseline text-base text-primary">min</span>
+              <p class="text-primary text-xl font-bold">
+                <%= duration_in_words(@dashboard.average_time_spent_metric) %>
               </p>
               <p class="pt-1 text-xs">AVG watch time per user</p>
            </div>
            <div class="">
-              <p class="text-primary text-xl font-bold">2</p>
+              <p class="text-primary text-xl font-bold"><%= @dashboard.active_course_count_metric %></p>
               <p class="pt-1 text-xs">Courses per user</p>
            </div>
            <div class="">
-              <p class="text-primary text-xl font-bold">290</p>
+              <p class="text-primary text-xl font-bold"><%= @dashboard.team_score_metric %></p>
               <p class="pt-1 text-xs">Team score</p>
            </div>
         </div>
