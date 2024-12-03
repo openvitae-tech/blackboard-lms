@@ -1,18 +1,13 @@
-<div class="flex gap-8 border-b p-8 border-line-colour">
-  <div class="flex items-center">
-    <%= link_to "javascript:void(0);", class: "inline-block w-14 h-14" do %>
-      <%= render "shared/components/profile_pic", letter: letter_avatar(user) %>
-    <% end %>
-  </div>
-  <div class="flex flex-col gap-3 md:gap-6">
+<div class="flex gap-8 border-b p-6 border-line-colour">
+  <div class="flex flex-col gap-2">
     <div class="flex items-center gap-4">
       <span class="text-sm md:text-base font-semibold"><%= user.name %></span>
     </div>
-    <div class="flex md:flex-row flex-col gap-4">
+    <div class="flex md:flex-row flex-col gap-2 md:gap-4">
       <div class="flex items-start flex-wrap">
         <span class="flex-shrink-0 text-xs md:text-sm font-normal text-letter-color-light mr-2">Organization: </span>
         <span class="text-xs md:text-sm font-normal text-letter-color-light break-words">
-         <%= org_name(user.learning_partner) %>
+          <%= org_name(user.learning_partner) %>
         </span>
       </div>
       <div class="flex items-start">
@@ -20,7 +15,7 @@
         <span class="text-xs md:text-sm font-normal text-letter-color-light ml-2 break-words">
           <%= role_text(user.role) %>
         </span>
-      </div>            
+      </div>
     </div>
   </div>
 </div>
