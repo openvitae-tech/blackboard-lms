@@ -145,6 +145,29 @@ class EventService
     publish_event(user, event)
   end
 
+  def publish_course_viewed(user, course_id)
+    event = Event::CourseViewed.new(
+      partner_id: user.learning_partner_id,
+      user_id: user.id,
+      team_id: user.team_id,
+      course_id: course_id
+    )
+
+    publish_event(user, event)
+  end
+
+  def publish_lesson_viewed(user, course_id, lesson_id)
+    event = Event::LessonViewed.new(
+      partner_id: user.learning_partner_id,
+      user_id: user.id,
+      team_id: user.team_id,
+      course_id: course_id,
+      lesson_id: lesson_id
+    )
+
+    publish_event(user, event)
+  end
+
   private
 
   def build_event(user, event_data)

@@ -46,5 +46,20 @@
       </div>
    </div>
 </div>
-<%= render "dashboards/team_progress_chart", dashboard: @dashboard%>
+
+<div class="mb-6 mt-8 mx-1 flex flex-row gap-6">
+  <%= render "dashboards/watch_time_chart", dashboard: @dashboard %>
+  <%= render "dashboards/total_views_chart", dashboard: @dashboard %>
+</div>
+
+
+<div class="mb-6 mt-8 mx-1 flex flex-row gap-6">
+  <%= render "dashboards/users_enrolled", dashboard: @dashboard %>
+  <%= render "dashboards/self_enrolled_vs_assigned_chart", dashboard: @dashboard %>
+</div>
+
+<!--<div class="mb-6 mt-8 mx-1 flex flex-row gap-6">-->
+<!--  <%#= render "dashboards/enrolled_ratio_chart", dashboard: @dashboard %> -->
+<!--   <div class="md:basis-1/2"></div>-->
+<!--</div>-->
 <% end %>

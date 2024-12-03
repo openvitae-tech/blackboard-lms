@@ -62,6 +62,30 @@ class DashboardService
       (total_time_spent_metric / total_course_time_metric.to_f * 100).round
     end
 
+    def lesson_views_series
+      events = lesson_viewed_query.call
+      data = {}
+      grouped_data = events.group_by { |event| to_grouping_key(event) }
+
+      grouped_data.each do |key, values|
+        data[key] = values.count
+      end
+
+      data
+    end
+
+    def course_enrolled_series
+      events = user_enrolled_query.call
+      data = {}
+      grouped_data = events.group_by { |event| to_grouping_key(event) }
+
+      grouped_data.each do |key, values|
+        data[key] = values.count
+      end
+
+      data
+    end
+
     private
 
     def to_grouping_key(event)
@@ -70,6 +94,14 @@ class DashboardService
 
     def time_spent_query
       @time_spent_query ||= TimeSpentQuery.new(@team.learning_partner_id, @duration)
+    end
+
+    def lesson_viewed_query
+      @lesson_viewed_query ||= LessonViewsQuery.new(@team.learning_partner_id, @duration)
+    end
+
+    def user_enrolled_query
+      @user_enrolled_query ||= UserEnrolledQuery.new(@team.learning_partner_id, @duration)
     end
   end
 
