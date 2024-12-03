@@ -9,11 +9,18 @@ class CoursesController < ApplicationController
     authorize :course
 
     if current_user.is_admin?
-      @available_courses = Course.all
+      @available_courses = Course.all.limit(5)
+      @available_courses_count = Course.count
     else
-      @enrolled_courses = current_user.courses.includes(:enrollments)
-      @available_courses = Course.published - @enrolled_courses
+      enrolled_course_ids = current_user.courses.pluck(:id)
+      @enrolled_courses = current_user.courses.includes(:enrollments).limit(5)
+      @available_courses = Course.published.where.not(id: enrolled_course_ids).limit(5)
+
+      @enrolled_courses_count = current_user.courses.includes(:enrollments).size
+      @available_courses_count = Course.published.where.not(id: enrolled_course_ids).count
     end
+    @type = permitted_type(params[:type])
+    apply_pagination if @type.present?
   end
 
   # GET /courses/1 or /courses/1.json
@@ -151,5 +158,18 @@ class CoursesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(:title, :description, :banner)
+  end
+
+  def filter_params
+    params.permit(:page)
+  end
+
+  def apply_pagination
+    @available_courses = @available_courses.page(filter_params[:page])
+    @enrolled_courses = @enrolled_courses.page(filter_params[:page]) if !current_user.is_admin?
+  end
+
+  def permitted_type(type)
+    %w[all enrolled].include?(type) ? type : nil
   end
 end
