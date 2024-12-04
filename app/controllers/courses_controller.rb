@@ -9,12 +9,12 @@ class CoursesController < ApplicationController
     authorize :course
 
     if current_user.is_admin?
-      @available_courses = Course.all.limit(5)
+      @available_courses = Course.all.limit(10)
       @available_courses_count = Course.count
     else
       enrolled_course_ids = current_user.courses.pluck(:id)
-      @enrolled_courses = current_user.courses.includes(:enrollments).limit(5)
-      @available_courses = Course.published.where.not(id: enrolled_course_ids).limit(5)
+      @enrolled_courses = current_user.courses.includes(:enrollments).limit(2)
+      @available_courses = Course.published.where.not(id: enrolled_course_ids).limit(10)
 
       @enrolled_courses_count = current_user.courses.includes(:enrollments).size
       @available_courses_count = Course.published.where.not(id: enrolled_course_ids).count
@@ -114,7 +114,9 @@ class CoursesController < ApplicationController
     authorize :course
     service = CourseManagementService.instance
     @keyword = params[:term]
-    @search_results = service.search(current_user, @keyword)
+    search_query = service.search(current_user, @keyword)
+    @search_results = search_query.page(filter_params[:page])
+    @search_results_count = search_query.size
     render :index
   end
 

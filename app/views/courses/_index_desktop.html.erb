@@ -13,7 +13,7 @@
         <span class="">No results for search keyword '<%= @keyword %>'</span>
       <% else %>
         <span class="">Search results</span>&nbsp
-        <span class="text-letter-color-light">(<%= pluralize(@search_results.count, 'result') %>)</span>
+        <span class="text-letter-color-light">(<%= pluralize(@search_results_count, 'result') %>)</span>
       <% end %>
     </p>
     <div class="flex flex-wrap gap-4">
@@ -21,6 +21,7 @@
         <%= render 'courses/course_card_with_top_image', course: course %>
       <% end %>
     </div>
+    <%= paginate(@search_results) %>
   <% end %>
   <% if has_enrolled_courses? && @type != "all" %>
     <p class="text-base font-medium mb-4">
