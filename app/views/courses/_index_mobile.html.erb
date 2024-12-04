@@ -3,14 +3,13 @@
     <span class="icon icon-course-teal icon-small"></span>
     <h1 class="text-sm font-semibold text-primary">My Courses</h1>
   </div>
-
   <% if has_search_results? %>
     <p class="text-base font-medium mb-4">
       <% if @search_results.empty? %>
         <span class="">No results for search keyword '<%= @keyword %>'</span>
       <% else %>
         <span class="">Search results</span>&nbsp
-        <span class="text-letter-color-light">(<%= pluralize(@search_results.count, 'result') %>)</span>
+        <span class="text-letter-color-light">(<%= pluralize(@search_results_count, 'result') %>)</span>
       <% end %>
     </p>
     <div class="flex flex-col gap-4">
@@ -18,29 +17,32 @@
         <%= render 'courses/course_card_with_top_image', course: course %>
       <% end %>
     </div>
+    <%= paginate(@search_results) %>
   <% end %>
-
-  <% if has_enrolled_courses? %>
+  <% if has_enrolled_courses? && @type != "all" %>
     <p class="text-base font-medium mb-4">
       <span class="">Enrolled courses</span>&nbsp
-      <span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'enrollment') %> )</span>
+      <span class="text-letter-color-light">(<%= pluralize(@enrolled_courses_count, 'enrollment') %> )</span>
+      <%= link_to 'View more', courses_path(type: 'enrolled'), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
     </p>
     <div class="flex flex-col gap-4">
       <% @enrolled_courses.each do |course| %>
         <%= render 'courses/course_card_with_top_image', course: course, enrollment: course.enrollments.first %>
       <% end %>
     </div>
+    <%= paginate(@enrolled_courses) if @type.present? %>
   <% end %>
-
-  <% if has_available_courses? %>
+  <% if has_available_courses? && @type != "enrolled" %>
     <p class="text-base font-medium my-4">
       <span class="">Available courses</span>&nbsp
-      <span class="text-letter-color-light">(<%= pluralize(@available_courses.count, 'course') %> )</span>
+      <span class="text-letter-color-light">(<%= pluralize(@available_courses_count, 'course') %> )</span>
+      <%= link_to 'View more', courses_path(type: 'all'), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil?  %>
     </p>
     <div class="flex flex-col gap-4">
       <% @available_courses.each do |course| %>
         <%= render 'courses/course_card_with_top_image', course: course %>
       <% end %>
     </div>
+    <%= paginate(@available_courses) if @type.present? %>
   <% end %>
 <% end %>
