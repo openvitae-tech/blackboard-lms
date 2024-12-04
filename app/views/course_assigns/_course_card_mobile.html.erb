@@ -1,5 +1,5 @@
-<li class="mt-6 flex flex-col p-4 box-shadow-medium" data-controller="assigns">
-  <div class="flex justify-between">
+<li class="mt-6 flex flex-col p-4 box-shadow-medium w-full" data-controller="assigns">
+  <div class="flex justify-between w-full">
     <%= image_tag course_banner(course, :vertical), class: "h-[118px] w-[152px] rounded-l object-cover" %>
     <div class="flex flex-col items-end">
       <%= f.check_box :course_ids, { multiple: true, class: "w-6 h-6 border-2 rounded border-secondary checked:bg-secondary checked:border-secondary checked:focus:bg-secondary focus:ring-0", data: { action: "assigns#toggle" } }, course.id, false %>
