@@ -1,19 +1,10 @@
 <%= render "shared/components/desktop_layout" do %>
-<div class="flex items-center justify-between">
-   <p class="text-base font-medium flex gap-1">
+<div class="flex items-center justify-between py-4 px-1">
+   <div class="text-base font-medium flex gap-1">
       <span class="">Welcome</span><span class=""><%= current_user.display_name %></span>
-   </p>
-   <div class="p-4 flex justify-between relative">
-      <select
-         id="date-filter"
-         class="block appearance-none w-full border border-line-colour-light pe-7 text-base rounded"
-         >
-         <option value="this-week" selected>This Week</option>
-         <option value="last-week">Last 7 days</option>
-         <option value="this-month">Last 30 days</option>
-         <option value="last-month">Last Month</option>
-         <option value="last-year">Last Year</option>
-      </select>
+   </div>
+   <div class="flex justify-between relative">
+     <%= render "shared/components/dropdown_menu", menu: duration_menu_for(@team), selected_item: selected_label %>
    </div>
 </div>
 
@@ -21,7 +12,7 @@
 
 <div class="p-6 bg-white rounded-lg box-shadow-medium mt-6">
    <p class="text-xl font-semibold">
-      Your team have spent in 
+      Your team have spent in
      <span class="text-primary "><%= duration_in_words(@dashboard.total_time_spent_metric) %></span>during this period
    </p>
 <!--   <p class="mt-2 text-sm font-medium">-->
