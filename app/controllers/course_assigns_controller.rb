@@ -7,10 +7,10 @@ class CourseAssignsController < ApplicationController
     authorize :course_assigns
 
     if @team_assign
-      @courses = Course.all
+      @courses = Course.published
     else
       enrolled_courses = @user.courses
-      @courses = Course.all - enrolled_courses
+      @courses = Course.published - enrolled_courses
     end
   end
 
