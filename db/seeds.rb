@@ -77,14 +77,14 @@ class DevelopmentSeed
 
   def setup_course
     course = create_course
-    course_modules = sample_modules.sample(rand(1..10)).map do |name|
-      setup_course_module(name, course)
+    course_modules = Array.new(rand(1..10)).map do |name|
+      setup_course_module(course)
     end
     course.update!(course_modules_in_order: course_modules.map(&:id))
   end
 
-  def setup_course_module(name, course)
-    course_module = create_module(name, course)
+  def setup_course_module(course)
+    course_module = create_module(course)
 
     lessons = setup_lesson(course_module)
     quizzes = setup_quiz(course_module)
@@ -103,7 +103,7 @@ class DevelopmentSeed
 
 
   def setup_quiz(course_module)
-    sample_quizzes.map { |quiz_data| create_quiz(*quiz_data, course_module) }
+    sample_quizzes.sample(rand(1..4)).map { |quiz_data| create_quiz(*quiz_data, course_module) }
   end
 
   def create_course
@@ -126,10 +126,12 @@ class DevelopmentSeed
     course
   end
 
-  def create_module(name, course)
+  def create_module(course)
     CourseModule.reset_column_information
+
+    title = Faker::Lorem.sentence(word_count: 3)
     CourseModule.create!(
-      title: name,
+      title:,
       course:
     )
   end
@@ -159,15 +161,6 @@ class DevelopmentSeed
       answer:,
       course_module:
     )
-  end
-
-  def sample_modules
-    [
-      'Body Language', 'Etiquette & Manners', 'Grooming And Hygiene',
-      'Guest Complaints', 'Communication Skills', 'Conflict Resolution',
-      'Customer Service Excellence', 'Time Management', 'Workplace Ethics',
-      'Emotional Intelligence'
-    ]
   end
 
   def sample_quizzes

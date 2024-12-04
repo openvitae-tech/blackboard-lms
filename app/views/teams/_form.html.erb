@@ -11,22 +11,20 @@
         <%= form.hidden_field :parent_team_id %>
       <% end %>
 
-      <%= render "shared/components/form_errors", resource: team %>
+      <%= render 'shared/components/form_errors', resource: team %>
 
       <div class="flex flex-col gap-4 items-start justify-center w-full">
-        <label class="text-sm flex flex-col">Upload team banner <span class="text-xs text-slate-grey font-light">(file size should be less than 1MB)</span></label>
+        <label class="text-sm flex flex-col">Upload team banner <span class="text-xs text-slate-grey font-light">(<%= I18.t('team.banner_file_tip') %>)</span></label>
         <!-- From component: pass the hidden file input field with data attribute forms_target: "fileInput" for this to work  -->
-        <%= render "shared/components/file_select",
-         hidden_file_field:  form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput"}),
-         preview: "banner"%>
+        <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:banner, class: 'hidden', data: { forms_target: 'fileInput' }), preview: 'banner' %>
       </div>
       <div class="flex flex-col gap-4">
-        <%= form.label :name, 'Team name', class: "block text-sm" %>
-        <%= form.text_field :name, class: "input-text", placeholder: "Your team name" %>
+        <%= form.label :name, 'Team name', class: 'block text-sm' %>
+        <%= form.text_field :name, class: 'input-text', placeholder: 'Your team name' %>
       </div>
       <div class="flex flex-col justify-between">
-        <%= form.button save_button_label_for(team), class: "bg-primary text-white px-4 py-2 rounded" %>
-        <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
+        <%= form.button save_button_label_for(team), class: 'bg-primary text-white px-4 py-2 rounded' %>
+        <%= form.button 'Cancel', class: 'px-4 py-2', data: { action: 'click->modals#closeModal' } %>
       </div>
     <% end %>
   </div>
