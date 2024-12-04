@@ -33,7 +33,9 @@
             <li class="flex gap-4 items-center justify-between border-t border-line-colour px-4 py-4 text-sm <%= 'highlighted' if current_lesson?(lesson, enrollment) %>">
               <div class="flex items-center gap-4">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
-                  <span class="icon bg-primary-light border-primary-light-50 icon-check h-5 w-5 flex-shrink-0 items-center border"></span>
+                  <div class="flex items-center bg-primary-light-50 border border-primary-light p-1">
+                    <span class="icon icon-check h-[14px] w-[14px] bg-primary"></span>
+                  </div>
                 <% end %>
                 <p class="flex flex-col md:flex-row md:gap-4 items-start">
                   <span class="text-letter-color-light text-sm md:text-base">
