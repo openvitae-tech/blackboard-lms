@@ -1,7 +1,7 @@
 <div class="flex flex-col course-details-box-shadow rounded">
   <%= image_tag course_banner(course, :vertical), class: "h-[120px] min-w-[328px] rounded-t object-cover" %>
   <div class="m-4 flex flex-col">
-    <p class="mb-1 overflow-hidden text-ellipsis text-sm font-extrabold italic text-primary">
+    <p class="mb-1 overflow-hidden text-ellipsis text-sm font-extrabold text-primary">
       <%= course.title %>
     </p>
     <% if enrollment && (enrollment.progress > 0) %>
