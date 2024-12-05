@@ -28,6 +28,10 @@ class CoursesController < ApplicationController
     authorize @course
     @course_modules = helpers.modules_in_order(@course)
     @enrollment = current_user.get_enrollment_for(@course)
+
+    if @enrollment.present?
+      EVENT_LOGGER.publish_course_viewed(current_user, @course.id)
+    end
   end
 
   # GET /courses/new

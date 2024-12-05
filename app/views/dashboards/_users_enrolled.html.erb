@@ -7,7 +7,7 @@
       </div>
       <div class="w-full max-w-4xl bg-white py-6">                
          <%= column_chart [
-            { name: "Self Enrolled", data: { "02 Aug" => 15, "03 Aug" => 30, "04 Aug" => 25, "05 Aug" => 40, "06 Aug" => 25 } }
+            { name: "Users Enrolled", data: dashboard.course_enrolled_series }
             ], height: "200px", colors: ["#0075A4"],stacked: true, max: 100,
             library: {
                plugins: {

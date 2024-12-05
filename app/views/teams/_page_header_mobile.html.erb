@@ -29,7 +29,7 @@
         <% end %>
       <% end %>
       <% if policy(:dashboard).index? %>
-        <%= link_to dashboard_path do %>
+        <%= link_to dashboard_path(team: team) do %>
           <%= render 'shared/components/button_default_small', label: 'Team dashboard', icon_name: 'icon-arrow-right' %>
         <% end %>
       <% end %>
