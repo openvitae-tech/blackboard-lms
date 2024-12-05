@@ -38,7 +38,7 @@ class Team < ApplicationRecord
   def score
     return @score if @score.present?
 
-    member_score = members.map(&:score).sum
+    member_score = members.includes(:enrollments).map(&:score).sum
     sub_team_score = sub_teams.map(&:score).sum
     @score = member_score + sub_team_score
   end
