@@ -137,7 +137,8 @@ module CoursesHelper
 
   def options_for_duration
     {
-      one_day_: '1 Day',
+      none: 'None',
+      one_day: '1 Day',
       two_days: '2 Days',
       one_week: '1 Week',
       two_weeks: '2 Weeks',
