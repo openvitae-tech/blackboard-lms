@@ -44,7 +44,7 @@ class CourseManagementService
   end
 
   def set_progress!(user, enrollment, course_module, lesson, time_spent_in_seconds)
-    EVENT_LOGGER.publish_time_spent(user, time_spent_in_seconds)
+    EVENT_LOGGER.publish_time_spent(user, enrollment.course_id, time_spent_in_seconds)
     # do nothing if the lesson is already complete, only the first time complete will be
     # considered
     return if enrollment.lesson_completed?(lesson.id)
