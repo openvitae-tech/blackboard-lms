@@ -1,4 +1,5 @@
 <%= render "shared/components/desktop_layout" do %>
+  <%= render 'shared/components/back_button',  back_link:courses_path%>
   <div class="flex justify-between my-4">
     <%= render "shared/components/bread_crumbs", links: [[@course.title, nil]] %>
     <div class="flex justify-between gap-4">
