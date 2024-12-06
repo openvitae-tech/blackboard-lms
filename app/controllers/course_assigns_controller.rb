@@ -11,8 +11,8 @@ class CourseAssignsController < ApplicationController
     if @team_assign
       @courses = published_courses
     else
-      enrolled_courses = @user.courses
-      @courses = published_courses - enrolled_courses
+      enrolled_courses_ids = @user.enrollments.pluck(:course_id)
+      @courses = published_courses.where.not(id: enrolled_courses_ids)
     end
   end
 
