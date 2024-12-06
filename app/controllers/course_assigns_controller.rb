@@ -6,11 +6,13 @@ class CourseAssignsController < ApplicationController
   def new
     authorize :course_assigns
 
+    published_courses = Course.includes([:banner_attachment]).published
+
     if @team_assign
-      @courses = Course.published
+      @courses = published_courses
     else
       enrolled_courses = @user.courses
-      @courses = Course.published - enrolled_courses
+      @courses = published_courses - enrolled_courses
     end
   end
 
