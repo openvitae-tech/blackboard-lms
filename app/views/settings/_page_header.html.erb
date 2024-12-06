@@ -1,28 +1,14 @@
-<div class="flex gap-8 border-b p-6 md:p-8  border-line-colour">
-  <% if current_user.is_admin? %>
+<% if current_user.is_admin? %>
+  <div class="flex gap-8 p-6 md:p-8 rounded box-shadow-medium mt-6">
     <div class="flex items-center">
       <%= link_to "javascript:void(0);", class: "inline-block w-14 h-14" do %>
         <%= render 'shared/components/profile_pic', letter: letter_avatar(user) %>
       <% end %>
     </div>
-  <% end %>
-  <div class="flex flex-col gap-2">
     <div class="flex items-center gap-4">
       <span class="text-sm md:text-base font-semibold"><%= user.name %></span>
     </div>
-    <div class="flex md:flex-row flex-col gap-2 md:gap-4">
-      <div class="flex items-start flex-wrap">
-        <span class="flex-shrink-0 text-xs md:text-sm font-normal text-letter-color-light mr-2">Organization: </span>
-        <span class="text-xs md:text-sm font-normal text-letter-color-light break-words">
-          <%= org_name(user.learning_partner) %>
-        </span>
-      </div>
-      <div class="flex items-start">
-        <span class="flex-shrink-0 text-xs md:text-sm font-normal text-letter-color-light"> Role:</span>
-        <span class="text-xs md:text-sm font-normal text-letter-color-light ml-2 break-words">
-          <%= role_text(user.role) %>
-        </span>
-      </div>
-    </div>
   </div>
-</div>
+<% else %>
+  <h2 class="mt-4 mb-6 text-base text-primary font-medium pl-4 md:pl-6"><%= user.name %></h2>
+<% end %>
