@@ -1,10 +1,28 @@
 <li class="flex flex-row p-6 box-shadow-medium w-full" data-controller="assigns">
-  <%= image_tag course_banner(course, :vertical), class: "h-[208px] w-[140px] rounded-l object-cover" %>
-  <div class="flex flex-col px-4 pt-2 w-full">
+  <%= image_tag course_banner(course, :vertical), class: 'h-[208px] w-[140px] rounded-l object-cover' %>
+  <div class="flex flex-col px-4 pt-2 w-full gap-4">
     <div class="flex justify-between">
-      <p class="text-primary mb-4 overflow-hidden text-ellipsis text-base font-semibold italic">
-        <%= course.title %>
-      </p>
+      <div class="flex flex-col gap-4">
+        <p class="text-primary overflow-hidden text-ellipsis text-base font-semibold">
+          <%= course.title %>
+        </p>
+        <div class="flex justify-between space-x-4">
+          <div class="flex items-center">
+            <span class="icon icon-lessons h-3.5 w-3.5"></span>
+            <span class="ml-2 text-xs font-medium"><%= modules_count(course) %></span>
+          </div>
+          <div class="flex items-center">
+            <span class="icon icon-clock h-3.5 w-3.5"></span>
+            <span class="ml-2 text-xs font-medium"><%= course_duration(course) %></span>
+          </div>
+          <div class="flex items-center">
+            <span class="icon icon-user h-3.5 w-3.5"></span>
+            <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
+          </div>
+        </div>
+        <p class="max-h-[20px] overflow-hidden text-ellipsis text-sm font-medium tracking-tight">Course Description</p>
+      </div>
+
       <div class="flex items-center space-x-4">
         <div class="flex items-center space-x-4 hidden" data-assigns-target="durationContainer">
           <div data-assigns-target="labelContainer">
@@ -12,34 +30,17 @@
           </div>
           <div class="hidden flex items-center font-medium" data-assigns-target="customLabelContainer">
             <span>Custom:</span>
-            <input type="date" class="border-0 focus:ring-0" data-action="change->assigns#datePicked">
+            <input type="date" class="border-0 focus:ring-0" data-action="change->assigns#datePicked" />
           </div>
           <%= f.select "duration[]", options_for_duration, {}, disabled: true, id: 'duration', class: "border border-line-colour-light box-shadow-small rounded focus:ring-0", data: { assigns_target: "dateSelector", action: "change->assigns#durationChanged", duration: 'duration' } %>
         </div>
         <%= f.check_box :course_ids, { multiple: true, class: "w-6 h-6 border-2 rounded border-secondary checked:bg-secondary checked:border-secondary checked:focus:bg-secondary focus:ring-0", data: { action: "assigns#toggle" } }, course.id, false %>
       </div>
     </div>
-    <div class="mb-5 flex justify-between space-x-2">
-      <div class="flex justify-between space-x-4">
-        <div class="flex items-center">
-          <span class="icon icon-lessons h-3.5 w-3.5"></span>
-          <span class="ml-2 text-xs font-medium"><%= modules_count(course) %></span>
-        </div>
-        <div class="flex items-center">
-          <span class="icon icon-clock h-3.5 w-3.5"></span>
-          <span class="ml-2 text-xs font-medium"><%= course_duration(course) %></span>
-        </div>
-        <div class="flex items-center">
-          <span class="icon icon-user h-3.5 w-3.5"></span>
-          <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
-        </div>
+    <div class="p-4 text-justify text-sm tracking-tight bg-primary-light-50 rounded-lg">
+      <div class="h-full overflow-hidden flex items-center text-sm">
+        <%= course_description(course) %>
       </div>
-    </div>
-    <p class="mb-3 max-h-[20px] overflow-hidden text-ellipsis text-sm font-medium tracking-tight">
-      Course Description
-    </p>
-    <div class="bg-primary-light-50 show-less-desc overflow-hidden text-ellipsis p-4 text-justify text-sm tracking-tight">
-      <%= course_description(course) %>
     </div>
   </div>
 </li>

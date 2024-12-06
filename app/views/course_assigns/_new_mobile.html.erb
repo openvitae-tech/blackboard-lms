@@ -30,12 +30,12 @@
       <% else %>
         <%= form.hidden_field :user_id, value: @user.id %>
       <% end %>
-      <ul class="overflow-y-auto p-1 flex flex-col gap-4 h-[400px]">
+      <ul class="overflow-y-auto p-1 flex flex-col gap-4 max-h-[calc(100vh-150px)]">
         <% @courses.each do |course| %>
           <%= render 'course_assigns/course_card_mobile', course: course, f: form %>
         <% end %>
       </ul>
-      <div class="bg-white bottom-0 flex flex-col items-center">
+      <div class="bg-white fixed bottom-0 left-0 right-0  px-4 w-full flex flex-col items-center">
         <%= form.button 'Assign Course', class: 'bg-primary rounded w-full p-4 text-white text-base font-medium' %>
         <%= link_to 'Cancel', request.referer, class: 'text-center w-full p-4 text-base font-medium' %>
       </div>
