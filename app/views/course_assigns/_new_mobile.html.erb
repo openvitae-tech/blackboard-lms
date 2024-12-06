@@ -30,7 +30,7 @@
       <% else %>
         <%= form.hidden_field :user_id, value: @user.id %>
       <% end %>
-      <ul class="overflow-y-auto p-1 flex flex-col gap-4 max-h-[calc(100vh-150px)]">
+      <ul class="overflow-y-auto p-1 flex flex-col gap-4 max-h-[calc(100vh-300px)]">
         <% @courses.each do |course| %>
           <%= render 'course_assigns/course_card_mobile', course: course, f: form %>
         <% end %>
