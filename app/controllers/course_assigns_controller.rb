@@ -9,10 +9,10 @@ class CourseAssignsController < ApplicationController
 
     if @team_assign
       enrolled_courses_ids = @team.team_enrollments.pluck(:course_id)
-      @courses = published_courses.where.not(id: enrolled_courses_ids)
+      @courses = published_courses.where.not(id: enrolled_courses_ids).order(:id)
     else
       enrolled_courses_ids = @user.enrollments.pluck(:course_id)
-      @courses = published_courses.where.not(id: enrolled_courses_ids)
+      @courses = published_courses.where.not(id: enrolled_courses_ids).order(:id)
     end
   end
 

@@ -95,7 +95,7 @@ class CourseManagementService
       courses_with_deadline.each do |course, _deadline|
         next if team.enrolled_for_course?(course)
 
-        team.enroll!(course, assigned_by)
+        course.enroll_team!(team, assigned_by)
       end
       # assigning to team assigns the course to each users in the team
       # therefore create enrollment record for each users in the team
