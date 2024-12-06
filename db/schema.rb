@@ -179,7 +179,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_074129) do
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "team_enrollments_count", default: 0
     t.bigint "assigned_by_id"
     t.index ["assigned_by_id"], name: "index_team_enrollments_on_assigned_by_id"
     t.index ["course_id"], name: "index_team_enrollments_on_course_id"
@@ -193,6 +192,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_074129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "parent_team_id"
+    t.integer "team_enrollments_count", default: 0
     t.index ["learning_partner_id"], name: "index_teams_on_learning_partner_id"
     t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
   end
