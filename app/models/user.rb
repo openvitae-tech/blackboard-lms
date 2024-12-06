@@ -88,6 +88,10 @@ class User < ApplicationRecord
     name.downcase.split.first&.capitalize
   end
 
+  def score
+    @score ||= enrollments.map(&:score).reduce(:+) || 0
+  end
+
   private
 
   def password_verifier

@@ -1,5 +1,5 @@
-<li class="mt-6 flex flex-col p-4 box-shadow-medium" data-controller="assigns">
-  <div class="flex justify-between">
+<li class="mt-6 flex flex-col p-4 box-shadow-medium w-full" data-controller="assigns">
+  <div class="flex justify-between w-full">
     <%= image_tag course_banner(course, :vertical), class: "h-[118px] w-[152px] rounded-l object-cover" %>
     <div class="flex flex-col items-end">
       <%= f.check_box :course_ids, { multiple: true, class: "w-6 h-6 border-2 rounded border-secondary checked:bg-secondary checked:border-secondary checked:focus:bg-secondary focus:ring-0", data: { action: "assigns#toggle" } }, course.id, false %>
@@ -15,11 +15,11 @@
       </div>
     </div>
   </div>
-  <div class="mt-4 flex flex-col">
-    <p class="mb-1 overflow-hidden text-ellipsis text-sm font-extrabold italic text-primary">
+  <div class="mt-2 flex flex-col gap-2">
+    <p class="overflow-hidden text-ellipsis text-sm font-extrabold text-primary">
       <%= course.title %>
     </p>
-    <div class="mt-2 flex justify-between space-x-3">
+    <div class="flex justify-between space-x-3">
       <div class="flex items-center space-x-2">
         <span class="icon-small icon icon-lessons"></span>
         <span class="ml-2 text-xs font-medium"><%= modules_count(course) %></span>
@@ -33,7 +33,7 @@
         <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
       </div>
     </div>
-    <p class="my-3 overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">
+    <p class="overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">
       Course Description
     </p>
     <div class="overflow-hidden text-ellipsis text-justify text-sm tracking-tight text-letter-color-light max-h-[100px]">

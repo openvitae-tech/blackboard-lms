@@ -116,3 +116,5 @@ gem 'sidekiq-failures'
 
 # adds unique constraints to sidekiq jobs
 gem 'sidekiq-unique-jobs'
+
+gem 'rails-html-sanitizer', '1.6.1'

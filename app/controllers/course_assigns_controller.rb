@@ -7,10 +7,10 @@ class CourseAssignsController < ApplicationController
     authorize :course_assigns
 
     if @team_assign
-      @courses = Course.all
+      @courses = Course.published
     else
       enrolled_courses = @user.courses
-      @courses = Course.all - enrolled_courses
+      @courses = Course.published - enrolled_courses
     end
   end
 
@@ -60,13 +60,7 @@ class CourseAssignsController < ApplicationController
     when 'one_month'
       DateTime.now + 1.month
     else
-      begin
-        date = DateTime.strptime(duration, '%Y-%m-%d').end_of_day
-      rescue ArgumentError
-        Rails.logger.error "Invalid date format for #{duration} for course deadline, using default 1 month duration"
-        date = DateTime.now + 1.month
-      end
-      date
+      nil
     end
   end
 end

@@ -17,16 +17,16 @@
        </div>
        <div class="flex flex-row items-center justify-between">
           <div class="mt-4">
-             <span class="text-primary text-4xl font-semibold">7.8hr</span>
-             <span class="text-2xl font-light text-[#0075A4]">/12hr</span>
+             <span class="text-primary text-4xl font-semibold"><%= duration_in_words(dashboard.total_time_spent_metric) %></span>
+             <span class="text-2xl font-light text-[#0075A4]">/<%= duration_in_words(dashboard.total_course_time_metric) %></span>
           </div>
           <div
              class="relative h-48 w-48 rounded-full"
-             style="background: conic-gradient(#0075a4 0% 26%, #00b48d 26% 100%)">
+             style="background: conic-gradient(#0075a4 0% <%= dashboard.completion_percent_metric %>%, #00b48d <%= dashboard.completion_percent_metric %>% 100%)">
              <div class="absolute inset-0 flex items-center justify-center">
                 <div
                    class="flex h-32 w-32 items-center justify-center rounded-full bg-white">
-                   <span class="text-center text-lg font-semibold text-primary">74%<br />Completed</span>
+                   <span class="text-center text-lg font-semibold text-primary"><%= dashboard.completion_percent_metric %>%<br />Completed</span>
                 </div>
              </div>
           </div>
