@@ -9,7 +9,8 @@ class CourseAssignsController < ApplicationController
     published_courses = Course.includes([:banner_attachment]).published
 
     if @team_assign
-      @courses = published_courses
+      enrolled_courses_ids = @team.team_enrollments.pluck(:course_id)
+      @courses = published_courses.where.not(id: enrolled_courses_ids)
     else
       enrolled_courses_ids = @user.enrollments.pluck(:course_id)
       @courses = published_courses.where.not(id: enrolled_courses_ids)

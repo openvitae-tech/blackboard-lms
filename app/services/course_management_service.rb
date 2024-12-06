@@ -4,14 +4,15 @@ class CourseManagementService
   include Singleton
   include Errors
 
-  def enroll!(user, course)
+  def enroll!(user, course, assigned_by = nil, deadline = nil)
+    # Enrolling to an unpublished course is unacceptable
     raise InvalidEnrollmentError.new("Cannot enroll to unpublished course. Course Id: #{course.id}") unless course.published?
 
     return :duplicate if user.enrolled_for_course?(course)
 
     EVENT_LOGGER.publish_course_enrolled(user, course.id)
 
-    course.enroll!(user)
+    course.enroll!(user, assigned_by, deadline)
     :ok
   end
 
@@ -76,10 +77,12 @@ class CourseManagementService
   end
 
   def assign_user_to_courses(user, courses_with_deadline, assigned_by)
-    courses_with_deadline.each do |course, deadline|
-      next if user.enrolled_for_course?(course)
+    return unless user.is_learner?
 
-      course.enroll!(user, assigned_by, deadline)
+    courses_with_deadline.each do |course, deadline|
+      result = enroll!(user, course, assigned_by, deadline)
+      next if result != :ok
+
       EVENT_LOGGER.publish_course_assigned(assigned_by, user.id, course.id)
       Notification.notify(user, format(I18n.t('course.assigned'), course: course.title, name: assigned_by.name))
       UserMailer.course_assignment(user, assigned_by, course).deliver_later
@@ -87,8 +90,18 @@ class CourseManagementService
   end
 
   def assign_team_to_courses(team, courses_with_deadline, assigned_by)
-    team.members.each do |user|
-      assign_user_to_courses(user, courses_with_deadline, assigned_by)
+    ActiveRecord::Base.transaction do
+      # create team_enrollment record at team level
+      courses_with_deadline.each do |course, _deadline|
+        next if team.enrolled_for_course?(course)
+
+        team.enroll!(course, assigned_by)
+      end
+      # assigning to team assigns the course to each users in the team
+      # therefore create enrollment record for each users in the team
+      team.members.each do |user|
+        assign_user_to_courses(user, courses_with_deadline, assigned_by)
+      end
     end
   end
 

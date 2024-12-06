@@ -92,6 +92,10 @@ class User < ApplicationRecord
     @score ||= enrollments.map(&:score).reduce(:+) || 0
   end
 
+  def verified_learner?
+    verified? && is_learner?
+  end
+
   private
 
   def password_verifier

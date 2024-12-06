@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_22_093202) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_06_074129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -74,6 +74,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_22_093202) do
     t.integer "enrollments_count", default: 0
     t.bigint "course_modules_in_order", default: [], array: true
     t.boolean "is_published", default: false
+    t.integer "team_enrollments_count", default: 0
   end
 
   create_table "enrollments", force: :cascade do |t|
@@ -173,6 +174,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_22_093202) do
     t.index ["course_module_id"], name: "index_quizzes_on_course_module_id"
   end
 
+  create_table "team_enrollments", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "team_enrollments_count", default: 0
+    t.bigint "assigned_by_id"
+    t.index ["assigned_by_id"], name: "index_team_enrollments_on_assigned_by_id"
+    t.index ["course_id"], name: "index_team_enrollments_on_course_id"
+    t.index ["team_id"], name: "index_team_enrollments_on_team_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.string "banner"
@@ -231,6 +244,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_22_093202) do
   add_foreign_key "quiz_answers", "enrollments"
   add_foreign_key "quiz_answers", "quizzes"
   add_foreign_key "quizzes", "course_modules"
+  add_foreign_key "team_enrollments", "courses"
+  add_foreign_key "team_enrollments", "teams"
+  add_foreign_key "team_enrollments", "users", column: "assigned_by_id"
   add_foreign_key "teams", "learning_partners"
   add_foreign_key "users", "learning_partners"
   add_foreign_key "users", "teams"
