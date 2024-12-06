@@ -49,4 +49,8 @@ class Team < ApplicationRecord
   def enrolled_for_course?(course)
     team_enrollments.exists?(course:)
   end
+
+  def within_hierarchy?(user)
+    user.team == self || ancestors.include?(user.team)
+  end
 end
