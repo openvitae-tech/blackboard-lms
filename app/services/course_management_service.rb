@@ -2,7 +2,11 @@
 
 class CourseManagementService
   include Singleton
+  include Errors
+
   def enroll!(user, course)
+    raise InvalidEnrollmentError.new("Cannot enroll to unpublished course. Course Id: #{course.id}") unless course.published?
+
     return :duplicate if user.enrolled_for_course?(course)
 
     EVENT_LOGGER.publish_course_enrolled(user, course.id)
