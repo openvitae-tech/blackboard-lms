@@ -89,12 +89,13 @@ class EventService
     publish_event(user, event)
   end
 
-  def publish_course_enrolled(user, course_id)
+  def publish_course_enrolled(user, course_id, self_enroll)
     event = Event::CourseEnrolled.new(
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      course_id: course_id,
+      course_id:,
+      self_enroll:
     )
 
     publish_event(user, event)
