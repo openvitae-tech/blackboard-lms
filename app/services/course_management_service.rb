@@ -10,7 +10,9 @@ class CourseManagementService
 
     return :duplicate if user.enrolled_for_course?(course)
 
-    EVENT_LOGGER.publish_course_enrolled(user, course.id)
+    self_enrolled = assigned_by.nil?
+
+    EVENT_LOGGER.publish_course_enrolled(user, course.id, self_enrolled)
 
     course.enroll!(user, assigned_by, deadline)
     :ok

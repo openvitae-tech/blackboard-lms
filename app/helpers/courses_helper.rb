@@ -60,7 +60,10 @@ module CoursesHelper
   end
 
   def enroll_count(course)
-    number_with_delimiter(course.enrollments_count)
+    return course.enrollments_count if current_user.is_admin?
+    # probably cache this in a short term basis rather than on demand memoization
+    @partner_metrics ||= PartnerMetrics.new(current_user.learning_partner)
+    number_with_delimiter(@partner_metrics.course_enrollment_counts_for(course))
   end
 
   def modules_count(course)

@@ -9,12 +9,12 @@ class CoursesController < ApplicationController
     authorize :course
 
     if current_user.is_admin?
-      @available_courses = Course.all.limit(10)
+      @available_courses = Course.includes([:banner_attachment]).all.limit(10)
       @available_courses_count = Course.count
     else
       enrolled_course_ids = current_user.courses.pluck(:id)
-      @enrolled_courses = current_user.courses.includes(:enrollments).limit(2)
-      @available_courses = Course.published.where.not(id: enrolled_course_ids).limit(10)
+      @enrolled_courses = current_user.courses.includes([:banner_attachment, :enrollments]).limit(2)
+      @available_courses = Course.includes([:banner_attachment]).published.where.not(id: enrolled_course_ids).limit(10)
 
       @enrolled_courses_count = current_user.courses.includes(:enrollments).size
       @available_courses_count = Course.published.where.not(id: enrolled_course_ids).count
