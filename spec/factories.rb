@@ -10,9 +10,9 @@ FactoryBot.define do
     # numbers starting with 11 will be considered as test numbers
     phone { "11#{Faker::Number.number(digits: 8)}" }
 
-    transient {
+    transient do
       t_team { create :team }
-    }
+    end
 
     trait :admin do
       role { 'admin' }
