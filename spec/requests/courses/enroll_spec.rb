@@ -3,7 +3,7 @@
 RSpec.describe 'Request spec for PUT /course/:id/enroll' do
   describe 'Enroll course by non admin user' do
     %i[owner manager learner].each do |role|
-      subject { course_with_associations }
+      subject { course_with_associations(published: true) }
 
       before do
         @team = create :team
@@ -24,6 +24,13 @@ RSpec.describe 'Request spec for PUT /course/:id/enroll' do
         subject.enroll!(user)
         put("/courses/#{subject.id}/enroll")
         expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      end
+
+      it 'Fails if course is unpublished' do
+        subject.update(is_published: false)
+        expect do
+          put("/courses/#{subject.id}/enroll")
+        end.to raise_error(Errors::InvalidEnrollmentError)
       end
     end
   end
