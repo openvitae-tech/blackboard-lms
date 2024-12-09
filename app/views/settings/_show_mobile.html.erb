@@ -12,13 +12,12 @@
       </div>
     </div>
   <% end %>
-  <h2 class="my-4 text-xs text-primary font-semibold">My Profile</h2>
+  <%= render 'settings/page_header_mobile' %>
   <div class="rounded box-shadow-medium">
-    <%= render 'settings/page_header_mobile' %>
     <%= render 'settings/page_body_mobile' %>
-    <div class="p-6">
+    <div class="p-4">
       <h1 class="text-base font-semibold">Change password</h1>
-      <div class="mt-4">
+      <div class="mt-2">
         <%= link_to 'Change your password', change_password_settings_path, data: { turbo_frame: 'change-password-modal' }, class: 'link-text text-purple' %>
       </div>
     </div>
