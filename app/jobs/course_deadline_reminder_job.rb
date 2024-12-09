@@ -2,7 +2,6 @@
 
 class CourseDeadlineReminderJob < BaseJob
   def perform
-    Rails.logger.info "$"*100
     enrollments = Enrollment.where(deadline_at: Time.zone.now..3.days.from_now)
 
     enrollments.each do |enrollment|
