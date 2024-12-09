@@ -1,0 +1,35 @@
+<div style="width: 100%;padding: 20px 10px; font-family: Arial, Helvetica, sans-serif; color: #333; box-sizing: border-box;">
+  <div style="background:#585563; text-align: center; padding: 40px 20px;">
+    <!-- <%= image_tag 'instruo.png', alt: 'Logo', class: 'h-2' %> -->
+
+    <h1 style="text-align: center; color: #ffff; font-size:32px;">Complete Your Course Before the Deadline</h1>
+  </div>
+
+  <div style="margin: 0 auto; background-color: #ffffff; padding: 20px 40px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); border:1px solid #E6E6E6;">
+    <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.5;">
+      Dear <span><%= @user.display_name %></span>,
+    </p>
+    <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.5;">
+      We hope you're enjoying your learning journey with us! We wanted to remind you that the deadline for completing your course, <%= link_to @course.title, course_url(@course), style: 'color:#3456DA;', target: '_blank' %>, is approaching soon.
+    </p>
+
+    <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.5;">
+      Deadline <b><%= @deadline %></b >
+    </p>
+
+    <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.5;">
+      To ensure you stay on track and get the most out of your learning experience, please log in to your account and complete the remaining lessons before the deadline.
+    </p>
+    <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.5;">Don't miss this opportunity to complete the course and achieve your goals! If you have any questions or need assistance, feel free to reach out to our support team.</p>
+    <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.5;">Best regards,</p>
+    <p style="margin: 0; font-size: 16px; line-height: 1.5;"><%= Rails.application.credentials.dig(:org_name) %></p>
+  </div>
+
+  <style type="text/css">
+      @media only screen and (max-width: 600px) {
+          h1 {
+              font-size: 20px !important;
+          }
+      }
+  </style>
+</div>

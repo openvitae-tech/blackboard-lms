@@ -1,0 +1,4 @@
+course_deadline_reminder:
+  cron: "0 4 * * *"
+  class: "CourseDeadlineReminder"
+  queue: "daily_jobs"
