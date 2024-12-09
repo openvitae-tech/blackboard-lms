@@ -44,13 +44,13 @@
           <li class="flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6 <%= 'highlighted' if current_lesson?(lesson, enrollment) %>">
             <div class="flex items-center gap-4">
               <% if enrollment && lesson_completed?(enrollment, lesson) %>
-                <div class="flex items-center gap-4">
-                  <span class="icon bg-primary-light border-slate-grey icon-complete h-5 w-5 items-center border"></span>
+                <div class="flex items-center bg-primary-light-50 border border-primary-light p-1">
+                  <span class="icon icon-check h-[14px] w-[14px] bg-primary"></span>
                 </div>
               <% end %>
               <% if enrollment && !lesson_completed?(enrollment, lesson) %>
-                <div class="flex items-center gap-4">
-                  <span class="icon bg-gold border-slate-grey icon-incomplete h-5 w-5 items-center border"></span>
+                <div class="flex items-center bg-gold-light border border-gold p-1">
+                  <span class="icon icon-incomplete h-[14px] w-[14px]"></span>
                 </div>
               <% end %>
               <span><%= lesson.title %></span>

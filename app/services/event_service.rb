@@ -89,12 +89,13 @@ class EventService
     publish_event(user, event)
   end
 
-  def publish_course_enrolled(user, course_id)
+  def publish_course_enrolled(user, course_id, self_enroll)
     event = Event::CourseEnrolled.new(
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      course_id: course_id,
+      course_id:,
+      self_enroll:
     )
 
     publish_event(user, event)
@@ -128,6 +129,41 @@ class EventService
       user_id: user.id,
       team_id: user.team_id,
       course_id: course_id
+    )
+
+    publish_event(user, event)
+  end
+
+  def publish_time_spent(user, course_id, time_spent_in_seconds)
+    event = Event::LearningTimeSpent.new(
+      partner_id: user.learning_partner_id,
+      user_id: user.id,
+      team_id: user.team_id,
+      course_id: course_id,
+      time_spent: time_spent_in_seconds
+    )
+
+    publish_event(user, event)
+  end
+
+  def publish_course_viewed(user, course_id)
+    event = Event::CourseViewed.new(
+      partner_id: user.learning_partner_id,
+      user_id: user.id,
+      team_id: user.team_id,
+      course_id: course_id
+    )
+
+    publish_event(user, event)
+  end
+
+  def publish_lesson_viewed(user, course_id, lesson_id)
+    event = Event::LessonViewed.new(
+      partner_id: user.learning_partner_id,
+      user_id: user.id,
+      team_id: user.team_id,
+      course_id: course_id,
+      lesson_id: lesson_id
     )
 
     publish_event(user, event)

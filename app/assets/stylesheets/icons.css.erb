@@ -124,8 +124,8 @@
 }
 
 .icon-check {
-    background-image: url("<%= asset_url('check.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('check.svg') %>") no-repeat;
+    mask: url("<%= asset_url('check.svg') %>") no-repeat;
 }
 
 .icon-winner {

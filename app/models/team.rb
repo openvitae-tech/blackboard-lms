@@ -13,6 +13,9 @@ class Team < ApplicationRecord
   belongs_to :parent_team, class_name: 'Team', optional: true
   has_many :sub_teams, class_name: 'Team', foreign_key: 'parent_team_id'
 
+  has_many :team_enrollments, dependent: :destroy
+  has_many :courses, through: :team_enrollments
+
   def members
     users
   end
@@ -33,5 +36,21 @@ class Team < ApplicationRecord
 
   def parent_team?
     parent_team_id.blank?
+  end
+
+  def score
+    return @score if @score.present?
+
+    member_score = members.includes(:enrollments).map(&:score).sum
+    sub_team_score = sub_teams.map(&:score).sum
+    @score = member_score + sub_team_score
+  end
+
+  def enrolled_for_course?(course)
+    team_enrollments.exists?(course:)
+  end
+
+  def within_hierarchy?(user)
+    user.team == self || ancestors.include?(user.team)
   end
 end

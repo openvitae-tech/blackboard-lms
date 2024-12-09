@@ -1,55 +1,46 @@
 <%= render "shared/components/mobile_layout" do %>
-<div class="flex items-center justify-between pt-2 pb-4">
+  <div class="flex items-center justify-between py-4 px-1">
     <p class="text-sm font-medium flex gap-1">
-       <span class="">Welcome</span><span class=""><%= current_user.name %></span>
+      <span class="">Welcome</span><span class=""><%= current_user.name %></span>
     </p>
     <div class="flex justify-between relative">
-        <select
-           id="date-filter"
-           class="block appearance-none w-full border border-line-colour-light pe-6 text-xs rounded"
-           >
-          <option value="this-week" selected>This Week</option>
-          <option value="last-week">Last 7 days</option>
-          <option value="this-month">Last 30 days</option>
-          <option value="last-month">Last Month</option>
-          <option value="last-year">Last Year</option>
-        </select>
-     </div>
+      <%= render "shared/components/dropdown_menu", menu: duration_menu_for(@team), selected_item: selected_label %>
     </div>
-    <div class="box-shadow-medium rounded p-4">
-        <div class="flex items-center justify-between">
-           <p class="text-base font-semibold flex gap-1">
-              <span class="">Time spent by the users</span>
-           </p>
-        </div>
-        <%= render "shared/components/average_time_spend_chart" %>
-     </div>
-     <div class="p-4 bg-white box-shadow-medium rounded-lg my-4">
-        <p class="text-base font-medium">
-          Your team have spent
-           <span class="text-primary ">10hr 25 min</span>
-          this week
+  </div>
+
+  <%= render "dashboards/average_time_spend_chart", dashboard: @dashboard %>
+
+  <div class="p-4 bg-white box-shadow-medium rounded-lg my-4">
+    <p class="text-base font-medium">
+      Your team have spent
+      <span class="text-primary "><%= duration_in_words(@dashboard.total_time_spent_metric) %></span> during this period
+    </p>
+    <!--        <p class="text-xs font-medium mt-4">-->
+    <!--           That means <span class="text-primary">200% +</span> higher than last week-->
+    <!--        </p>-->
+    <div class="mt-6 flex flex-col gap-6 items-center text-center">
+      <div class="">
+        <p class="text-primary text-xl font-bold">
+          <%= duration_in_words(@dashboard.average_time_spent_metric) %>
         </p>
-        <p class="text-xs font-medium mt-4">
-           That means <span class="text-primary">200% +</span> higher than last week
-        </p>
-        <div class="mt-6 flex flex-col gap-6 items-center text-center">
-           <div class="">
-              <p class="text-primary text-xl font-bold"> 
-                 01<span class="align-baseline text-base text-primary">hr</span> : 12<span class="align-baseline text-base text-primary">min</span>
-              </p>
-              <p class="pt-1 text-xs">AVG watch time per user</p>
-           </div>
-           <div class="">
-              <p class="text-primary text-xl font-bold">2</p>
-              <p class="pt-1 text-xs">Courses per user</p>
-           </div>
-           <div class="">
-              <p class="text-primary text-xl font-bold">290</p>
-              <p class="pt-1 text-xs">Team score</p>
-           </div>
-        </div>
-     </div>
-     <%= render "shared/components/team_progress_chart_mobile" %>
+        <p class="pt-1 text-xs">AVG watch time per user</p>
+      </div>
+      <div class="">
+        <p class="text-primary text-xl font-bold"><%= @dashboard.active_course_count_metric %></p>
+        <p class="pt-1 text-xs">Courses per user</p>
+      </div>
+      <div class="">
+        <p class="text-primary text-xl font-bold"><%= @dashboard.team_score_metric %></p>
+        <p class="pt-1 text-xs">Team score</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <%= render "dashboards/watch_time_chart_mobile", dashboard: @dashboard %>
+    <%= render "dashboards/total_views_chart", dashboard: @dashboard %>
+    <%= render "dashboards/users_enrolled", dashboard: @dashboard %>
+    <%= render "dashboards/self_enrolled_vs_assigned_chart", dashboard: @dashboard %>
+  </div>
 
 <% end %>

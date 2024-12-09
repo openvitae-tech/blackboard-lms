@@ -7,6 +7,10 @@ class Course < ApplicationRecord
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments
 
+  has_many :team_enrollments, dependent: :destroy
+  has_many :teams, through: :team_enrollments
+
+
   has_one_attached :banner
   validates :title, presence: true, length: { minimum: 6, maximum: 255 }
   validates :description, presence: true, length: { minimum: 32, maximum: 1024 }
@@ -16,6 +20,10 @@ class Course < ApplicationRecord
 
   def enroll!(user, assigned_by = nil, deadline = nil)
     enrollments.create!(user:, assigned_by:, deadline_at: deadline)
+  end
+
+  def enroll_team!(team, assigned_by)
+    team_enrollments.create!(team:, assigned_by:)
   end
 
   def undo_enroll!(user)

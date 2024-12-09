@@ -27,7 +27,7 @@
       <span class=""><%= member.phone %></span>
     </div>
     <div class="flex justify-end p-1">
-      <% if member.verified? && policy(:course_assigns).new? %>
+      <% if member.verified_learner? && policy(:course_assigns).new? %>
         <%= link_to new_course_assign_path(user_id: member) do %>
           <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
         <% end %>
