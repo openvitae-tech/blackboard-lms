@@ -135,7 +135,7 @@
   }
 
   .header-nav {
-    @apply h-20 flex flex-wrap items-center justify-between py-5 navbar-box-shadow;
+    @apply h-20 flex flex-wrap items-center justify-between py-5;
   }
 
   .input-search {
