@@ -111,12 +111,12 @@ class Dashboard
 
   def to_duration(duration)
     case duration
-    when "last_7_days" then 7.days.ago.beginning_of_day..Time.zone.today.beginning_of_day
-    when "last_14_days" then 14.days.ago.beginning_of_day..Time.zone.today.beginning_of_day
-    when "last_30_days" then 30.days.ago.beginning_of_day..Time.zone.today.beginning_of_day
+    when "last_7_days" then 7.days.ago.beginning_of_day..Time.zone.now
+    when "last_14_days" then 14.days.ago.beginning_of_day..Time.zone.now
+    when "last_30_days" then 30.days.ago.beginning_of_day..Time.zone.now
     when "last_month" then 2.months.ago.beginning_of_month..2.months.ago.end_of_month
     else
-      7.days.ago.beginning_of_day..Time.zone.today.beginning_of_day
+      7.days.ago.beginning_of_day..Time.zone.now
     end
   end
 
