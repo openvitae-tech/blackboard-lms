@@ -13,4 +13,15 @@ class UserMailer < ApplicationMailer
       subject: "Course assigned",
     )
   end
+
+  def course_deadline_reminder(user, course, deadline)
+    @user = user
+    @course = course
+    @deadline = deadline.to_formatted_s(:short)
+
+    mail(
+      to: @user.email,
+      subject: "Course deadline approaching",
+      )
+  end
 end
