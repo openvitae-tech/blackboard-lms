@@ -6,7 +6,10 @@
       <% end %>
     </div>
   <% end %>
-  <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
+  <div class="flex flex-row space-x-6">
+    <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
+    <%= render 'shared/components/dropdown', options: @tags if @type.present? %>
+  </div>
   <% if has_search_results? %>
     <p class="text-base font-medium mb-4">
       <% if @search_results.blank? %>

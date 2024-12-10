@@ -1,0 +1,5 @@
+<%= turbo_stream.remove "tag_#{@tag.id}" %>
+<%= turbo_stream.replace 'delete-tag-modal' %>
+<%= turbo_stream.update 'tags-count' do %>
+  <h1 class="mb-4 text-sm font-semibold"><%= pluralize(@tags_count, "tag") %></h1>
+<% end %>

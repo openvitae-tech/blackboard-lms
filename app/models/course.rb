@@ -6,6 +6,7 @@ class Course < ApplicationRecord
   has_many :course_modules, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments
+  has_and_belongs_to_many :tags
 
   has_one_attached :banner
   validates :title, presence: true, length: { minimum: 6, maximum: 255 }

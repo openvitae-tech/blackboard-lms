@@ -3,14 +3,16 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
+  before_action :set_tags, only: %i[new create edit]
 
   # GET /courses or /courses.json
   def index
     authorize :course
 
     if current_user.is_admin?
-      @available_courses = Course.all.limit(10)
-      @available_courses_count = Course.count
+      courses = filter_courses(params[:tags])
+      @available_courses = courses.limit(10)
+      @available_courses_count = courses.length
     else
       enrolled_course_ids = current_user.courses.pluck(:id)
       @enrolled_courses = current_user.courses.includes(:enrollments).limit(2)
@@ -20,6 +22,7 @@ class CoursesController < ApplicationController
       @available_courses_count = Course.published.where.not(id: enrolled_course_ids).count
     end
     @type = permitted_type(params[:type])
+    @tags = Tag.all
     apply_pagination if @type.present?
   end
 
@@ -39,24 +42,26 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit
     authorize @course
+    @category = @course.tags.category.first
+    @level = @course.tags.level.first
   end
 
   # POST /courses or /courses.json
   def create
     authorize :course
-    @course = Course.new(course_params)
+    @course = Course.new(updated_params)
 
     if @course.save
       redirect_to course_url(@course), notice: I18n.t('course.created')
     else
-      render :new, status: :unprocessable_entity
+       render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
     authorize @course
-    if @course.update(course_params)
+    if @course.update(updated_params)
       redirect_to course_url(@course), notice: I18n.t('course.updated')
     else
       render :edit, status: :unprocessable_entity
@@ -159,7 +164,7 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :banner)
+    params.require(:course).permit(:title, :description, :banner, :category_id, :level_id)
   end
 
   def filter_params
@@ -173,5 +178,23 @@ class CoursesController < ApplicationController
 
   def permitted_type(type)
     %w[all enrolled].include?(type) ? type : nil
+  end
+
+  def set_tags
+    @categories = Tag.category
+    @levels = Tag.level
+  end
+
+  def updated_params
+    tag_ids = [course_params[:category_id], course_params[:level_id]].compact
+    course_params.merge(tag_ids:).except(:category_id, :level_id)
+  end
+
+  def filter_courses(tags)
+    if tags.present?
+      Course.joins(:tags).where(tags: { name: [tags] }).group("courses.id").having("COUNT(tags.id) =?", 1)
+    else
+      Course.all
+    end
   end
 end

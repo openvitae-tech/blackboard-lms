@@ -24,21 +24,29 @@
             <span class="icon icon-course icon-small"></span>
             <span class="">My Course</span>
           <% end %>
-      </li>
-      <% if policy(current_user.team || :team).show? %>
-        <li class="side-bar-item <%= sidebar_active('teams') %>">
-          <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
-            <span class="icon icon-team icon-small"></span>
-            <span class="">Team</span>
+        </li>
+        <% if policy(current_user.team || :team).show? %>
+          <li class="side-bar-item <%= sidebar_active('teams') %>">
+            <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
+              <span class="icon icon-team icon-small"></span>
+              <span class="">Team</span>
+            <% end %>
+          </li>
+        <% end %>
+        <% if current_user.is_admin? %>
+          <li class="side-bar-item %>">
+            <%= link_to tags_path, class: "side-bar-item-inner" do %>
+              <span class="icon icon-support icon-small"></span>
+              <span class="">Tags</span>
+            <% end %>
+          </li>
+        <% end %>
+        <li class="side-bar-item">
+          <%= link_to "#", class: "side-bar-item-inner" do %>
+            <span class="icon icon-support icon-small"></span>
+            <span class="">Support</span>
           <% end %>
         </li>
-      <% end %>
-      <li class="side-bar-item">
-        <%= link_to "#", class: "side-bar-item-inner" do %>
-          <span class="icon icon-support icon-small"></span>
-          <span class="">Support</span>
-        <% end %>
-      </li>
       </ul>
     </div>
   </div>

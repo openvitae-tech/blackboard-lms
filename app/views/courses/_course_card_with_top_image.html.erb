@@ -25,6 +25,9 @@
       <p class="mt-4 overflow-hidden text-ellipsis text-sm font-medium tracking-tight text-black0 max-h-[20px]">Course
         Description</p>
       <p class="my-3 overflow-hidden text-ellipsis text-justify text-sm tracking-tight text-letter-color-light max-h-[60px]"><%= course_description(course, 250) %></p>
+      <h1 class="text-sm bottom-0 text-primary">
+        <%= course.tags.map { |tag| "##{tag.name}" }.join(' ') %>
+      </h1>
     </div>
   </div>
 <% end %>

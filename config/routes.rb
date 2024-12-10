@@ -29,6 +29,11 @@ Rails.application.routes.draw do
   end
 
   resources :events, only: [:index]
+  resources :tags do
+    member do
+      get 'delete_modal'
+    end
+  end
 
   resources :courses do
     member do
