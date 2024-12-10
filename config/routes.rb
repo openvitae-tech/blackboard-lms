@@ -84,6 +84,8 @@ Rails.application.routes.draw do
   }
 
   resources :users, only: [:show], as: 'members', path: 'member'
+  resources :supports, only: [:index]
+
 
   get 'error_401' => 'pages#unauthorized'
   get 'dashboard' => 'dashboards#index'
