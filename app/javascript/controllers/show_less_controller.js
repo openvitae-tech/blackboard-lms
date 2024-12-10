@@ -9,6 +9,7 @@ export default class extends Controller {
   ];
   connect() {
     this.checkTruncation();
+
     window.addEventListener("resize", this.checkTruncation.bind(this));
   }
 
@@ -17,6 +18,9 @@ export default class extends Controller {
   }
 
   checkTruncation() {
+    const isExpanded = this.courseDescriptionTarget.classList.contains(
+      "max-h-[max-content]"
+    );
     const isTruncated =
       this.courseDescriptionTarget.scrollHeight >
       this.courseDescriptionTarget.offsetHeight;
@@ -24,6 +28,9 @@ export default class extends Controller {
     if (isTruncated) {
       this.showMoreToggleTarget.classList.remove("hidden");
     } else {
+      if (isExpanded) {
+        this.showMoreToggle();
+      }
       this.showMoreToggleTarget.classList.add("hidden");
     }
   }
