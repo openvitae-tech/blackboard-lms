@@ -1,7 +1,7 @@
 <%= render "shared/components/mobile_layout" do %>
   <div class="flex justify-between items-center">
     <div class="flex gap-2">
-      <%= link_to team_path(current_user.team), class: "flex gap-2" do %>
+      <%= link_to team_path(current_user.team), class: "flex items-center gap-2" do %>
         <span class="icon icon-arrow-left icon-small"></span>
         <span class="text-primary text-sm font-semibold">Assign Course</span>
       <% end %>
@@ -17,7 +17,9 @@
         <span class="icon icon-search icon-small"></span>
       </div>
       <div class="border rounded-lg border-line-colour-light">
-        <%= text_field_tag :term, '', id: 'course-search', class: 'input-search w-full', placeholder: 'Search courses ...' %>
+        <%=
+          text_field_tag :term, '', id: 'course-search', class: 'input-search w-full', placeholder: 'Search courses ...'
+        %>
       </div>
     <% end %>
   </div>
