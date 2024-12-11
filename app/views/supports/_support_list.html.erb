@@ -1,7 +1,7 @@
 <li class="flex flex-col gap-2" data-controller="show-less">
   <div class="flex justify-between items-center">
     <h3 class="flex flex-row items-center gap-4">
-      <span class="h-6 w-6 icon <%= icon_name %>"></span>
+      <span class="h-6 w-6 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %>"></span>
       <span class="text-base font-semibold text-primary"><%= title %></span>
     </h3>
     <button

@@ -1,6 +1,6 @@
 <li class="flex flex-col gap-2" data-controller="show-less">
   <div class="flex justify-between items-center mb-2">
-    <span class="h-6 w-6 icon <%= icon_name %>"></span>
+    <span class="h-6 w-6 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %>"></span>
     <button
       class="flex items-center justify-center focus:outline-none"
       data-show-less-target="showMoreToggle"
