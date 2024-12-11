@@ -4,22 +4,30 @@ export default class extends Controller {
   static targets = [
     "inactiveUser",
     "activeUser",
+    "moreMenu",
     "deactivateMenu",
     "activateConfirmation",
     "deactivateConfirmation",
   ];
 
+  showConfirmation() {
+    console.log(
+      "Updated data-activate:",
+      this.deactivateMenuTarget.getAttribute("data-activate")
+    );
+
+    const isActivate =
+      this.deactivateMenuTarget.getAttribute("data-activate") === "true";
+    isActivate
+      ? this.activateConfirmationTarget.classList.remove("hidden")
+      : this.deactivateConfirmationTarget.classList.remove("hidden");
+    this.moreMenuTarget.classList.add("hidden");
+  }
+
   confirm(event) {
     const buttonDataAction = event.currentTarget.dataset.actionType;
     const isActivate = buttonDataAction === "deactivateYes";
 
-    const updateEvent = new CustomEvent("statusChange", {
-      detail: { activate: isActivate },
-      bubbles: true,
-    });
-
-    this.element.dispatchEvent(updateEvent);
-    
     if (isActivate) {
       this.deactivateConfirmationTarget.classList.add("hidden");
       this.inactiveUserTarget.classList.remove("hidden");
