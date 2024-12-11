@@ -1,6 +1,6 @@
 <aside class="bg-primary-light-50 sticky top-0 flex h-screen min-w-64 flex-col">
   <div class="h-full pt-8">
-    <%= image_tag "instruo_logo_blue_small.png",  alt: "Instruo", class: "h-6 pe-24 ps-8" %>
+    <%= image_tag "instruo_beta_logo.png",  alt: "Instruo", class: "h-10 pe-24 ps-8" %>
     <div class="flex h-full flex-col justify-between pt-14">
       <ul class="flex flex-col gap-3">
         <% if policy(:dashboard).index? %>
@@ -42,7 +42,7 @@
           </li>
         <% end %>
         <li class="side-bar-item">
-          <%= link_to "#", class: "side-bar-item-inner" do %>
+          <%= link_to supports_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-support icon-small"></span>
             <span class="">Support</span>
           <% end %>

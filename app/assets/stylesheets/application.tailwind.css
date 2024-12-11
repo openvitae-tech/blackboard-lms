@@ -135,7 +135,7 @@
   }
 
   .header-nav {
-    @apply border-b-2 border-line-colour h-20 flex flex-wrap items-center justify-between py-5;
+    @apply h-20 flex flex-wrap items-center justify-between py-5;
   }
 
   .input-search {

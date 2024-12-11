@@ -74,6 +74,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_145309) do
     t.integer "enrollments_count", default: 0
     t.bigint "course_modules_in_order", default: [], array: true
     t.boolean "is_published", default: false
+    t.integer "team_enrollments_count", default: 0
   end
 
   create_table "courses_tags", force: :cascade do |t|
@@ -99,6 +100,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_145309) do
     t.bigint "completed_modules", default: [], array: true
     t.boolean "course_completed", default: false
     t.integer "score", default: 0
+    t.datetime "reminder_send_at"
+    t.datetime "course_started_at"
     t.index ["assigned_by_id"], name: "index_enrollments_on_assigned_by_id"
     t.index ["course_id"], name: "index_enrollments_on_course_id"
     t.index ["user_id", "course_id"], name: "index_enrollments_on_user_id_and_course_id", unique: true
@@ -182,12 +185,24 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_145309) do
     t.index ["course_module_id"], name: "index_quizzes_on_course_module_id"
   end
 
+<<<<<<< HEAD
   create_table "tags", force: :cascade do |t|
     t.string "name", null: false
     t.string "tag_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_tags_on_name", unique: true
+=======
+  create_table "team_enrollments", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "assigned_by_id"
+    t.index ["assigned_by_id"], name: "index_team_enrollments_on_assigned_by_id"
+    t.index ["course_id"], name: "index_team_enrollments_on_course_id"
+    t.index ["team_id"], name: "index_team_enrollments_on_team_id"
+>>>>>>> main
   end
 
   create_table "teams", force: :cascade do |t|
@@ -197,6 +212,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_145309) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "parent_team_id"
+    t.integer "team_enrollments_count", default: 0
     t.index ["learning_partner_id"], name: "index_teams_on_learning_partner_id"
     t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
   end
@@ -248,6 +264,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_145309) do
   add_foreign_key "quiz_answers", "enrollments"
   add_foreign_key "quiz_answers", "quizzes"
   add_foreign_key "quizzes", "course_modules"
+  add_foreign_key "team_enrollments", "courses"
+  add_foreign_key "team_enrollments", "teams"
+  add_foreign_key "team_enrollments", "users", column: "assigned_by_id"
   add_foreign_key "teams", "learning_partners"
   add_foreign_key "users", "learning_partners"
   add_foreign_key "users", "teams"

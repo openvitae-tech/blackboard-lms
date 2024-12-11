@@ -2,20 +2,21 @@
 
 class CourseAssignsController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorize_actions
   before_action :set_user_or_team
   def new
-    authorize :course_assigns
+    published_courses = Course.includes([:banner_attachment]).published
 
     if @team_assign
-      @courses = Course.all
+      enrolled_courses_ids = @team.team_enrollments.pluck(:course_id)
+      @courses = published_courses.where.not(id: enrolled_courses_ids).order(:id)
     else
-      enrolled_courses = @user.courses
-      @courses = Course.all - enrolled_courses
+      enrolled_courses_ids = @user.enrollments.pluck(:course_id)
+      @courses = published_courses.where.not(id: enrolled_courses_ids).order(:id)
     end
   end
 
   def create
-    authorize :course_assigns
     course_ids = (params[:course_ids] || []).filter { |id| !id.empty? }
     deadlines = (params[:duration] || []).map { |d| to_deadline(d) }
 
@@ -40,11 +41,21 @@ class CourseAssignsController < ApplicationController
 
   private
 
+  def authorize_actions
+    authorize :course_assigns
+  end
+
   def set_user_or_team
+    # either user_id or team_id will be present not both
     @user = User.find params[:user_id] if params[:user_id].present?
     @team = Team.find params[:team_id] if params[:team_id].present?
 
-    @team_assign = @team.present?
+    if @team.present?
+      @team_assign = true
+      raise Errors::IllegalAccessError.new("User does not belong to the team hierarchy") unless @team.within_hierarchy?(current_user)
+    else
+      raise Errors::IllegalAccessError.new("User does not belong to the team hierarchy") unless @user.team.within_hierarchy?(current_user)
+    end
   end
 
   def to_deadline(duration)
@@ -60,13 +71,7 @@ class CourseAssignsController < ApplicationController
     when 'one_month'
       DateTime.now + 1.month
     else
-      begin
-        date = DateTime.strptime(duration, '%Y-%m-%d').end_of_day
-      rescue ArgumentError
-        Rails.logger.error "Invalid date format for #{duration} for course deadline, using default 1 month duration"
-        date = DateTime.now + 1.month
-      end
-      date
+      nil
     end
   end
 end

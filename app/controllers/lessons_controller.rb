@@ -13,6 +13,11 @@ class LessonsController < ApplicationController
   def show
     authorize @lesson
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
+
+    if @enrollment.present?
+      EVENT_LOGGER.publish_lesson_viewed(current_user, @course.id, @lesson.id)
+    end
+
     @course_modules = helpers.modules_in_order(@course)
     @video_iframe = get_video_iframe(@local_content)
   end

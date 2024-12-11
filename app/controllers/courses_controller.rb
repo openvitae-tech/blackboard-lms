@@ -10,12 +10,12 @@ class CoursesController < ApplicationController
     authorize :course
 
     if current_user.is_admin?
-      @available_courses = Course.all.limit(10)
+      @available_courses = Course.includes([:banner_attachment]).all.limit(10)
       @available_courses_count = Course.count
     else
       enrolled_course_ids = current_user.courses.pluck(:id)
-      @enrolled_courses = current_user.courses.includes(:enrollments).limit(2)
-      @available_courses = Course.published.where.not(id: enrolled_course_ids).limit(10)
+      @enrolled_courses = current_user.courses.includes([:banner_attachment, :enrollments]).limit(2)
+      @available_courses = Course.includes([:banner_attachment]).published.where.not(id: enrolled_course_ids).limit(10)
 
       @enrolled_courses_count = current_user.courses.includes(:enrollments).size
       @available_courses_count = Course.published.where.not(id: enrolled_course_ids).count
@@ -29,6 +29,10 @@ class CoursesController < ApplicationController
     authorize @course
     @course_modules = helpers.modules_in_order(@course)
     @enrollment = current_user.get_enrollment_for(@course)
+
+    if @enrollment.present?
+      EVENT_LOGGER.publish_course_viewed(current_user, @course.id)
+    end
   end
 
   # GET /courses/new
@@ -108,7 +112,11 @@ class CoursesController < ApplicationController
 
     service = CourseManagementService.instance
     enrollment = service.proceed(current_user, @course)
-    EVENT_LOGGER.publish_course_started(current_user, @course.id)
+    if enrollment.course_started_at.blank?
+      EVENT_LOGGER.publish_course_started(current_user, @course.id)
+      enrollment.touch(:course_started_at)
+    end
+
     redirect_to course_module_lesson_path(@course, enrollment.current_module_id || @course.first_module.id,
                                           enrollment.current_lesson_id || @course.first_module.first_lesson)
   end

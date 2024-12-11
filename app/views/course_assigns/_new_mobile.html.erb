@@ -1,7 +1,7 @@
 <%= render "shared/components/mobile_layout" do %>
   <div class="flex justify-between items-center">
     <div class="flex gap-2">
-      <%= link_to team_path(current_user.team), class: "flex gap-2" do %>
+      <%= link_to team_path(current_user.team), class: "flex items-center gap-2" do %>
         <span class="icon icon-arrow-left icon-small"></span>
         <span class="text-primary text-sm font-semibold">Assign Course</span>
       <% end %>
@@ -17,7 +17,9 @@
         <span class="icon icon-search icon-small"></span>
       </div>
       <div class="border rounded-lg border-line-colour-light">
-        <%= text_field_tag :term, '', id: 'course-search', class: 'input-search w-full', placeholder: 'Search courses ...' %>
+        <%=
+          text_field_tag :term, '', id: 'course-search', class: 'input-search w-full', placeholder: 'Search courses ...'
+        %>
       </div>
     <% end %>
   </div>
@@ -30,12 +32,12 @@
       <% else %>
         <%= form.hidden_field :user_id, value: @user.id %>
       <% end %>
-      <ul class="overflow-y-auto p-1 flex flex-col gap-4 h-[400px]">
+      <ul class="overflow-y-auto p-1 flex flex-col gap-4 max-h-[calc(100vh-300px)]">
         <% @courses.each do |course| %>
           <%= render 'course_assigns/course_card_mobile', course: course, f: form %>
         <% end %>
       </ul>
-      <div class="bg-white bottom-0 flex flex-col items-center">
+      <div class="bg-white fixed bottom-0 left-0 right-0  px-4 w-full flex flex-col items-center">
         <%= form.button 'Assign Course', class: 'bg-primary rounded w-full p-4 text-white text-base font-medium' %>
         <%= link_to 'Cancel', request.referer, class: 'text-center w-full p-4 text-base font-medium' %>
       </div>

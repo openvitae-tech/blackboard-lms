@@ -73,4 +73,9 @@ module ApplicationHelper
      "#{duration / 60 % 60} #{duration / 60 % 60 == 1 ? 'min' : 'mins'}"]
       .select { |str| str =~ /^[1-9]/ }.join(" ")
   end
+  
+  def product_name
+    Rails.application.credentials.org_name
+  end
+  
 end
