@@ -33,18 +33,7 @@
         <span class="bg-cover inline-block icon-red-circle icon-tiny"></span>
         <p class="text-xs text-danger">Deactivated</p>
       </div>
-      <div class="relative mt-1">
-        <label class="flex items-center cursor-pointer rounded-lg bg-line-colour" data-action="click->team-user-status#toggleDropdown">
-          <span class="icon icon-more-vertical icon-small"></span>
-        </label>
-        <div
-          class="absolute bg-white rounded box-shadow-medium hidden mt-3 -ml-20 z-10"
-          data-team-user-status-target="deactivateMenu"
-          data-user-status-confirmation-target="deactivateMenu"
-          data-activate="false">
-          <p class="text-xs cursor-pointer px-4 py-2 hover:bg-gray-100" data-action="click->team-user-status#showConfirmation">Deactivate</p>
-        </div>
-      </div>
+      <%= render 'shared/components/more_action' %>
     </div>
   </div>
   <%= render 'shared/components/confirmation_modal' %>
