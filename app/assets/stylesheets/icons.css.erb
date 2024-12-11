@@ -9,8 +9,8 @@
 }
 
 .icon-user {
-    background-image: url("<%= asset_url('user.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('user.svg') %>") no-repeat;
+    mask: url("<%= asset_url('user.svg') %>") no-repeat;
 }
 
 .icon-arrow-right {
