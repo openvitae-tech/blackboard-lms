@@ -109,7 +109,11 @@ class CoursesController < ApplicationController
 
     service = CourseManagementService.instance
     enrollment = service.proceed(current_user, @course)
-    EVENT_LOGGER.publish_course_started(current_user, @course.id)
+    if enrollment.course_started_at.blank?
+      EVENT_LOGGER.publish_course_started(current_user, @course.id)
+      enrollment.touch(:course_started_at)
+    end
+
     redirect_to course_module_lesson_path(@course, enrollment.current_module_id || @course.first_module.id,
                                           enrollment.current_lesson_id || @course.first_module.first_lesson)
   end

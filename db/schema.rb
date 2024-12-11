@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_06_074129) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_09_115158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +91,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_074129) do
     t.bigint "completed_modules", default: [], array: true
     t.boolean "course_completed", default: false
     t.integer "score", default: 0
+    t.datetime "reminder_send_at"
+    t.datetime "course_started_at"
     t.index ["assigned_by_id"], name: "index_enrollments_on_assigned_by_id"
     t.index ["course_id"], name: "index_enrollments_on_course_id"
     t.index ["user_id", "course_id"], name: "index_enrollments_on_user_id_and_course_id", unique: true
