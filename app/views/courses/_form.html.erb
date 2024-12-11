@@ -15,6 +15,14 @@
                                                                                          class: "hidden", data: { forms_target: "fileInput" }), preview: "logo" %>
         </div>
       </div>
+      <div class="my-8 text-sm flex flex-col">
+        <%= form.label :category, class: "text-sm font-medium mb-2" %>
+        <%= form.select :category_id, options_for_select(@categories.pluck(:name, :id), @category&.id), data: {courses_target: "category"} %>
+      </div>
+      <div class="my-8 text-sm flex flex-col" data-courses-target="level">
+        <%= form.label :level, class: "text-sm font-medium mb-2" %>
+        <%= form.select :level_id, options_for_select(@levels.pluck(:name, :id), @level&.id) %>
+      </div>
       <div class="my-8 text-sm">
         <%= form.label :description, class: "text-sm font-medium" %>
         <%= form.text_area :description, class: "input-textarea mt-2", rows: "5" %>

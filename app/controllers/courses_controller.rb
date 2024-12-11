@@ -3,6 +3,7 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
+  before_action :set_tags, only: %i[new create edit update]
 
   # GET /courses or /courses.json
   def index
@@ -39,24 +40,26 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit
     authorize @course
+    @category = @course.tags.category.first
+    @level = @course.tags.level.first
   end
 
   # POST /courses or /courses.json
   def create
     authorize :course
-    @course = Course.new(course_params)
+    @course = Course.new(updated_params)
 
     if @course.save
       redirect_to course_url(@course), notice: I18n.t('course.created')
     else
-      render :new, status: :unprocessable_entity
+       render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
     authorize @course
-    if @course.update(course_params)
+    if @course.update(updated_params)
       redirect_to course_url(@course), notice: I18n.t('course.updated')
     else
       render :edit, status: :unprocessable_entity
@@ -159,7 +162,7 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :banner)
+    params.require(:course).permit(:title, :description, :banner, :category_id, :level_id)
   end
 
   def filter_params
@@ -173,5 +176,15 @@ class CoursesController < ApplicationController
 
   def permitted_type(type)
     %w[all enrolled].include?(type) ? type : nil
+  end
+
+  def set_tags
+    @categories = Tag.category
+    @levels = Tag.level
+  end
+
+  def updated_params
+    tag_ids = [course_params[:category_id], course_params[:level_id]].compact
+    course_params.merge(tag_ids:).except(:category_id, :level_id)
   end
 end

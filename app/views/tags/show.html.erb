@@ -1,0 +1,5 @@
+<%= turbo_frame_tag 'tag-modal' do %>
+  <%= render "shared/components/alert", title: "Delete tag?",
+  description: "You are permanently deleting the <span class='font-bold'>#{@tag.name}</span> tag. This action can't be undone.".html_safe,
+  submitButtonLabel: "Delete", record: @tag, method: :delete %>
+<% end %>

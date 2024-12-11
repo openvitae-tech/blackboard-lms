@@ -10,6 +10,10 @@ module ApplicationHelper
     default_header_options.merge!(opts)
   end
 
+  def is_mobile_view_for_turbo?
+    request.user_agent =~ /Mobile|webOS/
+  end
+
   def active(name, link)
     link == name ? 'active' : ''
   end
