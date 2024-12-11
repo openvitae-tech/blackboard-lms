@@ -1,6 +1,6 @@
 <aside class="bg-primary-light-50 sticky top-0 flex h-screen min-w-64 flex-col">
   <div class="h-full pt-8">
-    <%= image_tag "instruo_logo_blue_small.png",  alt: "Instruo", class: "h-6 pe-24 ps-8" %>
+    <%= image_tag 'instruo_logo_blue_small.png', alt: 'Instruo', class: 'h-6 pe-24 ps-8' %>
     <div class="flex h-full flex-col justify-between pt-14">
       <ul class="flex flex-col gap-3">
         <% if policy(:dashboard).index? %>
@@ -24,21 +24,21 @@
             <span class="icon icon-course icon-small"></span>
             <span class="">My Course</span>
           <% end %>
-      </li>
-      <% if policy(current_user.team || :team).show? %>
-        <li class="side-bar-item <%= sidebar_active('teams') %>">
-          <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
-            <span class="icon icon-team icon-small"></span>
-            <span class="">Team</span>
+        </li>
+        <% if policy(current_user.team || :team).show? %>
+          <li class="side-bar-item <%= sidebar_active('teams') %>">
+            <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
+              <span class="icon icon-team icon-small"></span>
+              <span class="">Team</span>
+            <% end %>
+          </li>
+        <% end %>
+        <li class="side-bar-item">
+          <%= link_to supports_path, class: "side-bar-item-inner" do %>
+            <span class="icon icon-support icon-small"></span>
+            <span class="">Support</span>
           <% end %>
         </li>
-      <% end %>
-      <li class="side-bar-item">
-        <%= link_to "#", class: "side-bar-item-inner" do %>
-          <span class="icon icon-support icon-small"></span>
-          <span class="">Support</span>
-        <% end %>
-      </li>
       </ul>
     </div>
   </div>
