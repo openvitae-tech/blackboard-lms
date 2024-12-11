@@ -1,3 +1,6 @@
+<%= mobile_view do %>
+  <%= render 'shared/components/admin_not_available'%>
+<% end %>
 <%= render "shared/components/desktop_layout" do %>
   <div class="flex gap-4 justify-end">
     <%= link_to new_tag_path, class: "nav-link", data: { turbo_frame: "tag-modal" } do %>

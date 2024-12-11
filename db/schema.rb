@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_04_145309) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_09_115158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -185,14 +185,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_145309) do
     t.index ["course_module_id"], name: "index_quizzes_on_course_module_id"
   end
 
-<<<<<<< HEAD
   create_table "tags", force: :cascade do |t|
     t.string "name", null: false
     t.string "tag_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_tags_on_name", unique: true
-=======
+  end
+
   create_table "team_enrollments", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.bigint "course_id", null: false
@@ -202,7 +202,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_145309) do
     t.index ["assigned_by_id"], name: "index_team_enrollments_on_assigned_by_id"
     t.index ["course_id"], name: "index_team_enrollments_on_course_id"
     t.index ["team_id"], name: "index_team_enrollments_on_team_id"
->>>>>>> main
   end
 
   create_table "teams", force: :cascade do |t|
