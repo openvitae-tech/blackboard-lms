@@ -7,7 +7,7 @@
       <% if policy(:dashboard).index? %>
         <li class="side-bar-item <%= sidebar_active('dashboards') %>">
           <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-home icon-small"></span>
+            <span class="icon icon-home icon-small bg-letter-color"></span>
             <span class="">Home</span>
           <% end %>
         </li>
@@ -16,34 +16,34 @@
       <% if policy(:learning_partner).show? %>
         <li class="side-bar-item <%= sidebar_active('learning_partners') %>">
           <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-course icon-small"></span>
+            <span class="icon icon-course icon-small bg-letter-color"></span>
             <span class="">Partners</span>
           <% end %>
         </li>
       <% end %>
       <li class="side-bar-item <%= sidebar_active('courses') %>">
         <%= link_to courses_path, class: "side-bar-item-inner" do %>
-          <span class="icon icon-course icon-small"></span>
+          <span class="icon icon-course icon-small bg-letter-color"></span>
           <span class="">My Course</span>
         <% end %>
       </li>
       <% if policy(current_user.team || :team).show? %>
         <li class="side-bar-item <%= sidebar_active('teams') %>">
           <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
-            <span class="icon icon-team icon-small"></span>
+            <span class="icon icon-team icon-small bg-letter-color"></span>
             <span class="">Team</span>
           <% end %>
         </li>
       <% end %>
       <li class="side-bar-item <%= 'item-selected' if 'teams' == 'Support' %>">
         <%= link_to supports_path, class: "side-bar-item-inner" do %>
-          <span class="icon icon-support icon-small"></span>
+          <span class="icon icon-support icon-small bg-letter-color"></span>
           <span>Support</span>
         <% end %>
       </li>
     </ul>
     <%= button_to destroy_user_session_path, class: "side-bar-footer py-4 w-full", method: :delete, data: { turbo_method: :delete } do %>
-      <span class="icon icon-logout icon-small"></span>
+      <span class="icon icon-logout icon-small bg-letter-color"></span>
       <span class="text-sm">Logout</span>
     <% end %>
   </div>
