@@ -76,7 +76,7 @@ class LearningPartnersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def learning_partner_params
-    params.require(:learning_partner).permit(:name, :content, :logo, :banner)
+    params.require(:learning_partner).permit(:name, :content, :logo, :banner, :max_user_count)
   end
 
   def authorize_admin!
