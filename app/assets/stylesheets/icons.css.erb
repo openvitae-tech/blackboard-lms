@@ -64,13 +64,13 @@
 }
 
 .icon-grid {
-    background-image: url("<%= asset_url('grid.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('grid.svg') %>") no-repeat;
+    mask: url("<%= asset_url('grid.svg') %>") no-repeat;
 }
 
 .icon-list{
-    background-image: url("<%= asset_url('list.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('list.svg') %>") no-repeat;
+    mask: url("<%= asset_url('list.svg') %>") no-repeat;
 }
 
 .icon-minus {
