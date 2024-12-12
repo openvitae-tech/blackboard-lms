@@ -74,8 +74,8 @@
 }
 
 .icon-minus {
-    background-image: url("<%= asset_url('minus.svg') %>");
-    background-repeat: no-repeat;
+     -webkit-mask:  url("<%= asset_url('minus.svg') %>") no-repeat;
+    mask: url("<%= asset_url('minus.svg') %>") no-repeat;
 }
 
 .icon-next{
