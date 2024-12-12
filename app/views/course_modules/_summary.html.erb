@@ -3,7 +3,7 @@
   <%= render "course_modules/course_completion_quiz", course_module: @course_module, enrollment: @enrollment %>
   <div class="flex flex-row justify-between gap-4 p-4 sm:p-6">
     <%= link_to redo_quiz_course_module_path(@course, @course_module), data: { turbo_method: :delete } do %>
-      <%= render "shared/components/button_default_small", label: "Retry", icon_name: "icon-retry" %>
+      <%= render "shared/components/button_default_large", label: "Retry", icon_name: "icon-retry" %>
     <% end %>
 
     <%= link_to course_path(@course) do %>

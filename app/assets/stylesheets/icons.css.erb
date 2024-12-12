@@ -14,8 +14,13 @@
 }
 
 .icon-arrow-right {
-    background-image: url("<%= asset_url('arrow_right.svg') %>");
-    background-repeat: no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    -webkit-mask:  url("<%= asset_url('arrow_right.svg') %>") no-repeat;
+    mask: url("<%= asset_url('arrow_right.svg') %>") no-repeat; 
+    -webkit-mask-size: contain; 
+    mask-size: contain;
 }
 
 .icon-home {
@@ -338,8 +343,8 @@
 }
 
 .icon-edit{
-    background-image: url("<%= asset_url('edit.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('edit.svg') %>") no-repeat;
+    mask: url("<%= asset_url('edit.svg') %>") no-repeat;
 }
 
 .icon-arrow-down {
@@ -348,7 +353,13 @@
 }
 
 .icon-trash {
-    background-image: url("<%= asset_url('trash.svg') %>");
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    -webkit-mask: url("<%= asset_url('trash.svg') %>") no-repeat center;
+    mask: url("<%= asset_url('trash.svg') %>") no-repeat center;
+    -webkit-mask-size: contain; 
+    mask-size: contain;
 }
 
 .icon-upload-cloud {
@@ -364,7 +375,13 @@
 }
 
 .icon-retry {
-    background-image: url("<%= asset_url('retry.svg') %>");
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    -webkit-mask:  url("<%= asset_url('retry.svg') %>") no-repeat;
+    mask: url("<%= asset_url('retry.svg') %>") no-repeat;
+    -webkit-mask-size: contain; 
+    mask-size: contain;
 }
 
 .icon-down-arrow-green {
