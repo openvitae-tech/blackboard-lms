@@ -7,6 +7,9 @@ class InvitesController < ApplicationController
   def new
     authorize :invite
     @team = Team.find(params[:team_id])
+
+    # check if user limit exceeds by this invite
+    authorize @team.learning_partner, :invite?
     @user = User.new(team: @team)
   end
 
@@ -14,6 +17,8 @@ class InvitesController < ApplicationController
     service = UserManagementService.instance
     @team = Team.find(invite_params[:team_id])
     authorize @team, :create?, policy_class: InvitePolicy
+    partner = @team.learning_partner
+    authorize partner, :invite?
 
     @bulk_invite = invite_params[:bulk_invite].present?
 
@@ -24,12 +29,15 @@ class InvitesController < ApplicationController
         # Bulk invite users as learners
         valid_records = BulkInviteInputService.instance.process(invite_params[:bulk_invite])
 
-        if valid_records.present?
-          service.bulk_invite(current_user, valid_records, :learner, @team)
-          :ok
-        else
+        if valid_records.empty?
           @user.errors.add(:base, I18n.t('invite.invalid_csv'))
           :error
+        elsif (valid_records.length + partner.users_count) > partner.max_user_count
+          @user.errors.add(:base, I18n.t('invite.exceeds_user_limit') % { limit: partner.max_user_count })
+          :error
+        else
+          service.bulk_invite(current_user, valid_records, :learner, @team)
+          :ok
         end
       else
         @user = service.invite(current_user, invite_params, @team)

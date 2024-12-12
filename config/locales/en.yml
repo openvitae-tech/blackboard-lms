@@ -59,6 +59,7 @@ en:
     invalid_csv: 'Failed to send invite. Please check the csv file format.'
     invite_sent: 'Invitation sent to %{email}'
     invalid_user: 'Failed to invite user, are you sure that this user exists ?'
+    exceeds_user_limit: "Can't add more than %{limit} users in your current plan."
   local_content:
     video_not_found: 'Video for %{lang} must exists'
     lang_exists: '%{lang} already exists'
