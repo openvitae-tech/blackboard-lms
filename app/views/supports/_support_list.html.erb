@@ -4,20 +4,13 @@
       <span class="h-6 w-6 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %>"></span>
       <span class="text-base font-semibold text-primary"><%= title %></span>
     </h3>
-    <button
-      class="flex items-center justify-center focus:outline-none"
-      data-show-less-target="showMoreToggle"
-      data-action="click->show-less#showMoreToggle"
-    >
+    <button class="flex items-center justify-center focus:outline-none" data-show-less-target="showMoreToggle" data-action="click->show-less#showMoreToggle">
       <span class="text-xs text-primary">Show more</span>
-      <span class="hidden icon-arrow-up icon-small" data-show-less-target="upArrow"></span>
-      <span class="icon icon-arrow-down icon-small" data-show-less-target="downArrow"></span>
+      <span class="hidden icon-arrow-up icon-small bg-primary" data-show-less-target="upArrow"></span>
+      <span class="icon icon-arrow-down icon-small bg-primary" data-show-less-target="downArrow"></span>
     </button>
   </div>
-  <p
-    class="text-sm pl-10 pr-14 max-h-10 overflow-hidden <%= 'line-clamp-3' if description.length > 150 %>"
-    data-show-less-target="courseDescription"
-  >
+  <p class="text-sm pl-10 pr-14 max-h-10 overflow-hidden <%= 'line-clamp-3' if description.length > 150 %>" data-show-less-target="courseDescription">
     <%= description %>
   </p>
 </li>

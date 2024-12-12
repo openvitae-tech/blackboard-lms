@@ -54,8 +54,13 @@
 }
 
 .icon-arrow-up {
-    background-image: url("<%= asset_url('arrow_up.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('arrow_up.svg') %>") no-repeat;
+    mask: url("<%= asset_url('arrow_up.svg') %>") no-repeat;
+}
+
+.icon-arrow-down {
+    -webkit-mask:  url("<%= asset_url('arrow_down.svg') %>") no-repeat;
+    mask: url("<%= asset_url('arrow_down.svg') %>") no-repeat;
 }
 
 .icon-grid {
@@ -335,11 +340,6 @@
 .icon-edit{
     -webkit-mask:  url("<%= asset_url('edit.svg') %>") no-repeat;
     mask: url("<%= asset_url('edit.svg') %>") no-repeat;
-}
-
-.icon-arrow-down {
-    background-image: url("<%= asset_url('arrow_down.svg') %>");
-    background-repeat: no-repeat;
 }
 
 .icon-trash {
