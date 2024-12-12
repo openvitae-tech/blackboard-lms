@@ -3,20 +3,12 @@
     <span class="icon icon-more-vertical icon-small"></span>
   </label>
   <div class="absolute bg-white rounded box-shadow-medium hidden mt-3 -ml-20 z-10" data-more-action-target="moreMenu" data-user-status-confirmation-target="moreMenu">
-    <% actions.each do |action| %>
-      <% if action == :deactivate %>
-        <button
-          class="text-xs cursor-pointer px-4 py-2 hover:bg-gray-100 w-full text-left"
-          data-action="click->user-status-confirmation#showConfirmation"
-          data-user-status-confirmation-target="deactivateMenu"
-          data-activate="false">
-          Deactivate
-        </button>
-      <% elsif action == :edit %>
-        <button class="text-xs cursor-pointer px-4 py-2 hover:bg-gray-100 w-full text-left">Edit</button>
-      <% elsif action == :delete %>
-        <button class="text-xs cursor-pointer px-4 py-2 hover:bg-gray-100 w-full text-left">Delete</button>
-      <% end %>
-    <% end %>
+    <button
+      class="text-xs cursor-pointer px-4 py-2 hover:bg-gray-100 w-full text-left"
+      data-action="click->user-status-confirmation#showConfirmation"
+      data-user-status-confirmation-target="deactivateMenu"
+      data-activate="false">
+      Deactivate
+    </button>
   </div>
 </div>
