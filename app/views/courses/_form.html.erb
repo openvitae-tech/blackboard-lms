@@ -17,9 +17,9 @@
       </div>
       <div class="my-8 text-sm flex flex-col">
         <%= form.label :category, class: "text-sm font-medium mb-2" %>
-        <%= form.select :category_id, options_for_select(@categories.pluck(:name, :id), @category&.id), data: {courses_target: "category"} %>
+        <%= form.select :category_id, options_for_select(@categories.pluck(:name, :id), @category&.id) %>
       </div>
-      <div class="my-8 text-sm flex flex-col" data-courses-target="level">
+      <div class="my-8 text-sm flex flex-col">
         <%= form.label :level, class: "text-sm font-medium mb-2" %>
         <%= form.select :level_id, options_for_select(@levels.pluck(:name, :id), @level&.id) %>
       </div>

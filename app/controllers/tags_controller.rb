@@ -41,7 +41,7 @@ class TagsController < ApplicationController
     flash.now[:success] = t("resource.updated", resource_name: "Tag")
   rescue ActiveRecord::RecordInvalid => exception
     @tag = exception.record
-    render :new, status: :unprocessable_entity
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
