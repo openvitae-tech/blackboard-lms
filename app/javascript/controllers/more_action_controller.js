@@ -1,9 +1,9 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["deactivateMenu"];
+  static targets = ["moreMenu"];
 
   toggleDropdown() {
-    this.deactivateMenuTarget.classList.toggle("hidden");
+    this.moreMenuTarget.classList.toggle("hidden");
   }
 }
