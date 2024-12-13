@@ -33,6 +33,14 @@
             <% end %>
           </li>
         <% end %>
+        <% if current_user.is_admin? %>
+          <li class="side-bar-item <%= sidebar_active('tags') %>">
+            <%= link_to tags_path, class: "side-bar-item-inner" do %>
+              <span class="icon icon-settings icon-small"></span>
+              <span>Tags</span>
+            <% end %>
+          </li>
+        <% end %>
         <li class="side-bar-item">
           <%= link_to supports_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-support icon-small"></span>

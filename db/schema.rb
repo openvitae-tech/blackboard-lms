@@ -77,6 +77,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_09_115158) do
     t.integer "team_enrollments_count", default: 0
   end
 
+  create_table "courses_tags", force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_courses_tags_on_course_id"
+    t.index ["tag_id"], name: "index_courses_tags_on_tag_id"
+  end
+
   create_table "enrollments", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "course_id", null: false
@@ -174,6 +183,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_09_115158) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_module_id"], name: "index_quizzes_on_course_module_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "tag_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "team_enrollments", force: :cascade do |t|

@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   end
 
   resources :events, only: [:index]
+  resources :tags
 
   resources :courses do
     member do

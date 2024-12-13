@@ -171,4 +171,15 @@ RSpec.describe Course, type: :model do
       expect(course).not_to be_published
     end
   end
+
+  describe '#unique_tags' do
+    let(:tag) { create :tag }
+
+    it 'is invalid with duplicate tags' do
+      new_course = described_class.new(title: 'Ruby 101', description: Faker::Lorem.paragraph_by_chars(number: 140),
+                                       tag_ids: [tag.id, tag.id])
+      new_course.valid?
+      expect(new_course.errors.full_messages.to_sentence).to include(t('course.unique_tags'))
+    end
+  end
 end
