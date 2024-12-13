@@ -1,9 +1,9 @@
 <nav class="p-4 flex flex-wrap box-shadow-medium  items-center justify-between w-full gap-4">
   <div class="flex flex-row justify-between items-center w-full">
     <label for="sidebar-toggle" class="flex items-center cursor-pointer">
-      <span class="icon icon-menu icon-small"></span>
+      <span class="icon icon-menu icon-small bg-letter-color"></span>
     </label>
-    <%= image_tag "instruo_beta_logo_mobile.png",  alt: "Instruo", class: "h-6 w-16" %>
+    <%= image_tag 'instruo_beta_logo_mobile.png', alt: 'Instruo', class: 'h-6 w-16' %>
     <div class="flex gap-5">
       <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
         <span class="h-6 w-6 icon icon-small icon-notification bg-letter-color"></span>
@@ -20,7 +20,7 @@
           <span class="icon icon-search icon-small bg-letter-color"></span>
         </div>
         <div class="border rounded-lg border-line-colour-light">
-          <%= text_field_tag :term, "", id: "course-search", class: "input-search w-full", placeholder: "Search courses ..." %>
+          <%= text_field_tag :term, '', id: 'course-search', class: 'input-search w-full', placeholder: 'Search courses ...' %>
         </div>
       <% end %>
     </div>

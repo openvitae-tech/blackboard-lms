@@ -104,8 +104,8 @@
 }
 
 .icon-menu{
-    background-image: url("<%= asset_url('menu.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('menu.svg') %>") no-repeat;
+    mask: url("<%= asset_url('menu.svg') %>") no-repeat;
 }
 
 .icon-user-top {
