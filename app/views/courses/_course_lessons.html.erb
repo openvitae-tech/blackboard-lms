@@ -51,7 +51,7 @@
             <% end %>
             <% if enrollment && !lesson_completed?(enrollment, lesson) %>
               <div class="flex items-center bg-gold-light border border-gold p-1">
-                <span class="icon icon-incomplete h-[14px] w-[14px]"></span>
+                <span class="icon icon-incomplete h-[14px] w-[14px] bg-primary"></span>
               </div>
             <% end %>
             <span><%= lesson.title %></span>

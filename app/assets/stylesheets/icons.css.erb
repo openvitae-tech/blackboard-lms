@@ -94,13 +94,13 @@
 }
 
 .icon-complete{
-    background-image: url("<%= asset_url('complete.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('complete.svg') %>") no-repeat;
+    mask: url("<%= asset_url('complete.svg') %>") no-repeat;
 }
 
 .icon-incomplete{
-    background-image: url("<%= asset_url('incomplete.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('incomplete.svg') %>") no-repeat;
+    mask: url("<%= asset_url('incomplete.svg') %>") no-repeat;
 }
 
 .icon-menu{
