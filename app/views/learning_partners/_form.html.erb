@@ -35,6 +35,10 @@
                    preview: "banner" %>
       </div>
     </div>
+    <div class="my-8 text-sm">
+      <%= form.label :max_user_count, 'User limit', style: "display: block" %>
+      <%= form.text_field :max_user_count, class: "input-text mt-2" %>
+    </div>
     <div class="my-8 flex items-center gap-4 text-sm">
       <div class="mx-4 my-8">
         <%= link_to "Cancel", learning_partners_path, class: "nav-link" %>

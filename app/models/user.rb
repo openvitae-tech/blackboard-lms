@@ -32,7 +32,7 @@ class User < ApplicationRecord
 
   has_secure_password :otp, validations: false
 
-  belongs_to :learning_partner, optional: true
+  belongs_to :learning_partner, optional: true, counter_cache: true
 
   # This is a self referential relationship, learner and his manager are mapped to same User model.
   belongs_to :manager, class_name: 'User', optional: true
