@@ -129,9 +129,8 @@
 }
 
 .icon-celebration {
-    background-image: url("<%= asset_url('celebration.svg') %>");
-    background-repeat: no-repeat;
-}
+    -webkit-mask:  url("<%= asset_url('celebration.svg') %>") no-repeat;
+    mask: url("<%= asset_url('celebration.svg') %>") no-repeat;}
 
 .icon-arrow-right-grey {
     background-image: url("<%= asset_url('arrow_right_gray.svg') %>");
