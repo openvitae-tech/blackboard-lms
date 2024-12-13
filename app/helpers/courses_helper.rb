@@ -165,4 +165,34 @@ module CoursesHelper
   def quiz_position_text(course_module, quiz)
     "#{position_of_quiz(course_module, quiz)}/#{course_module.quizzes_count}"
   end
+
+  def generate_tag_objects(tags, type)
+    allowed_tags = type == :category ? @tags.category.pluck(:name) : @tags.level.pluck(:name)
+    current_tags = request.query_parameters[:tags].to_a
+    filtered_tags = current_tags - (current_tags & allowed_tags)
+
+    tags.map do |tag|
+      OpenStruct.new(
+        label: tag.name,
+        link: courses_path(request.query_parameters.merge(tags: filtered_tags + [tag.name]))
+      )
+    end
+  end
+
+  def category_tags
+    generate_tag_objects(@tags.category, :category)
+  end
+
+  def level_tags
+    generate_tag_objects(@tags.level, :level)
+  end
+
+  def selected_tag(is_category: false)
+    tag_type = is_category ? :category : :level
+    default_label = is_category ? "Select category" : "Select level"
+
+    return default_label unless params[:tags].present?
+
+    Tag.send(tag_type).find_by(name: params[:tags])&.name || default_label
+  end
 end

@@ -5,11 +5,9 @@
       <p class="mb-2 overflow-hidden text-ellipsis text-base font-semibold text-primary max-h-[68px]">
         <%= course.title %>
       </p>
-
       <% if local_assigns[:enrollment].present? %>
         <%= render "shared/components/progress_bar", progress: enrollment.progress %>
       <% end %>
-
       <div class="flex justify-between mt-2">
         <div class="flex items-center">
           <span class="icon icon-lessons h-3.5 w-3.5"></span>
@@ -29,6 +27,9 @@
       <p class="overflow-hidden text-ellipsis text-justify text-sm tracking-tight text-letter-color-light max-h-[60px]">
         <%= course_description(course, 250) %>
       </p>
+      <h1 class="text-sm bottom-0 text-primary">
+        <%= course.tags.map { |tag| "##{tag.name}" }.join(' ') %>
+      </h1>
     </div>
   </div>
 <% end %>
