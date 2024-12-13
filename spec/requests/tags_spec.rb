@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe TagsController, type: :request do
+RSpec.describe Tags, type: :request do
   let(:user) { create(:user, :admin) }
 
   before do
