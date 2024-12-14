@@ -1,0 +1,20 @@
+<div id="notification-frame" data-notifications-target="notificationList">
+  <div class="absolute border">
+    <ul>
+      <% if notifications.empty? %>
+        <li>
+          No new notifications
+        </li>
+      <% else %>
+        <%= link_to "clear", clear_notifications_path, data: { turbo_stream: true } %>
+      <% end %>
+      <% notifications.each do |notification| %>
+        <li>
+          <%= link_to mark_as_read_notifications_path(message: notification.encoded_message, redirect_url: "/"), data: { turbo_stream: true } do %>
+            <small><%= notification.ntype %></small>&nbsp;<span><%= notification.text %></span> <small><i><%= time_ago_in_words notification.created_at %> ago </i></small>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_12_040606) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_13_143331) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -151,15 +151,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_12_040606) do
     t.index ["lesson_id"], name: "index_local_contents_on_lesson_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.string "ntype"
-    t.string "text"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_notifications_on_user_id"
-  end
-
   create_table "quiz_answers", force: :cascade do |t|
     t.string "status"
     t.bigint "quiz_id", null: false
@@ -261,7 +252,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_12_040606) do
   add_foreign_key "enrollments", "users", column: "assigned_by_id"
   add_foreign_key "lessons", "course_modules"
   add_foreign_key "local_contents", "lessons"
-  add_foreign_key "notifications", "users"
   add_foreign_key "quiz_answers", "enrollments"
   add_foreign_key "quiz_answers", "quizzes"
   add_foreign_key "quizzes", "course_modules"
