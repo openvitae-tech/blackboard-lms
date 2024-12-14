@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus";
-
 export default class extends Controller {
   static targets = ["filters"]
 
@@ -33,7 +32,7 @@ export default class extends Controller {
     });
 
     Turbo.visit(`?${this.existingQueryString(formValues)}&${queryParams.toString()}`);
-    this.close_filter()
+    this.close_filter();
   }
 
   existingQueryString(formValues) {
@@ -48,12 +47,11 @@ export default class extends Controller {
       if (term) queryParts.push(`term=${encodeURIComponent(term)}`);
     }
 
-    if (formValues['tags[]'] === undefined) {
+    if (formValues['tags[]'] === undefined && Object.keys(formValues).length>0) {
       const tags = params.getAll("tags[]");
       tags.forEach(tag => queryParts.push(`tags[]=${encodeURIComponent(tag)}`));
     }
 
     return queryParts.join('&');
   }
-
 }

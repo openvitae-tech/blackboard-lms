@@ -1,6 +1,6 @@
 <%= render "shared/components/desktop_layout" do %>
   <div data-controller="courses">
-    <%= render 'filters', tags: @tags%>
+    <%= render 'filters', tags: @tags %>
     <div class="flex flex-row justify-between">
       <h1 class="text-xl font-semibold">My Courses</h1>
       <% if policy(:course).new? %>
@@ -9,14 +9,21 @@
         <% end %>
       <% end %>
     </div>
-    <%= form_tag courses_path, method: :get, data: {controller: "courses", action: "submit->courses#form_submit"} do %>
+    <%= form_tag courses_path, method: :get, data: { action: "submit->courses#form_submit" } do %>
       <div class="rounded-sm shadow-sm w-full mt-5" name="search">
         <div class="border rounded-lg border-line-colour-light pl-10">
           <%= text_field_tag :term, params[:term], id: "course-search", class: "input-search w-full", placeholder: "Search courses ..." %>
         </div>
       </div>
     <% end %>
-    <div class="flex justify-end mt-5">
+    <div class="flex flex-row mt-5 justify-between mb-4">
+      <div class="space-x-2 flex flex-row">
+        <% params[:tags]&.each do |tag| %>
+          <%= link_to updated_tags_query_params(tag), method: :get do %>
+            <%= render "shared/components/button_default_small", label: tag, icon_name: "icon-close" %>
+          <% end %>
+        <% end %>
+      </div>
       <% if @type.present? %>
         <div data-action="click->courses#open_filter">
           <%= render "shared/components/button_default_small", label: "Filter", icon_name: "icon-edit" %>
