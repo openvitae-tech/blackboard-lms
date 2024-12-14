@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class LearningPartnerPolicy
-  attr_reader :user
+  attr_reader :user, :learning_partner
 
-  def initialize(user, _record)
+  def initialize(user, learning_partner)
     @user = user
+    @learning_partner = learning_partner
   end
 
   def index?
@@ -33,5 +34,9 @@ class LearningPartnerPolicy
 
   def destroy?
     false
+  end
+
+  def invite?
+    learning_partner.users_count < learning_partner.max_user_count
   end
 end
