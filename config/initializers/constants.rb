@@ -4,6 +4,8 @@ require Rails.root.join('app/services/event_service.rb').to_path
 
 EVENT_LOGGER = EventService.instance
 
+REDIS_CLIENT = RedisClient.new
+
 STATIC_ASSETS = {
   team_banner: 'team_banner_placeholder.jpeg',
   course_banner: 'course_banner_placeholder.jpeg',

@@ -1,0 +1,7 @@
+<div data-controller="notifications" class="relative">
+  <%= link_to notifications_path, class:"inline-block hover:pointer", data: { turbo_stream: true } do %>
+    <span class="h-6 w-6 icon icon-notification"></span>
+  <% end %>
+  <span class="absolute top-0 text-xs"><span id="notification-count">0</span></span>
+  <div id="notification-frame" data-notifications-target="notificationList"></div>
+</div>
