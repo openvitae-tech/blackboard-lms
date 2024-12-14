@@ -38,7 +38,8 @@ class Courses::FilterService
   def filter_by_tags(tags, courses)
     if tags.present?
       courses.joins(:tags)
-      .where(tags: { name: tags })
+      .where(tags: { name: tags }).distinct
+
     else
       courses
     end
