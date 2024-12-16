@@ -171,8 +171,8 @@
 }
 
 .icon-at-sign {
-    background-image: url("<%= asset_url('at_sign.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('at_sign.svg') %>") no-repeat;
+    mask: url("<%= asset_url('at_sign.svg') %>") no-repeat;
 }
 
 .icon-smartphone {
