@@ -18,7 +18,7 @@
       <% team_list(current_user.team, team).each do |team| %>
         <li class="flex items-center gap-[2px]">
           <%= link_to team.name, team_path(team) %>
-          <span class="icon icon-simple-arrow-right icon-tiny"></span>
+          <span class="icon icon-simple-arrow-right bg-letter-color icon-tiny"></span>
         </li>
       <% end %>
     </ol>

@@ -4,13 +4,13 @@
       <% team_list(current_user.team, @user.team).each do |team| %>
         <li class="flex space-x-1">
           <%= link_to team.name, team_path(team) %>
-          <span class="icon icon-simple-arrow-right icon-small"></span>
+          <span class="icon icon-simple-arrow-right bg-letter-color icon-small"></span>
         </li>
       <% end %>
     </ol>
   </div>
-  <%= render "users/team_user_info" %>
-  <%= render "users/team_user_course_status" %>
+  <%= render 'users/team_user_info' %>
+  <%= render 'users/team_user_course_status' %>
   <div class="my-8">
     <% if has_enrolled_courses? %>
       <p class="text-base font-medium mb-4">
@@ -19,7 +19,7 @@
 
       <div class="flex flex-wrap gap-4">
         <% @enrolled_courses.each do |course| %>
-          <%= render "courses/course_card_with_left_image", course: course, enrollment: course.enrollments.first %>
+          <%= render 'courses/course_card_with_left_image', course: course, enrollment: course.enrollments.first %>
         <% end %>
       </div>
     <% end %>

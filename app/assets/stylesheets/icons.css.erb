@@ -145,8 +145,8 @@
 }
 
 .icon-simple-arrow-right {
-    background-image: url("<%= asset_url('simple_arrow_right.svg') %>");
-    background-repeat: no-repeat;
+     -webkit-mask:  url("<%= asset_url('simple_arrow_right.svg') %>") no-repeat;
+    mask: url("<%= asset_url('simple_arrow_right.svg') %>") no-repeat;
 }
 
 .icon-maximize {
