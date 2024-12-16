@@ -9,7 +9,7 @@ class NotificationService
   # each user may have at most 25 latest notification at a time
   MAX_NOTIFICATION_LIMIT = 25
 
-  def notify(user, text, ntype)
+  def notify(user, text, ntype = 'info')
     notification = Notification.new(user, text, ntype)
     enqueue_notification(notification)
   end
@@ -36,7 +36,7 @@ class NotificationService
 
   def enqueue_notification(notification)
     clear_older_notifications(notification.user)
-    QUEUE_CLIENT.enqueue(queue_name(notification.user), message.encoded_message)
+    QUEUE_CLIENT.enqueue(queue_name(notification.user), notification.encoded_message)
   end
 
   def read_all_notifications_for(user)
