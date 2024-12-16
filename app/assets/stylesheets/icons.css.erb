@@ -160,8 +160,8 @@
 }
 
 .icon-re-invite {
-    background-image: url("<%= asset_url('re_invite.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('re_invite.svg') %>") no-repeat;
+    mask: url("<%= asset_url('re_invite.svg') %>") no-repeat;
 }
 
 .icon-plus-green {
@@ -171,11 +171,6 @@
 
 .icon-upload {
     background-image: url("<%= asset_url('upload.svg') %>");
-    background-repeat: no-repeat;
-}
-
-.icon-re-invite {
-    background-image: url("<%= asset_url('re_invite.svg') %>");
     background-repeat: no-repeat;
 }
 

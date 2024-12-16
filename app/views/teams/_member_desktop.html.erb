@@ -23,7 +23,7 @@
 
       <% if InvitePolicy.new(current_user, member).resend? %>
         <%= link_to resend_invite_path(member, team_id: team.id), data: { turbo_method: "put" } do %>
-          <%= render "shared/components/label_medium_success", label: "Re-Invite", icon_name: "icon-re-invite" %>
+          <%= render "shared/components/label_medium_success", label: "Re-Invite", icon_name: "icon-re-invite bg-primary" %>
         <% end %>
       <% end %>
     </div>
