@@ -216,8 +216,8 @@
 }
 
 .icon-arrow-left {
-    background-image: url("<%= asset_url('arrow_left.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('arrow_left.svg') %>") no-repeat;
+    mask: url("<%= asset_url('arrow_left.svg') %>") no-repeat;
 }
 
 .icon-close-white {
@@ -238,10 +238,6 @@
 
 .icon-play-lite {
     background-image: url("<%= asset_url('play_button_lite.svg') %>");
-}
-
-.icon-arrow-left-gray {
-    background-image: url("<%= asset_url('arrow_left_gray.svg') %>");
 }
 
 .icon-retry {
