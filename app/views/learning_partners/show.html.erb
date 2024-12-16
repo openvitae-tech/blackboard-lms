@@ -3,7 +3,7 @@
 <% end %>
 <%= render "shared/components/desktop_layout" do %>
   <div class="flex justify-between pt-4 items-center">
-    <%= render "shared/components/back_button", back_link: learning_partners_path %>
+    <%= render 'shared/components/back_button', back_link: learning_partners_path %>
 
     <div class="flex items-center gap-4">
       <% if policy(@learning_partner).destroy? %>
@@ -13,12 +13,12 @@
       <% end %>
       <% if policy(@learning_partner).edit? %>
         <%= link_to edit_learning_partner_path(@learning_partner) do %>
-          <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+          <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
         <% end %>
       <% end %>
       <% if policy(:invite).new? %>
         <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "add-user-modal" } do %>
-          <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus-white' %>
+          <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus-white bg-white' %>
         <% end %>
       <% end %>
     </div>
@@ -26,9 +26,9 @@
   <div class="w-full">
     <h1 class="mb-4 text-xl font-semibold"><%= @learning_partner.name %></h1>
     <h3 class="text-sm font-medium">Hotel Logo</h3>
-    <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_logo(@learning_partner, :large), class: "h-[80px] w-[80px] object-contain" %></div>
+    <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_logo(@learning_partner, :large), class: 'h-[80px] w-[80px] object-contain' %></div>
     <h3 class="text-sm font-medium">Hotel Banner</h3>
-    <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_banner(@learning_partner), class: "max-h-[120px] max-w-full rounded-l object-center" %></div>
+    <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_banner(@learning_partner), class: 'max-h-[120px] max-w-full rounded-l object-center' %></div>
     <div class="my-4">
       <h3 class="text-sm font-medium">About</h3>
       <div class="my-4 p-6 box-shadow-medium">
@@ -36,6 +36,6 @@
       </div>
     </div>
   </div>
-  <%= render "teams/member_list", team: @learning_partner.parent_team %>
+  <%= render 'teams/member_list', team: @learning_partner.parent_team %>
 <% end %>
-<%= turbo_frame_tag "add-user-modal" %>
+<%= turbo_frame_tag 'add-user-modal' %>

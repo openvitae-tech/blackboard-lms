@@ -4,7 +4,7 @@
 <%= render "shared/components/desktop_layout" do %>
   <div class="flex justify-end text-right">
     <%= link_to new_learning_partner_path do %>
-      <%= render "shared/components/icon_button_primary", icon_name: "icon-plus-white", label: "Add Partner" %>
+      <%= render 'shared/components/icon_button_primary', icon_name: 'icon-plus-white bg-white', label: 'Add Partner' %>
     <% end %>
   </div>
   <h1 class="text-xl font-semibold my-6">Partners List</h1>
@@ -14,9 +14,9 @@
         <%= link_to learning_partner, class: "link" do %>
           <div class="flex items-center gap-4 py-2 px-6 text-base box-shadow-medium rounded-lg">
             <% if learning_partner.logo.attached? %>
-              <%= image_tag partner_logo(learning_partner, :small), alt: "Logo", class: "h-[80px] w-[80px] object-contain" %>
+              <%= image_tag partner_logo(learning_partner, :small), alt: 'Logo', class: 'h-[80px] w-[80px] object-contain' %>
             <% else %>
-              <%= image_tag 'logo_placeholder.png', class: "h-[80px] w-[80px] object-contain" %>
+              <%= image_tag 'logo_placeholder.png', class: 'h-[80px] w-[80px] object-contain' %>
             <% end %>
             <span class="text-sm font-medium"><%= learning_partner.name %></span>
           </div>
@@ -25,7 +25,7 @@
     <% end %>
   </ul>
   <div class="mx-4 my-6 text-center">
-    <%= link_to_prev_page @learning_partners, 'Prev', class: "nav_link" %>
-    <%= link_to_next_page @learning_partners, 'Next', class: "nav_link" %>
+    <%= link_to_prev_page @learning_partners, 'Prev', class: 'nav_link' %>
+    <%= link_to_next_page @learning_partners, 'Next', class: 'nav_link' %>
   </div>
 <% end %>

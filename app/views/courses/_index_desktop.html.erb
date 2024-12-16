@@ -2,7 +2,7 @@
   <% if policy(:course).new? %>
     <div class="flex gap-4 justify-end">
       <%= link_to new_course_path, class: "nav-link" do %>
-        <%= render 'shared/components/icon_button_primary', label: 'Add course', icon_name: 'icon-plus-white' %>
+        <%= render 'shared/components/icon_button_primary', label: 'Add course', icon_name: 'icon-plus-white bg-white' %>
       <% end %>
     </div>
   <% end %>
@@ -38,7 +38,7 @@
   <% if has_available_courses? && @type != "enrolled" %>
     <p class="text-base font-medium my-4">
       <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses_count, 'course') %> )</span>
-      <%= link_to 'View more', courses_path(type: 'all'), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil?  %>
+      <%= link_to 'View more', courses_path(type: 'all'), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
     </p>
     <div class="flex flex-wrap gap-4">
       <% @available_courses.each do |course| %>

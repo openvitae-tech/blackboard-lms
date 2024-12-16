@@ -5,27 +5,25 @@
       <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
         <span class="icon icon-search icon-small bg-letter-color"></span>
       </div>
-      <input
-        type="text"
-        value="Search Team Members"
-        name="price"
-        id="price"
-        class="input-search"
-        placeholder="Search courses"
-        />
+      <input 
+      type="text" 
+      value="Search Team Members" 
+      name="price" 
+      id="price" 
+      class="input-search" 
+      placeholder="Search courses" 
+      />
     </div>
 
     <% if policy(:course_assigns).new? %>
       <%= link_to new_course_assign_path(team_id: @team.id) do %>
-        <%= render "shared/components/icon_button_secondary", label: 'Assign course', icon_name: 'icon-assign-user-white' %>
+        <%= render 'shared/components/icon_button_secondary', label: 'Assign course', icon_name: 'icon-assign-user-white' %>
       <% end %>
     <% end %>
     <% if policy(:invite).new? %>
       <%= link_to new_invite_path(team_id: @team.id), data: { turbo_frame: "add-user-modal" } do %>
-        <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus-white' %>
+        <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus-white bg-white' %>
       <% end %>
     <% end %>
   </div>
-
 </div>
-

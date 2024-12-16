@@ -1,7 +1,7 @@
 <% if team.sub_teams.empty? %>
   <div class="mt-6 flex justify-between gap-60 rounded border border-dashed p-8 border-primary box-shadow-medium">
     <p class="text-sm w-[446px]">
-      Welcome, you can manage departments/teams under your team by adding teams for each department/team here.
+    Welcome, you can manage departments/teams under your team by adding teams for each department/team here.
     </p>
     <% if policy(team).new? %>
       <%= link_to new_team_path(parent_team_id: team.id), data: { turbo_frame: "add-new-team-modal" } do %>
@@ -14,7 +14,7 @@
     <p class="font-medium text-basic">Your sub teams</p>
     <% if policy(team).new? %>
       <%= link_to new_team_path(parent_team_id: team.id), data: { turbo_frame: "add-new-team-modal" } do %>
-        <%= render 'shared/components/icon_button_primary', label: 'Add sub team', icon_name: 'icon-plus-white' %>
+        <%= render 'shared/components/icon_button_primary', label: 'Add sub team', icon_name: 'icon-plus-white bg-white' %>
       <% end %>
     <% end %>
   </div>
@@ -22,6 +22,6 @@
 
 <ul id="team-list-desktop" class="flex flex-col gap-4 mt-6 overflow-y-auto max-h-[240px]">
   <% sub_teams.each do |sub_team| %>
-    <%= render "teams/team_desktop", team: sub_team %>
+    <%= render 'teams/team_desktop', team: sub_team %>
   <% end %>
 </ul>

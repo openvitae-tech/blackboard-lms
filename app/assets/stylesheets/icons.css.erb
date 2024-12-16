@@ -150,8 +150,8 @@
 }
 
 .icon-plus-white {
-    background-image: url("<%= asset_url('plus.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('plus.svg') %>") no-repeat;
+    mask: url("<%= asset_url('plus.svg') %>") no-repeat;
 }
 
 .icon-show-users {
@@ -181,11 +181,6 @@
 
 .icon-upload {
     background-image: url("<%= asset_url('upload.svg') %>");
-    background-repeat: no-repeat;
-}
-
-.icon-plus-white {
-    background-image: url("<%= asset_url('plus.svg') %>");
     background-repeat: no-repeat;
 }
 
