@@ -2,15 +2,15 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["filters"]
 
-  open_filter() {
+  openFilter() {
     this.filtersTarget.classList.remove("hidden")
   }
 
-  close_filter() {
+  closeFilter() {
     this.filtersTarget.classList.add("hidden")
   }
 
-  form_submit(event) {
+  formSubmit(event) {
     event.preventDefault();
 
     const form = event.target;
@@ -32,7 +32,7 @@ export default class extends Controller {
     });
 
     Turbo.visit(`?${this.existingQueryString(formValues)}&${queryParams.toString()}`);
-    this.close_filter();
+    this.closeFilter();
   }
 
   existingQueryString(formValues) {

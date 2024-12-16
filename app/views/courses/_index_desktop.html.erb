@@ -9,7 +9,7 @@
         <% end %>
       <% end %>
     </div>
-    <%= form_tag courses_path, method: :get, data: { action: "submit->courses#form_submit" } do %>
+    <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
       <div class="rounded-sm shadow-sm w-full mt-5" name="search">
         <div class="border rounded-lg border-line-colour-light pl-10">
           <%= text_field_tag :term, params[:term], id: "course-search", class: "input-search w-full", placeholder: "Search courses ..." %>
@@ -25,7 +25,7 @@
         <% end %>
       </div>
       <% if @type.present? %>
-        <div data-action="click->courses#open_filter">
+        <div data-action="click->courses#openFilter">
           <%= render "shared/components/button_default_small", label: "Filter", icon_name: "icon-edit" %>
         </div>
       <% end %>
