@@ -16,7 +16,7 @@
       <h1 class="mb-4 pl-0 text-base font-bold">Team members</h1>
       <% if policy(:course_assigns).new? %>
         <%= link_to new_course_assign_path(team_id: @team.id) do %>
-          <%= render 'shared/components/icon_button_secondary', label: 'Assign courses', icon_name: 'icon-assign-user-white' %>
+          <%= render 'shared/components/icon_button_secondary', label: 'Assign courses', icon_name: 'icon-assign-user bg-white' %>
         <% end %>
       <% end %>
     </div>

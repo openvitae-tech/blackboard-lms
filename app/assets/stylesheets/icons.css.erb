@@ -155,8 +155,8 @@
 }
 
 .icon-assign-user {
-    background-image: url("<%= asset_url('assign_user.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('assign_user_white.svg') %>") no-repeat;
+    mask: url("<%= asset_url('assign_user_white.svg') %>") no-repeat;
 }
 
 .icon-re-invite {
@@ -169,18 +169,8 @@
     background-repeat: no-repeat;
 }
 
-.icon-assign-user-white {
-    background-image: url("<%= asset_url('assign_user_white.svg') %>");
-    background-repeat: no-repeat;
-}
-
 .icon-upload {
     background-image: url("<%= asset_url('upload.svg') %>");
-    background-repeat: no-repeat;
-}
-
-.icon-assign-user {
-    background-image: url("<%= asset_url('assign_user.svg') %>");
     background-repeat: no-repeat;
 }
 

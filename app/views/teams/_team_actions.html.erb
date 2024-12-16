@@ -17,7 +17,7 @@
 
     <% if policy(:course_assigns).new? %>
       <%= link_to new_course_assign_path(team_id: @team.id) do %>
-        <%= render 'shared/components/icon_button_secondary', label: 'Assign course', icon_name: 'icon-assign-user-white' %>
+        <%= render 'shared/components/icon_button_secondary', label: 'Assign course', icon_name: 'icon-assign-user bg-white' %>
       <% end %>
     <% end %>
     <% if policy(:invite).new? %>
