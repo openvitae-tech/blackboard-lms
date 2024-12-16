@@ -1,7 +1,9 @@
 <li class="flex flex-col gap-2" data-controller="show-less">
   <div class="flex justify-between items-center">
     <h3 class="flex flex-row items-center gap-4">
-      <span class="h-6 w-6 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %>"></span>
+      <div class="bg-primary-light-50 p-1 rounded">
+        <span class="h-4 w-4 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %> bg-primary"></span>
+      </div>
       <span class="text-base font-semibold text-primary"><%= title %></span>
     </h3>
     <button class="flex items-center justify-center focus:outline-none" data-show-less-target="showMoreToggle" data-action="click->show-less#showMoreToggle">
