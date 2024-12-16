@@ -63,7 +63,9 @@
               <% end %>
             <% end %>
             <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
-              <span class="icon icon-play-lite icon-small md:h-5 md:w-5 "></span>
+              <div class="bg-primary-light-50 rounded-full px-[5px] py-1 flex items-center justify-center">
+                <span class="icon icon-play bg-primary h-[7px] w-[6px] md:h-[14px] md:w-[12px]"></span>
+              </div>
             <% end %>
           </div>
         </li>
