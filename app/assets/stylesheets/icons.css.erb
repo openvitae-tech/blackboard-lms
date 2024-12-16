@@ -211,8 +211,8 @@
 }
 
 .icon-filter {
-    background-image: url("<%= asset_url('filter.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('filter.svg') %>") no-repeat;
+    mask: url("<%= asset_url('filter.svg') %>") no-repeat;
 }
 
 .icon-arrow-left {
