@@ -21,7 +21,7 @@
         <div class="relative mt-2">
           <%= builder.file_field :video, accept: 'video/*', class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer", data: { video_upload_target: "fileInput", action: "change->video-upload#removeVideoNameAttribute" } %>
           <div class="file-input bg-white border border-dashed border-primary-light rounded-md p-4 text-center flex items-center justify-center">
-            <span class="icon icon-upload icon-small"></span>
+            <span class="icon icon-upload bg-primary icon-small"></span>
             <span class="file-label text-primary">Choose File</span>
           </div>
         </div>

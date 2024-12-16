@@ -165,8 +165,9 @@
 }
 
 .icon-upload {
-    background-image: url("<%= asset_url('upload.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('upload.svg') %>") no-repeat;
+    mask: url("<%= asset_url('upload.svg') %>") no-repeat;
+   
 }
 
 .icon-at-sign {
@@ -247,10 +248,6 @@
     -webkit-mask: url("<%= asset_url('trash.svg') %>") no-repeat center;
     mask: url("<%= asset_url('trash.svg') %>") no-repeat center;
     
-}
-
-.icon-upload-cloud {
-    background-image: url("<%= asset_url('upload_cloud.svg') %>");
 }
 
 .icon-play-lite {
