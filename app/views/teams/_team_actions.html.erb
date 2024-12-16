@@ -22,7 +22,7 @@
     <% end %>
     <% if policy(:invite).new? %>
       <%= link_to new_invite_path(team_id: @team.id), data: { turbo_frame: "add-user-modal" } do %>
-        <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus-white bg-white' %>
+        <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus bg-white' %>
       <% end %>
     <% end %>
   </div>
