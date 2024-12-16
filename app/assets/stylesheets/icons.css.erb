@@ -38,12 +38,6 @@
     mask: url("<%= asset_url('support.svg') %>") no-repeat;
 }
 
-.icon-settings {
-    background-color: black;
-    -webkit-mask:  url("<%= asset_url('plus.svg') %>") no-repeat;
-    mask: url("<%= asset_url('plus.svg') %>") no-repeat;
-}
-
 .icon-logout {
     -webkit-mask:  url("<%= asset_url('logout.svg') %>") no-repeat;
     mask: url("<%= asset_url('logout.svg') %>") no-repeat;
@@ -263,5 +257,6 @@
 }
 
 .icon-support-placeholder {
-     background-image: url("<%= asset_url('support_placeholder.svg') %>");
+    -webkit-mask:  url("<%= asset_url('support_placeholder_info.svg') %>") no-repeat center;
+    mask: url("<%= asset_url('support_placeholder_info.svg') %>") no-repeat;
 }

@@ -24,11 +24,11 @@
       <%= render 'teams/member_list_mobile' %>
       <% if policy(:invite).new? && policy(@learning_partner).invite? %>
         <%= link_to new_invite_path(team_id: @team.id),class:"w-full", data: { turbo_frame: "add-user-modal" } do %>
-          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus-white', label: 'Invite User' %>
+          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus bg-white', label: 'Invite User' %>
         <% end %>
       <% else %>
         <%= link_to "javascript:void(0);", class: 'w-full disabled' do %>
-          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus-white', label: 'Invite User' %>
+          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus bg-white', label: 'Invite User' %>
         <% end %>
       <% end %>
     </div>
