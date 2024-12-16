@@ -22,17 +22,14 @@
     </div>
     <div data-tab-change-target="tabContent" class="pt-6" data-tab="user">
       <%= render 'teams/member_list_mobile' %>
-      <% if policy(:invite).new? %>
-        <div class="bg-white fixed bottom-0 left-0 right-0  px-4 pb-4 w-full flex flex-col items-center">
-          <%= link_to new_invite_path(team_id: @team.id),class:"w-full", data: { turbo_frame: "add-user-modal" } do %>
-            <div class="w-full justify-center rounded text-center bg-primary end-4 start-4">
-              <button class="flex w-full justify-center gap-2 px-4 py-5">
-                <span class="items-center icon icon-plus bg-white icon-small"></span>
-                <span class="text-sm text-white">Invite User</span>
-              </button>
-            </div>
-          <% end %>
-        </div>
+      <% if policy(:invite).new? && policy(@learning_partner).invite? %>
+        <%= link_to new_invite_path(team_id: @team.id),class:"w-full", data: { turbo_frame: "add-user-modal" } do %>
+          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus bg-white', label: 'Invite User' %>
+        <% end %>
+      <% else %>
+        <%= link_to "javascript:void(0);", class: 'w-full disabled' do %>
+          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus bg-white', label: 'Invite User' %>
+        <% end %>
       <% end %>
     </div>
     <div data-tab-change-target="tabContent" class="hidden" data-tab="team">
