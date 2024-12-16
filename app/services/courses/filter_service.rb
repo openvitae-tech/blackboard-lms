@@ -36,14 +36,29 @@ class Courses::FilterService
   end
 
   def filter_by_tags(tags, courses)
-    if tags.present?
-      courses.joins(:tags)
-      .where(tags: { name: tags }).distinct
+    return courses unless tags.present?
 
+    categories = Tag.where(tag_type: :category, name: tags).pluck(:id)
+    levels = Tag.where(tag_type: :level, name: tags).pluck(:id)
+
+    if categories.present? && levels.present?
+      courses.joins(:tags)
+             .where(tags: { id: categories })
+             .where(id: Course.joins(:tags).where(tags: { id: levels }).select(:id))
+             .distinct
+    elsif categories.present?
+      courses.joins(:tags)
+             .where(tags: { id: categories })
+             .distinct
+    elsif levels.present?
+      courses.joins(:tags)
+             .where(tags: { id: levels })
+             .distinct
     else
       courses
     end
   end
+
 
   def filter_by_search(current_user, search_term)
     service = CourseManagementService.instance
