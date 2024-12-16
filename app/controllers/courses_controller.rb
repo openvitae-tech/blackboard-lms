@@ -119,16 +119,6 @@ class CoursesController < ApplicationController
                                           enrollment.current_lesson_id || @course.first_module.first_lesson)
   end
 
-  def search
-    authorize :course
-    service = CourseManagementService.instance
-    @keyword = params[:term]
-    search_query = service.search(current_user, @keyword)
-    @search_results = search_query.page(filter_params[:page])
-    @search_results_count = search_query.size
-    render :index
-  end
-
   def publish
     authorize @course
 
