@@ -176,8 +176,8 @@
 }
 
 .icon-smartphone {
-    background-image: url("<%= asset_url('smartphone.svg') %>");
-    background-repeat: no-repeat;
+    -webkit-mask:  url("<%= asset_url('smartphone.svg') %>") no-repeat;
+    mask: url("<%= asset_url('smartphone.svg') %>") no-repeat;
 }
 
 .icon-green-circle {
