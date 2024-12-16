@@ -1,0 +1,2 @@
+<%= turbo_stream.update "flash", partial: "shared/components/flash" %>
+<%= turbo_stream.replace "tag_#{@tag.id}", partial: 'tags/tag', locals: { tag: @tag } %>

@@ -30,6 +30,11 @@
 en:
   must_exist: "%{entity} must exist"
   cant_blank: "%{field} can't be blank"
+  already_taken: "%{field} has already been taken"
+  resource:
+    created: "The %{resource_name} is successfully created."
+    updated: "The %{resource_name} is successfully updated."
+    deleted: "The %{resource_name} is successfully deleted."
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
   course:
@@ -49,6 +54,7 @@ en:
     module_created: 'Course module was successfully created.'
     module_updated: 'Course module was successfully updated.'
     module_deleted: 'Course module was successfully destroyed.'
+    unique_tags: "Course cannot have duplicate tags"
   login:
     invalid_or_incorrect_otp: "Incorrect otp or otp expired"
     incorrect_phone: "Incorrect mobile number"
@@ -59,6 +65,7 @@ en:
     invalid_csv: 'Failed to send invite. Please check the csv file format.'
     invite_sent: 'Invitation sent to %{email}'
     invalid_user: 'Failed to invite user, are you sure that this user exists ?'
+    exceeds_user_limit: "Can't add more than %{limit} users in your current plan."
   local_content:
     video_not_found: 'Video for %{lang} must exists'
     lang_exists: '%{lang} already exists'

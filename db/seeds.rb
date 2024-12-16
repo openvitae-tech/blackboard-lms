@@ -42,6 +42,7 @@ class DevelopmentSeed
 
       (0..10).each do
         setup_course
+        setup_tag
       end
     end
   end
@@ -182,6 +183,10 @@ class DevelopmentSeed
       filename: 'sample_video.mp4',
       content_type: 'video/mp4'
     )
+  end
+
+  def setup_tag
+    Tag.create!(name: Faker::Lorem.unique.word)
   end
 end
 

@@ -1,6 +1,7 @@
 <%= mobile_view do %>
   <%= render 'shared/components/admin_not_available' %>
 <% end %>
+
 <%= render "shared/components/desktop_layout" do %>
   <div class="flex justify-between pt-4 items-center">
     <%= render 'shared/components/back_button', back_link: learning_partners_path %>
@@ -16,9 +17,13 @@
           <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
         <% end %>
       <% end %>
-      <% if policy(:invite).new? %>
+      <% if policy(:invite).new? && policy(@learning_partner).invite? %>
         <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "add-user-modal" } do %>
           <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus bg-white' %>
+        <% end %>
+      <% else %>
+        <%= link_to 'javascript:void(0);', class: 'disabled' do %>
+          <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus-white' %>
         <% end %>
       <% end %>
     </div>

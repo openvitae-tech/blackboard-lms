@@ -30,6 +30,8 @@ RSpec.describe 'Request spec for POST /course' do
     before do
       admin = create :user, :admin
       sign_in admin
+      @category_tag = create :tag
+      @level_tag = create :tag, tag_type: :level
     end
 
     it 'fails when the title is blank' do
@@ -84,7 +86,9 @@ RSpec.describe 'Request spec for POST /course' do
         course: {
           title: Faker::Lorem.sentence(word_count: 5),
           banner: image_file,
-          description: Faker::Lorem.paragraph_by_chars(number: 141)
+          description: Faker::Lorem.paragraph_by_chars(number: 141),
+          category_id: @category_tag.id,
+          level_id: @level_tag.id
         }
       }
 
@@ -93,6 +97,8 @@ RSpec.describe 'Request spec for POST /course' do
       end.to change(Course, :count).by(1)
 
       expect(response.status).to be(302) # redirect to course details page
+      course = Course.last
+      expect(course.tags.pluck(:id)).to eq([@category_tag.id, @level_tag.id])
     end
   end
 end

@@ -31,6 +31,8 @@ RSpec.describe 'Request spec for PUT /course' do
       admin = create :user, :admin
       sign_in admin
       @course = course_with_associations
+      @tag_one = create :tag
+      @tag_two = create :tag, tag_type: :level
     end
 
     it 'fails when the title is blank' do
@@ -72,7 +74,8 @@ RSpec.describe 'Request spec for PUT /course' do
       new_title = Faker::Lorem.sentence(word_count: 5)
       params = {
         course: {
-          title: new_title
+          title: new_title,
+          tag_ids: [@tag_one.id, @tag_two.id]
         }
       }
 

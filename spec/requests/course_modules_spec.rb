@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CourseModulesController, type: :request do
+RSpec.describe 'Request spec for CourseModules', type: :request do
   let(:user) { create(:user, :admin) }
 
   before do

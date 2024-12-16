@@ -6,6 +6,7 @@ class Course < ApplicationRecord
   has_many :course_modules, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments
+  has_and_belongs_to_many :tags
 
   has_many :team_enrollments, dependent: :destroy
   has_many :teams, through: :team_enrollments
@@ -14,7 +15,9 @@ class Course < ApplicationRecord
   has_one_attached :banner
   validates :title, presence: true, length: { minimum: 6, maximum: 255 }
   validates :description, presence: true, length: { minimum: 32, maximum: 1024 }
+
   validate :acceptable_banner
+  validate :unique_tags
 
   scope :published, -> { where(is_published: true) }
 
@@ -83,5 +86,14 @@ class Course < ApplicationRecord
     rule_at_least_one_module = course_modules_count > 0
     rule_at_least_one_lesson_per_module = course_modules.map { |course_module|  course_module.lessons_count > 0 }.all?
     [rule_at_least_one_module, rule_at_least_one_lesson_per_module].all?
+  end
+
+  private
+
+  def unique_tags
+    duplicates = tags.group_by(&:id).select { |_, group| group.size > 1 }
+    if duplicates.any?
+      errors.add(:course, "cannot have duplicate tags")
+    end
   end
 end
