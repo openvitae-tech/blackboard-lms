@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.fdescribe NotificationService do
+RSpec.describe NotificationService do
   subject { described_class.instance }
 
   let(:queue_client) { instance_double(Utilities::QueueClient) }
