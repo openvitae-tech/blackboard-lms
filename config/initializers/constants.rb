@@ -4,7 +4,9 @@ require Rails.root.join('app/services/event_service.rb').to_path
 
 EVENT_LOGGER = EventService.instance
 
-REDIS_CLIENT = RedisClient.new
+REDIS_CLIENT = RedisClient
+               .config(url: Rails.application.credentials.dig(:redis, :url), reconnect_attempts: 2)
+               .new_pool(timeout: 5, size: Integer(ENV.fetch('RAILS_MAX_THREADS', 5)))
 
 STATIC_ASSETS = {
   team_banner: 'team_banner_placeholder.jpeg',
