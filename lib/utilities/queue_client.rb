@@ -5,7 +5,7 @@ module Utilities
   class QueueClient
     attr_reader :redis_client
 
-    def initialize(redis_client = REDIS_CLIENT)
+    def initialize(redis_client)
       @redis_client = redis_client
     end
 

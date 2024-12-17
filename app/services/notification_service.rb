@@ -4,7 +4,7 @@ require 'utilities/queue_client'
 class NotificationService
   include Singleton
 
-  QUEUE_CLIENT = Utilities::QueueClient.new
+  QUEUE_CLIENT = Utilities::QueueClient.new(REDIS_CLIENT)
 
   # each user may have at most 25 latest notification at a time
   MAX_NOTIFICATION_LIMIT = 25
@@ -70,7 +70,6 @@ class NotificationService
   end
 
   def queue_name(user)
-    # "notification-#{user.id}"
-    "notifications"
+    "notifications-#{user.id}"
   end
 end
