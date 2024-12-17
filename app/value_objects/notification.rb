@@ -6,7 +6,7 @@ class Notification
 
   attr_accessor :user, :text, :ntype, :timestamp
 
-  def initialize(user, text, ntype = 'info', timestamp = Time.zone.now.to_i)
+  def initialize(user, text, ntype: 'info', timestamp: Time.zone.now.to_i)
     @user = user
     @text = text
     @ntype = ntype
@@ -31,8 +31,3 @@ class Notification
     CGI.escape(Base64.encode64(to_json))
   end
 end
-
-
-# n = Notification.new("a", "random string", 'info')
-
-# "eyJ0ZXh0IjoicmFuZG9tIHN0cmluZyIsIm50eXBlIjoiaW5mbyIsImNyZWF0\nZWRfYXQiOiIyMDI0LTEyLTE0VDEyOjMzOjE5Ljk3MloifQ==\n"
