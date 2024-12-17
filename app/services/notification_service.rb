@@ -11,7 +11,7 @@ class NotificationService
 
   def self.notify(user, text, ntype = 'info')
     service = NotificationService.instance
-    notification = Notification.new(user, text, ntype)
+    notification = Notification.new(user, text, ntype:)
     service.enqueue_notification(notification)
   end
 
@@ -22,7 +22,7 @@ class NotificationService
 
   def pending_notification_for(user)
     read_all_notifications_for(user).map do |obj|
-      Notification.new(user, obj['text'], obj['ntype'], obj['timestamp'])
+      Notification.new(user, obj['text'], ntype: obj['ntype'], timestamp: obj['timestamp'])
     end
   end
 
