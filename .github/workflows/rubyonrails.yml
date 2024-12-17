@@ -22,6 +22,14 @@ jobs:
           POSTGRES_DB: blackboard_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+      redis:
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://postgres:postgres@localhost:5432/blackboard_test"
