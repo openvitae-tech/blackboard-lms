@@ -15,13 +15,13 @@
 
       <% if policy(:lesson).new? %>
         <%= link_to new_course_module_lesson_path(@course, @course_module), class: "nav-link" do %>
-          <%= render 'shared/components/icon_button_primary', label: 'New lesson', icon_name: 'icon-plus bg-white' %>
+          <%= render 'shared/components/icon_button_primary', label: 'New lesson', icon_name: 'icon-plus' %>
         <% end %>
       <% end %>
 
       <% if policy(:quiz).new? %>
         <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
-          <%= render 'shared/components/icon_button_primary', label: 'New quiz', icon_name: 'icon-plus bg-white' %>
+          <%= render 'shared/components/icon_button_primary', label: 'New quiz', icon_name: 'icon-plus' %>
         <% end %>
       <% end %>
     </div>

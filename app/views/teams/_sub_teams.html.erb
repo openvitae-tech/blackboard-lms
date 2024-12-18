@@ -5,7 +5,7 @@
     </p>
     <% if policy(team).new? %>
       <%= link_to new_team_path(parent_team_id: team.id), data: { turbo_frame: "add-new-team-modal" } do %>
-        <%= render 'shared/components/outline_icon_button_primary', label: 'Add team', icon_name: 'icon-plus bg-primary' %>
+        <%= render 'shared/components/outline_icon_button_primary', label: 'Add team', icon_name: 'icon-plus' %>
       <% end %>
     <% end %>
   </div>
@@ -14,7 +14,7 @@
     <p class="font-medium text-basic">Your sub teams</p>
     <% if policy(team).new? %>
       <%= link_to new_team_path(parent_team_id: team.id), data: { turbo_frame: "add-new-team-modal" } do %>
-        <%= render 'shared/components/icon_button_primary', label: 'Add sub team', icon_name: 'icon-plus bg-white' %>
+        <%= render 'shared/components/icon_button_primary', label: 'Add sub team', icon_name: 'icon-plus' %>
       <% end %>
     <% end %>
   </div>
