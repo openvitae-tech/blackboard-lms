@@ -1,0 +1,9 @@
+<div class="flex">
+  <%= render 'shared/components/sidebar' %>
+  <div class="flex flex-col w-full">
+    <%= render 'shared/components/navbar' %>
+    <main class="p-8 max-w-[1280px] m-auto">
+      <%= yield %>
+    </main>
+  </div>
+</div>
