@@ -19,7 +19,7 @@
   </div>
   <div class="p-4 text-xs">
     <div class="mb-2 flex items-center gap-2">
-      <span class="icon icon-at-sign"></span>
+      <span class="icon icon-at-sign bg-letter-color"></span>
       <span class=""><%= member.email %></span>
     </div>
     <div class="flex items-center gap-2">
@@ -29,12 +29,12 @@
     <div class="flex justify-end p-1">
       <% if member.verified_learner? && policy(:course_assigns).new? %>
         <%= link_to new_course_assign_path(user_id: member) do %>
-          <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
+          <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user bg-letter-color' %>
         <% end %>
       <% end %>
       <% if InvitePolicy.new(current_user, member).resend? %>
         <%= link_to resend_invite_path(member, team_id: team.id), data: { turbo_method: "put" } do %>
-          <%= render 'shared/components/label_medium_success', label: 'Re-invite', icon_name: 'icon-re-invite' %>
+          <%= render 'shared/components/label_medium_success', label: 'Re-invite', icon_name: 'icon-re-invite bg-primary' %>
         <% end %>
       <% end %>
     </div>

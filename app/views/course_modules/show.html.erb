@@ -1,27 +1,27 @@
 <%= mobile_view do %>
-  <%= render 'shared/components/admin_not_available'%>
+  <%= render 'shared/components/admin_not_available' %>
 <% end %>
 <%= render "shared/components/desktop_layout" do %>
   <%= render 'shared/components/back_button', back_link: course_path(@course) %>
 
   <div class="flex justify-between my-4">
-    <%= render "shared/components/bread_crumbs", links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
+    <%= render 'shared/components/bread_crumbs', links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
     <div class="flex justify-end gap-4">
       <% if policy(@course_module).destroy? %>
         <%= link_to course_module_path(@course, @course_module), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete this module along with its lessons?" } do %>
-          <%= render "shared/components/outline_button_danger", label: "Delete" %>
+          <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
         <% end %>
       <% end %>
 
       <% if policy(:lesson).new? %>
         <%= link_to new_course_module_lesson_path(@course, @course_module), class: "nav-link" do %>
-          <%= render 'shared/components/icon_button_primary', label: 'New lesson', icon_name: 'icon-plus-white' %>
+          <%= render 'shared/components/icon_button_primary', label: 'New lesson', icon_name: 'icon-plus bg-white' %>
         <% end %>
       <% end %>
 
       <% if policy(:quiz).new? %>
         <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
-          <%= render 'shared/components/icon_button_primary', label: 'New quiz', icon_name: 'icon-plus-white' %>
+          <%= render 'shared/components/icon_button_primary', label: 'New quiz', icon_name: 'icon-plus bg-white' %>
         <% end %>
       <% end %>
     </div>
@@ -32,7 +32,7 @@
     <div class="flex justify-end gap-4 text-right">
       <% if policy(@course_module).edit? %>
         <%= link_to edit_course_module_path(@course, @course_module) do %>
-          <%= render "shared/components/button_default_small", label: "Edit module", icon_name: "icon-edit" %>
+          <%= render 'shared/components/button_default_small', label: 'Edit module', icon_name: 'icon-edit' %>
         <% end %>
       <% end %>
     </div>
@@ -44,30 +44,29 @@
     <ul>
       <% lessons_in_order(@course_module).each do |lesson| %>
         <li class="mb-4 rounded border p-6 text-sm border-line-colour-light">
-
           <div class="flex items-center justify-between">
             <%= link_to course_module_lesson_path(@course, @course_module, lesson, class: "nav-link") do %>
-                <span class="text-base font-medium hover:underline">
-                  <%= lesson.title %>
-                </span>
+              <span class="text-base font-medium hover:underline">
+                <%= lesson.title %>
+              </span>
             <% end %>
             <div class="flex items-center gap-6">
               <% if policy(@course_module).edit? %>
                 <%= link_to edit_course_module_lesson_path(@course, @course_module, lesson) do %>
-                  <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+                  <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
                 <% end %>
               <% end %>
               <div class="flex flex-col items-center">
                 <% if policy(:lesson).moveup? %>
                   <%= link_to moveup_course_module_lesson_path(@course, @course_module, lesson), data: {
                     turbo_method: :put }, class: "link" do %>
-                    <span class="block icon icon-arrow-up icon-small"></span>
+                    <span class="block icon icon-arrow-up icon-small bg-primary"></span>
                   <% end %>
                 <% end %>
                 <% if policy(:lesson).movedown? %>
                   <%= link_to movedown_course_module_lesson_path(@course, @course_module,
                                                                  lesson), data: { turbo_method: :put }, class: "link" do %>
-                    <span class="block icon icon-arrow-down icon-small"></span>
+                    <span class="block icon icon-arrow-down icon-small bg-primary"></span>
                   <% end %>
                 <% end %>
               </div>
@@ -95,20 +94,20 @@
             <div class="flex items-center gap-6">
               <% if policy(@course_module).edit? %>
                 <%= link_to edit_course_module_quiz_path(@course, @course_module, quiz) do %>
-                  <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+                  <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
                 <% end %>
               <% end %>
               <div class="flex flex-col items-center">
                 <% if policy(:lesson).moveup? %>
                   <%= link_to moveup_course_module_quiz_path(@course, @course_module, quiz), data: {
                     turbo_method: :put }, class: "link" do %>
-                    <span class="block icon icon-arrow-up icon-small"></span>
+                    <span class="block icon icon-arrow-up icon-small bg-primary"></span>
                   <% end %>
                 <% end %>
                 <% if policy(:lesson).movedown? %>
                   <%= link_to movedown_course_module_quiz_path(@course, @course_module, quiz), data: {
                     turbo_method: :put }, class: "link" do %>
-                    <span class="block icon icon-arrow-down icon-small"></span>
+                    <span class="block icon icon-arrow-down icon-small bg-primary"></span>
                   <% end %>
                 <% end %>
               </div>

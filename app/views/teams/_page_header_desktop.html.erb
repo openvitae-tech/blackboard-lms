@@ -15,7 +15,7 @@
       <% team_list(current_user.team, team).each do |team_item| %>
         <li class="flex space-x-1">
           <%= link_to team_item.name, team_path(team_item) %>
-          <span class="icon icon-simple-arrow-right icon-small"></span>
+          <span class="icon icon-simple-arrow-right bg-letter-color icon-small"></span>
         </li>
       <% end %>
     </ol>
@@ -29,7 +29,7 @@
 
       <% if policy(:dashboard).index? %>
         <%= link_to dashboard_path(team: team) do %>
-          <%= render 'shared/components/button_default_small', label: 'Team dashboard', icon_name: 'icon-arrow-right' %>
+          <%= render 'shared/components/button_default_small', label: 'Team dashboard', icon_name: 'icon-arrow-right icon-small' %>
         <% end %>
       <% end %>
     </div>

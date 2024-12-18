@@ -2,13 +2,13 @@
   <%= link_to team_path(team) do %>
     <div class="flex justify-between items-center py-2 px-4">
       <div class="flex items-center space-x-8 h-16">
-          <% if team.banner.present? %>
-            <%= image_tag team.banner, alt: "Image", class: "max-h-full w-28 object-contain bg-cover bg-center" %>
-          <% end %>
+        <% if team.banner.present? %>
+          <%= image_tag team.banner, alt: 'Image', class: 'max-h-full w-28 object-contain bg-cover bg-center' %>
+        <% end %>
         <span class="text-basic font-medium"><%= team.name %></span>
       </div>
       <div>
-        <span class="icon icon-simple-arrow-right icon-small"></span>
+        <span class="icon icon-simple-arrow-right bg-letter-color icon-small"></span>
       </div>
     </div>
   <% end %>

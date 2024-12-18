@@ -1,19 +1,19 @@
 <div class="box-shadow-medium mt-8 rounded border">
-  <%= render "shared/components/congrats_card_mobile" %>
+  <%= render 'shared/components/congrats_card_mobile' %>
   <div class="border-line-colour-light flex justify-start gap-8 border border-b px-4 pt-6">
     <a href="#module" class="active-border text-base font-normal">Module</a>
     <a href="#quiz" class="text-base font-normal">Quiz</a>
   </div>
   <div id="module" class="tab-content">
-    <%= render "shared/components/course_completion_module_mobile" %> 
+    <%= render 'shared/components/course_completion_module_mobile' %>
   </div>
   <div id="quiz" class="tab-content">
-    <%= render "shared/components/course_completion_quiz_mobile" %>  
-  </div> 
+    <%= render 'shared/components/course_completion_quiz_mobile' %>
+  </div>
 </div>
 <div class="flex justify-center pt-6">
   <button class="bg-primary flex items-center gap-2 rounded p-1 px-3">
     <span class="text-sm text-white">Go to My Course</span>
-    <span class="icon icon-next icon-small"></span>
+    <span class="icon icon-next icon-small bg-white"></span>
   </button>
 </div>
