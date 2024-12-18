@@ -5,8 +5,8 @@
       <div class="mt-2 bg-line-colour-light rounded">
         <%= image_tag team_banner(current_user.team, 'desktop'), class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
       </div>
-      <div class="flex justify-start -mt-8 ml-6">
-        <%= link_to "javascript:void(0);", class: "inline-block w-16 h-16" do %>
+      <div class="flex justify-start -mt-10 ml-6">
+        <%= link_to "javascript:void(0);", class: "inline-block w-20 h-20" do %>
           <%= render 'shared/components/profile_pic', letter: letter_avatar(@user) %>
         <% end %>
       </div>

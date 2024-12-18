@@ -2,7 +2,7 @@
   <div class="border-b p-4 border-line-colour-light">
     <%= link_to member_path(member), class: "cursor-pointer" do %>
       <div class="flex items-center gap-4">
-        <div class="inline-block h-12 w-12">
+        <div class="inline-block h-12 w-12 flex-shrink-0">
           <%= render 'shared/components/profile_pic', letter: letter_avatar(member) %>
         </div>
         <div class="flex w-full flex-col">
