@@ -1,6 +1,6 @@
 <%= render "shared/components/desktop_layout" do %>
   <%= render 'shared/components/back_button', back_link: courses_path %>
-  <div class="flex justify-between my-4">
+  <div class="flex justify-end my-4">
     <div class="flex justify-between gap-4">
       <% if policy(@course).destroy? %>
         <%= link_to course_path(@course), data: { turbo_method: "delete" } do %>
