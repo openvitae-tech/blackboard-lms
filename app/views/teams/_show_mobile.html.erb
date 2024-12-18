@@ -16,7 +16,7 @@
       <h1 class="mb-4 pl-0 text-base font-bold">Team members</h1>
       <% if policy(:course_assigns).new? %>
         <%= link_to new_course_assign_path(team_id: @team.id) do %>
-          <%= render 'shared/components/icon_button_secondary', label: 'Assign courses', icon_name: 'icon-assign-user bg-white' %>
+          <%= render 'shared/components/icon_button_secondary', label: 'Assign courses', icon_name: 'icon-assign-user' %>
         <% end %>
       <% end %>
     </div>
@@ -24,11 +24,11 @@
       <%= render 'teams/member_list_mobile' %>
       <% if policy(:invite).new? && policy(@learning_partner).invite? %>
         <%= link_to new_invite_path(team_id: @team.id),class:"w-full", data: { turbo_frame: "add-user-modal" } do %>
-          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus bg-white', label: 'Invite User' %>
+          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus', label: 'Invite User' %>
         <% end %>
       <% else %>
         <%= link_to "javascript:void(0);", class: 'w-full disabled' do %>
-          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus bg-white', label: 'Invite User' %>
+          <%= render "shared/components/button_primary_sticky_bottom", icon_name: 'icon-plus', label: 'Invite User' %>
         <% end %>
       <% end %>
     </div>
