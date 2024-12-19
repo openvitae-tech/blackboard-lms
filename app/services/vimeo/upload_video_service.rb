@@ -7,8 +7,11 @@ require 'tempfile'
 class Vimeo::UploadVideoService
   include Singleton
 
-  def upload_video(file)
+  def upload_video(file, local_content_id)
+    local_content = LocalContent.find(local_content_id)
+
     response = generate_upload_url(file)
+
     unless response.is_a?(Net::HTTPSuccess)
       log_error_to_sentry(response, "Failed to generate upload url")
       return
@@ -18,6 +21,7 @@ class Vimeo::UploadVideoService
 
     upload_url = response_data.dig('upload', 'upload_link')
     vimeo_link = response_data['link']
+    file.update!(metadata: file.metadata.merge(url: vimeo_link, upload_url: upload_url))
 
     upload_response = upload_to_vimeo(upload_url, file)
 
@@ -26,7 +30,7 @@ class Vimeo::UploadVideoService
       return
     end
 
-    file.update!(metadata: file.metadata.merge(url: vimeo_link))
+    local_content.update!(status: :complete)
     upload_response
   end
 

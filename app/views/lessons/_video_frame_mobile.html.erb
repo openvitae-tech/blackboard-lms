@@ -1,13 +1,7 @@
 <div class="flex flex-col border-b border-line-colour pb-6">
   <div class="embed-container border-line-colour-light rounded border p-2">
     <% if @local_content.video.attached? %>
-      <% if Rails.env.production? && @video_iframe.present? %>
-        <%= @video_iframe.html_safe %>
-      <% elsif Rails.env.development? %>
-        <%= video_tag rails_blob_path(@local_content.video), controls: true %>
-      <% else %>
-        <div class="w-full inline-block text-center">Uploaded video is under process. Please refresh the page after some time.</div>
-      <% end %>
+      <%= render "video_player" %>
     <% else %>
       <div class="w-full inline-block text-center">Sorry! Video is not available</div>
     <% end %>
@@ -50,7 +44,7 @@
         <span class="icon icon-arrow-down icon-small" data-course-description-card-target="downArrow"></span>
       </button>
     </div>
-     <div class="flex gap-2 overflow-hidden show-less-desc text-sm" data-course-description-card-target="courseDescription">
+    <div class="flex gap-2 overflow-hidden show-less-desc text-sm" data-course-description-card-target="courseDescription">
       <div class="h-full overflow-hidden flex text-base">
         <span><%= lesson.rich_description %></span>
       </div>
