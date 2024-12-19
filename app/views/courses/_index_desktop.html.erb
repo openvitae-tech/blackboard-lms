@@ -5,25 +5,20 @@
         <%= render 'shared/components/icon_button_primary', label: 'Add course', icon_name: 'icon-plus' %>
       <% end %>
     </div>
-    <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
-      <div class="rounded-sm shadow-sm w-full mt-5" name="search">
-        <div class="border rounded-lg border-line-colour-light pl-10">
-          <%= text_field_tag :term, params[:term], id: "course-search", class: "input-search w-full", placeholder: "Search courses ..." %>
-        </div>
-      </div>
-    <% end %>
-    <div class="flex flex-row mt-5 justify-between mb-4">
-      <div class="space-x-2 flex flex-row">
-        <% params[:tags]&.each do |tag| %>
-          <%= link_to updated_tags_query_params(tag), method: :get do %>
-            <%= render "shared/components/button_default_small", label: tag, icon_name: "icon-close" %>
-          <% end %>
-        <% end %>
-      </div>
-      <% if @type.present? %>
-        <div data-action="click->courses#openFilter">
-          <%= render "shared/components/button_default_small", label: "Filter", icon_name: "icon-edit" %>
-        </div>
+  <% end %>
+  <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
+  <% if has_search_results? %>
+    <p class="text-base font-medium mb-4">
+      <% if @search_results.blank? %>
+        <span class="">No results for search keyword '<%= @keyword %>'</span>
+      <% else %>
+        <span class="">Search results</span>&nbsp
+        <span class="text-letter-color-light">(<%= pluralize(@search_results_count, 'result') %>)</span>
+      <% end %>
+    </p>
+    <div class="flex flex-wrap gap-4">
+      <% @search_results.each do |course| %>
+        <%= render 'courses/course_card_with_top_image', course: course %>
       <% end %>
     </div>
     <%= paginate(@search_results) %>
