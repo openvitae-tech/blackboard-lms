@@ -1,0 +1,7 @@
+<% if Rails.env.production? && @video_iframe.present? && @local_content.status == "complete" %>
+  <%= @video_iframe.html_safe %>
+<% elsif Rails.env.development? %>
+  <%= video_tag rails_blob_path(@local_content.video), controls: true %>
+<% else %>
+  <div class="w-full inline-block text-center">Uploaded video is under process. Please refresh the page after some time.</div>
+<% end %>
