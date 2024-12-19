@@ -1,10 +1,7 @@
-<%= mobile_view do %>
-  <%= render 'shared/components/admin_not_available' %>
-<% end %>
-<%= render "shared/components/desktop_layout" do %>
+<%= render "shared/components/layout" do %>
   <%= render 'shared/components/back_button', back_link: course_path(@course) %>
 
-  <div class="flex justify-between my-4">
+  <div class="flex flex-col md:flex-row justify-between my-4">
     <%= render 'shared/components/bread_crumbs', links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
     <div class="flex justify-end gap-4">
       <% if policy(@course_module).destroy? %>
@@ -46,7 +43,7 @@
         <li class="mb-4 rounded border p-6 text-sm border-line-colour-light">
           <div class="flex items-center justify-between">
             <%= link_to course_module_lesson_path(@course, @course_module, lesson, class: "nav-link") do %>
-              <span class="text-base font-medium hover:underline">
+              <span class="text-sm md:text-base font-medium hover:underline">
                 <%= lesson.title %>
               </span>
             <% end %>
@@ -83,10 +80,10 @@
     <div class="my-4">
       <ul>
         <% quizzes_in_order(@course_module).each do |quiz| %>
-          <li class="mb-4 flex justify-between rounded border p-6 text-sm border-line-colour-light">
+          <li class="mb-4 flex gap-2 justify-between rounded border p-6 text-sm border-line-colour-light">
             <%= link_to course_module_quiz_path(@course, @course_module, quiz) do %>
               <div class="flex items-center justify-between">
-                <span class="text-base font-medium hover:underline">
+                <span class="text-sm md:text-base font-medium hover:underline">
                   <%= quiz.question %>
                 </span>
               </div>

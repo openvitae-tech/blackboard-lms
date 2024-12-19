@@ -1,2 +1,5 @@
-<%= render "show_mobile" %>
-<%= render "show_desktop" %>
+<%= render "shared/components/layout" do %>
+  <div class="flex flex-row gap-6">
+    <%= render "quizzes/quizz_box", course: @course, course_module: @course_module, quiz: @quiz %>
+  </div>
+<% end %>
