@@ -1,4 +1,18 @@
 <nav class="px-8 header-nav w-full sticky top-0 bg-white z-50 navbar-box-shadow">
+  <div>
+    <%- if controller_name == 'courses' %>
+      <div class="relative rounded-md shadow-sm" name="search">
+        <%= form_tag search_courses_path, method: :get do %>
+          <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
+            <span class="icon icon-search icon-small bg-letter-color"></span>
+          </div>
+          <div class="border rounded-lg border-line-colour-light">
+            <%= text_field_tag :term, "", id: "course-search", class: "input-search", placeholder: "Search courses ..." %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
   <div class="flex gap-6 items-center">
     <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
       <span class="h-6 w-6 icon icon-notification bg-letter-color"></span>

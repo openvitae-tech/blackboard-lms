@@ -1,7 +1,7 @@
-<div class="w-80 bg-white shadow-lg fixed right-0 -mt-8 h-full border-line-colour-light border hidden" data-courses-target="filters">
+<div class="w-80 bg-white shadow-lg fixed right-0 -mt-8 h-full border-line-colour-light border hidden z-10" data-courses-target="filters">
   <div class="flex flex-row justify-between pl-4 pt-4">
     <h2 class="text-lg font-semibold mb-4">Filter by</h2>
-    <span class="icon icon-close icon-small mt-1 cursor-pointer mr-2" data-action="click->courses#closeFilter"></span>
+    <span class="icon icon-close icon-small mt-1 cursor-pointer mr-2 bg-black" data-action="click->courses#closeFilter"></span>
   </div>
   <hr class="my-2 border-t-2 border-line-colour w-full">
   <%= form_with url: courses_path, method: :get, local: true, data: {controller: "courses", action: "submit->courses#formSubmit"} do |form| %>
