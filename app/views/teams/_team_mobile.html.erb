@@ -4,11 +4,12 @@
       <% if team.banner.present? %>
         <%= image_tag team.banner, alt: 'Image', class: 'max-h-full max-w-full object-contain bg-cover bg-center' %>
       <% end %>
-    </div><span class="text-sm font-medium"><%= team.name %></span>
+    </div>
+    <span class="text-sm font-medium"><%= team.name %></span>
   </div>
   <div>
     <%= link_to team_path(team) do %>
-      <span class="icon icon-simple-arrow-right icon-small"></span>
+      <span class="icon icon-simple-arrow-right bg-letter-color icon-small"></span>
     <% end %>
   </div>
 </li>

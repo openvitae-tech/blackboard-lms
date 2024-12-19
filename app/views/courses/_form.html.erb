@@ -1,8 +1,8 @@
-<div class="my-8 w-full text-left md:max-w-3xl">
+<div class="my-4 w-full text-left md:max-w-3xl">
   <div class="w-auto">
     <%= form_with(model: course) do |form| %>
       <%= render "shared/components/form_errors", resource: course %>
-      <div class="my-8 text-sm">
+      <div class="mb-8 text-sm">
         <%= form.label :title, class: "text-sm font-medium" %>
         <%= form.text_field :title, class: "input-text mt-2" %>
       </div>
