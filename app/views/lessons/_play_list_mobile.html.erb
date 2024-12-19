@@ -1,17 +1,18 @@
 <div class="flex flex-col justify-start text-sm font-semibold py-6">
   <span class="">Course Overview</span>
   <% if enrollment.present? && enrollment.progress > 0 %>
-    <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+    <%= render 'shared/components/progress_bar', progress: enrollment.progress %>
   <% end %>
 </div>
 <% modules_in_order(course).each do |course_module| %>
   <details
     <% if current_module?(course_module, enrollment) %>
-    class="border-line-colour mx-4 my-6 rounded border highlighted" open="open"
+      class="border-line-colour mx-4 my-6 rounded border highlighted"
+      open="open"
     <% else %>
-    class="border-line-colour mx-4 my-6 rounded border"
+      class="border-line-colour mx-4 my-6 rounded border"
     <% end %>
-    >
+  >
     <summary class="border-line-colour rounded border flex cursor-pointer items-center justify-between p-4">
       <h2 class="flex flex-col justify-start text-base font-semibold">
         <span class=""><%= course_module.title %></span>
@@ -24,8 +25,8 @@
           <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
         <% end %>
       </h2>
-      <span class="icon icon-down icon-small"></span>
-      <span class="icon-up hidden icon-small"></span>
+      <span class="icon icon-down icon-small bg-letter-color"></span>
+      <span class="icon-up hidden icon-small bg-letter-color"></span>
     </summary>
     <ul class="border-line-colour rounded border">
       <% lessons_in_order(course_module).each do |lesson| %>

@@ -3,3 +3,25 @@
   cursor: not-allowed !important;
   opacity: 0.3 !important;
 }
+
+.side-bar {
+  inset: 0 auto 0 0;
+  z-index: 51;
+  height: 100vh;
+  width: 16rem;
+  min-width: 16rem;
+  transform: translateX(-100%);
+  position: fixed;
+}
+
+@media (min-width: 768px) {
+  .side-bar {
+    transform: translateX(0);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    transition: none;
+  }
+}

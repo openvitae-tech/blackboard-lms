@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between border-b border-line-colour-light p-6">
         <span class="text-base font-semibold">Edit Tag</span>
         <button data-action="click->modals#closeModal">
-          <span class="icon icon-close icon-small"></span>
+          <span class="icon icon-close bg-letter-color icon-small"></span>
         </button>
       </div>
       <%= form_with(model: @tag, url: tag_path(@tag), method: :patch, class: "flex flex-col gap-6 p-6") do |form| %>

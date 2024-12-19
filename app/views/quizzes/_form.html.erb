@@ -1,9 +1,9 @@
 <div class="box">
-  <div class="my-8 w-80 text-left">
+  <div class="mb-4 w-80 text-left">
     <% form_url = quiz.persisted? ? course_module_quiz_path(course, course_module, quiz) :  course_module_quizzes_path(course, course_module) %>
     <%= form_with(url: form_url, model:  quiz) do |form| %>
       <%= render "shared/components/form_errors", resource: quiz %>
-      <div class="my-8 text-sm">
+      <div class="mb-8 text-sm">
         <%= form.label :question, class: "text-sm font-medium" %>
         <%= form.text_area :question, class: "input-text mt-2 resize-none h-20", rows: 2, placeholder: "Enter your question here..." %>
       </div>

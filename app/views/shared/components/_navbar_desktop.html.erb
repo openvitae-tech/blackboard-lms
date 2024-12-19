@@ -1,9 +1,7 @@
 <nav class="px-8 header-nav w-full sticky top-0 bg-white z-50 navbar-box-shadow">
-  <div>
-  </div>
   <div class="flex gap-6 items-center">
     <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
-      <span class="h-6 w-6 icon icon-notification"></span>
+      <span class="h-6 w-6 icon icon-notification bg-letter-color"></span>
     <% end %>
     <%= link_to settings_path do %>
       <%= render "shared/components/profile_pic", letter: letter_avatar(current_user) %>

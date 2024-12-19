@@ -1,4 +1,4 @@
-<div class="basis-3/5">
+<div>
   <div class="box text-right">
     <% if policy(@quiz).edit? %>
       <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz), class: "btn-default" do %>
@@ -23,12 +23,12 @@
       <% prev_link = prev_quiz_path(@course, @course_module, @quiz) %>
         <%  if prev_link.blank? %>
           <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
-            <span class="icon icon-arrow-left-gray icon-small"></span>
+            <span class="icon icon-arrow-left bg-letter-color icon-small"></span>
             <span class="text-sm font-semibold">Previous</span>
           <% end %>      
         <% else %>
           <%= link_to prev_link, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
-            <span class="icon icon-arrow-left-gray icon-small"></span>
+            <span class="icon icon-arrow-left bg-letter-color icon-small"></span>
             <span class="text-sm font-semibold">Previous</span>
           <% end %>
       <% end %>

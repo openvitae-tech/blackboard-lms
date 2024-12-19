@@ -1,5 +1,5 @@
 <%= link_to course_path(course), class: "inline-block" do %>
-  <div class="flex rounded w-[472px] h-[252px] box-shadow-medium border-line-colour-light hover:cursor-pointer border">
+  <div class="flex rounded w-full  md:w-[472px] h-[252px] box-shadow-medium border-line-colour-light hover:cursor-pointer border">
     <%= image_tag course_banner(course, :vertical), class: "h-full w-[140px] rounded-l object-cover" %>
     <div class="p-4">
       <p class="mb-2 overflow-hidden text-ellipsis text-base font-semibold text-primary max-h-[68px]">
@@ -8,17 +8,17 @@
       <% if local_assigns[:enrollment].present? %>
         <%= render "shared/components/progress_bar", progress: enrollment.progress %>
       <% end %>
-      <div class="flex justify-between mt-2">
+      <div class="flex justify-between gap-1 mt-2">
         <div class="flex items-center">
-          <span class="icon icon-lessons h-3.5 w-3.5"></span>
+          <span class="icon icon-lessons h-3.5 w-3.5 bg-primary"></span>
           <span class="ml-2 text-xs font-medium"><%= modules_count(course) %></span>
         </div>
         <div class="flex items-center">
-          <span class="icon icon-clock h-3.5 w-3.5"></span>
+          <span class="icon icon-clock h-3.5 w-3.5 bg-primary"></span>
           <span class="ml-2 text-xs font-medium"><%= course_duration(course) %></span>
         </div>
         <div class="flex items-center">
-          <span class="icon icon-user h-3.5 w-3.5"></span>
+          <span class="icon icon-user h-3.5 w-3.5 bg-primary"></span>
           <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
         </div>
       </div>

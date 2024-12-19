@@ -10,15 +10,15 @@
           <p class="text-sm"><%= @user.role %></p>
         </div>
         <div class="flex items-center space-x-2">
-          <span class="icon icon-at-sign icon-small"></span>
+          <span class="icon icon-at-sign bg-letter-color icon-small"></span>
           <p class="text-sm"><%= @user.email %></p>
         </div>
         <div class="flex items-center space-x-2">
-          <span class="icon icon-smartphone icon-small"></span>
+          <span class="icon icon-smartphone bg-letter-color icon-small"></span>
           <p class="text-sm"><%= @user.phone %></p>
         </div>
         <div class="flex items-center space-x-2">
-          <span class="icon icon-team icon-small"></span>
+          <span class="icon icon-team bg-letter-color icon-small"></span>
           <p class="text-sm"><%= @user.team.name %></p>
         </div>
       </div>
@@ -26,11 +26,11 @@
 
     <div class="flex space-x-3 items-start">
       <div class="flex items-center space-x-2 bg-primary-light-50 py-1 px-2 rounded" data-user-status-confirmation-target="activeUser">
-        <span class="bg-cover inline-block icon-green-circle icon-tiny"></span>
+        <span class="bg-cover inline-block icon-green-circle bg-primary-light icon-tiny"></span>
         <p class="text-xs text-primary">Active</p>
       </div>
       <div class="flex items-center space-x-2 bg-danger-light py-1 px-2 rounded hidden" data-user-status-confirmation-target="inactiveUser">
-        <span class="bg-cover inline-block icon-red-circle icon-tiny"></span>
+        <span class="bg-cover inline-block icon-red-circle bg-danger icon-tiny"></span>
         <p class="text-xs text-danger">Deactivated</p>
       </div>
       <%= render 'shared/components/more_action' %>

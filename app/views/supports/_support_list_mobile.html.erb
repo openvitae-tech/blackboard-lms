@@ -1,14 +1,12 @@
 <li class="flex flex-col gap-2" data-controller="show-less">
   <div class="flex justify-between items-center mb-2">
-    <span class="h-6 w-6 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %>"></span>
-    <button
-      class="flex items-center justify-center focus:outline-none"
-      data-show-less-target="showMoreToggle"
-      data-action="click->show-less#showMoreToggle"
-    >
+    <div class="bg-primary-light-50 p-1 rounded">
+      <span class="h-4 w-4 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %> bg-primary"></span>
+    </div>
+    <button class="flex items-center justify-center focus:outline-none" data-show-less-target="showMoreToggle" data-action="click->show-less#showMoreToggle">
       <span class="text-xs text-primary">Show more</span>
-      <span class="hidden icon-arrow-up icon-small" data-show-less-target="upArrow"></span>
-      <span class="icon icon-arrow-down icon-small" data-show-less-target="downArrow"></span>
+      <span class="hidden icon-arrow-up icon-small bg-primary" data-show-less-target="upArrow"></span>
+      <span class="icon icon-arrow-down icon-small bg-primary" data-show-less-target="downArrow"></span>
     </button>
   </div>
   <span class="text-base font-semibold text-primary"><%= title %></span>
