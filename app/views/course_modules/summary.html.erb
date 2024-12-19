@@ -1,7 +1,15 @@
-<%= render "shared/components/mobile_layout" do %>
-  <%=  render "summary" %>
-<% end %>
+<%= render "shared/components/layout" do %>
+  <div class="w-full box-shadow-medium">
+    <%= render "course_modules/congrats_card", course_module: @course_module, enrollment: @enrollment %>
+    <%= render "course_modules/course_completion_quiz", course_module: @course_module, enrollment: @enrollment %>
+    <div class="flex flex-row justify-between gap-4 p-4 sm:p-6">
+      <%= link_to redo_quiz_course_module_path(@course, @course_module), data: { turbo_method: :delete } do %>
+        <%= render "shared/components/button_default_large", label: "Retry", icon_name: "icon-retry" %>
+      <% end %>
 
-<%= render "shared/components/desktop_layout" do %>
-  <%=  render "summary" %>
+      <%= link_to course_path(@course) do %>
+        <%= render "shared/components/icon_button_primary_small", icon_name: "icon-next", label: "Continue", icon_right: true %>
+      <% end %>
+    </div>
+  </div>
 <% end %>

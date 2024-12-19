@@ -1,10 +1,10 @@
 <% modules_in_order(course).each do |course_module| %>
   <details
     <% if current_module?(course_module, enrollment) %>
-      class="border-line-colour md:mx-4 rounded border highlighted"
+      class="border-line-colour mx-2 md:mx-4 rounded border highlighted"
       open="open"
     <% else %>
-      class="border-line-colour md:mx-4 rounded border"
+      class="border-line-colour mx-2 md:mx-4 rounded border"
     <% end %>
   >
     <summary class="flex items-center justify-between p-4 cursor-pointer focus:outline-none md:p-6">
