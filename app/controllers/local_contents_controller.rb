@@ -19,7 +19,7 @@ class LocalContentsController < ApplicationController
 
     @local_content.update!(updated_at: Time.now)
 
-   redirect_to course_module_lesson_path(@course, @course_module, @lesson, lang: @local_content.lang)
+    redirect_to course_module_lesson_path(@course, @course_module, @lesson, lang: @local_content.lang)
   end
 
   private
@@ -37,15 +37,6 @@ class LocalContentsController < ApplicationController
   end
 
   def set_local_content
-    if params[:lang].present?
-      @local_content = @lesson.local_contents.find_by!(lang: params[:lang])
-    else
-      @local_content = default_local_content
-    end
-  end
-
-  def default_local_content
-    default_language = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE.downcase)
-    default_language.present? ? default_language : @lesson.local_contents.first
+    @local_content = @lesson.local_contents.find_by!(lang: params[:lang])
   end
 end

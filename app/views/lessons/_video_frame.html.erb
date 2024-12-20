@@ -3,7 +3,7 @@
     <% if @local_content.video.attached? %>
       <% if is_upload_pending(@local_content) && current_user.is_admin? %>
         <div class="flex justify-center items-center">
-          <%= link_to retry_course_module_lesson_local_content_path(course, course_module, lesson, lang: params[:lang]),
+          <%= link_to retry_course_module_lesson_local_content_path(course, course_module, lesson, lang: get_local_content_lang(lesson)),
               data: { turbo_method: :put } do %>
             <%= render "shared/components/button_default_small", label: "Retry upload", icon_name: "icon-retry" %>
           <% end %>
