@@ -8,7 +8,7 @@
       <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
         <span class="icon icon-small icon-notification bg-letter-color"></span>
       <% end %>
-      <%= link_to settings_path, class: "inline-block hover:pointer w-6 h-6" do %>
+      <%= link_to settings_path, class: "inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large" do %>
         <%= render 'shared/components/profile_pic', letter: letter_avatar(current_user) %>
       <% end %>
     </div>

@@ -1,4 +1,4 @@
-<nav class="py-5 px-8 flex items-center justify-between md:justify-end w-full gap-4 bg-white sticky top-0 navbar-box-shadow z-50">
+<nav class="py-5 px-8 flex items-center justify-between md:justify-end w-full gap-4 bg-white sticky top-0 navbar-box-shadow z-150">
   <label for="sidebar-toggle" class=" md:hidden flex items-center cursor-pointer">
     <span class="icon icon-menu bg-letter-color icon-small"></span>
   </label>
@@ -7,7 +7,7 @@
     <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
       <span class="icon icon-notification icon-small md:icon-base bg-letter-color"></span>
     <% end %>
-    <%= link_to settings_path, class:"inline-block hover:pointer" do %>
+    <%= link_to settings_path, class:"inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large" do %>
       <%= render 'shared/components/profile_pic', letter: letter_avatar(current_user) %>
     <% end %>
   </div>
