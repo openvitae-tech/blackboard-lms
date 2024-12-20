@@ -44,8 +44,8 @@
           <% end %>
         </li>
       </ul>
-      <div class="side-bar-item side-bar-footer pb-4 md:py-12 w-full mb-2">
-        <%= button_to destroy_user_session_path, class: "side-bar-item-inner md:pb-3", method: :delete, data: { turbo_method: :delete } do %>
+      <div class="side-bar-item side-bar-footer pb-5 md:py-12 w-full">
+        <%= button_to destroy_user_session_path, class: "side-bar-item-inner pb-3", method: :delete, data: { turbo_method: :delete } do %>
           <span class="icon icon-logout bg-letter-color icon-small"></span>
           <span class="text-sm">Logout</span>
         <% end %>
