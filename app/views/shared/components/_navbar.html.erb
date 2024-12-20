@@ -4,10 +4,10 @@
   </label>
   <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-6 w-16  md:h-10  md:hidden' %>
   <div class="flex gap-5 items-center">
-    <%= link_to notifications_path, class: "inline-block hover:pointer" do %>
-      <span class="h-6 w-6 icon icon-small icon-notification bg-letter-color"></span>
+    <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
+      <span class="md:h-6 md:w-6 icon icon-small icon-notification bg-letter-color"></span>
     <% end %>
-    <%= link_to settings_path, class: "inline-block hover:pointer w-6 h-6" do %>
+    <%= link_to settings_path, class:"inline-block hover:pointer w-6 h-6 md:min-h-10 md:min-w-10" do %>
       <%= render 'shared/components/profile_pic', letter: letter_avatar(current_user) %>
     <% end %>
   </div>
