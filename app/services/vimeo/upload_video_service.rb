@@ -21,7 +21,7 @@ class Vimeo::UploadVideoService
 
     upload_url = response_data.dig('upload', 'upload_link')
     vimeo_link = response_data['link']
-    file.update!(metadata: file.metadata.merge(url: vimeo_link, upload_url: upload_url))
+    file.update!(metadata: file.metadata.merge(url: vimeo_link))
 
     upload_response = upload_to_vimeo(upload_url, file)
 

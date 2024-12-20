@@ -9,6 +9,8 @@ class LocalContentsController < ApplicationController
   before_action :set_local_content
 
   def retry
+    authorize @local_content
+
     blob = @local_content.video.blob
     vimeo_url = blob.metadata['url']
 

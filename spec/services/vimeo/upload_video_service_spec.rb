@@ -19,12 +19,14 @@ RSpec.describe Vimeo::UploadVideoService do
       stub_vimeo_video_upload_api
     end
 
-    it 'should_upload_video_to_vimeo' do
-      response = subject.upload_video(local_content.video.blob)
+    it 'uploads video to vimeo' do
+      response = subject.upload_video(local_content.video.blob, local_content.id)
       vimeo_video_url = local_content.video.blob.metadata['url']
+      local_content.reload
 
       expect(response).to be_a(Net::HTTPOK)
       expect(vimeo_video_url).to eq('https://vimeo.com/1234')
+      expect(local_content.status).to eq('complete')
     end
   end
 end

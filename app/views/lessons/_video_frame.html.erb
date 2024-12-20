@@ -8,7 +8,7 @@
             <%= render "shared/components/button_default_small", label: "Retry upload", icon_name: "icon-retry" %>
           <% end %>
         </div>
-      <% else %> <!--align to the div center -->
+      <% else %>
         <%= render "video_player" %>
       <% end %>
     <% else %>
@@ -63,7 +63,7 @@
         class="flex items-center justify-center rounded p-2 bg-primary-light-50"
         data-course-description-card-target="showMoreToggle"
         data-action="click->course-description-card#showMoreToggle"
-      >
+        >
         <span class="text-xs text-primary">Show more</span>
         <span class="hidden icon-arrow-up icon-small bg-primary" data-course-description-card-target="upArrow"></span>
         <span class="icon icon-arrow-down icon-small bg-primary" data-course-description-card-target="downArrow"></span>

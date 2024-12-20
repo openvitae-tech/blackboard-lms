@@ -60,7 +60,7 @@ Rails.application.routes.draw do
           put :replay
         end
 
-        resources :local_contents, params: :lang do
+        resources :local_contents, param: :lang, only: :retry do
           member do
             put :retry
           end
