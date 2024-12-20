@@ -12,7 +12,7 @@ export default class extends Controller {
                 .then(response => response.text())
                 .then(html => Turbo.renderStreamMessage(html))
                 .catch(error => console.log(error))
-        }, 5000);
+        }, 60000);
 
         // clear the interval after 24 hours
         setTimeout(() => {
@@ -21,8 +21,13 @@ export default class extends Controller {
 
         window.addEventListener("click",(e) => {
             if (!this.notificationListTarget.contains(e.target)) {
-                this.notificationListTarget.innerHTML = ""
+                this.close(e)
             }
         })
+    }
+
+    close(event) {
+        event.stopPropagation();
+        this.notificationListTarget.innerHTML = ""
     }
 }
