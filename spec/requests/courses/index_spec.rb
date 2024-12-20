@@ -58,6 +58,13 @@ RSpec.describe 'Request spec for GET /courses' do
       get courses_path, params: { type: 'enrolled', term: @courses[4].title }
       expect(assigns[:enrolled_courses].pluck(:id)).to eq([@courses[4].id])
     end
+
+    it 'filters enrolled courses by search term and tags' do
+      @courses[14].enroll!(user)
+
+      get courses_path, params: { type: 'enrolled', term: @courses[14].title, tags: [category_tags.second.id] }
+      expect(assigns[:enrolled_courses].pluck(:id)).to eq([@courses[14].id])
+    end
   end
 
   describe 'accessing index page by manager or owner' do
@@ -114,6 +121,11 @@ RSpec.describe 'Request spec for GET /courses' do
     it 'filters available courses by a search term' do
       get courses_path, params: { type: 'all', term: @courses.last.title }
       expect(assigns[:available_courses].pluck(:id)).to eq([@courses.last.id])
+    end
+
+    it 'filters available courses by search term and tags' do
+      get courses_path, params: { type: 'all', term: @courses[2].title, tags: [level_tags.first.id] }
+      expect(assigns[:available_courses].pluck(:id)).to eq([@courses[2].id])
     end
   end
 end
