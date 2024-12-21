@@ -17,6 +17,10 @@ class NotificationsController < ApplicationController
   def mark_as_read
     notification_service.mark_as_read(current_user, params[:message])
     @notifications = notification_service.pending_notification_for(current_user)
+    if params[:redirect_url].present?
+      redirect_to params[:redirect_url]
+      return
+    end
   end
 
   private

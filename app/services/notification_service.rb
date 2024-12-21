@@ -9,9 +9,9 @@ class NotificationService
   # each user may have at most 25 latest notification at a time
   MAX_NOTIFICATION_LIMIT = 25
 
-  def self.notify(user, text, ntype = 'info')
+  def self.notify(user, title, text, link: nil, ntype: 'info')
     service = NotificationService.instance
-    notification = Notification.new(user, text, ntype:)
+    notification = Notification.new(user, title, text, link:, ntype:)
     service.enqueue_notification(notification)
   end
 
@@ -22,7 +22,7 @@ class NotificationService
 
   def pending_notification_for(user)
     read_all_notifications_for(user).map do |obj|
-      Notification.new(user, obj['text'], ntype: obj['ntype'], timestamp: obj['timestamp'])
+      Notification.new(user, obj['title'], obj['text'], link: obj['link'], ntype: obj['ntype'], timestamp: obj['timestamp'])
     end
   end
 

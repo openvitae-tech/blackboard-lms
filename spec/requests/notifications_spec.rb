@@ -60,7 +60,7 @@ RSpec.describe 'Request specs for notifications', type: :request do
 
   def enqueue_test_notifications(count = 3)
     count.times.map do
-      n = Notification.new(user, Faker::Lorem.sentence)
+      n = Notification.new(user, Faker::Lorem.sentence, Faker::Lorem.sentence)
       NotificationService.instance.enqueue_notification(n)
       n
     end

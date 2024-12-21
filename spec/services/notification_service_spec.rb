@@ -5,7 +5,7 @@ RSpec.describe NotificationService do
 
   let(:queue_client) { instance_double(Utilities::QueueClient) }
   let(:user) { instance_double(User, id: 1) }
-  let(:notification) { Notification.new(user, 'Simple notification') }
+  let(:notification) { Notification.new(user, Faker::Lorem.sentence, Faker::Lorem.sentence) }
   let(:queue_name) { "notifications-#{user.id}" }
 
   before do
@@ -19,9 +19,10 @@ RSpec.describe NotificationService do
       allow(subject).to receive(:enqueue_notification)
       allow(queue_client).to receive(:enqueue)
 
-      described_class.notify(user, 'Simple notification')
+      described_class.notify(user, notification.title, notification.text, link: notification.link)
 
-      expect(Notification).to have_received(:new).with(user, notification.text, ntype: notification.ntype)
+      expect(Notification).to have_received(:new).with(user, notification.title, notification.text,
+                                                       link: notification.link, ntype: notification.ntype)
       expect(subject).to have_received(:enqueue_notification).with(notification)
     end
   end
