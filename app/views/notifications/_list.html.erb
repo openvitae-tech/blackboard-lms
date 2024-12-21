@@ -1,7 +1,7 @@
 <div id="notification-frame" data-notifications-target="notificationList" class="w-[360px] bg-white box-shadow-medium fixed left-0 md:absolute md:-left-[340px] z-150">
   <div class="p-4 border-b border-line-colour-light flex justify-between items-center">
     <h1 class="text-base font-semibold text-primary">Notification</h1>
-    <button aria-label="Close" class="inline-block hover:opacity-80" data-action="click->notifications#close()">
+    <button aria-label="Close" class="inline-block hover:opacity-80" data-action="click->notifications#close">
       <span class="icon icon-close icon-small bg-primary"></span>
     </button>
   </div>
@@ -18,7 +18,7 @@
       <% end %>
       <% notifications.each do |notification| %>
         <li class="border-b border-line-colour-light px-6 py-4 w-full">
-          <%= link_to mark_as_read_notifications_path(message: notification.encoded_message, redirect_url: "/"), data: { turbo_stream: true } do %>
+          <%= link_to mark_as_read_notifications_path(message: notification.encoded_message, redirect_url: notification.link ), data: { turbo_stream: true } do %>
             <% if notification.ntype == 'error' %>
               <p class="text-xs text-danger font-semibold mb-1"><%= notification.text %></p>
             <% else %>

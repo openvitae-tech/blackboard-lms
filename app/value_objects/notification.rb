@@ -4,11 +4,13 @@
 class Notification
   VALID_TYPES = %w[info error]
 
-  attr_accessor :user, :text, :ntype, :timestamp
+  attr_accessor :user, :title, :text, :ntype, :timestamp, :link
 
-  def initialize(user, text, ntype: 'info', timestamp: Time.zone.now.to_i)
+  def initialize(user, title, text, link: nil, ntype: 'info', timestamp: Time.zone.now.to_i)
     @user = user
+    @title = title
     @text = text
+    @link = link
     @ntype = ntype
     @timestamp = timestamp
 
@@ -17,7 +19,9 @@ class Notification
 
   def to_json
     {
+      title: self.title,
       text: self.text,
+      link: self.link,
       ntype: self.ntype,
       timestamp: self.timestamp
     }.to_json
