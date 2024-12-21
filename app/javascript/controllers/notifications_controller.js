@@ -5,9 +5,7 @@ export default class extends Controller {
     path = "/notifications/count"
     headers = { 'Accept' : 'text/vnd.turbo-stream.html' }
     connect() {
-        console.log("Notifications controller");
         const checkNotificationInterval = setInterval(() => {
-            console.log("Fetching notification counts")
             fetch(this.path, { headers: this.headers })
                 .then(response => response.text())
                 .then(html => Turbo.renderStreamMessage(html))

@@ -1,35 +1,31 @@
 <div id="notification-frame" data-notifications-target="notificationList" class="w-[360px] bg-white box-shadow-medium fixed left-0 md:absolute md:-left-[340px] z-150">
-  <div class="p-4 border-b border-line-colour-light flex justify-between items-center">
-    <h1 class="text-base font-semibold text-primary">Notification</h1>
-    <button aria-label="Close" class="inline-block hover:opacity-80" data-action="click->notifications#close">
-      <span class="icon icon-close icon-small bg-primary"></span>
-    </button>
-  </div>
-  <div class="w-full p-0 ">
-    <ul class="p-0 w-full">
-      <% if notifications.empty? %>
-        <li class="p-4">
-          <span class="text-sm">No new notifications</span>
-        </li>
-      <% else %>
+  <% unless notifications.empty? %>
+    <div class="p-4 border-b border-line-colour-light flex justify-between items-center">
+      <h1 class="text-base font-semibold text-primary">Notification</h1>
+      <button aria-label="Close" class="inline-block hover:opacity-80" data-action="click->notifications#close">
+        <span class="icon icon-close icon-small bg-primary"></span>
+      </button>
+    </div>
+    <div class="w-full p-0 ">
+      <ul class="p-0 w-full">
         <li class="text-right px-4 pt-4">
           <%= link_to "Clear all", clear_notifications_path, data: { turbo_stream: true }, class: "text-xs text-letter-color-light hover:cursor-pointer hover:underline" %>
         </li>
-      <% end %>
-      <% notifications.each do |notification| %>
-        <li class="border-b border-line-colour-light px-6 py-4 w-full">
-          <%= link_to mark_as_read_notifications_path(message: notification.encoded_message, redirect_url: notification.link ), data: { turbo_stream: true } do %>
-            <% if notification.ntype == 'error' %>
-              <p class="text-xs text-danger font-semibold mb-1"><%= notification.text %></p>
-            <% else %>
-              <p class="text-xs text-primary font-semibold mb-1"><%= notification.text %></p>
+        <% notifications.each do |notification| %>
+          <li class="border-b border-line-colour-light px-6 py-4 w-full">
+            <%= link_to mark_as_read_notifications_path(message: notification.encoded_message, redirect_url: notification.link), data: { turbo_stream: true } do %>
+              <% if notification.ntype == 'error' %>
+                <p class="text-xs text-danger font-semibold mb-1"><%= notification.text %></p>
+              <% else %>
+                <p class="text-xs text-primary font-semibold mb-1"><%= notification.text %></p>
+              <% end %>
+              <p class="text-xs text-letter-color-light mb-1"><%= notification.text %></p>
+              <p class="text-xs text-letter-color-light text-right"><%= time_ago_in_words(notification.created_at) %>
+                ago</p>
             <% end %>
-            <p class="text-xs text-letter-color-light mb-1"><%= notification.text %></p>
-            <p class="text-xs text-letter-color-light text-right"><%= time_ago_in_words(notification.created_at) %>
-              ago</p>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 </div>
