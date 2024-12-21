@@ -1,0 +1,2 @@
+<%= turbo_stream.replace 'notification-count', partial: "notifications/count_value", locals: { count: @notifications.count } %>
+<%= turbo_stream.replace 'notification-frame', partial: "notifications/list", locals: { notifications: @notifications } %>

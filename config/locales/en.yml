@@ -45,7 +45,9 @@ en:
     duplicate_enrolled: 'Already enrolled in this course'
     unenrolled: 'Successfully dropped out of the course'
     not_enrolled: 'You are not enrolled in this course'
-    assigned: "You have been assigned with new course %{course} by %{name}"
+    assigned:
+      title: 'New course assigned'
+      text: "You have been assigned with new course %{course} by %{name}"
     drop_warning: "Are you sure want to drop out ? Please note that all your progress will be lost!"
     published: 'Course is now available to everyone'
     unpublished: 'Course is unpublished and is not available for new enrollments'
