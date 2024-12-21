@@ -11,7 +11,9 @@ class LearningPartnersController < ApplicationController
   end
 
   # GET /learning_partners/1 or /learning_partners/1.json
-  def show; end
+  def show
+    @metrics = PartnerMetrics.new(@learning_partner)
+  end
 
   # GET /learning_partners/new
   def new
