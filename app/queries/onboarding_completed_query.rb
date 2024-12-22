@@ -5,9 +5,9 @@ class OnboardingCompletedQuery < AppQuery
     run_query do
       query = Event.where(
         name: 'onboarding_completed',
-        partner_id: @partner_id,
         ).order(:id)
 
+      query = query.where(partner_id: @partner_id) if @partner_id.present?
       query = query.where(created_at: @duration) if @duration.present?
 
       query
