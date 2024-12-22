@@ -7,17 +7,25 @@ class PartnerMetrics
 
   attr_reader :partner
 
+  COUNTS = [
+    :onboarding_initiated_count,
+    :onboarding_completed_count,
+    :user_login_count,
+    :user_logout_count,
+    :first_owner_joined_count,
+    :user_invited_count,
+    :user_joined_count,
+    :user_enrolled_count,
+    :course_started_count,
+    :course_completed_count,
+    :course_views_count,
+    :lesson_views_count,
+  ]
+
   def initialize(partner)
     @partner = partner
     @course_enrollment_values = {}
-    @user_invited_value = nil
-    @user_joined_value = nil
-    @course_enrolled_value = nil
-    @course_started_value = nil
-    @course_completed_value = nil
-    @course_views_value = nil
-    @lesson_views_value = nil
-    @time_spent_value = nil
+    @time_spent_total = nil
   end
 
   def course_enrollment_counts_for(course)
@@ -27,7 +35,8 @@ class PartnerMetrics
   def course_enrollment_values
     return @course_enrollment_values if @course_enrollment_values.present?
 
-    results = user_enrolled_query.call
+    query = init_query_object('user_enrolled_query')
+    results = query.call
     grouped_events = results.group_by { |event| event.data["course_id"] }
     grouped_events.each do |key, value|
       @course_enrollment_values[key] = value.count
@@ -36,77 +45,49 @@ class PartnerMetrics
     @course_enrollment_values
   end
 
-  def user_invited_value
-    return @user_invited_value if @user_invited_value.present?
-    @user_invited_value = user_invited_query.call.count
+  def onboarding_completed?
+    onboarding_completed_count > 0
   end
 
-  def user_joined_value
-    return @user_joined_value if @user_joined_value.present?
-    @user_joined_value = user_joined_query.call.count
+  def first_owner_joined?
+    first_owner_joined_count > 0
   end
+  # dynamically define counter methods
+  COUNTS.each do |count_name|
+      define_method count_name do
+        value = instance_variable_get("@#{count_name.to_s}")
+        return value if value.present?
 
-  def course_enrolled_value
-    return @course_enrolled_value if @course_enrolled_value.present?
-    @course_enrolled_value = user_enrolled_query.call.count
-  end
+        # eg: course_views_count_query
+        query_object_name = count_name.to_s.sub('_count', '_query')
 
-  def course_started_value
-    return @course_started_value if @course_started_value.present?
-    @course_started_value = course_started_query.call.count
-  end
+        query = init_query_object(query_object_name)
 
-  def course_completed_value
-    return @course_completed_value if @course_completed_value
-    @course_completed_value = course_completed_query.call.count
-  end
+        value = query.call.count
+        instance_variable_set("@#{count_name[1..]}".to_sym, value)
+        value
+      end
+    end
 
-  def course_views_value
-    return @course_views_value if @course_views_value.present?
-    @course_views_value = course_views_query.call.count
-  end
-
-  def lesson_views_value
-    return @lesson_views_value if @lesson_views_value.present?
-    @lesson_views_value = lesson_views_query.call.count
-  end
-
-  def time_spent_value
-    return @time_spent_value if @time_spent_value
-    @time_spent_value = time_spent_query.call.map { |x| x.data['time_spent'] }.sum
+  def time_spent_total
+    return @time_spent_total if @time_spent_total
+    query = init_query_object('time_spent_query')
+    @time_spent_total = query.call.map { |x| x.data['time_spent'] }.sum
   end
 
   private
 
-  def user_enrolled_query
-    @user_enrolled_query ||= UserEnrolledQuery.new(partner.id, nil)
-  end
+  # Here code uses metaprogramming and is confined to private scope to avoid confusion.
+  # For each `query_object_name` a corresponding query class is expected in app/queries.
+  # For example a query class TimeSpentQuery exists for `time_spent_query` object.
+  # The corresponding query object is instantiated using meta programming and is cached in an instance variable
+  # ending with '_query' to avoid duplicate instantiation.
+  def init_query_object(query_object_name)
+    value = instance_variable_get("@#{query_object_name}")
+    return value if value.present?
 
-  def user_invited_query
-    @user_invited_query ||= UserInvitedQuery.new(partner.id, nil)
-  end
-
-  def user_joined_query
-    @user_joined_query ||= UserJoinedQuery.new(partner.id, nil)
-  end
-
-  def course_started_query
-    @course_started_query ||= CourseStartedQuery.new(partner.id, nil)
-  end
-
-  def course_completed_query
-    @course_completed_query ||= CourseCompletedQuery.new(partner.id, nil)
-  end
-
-  def course_views_query
-    @course_views_query ||= CourseViewsQuery.new(partner.id, nil)
-  end
-
-  def lesson_views_query
-    @lesson_views_query ||= LessonViewsQuery.new(partner.id, nil)
-  end
-
-  def time_spent_query
-    @time_spent_query ||= TimeSpentQuery.new(partner.id, nil)
+    klass_name = query_object_name.camelize
+    klass = Kernel.const_get(klass_name)
+    instance_variable_set("@#{query_object_name}", klass.new(partner.id, nil))
   end
 end
