@@ -4,10 +4,12 @@ export default class extends Controller {
 
   openFilter() {
     this.filtersTarget.classList.remove("hidden")
+    document.body.style.overflow = "hidden";
   }
 
   closeFilter() {
     this.filtersTarget.classList.add("hidden")
+    document.body.style.overflow = "";
   }
 
   formSubmit(event) {

@@ -4,13 +4,13 @@
     <span class="icon icon-close icon-small cursor-pointer bg-black" data-action="click->courses#closeFilter"></span>
   </div>
   <%= form_with url: courses_path, method: :get, local: true,class:"h-full flex flex-col justify-between", data: {controller: "courses", action: "submit->courses#formSubmit"} do |form| %>
-    <div class="overflow-y-auto max-h-[calc(100vh-200px)] md:max-h-full">
+    <div class="overflow-y-auto max-h-[calc(100vh-220px)] pb-4">
       <div class="flex flex-col gap-2 p-4 border-b-2 border-line-colour">
         <div class=" flex justify-between">
           <h3 class="text-xs font-medium text-primary mb-2">Levels</h3>
           <span class="text-xs cursor-pointer mb-2" data-action="click->courses#clearFilters">Clear filter</span>
         </div>
-        <ul>
+        <ul class="flex flex-col gap-4">
           <% tags.level.each do |tag| %>
             <li class="mb-2 flex items-center">
               <%= check_box_tag 'tags[]', tag.name, params[:tags]&.include?(tag.name), class: 'mr-2 h-3 w-3 tags-checkbox', data: { courses_target: 'checkbox' } %>
@@ -23,7 +23,7 @@
         <div class="pt-2">
           <h3 class="text-xs font-medium text-primary mb-2">Category</h3>
         </div>
-        <ul>
+        <ul class="flex flex-col gap-4">
           <% tags.category.each do |tag| %>
             <li class="mb-2 flex items-center">
               <%= check_box_tag 'tags[]', tag.name, params[:tags]&.include?(tag.name), class: 'mr-2 h-3 w-3 tags-checkbox', data: { courses_target: 'checkbox' } %>
@@ -34,9 +34,8 @@
       </div>
     </div>
 
-    <div class="flex gap-4 p-4 text-sm justify-end sticky bottom-0 -mb-8 w-full bg-white items-center border-t-2 border-line-colour">
-      <button class="" data-action="click->courses#closeFilter">Cancel</button>
-      <%= form.submit 'Apply Filters', class: 'btn-primary' %>
+    <div class="flex gap-4 p-4 text-sm justify-center sticky bottom-0 -mb-8 w-full bg-white items-center border-t-2 border-line-colour">
+      <%= form.submit 'Apply Filters', class: 'btn-primary w-full' %>
     </div>
   <% end %>
 </div>
