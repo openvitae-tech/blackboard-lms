@@ -70,6 +70,16 @@
           </div>
         </li>
       <% end %>
+      <% if policy(@course).edit? %>
+        <li class="flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6">
+          <%= link_to new_course_module_lesson_path(course, course_module), class: "nav-link" do %>
+            <%= render 'shared/components/label_medium_success', label: 'Add lesson', icon_name: 'icon-plus' %>
+          <% end %>
+          <%= link_to new_course_module_quiz_path(course, course_module), class: "nav-link" do %>
+            <%= render 'shared/components/label_medium_success', label: 'Add quiz', icon_name: 'icon-plus' %>
+          <% end %>
+        </li>
+      <% end %>
     </ul>
   </details>
 <% end %>
