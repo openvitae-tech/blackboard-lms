@@ -18,6 +18,8 @@ RSpec.describe LocalContent, type: :model do
   describe '#blob_id' do
     it 'is not valid without blob' do
       local_content.blob_id = ''
+      local_content.video.detach
+
       expect(local_content).not_to be_valid
       expect(local_content.errors.full_messages.to_sentence).to include(t('local_content.video_not_found',
                                                                           lang: 'english'))

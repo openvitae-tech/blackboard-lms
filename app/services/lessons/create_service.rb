@@ -17,7 +17,7 @@ class Lessons::CreateService
   def upload_to_vimeo(lesson)
     lesson.local_contents.each do |item|
       blob = item.video.blob
-      UploadVideoToVimeoJob.perform_async(blob.id)
+      UploadVideoToVimeoJob.perform_async(blob.id, item.id)
     end
   end
 end

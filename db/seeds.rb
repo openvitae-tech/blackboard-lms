@@ -18,32 +18,11 @@ class DevelopmentSeed
 
   def seed
     ActiveRecord::Base.transaction do
-      admins = [%w[Deepak admin]]
-
-      admins.each { |name, role| create_user(name, role) }
-
-      other_users = [
-        %w[Jubin owner],
-        %w[Ajith manager],
-        %w[Poornima learner]
-      ]
-
-      partners = [
-        ['The Grand Budapest Hotel', about_text],
-        [Faker::Restaurant.name, about_text]
-      ]
-
-      partners.each { |name, about| create_partner(name, about) }
-
-      partner = LearningPartner.first
-      team = Team.where(learning_partner_id: partner.id).first
-
-      other_users.each { |name, role| create_user(name, role, partner, team) }
-
+      setup_users
       (0..10).each do
         setup_course
-        setup_tag
       end
+      setup_tag
     end
   end
 
@@ -105,6 +84,28 @@ class DevelopmentSeed
 
   def setup_quiz(course_module)
     sample_quizzes.sample(rand(1..4)).map { |quiz_data| create_quiz(*quiz_data, course_module) }
+  end
+
+  def setup_users
+    admins = [%w[Deepak admin]]
+    other_users = [
+      %w[Jubin owner],
+      %w[Ajith manager],
+      %w[Poornima learner]
+    ]
+
+    admins.each { |name, role| create_user(name, role) }
+    partners = [
+      ['The Grand Budapest Hotel', about_text],
+      [Faker::Restaurant.name, about_text]
+    ]
+
+    partners.each { |name, about| create_partner(name, about) }
+
+    partner = LearningPartner.first
+    team = Team.where(learning_partner_id: partner.id).first
+
+    other_users.each { |name, role| create_user(name, role, partner, team) }
   end
 
   def create_course
@@ -186,7 +187,16 @@ class DevelopmentSeed
   end
 
   def setup_tag
-    Tag.create!(name: Faker::Lorem.unique.word)
+    category = ["Food", "Bar", "Restaurant"]
+    level = ['Beginner', 'Advanced', 'Intermediate']
+
+    category.each do |item|
+      Tag.create!(name: item)
+    end
+
+    level.each do |item|
+      Tag.create!(name: item, tag_type: :level)
+    end
   end
 end
 

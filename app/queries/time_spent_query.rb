@@ -3,11 +3,14 @@
 class TimeSpentQuery < AppQuery
   def call
     run_query do
-      Event.where(
+      query = Event.where(
         name: 'learning_time_spent',
         partner_id: @partner_id,
-        created_at: @duration
       ).order(:id)
+
+      query = query.where(created_at: @duration) if @duration.present?
+
+      query
     end
   end
 end
