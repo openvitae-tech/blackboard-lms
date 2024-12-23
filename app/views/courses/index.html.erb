@@ -10,10 +10,11 @@
       <% end %>
     </div>
     <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
-      <div class="rounded-sm shadow-sm w-full mt-5" name="search">
-        <div class="border rounded-lg border-line-colour-light pl-10">
-          <%= text_field_tag :term, params[:term], id: "course-search", class: "input-search w-full", placeholder: "Search courses ..." %>
+      <div class="relative rounded-md shadow-sm w-full">
+        <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
+          <span class="icon icon-search icon-small bg-letter-color"></span>
         </div>
+          <%= text_field_tag :term, params[:term], id: "course-search", class: "input-search w-full", placeholder: "Search courses ..." %>
       </div>
     <% end %>
     <div class="flex flex-row mt-5 justify-between mb-4">
@@ -26,7 +27,7 @@
       </div>
       <% if @type.present? %>
         <div data-action="click->courses#openFilter">
-          <%= render "shared/components/button_default_small", label: "Filter", icon_name: "icon-edit" %>
+          <%= render "shared/components/button_default_small", label: "Filter", icon_name: "icon-filter" %>
         </div>
       <% end %>
     </div>
