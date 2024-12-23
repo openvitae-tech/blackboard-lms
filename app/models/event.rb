@@ -3,7 +3,6 @@
 class Event < ApplicationRecord
   VALID_EVENTS = %w[
     onboarding_initiated
-    onboarding_completed
     first_user_joined
     user_invited
     user_joined

@@ -2,6 +2,7 @@
 
 class Users::SessionsController < Devise::SessionsController
   before_action :configure_sign_in_params, only: [:create]
+  before_action :authenticate_user!, only: [:destroy]
 
   def create
     super do
@@ -12,9 +13,9 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def destroy
-    id = current_user&.id
-    team_id = current_user&.team_id
-    partner_id = current_user&.learning_partner_id
+    id = current_user.id
+    team_id = current_user.team_id
+    partner_id = current_user.learning_partner_id
 
     super do
       EVENT_LOGGER.publish_user_logout(id, team_id, partner_id)
