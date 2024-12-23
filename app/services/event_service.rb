@@ -37,8 +37,9 @@ class EventService
   end
 
   def publish_user_invited(user, invitee)
+    debugger
     event = Event::UserInvited.new(
-      partner_id: user.learning_partner_id,
+      partner_id: invitee.learning_partner_id,
       user_id: user.id,
       team_id: invitee.team_id,
       invite_email: invitee.email
