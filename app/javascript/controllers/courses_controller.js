@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
-  static targets = ["filters"]
+  static targets = ["filters","checkbox"]
 
   openFilter() {
     this.filtersTarget.classList.remove("hidden")
@@ -53,5 +53,12 @@ export default class extends Controller {
     }
 
     return queryParts.join('&');
+  }
+  clearFilters(event) {
+    event.preventDefault();
+    
+    this.checkboxTargets.forEach(checkbox => {
+      checkbox.checked = false; 
+    });
   }
 }
