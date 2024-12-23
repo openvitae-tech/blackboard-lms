@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
   before_action :set_tags, only: %i[new create edit update]
 

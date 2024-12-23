@@ -1,10 +1,10 @@
 <div class="flex min-h-screen w-full flex-col items-center justify-center gap-6 text-center text-secondary">
   <%= image_tag "error.png", alt: "Error", class: "" %>
   <div class="text-3xl font-extrabold text-secondary">404 Error</div>
-  <div class="text-base font-bold text-secondary md:text-2xl">Sorry, you are not <br>authorised to perform that action.
+  <div class="text-base font-bold text-secondary md:text-2xl">Sorry, you are not <br>
+    authorized to perform that action.
   </div>
-
   <div class="my-4">
-    <%= link_to "Take me out of here.", root_path, class: "btn-secondary" %>
+    <%= link_to "Take me out of here.", after_sign_in_path_for(current_user), class: "btn-secondary" %>
   </div>
 </div>
