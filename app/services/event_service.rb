@@ -173,11 +173,13 @@ class EventService
 
   def build_event(user, event_data)
     to_event_name = ->(obj) { obj.class.name.split('::')[1].underscore }
+    event_data_hash = event_data.to_h.with_indifferent_access
+
     Event.new do |e|
       e.name = to_event_name.call(event_data)
-      e.partner_id = user.learning_partner_id
+      e.partner_id = event_data_hash[:partner_id]
       e.user_id = user.id
-      e.data = event_data.to_h
+      e.data = event_data_hash
     end
   end
 
