@@ -48,7 +48,7 @@
     <% end %>
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
-        <%= link_to complete_course_module_lesson_path(course, course_module, lesson), params: { time_spent: 0 }, class: "bg-primary flex items-center gap-2 rounded px-4 py-3", data: { action: "click->lessons#completeLesson", turbo_method: :post } do %>
+        <%= button_to complete_course_module_lesson_path(course, course_module, lesson), params: { time_spent: 0}, class: "bg-primary flex items-center gap-2 rounded px-4 py-3", data: { action: "click->lessons#completeLesson", lessons_target: 'timeSpent', turbo_method: :post } do %>
           <span class="text-xs text-white">Complete & Continue</span>
           <span class="icon icon-next icon-small bg-white"></span>
         <% end %>
