@@ -148,7 +148,7 @@ class LessonsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course
-    @course = Course.includes(course_modules: { lessons: :local_contents }).find(params[:course_id])
+    @course = Course.includes(course_modules: :lessons).find(params[:course_id])
   end
 
   def set_course_module
@@ -179,7 +179,7 @@ class LessonsController < ApplicationController
   end
 
   def default_local_content
-    default_language = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE)
+    default_language = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE.downcase)
     default_language.present? ? default_language : @lesson.local_contents.first
   end
 end
