@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class CourseStartedQuery < AppQuery
+class CourseViewsQuery < AppQuery
   def call
     run_query do
       query = Event.where(
-        name: 'course_started',
+        name: 'course_viewed',
         partner_id: @partner_id,
       ).order(:id)
 

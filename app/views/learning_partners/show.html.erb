@@ -30,6 +30,62 @@
   </div>
   <div class="w-full">
     <h1 class="mb-4 text-xl font-semibold"><%= @learning_partner.name %></h1>
+    <div class="flex flex-col gap-4 my-8">
+      <div class="grid grid-cols-4 gap-4">
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Onboarding Complete</p>
+          <p><%= @metrics.onboarding_completed? %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Owner Joined</p>
+          <p><%= @metrics.first_owner_joined? %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>User Login</p>
+          <p><%= @metrics.user_login_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>User Logout</p>
+          <p><%= @metrics.user_logout_count %></p>
+        </div>
+      </div>
+      <div class="grid grid-cols-4 gap-4">
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Users</p>
+          <p><%= @metrics.user_invited_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Verified users</p>
+          <p><%= @metrics.user_joined_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Course Enrolled</p>
+          <p><%= @metrics.user_enrolled_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Course Started</p>
+          <p><%= @metrics.course_started_count %></p>
+        </div>
+      </div>
+      <div class="grid grid-cols-4 gap-4">
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Course Completed</p>
+          <p><%= @metrics.course_completed_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Course Views</p>
+          <p><%= @metrics.course_views_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Lesson Views</p>
+          <p><%= @metrics.lesson_views_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 text-center">
+          <p>Time spent</p>
+          <p><%= @metrics.time_spent_total %></p>
+        </div>
+      </div>
+    </div>
     <h3 class="text-sm font-medium">Hotel Logo</h3>
     <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_logo(@learning_partner, :large), class: 'h-[80px] w-[80px] object-contain' %></div>
     <h3 class="text-sm font-medium">Hotel Banner</h3>
