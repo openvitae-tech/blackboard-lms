@@ -4,6 +4,7 @@ class LoginsController < ApplicationController
   layout 'devise'
 
   before_action :user_exists?, only: %i[otp create]
+  skip_before_action :authenticate_user!
 
   def new; end
 

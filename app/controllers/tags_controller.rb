@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class TagsController < ApplicationController
-  before_action :authenticate_user!
-
   before_action :load_tag, only: [:edit, :show, :update, :destroy]
+
   def new
     authorize :tag
     @tag = Tag.new

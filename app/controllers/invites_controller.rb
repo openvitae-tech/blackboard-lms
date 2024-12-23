@@ -3,7 +3,6 @@
 # Invites Controller is used to invite new  members by the manager or owners.
 # This is not meant for inviting other admins.
 class InvitesController < ApplicationController
-  before_action :authenticate_user!
   def new
     authorize :invite
     @team = Team.find(params[:team_id])

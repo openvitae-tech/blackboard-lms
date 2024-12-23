@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_user, only: %i[show]
 
   def show
@@ -16,4 +15,4 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       @enrolled_courses = @user.courses.includes(:enrollments)
     end
-  end
+end
