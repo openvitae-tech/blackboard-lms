@@ -72,6 +72,7 @@ en:
   lesson:
     duplicate_lesson: 'Lesson cannot have multiple local contents for the same language: %{langs}'
     must_have_local_content: "Lesson must have at least one local content."
+    empty: "No lesson's found"
   team:
     created: 'Team created successfully'
     updated: 'Team updated successfully'
