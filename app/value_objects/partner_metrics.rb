@@ -9,7 +9,6 @@ class PartnerMetrics
 
   COUNTS = [
     :onboarding_initiated_count,
-    :onboarding_completed_count,
     :user_login_count,
     :user_logout_count,
     :first_owner_joined_count,
@@ -45,8 +44,8 @@ class PartnerMetrics
     @course_enrollment_values
   end
 
-  def onboarding_completed?
-    onboarding_completed_count > 0
+  def onboarding_initiated?
+    onboarding_initiated_count > 0
   end
 
   def first_owner_joined?

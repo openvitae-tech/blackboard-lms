@@ -158,6 +158,8 @@ RSpec.describe 'Request spec for LearningPartner' do
       expect do
         post('/learning_partners', params:)
       end.to change(Team, :count).by(1)
+
+      expect(Team.last.learning_partner).to eq(assigns(:learning_partner))
     end
 
     it 'Publishes an event onboarding_initiated' do
@@ -175,6 +177,7 @@ RSpec.describe 'Request spec for LearningPartner' do
 
       event = Event.last
       expect(event.name).to eq('onboarding_initiated')
+      expect(event.partner_id).to eq(assigns[:learning_partner].id)
     end
   end
 end

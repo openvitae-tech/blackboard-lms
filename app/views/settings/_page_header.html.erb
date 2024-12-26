@@ -1,6 +1,10 @@
 <% if current_user.is_admin? %>
   <div class="flex gap-8 p-6 md:p-8 rounded box-shadow-medium mt-6">
-      <%= render 'shared/components/profile_pic', letter: letter_avatar(user) %>
+    <div>
+      <%= link_to "javascript:void(0);", class: "inline-block w-20 h-20" do %>
+        <%= render 'shared/components/profile_pic', letter: letter_avatar(user) %>
+      <% end %>
+    </div>
     <div class="flex items-center gap-4">
       <span class="text-sm md:text-base font-semibold"><%= user.name %></span>
     </div>
