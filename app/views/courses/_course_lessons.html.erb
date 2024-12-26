@@ -44,7 +44,7 @@
       <% lessons = lessons_in_order(course_module) %>
       <% if lessons.empty? %>
         <li class="flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6">
-          <span><%= I18n.t("lesson.empty") %></span>
+          <span><%= t("lesson.empty") %></span>
         </li>
       <% else %>
         <% lessons.each do |lesson| %>
