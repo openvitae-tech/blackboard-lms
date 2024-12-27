@@ -41,33 +41,45 @@
       </div>
     </summary>
     <ul>
-      <% lessons_in_order(course_module).each do |lesson| %>
-        <li class="flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6 <%= 'highlighted' if current_lesson?(lesson, enrollment) %>">
-          <div class="flex items-center gap-4">
-            <% if enrollment && lesson_completed?(enrollment, lesson) %>
-              <div class="flex items-center bg-primary-light-50 border border-primary-light p-1">
-                <span class="icon icon-check h-[14px] w-[14px] bg-primary"></span>
-              </div>
-            <% end %>
-            <% if enrollment && !lesson_completed?(enrollment, lesson) %>
-              <div class="flex items-center bg-gold-light border border-gold p-1">
-                <span class="icon icon-incomplete h-[14px] w-[14px] bg-primary"></span>
-              </div>
-            <% end %>
-            <span><%= lesson.title %></span>
-          </div>
-          <div class="flex gap-6 items-center">
-            <% if policy(@course).edit? %>
-              <%= link_to edit_course_module_lesson_path(course, course_module, lesson), class: "link-text" do %>
-                <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
+      <% lessons = lessons_in_order(course_module) %>
+      <% if lessons.empty? %>
+        <li class="flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6">
+          <span><%= t("lesson.empty") %></span>
+        </li>
+      <% else %>
+        <% lessons.each do |lesson| %>
+          <li class="flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6 <%= 'highlighted' if current_lesson?(lesson, enrollment) %>">
+            <div class="flex items-center gap-4">
+              <% if enrollment %>
+                <div class="flex items-center <%= lesson_completed?(enrollment, lesson) ? 'bg-primary-light-50 border-primary-light' : 'bg-gold-light border-gold' %> border p-1">
+                  <span class="icon <%= lesson_completed?(enrollment, lesson) ? 'icon-check' : 'icon-incomplete' %> h-[14px] w-[14px] bg-primary"></span>
+                </div>
               <% end %>
-            <% end %>
-            <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
-              <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center">
-                <span class="icon icon-play bg-primary h-2 w-2 md:h-3 md:w-3"></span>
-              </div>
-            <% end %>
-          </div>
+              <span><%= lesson.title %></span>
+            </div>
+            <div class="flex gap-6 items-center">
+              <% if policy(@course).edit? %>
+                <%= link_to edit_course_module_lesson_path(course, course_module, lesson), class: "link-text" do %>
+                  <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
+                <% end %>
+              <% end %>
+              <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
+                <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center">
+                  <span class="icon icon-play bg-primary h-2 w-2 md:h-3 md:w-3"></span>
+                </div>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+      <% if policy(@course).edit? %>
+        <li class="flex items-center space-x-5 border-t border-line-colour px-4 py-4 text-sm md:px-6">
+          <%= link_to new_course_module_lesson_path(course, course_module), class: "nav-link" do %>
+            <%= render 'shared/components/label_medium_success', label: 'Add lesson', icon_name: 'icon-plus' %>
+          <% end %>
+          <%= link_to new_course_module_quiz_path(course, course_module), class: "nav-link" do %>
+            <%= render 'shared/components/label_medium_success', label: 'Add quiz', icon_name: 'icon-plus' %>
+          <% end %>
         </li>
       <% end %>
     </ul>
