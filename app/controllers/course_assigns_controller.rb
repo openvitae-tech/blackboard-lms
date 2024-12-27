@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class CourseAssignsController < ApplicationController
-  before_action :authenticate_user!
   before_action :authorize_actions
   before_action :set_user_or_team
+
   def new
     published_courses = Course.includes([:banner_attachment]).published
 

@@ -72,6 +72,7 @@ en:
   lesson:
     duplicate_lesson: 'Lesson cannot have multiple local contents for the same language: %{langs}'
     must_have_local_content: "Lesson must have at least one local content."
+    empty: "No lesson's found"
   team:
     created: 'Team created successfully'
     updated: 'Team updated successfully'
@@ -80,3 +81,4 @@ en:
     updated: 'User settings updated successfully'
     password_updated: 'Password updated successfully, please login with your new password.'
     password_change: 'After changing the password you will be logged out and need to login with new password.'
+  page_not_found: "The page you're looking for is missing."

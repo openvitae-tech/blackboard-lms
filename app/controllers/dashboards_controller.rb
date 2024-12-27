@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class DashboardsController < ApplicationController
-  before_action :authenticate_user!
-
   before_action :set_dashboard_params, only: [:index]
+  
   def index
     authorize :dashboard
 
