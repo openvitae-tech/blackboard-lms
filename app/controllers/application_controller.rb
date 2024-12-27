@@ -4,12 +4,11 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
   include HandleNotFound
 
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  protected
+  before_action :authenticate_user!
 
-  def authenticate_manager!
-    redirect_to new_user_session_path unless current_user&.is_manager? || current_user&.is_owner?
-  end
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  protected
 
   def authenticate_admin!
     redirect_to new_user_session_path unless current_user&.is_admin?
@@ -28,4 +27,5 @@ class ApplicationController < ActionController::Base
       courses_path
     end
   end
+  helper_method :after_sign_in_path_for
 end

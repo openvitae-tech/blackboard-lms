@@ -3,7 +3,6 @@
 class LessonsController < ApplicationController
   include LessonsHelper
 
-  before_action :authenticate_user!
   before_action :set_course
   before_action :set_course_module
   before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]

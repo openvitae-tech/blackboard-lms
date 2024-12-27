@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class TeamsController < ApplicationController
-  before_action :authenticate_manager!
+  before_action :set_team, only: %i[show edit update]
+  before_action :set_parent_team, only: :create
 
   def new
     authorize :team
@@ -9,16 +10,15 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find params[:id]
     authorize @team
     @learning_partner = current_user.learning_partner
     @members = @team.users
   end
 
   def create
-    service = TeamManagementService.instance
-    Team.find create_team_params[:parent_team_id]
+    authorize @parent_team
 
+    service = TeamManagementService.instance
     @team = Team.new(create_team_params)
 
     if service.create_team(@team, current_user.learning_partner)
@@ -29,11 +29,12 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    @team = Team.find params[:id]
+    authorize @team
   end
 
   def update
-    @team = Team.find(params[:id])
+    authorize @team
+
     service = TeamManagementService.instance
 
     if service.update_team(@team, update_team_params)
@@ -51,5 +52,13 @@ class TeamsController < ApplicationController
 
   def update_team_params
     params.require(:team).permit(:name, :banner)
+  end
+
+  def set_team
+    @team = Team.find(params[:id])
+  end
+
+  def set_parent_team
+    @parent_team = Team.find(create_team_params[:parent_team_id])
   end
 end
