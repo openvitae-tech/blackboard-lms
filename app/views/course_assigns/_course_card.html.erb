@@ -40,7 +40,7 @@
       <div class="flex flex-col md:flex-row gap-2 items-start md:items-center absolute -top-24 md:top-0 -right-4 md:right-12 invisible opacity-0" data-assigns-target="durationContainer">
         <label for="duration" class="font-medium text-sm md:text-base">Assign Duration:</label>
         <div class="flex items-center">
-          <%= f.select "duration[]", options_for_duration, {}, disabled: true, id: 'duration', class: "border border-line-colour-light box-shadow-small rounded focus:ring-0 p-0 px-1 h-6 text-sm", data: { assigns_target: "dateSelector", duration: 'duration' } %>
+          <%= f.select "duration[]", options_for_duration, {}, disabled: true, id: 'duration', class: "border border-line-colour-light box-shadow-small rounded focus:ring-0 p-0 px-2 h-6 w-28 text-sm", data: { assigns_target: "dateSelector", duration: 'duration' } %>
           <input type="date" class="border-0 focus:ring-0 text-sm md:text-base" data-action="change->assigns#datePicked" />
         </div>
       </div>
