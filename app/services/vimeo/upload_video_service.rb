@@ -29,8 +29,8 @@ class Vimeo::UploadVideoService
       return
     end
 
-    local_content.update!(status: :complete)
     file.update!(metadata: file.metadata.merge(url: vimeo_link))
+    local_content.update!(status: :complete)
     upload_response
   end
 
