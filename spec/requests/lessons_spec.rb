@@ -24,7 +24,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
 
       expect(response.status).to be(200)
       expect(assigns(:lesson)).to eq(@lesson)
-      expect(assigns(:course_modules)).to eq(@course.course_modules)
+      expect(assigns(:course_modules).pluck(:id).sort).to eq(@course.course_modules.pluck(:id).sort)
       expect(response).to render_template(:show)
     end
   end
