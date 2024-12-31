@@ -13,11 +13,10 @@ class LocalContentsController < ApplicationController
 
     blob = @local_content.video.blob
     vimeo_url = blob.metadata['url']
+    @local_content.update!(status: :pending, updated_at: Time.now)
 
     UploadVideoToVimeoJob.perform_async(blob.id, @local_content.id)
     DeleteVideoFromVimeoJob.perform_async(vimeo_url)
-
-    @local_content.update!(updated_at: Time.now)
 
     redirect_to course_module_lesson_path(@course, @course_module, @lesson, lang: @local_content.lang)
   end

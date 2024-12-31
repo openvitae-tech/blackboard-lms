@@ -21,7 +21,6 @@ class Vimeo::UploadVideoService
 
     upload_url = response_data.dig('upload', 'upload_link')
     vimeo_link = response_data['link']
-    file.update!(metadata: file.metadata.merge(url: vimeo_link))
 
     upload_response = upload_to_vimeo(upload_url, file)
 
@@ -30,6 +29,7 @@ class Vimeo::UploadVideoService
       return
     end
 
+    file.update!(metadata: file.metadata.merge(url: vimeo_link))
     local_content.update!(status: :complete)
     upload_response
   end
@@ -57,19 +57,19 @@ class Vimeo::UploadVideoService
   end
 
   def upload_to_vimeo(upload_url, file)
-    Tempfile.create(['video', File.extname(file.filename.to_s)]) do |tempfile|
-      tempfile.binmode
-      tempfile.write(URI.open(file.url, 'rb').read)
-      tempfile.rewind
-      url = URI.parse(upload_url)
-      request = Net::HTTP::Patch.new(url)
+    url = URI.parse(upload_url)
+    request = Net::HTTP::Patch.new(url)
 
-      request['Tus-Resumable'] = '1.0.0'
-      request['Upload-Offset'] = '0'
-      request['Content-Type'] = 'application/offset+octet-stream'
+    request['Tus-Resumable'] = '1.0.0'
+    request['Upload-Offset'] = '0'
+    request['Content-Type'] = 'application/offset+octet-stream'
+    request['Content-Length'] = file.byte_size.to_s
 
-      request.body = tempfile.read
-      Net::HTTP.start(url.hostname, url.port, use_ssl: true) { |http| http.request(request) }
+    URI.open(file.url, 'rb') do |file_stream|
+      Net::HTTP.start(url.hostname, url.port, use_ssl: true) do |http|
+        request.body_stream = file_stream
+        http.request(request)
+      end
     end
   end
 
