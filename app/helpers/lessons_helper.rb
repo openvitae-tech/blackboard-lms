@@ -12,7 +12,11 @@ module LessonsHelper
   end
 
   def is_upload_pending(local_content)
-    local_content.status == "pending" && local_content.updated_at < 30.minutes.ago
+    if local_content.video.blob.metadata['url'].nil? && local_content.status == "complete"
+      true
+    else
+      local_content.status == "pending" && local_content.updated_at < 30.minutes.ago
+    end
   end
 
   def get_local_content_lang(lesson)
