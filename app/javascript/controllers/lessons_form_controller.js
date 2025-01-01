@@ -21,7 +21,6 @@ export default class extends Controller {
       this.setButtonState(event.detail.isActive);
     });
     this.isValidForAddRecord && this.addRecord();
-    this.shouldShowRemoveButton();
   }
 
   addRecord() {

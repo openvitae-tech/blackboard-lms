@@ -3,7 +3,6 @@
 class LessonsController < ApplicationController
   include LessonsHelper
 
-  before_action :authenticate_user!
   before_action :set_course
   before_action :set_course_module
   before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]
@@ -148,7 +147,7 @@ class LessonsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course
-    @course = Course.includes(course_modules: { lessons: :local_contents }).find(params[:course_id])
+    @course = Course.includes(course_eager_load_params).find(params[:course_id])
   end
 
   def set_course_module
@@ -156,7 +155,7 @@ class LessonsController < ApplicationController
   end
 
   def set_lesson
-    @lesson = @course_module.lessons.find(params[:id])
+    @lesson = @course_module.lessons.includes(lesson_eager_load_params).find(params[:id])
   end
 
   def lesson_params
@@ -179,7 +178,15 @@ class LessonsController < ApplicationController
   end
 
   def default_local_content
-    default_language = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE)
+    default_language = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE.downcase)
     default_language.present? ? default_language : @lesson.local_contents.first
+  end
+
+  def course_eager_load_params
+    %w[show complete].include?(action_name) ? { course_modules: :lessons } : nil
+  end
+
+  def lesson_eager_load_params
+    %w[edit].include?(action_name) ? { local_contents: :video_attachment } : nil
   end
 end

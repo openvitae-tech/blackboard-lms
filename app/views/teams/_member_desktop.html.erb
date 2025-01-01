@@ -2,7 +2,9 @@
   <td class="px-6 py-4  flex  gap-4 items-center">
     <%= link_to member_path(member), class: "cursor-pointer" do %>
       <div class="flex gap-2 items-center">
-        <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
+        <span class="inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large">
+          <%= render "shared/components/profile_pic", letter: letter_avatar(member) %>
+        </span>
         <span class="ml-2 font-medium text-sm"><%= member.name %></span>
       </div>
     <% end %>

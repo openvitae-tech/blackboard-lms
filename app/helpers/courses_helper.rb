@@ -71,7 +71,7 @@ module CoursesHelper
   end
 
   def lessons_count(course_module)
-    pluralize(course_module.lessons.count, 'lesson')
+    pluralize(course_module.lessons_count, 'lesson')
   end
 
   def course_duration(course)

@@ -1,7 +1,7 @@
 <% if current_user.is_admin? %>
   <div class="flex gap-8 p-6 md:p-8 rounded box-shadow-medium mt-6">
-    <div class="flex items-center">
-      <%= link_to "javascript:void(0);", class: "inline-block w-14 h-14" do %>
+    <div>
+      <%= link_to "javascript:void(0);", class: "inline-block w-20 h-20" do %>
         <%= render 'shared/components/profile_pic', letter: letter_avatar(user) %>
       <% end %>
     </div>

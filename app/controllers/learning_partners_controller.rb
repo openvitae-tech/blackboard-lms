@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class LearningPartnersController < ApplicationController
-  before_action :authenticate_user!
   before_action :authorize_admin!
   before_action :set_learning_partner, only: %i[show edit update destroy]
 
@@ -11,7 +10,9 @@ class LearningPartnersController < ApplicationController
   end
 
   # GET /learning_partners/1 or /learning_partners/1.json
-  def show; end
+  def show
+    @metrics = PartnerMetrics.new(@learning_partner)
+  end
 
   # GET /learning_partners/new
   def new
