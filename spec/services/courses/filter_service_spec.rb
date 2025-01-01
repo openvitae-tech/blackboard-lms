@@ -54,7 +54,7 @@ RSpec.describe Courses::FilterService do
       expect(result[:enrolled_courses].pluck(:id)).to eq([@course_two.id])
 
       result = service.filter_courses(user, [level_tags.first.name], '')
-      expect(result[:enrolled_courses].pluck(:id)).to eq([@course_one.id, @course_two.id])
+      expect(result[:enrolled_courses].pluck(:id).sort).to eq([@course_one.id, @course_two.id].sort)
     end
 
     it 'returns no enrolled courses when there are no matching tags' do

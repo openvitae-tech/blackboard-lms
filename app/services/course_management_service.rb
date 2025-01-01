@@ -67,7 +67,7 @@ class CourseManagementService
   end
 
   def search(user, term)
-    courses_scope = Course.where('title ILIKE ?', "%#{term}%")
+    courses_scope = Course.where('title ILIKE ?', "%#{term}%").order(created_at: :desc)
 
     if user.is_admin?
       courses_scope

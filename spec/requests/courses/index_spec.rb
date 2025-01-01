@@ -36,7 +36,8 @@ RSpec.describe 'Request spec for GET /courses' do
         courses[index].enroll!(user)
       end
       get('/courses')
-      expect(assigns[:enrolled_courses].pluck(:id).sort).to eq(user.courses.limit(2).pluck(:id).sort)
+      expect(assigns[:enrolled_courses].pluck(:id).sort)
+        .to eq(user.courses.order(created_at: :desc).limit(2).pluck(:id).sort)
     end
 
     it 'lists all enrolled courses when type is enrolled' do
@@ -105,12 +106,14 @@ RSpec.describe 'Request spec for GET /courses' do
 
     it 'shows only the first 10 available courses on the admin dashboard' do
       get('/courses')
-      expect(assigns[:available_courses].pluck(:id).sort).to eq(Course.limit(10).pluck(:id).sort)
+      expect(assigns[:available_courses].pluck(:id).sort)
+        .to eq(Course.limit(10).order(created_at: :desc).pluck(:id).sort)
     end
 
     it 'shows all available courses when type is all' do
       get('/courses', params: { type: 'all' })
-      expect(assigns[:available_courses].pluck(:id).sort).to eq(Course.limit(12).pluck(:id).sort)
+      expect(assigns[:available_courses].pluck(:id).sort)
+        .to eq(Course.limit(12).order(created_at: :desc).pluck(:id).sort)
     end
 
     it 'filters available courses when tags are provided' do

@@ -45,20 +45,16 @@ class Courses::FilterService
       courses.joins(:tags)
              .where(tags: { id: categories })
              .where(id: Course.joins(:tags).where(tags: { id: levels }).select(:id))
-             .distinct
     elsif categories.present?
       courses.joins(:tags)
              .where(tags: { id: categories })
-             .distinct
     elsif levels.present?
       courses.joins(:tags)
              .where(tags: { id: levels })
-             .distinct
     else
       courses
     end
   end
-
 
   def filter_by_search(current_user, search_term)
     service = CourseManagementService.instance
