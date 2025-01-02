@@ -1,9 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["timeSpent"]
+    static targets = ["timeSpent", "loader", "videoPlayer"]
+
     connect() {
         self.startTime = new Date();
+        if (this.hasVideoPlayerTarget) {
+            this.videoPlayerTarget.addEventListener("load", this.hideLoader.bind(this));
+        }
     }
 
     completeLesson(event) {
@@ -16,4 +20,8 @@ export default class extends Controller {
         time_spent.value = duration;
         console.log("Time spent = ", time_spent.value)
     }
+
+    hideLoader() {
+        this.loaderTarget.classList.add("hidden");
+      }
 }
