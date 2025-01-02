@@ -1,7 +1,7 @@
 <%= render "shared/components/layout" do %>
   <div data-controller="courses">
     <%= render 'filters', tags: @tags %>
-    <div class="flex flex-row justify-between">
+    <div class="flex flex-row justify-between mb-4">
       <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
       <% if policy(:course).new? %>
         <%= link_to new_course_path, class: "nav-link" do %>
@@ -14,20 +14,20 @@
         <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
           <span class="icon icon-search icon-small bg-letter-color"></span>
         </div>
-          <%= text_field_tag :term, params[:term], id: "course-search", class: "input-search w-full", placeholder: "Search courses ..." %>
+        <%= text_field_tag :term, params[:term], id: 'course-search', class: 'input-search w-full', placeholder: 'Search courses ...' %>
       </div>
     <% end %>
     <div class="flex flex-row mt-5 justify-between mb-4">
       <div class="space-x-2 flex flex-row">
         <% params[:tags]&.each do |tag| %>
           <%= link_to updated_tags_query_params(tag), method: :get do %>
-            <%= render "shared/components/button_default_small", label: tag, icon_name: "icon-close" %>
+            <%= render 'shared/components/button_default_small', label: tag, icon_name: 'icon-close' %>
           <% end %>
         <% end %>
       </div>
       <% if @type.present? %>
         <div data-action="click->courses#openFilter">
-          <%= render "shared/components/button_default_small", label: "Filter", icon_name: "icon-filter" %>
+          <%= render 'shared/components/button_default_small', label: 'Filter', icon_name: 'icon-filter' %>
         </div>
       <% end %>
     </div>
