@@ -38,11 +38,15 @@
         </div>
       <% end %>
     </div>
-    <% if  @type !="enrolled" && @available_courses.blank? && @enrolled_courses.blank? %>
+    <% if  @type.nil? && @available_courses.blank? && @enrolled_courses.blank? %>
       <p class="text-base font-medium mb-4">
         <span>No courses found with your search query "<%= params[:term] %>"</span>
       </p>
     <% elsif @type == "enrolled" &&  @enrolled_courses.blank? %>
+      <p class="text-base font-medium mb-4">
+        <span>No courses found with your search query "<%= params[:term] %>"</span>
+      </p>
+    <% elsif  @type == "all" &&  @available_courses.blank?%>
       <p class="text-base font-medium mb-4">
         <span>No courses found with your search query "<%= params[:term] %>"</span>
       </p>
