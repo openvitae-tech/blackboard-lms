@@ -39,17 +39,11 @@
       <% end %>
     </div>
     <% if  @type.nil? && @available_courses.blank? && @enrolled_courses.blank? %>
-      <p class="text-base font-medium mb-4">
-        <span>No courses found with your search query "<%= params[:term] %>"</span>
-      </p>
+      <%= render 'courses/not_found_msg', type: 'search' %>
     <% elsif @type == "enrolled" &&  @enrolled_courses.blank? %>
-      <p class="text-base font-medium mb-4">
-        <span>No courses found with your search query "<%= params[:term] %>"</span>
-      </p>
+      <%= render 'courses/not_found_msg', type: (params[:tags].present? && params[:term].present? ? 'search_and_tags' : params[:term].present? ? 'search' : 'tags') %>
     <% elsif  @type == "all" &&  @available_courses.blank?%>
-      <p class="text-base font-medium mb-4">
-        <span>No courses found with your search query "<%= params[:term] %>"</span>
-      </p>
+      <%= render 'courses/not_found_msg', type: (params[:tags].present? && params[:term].present? ? 'search_and_tags' : params[:term].present? ? 'search' : 'tags') %>
     <% end %>
     <% if has_enrolled_courses? && @type != "all" %>
       <p class="text-base font-medium mb-4">
