@@ -6,11 +6,12 @@ class LessonsController < ApplicationController
   before_action :set_course
   before_action :set_course_module
   before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]
+  before_action :authorize_resource
+  before_action :load_eager_data, only: %i[show edit complete]
   before_action :set_local_content, only: :show
 
   # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
   def show
-    authorize @lesson
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
 
     if @enrollment.present?
@@ -23,18 +24,14 @@ class LessonsController < ApplicationController
 
   # GET /lessons/new
   def new
-    authorize Lesson
     @lesson = @course_module.lessons.new
   end
 
   # GET /lessons/1/edit
-  def edit
-    authorize @lesson
-  end
+  def edit;  end
 
   # POST /lessons or /lessons.json
   def create
-    authorize Lesson
     service = Lessons::CreateService.instance
 
     begin
@@ -57,7 +54,6 @@ class LessonsController < ApplicationController
 
   # PATCH/PUT /lessons/1 or /lessons/1.json
   def update
-    authorize @lesson
     service = Lessons::UpdateService.instance
 
     begin
@@ -80,7 +76,6 @@ class LessonsController < ApplicationController
 
   # DELETE /lessons/1 or /lessons/1.json
   def destroy
-    authorize @lesson
     service = CourseManagementService.instance
     @lesson.destroy!
     service.update_lesson_ordering!(@course_module, @lesson, :destroy)
@@ -94,7 +89,6 @@ class LessonsController < ApplicationController
   end
 
   def complete
-    authorize @lesson
     service = CourseManagementService.instance
     time_spent_in_seconds = (params[:time_spent] || 0).to_i
     enrollment = current_user.get_enrollment_for(@course)
@@ -114,7 +108,6 @@ class LessonsController < ApplicationController
   end
 
   def moveup
-    authorize @lesson
     service = CourseManagementService.instance
     service.update_lesson_ordering!(@course_module, @lesson, :up)
 
@@ -125,7 +118,6 @@ class LessonsController < ApplicationController
   end
 
   def movedown
-    authorize @lesson
     service = CourseManagementService.instance
     service.update_lesson_ordering!(@course_module, @lesson, :down)
 
@@ -136,7 +128,6 @@ class LessonsController < ApplicationController
   end
 
   def replay
-    authorize @lesson
     service = CourseManagementService.instance
     enrollment = current_user.get_enrollment_for(@course)
     service.replay!(enrollment, @lesson)
@@ -147,7 +138,7 @@ class LessonsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course
-    @course = Course.includes(course_eager_load_params).find(params[:course_id])
+    @course = Course.find(params[:course_id])
   end
 
   def set_course_module
@@ -155,7 +146,7 @@ class LessonsController < ApplicationController
   end
 
   def set_lesson
-    @lesson = @course_module.lessons.includes(lesson_eager_load_params).find(params[:id])
+    @lesson = @course_module.lessons.find(params[:id])
   end
 
   def lesson_params
@@ -182,11 +173,20 @@ class LessonsController < ApplicationController
     default_language.present? ? default_language : @lesson.local_contents.first
   end
 
-  def course_eager_load_params
-    %w[show complete].include?(action_name) ? { course_modules: :lessons } : nil
+  def authorize_resource
+    if action_name == 'new' || action_name == 'create'
+      authorize Lesson
+    else
+      authorize @lesson
+    end
   end
 
-  def lesson_eager_load_params
-    %w[edit].include?(action_name) ? { local_contents: :video_attachment } : nil
+  def load_eager_data
+    case action_name
+    when 'show', 'complete'
+      @course = Course.includes(course_modules: :lessons).find(@course.id)
+    when 'edit'
+      @lesson = Lesson.includes(local_contents: :video_attachment).find(@lesson.id)
+    end
   end
 end

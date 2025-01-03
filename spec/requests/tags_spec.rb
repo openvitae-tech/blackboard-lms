@@ -105,7 +105,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
 
-    it 'Update course module failure' do
+    it 'Update tag failure' do
       put tag_path(@tag.id), params: { tag: { name: nil } }
 
       expect(response.status).to eq(422)
