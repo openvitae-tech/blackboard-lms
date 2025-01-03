@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :teams
+  resources :teams, except: %i[index destroy]
 
   resources :direct_uploads, only: :create
 
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :notifications, only: [:index]
+  resources :notifications, only: :index
 
   resources :course_assigns, param: :user_id, only: %i[new create]
 
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :events, only: [:index]
+  resources :events, only: :index
   resources :tags
 
   resources :courses do
@@ -44,7 +44,7 @@ Rails.application.routes.draw do
       get :search
     end
 
-    resources :course_modules, as: 'modules', except: [:index] do
+    resources :course_modules, as: 'modules', except: :index do
       member do
         put :moveup
         put :movedown
@@ -52,7 +52,7 @@ Rails.application.routes.draw do
         delete :redo_quiz
       end
 
-      resources :lessons, except: [:index] do
+      resources :lessons, except: :index do
         member do
           post :complete
           put :moveup
@@ -66,7 +66,8 @@ Rails.application.routes.draw do
           end
         end
       end
-      resources :quizzes, except: [:index] do
+
+      resources :quizzes, except: :index do
         member do
           post :submit_answer
           put :moveup
@@ -77,9 +78,9 @@ Rails.application.routes.draw do
   end
 
   resources :learning_partners
-  resources :dashboards, only: %i[index]
+  resources :dashboards, only: :index
 
-  resources :logins, only: %i[new create] do
+  resource :login, only: %i[new create] do
     collection do
       post :otp
     end
@@ -90,8 +91,8 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  resources :users, only: [:show], as: 'members', path: 'member'
-  resources :supports, only: [:index]
+  resources :users, only: :show, as: 'members', path: 'member'
+  resources :supports, only: :index
 
   get 'error_401' => 'pages#unauthorized'
   get 'dashboard' => 'dashboards#index'
