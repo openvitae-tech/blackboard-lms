@@ -17,11 +17,26 @@
     <% end %>
 
     <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
-      <div class="relative rounded-md shadow-sm w-full">
-        <div class="pointer-events-none absolute inset-y-0 flex items-center pl-3">
+      <div class="relative rounded-md border border-line-colour-light w-full" data-controller="search">
+        <div class="pointer-events-none absolute inset-y-0 left-3 flex items-center pl-3">
           <span class="icon icon-search icon-small bg-letter-color"></span>
         </div>
-        <%= text_field_tag :term, params[:term], id: 'course-search', class: 'input-search w-full', placeholder: 'Search courses ...' %>
+
+        <%=
+          text_field_tag :term,
+                         params[:term],
+                         id: 'course-search',
+                         class: 'input-search w-full border-none pr-10',
+                         placeholder: 'Search courses ...',
+                         data: {
+                           search_target: 'searchInput',
+                           action: 'input->search#updateClearButtonVisibility',
+                         }
+        %>
+
+        <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" data-search-target="clearButton" data-action="click->search#clearSearch">
+          <span class="flex cursor-pointer items-center text-purple text-sm">Clear search</span>
+        </div>
       </div>
     <% end %>
     <div class="flex flex-row mt-5 justify-between mb-4">
