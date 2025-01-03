@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Rails.env.development? && defined?(Bullet)
+if Rails.env.local? && defined?(Bullet)
   Bullet.enable = true
   Bullet.bullet_logger = true
 
