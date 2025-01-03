@@ -7,18 +7,16 @@ class CoursesController < ApplicationController
   # GET /courses or /courses.json
   def index
     authorize :course
+    service = Courses::FilterService.instance
+    result = service.filter_courses(current_user, params[:tags], params[:term], params[:type])
 
-    if current_user.is_admin?
-      @available_courses = Course.includes([:banner_attachment]).all.limit(10)
-      @available_courses_count = Course.count
-    else
-      enrolled_course_ids = current_user.courses.pluck(:id)
-      @enrolled_courses = current_user.courses.includes([:banner_attachment, :enrollments]).limit(2)
-      @available_courses = Course.includes([:banner_attachment]).published.where.not(id: enrolled_course_ids).limit(10)
-
-      @enrolled_courses_count = current_user.courses.includes(:enrollments).size
-      @available_courses_count = Course.published.where.not(id: enrolled_course_ids).count
+    @available_courses = result[:available_courses]
+    @available_courses_count = result[:available_courses_count]
+    if !current_user.is_admin?
+      @enrolled_courses = result[:enrolled_courses]
+      @enrolled_courses_count = result[:enrolled_courses_count]
     end
+    @tags = Tag.all
     @type = permitted_type(params[:type])
     apply_pagination if @type.present?
   end
@@ -120,16 +118,6 @@ class CoursesController < ApplicationController
                                           enrollment.current_lesson_id || @course.first_module.first_lesson)
   end
 
-  def search
-    authorize :course
-    service = CourseManagementService.instance
-    @keyword = params[:term]
-    search_query = service.search(current_user, @keyword)
-    @search_results = search_query.page(filter_params[:page])
-    @search_results_count = search_query.size
-    render :index
-  end
-
   def publish
     authorize @course
 
@@ -177,8 +165,11 @@ class CoursesController < ApplicationController
   end
 
   def apply_pagination
-    @available_courses = @available_courses.page(filter_params[:page])
-    @enrolled_courses = @enrolled_courses.page(filter_params[:page]) if !current_user.is_admin?
+    if @type == "all"
+      @available_courses = @available_courses.page(filter_params[:page])
+    else
+      @enrolled_courses = @enrolled_courses.page(filter_params[:page]) if !current_user.is_admin?
+    end
   end
 
   def permitted_type(type)

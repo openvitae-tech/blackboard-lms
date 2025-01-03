@@ -67,10 +67,15 @@ class CourseManagementService
   end
 
   def search(user, term)
+    courses_scope = Course.where('title ILIKE ?', "%#{term}%").order(created_at: :desc)
+
     if user.is_admin?
-      Course.where('title ilike ?', "%#{term}%").includes(:banner_attachment)
+      courses_scope
     else
-      Course.published.where('title ilike ?', "%#{term}%").includes(:banner_attachment)
+      {
+        current_user_enrolled_courses: user.courses.merge(courses_scope),
+        current_user_available_courses: courses_scope.published
+      }
     end
   end
 
