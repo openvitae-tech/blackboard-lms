@@ -6,6 +6,7 @@ export default class extends Controller {
     connect() {
         self.startTime = new Date();
         if (this.hasVideoPlayerTarget) {
+            this.loaderTarget.classList.remove("hidden");
             this.videoPlayerTarget.addEventListener("load", this.hideLoader.bind(this));
         }
     }

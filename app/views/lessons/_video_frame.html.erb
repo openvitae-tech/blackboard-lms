@@ -9,10 +9,10 @@
           <% end %>
         </div>
       <% else %>
-        <%= render "video_player" %>
+        <%= render "video_player", video_iframe: @video_iframe, local_content: @local_content %>
       <% end %>
     <% else %>
-      <div class="w-full inline-block text-center">Sorry! Video is not available</div>
+      <div class="w-full inline-block text-center"><%= t("local_content.video_not_available") %></div>
     <% end %>
   </div>
   <div class="flex flex-col md:flex-row gap-6 md:justify-between pt-4 pb-6 md:pt-6 md:pb-12">
