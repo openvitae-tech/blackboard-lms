@@ -68,9 +68,9 @@ class CourseManagementService
 
   def search(user, term)
     if user.is_admin?
-      Course.where('title ilike ?', "%#{term}%")
+      Course.where('title ilike ?', "%#{term}%").includes(:banner_attachment)
     else
-      Course.published.where('title ilike ?', "%#{term}%")
+      Course.published.where('title ilike ?', "%#{term}%").includes(:banner_attachment)
     end
   end
 
