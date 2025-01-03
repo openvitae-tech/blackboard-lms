@@ -1,6 +1,12 @@
-<%= render "show_mobile" %>
-<%= render "show_desktop" %>
+<%= render "shared/components/layout" do %>
+  <%= render 'teams/page_header', team: @team %>
 
-<%= turbo_frame_tag "add-new-team-modal" %>
-<%= turbo_frame_tag "edit-team-modal" %>
+  <%= render 'teams/team_actions' %>
+
+  <%= render 'teams/member_list', team: @team %>
+  <%= render 'teams/sub_teams', team: @team, sub_teams: @team.sub_teams.includes(:banner_attachment) %>
+<% end %>
+
+<%= turbo_frame_tag 'add-new-team-modal' %>
+<%= turbo_frame_tag 'edit-team-modal' %>
 <%= turbo_frame_tag 'add-user-modal' %>

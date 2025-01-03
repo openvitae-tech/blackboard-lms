@@ -1,7 +1,9 @@
 <% if team.sub_teams.empty? %>
-  <div class="mt-6 flex justify-between gap-60 rounded border border-dashed p-8 border-primary box-shadow-medium">
-    <p class="text-sm w-[446px]">
-    Welcome, you can manage departments/teams under your team by adding teams for each department/team here.
+  <div
+    class="mt-6 flex flex-col md:flex-row justify-between gap-4 md:gap-60 rounded border border-dashed p-8 border-primary box-shadow-medium"
+  >
+    <p class="text-sm md:w-[446px]">
+      Welcome, you can manage departments/teams under your team by adding teams for each department/team here.
     </p>
     <% if policy(team).new? %>
       <%= link_to new_team_path(parent_team_id: team.id), data: { turbo_frame: "add-new-team-modal" } do %>
@@ -20,8 +22,8 @@
   </div>
 <% end %>
 
-<ul id="team-list-desktop" class="flex flex-col gap-4 mt-6 overflow-y-auto max-h-[240px]">
+<ul id="team-list-desktop" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 overflow-y-auto max-h-[400px]">
   <% sub_teams.each do |sub_team| %>
-    <%= render 'teams/team_desktop', team: sub_team %>
+    <%= render 'teams/team_card', team: sub_team %>
   <% end %>
 </ul>
