@@ -13,13 +13,12 @@
     <div class="flex items-center justify-center">
       <div class="w-4/6 flex flex-col gap-4">
         <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
-          <% video_iframe = get_video_iframe(builder.object) %>
-          <% if Rails.env.production? && video_iframe.present? %>
-            <%= video_iframe.html_safe %>
-          <% elsif Rails.env.development? %>
-            <%= video_tag rails_blob_path(builder.object.video), controls: true %>
+          <% if Rails.env.production? && is_upload_pending(builder.object) %>
+            <div class="absolute inset-0 flex justify-center items-center">
+              <span class="text-center"><%= t("local_content.video_not_available") %></span>
+            </div>
           <% else %>
-            <div class="w-full inline-block text-center">Uploaded video is under process. Please refresh the page after some time.</div>
+            <%= render "video_player", video_iframe: get_video_iframe(builder.object), local_content: builder.object %>
           <% end %>
         </div>
       </div>
