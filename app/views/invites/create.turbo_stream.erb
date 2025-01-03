@@ -1,6 +1,5 @@
 <%= turbo_stream.replace "modal-flash", partial: "shared/components/modal_flash" %>
 
 <% unless @bulk_invite %>
-  <%= turbo_stream.prepend "team-member-list-desktop", partial: "teams/member_list_items", locals: { team: @team, member: @user } %>
-  <%= turbo_stream.prepend "team-member-list-mobile", partial: "teams/member_mobile", locals: { team: @team, member: @user } %>
+  <%= turbo_stream.prepend "team-member-list", partial: "teams/member_list_items", locals: { team: @team, member: @user } %>
 <% end %>
