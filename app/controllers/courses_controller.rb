@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
   def index
     authorize :course
     service = Courses::FilterService.instance
-    result = service.filter_courses(current_user, params[:tags], params[:term])
+    result = service.filter_courses(current_user, params[:tags], params[:term], params[:type])
 
     @available_courses = result[:available_courses]
     @available_courses_count = result[:available_courses_count]
@@ -165,8 +165,11 @@ class CoursesController < ApplicationController
   end
 
   def apply_pagination
-    @available_courses = @available_courses.page(filter_params[:page])
-    @enrolled_courses = @enrolled_courses.page(filter_params[:page]) if !current_user.is_admin?
+    if @type == "all"
+      @available_courses = @available_courses.page(filter_params[:page])
+    else
+      @enrolled_courses = @enrolled_courses.page(filter_params[:page]) if !current_user.is_admin?
+    end
   end
 
   def permitted_type(type)

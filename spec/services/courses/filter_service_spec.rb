@@ -20,7 +20,7 @@ RSpec.describe Courses::FilterService do
     context 'when the user is an admin' do
       it 'filter courses based on search term' do
         result = service.filter_courses(user, [], @course_one.title)
-        expect(result[:available_courses].pluck(:id)).to eq([@course_one.id])
+        expect(result[:available_courses].reload.pluck(:id)).to eq([@course_one.id])
       end
 
       it 'filter courses based on tags' do
