@@ -2,10 +2,10 @@
   <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
     <% if @local_content.video.attached? %>
       <% if Rails.env.production? && is_upload_pending(@local_content) && current_user.is_admin? %>
-        <div class="flex justify-center items-center">
+        <div class="absolute inset-0 flex justify-center items-center">
           <%= link_to retry_course_module_lesson_local_content_path(course, course_module, lesson, lang: get_local_content_lang(lesson)),
               data: { turbo_method: :put } do %>
-            <%= render "shared/components/button_default_small", label: "Retry upload", icon_name: "icon-retry" %>
+            <%= render "shared/components/icon_button_primary_small", label: "Retry upload", icon_name: "icon-retry" %>
           <% end %>
         </div>
       <% else %>
