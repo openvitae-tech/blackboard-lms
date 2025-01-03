@@ -1,18 +1,20 @@
 <li class="flex flex-col gap-2" data-controller="show-less">
-  <div class="flex justify-between items-center">
-    <h3 class="flex flex-row items-center gap-4">
-      <div class="bg-primary-light-50 p-1 rounded">
-        <span class="h-4 w-4 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %> bg-primary"></span>
-      </div>
+  <div class="flex flex-row flex-wrap md:items-center justify-between md:gap-4">
+    <div class="flex-none order-1 md:order-1 flex items-center justify-center bg-primary-light-50 p-1 rounded">
+      <span class="h-4 w-4 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %> bg-primary"></span>
+    </div>
+    <div class="order-3 md:order-2 text-left mt-2 md:mt-0 grow">
       <span class="text-base font-semibold text-primary"><%= title %></span>
-    </h3>
-    <button class="flex items-center justify-center focus:outline-none" data-show-less-target="showMoreToggle" data-action="click->show-less#showMoreToggle">
-      <span class="text-xs text-primary">Show more</span>
-      <span class="hidden icon-arrow-up icon-small bg-primary" data-show-less-target="upArrow"></span>
-      <span class="icon icon-arrow-down icon-small bg-primary" data-show-less-target="downArrow"></span>
-    </button>
+    </div>
+    <div class="flex-none order-2 md:order-3 flex items-center justify-center md:justify-end">
+      <button class="flex items-center justify-center focus:outline-none" data-show-less-target="showMoreToggle" data-action="click->show-less#showMoreToggle">
+        <span class="text-xs text-primary">Show more</span>
+        <span class="hidden icon-arrow-up icon-small bg-primary" data-show-less-target="upArrow"></span>
+        <span class="icon icon-arrow-down icon-small bg-primary" data-show-less-target="downArrow"></span>
+      </button>
+    </div>
   </div>
-  <p class="text-sm pl-10 pr-14 max-h-10 overflow-hidden <%= 'line-clamp-3' if description.length > 150 %>" data-show-less-target="courseDescription">
+  <p class="text-sm md:pl-10 md:pr-14 max-h-10 overflow-hidden" data-show-less-target="courseDescription">
     <%= description %>
   </p>
 </li>
