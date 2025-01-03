@@ -1,0 +1,9 @@
+<div class=" flex items-center justify-center text-base font-medium h-full">
+  <% if type == "search_and_tags" %>
+    <span>No courses found matching your search query "<%= params[:term] %>" and applied filters.</span>
+  <% elsif type == "search" %>
+    <span>No courses found matching your search query "<%= params[:term] %>".</span>
+  <% else %>
+    <span>No courses found with the selected filters.</span>
+  <% end %>
+</div>

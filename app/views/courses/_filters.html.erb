@@ -1,35 +1,41 @@
-<div class="w-80 bg-white shadow-lg fixed right-0 -mt-8 h-full border-line-colour-light border hidden z-10" data-courses-target="filters">
-  <div class="flex flex-row justify-between pl-4 pt-4">
-    <h2 class="text-lg font-semibold mb-4">Filter by</h2>
-    <span class="icon icon-close icon-small mt-1 cursor-pointer mr-2 bg-black" data-action="click->courses#closeFilter"></span>
+<div class="md:w-80 w-full bg-white box-shadow-medium fixed right-0 -mt-8 h-screen hidden z-50" data-courses-target="filters">
+  <div class="flex flex-row items-center justify-between border-b-2 border-line-colour mb-4 p-4">
+    <h2 class="text-lg font-semibold">Filter by</h2>
+    <span class="icon icon-close icon-small cursor-pointer bg-black" data-action="click->courses#closeFilter"></span>
   </div>
-  <hr class="my-2 border-t-2 border-line-colour w-full">
-  <%= form_with url: courses_path, method: :get, local: true, data: {controller: "courses", action: "submit->courses#formSubmit"} do |form| %>
-    <div class="pl-4 pt-2">
-      <h3 class="text-sm text-primary mb-2">Levels</h3>
+  <%= form_with url: courses_path, method: :get, local: true,class:"h-full flex flex-col justify-between", data: {controller: "courses", action: "submit->courses#formSubmit"} do |form| %>
+    <div class="overflow-y-auto max-h-[calc(100vh-220px)] pb-4">
+      <div class="flex flex-col gap-2 p-4 border-b-2 border-line-colour">
+        <div class=" flex justify-between">
+          <h3 class="text-xs font-medium text-primary mb-2">Levels</h3>
+          <span class="text-xs cursor-pointer mb-2" data-action="click->courses#clearFilters">Clear filter</span>
+        </div>
+        <ul class="flex flex-col gap-4">
+          <% tags.level.each do |tag| %>
+            <li class="mb-2 flex items-center">
+              <%= check_box_tag 'tags[]', tag.name, params[:tags]&.include?(tag.name), class: 'mr-2 h-3 w-3 tags-checkbox', data: { courses_target: 'checkbox' } %>
+              <a class="text-sm"><%= tag.name %></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="flex flex-col gap-2 p-4">
+        <div class="pt-2">
+          <h3 class="text-xs font-medium text-primary mb-2">Category</h3>
+        </div>
+        <ul class="flex flex-col gap-4">
+          <% tags.category.each do |tag| %>
+            <li class="mb-2 flex items-center">
+              <%= check_box_tag 'tags[]', tag.name, params[:tags]&.include?(tag.name), class: 'mr-2 h-3 w-3 tags-checkbox', data: { courses_target: 'checkbox' } %>
+              <a class="text-sm"><%= tag.name %></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-    <ul class="p-4">
-      <% tags.level.each do |tag| %>
-        <li class="mb-2 flex items-center">
-          <%= check_box_tag "tags[]", tag.name, params[:tags]&.include?(tag.name), class: "mr-2" %>
-          <a class="text-blue-600"><%= tag.name %></a>
-        </li>
-      <% end %>
-    </ul>
-    <hr class="my-2 border-t-2 border-line-colour w-full">
-    <div class="pl-4 pt-2">
-      <h3 class="text-sm text-primary mb-2">Category</h3>
-    </div>
-    <ul class="p-4">
-      <% tags.category.each do |tag| %>
-        <li class="mb-2 flex items-center">
-          <%= check_box_tag "tags[]", tag.name, params[:tags]&.include?(tag.name), class: "mr-2" %>
-          <a class="text-blue-600"><%= tag.name %></a>
-        </li>
-      <% end %>
-    </ul>
-    <div class="pl-4 pt-4">
-      <%= form.submit 'Apply Filters', class: 'btn btn-primary' %>
+
+    <div class="flex gap-4 p-4 text-sm justify-center sticky bottom-0 -mb-8 w-full bg-white items-center border-t-2 border-line-colour">
+      <%= form.submit 'Apply Filters', class: 'btn-primary w-full' %>
     </div>
   <% end %>
 </div>
