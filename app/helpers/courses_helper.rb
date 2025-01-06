@@ -145,8 +145,7 @@ module CoursesHelper
       two_days: '2 Days',
       one_week: '1 Week',
       two_weeks: '2 Weeks',
-      one_month: '1 Month',
-      custom: 'Custom'
+      one_month: '1 Month'
     }.invert
   end
 

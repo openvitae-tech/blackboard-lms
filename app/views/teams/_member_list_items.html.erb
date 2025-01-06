@@ -1,0 +1,44 @@
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center py-4 md:px-4 shadow-[0px_0px_4px_0px_#33333329] rounded md:shadow-none">
+  <div class="flex flex-wrap justify-between gap-2 items-center col-span-1 md:col-span-4 border-b md:border-none border-line-colour pl-4 pb-2 md:pb-0 md:pl-0">
+    <%= link_to member_path(member), class: "cursor-pointer" do %>
+      <div class="flex gap-2 items-center">
+        <span class="inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large flex-shrink-0">
+          <%= render 'shared/components/profile_pic', letter: letter_avatar(member) %>
+        </span>
+        <span class="ml-2 font-medium text-sm text-ellipsis"><%= member.name %></span>
+      </div>
+    <% end %>
+    <% if member.verified? %>
+      <div class="mt-1 md:mt-0 flex flex-1 justify-end pe-6">
+        <%= render 'shared/components/label_small_success', label: 'Verified', icon_name: 'icon-complete' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-span-1 md:col-span-3 text-xs md:text-sm break-words px-4 md:px-0">
+    <%= member.email %>
+  </div>
+
+  <div class="col-span-1 md:col-span-2 text-xs md:text-sm pl-4 md:pl-0"><%= member.phone %></div>
+
+  <div class="col-span-1 md:col-span-3 text-xs md:text-sm px-4 md:px-0">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-between">
+      <div class="col-span-1 md:col-span-2 text-xs md:text-sm">
+        <%= role_text(member.role) %>
+      </div>
+      <div class="flex flex-col gap-2 col-span-1 md:col-span-2 items-end md:items-start text-xs md:text-sm">
+        <% if member.verified_learner? && policy(:course_assigns).new? %>
+          <%= link_to new_course_assign_path(user_id: member) do %>
+            <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
+          <% end %>
+        <% end %>
+
+        <% if InvitePolicy.new(current_user, member).resend? %>
+          <%= link_to resend_invite_path(member, team_id: team.id), data: { turbo_method: "put" } do %>
+            <%= render 'shared/components/label_medium_success', label: 'Re-Invite', icon_name: 'icon-re-invite' %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+</div>

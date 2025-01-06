@@ -3,7 +3,6 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
     static targets = [
         "durationContainer",
-        "labelContainer",
         "customLabelContainer",
         "dateSelector"
 
@@ -11,21 +10,11 @@ export default class extends Controller {
 
     toggle(event) {
         this.dateSelectorTarget.disabled = !this.dateSelectorTarget.disabled;
-
+    
         if (!this.dateSelectorTarget.disabled) {
-            this.durationContainerTarget.classList.remove("hidden");
+            this.durationContainerTarget.classList.remove("invisible", "opacity-0");
         } else {
-            this.durationContainerTarget.classList.add("hidden");
-        }
-    }
-
-    durationChanged(event) {
-        if (event.target.value === "custom") {
-            this.labelContainerTarget.classList.add("hidden");
-            this.customLabelContainerTarget.classList.remove("hidden");
-        } else {
-            this.customLabelContainerTarget.classList.add("hidden");
-            this.labelContainerTarget.classList.remove("hidden");
+            this.durationContainerTarget.classList.add("invisible", "opacity-0");
         }
     }
 
