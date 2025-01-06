@@ -1,8 +1,0 @@
-<%= render "shared/components/desktop_layout" do %>
-  <%= render "teams/page_header_desktop", team: @team %>
-
-  <%= render "teams/team_actions" %>
-
-  <%= render "teams/member_list", team: @team %>
-  <%= render "teams/sub_teams", team: @team, sub_teams: @team.sub_teams.includes(:banner_attachment) %>
-<% end %>
