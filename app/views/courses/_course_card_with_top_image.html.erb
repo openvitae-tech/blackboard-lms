@@ -26,7 +26,7 @@
         <p class="my-2 overflow-hidden text-ellipsis text-sm font-medium tracking-tight text-black0 max-h-[20px]">Course Description</p>
         <p class="overflow-hidden text-ellipsis text-justify text-sm tracking-tight text-letter-color-light max-h-[60px]"><%= course_description(course, 250) %></p>
       </div>
-      <div class="p-4 flex flex-wrap justify-start gap-2">
+      <div class="px-4 pb-4 flex flex-wrap justify-start gap-2">
         <% course.tags.each do |tag| %>
           <span class="px-2 py-1 text-xs font-medium text-white bg-primary-light rounded">
             <%= tag.name %>
