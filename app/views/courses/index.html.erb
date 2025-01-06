@@ -54,7 +54,7 @@
       <%= render 'courses/not_found_msg', type: 'search' %>
     <% elsif @type == "enrolled" &&  @enrolled_courses.blank? %>
       <%= render 'courses/not_found_msg', type: (params[:tags].present? && params[:term].present? ? 'search_and_tags' : params[:term].present? ? 'search' : 'tags') %>
-    <% elsif  @type == "all" &&  @available_courses.blank?%>
+    <% elsif  @type == "all" &&  @available_courses.blank? %>
       <%= render 'courses/not_found_msg', type: (params[:tags].present? && params[:term].present? ? 'search_and_tags' : params[:term].present? ? 'search' : 'tags') %>
     <% end %>
     <% if has_enrolled_courses? && @type != "all" %>

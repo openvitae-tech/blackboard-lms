@@ -55,6 +55,9 @@ en:
     module_updated: 'Course module was successfully updated.'
     module_deleted: 'Course module was successfully destroyed.'
     unique_tags: "Course cannot have duplicate tags"
+    no_courses_found_with_filters_and_search: "No courses found matching your search query \"%{search_term}\" and applied filters."
+    no_courses_with_search: "No courses found matching your search query \"%{search_term}\"."
+    no_courses_with_filter: "No courses found with the selected filters."
   login:
     invalid_or_incorrect_otp: "Incorrect otp or otp expired"
     incorrect_phone: "Incorrect mobile number"
