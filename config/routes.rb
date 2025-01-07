@@ -17,8 +17,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :notifications, only: :index
-
+  resources :notifications, only: [:index] do
+    collection do
+      get :count
+      get :clear
+      get :mark_as_read
+    end
+  end
   resources :course_assigns, param: :user_id, only: %i[new create]
 
   resource :settings, only: %i[show edit update] do
