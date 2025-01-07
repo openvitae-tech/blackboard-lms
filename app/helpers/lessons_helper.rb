@@ -31,4 +31,25 @@ module LessonsHelper
     default_language = lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE.downcase)
     default_language.present? ? default_language : lesson.local_contents.first
   end
+
+  def lesson_navigation_buttons(course, course_module, lesson)
+    [
+      {
+        label: "Previous",
+        link: prev_lesson_path(course, course_module, lesson)
+      },
+      {
+        label: "Next",
+        link: next_lesson_path(course, course_module, lesson)
+      }
+    ]
+  end
+
+  def is_lesson_completed(course_id, lesson_id)
+    current_user.get_enrollment_for(current_user.courses.find(course_id)).completed_lessons.include? lesson_id
+  end
+
+  def is_current_lesson(lesson_id, current_lesson_id)
+    lesson_id.to_s == current_lesson_id
+  end
 end
