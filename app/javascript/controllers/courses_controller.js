@@ -1,13 +1,25 @@
 import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
-  static targets = ["filters"]
+  static targets = ["filters", "checkbox", "searchInput"]
+
+  connect() {
+    const url =  this.getUrl();
+
+    if (url.searchParams.has('clear_search')) {
+      this.searchInputTarget.focus();
+      url.searchParams.delete('clear_search');
+      Turbo.navigator.history.push(url);
+    }
+  }
 
   openFilter() {
     this.filtersTarget.classList.remove("hidden")
+    document.body.style.overflow = "hidden";
   }
 
   closeFilter() {
     this.filtersTarget.classList.add("hidden")
+    document.body.style.overflow = "";
   }
 
   formSubmit(event) {
@@ -53,5 +65,26 @@ export default class extends Controller {
     }
 
     return queryParts.join('&');
+  }
+
+  clearFilters(event) {
+    event.preventDefault();
+
+    this.checkboxTargets.forEach(checkbox => {
+      checkbox.checked = false;
+    });
+  }
+
+  clearSearch() {
+    this.searchInputTarget.value = "";
+    const url = this.getUrl();
+
+    url.searchParams.delete('term');
+    url.searchParams.set('clear_search', 'true');
+    Turbo.visit(url);
+  }
+
+  getUrl() {
+    return new URL(window.location.href);
   }
 }
