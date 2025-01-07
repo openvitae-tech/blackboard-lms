@@ -1,7 +1,10 @@
-<% if Rails.env.production? && @video_iframe.present? && @local_content.status == "complete" %>
-  <%= @video_iframe.html_safe %>
+<% if Rails.env.production? && video_iframe.present? && local_content.status == "complete" %>
+  <div class="absolute inset-0 flex justify-center items-center bg-white" data-lessons-target="loader">
+    <%= render "shared/components/spinner" %>
+  </div>
+  <%= video_iframe.gsub('<iframe', '<iframe data-lessons-target="videoPlayer"').html_safe %>
 <% elsif Rails.env.development? %>
-  <%= video_tag rails_blob_path(@local_content.video), controls: true %>
+  <%= video_tag rails_blob_path(local_content.video), controls: true %>
 <% else %>
-  <div class="w-full inline-block text-center">Uploaded video is under process. Please refresh the page after some time.</div>
+  <div class="absolute inset-0 flex justify-center items-center text-center"><%= t("local_content.video_under_process") %></div>
 <% end %>

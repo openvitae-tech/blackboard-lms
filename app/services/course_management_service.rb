@@ -91,7 +91,7 @@ class CourseManagementService
       next if result != :ok
 
       EVENT_LOGGER.publish_course_assigned(assigned_by, user.id, course.id)
-      Notification.notify(user, format(I18n.t('course.assigned'), course: course.title, name: assigned_by.name))
+      NotificationService.notify(user, I18n.t('course.assigned.title'), format(I18n.t('course.assigned.text'), course: course.title, name: assigned_by.name), link: '/')
       UserMailer.course_assignment(user, assigned_by, course).deliver_later
     end
   end

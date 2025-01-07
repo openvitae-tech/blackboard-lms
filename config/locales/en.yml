@@ -45,7 +45,9 @@ en:
     duplicate_enrolled: 'Already enrolled in this course'
     unenrolled: 'Successfully dropped out of the course'
     not_enrolled: 'You are not enrolled in this course'
-    assigned: "You have been assigned with new course %{course} by %{name}"
+    assigned:
+      title: 'New course assigned'
+      text: "You have been assigned with new course %{course} by %{name}"
     drop_warning: "Are you sure want to drop out ? Please note that all your progress will be lost!"
     published: 'Course is now available to everyone'
     unpublished: 'Course is unpublished and is not available for new enrollments'
@@ -69,6 +71,8 @@ en:
   local_content:
     video_not_found: 'Video for %{lang} must exists'
     lang_exists: '%{lang} already exists'
+    video_under_process: 'Uploaded video is under process. Please refresh the page after some time.'
+    video_not_available: "Sorry! Video is not available."
   lesson:
     duplicate_lesson: 'Lesson cannot have multiple local contents for the same language: %{langs}'
     must_have_local_content: "Lesson must have at least one local content."
