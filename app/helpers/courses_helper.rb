@@ -164,4 +164,8 @@ module CoursesHelper
   def quiz_position_text(course_module, quiz)
     "#{position_of_quiz(course_module, quiz)}/#{course_module.quizzes_count}"
   end
+
+  def updated_tags_query_params(tag)
+    url_for(request.query_parameters.merge(tags: params[:tags] - [tag]))
+  end
 end

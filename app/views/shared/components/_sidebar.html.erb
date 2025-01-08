@@ -1,11 +1,8 @@
 <input type="checkbox" id="sidebar-toggle" class="peer hidden" />
 <div class="bg-black fixed inset-0 z-40 hidden bg-opacity-90 peer-checked:block md:peer-checked:hidden md:hidden"></div>
-
 <aside class="bg-primary-light-50 side-bar peer-checked:translate-x-0 peer-checked:transition-transform peer-checked:duration-300 peer-checked:ease-in-out">
   <label for="sidebar-toggle" class="md:hidden icon icon-close bg-letter-color absolute right-6 top-6 icon-small cursor-pointer"></label>
-
   <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-10 pe-24 ps-8 hidden md:mt-8 md:block' %>
-
   <div class="flex h-[calc(100vh-60px)] md:h-full flex-col justify-between mt-14 z-150">
     <ul class="flex flex-col gap-3">
       <% if policy(:dashboard).index? %>
@@ -35,6 +32,14 @@
           <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
             <span class="icon icon-team bg-letter-color icon-small"></span>
             <span>Team</span>
+          <% end %>
+        </li>
+      <% end %>
+      <% if current_user.is_admin? %>
+        <li class="side-bar-item <%= sidebar_active('tags') %>">
+          <%= link_to tags_path, class: "side-bar-item-inner" do %>
+            <span class="icon icon-course icon-small bg-letter-color"></span>
+            <span>Tags</span>
           <% end %>
         </li>
       <% end %>

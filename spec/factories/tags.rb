@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :tag, class: 'Tag' do
-    name { Faker::Lorem.unique.word }
+    name { Faker::Alphanumeric.unique.alpha(number: 10) }
   end
 end
