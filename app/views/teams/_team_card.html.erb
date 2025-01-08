@@ -1,9 +1,8 @@
 <li class="border border-line-colour-light rounded box-shadow-small h-[168px]">
   <%= link_to team_path(team) do %>
     <div class="flex flex-col">
-      <% if team.banner.present? %>
-        <%= image_tag team.banner, alt: 'Image', class: 'w-full h-[87px] object-cover rounded-t' %>
-      <% end %>
+      <%= image_tag team_banner(team, 'desktop'), class: 'w-full h-[87px] object-fill rounded-t' %>
+
       <div class="flex flex-col items-start py-4 px-4">
         <h3 class="font-medium text-primary"><%= team.name %></h3>
         <div class="flex flex-row items-center justify-between w-full">
