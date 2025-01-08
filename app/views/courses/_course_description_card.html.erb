@@ -1,6 +1,6 @@
 <div class="flex flex-col border-b px-6 py-6 border-line-colour">
   <div class="flex flex-col md:flex-row gap-4">
-    <%= image_tag course_banner(course, :vertical), class: "md:h-[216px] md:w-[140px] h-[120px] w-[328px] object-cover" %>
+    <%= image_tag course_banner(course, :vertical), class: 'md:h-[216px] md:w-[140px] h-[120px] w-[328px] object-cover' %>
     <div class="flex w-full flex-col gap-4">
       <div class="flex justify-between">
         <p class="overflow-hidden text-ellipsis text-2xl font-extrabold text-primary">
@@ -8,14 +8,14 @@
         </p>
         <% if policy(course).edit? %>
           <%= link_to edit_course_path(course), class: "nav-link" do %>
-            <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+            <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
           <% end %>
         <% end %>
       </div>
 
       <% if enrollment && (enrollment.progress > 0) %>
         <div class="w-80">
-          <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+          <%= render 'shared/components/progress_bar', progress: enrollment.progress %>
         </div>
       <% end %>
       <div class="flex justify-between space-x-2">
@@ -32,33 +32,30 @@
             <span class="icon icon-user h-3.5 w-3.5 bg-primary"></span>
             <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
           </div>
-        </div>     
+        </div>
       </div>
-      <p class="overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">
-        Course Description
-      </p>
+      <p class="overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px]">Course Description</p>
       <div class="p-4 text-justify text-sm tracking-tight bg-primary-light-50 rounded-lg">
         <div class="h-full overflow-hidden flex items-center text-base">
           <%= course_description(course) %>
         </div>
       </div>
-
     </div>
   </div>
   <div class="flex justify-center md:justify-end  gap-4 mt-6">
     <% if policy(course).unenroll? %>
       <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
-        <%= render "shared/components/outline_icon_button_secondary_small", icon_name: 'icon-minus', label: 'Drop' %>
+        <%= render 'shared/components/outline_icon_button_secondary_small', icon_name: 'icon-minus', label: 'Drop' %>
       <% end %>
     <% end %>
     <% if policy(course).enroll? %>
       <%= link_to enroll_course_path(course), data: { turbo_method: :put }  do %>
-        <%= render "shared/components/button_primary_small", label: 'Enroll' %>
+        <%= render 'shared/components/button_primary_small', label: 'Enroll' %>
       <% end %>
     <% end %>
     <% if policy(course).proceed? %>
       <%= link_to proceed_course_path(course) do %>
-        <%= render "shared/components/icon_button_primary_small", label: 'Continue', icon_name: 'icon-next', icon_right: true %>
+        <%= render 'shared/components/icon_button_primary_small', label: 'Continue', icon_name: 'icon-next', icon_right: true %>
       <% end %>
     <% end %>
   </div>

@@ -166,8 +166,6 @@
   }
 }
 
-
-
 .btn-watch-demo {
   @apply flex items-center gap-2 px-3 py-2 text-white bg-black max-w-[188px] rounded-[32px] md:max-w-[296px] md:gap-5 md:px-5 md:py-3;
 
@@ -193,7 +191,7 @@
 }
 
 .item-selected {
-  @apply bg-primary text-white;
+  @apply bg-primary text-white rounded-bl-xl;
 
   span {
     @apply text-white;

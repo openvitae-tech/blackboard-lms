@@ -15,13 +15,12 @@
  */
 
 * {
-    font-family: 'Montserrat', sans-serif;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    color: #333333;
-    letter-spacing: 0.025em;
+  font-family: "poppins";
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: #404041;
+  letter-spacing: 0.025em;
 }
 
-@import 'actiontext.css';
-
+@import "actiontext.css";

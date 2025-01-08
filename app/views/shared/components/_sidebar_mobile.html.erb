@@ -1,14 +1,14 @@
 <input type="checkbox" id="sidebar-toggle" class="peer hidden" />
 <div class="bg-black fixed inset-0 z-50 hidden bg-opacity-90 peer-checked:block"></div>
-<div class="bg-primary-light-50 fixed inset-y-0 left-0 z-50 h-screen w-64 min-w-64 -translate-x-full transform transition-transform duration-300 ease-in-out peer-checked:translate-x-0">
-  <label for="sidebar-toggle" class="icon icon-close bg-letter-color absolute right-6 top-6 icon-small cursor-pointer"></label>
+<div class="bg-primary-dark fixed inset-y-0 left-0 z-50 h-screen w-64 min-w-64 -translate-x-full transform transition-transform duration-300 ease-in-out peer-checked:translate-x-0">
+  <label for="sidebar-toggle" class="icon icon-close bg-white absolute right-6 top-6 icon-small cursor-pointer"></label>
   <div class="flex h-full flex-col justify-between pt-14">
     <ul class="flex flex-col gap-3">
       <% if policy(:dashboard).index? %>
         <li class="side-bar-item <%= sidebar_active('dashboards') %>">
           <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-home icon-small bg-letter-color"></span>
-            <span class="">Home</span>
+            <span class="icon icon-home icon-small bg-white"></span>
+            <span class="text-white">Home</span>
           <% end %>
         </li>
       <% end %>
@@ -16,35 +16,35 @@
       <% if policy(:learning_partner).show? %>
         <li class="side-bar-item <%= sidebar_active('learning_partners') %>">
           <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-course icon-small bg-letter-color"></span>
-            <span class="">Partners</span>
+            <span class="icon icon-course icon-small bg-white"></span>
+            <span class="text-white">Partners</span>
           <% end %>
         </li>
       <% end %>
       <li class="side-bar-item <%= sidebar_active('courses') %>">
         <%= link_to courses_path, class: "side-bar-item-inner" do %>
-          <span class="icon icon-course icon-small bg-letter-color"></span>
-          <span class="">My Course</span>
+          <span class="icon icon-course icon-small bg-white"></span>
+          <span class="text-white">My Course</span>
         <% end %>
       </li>
       <% if policy(current_user.team || :team).show? %>
         <li class="side-bar-item <%= sidebar_active('teams') %>">
           <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
-            <span class="icon icon-team icon-small bg-letter-color"></span>
-            <span class="">Team</span>
+            <span class="icon icon-team icon-small bg-white"></span>
+            <span class="text-white">Team</span>
           <% end %>
         </li>
       <% end %>
       <li class="side-bar-item <%= 'item-selected' if 'teams' == 'Support' %>">
         <%= link_to supports_path, class: "side-bar-item-inner" do %>
-          <span class="icon icon-support icon-small bg-letter-color"></span>
-          <span>Support</span>
+          <span class="icon icon-support icon-small bg-white"></span>
+          <span class="text-white">Support</span>
         <% end %>
       </li>
     </ul>
     <%= button_to destroy_user_session_path, class: "side-bar-footer py-4 w-full", method: :delete, data: { turbo_method: :delete } do %>
-      <span class="icon icon-logout icon-small bg-letter-color"></span>
-      <span class="text-sm">Logout</span>
+      <span class="icon icon-logout icon-small bg-white"></span>
+      <span class="text-sm text-white">Logout</span>
     <% end %>
   </div>
 </div>
