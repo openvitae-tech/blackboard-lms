@@ -50,7 +50,7 @@
   }
 
   .btn-primary {
-    @apply rounded border px-4 text-center shadow-xl py-3.5 min-w-40 border-primary bg-primary text-white;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-primary bg-primary text-white;
     &:hover {
       @apply cursor-pointer opacity-95;
     }
@@ -61,7 +61,7 @@
   }
 
   .btn-secondary {
-    @apply rounded border px-4 text-center shadow-xl py-3.5 min-w-40 border-secondary bg-secondary text-white;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-secondary bg-secondary text-white;
     &:hover {
       @apply cursor-pointer opacity-95;
     }
@@ -220,4 +220,14 @@ details.highlighted summary {
 
 li.highlighted {
   @apply border border-primary-light;
+}
+
+input.tags-checkbox:checked,
+input.tags-checkbox:checked:focus {
+  @apply bg-secondary;
+}
+
+input.tags-checkbox:focus,
+input.tags-checkbox:checked:focus {
+  @apply ring-0 focus:outline-none;
 }
