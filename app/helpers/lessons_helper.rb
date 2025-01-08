@@ -35,11 +35,11 @@ module LessonsHelper
   def lesson_navigation_buttons(course, course_module, lesson)
     [
       {
-        label: "Previous",
+        label: t("lesson.previous"),
         link: prev_lesson_path(course, course_module, lesson)
       },
       {
-        label: "Next",
+        label: t("lesson.next"),
         link: next_lesson_path(course, course_module, lesson)
       }
     ]
@@ -51,5 +51,9 @@ module LessonsHelper
 
   def is_current_lesson(lesson_id, current_lesson_id)
     lesson_id.to_s == current_lesson_id
+  end
+
+  def lesson_in_course_module?(course_module, lesson_id)
+    course_module.lessons.pluck(:id).include?(lesson_id.to_i)
   end
 end

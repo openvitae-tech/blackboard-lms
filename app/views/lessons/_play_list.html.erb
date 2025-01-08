@@ -2,7 +2,7 @@
   <div class="md:border md:border-line-colour md:rounded md:overflow-auto md:max-h-screen flex flex-col gap-4 md:py-2">
     <% modules_in_order(course).each do |course_module| %>
       <details
-        <% if course_module.lessons.pluck(:id).include? params[:id].to_i %>
+        <% if lesson_in_course_module?(course_module, params[:id]) %>
           class="border border-line-colour md:mx-2 rounded  highlighted"
           open="open"
         <% else %>
