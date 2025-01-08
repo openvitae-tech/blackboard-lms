@@ -7,9 +7,7 @@
     <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-6 w-16 md:h-10 md:w-24' %>
   </div>
   <div class="flex-none flex gap-5 items-center">
-    <%= link_to notifications_path, class:"inline-block hover:pointer" do %>
-      <span class="icon icon-notification icon-small md:icon-base bg-letter-color"></span>
-    <% end %>
+    <%= render 'notifications/notification' %>
     <%= link_to settings_path, class:"inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large" do %>
       <%= render 'shared/components/profile_pic', letter: letter_avatar(current_user) %>
     <% end %>
