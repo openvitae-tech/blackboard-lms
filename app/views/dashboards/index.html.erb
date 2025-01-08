@@ -1,3 +1,53 @@
+<%= render "shared/components/layout" do %>
+  <div class="flex items-center justify-between py-4 px-1">
+    <div class="text-base font-medium flex gap-1">
+      <span class="">Welcome</span><span class=""><%= current_user.display_name %></span>
+    </div>
+    <div class="flex justify-between relative">
+      <%= render 'shared/components/dropdown_menu', menu: duration_menu_for(@team), selected_item: selected_label %>
+    </div>
+  </div>
 
-<%= render 'index_mobile' %>
-<%= render 'index_desktop' %>
+  <%= render 'dashboards/average_time_spend_chart', dashboard: @dashboard %>
+
+  <div class="p-6 bg-white rounded-lg box-shadow-medium mt-6">
+    <p class="text-lg md:text-xl font-semibold text-center">
+      Your team have spent in
+      <span class="text-primary "><%= duration_in_words(@dashboard.total_time_spent_metric) %></span> during this period
+    </p>
+    <!--   <p class="mt-2 text-sm font-medium">-->
+    <!--      That means <span class="text-primary">200% +</span> higher than last week-->
+    <!--   </p>-->
+    <div class="mt-6 flex flex-row justify-between text-start">
+      <div class="text-center">
+        <p class="text-primary text-xl md:text-2xl font-bold">
+          <%= duration_in_words(@dashboard.average_time_spent_metric) %>
+        </p>
+        <p class="pt-1 text-sm">AVG watch time per user</p>
+      </div>
+      <div class="text-center">
+        <p class="text-primary text-xl md:text-2xl font-bold"><%= @dashboard.active_course_count_metric %></p>
+        <p class="pt-1 text-sm">Active courses</p>
+      </div>
+      <div class="text-center">
+        <p class="text-primary text-xl md:text-2xl font-bold"><%= @dashboard.team_score_metric %></p>
+        <p class="pt-1 text-sm">Team score</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="md:mb-6 mt-8 md:mx-1 flex md:flex-row flex-col md:gap-6 gap-4">
+    <%= render 'dashboards/watch_time_chart', dashboard: @dashboard %>
+    <%= render 'dashboards/total_views_chart', dashboard: @dashboard %>
+  </div>
+
+  <div class="mb-6 mt-4 md:mt-8 md:mx-1 flex md:flex-row flex-col md:gap-6 gap-4">
+    <%= render 'dashboards/users_enrolled', dashboard: @dashboard %>
+    <%= render 'dashboards/self_enrolled_vs_assigned_chart', dashboard: @dashboard %>
+  </div>
+
+  <!--<div class="mb-6 mt-8 mx-1 flex flex-row gap-6">-->
+  <!--  <%#= render "dashboards/enrolled_ratio_chart", dashboard: @dashboard %> -->
+  <!--   <div class="md:basis-1/2"></div>-->
+  <!--</div>-->
+<% end %>
