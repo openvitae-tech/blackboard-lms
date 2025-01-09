@@ -33,9 +33,9 @@
   <h1 class="page-sub-heading">Lessons</h1>
   <div class="my-4">
     <ul>
-      <li class="mb-4 rounded border p-6 text-sm border-line-colour-light">
-        <% if @course_module.lessons.present? %>
-          <% lessons_in_order(@course_module).each do |lesson| %>
+      <% if @course_module.lessons.present? %>
+        <% lessons_in_order(@course_module).each do |lesson| %>
+          <li class="mb-4 rounded border p-6 text-sm border-line-colour-light">
             <div class="flex items-center justify-between">
               <%= link_to course_module_lesson_path(@course, @course_module, lesson, class: "nav-link") do %>
                 <span class="text-sm md:text-base font-medium hover:underline">
@@ -64,25 +64,27 @@
                 </div>
               </div>
             </div>
-          <% end %>
-        <% else %>
+          </li>
+        <% end %>
+      <% else %>
+        <li class="mb-4 rounded border p-6 text-sm border-line-colour-light">
           <div class="flex flex-col items-center justify-center">
             <h2 class="text-base font-semibold pb-4">There are no lessons to show.</h2>
             <%= link_to new_course_module_lesson_path(@course, @course_module), class: "nav-link" do %>
               <%= render 'shared/components/icon_button_primary_small', label: 'New lesson', icon_name: 'icon-plus' %>
             <% end %>
           </div>
-        <% end%>
-      </li>
+        </li>
+      <% end%>
     </ul>
   </div>
   <h1 class="page-sub-heading">Quizzes</h1>
   <% if current_user.is_admin? %>
     <div class="my-4">
       <ul>
-        <li class="mb-4 gap-2 justify-between rounded border p-6 text-sm border-line-colour-light">
-          <% if @course_module.quizzes.present? %>
-            <% quizzes_in_order(@course_module).each do |quiz| %>
+        <% if @course_module.quizzes.present? %>
+          <% quizzes_in_order(@course_module).each do |quiz| %>
+            <li class="mb-4 gap-2 justify-between rounded border p-6 text-sm border-line-colour-light">
               <div class="flex items-center justify-between">
                 <%= link_to course_module_quiz_path(@course, @course_module, quiz) do %>
                   <span class="text-sm md:text-base font-medium hover:underline">
@@ -111,16 +113,18 @@
                   </div>
                 </div>
               </div>
-            <% end %>
-          <% else %>
+            </li>
+          <% end %>
+        <% else %>
+          <li class="mb-4 gap-2 justify-between rounded border p-6 text-sm border-line-colour-light">
             <div class="flex flex-col items-center justify-center">
               <h2 class="text-base font-semibold pb-4">There are no quizzes to show.</h2>
               <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
                 <%= render 'shared/components/icon_button_primary', label: 'New quiz', icon_name: 'icon-plus' %>
               <% end %>
             </div>
-          <% end %>
-        </li>
+          </li>
+        <% end %>
       </ul>
     </div>
   <% else %>
