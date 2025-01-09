@@ -1,7 +1,6 @@
-<%= mobile_view do %>
-  <%= render 'shared/components/admin_not_available'%>
-<% end %>
-<%= render "shared/components/desktop_layout" do %>
-  <%= render "shared/components/back_button", back_link: learning_partner_path(@learning_partner) %>
-  <%= render "form", learning_partner: @learning_partner %>
+<%= render "shared/components/layout" do %>
+  <div class="my-8 mx-auto w-full text-left md:max-w-3xl">
+    <%= render "shared/components/back_button", back_link: learning_partner_path(@learning_partner) %>
+    <%= render "form", learning_partner: @learning_partner %>
+  </div> 
 <% end %>
