@@ -48,9 +48,15 @@
     <% end %>
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
-        <%= button_to complete_course_module_lesson_path(course, course_module, lesson), params: { time_spent: 0}, class: "bg-primary flex items-center gap-2 rounded px-4 py-3", data: { action: "click->lessons#completeLesson", lessons_target: 'timeSpent', turbo_method: :post } do %>
-          <span class="text-xs text-white">Complete & Continue</span>
-          <span class="icon icon-next icon-small bg-white"></span>
+        <% if is_lesson_completed(course.id, lesson.id) %>
+          <%= link_to next_lesson_path(course, course_module, lesson), class: "bg-primary flex items-center gap-2 rounded px-4 py-3" do %>
+            <span class="text-xs text-white"><%= t("lesson.next") %></span>
+          <% end %>
+        <% else %>
+          <%= button_to complete_course_module_lesson_path(course, course_module, lesson), params: { time_spent: 0}, class: "bg-primary flex items-center gap-2 rounded px-4 py-3", data: { action: "click->lessons#completeLesson", lessons_target: 'timeSpent', turbo_method: :post } do %>
+            <span class="text-xs text-white"><%= t("lesson.complete_and_continue") %></span>
+            <span class="icon icon-next icon-small bg-white"></span>
+          <% end %>
         <% end %>
       </div>
     <% end %>
@@ -77,24 +83,15 @@
   </div>
   <% if current_user.is_admin? %>
     <div class="flex justify-end gap-4 py-8">
-      <% prev_link = prev_lesson_path(course, course_module, lesson) %>
-      <% if prev_link.blank? %>
-        <%= link_to "javascript:void(0);", class: "border-primary rounded border px-4 py-2 btn-disabled" do %>
-          <span class="text-primary text-xs">Previous</span>
-        <% end %>
-      <% else %>
-        <%= link_to prev_link, class: "border-primary rounded border px-4 py-2 " do %>
-          <span class="text-primary text-xs">Previous</span>
-        <% end %>
-      <% end %>
-      <% next_link = next_lesson_path(course, course_module, lesson) %>
-      <%  if next_link.blank? %>
-        <%= link_to "javascript:void(0);", class: "border-primary rounded border px-4 py-2 btn-disabled" do %>
-          <span class="text-primary text-xs">Next</span>
-        <% end %>
-      <% else %>
-        <%= link_to next_link, class: "border-primary rounded border px-4 py-2 btn-disabled" do %>
-          <span class="text-primary text-xs">Next</span>
+      <% lesson_navigation_buttons(course, course_module, lesson).each do |item| %>
+        <% if item[:link].blank? %>
+          <button class="border-primary rounded border px-4 py-2 disabled">
+            <span class="text-primary text-xs"><%= item[:label] %></span>
+          </button>
+        <% else %>
+          <%= link_to item[:link], class: "border-primary rounded border px-4 py-2" do %>
+            <span class="text-primary text-xs"><%= item[:label] %></span>
+          <% end %>
         <% end %>
       <% end %>
     </div>

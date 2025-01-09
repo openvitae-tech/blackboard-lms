@@ -62,7 +62,7 @@ class User < ApplicationRecord
   end
 
   def get_enrollment_for(course)
-    enrollments.where(course:).first
+    enrollments.find_by(course: course)
   end
 
   def verified?

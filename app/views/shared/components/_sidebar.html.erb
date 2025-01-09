@@ -1,7 +1,8 @@
 <input type="checkbox" id="sidebar-toggle" class="peer hidden" />
-<div class="bg-black fixed inset-0 z-40 hidden bg-opacity-90 peer-checked:block md:peer-checked:hidden md:hidden"></div>
-<aside class="bg-primary-light-50 side-bar peer-checked:translate-x-0 peer-checked:transition-transform peer-checked:duration-300 peer-checked:ease-in-out">
-  <label for="sidebar-toggle" class="md:hidden icon icon-close bg-letter-color absolute right-6 top-6 icon-small cursor-pointer"></label>
+<div class="bg-black fixed inset-0 black-shield hidden bg-opacity-90 peer-checked:block md:peer-checked:hidden md:hidden"></div>
+
+<aside class="bg-primary-light-50 side-bar -translate-x-full transform transition-transform duration-300 ease-in-out peer-checked:translate-x-0">
+  <label for="sidebar-toggle" class="icon icon-close bg-letter-color absolute right-6 top-6 icon-small cursor-pointer"></label>
 
   <div class="hidden md:mt-8 md:block">
     <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-10 side-bar-item' %>
@@ -54,7 +55,7 @@
         <% end %>
       </li>
     </ul>
-    <div class="side-bar-item side-bar-footer py-4 md:py-11 w-full">
+    <div class="side-bar-footer py-1 md:py-4 w-full sticky bottom-0">
       <%= button_to destroy_user_session_path, class: "side-bar-item-inner", method: :delete, data: { turbo_method: :delete } do %>
         <span class="icon icon-logout bg-letter-color icon-small"></span>
         <span class="text-sm">Logout</span>

@@ -10,20 +10,7 @@
   height: 100vh;
   width: 16rem;
   min-width: 16rem;
-  transform: translateX(-100%);
   position: fixed;
-}
-
-@media (min-width: 768px) {
-  .side-bar {
-    transform: translateX(0);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    position: sticky;
-    top: 0;
-    transition: none;
-  }
 }
 
 input:-webkit-autofill {
@@ -32,4 +19,8 @@ input:-webkit-autofill {
   background-image: none !important;
   box-shadow: 0 0 0px 1000px white inset !important;
   -webkit-text-fill-color: inherit !important;
+}
+
+.black-shield {
+  z-index: 51;
 }
