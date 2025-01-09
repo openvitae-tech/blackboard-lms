@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_09_083052) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_09_090332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -238,6 +238,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_09_083052) do
     t.bigint "team_id"
     t.string "otp_digest"
     t.datetime "otp_generated_at"
+    t.string "state", default: "none"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["learning_partner_id"], name: "index_users_on_learning_partner_id"

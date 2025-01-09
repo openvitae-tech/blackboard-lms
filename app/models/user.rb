@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
 
+  USER_STATES = %w[none active in-active]
+
   # add dynamic methods using meta programming for checking the current role
   # of a user.
   USER_ROLES.each do |role|
@@ -29,6 +31,7 @@ class User < ApplicationRecord
             inclusion: { in: USER_ROLES,
                          message: '%<value>s is not a valid user role' }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true
+  validates :state, inclusion: { in: USER_STATES, message: '%<value>s is not a valid user state' }
 
   has_secure_password :otp, validations: false
 
@@ -40,7 +43,6 @@ class User < ApplicationRecord
 
   has_many :enrollments, dependent: :destroy
   has_many :courses, through: :enrollments
-  has_many :notifications, dependent: :destroy
 
   belongs_to :team, optional: true
 
@@ -94,6 +96,19 @@ class User < ApplicationRecord
 
   def verified_learner?
     verified? && is_learner?
+  end
+
+  def active?
+    state == 'active'
+  end
+
+  def deactivated?
+    state == 'in-active'
+  end
+
+  def deactivate
+    self.state = 'in-active'
+    self.save
   end
 
   private

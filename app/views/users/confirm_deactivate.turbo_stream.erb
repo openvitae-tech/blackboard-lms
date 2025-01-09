@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "user-state", partial: "users/user_state", locals: { user: @user } %>
+<%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
+<%= turbo_stream.replace "modal" do %>
+  <%= turbo_frame_tag "modal" %>
+<% end %>
