@@ -52,7 +52,8 @@ RSpec.describe 'Request spec for feature teams' do
         team: {
           name: Faker::Restaurant.name,
           banner: image_file,
-          parent_team_id: @parent_team.id
+          parent_team_id: @parent_team.id,
+          department: 'NA'
         }
       }
     end
@@ -61,6 +62,7 @@ RSpec.describe 'Request spec for feature teams' do
       expect do
         post teams_path, params: @params
       end.to change(Team, :count).by(1)
+      expect(assigns[:team].department).to eq('NA')
     end
 
     it 'Unauthorized when creating team by non-manager' do
