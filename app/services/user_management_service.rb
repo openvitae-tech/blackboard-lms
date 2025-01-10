@@ -32,16 +32,16 @@ class UserManagementService
   def activate(manager, target_user)
     raise Errors::IllegalUserState.new("User state is illegal") unless target_user.deactivated?
     return false unless target_user.activate
-    active_user_count = manager.learning_partner.users.where(state: 'active').count
-    EVENT_LOGGER.publish_user_activated(manager, target_user, active_user_count)
+    EVENT_LOGGER.publish_user_activated(manager, target_user)
+    EVENT_LOGGER.publish_active_user_count(target_user)
     true
   end
 
   def deactivate(manager, target_user)
     raise Errors::IllegalUserState.new("User state is illegal") unless target_user.active?
     return false unless target_user.deactivate
-    active_user_count = manager.learning_partner.users.where(state: 'active').count
-    EVENT_LOGGER.publish_user_deactivated(manager, target_user, active_user_count)
+    EVENT_LOGGER.publish_user_deactivated(manager, target_user)
+    EVENT_LOGGER.publish_active_user_count(target_user)
     true
   end
 
