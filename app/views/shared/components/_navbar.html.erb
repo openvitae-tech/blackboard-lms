@@ -2,13 +2,12 @@
   <label for="sidebar-toggle" class="flex-none flex items-center cursor-pointer">
     <span class="icon icon-menu bg-letter-color icon-small"></span>
   </label>
-
   <div class="grow flex items-center justify-center md:justify-start">
     <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-6 w-16 md:h-10 md:w-24' %>
   </div>
   <div class="flex-none flex gap-5 items-center">
     <%= render 'notifications/notification' %>
-    <%= link_to settings_path, class:"inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large" do %>
+    <%= link_to user_settings_path, class:"inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large" do %>
       <%= render 'shared/components/profile_pic', letter: letter_avatar(current_user) %>
     <% end %>
   </div>

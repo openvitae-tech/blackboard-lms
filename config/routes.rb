@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   end
   resources :course_assigns, param: :user_id, only: %i[new create]
 
-  resource :settings, only: %i[show edit update] do
+  resource :user_settings, only: %i[show edit update] do
     collection do
       get :change_password
       put :update_password

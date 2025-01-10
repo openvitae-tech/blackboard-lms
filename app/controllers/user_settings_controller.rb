@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-class SettingsController < ApplicationController
+class UserSettingsController < ApplicationController
   before_action :set_user
   before_action :set_learning_partner
 
   def show
-    authorize :settings
+    authorize :user_settings
   end
   def edit
-    authorize :settings
+    authorize :user_settings
   end
 
   def update
-    authorize :settings
+    authorize :user_settings
     @user.update(profile_params)
 
     if @user.update(profile_params)
@@ -23,10 +23,10 @@ class SettingsController < ApplicationController
   end
 
   def change_password
-    authorize :settings
+    authorize :user_settings
   end
   def update_password
-    authorize :settings
+    authorize :user_settings
 
     if @user.update(password_params)
       redirect_to new_user_session_path, notice: I18n.t('settings.password_updated')
