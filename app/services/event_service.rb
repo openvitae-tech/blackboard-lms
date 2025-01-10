@@ -169,6 +169,30 @@ class EventService
     publish_event(user, event)
   end
 
+  def publish_user_activated(user, target_user, active_user_count)
+    event = Event::UserActivated.new(
+      partner_id: user.learning_partner_id,
+      user_id: user.id,
+      team_id: user.team_id,
+      target_user_id: target_user.id,
+      active_user_count: active_user_count
+    )
+
+    publish_event(user, event)
+  end
+
+  def publish_user_deactivated(user, target_user, active_user_count)
+    event = Event::UserDeactivated.new(
+      partner_id: user.learning_partner_id,
+      user_id: user.id,
+      team_id: user.team_id,
+      target_user_id: target_user.id,
+      active_user_count: active_user_count
+    )
+
+    publish_event(user, event)
+  end
+
   private
 
   def build_event(user, event_data)

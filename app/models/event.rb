@@ -15,6 +15,8 @@ class Event < ApplicationRecord
     learning_time_spent
     course_viewed
     lesson_viewed
+    user_activated
+    user_deactivated
   ].freeze
 
   OnboardingInitiated = Struct.new(:partner_id, :partner_name,  keyword_init: true)
@@ -31,6 +33,8 @@ class Event < ApplicationRecord
   LearningTimeSpent = Struct.new(:partner_id, :team_id, :user_id, :course_id, :time_spent, keyword_init: true)
   CourseViewed = Struct.new(:partner_id, :team_id, :user_id, :course_id, keyword_init: true)
   LessonViewed = Struct.new(:partner_id, :team_id, :user_id, :course_id, :lesson_id, keyword_init: true)
+  UserActivated = Struct.new(:partner_id, :team_id, :user_id, :target_user_id, :active_user_count, keyword_init: true)
+  UserDeactivated = Struct.new(:partner_id, :team_id, :user_id, :target_user_id, :active_user_count, keyword_init: true)
 
   validates :name, presence: true
   validates :name, inclusion: { in: VALID_EVENTS, message: '%<value>s is not a valid event name.' }

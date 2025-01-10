@@ -17,7 +17,9 @@ class UsersController < ApplicationController
   def confirm_deactivate
     authorize @user
 
-    if @user.deactivate
+    service = UserManagementService.instance
+
+    if service.deactivate(current_user, @user)
       flash.now[:success] = I18n.t('user.deactivate')
     else
       flash.now[:error] = I18n.t('user.deactivate_failed')
@@ -31,7 +33,9 @@ class UsersController < ApplicationController
   def confirm_activate
     authorize @user
 
-    if @user.activate
+    service = UserManagementService.instance
+
+    if service.activate(current_user, @user)
       flash.now[:success] = I18n.t('user.activate')
     else
       flash.now[:error] = I18n.t('user.activate_failed')
