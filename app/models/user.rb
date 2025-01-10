@@ -84,8 +84,26 @@ class User < ApplicationRecord
     !is_admin?
   end
 
+  # overridden methods for Devise specific actions
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  def send_reset_password_instructions
+    unless active?
+      errors.add(:base, inactive_message)
+      return false
+    end
+
+    super
+  end
+
+  def active_for_authentication?
+    super && self.active?
+  end
+
+  def inactive_message
+    I18n.t('user.deactivated_account')
   end
 
   def display_name
