@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
 
-  USER_STATES = %w[none active in-active]
+  USER_STATES = %w[unverified active in-active]
 
   # add dynamic methods using meta programming for checking the current role
   # of a user.
@@ -45,6 +45,8 @@ class User < ApplicationRecord
   has_many :courses, through: :enrollments
 
   belongs_to :team, optional: true
+
+  scope :skip_deactivated, -> { where.not(state: 'in-active') }
 
   def set_temp_password
     temp_password = SecureRandom.alphanumeric(8)
@@ -109,6 +111,16 @@ class User < ApplicationRecord
   def deactivate
     self.state = 'in-active'
     self.save
+  end
+
+  def activate
+    self.state = 'active'
+    self.save
+  end
+
+  def is_manager_of?(other_user)
+    return false unless other_user.learning_partner_id == self.learning_partner_id
+    is_owner? || other_user.team.ancestors.include?(self.team)
   end
 
   private

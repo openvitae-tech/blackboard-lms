@@ -36,7 +36,7 @@ class Team < ApplicationRecord
   ]
 
   def members
-    users
+    users.skip_deactivated
   end
 
   def ancestors

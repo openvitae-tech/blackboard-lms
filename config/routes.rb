@@ -100,6 +100,8 @@ Rails.application.routes.draw do
     member do
       get :deactivate
       post :confirm_deactivate
+      get :activate
+      post :confirm_activate
     end
   end
 
