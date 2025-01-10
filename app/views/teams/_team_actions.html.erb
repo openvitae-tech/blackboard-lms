@@ -1,18 +1,6 @@
 <div class="my-4 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
   <h1>Team Members</h1>
   <div class="flex flex-col md:flex-row justify-end gap-6 w-full md:w-auto">
-    <div class="relative rounded-md shadow-sm w-full md:w-64">
-      <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-        <span class="icon icon-search icon-small bg-letter-color"></span>
-      </div>
-      <input
-       type="text"
-       value="Search Team Members" 
-       name="price" 
-       id="price" 
-       class="input-search w-full md:w-64" 
-       placeholder="Search team members" />
-    </div>
     <div class="flex justify-between gap-6 w-full md:w-auto">
       <% if policy(:course_assigns).new? %>
         <%= link_to new_course_assign_path(team_id: @team.id) do %>
