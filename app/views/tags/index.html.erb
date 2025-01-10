@@ -1,8 +1,9 @@
 <%= mobile_view do %>
   <%= render 'shared/components/admin_not_available'%>
 <% end %>
-<%= render "shared/components/desktop_layout" do %>
-  <div class="flex gap-4 justify-end">
+<%= render "shared/components/layout" do %>
+  <div class="flex gap-4 justify-between pb-5">
+    <%= render 'shared/components/bread_crumbs', links: [[t("settings.label"), settings_path], [t("tags.label"), nil]] %>
     <%= link_to new_tag_path, class: "nav-link", data: { turbo_frame: "tag-modal" } do %>
       <%= render 'shared/components/icon_button_primary', label: 'Add tag', icon_name: 'icon-plus' %>
     <% end %>

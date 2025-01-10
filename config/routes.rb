@@ -84,6 +84,7 @@ Rails.application.routes.draw do
 
   resources :learning_partners
   resources :dashboards, only: :index
+  resources :settings, only: :index
 
   resource :login, only: %i[new create] do
     collection do

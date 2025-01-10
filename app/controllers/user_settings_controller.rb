@@ -16,7 +16,7 @@ class UserSettingsController < ApplicationController
     @user.update(profile_params)
 
     if @user.update(profile_params)
-      flash.now[:success] = I18n.t('settings.updated')
+      flash.now[:success] = I18n.t('user_settings.updated')
     else
       render :edit
     end
@@ -29,7 +29,7 @@ class UserSettingsController < ApplicationController
     authorize :user_settings
 
     if @user.update(password_params)
-      redirect_to new_user_session_path, notice: I18n.t('settings.password_updated')
+      redirect_to new_user_session_path, notice: I18n.t('user_settings.password_updated')
     else
       render 'change_password'
     end
