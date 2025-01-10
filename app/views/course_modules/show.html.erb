@@ -7,7 +7,7 @@
         <%= link_to course_module_path(@course, @course_module), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete this module along with its lessons?" } do %>
           <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
         <% end %>
-      <% end %>
+      <% end %>      
     </div>
   </div>
   <div class="mb-8 flex flex-col md:flex-row flex-wrap gap-4 md:items-center justify-between">
@@ -23,7 +23,6 @@
 
   <div class="flex justify-between">
     <h1 class="page-sub-heading">Lessons</h1>
-
     <% if policy(:lesson).new? && @course_module.lessons.present? %>
       <%= link_to new_course_module_lesson_path(@course, @course_module), class: "nav-link" do %>
         <%= render 'shared/components/icon_button_primary', label: 'New lesson', icon_name: 'icon-plus' %>
