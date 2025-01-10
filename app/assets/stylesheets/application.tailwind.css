@@ -38,7 +38,7 @@
   }
 
   .page-heading {
-    @apply text-2xl font-bold md:text-3xl md:font-semibold;
+    @apply text-xl font-bold md:text-3xl md:font-semibold;
   }
 
   .page-heading-medium {
@@ -46,7 +46,7 @@
   }
 
   .page-sub-heading {
-    @apply text-lg font-semibold;
+    @apply text-base md:text-lg font-semibold;
   }
 
   .btn-primary {
