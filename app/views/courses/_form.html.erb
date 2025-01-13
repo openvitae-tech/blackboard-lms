@@ -1,46 +1,45 @@
-<div class="my-4 w-full text-left md:max-w-3xl">
-  <div class="w-auto">
-    <%= form_with(model: course) do |form| %>
-      <%= render "shared/components/form_errors", resource: course %>
-      <div class="mb-8 text-sm">
-        <%= form.label :title, class: "text-sm font-medium" %>
-        <%= form.text_field :title, class: "input-text mt-2" %>
+<div class="w-auto">
+  <%= form_with(model: course) do |form| %>
+    <%= render "shared/components/form_errors", resource: course %>
+    <div class="mb-8 text-sm">
+      <%= form.label :title, class: "text-sm font-medium" %>
+      <%= form.text_field :title, class: "input-text mt-2" %>
+    </div>
+    <div class="my-8 text-sm">
+      <div class="flex justify-between">
+        <%= form.label :banner, class: "text-sm font-medium" %>
       </div>
-      <div class="my-8 text-sm">
-        <div class="flex justify-between">
-          <%= form.label :banner, class: "text-sm font-medium" %>
-        </div>
-        <div class="relative mt-2">
-          <%= render "shared/components/file_select", hidden_file_field: form.file_field(:banner,
-                                                                                         class: "hidden", data: { forms_target: "fileInput" }), preview: "logo" %>
-        </div>
+      <div class="relative mt-2">
+        <%= render "shared/components/file_select", hidden_file_field: form.file_field(:banner,
+                                                                                        class: "hidden", data: { forms_target: "fileInput" }), preview: "logo" %>
       </div>
-      <div class="my-8 text-sm flex flex-col">
-        <%= form.label :category, class: "text-sm font-medium mb-2" %>
-        <%= form.select :category_id, options_for_select(@categories.pluck(:name, :id), @category&.id) %>
+    </div>
+    <div class="my-8 text-sm flex flex-col">
+      <%= form.label :category, class: "text-sm font-medium mb-2" %>
+      <%= form.select :category_id, options_for_select(@categories.pluck(:name, :id), @category&.id) %>
+    </div>
+    <div class="my-8 text-sm flex flex-col">
+      <%= form.label :level, class: "text-sm font-medium mb-2" %>
+      <%= form.select :level_id, options_for_select(@levels.pluck(:name, :id), @level&.id) %>
+    </div>
+    <div class="my-8 text-sm">
+      <%= form.label :description, class: "text-sm font-medium" %>
+      <%= form.text_area :description, class: "input-textarea mt-2", rows: "5" %>
+    </div>
+    <div class="my-8 flex items-center gap-6 text-sm">
+      <div class="my-8">
+        <% if @course.persisted? %>
+          <%= link_to "Cancel", course_path(@course), class: "nav-link" %>
+        <% else %>
+          <%= link_to "Cancel", courses_path, class: "nav-link" %>
+        <% end %>
       </div>
-      <div class="my-8 text-sm flex flex-col">
-        <%= form.label :level, class: "text-sm font-medium mb-2" %>
-        <%= form.select :level_id, options_for_select(@levels.pluck(:name, :id), @level&.id) %>
+      <div>
+        <%= form.submit class: "btn-primary" do %>
+          <span><%= submit_label_for(course) %></span>
+        <% end %>
       </div>
-      <div class="my-8 text-sm">
-        <%= form.label :description, class: "text-sm font-medium" %>
-        <%= form.text_area :description, class: "input-textarea mt-2", rows: "5" %>
-      </div>
-      <div class="my-8 flex items-center gap-6 text-sm">
-        <div class="my-8">
-          <% if @course.persisted? %>
-            <%= link_to "Cancel", course_path(@course), class: "nav-link" %>
-          <% else %>
-            <%= link_to "Cancel", courses_path, class: "nav-link" %>
-          <% end %>
-        </div>
-        <div>
-          <%= form.submit class: "btn-primary" do %>
-            <span><%= submit_label_for(course) %></span>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>
+
