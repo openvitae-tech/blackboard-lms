@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_19_092106) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_09_083052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -206,6 +206,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_19_092106) do
     t.datetime "updated_at", null: false
     t.bigint "parent_team_id"
     t.integer "team_enrollments_count", default: 0
+    t.string "department"
     t.index ["learning_partner_id"], name: "index_teams_on_learning_partner_id"
     t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
   end

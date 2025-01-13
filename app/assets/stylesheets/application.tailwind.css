@@ -29,6 +29,10 @@
     @apply h-5 w-5 border text-primary border-line-colour focus:border-primary focus:ring-0;
   }
 
+  .input-select {
+    @apply w-full px-3 py-2 rounded border border-line-colour h-[48px] md:h-[52px] focus:border-primary focus:ring-0;
+  }
+
   .input-text-otp {
     @apply h-14 rounded text-center text-xl font-semibold border-line-colour min-w-[70px] text-secondary focus:border-primary focus:ring-0;
   }
