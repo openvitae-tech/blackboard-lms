@@ -4,7 +4,7 @@ module SettingsHelper
       {
         label: t("tags.label"),
         description: t("settings.description"),
-        icon: "icon-filter",
+        icon: "icon-tag",
         path: tags_path
     }
   ]
