@@ -1,11 +1,18 @@
 <tr id="tag_<%= tag.id %>" class="whitespace-nowrap text-xs font">
-  <td class="px-6 py-4 text-left w-1/4"><%= tag.name %></td>
-  <td class="px-6 py-4 text-center grow"><%= tag.tag_type.capitalize %></td>
-  <td class="px-6 py-4 text-right w-1/4">
-    <div class="flex justify-end gap-2">
+  <td class="pl-4 md:px-6 py-4 text-left w-1/3">
+    <%= tag.name %>
+  </td>
+
+  <td class="px-4 md:px-6 py-4 text-center w-1/3">
+    <%= tag.tag_type.capitalize %>
+  </td>
+
+  <td class="px-4 md:px-6 py-4 w-1/3">
+    <div class="flex flex-col md:flex-row justify-end gap-4">
       <%= link_to edit_tag_path(tag), data: { turbo_frame: "tag-modal" } do %>
         <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
       <% end %>
+
       <%= link_to tag_path(tag), data: { turbo_frame: "tag-modal" } do %>
         <%= render "shared/components/button_default_small", label: 'Delete', icon_name: 'icon-trash' %>
       <% end %>
