@@ -1,7 +1,4 @@
-<%= mobile_view do %>
-  <%= render 'shared/components/admin_not_available'%>
-<% end %>
-<%= render "shared/components/desktop_layout" do %>
+<%= render "shared/components/layout" do %>
   <div class="flex gap-4 justify-end">
     <%= link_to new_tag_path, class: "nav-link", data: { turbo_frame: "tag-modal" } do %>
       <%= render 'shared/components/icon_button_primary', label: 'Add tag', icon_name: 'icon-plus' %>
@@ -11,12 +8,12 @@
   <div id="tags-count">
     <h1 class="mb-4 text-sm font-semibold"><%= pluralize(@tags_count, "tag") %></h1>
   </div>
-  <table class="mt-5 min-w-full rounded px-6 py-4 box-shadow-medium table-fixed">
-    <thead class="sticky top-0 z-10 border-b border-line-colour-light bg-white">
+  <table class="mt-5 min-w-full rounded px-4 md:px-6 py-4 box-shadow-medium table-fixed">
+    <thead class="sticky top-0 z-10 border-b border-line-colour-light bg-white whitespace-nowrap">
       <tr class="text-sm font-medium">
-        <th class="px-6 py-4 text-left w-1/4">Name</th>
-        <th class="px-6 py-4 text-center grow">Type</th>
-        <th class="px-14 py-4 text-right w-1/4">Actions</th>
+        <th class="pl-4 md:px-6 py-4 text-left w-1/3">Name</th>
+        <th class="px-4 md:px-6 py-4 text-center w-1/2">Type</th>
+        <th class="py-4 text-center w-1/4 md:w-1/6">Actions</th>
       </tr>
     </thead>
     <tbody id="tag-list" class="bg-white divide-y divide-slate-grey-light">
