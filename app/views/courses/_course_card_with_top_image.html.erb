@@ -1,9 +1,9 @@
 <%= link_to course_path(course), class: "inline-block rounded box-shadow-medium border border-line-colour-light relative" do %>
   <div class="w-full rounded md:w-[310px] relative">
-    <div class="absolute top-2 right-0 z-10 flex flex-wrap justify-start gap-2">
+    <div class="absolute top-0 right-0 z-10 flex flex-wrap justify-start gap-2">
       <% course.tags.each do |tag| %>
         <% if tag.tag_type == "level" %>
-          <span class="px-2 py-1 text-xs font-medium bg-primary-light-50">
+          <span class="px-2 py-1 text-xs font-medium bg-secondary text-white">
             <%= tag.name %>
           </span>
         <% end %>
@@ -17,11 +17,6 @@
         <p class="mb-2 overflow-hidden text-ellipsis text-base font-semibold text-primary max-h-[68px]">
           <%= course.title %>
         </p>
-        
-        <% if local_assigns[:enrollment].present? %>
-          <%= render 'shared/components/progress_bar', progress: enrollment.progress %>
-        <% end %>
-        
         <div class="flex justify-between mt-2">
           <div class="flex items-center">
             <span class="icon icon-lessons h-3.5 w-3.5 bg-primary"></span>
@@ -36,13 +31,18 @@
             <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
           </div>
         </div>          
-        <div class="flex flex-wrap justify-start gap-2 mt-2">
+        <div class="flex flex-row items-center justify-between gap-2 mt-2">
           <% course.tags.each do |tag| %>
             <% if tag.tag_type == "category" %>
               <span class="px-2 py-1 text-xs font-medium bg-primary-light-50 rounded">
                 <%= tag.name %>
               </span>
             <% end %>
+          <% end %>
+          <% if local_assigns[:enrollment].present? %>
+            <div class="w-[83px]">
+              <%= render 'shared/components/progress_bar_short', progress: enrollment.progress %>
+            </div>
           <% end %>
         </div>
       </div>      
