@@ -29,5 +29,6 @@
 <body>
   <%= yield %>
   <%= render "shared/components/flash" %>
+  <%= turbo_frame_tag "modal" %>
 </body>
 </html>

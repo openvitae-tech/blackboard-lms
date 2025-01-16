@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
 
+  USER_STATES = %w[unverified active in-active]
+
   # add dynamic methods using meta programming for checking the current role
   # of a user.
   USER_ROLES.each do |role|
@@ -29,6 +31,7 @@ class User < ApplicationRecord
             inclusion: { in: USER_ROLES,
                          message: '%<value>s is not a valid user role' }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true
+  validates :state, inclusion: { in: USER_STATES, message: '%<value>s is not a valid user state' }
 
   has_secure_password :otp, validations: false
 
@@ -40,9 +43,10 @@ class User < ApplicationRecord
 
   has_many :enrollments, dependent: :destroy
   has_many :courses, through: :enrollments
-  has_many :notifications, dependent: :destroy
 
   belongs_to :team, optional: true
+
+  scope :skip_deactivated, -> { where.not(state: 'in-active') }
 
   def set_temp_password
     temp_password = SecureRandom.alphanumeric(8)
@@ -80,8 +84,26 @@ class User < ApplicationRecord
     !is_admin?
   end
 
+  # overridden methods for Devise specific actions
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  def send_reset_password_instructions
+    unless active?
+      errors.add(:base, inactive_message)
+      return false
+    end
+
+    super
+  end
+
+  def active_for_authentication?
+    super && self.active?
+  end
+
+  def inactive_message
+    I18n.t('user.deactivated_account')
   end
 
   def display_name
@@ -94,6 +116,29 @@ class User < ApplicationRecord
 
   def verified_learner?
     verified? && is_learner?
+  end
+
+  def active?
+    state == 'active'
+  end
+
+  def deactivated?
+    state == 'in-active'
+  end
+
+  def deactivate
+    self.state = 'in-active'
+    self.save
+  end
+
+  def activate
+    self.state = 'active'
+    self.save
+  end
+
+  def is_manager_of?(other_user)
+    return false unless other_user.learning_partner_id == self.learning_partner_id
+    is_owner? || other_user.team.ancestors.include?(self.team)
   end
 
   private

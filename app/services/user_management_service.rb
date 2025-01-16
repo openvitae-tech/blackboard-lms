@@ -29,6 +29,22 @@ class UserManagementService
     end
   end
 
+  def activate(manager, target_user)
+    raise Errors::IllegalUserState.new("User state is illegal") unless target_user.deactivated?
+    return false unless target_user.activate
+    EVENT_LOGGER.publish_user_activated(manager, target_user)
+    EVENT_LOGGER.publish_active_user_count(target_user)
+    true
+  end
+
+  def deactivate(manager, target_user)
+    raise Errors::IllegalUserState.new("User state is illegal") unless target_user.active?
+    return false unless target_user.deactivate
+    EVENT_LOGGER.publish_user_deactivated(manager, target_user)
+    EVENT_LOGGER.publish_active_user_count(target_user)
+    true
+  end
+
   private
 
   def raise_error_if_exceeds_user_limit!(learning_partner)

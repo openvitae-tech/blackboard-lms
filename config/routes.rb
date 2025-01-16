@@ -96,7 +96,15 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  resources :users, only: :show, as: 'members', path: 'member'
+  resources :users, only: :show, as: 'members', path: 'member' do
+    member do
+      get :deactivate
+      post :confirm_deactivate
+      get :activate
+      post :confirm_activate
+    end
+  end
+
   resources :supports, only: :index
 
   get 'error_401' => 'pages#unauthorized'
