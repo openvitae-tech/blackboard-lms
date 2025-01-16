@@ -54,3 +54,4 @@ docker-build
 .idea/*
 *.md
 package.json
+.DS_STORE
