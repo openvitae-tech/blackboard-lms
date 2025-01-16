@@ -1,0 +1,9 @@
+<%= turbo_frame_tag 'modal' do %>
+  <%= render "shared/components/modal_small", modalTitle: "Deactivate" do %>
+    <p class="mb-4 p-6 text-sm">Do you want to deactivate <span><%= @user.display_name %></span>?</p>
+    <div class="flex flex-col px-6 pb-6">
+      <%= button_to "Yes", confirm_deactivate_member_path(@user), class: "w-full bg-danger text-white px-4 py-2 rounded h-14" %>
+      <button data-action="click->modals#closeModal" class="h-14 w-full px-4 py-2">No</button>
+    </div>
+  <% end %>
+<% end %>

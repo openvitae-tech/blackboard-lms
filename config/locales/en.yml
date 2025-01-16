@@ -100,4 +100,10 @@ en:
     description: "Create and manage tags"
   tags:
     label: "Tags"
+  user:
+    activate: 'User account activated'
+    activate_failed: 'User account activation failed'
+    deactivate: 'User deactivated'
+    deactivate_failed: 'User deactivate failed'
+    deactivated_account: 'Your account is deactivated, please contact your team manager.'
   page_not_found: "The page you're looking for is missing."

@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
   def show
     authorize @team
     @learning_partner = current_user.learning_partner
-    @members = @team.users
+    @members = @team.members
   end
 
   def create
