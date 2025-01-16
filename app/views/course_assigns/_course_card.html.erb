@@ -6,7 +6,7 @@
       <%= f.check_box :course_ids, 
           { 
             multiple: true, 
-            class: "absolute -top-32 md:top-2 right-0 w-6 h-6 border-2 rounded border-secondary checked:bg-secondary checked:border-secondary checked:focus:bg-secondary focus:ring-0", 
+            class: "absolute -top-32 md:top-0 right-0 w-6 h-6 border-2 rounded border-secondary checked:bg-secondary checked:border-secondary checked:focus:bg-secondary focus:ring-0", 
             data: { action: "assigns#toggle" } 
           }, 
           course.id, 
@@ -37,12 +37,15 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col md:flex-row gap-2 items-start md:items-center absolute -top-24 md:top-0 -right-4 md:right-12 invisible opacity-0" data-assigns-target="durationContainer">
+      <div class="flex flex-col md:flex-row gap-2 items-end md:items-center absolute -top-24 md:top-0 -right-4 md:right-12 invisible opacity-0" data-assigns-target="durationContainer">
         <label for="duration" class="font-medium text-sm md:text-base">Assign Duration:</label>
-        <div class="flex items-center">
+        <div class="flex flex-row items-center">
+          <input type="date" id="datePicker" class="invisible w-[2px] p-0" data-action="change->assigns#datePicked" data-assigns-target="datePicker"/>            
           <%= f.select "duration[]", options_for_duration, {}, disabled: true, id: 'duration', class: "border border-line-colour-light box-shadow-small rounded focus:ring-0 p-0 px-2 h-6 w-28 text-sm", data: { assigns_target: "dateSelector", duration: 'duration' } %>
-          <input type="date" class="border-0 focus:ring-0 text-sm md:text-base" data-action="change->assigns#datePicked" />
-        </div>
+          <div class="relative flex items-center pl-2">
+            <span class="icon-small icon icon-calendar bg-letter-color cursor-pointer" data-action="click->assigns#openDatePicker"></span>
+          </div>
+       </div>
       </div>
     </div>
   </div>

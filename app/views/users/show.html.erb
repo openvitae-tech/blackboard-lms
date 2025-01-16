@@ -9,7 +9,7 @@
       <% end %>
     </ol>
   </div>
-  <%= render 'users/team_user_info' %>
+  <%= render 'users/team_user_info', user: @user %>
   <%= render 'users/team_user_course_status' %>
   <div class="my-8">
     <% if has_enrolled_courses? %>

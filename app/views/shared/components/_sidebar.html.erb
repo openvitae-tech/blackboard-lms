@@ -1,13 +1,10 @@
 <input type="checkbox" id="sidebar-toggle" class="peer hidden" />
 <div class="bg-black fixed inset-0 black-shield hidden bg-opacity-90 peer-checked:block md:peer-checked:hidden md:hidden"></div>
-
 <aside class="bg-primary-light-50 side-bar -translate-x-full transform transition-transform duration-300 ease-in-out peer-checked:translate-x-0">
   <label for="sidebar-toggle" class="icon icon-close bg-letter-color absolute right-6 top-6 icon-small cursor-pointer"></label>
-
   <div class="hidden md:mt-8 md:block">
     <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-10 side-bar-item' %>
   </div>
-
   <div class="flex h-[calc(100vh-60px)] md:h-full flex-col justify-between mt-14 z-150">
     <ul class="flex flex-col gap-3">
       <% if policy(:dashboard).index? %>
@@ -41,21 +38,21 @@
         </li>
       <% end %>
       <% if current_user.is_admin? %>
-        <li class="side-bar-item <%= sidebar_active('tags') %>">
-          <%= link_to tags_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-course icon-small bg-letter-color"></span>
-            <span>Tags</span>
+        <li class="side-bar-item <%= sidebar_active('settings') || sidebar_active('tags') %>">
+          <%= link_to settings_path, class: "side-bar-item-inner" do %>
+            <span class="icon icon-settings icon-small bg-letter-color"></span>
+            <span><%= t("settings.label") %></span>
           <% end %>
         </li>
       <% end %>
-      <li class="side-bar-item">
+      <li class="side-bar-item <%= sidebar_active('supports') %>">
         <%= link_to supports_path, class: "side-bar-item-inner" do %>
           <span class="icon icon-support bg-letter-color icon-small"></span>
           <span>Support</span>
         <% end %>
       </li>
     </ul>
-    <div class=" side-bar-footer py-1 md:py-4 w-full sticky bottom-0">
+    <div class="side-bar-footer py-1 md:py-4 w-full sticky bottom-0">
       <%= button_to destroy_user_session_path, class: "side-bar-item-inner", method: :delete, data: { turbo_method: :delete } do %>
         <span class="icon icon-logout bg-letter-color icon-small"></span>
         <span class="text-sm">Logout</span>

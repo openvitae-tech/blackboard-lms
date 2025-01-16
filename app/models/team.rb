@@ -4,6 +4,7 @@ class Team < ApplicationRecord
   include CustomValidations
 
   validates :name, presence: true
+  validates :department, presence: true, allow_nil: true
 
   has_one_attached :banner
 
@@ -16,8 +17,26 @@ class Team < ApplicationRecord
   has_many :team_enrollments, dependent: :destroy
   has_many :courses, through: :team_enrollments
 
+  DEPARTMENTS = [
+    'Front Office',
+    'Housekeeping',
+    'Food and Beverage',
+    'Engineering / Maintenance',
+    'Sales and Marketing',
+    'Security Department',
+    'Human Resources Department',
+    'Finance and Accounting',
+    'Purchasing / Procurement',
+    'IT / Systems',
+    'Spa and Wellness',
+    'Recreation and Activities',
+    'Legal/Compliance',
+    'Administration',
+    'NA'
+  ]
+
   def members
-    users
+    users.skip_deactivated
   end
 
   def ancestors

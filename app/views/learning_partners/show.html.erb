@@ -1,11 +1,6 @@
-<%= mobile_view do %>
-  <%= render 'shared/components/admin_not_available' %>
-<% end %>
-
-<%= render "shared/components/desktop_layout" do %>
+<%= render "shared/components/layout" do %>
   <div class="flex justify-between pt-4 items-center">
     <%= render 'shared/components/back_button', back_link: learning_partners_path %>
-
     <div class="flex items-center gap-4">
       <% if policy(@learning_partner).destroy? %>
         <%= link_to @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" }, class: "btn-default" do %>
@@ -28,10 +23,18 @@
       <% end %>
     </div>
   </div>
-  <div class="w-full">
+  <div class="w-full mt-8">
+    <div class="flex flex-col pb-6">
+      <div class="bg-line-colour-light rounded">
+        <%= image_tag partner_banner(@learning_partner), class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
+      </div>
+      <div class="flex justify-start -mt-10 ml-4">
+        <%= image_tag partner_logo(@learning_partner, :large), class: 'h-20 w-20 object-cover rounded-full border border-line-colour-light box-shadow-medium' %>
+      </div>
+    </div>
     <h1 class="mb-4 text-xl font-semibold"><%= @learning_partner.name %></h1>
     <div class="flex flex-col gap-4 my-8">
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="border border-line-colour-light px-1 py-4 text-center">
           <p>Onboarding Initiated</p>
           <p><%= @metrics.onboarding_initiated? %></p>
@@ -49,7 +52,7 @@
           <p><%= @metrics.user_logout_count %></p>
         </div>
       </div>
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="border border-line-colour-light px-1 py-4 text-center">
           <p>Users</p>
           <p><%= @metrics.user_invited_count %></p>
@@ -67,7 +70,7 @@
           <p><%= @metrics.course_started_count %></p>
         </div>
       </div>
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="border border-line-colour-light px-1 py-4 text-center">
           <p>Course Completed</p>
           <p><%= @metrics.course_completed_count %></p>
@@ -86,10 +89,6 @@
         </div>
       </div>
     </div>
-    <h3 class="text-sm font-medium">Hotel Logo</h3>
-    <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_logo(@learning_partner, :large), class: 'h-[80px] w-[80px] object-contain' %></div>
-    <h3 class="text-sm font-medium">Hotel Banner</h3>
-    <div class="my-4 p-6 box-shadow-medium flex justify-center"><%= image_tag partner_banner(@learning_partner), class: 'max-h-[120px] max-w-full rounded-l object-center' %></div>
     <div class="my-4">
       <h3 class="text-sm font-medium">About</h3>
       <div class="my-4 p-6 box-shadow-medium">
