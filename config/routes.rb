@@ -110,7 +110,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   devise_scope :user do
-    root 'users/sessions#new'
+    authenticated do
+      root 'home#index', as: :authenticated_root
+    end
+
+    unauthenticated do
+      root 'users/sessions#new', as: :unauthenticated_root
+    end
   end
 
   draw :sidekiq_web
