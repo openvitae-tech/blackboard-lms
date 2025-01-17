@@ -1,6 +1,6 @@
 <%= render "shared/components/layout" do %>
   <div class="flex gap-4 justify-end">
-    <%= link_to new_tag_path, class: "nav-link", data: { turbo_frame: "tag-modal" } do %>
+    <%= link_to new_tag_path, class: "nav-link", data: { turbo_frame: "modal" } do %>
       <%= render 'shared/components/icon_button_primary', label: 'Add tag', icon_name: 'icon-plus' %>
     <% end %>
   </div>
