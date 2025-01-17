@@ -11,15 +11,7 @@
   <span class="font-medium text-basic"><%= team.name %></span>
 
   <div class="mt-4 flex flex-col md:flex-row gap-4 justify-between items-start">
-    <ol class="flex items-center space-x-2 text-secondary text-xs">
-      <% team_list(current_user.team, team).each do |team_item| %>
-        <li class="flex space-x-1">
-          <%= link_to team_item.name, team_path(team_item) %>
-          <span class="icon icon-simple-arrow-right bg-letter-color icon-small"></span>
-        </li>
-      <% end %>
-    </ol>
-
+    <%= render "shared/components/bread_crumbs", title: "Teams", links: team_breadcrumbs_links(current_user.team, team) %>
     <div class="flex gap-4 items-start justify-end w-full md:w-auto">
       <% if policy(team).edit? %>
         <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
