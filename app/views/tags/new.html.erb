@@ -1,19 +1,17 @@
-<%= turbo_frame_tag 'modal' do %>
-  <%= render "shared/components/modal", modalTitle: "Add new tag" do %>
-      <%= form_with(url: tags_path, method: :post, model: @tag, class: "flex flex-col gap-6 p-6") do |form| %>
-        <%= render 'shared/components/form_errors', resource: @tag %>
-        <div class="flex flex-col gap-4">
-          <%= form.label :name, class: "block text-sm" %>
-          <%= form.text_field :name, placeholder: "Enter tag name", class: "input-text" %>
-        </div>
-        <div class="flex flex-col gap-4">
-          <%= form.label :type, class: "block text-sm" %>
-          <%= form.select :tag_type, options_for_select(tag_list) %>
-        </div>
-        <div class="flex flex-col justify-between">
-          <%= form.button "Create", class: "bg-primary text-white px-4 py-2 rounded" %>
-          <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
-        </div>
-      <% end %>
+<%= render "shared/components/modal", modalTitle: "Add new tag" do %>
+  <%= form_with(url: tags_path, method: :post, model: @tag, class: "flex flex-col gap-6 p-6") do |form| %>
+    <%= render 'shared/components/form_errors', resource: @tag %>
+    <div class="flex flex-col gap-4">
+      <%= form.label :name, class: "block text-sm" %>
+      <%= form.text_field :name, placeholder: "Enter tag name", class: "input-text" %>
+    </div>
+    <div class="flex flex-col gap-4">
+      <%= form.label :type, class: "block text-sm" %>
+      <%= form.select :tag_type, options_for_select(tag_list) %>
+    </div>
+    <div class="flex flex-col justify-between">
+      <%= form.button "Create", class: "bg-primary text-white px-4 py-2 rounded" %>
+      <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
+    </div>
   <% end %>
 <% end %>

@@ -13,7 +13,7 @@
         <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
       <% end %>
 
-      <%= link_to tag_path(tag), data: { turbo_frame: "tag-modal" } do %>
+      <%= link_to tag_path(tag), data: { turbo_frame: "modal" } do %>
         <%= render "shared/components/button_default_small", label: 'Delete', icon_name: 'icon-trash' %>
       <% end %>
     </div>

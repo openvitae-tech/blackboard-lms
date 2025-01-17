@@ -1,23 +1,21 @@
-<%= turbo_frame_tag 'modal' do %>
-  <%= render "shared/components/modal", modalTitle: "Settings" do %>
-      <%= form_with(url: settings_path, method: :put, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
+<%= render "shared/components/modal", modalTitle: "Settings" do %>
+  <%= form_with(url: settings_path, method: :put, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
 
-        <%= render "shared/components/form_errors", resource: @user %>
+    <%= render "shared/components/form_errors", resource: @user %>
 
-        <div class="flex flex-col gap-4">
-          <%= form.label :name, class: "block text-sm" %>
-          <%= form.text_field :name, placeholder: "Set your name", class: "input-text" %>
-        </div>
+    <div class="flex flex-col gap-4">
+      <%= form.label :name, class: "block text-sm" %>
+      <%= form.text_field :name, placeholder: "Set your name", class: "input-text" %>
+    </div>
 
-        <div class="flex flex-col gap-4">
-          <%= form.label :phone, class: "block text-sm" %>
-          <%= form.text_field :phone, placeholder: "Set your 10 digit phone number", class: "input-number" %>
-        </div>
+    <div class="flex flex-col gap-4">
+      <%= form.label :phone, class: "block text-sm" %>
+      <%= form.text_field :phone, placeholder: "Set your 10 digit phone number", class: "input-number" %>
+    </div>
 
-        <div class="flex flex-col justify-between">
-          <%= form.button "Save settings", class: "bg-primary text-white px-4 py-2 rounded" %>
-          <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
-        </div>
-      <% end %>
+    <div class="flex flex-col justify-between">
+      <%= form.button "Save settings", class: "bg-primary text-white px-4 py-2 rounded" %>
+      <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
+    </div>
   <% end %>
 <% end %>
