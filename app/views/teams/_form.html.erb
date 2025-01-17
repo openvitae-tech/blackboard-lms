@@ -5,8 +5,9 @@
 
   <%= render 'shared/components/form_errors', resource: team %>
 
-  <div class="flex flex-col gap-4 items-start justify-center w-full">
-    <label class="text-sm flex flex-col">Upload team banner <span class="text-xs text-slate-grey font-light">(<%= I18n.t('team.banner_file_tip') %>)</span></label>
+  <div class="flex w-full flex-col items-start justify-center gap-4">
+    <label class="flex flex-col text-sm">Upload team banner
+      <span class="text-xs font-light text-slate-grey">(<%= I18n.t('team.banner_file_tip') %>)</span></label>
     <!-- From component: pass the hidden file input field with data attribute forms_target: "fileInput" for this to work  -->
     <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:banner, class: 'hidden', data: { forms_target: 'fileInput' }), preview: 'banner' %>
   </div>
@@ -18,7 +19,7 @@
     <%= form.label :department, 'Department name', class: 'block text-sm' %>
     <%= form.select :department, Team::DEPARTMENTS, { include_blank: 'Choose' }, { class: 'input-select' } %>
   </div>
-  <div class="flex flex-col gap-6 justify-between">
+  <div class="flex flex-col justify-between gap-6">
     <%= form.button save_button_label_for(team), class: 'bg-primary text-white p-4 rounded' %>
     <%= form.button 'Cancel', data: { action: 'click->modals#closeModal' } %>
   </div>
