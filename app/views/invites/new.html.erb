@@ -43,9 +43,9 @@
           </div>
         <% end %>
 
-        <div class="flex flex-col justify-between">
-          <%= form.button "Invite user", class: "bg-primary text-white px-4 py-2 rounded" %>
-          <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
+        <div class="flex flex-col gap-6 justify-between">
+          <%= form.button "Invite user", class: "bg-primary text-white p-4 rounded" %>
+          <%= form.button "Cancel", data: { action: "click->modals#closeModal" } %>
         </div>
       <% end %>
     </div>
