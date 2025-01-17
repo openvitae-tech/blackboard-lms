@@ -1,44 +1,42 @@
-<%= turbo_frame_tag 'modal' do %>
-  <%= render "shared/components/modal", modalTitle: "Invite new user" do %>
-    <%= form_with(url: invites_path, method: :post, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
+<%= render "shared/components/modal", modalTitle: "Invite new user" do %>
+  <%= form_with(url: invites_path, method: :post, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
 
-      <%= render "shared/components/form_errors", resource: @user %>
-      <%= form.hidden_field :team_id %>
+    <%= render "shared/components/form_errors", resource: @user %>
+    <%= form.hidden_field :team_id %>
 
-      <div class="flex flex-col gap-4">
-        <%= form.label :name, class: "block text-sm" %>
-        <%= form.text_field :name, placeholder: "Your name", class: "input-text" %>
+    <div class="flex flex-col gap-4">
+      <%= form.label :name, class: "block text-sm" %>
+      <%= form.text_field :name, placeholder: "Your name", class: "input-text" %>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <%= form.label :email, class: "block text-sm" %>
+      <%= form.email_field :email, placeholder: "yourname@yourdomain.com", class: "input-text" %>
+    </div>
+    <div class="flex flex-col gap-4">
+      <%= form.label :role, 'Select role', class: "block text-sm" %>
+      <%= form.select :role, user_role_mapping_for_partner(current_user, @team), {}, class: "input-text" %>
+    </div>
+
+    <!-- admin cannot bulk import users, admin invites users to the top level team.
+    Inviting in bulk can be done by managers or owners of the company -->
+    <% if current_user.is_manager? || current_user.is_owner? %>
+      <div class="flex items-center my-4">
+        <div class="flex-grow border-t border-line-colour"></div>
+        <span class="px-2 text-sm ">Or invite multiple learners to the team</span>
+        <div class="flex-grow border-t border-line-colour"></div>
       </div>
-
-      <div class="flex flex-col gap-4">
-        <%= form.label :email, class: "block text-sm" %>
-        <%= form.email_field :email, placeholder: "yourname@yourdomain.com", class: "input-text" %>
+      <div>
+        <%= link_to "Download sample csv file", download_invites_path, class: "nav-link", target: "_blank" %>
       </div>
-      <div class="flex flex-col gap-4">
-        <%= form.label :role, 'Select role', class: "block text-sm" %>
-        <%= form.select :role, user_role_mapping_for_partner(current_user, @team), {}, class: "input-text" %>
-      </div>
-
-      <!-- admin cannot bulk import users, admin invites users to the top level team.
-      Inviting in bulk can be done by managers or owners of the company -->
-      <% if current_user.is_manager? || current_user.is_owner? %>
-        <div class="flex items-center my-4">
-          <div class="flex-grow border-t border-line-colour"></div>
-          <span class="px-2 text-sm ">Or invite multiple learners to the team</span>
-          <div class="flex-grow border-t border-line-colour"></div>
-        </div>
-        <div>
-          <%= link_to "Download sample csv file", download_invites_path, class: "nav-link", target: "_blank" %>
-        </div>
-        <div class="flex flex-col gap-4 items-start justify-center w-full">
-          <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:bulk_invite, class: "hidden", data: { forms_target: "fileInput" }) %>
-        </div>
-      <% end %>
-
-      <div class="flex flex-col gap-6 justify-between">
-        <%= form.button "Invite user", class: "bg-primary text-white p-4 rounded" %>
-        <%= form.button "Cancel", data: { action: "click->modals#closeModal" } %>
+      <div class="flex flex-col gap-4 items-start justify-center w-full">
+        <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:bulk_invite, class: "hidden", data: { forms_target: "fileInput" }) %>
       </div>
     <% end %>
+
+    <div class="flex flex-col gap-6 justify-between">
+      <%= form.button "Invite user", class: "bg-primary text-white p-4 rounded" %>
+      <%= form.button "Cancel", data: { action: "click->modals#closeModal" } %>
+    </div>
   <% end %>
 <% end %>

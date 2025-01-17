@@ -1,5 +1,3 @@
-<%= turbo_frame_tag "modal" do %>
-  <%= render "shared/components/modal", modalTitle: model_title_label_for(@team) do %>
-    <%= render 'form', team: @team %>
-  <% end %>
+<%= render "shared/components/modal", modalTitle: model_title_label_for(@team) do %>
+  <%= render 'form', team: @team %>
 <% end %>
