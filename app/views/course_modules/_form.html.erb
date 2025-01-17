@@ -10,7 +10,7 @@
       <div class="my-8 text-sm  flex gap-6 items-center">
         <div>
           <% if @course_module.persisted? %>
-            <%= link_to "Cancel" , course_module_path(@course_module), class: "nav-link" %>
+            <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
           <% else %>
             <%= link_to "Cancel" , course_path(@course), class: "nav-link" %>
           <% end %>
