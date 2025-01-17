@@ -1,13 +1,5 @@
-<%= turbo_frame_tag 'edit-settings-modal' do %>
-  <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-[9999] md:items-center md:justify-center" data-controller="modals" data-modals-target="modalBox">
-    <div class="absolute bottom-4 rounded-lg bg-white w-[326px] md:w-[462px] md:relative md:inset-auto md:bottom-auto md:rounded-lg">
-      <div class="flex items-center justify-between border-b p-6 border-line-colour-light">
-        <span class="text-base font-semibold">Settings</span>
-        <button data-action="click->modals#closeModal">
-          <span class="icon icon-close icon-small bg-letter-color"></span>
-        </button>
-      </div>
-
+<%= turbo_frame_tag 'modal' do %>
+  <%= render "shared/components/modal", modalTitle: "Settings" do %>
       <%= form_with(url: settings_path, method: :put, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
 
         <%= render "shared/components/form_errors", resource: @user %>
@@ -27,6 +19,5 @@
           <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
         </div>
       <% end %>
-    </div>
-  </div>
+  <% end %>
 <% end %>
