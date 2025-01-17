@@ -1,29 +1,30 @@
 <div id="team-page-header" class="md:mb-8">
-  <div class="flex flex-col pb-6">
-    <div class="bg-line-colour-light rounded">
-      <%= image_tag team_banner(team, 'desktop'), class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
-    </div>
+  <%= render "shared/components/bread_crumbs", title: "Teams", links: team_breadcrumbs_links(current_user.team, team) %>
 
-    <div class="flex justify-start -mt-10 ml-4">
-      <%= image_tag partner_logo(team.learning_partner, :medium), class: 'h-20 w-20 object-cover rounded-full border border-line-colour-light box-shadow-medium' %>
+  <div class="relative h-[250px] w-full">
+    <div class="relative h-full">
+      <%= image_tag team_banner(team, 'desktop'), class: 'h-full w-full object-cover' %>
     </div>
-  </div>
-  <span class="font-medium text-basic"><%= team.name %></span>
-
-  <div class="mt-4 flex flex-col md:flex-row gap-4 justify-between items-start">
-    <%= render "shared/components/bread_crumbs", title: "Teams", links: team_breadcrumbs_links(current_user.team, team) %>
-    <div class="flex gap-4 items-start justify-end w-full md:w-auto">
-      <% if policy(team).edit? %>
-        <%= link_to edit_team_path(team), data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
+    <div class="absolute inset-0 bg-black opacity-60"></div>
+    <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
+      <%= image_tag partner_logo(team.learning_partner, :medium), class: 'h-16 w-16 object-cover rounded-full border-2 border-white box-shadow-medium' %>
+      <span class="text-white font-bold text-xl"><%= team.name %></span>
+    </div>
+    <div class="absolute bottom-4 right-4 flex gap-4  z-10">    
+      <%= render 'shared/components/more_action', icon_color: 'bg-white' do %>
+        <% if policy(:dashboard).index? %>
+          <%= link_to dashboard_path(team: team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2' do%>
+            <span class="text-secondary text-xs font-medium">Team dashboard</span>
+            <span class="icon icon-arrow-right icon-small bg-secondary"></span>
+          <% end %>
         <% end %>
-      <% end %>
-
-      <% if policy(:dashboard).index? %>
-        <%= link_to dashboard_path(team: team) do %>
-          <%= render 'shared/components/button_default_small', label: 'Team dashboard', icon_name: 'icon-arrow-right icon-small' %>
+        <% if policy(team).edit? %>
+          <%= link_to edit_team_path(team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2', data: { turbo_frame: "edit-team-modal"} do%>
+            <span class="text-secondary text-xs font-medium">Edit</span>
+            <span class="icon icon-edit h-[10px] w-[10px] bg-secondary"></span>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
+      <% end %>  
+    </div>  
   </div>
 </div>
