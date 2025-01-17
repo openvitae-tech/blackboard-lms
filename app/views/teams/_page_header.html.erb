@@ -22,7 +22,7 @@
 
     <div class="flex gap-4 items-start justify-end w-full md:w-auto">
       <% if policy(team).edit? %>
-        <%= link_to edit_team_path(team), data: { turbo_frame: "edit-team-modal" } do %>
+        <%= link_to edit_team_path(team), data: { turbo_frame: "modal" } do %>
           <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
         <% end %>
       <% end %>
