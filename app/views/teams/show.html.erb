@@ -7,6 +7,4 @@
   <%= render 'teams/sub_teams', team: @team, sub_teams: @team.sub_teams.includes(:banner_attachment) %>
 <% end %>
 
-<%= turbo_frame_tag 'add-new-team-modal' %>
-<%= turbo_frame_tag 'edit-team-modal' %>
 <%= turbo_frame_tag 'add-user-modal' %>
