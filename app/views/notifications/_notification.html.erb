@@ -1,4 +1,4 @@
-<div data-controller="notifications" class="relative inline-block p-0 m-0">
+<div data-controller="notifications" class="relative inline-block p-0 m-0" data-notifications-target="polingInterval" data-interval="<%= poling_interval %>">
   <%= link_to notifications_path, class:"hover:pointer", data: { turbo_stream: true } do %>
     <span class="icon icon-notification icon-small md:icon-base bg-letter-color"></span>
     <span class="absolute top-2 left-4 md:left-6  bg-primary rounded-full w-4 h-4 flex items-center justify-center"><span id="notification-count" class="text-white text-[10px]">0</span></span>
