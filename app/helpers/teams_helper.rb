@@ -29,6 +29,11 @@ module TeamsHelper
     team_list.reverse
   end
 
+  def team_breadcrumbs_links(root_team, team)
+    list = team_list(root_team, team).map { |team| [team.name, team_path(team)] }
+    last = list.pop
+    list.push([last[0], nil])
+  end
   def save_button_label_for(team)
     team.persisted? ? 'Update team' : 'Create team'
   end

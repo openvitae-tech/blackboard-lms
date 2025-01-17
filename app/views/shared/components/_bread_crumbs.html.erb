@@ -1,15 +1,34 @@
 <div class="mt-4 md:mb-4">
   <ol class="flex items-start space-x-2 text-secondary text-xs">
-    <% links.each do |title, link| %>
+    <% if local_assigns[:title].present? %>
       <li class="flex items-center space-x-1">
-        <% if link.blank? %>
+        <span class="flex items-center">
           <span><%= title %></span>
-        <% else %>
-          <span class="flex items-center">
+          <span class="icon icon-simple-arrow-right bg-letter-color icon-small ml-1"></span>
+        </span>
+      </li>
+    <% end %>
+    <% links[0..-2].each do |title, link| %>
+      <li class="flex items-center space-x-1">
+        <span class="flex items-center">
+          <% if link.present? %>
             <%= link_to title, link, class: 'hover:pointer hover:underline hover:text-primary whitespace-nowrap' %>
-            <span class="icon icon-simple-arrow-right bg-letter-color icon-small ml-1"></span>
-          </span>
-        <% end %>
+          <% else %>
+            <span><%= title %></span>
+          <% end %>
+          <span class="icon icon-simple-arrow-right bg-letter-color icon-small ml-1"></span>
+        </span>
+      </li>
+    <% end %>
+    <% if (title, link = links.last) %>
+      <li class="flex items-center space-x-1">
+        <span class="flex items-center">
+          <% if link.present? %>
+            <%= link_to title, link, class: 'hover:pointer hover:underline hover:text-primary whitespace-nowrap' %>
+          <% else %>
+            <span><%= title %></span>
+          <% end %>
+        </span>
       </li>
     <% end %>
   </ol>
