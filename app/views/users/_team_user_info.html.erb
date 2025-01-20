@@ -6,7 +6,7 @@
 
         <div class="flex space-x-3 items-start flex-shrink-0">
           <%= render 'users/user_state', user: user %>
-          <%= render 'shared/components/more_action',icon_color: 'bg-letter-color' do %>
+          <%= render 'shared/components/more_action',icon_class: 'member-more', label_hover:"hover:bg-line-colour" do %>
             <% if policy(user).deactivate? %>
               <%= link_to 'Deactivate', deactivate_member_path(user), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left', data: { turbo_frame: "modal" } %>
             <% end %>
