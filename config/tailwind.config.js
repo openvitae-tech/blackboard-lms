@@ -34,7 +34,7 @@ module.exports = {
       "purple":"#3456DA",
       "black": "#000000",
       "light-green":"#A9D500",
-      "light-green":"#F9FFE0",
+      "light-green-50":"#F9FFE0",
 
     },
     dropShadow: {
