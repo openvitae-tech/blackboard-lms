@@ -25,7 +25,7 @@ module.exports = {
       "danger":"#FF6A6A",
       "danger-light":"#FFE0E0",
       "letter-color":"#404041",
-      "letter-color-light":"#5C5C5C",
+      "letter-color-light":"#8B8B8D",
       "white": "#FFFFFF",
       "gold":"#FFC857",
       "gold-light":"#FFF3DB",
