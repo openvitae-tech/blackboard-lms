@@ -13,7 +13,7 @@
         <% end %>
       <% end %>
       <% if policy(:invite).new? && policy(@learning_partner).invite? %>
-        <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "add-user-modal" } do %>
+        <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "modal" } do %>
           <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus' %>
         <% end %>
       <% else %>
@@ -98,4 +98,3 @@
   </div>
   <%= render 'teams/member_list', team: @learning_partner.parent_team %>
 <% end %>
-<%= turbo_frame_tag 'add-user-modal' %>

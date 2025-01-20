@@ -18,10 +18,8 @@
     <div class="p-6">
       <h1 class="text-base font-semibold">Change password</h1>
       <div class="mt-2">
-        <%= link_to 'Change your password', change_password_user_settings_path, data: { turbo_frame: 'change-password-modal' }, class: 'link-text text-purple' %>
+        <%= link_to 'Change your password', change_password_user_settings_path, data: { turbo_frame: 'modal' }, class: 'link-text text-purple' %>
       </div>
     </div>
   </div>
 <% end %>
-<%= turbo_frame_tag 'edit-user-settings-modal' %>
-<%= turbo_frame_tag 'change-password-modal' %>

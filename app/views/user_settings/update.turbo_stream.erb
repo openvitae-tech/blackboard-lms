@@ -1,3 +1,6 @@
-<%= turbo_stream.replace "modal-flash", partial: "shared/components/modal_flash" %>
 <%= turbo_stream.replace "user-settings-page-header", partial: "user_settings/page_header", locals: { user: @user } %>
 <%= turbo_stream.replace "user-settings-page-body", partial: "user_settings/page_body", locals: { user: @user } %>
+<%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
+<%= turbo_stream.replace "modal" do %>
+  <%= turbo_frame_tag "modal" %>
+<% end %>
