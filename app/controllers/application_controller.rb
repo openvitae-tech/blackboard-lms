@@ -27,5 +27,4 @@ class ApplicationController < ActionController::Base
       courses_path
     end
   end
-  helper_method :after_sign_in_path_for
 end

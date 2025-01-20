@@ -92,6 +92,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :embeds do
+    resources :learning_partners, only: [] do
+      resources :videos, only: :show
+    end
+  end
+
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',
     sessions: 'users/sessions'

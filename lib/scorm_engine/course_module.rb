@@ -1,9 +1,17 @@
 # frozen_string_literal: true
 
 module ScormEngine
-  class CourseModule < ApplicationRecord
-    self.abstract_class = true
+  class CourseModule
+    def initialize
+      raise 'Cannot initialize an abstract CourseModule class'
+    end
 
-    attr_accessor :title, :lessons
+    def title
+      raise NotImplementedError, "#{self.class} must implement abstract method 'title'"
+    end
+
+    def lessons
+      raise NotImplementedError, "#{self.class} must implement abstract method 'lessons'"
+    end
   end
 end
