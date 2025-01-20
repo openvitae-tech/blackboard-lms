@@ -19,7 +19,7 @@
           <% end %>
         <% end %>
         <% if policy(team).edit? %>
-          <%= link_to edit_team_path(team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2', data: { turbo_frame: "edit-team-modal"} do%>
+          <%= link_to edit_team_path(team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2', data: { turbo_frame: "modal"} do%>
             <span class="text-secondary text-xs font-medium">Edit</span>
             <span class="icon icon-edit h-[10px] w-[10px] bg-secondary"></span>
           <% end %>
