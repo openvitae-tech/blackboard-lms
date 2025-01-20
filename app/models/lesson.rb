@@ -4,6 +4,7 @@ class Lesson < ApplicationRecord
   belongs_to :course_module, counter_cache: true
 
   validates :title, presence: true
+  validates :duration, presence: { message: I18n.t("lesson.duration_not_set") }
   validate :unique_local_content_lang
   validate :has_local_contents?
 
