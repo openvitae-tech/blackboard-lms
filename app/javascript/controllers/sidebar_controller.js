@@ -12,10 +12,6 @@ export default class extends Controller {
     document.removeEventListener("click", this.handleOutsideClick);
   }
 
-  toggleSidebar() {
-    this.sidebarCheckboxTarget.checked = !this.sidebarCheckboxTarget.checked;
-  }
-
   closeSidebar() {
     this.sidebarCheckboxTarget.checked = false;
   }
