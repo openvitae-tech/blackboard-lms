@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import { DirectUpload } from "@rails/activestorage"
+import { toggleButtonState } from "../utils/lessons";
 
 export default class extends Controller {
   static targets = [
@@ -17,7 +18,7 @@ export default class extends Controller {
     "durationField",
     "uploadControls",
     "failedUploadMessage"
-  ];
+    ];
 
   connect() {
     this.fileInputTarget.addEventListener(
@@ -95,10 +96,12 @@ export default class extends Controller {
 
   uploadFile(file) {
     this.toggleCancelUploadButtons(false);
+    toggleButtonState("disabled");
 
     const upload = new DirectUpload(file, '/direct_uploads?service=video', this);
 
     upload.create((error,blob) => {
+      toggleButtonState();
       if (error) {
         this.failedUploadMessageTarget.classList.remove("hidden");
         this.uploadControlsTarget.classList.add("hidden");
@@ -128,6 +131,7 @@ export default class extends Controller {
       this.currentXHR.abort();
       this.currentXHR = null;
       this.resetUploader();
+      toggleButtonState();
     }
   }
 

@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { toggleButtonState } from "../utils/lessons";
 
 export default class extends Controller {
   static targets = [
@@ -76,5 +77,6 @@ export default class extends Controller {
     languageSection.style.display = "none";
 
     this.videoFieldCount--;
+    toggleButtonState();
   }
 }
