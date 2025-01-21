@@ -235,3 +235,15 @@ input.tags-checkbox:focus,
 input.tags-checkbox:checked:focus {
   @apply ring-0 focus:outline-none;
 }
+
+.teams-more{
+  @apply bg-white icon-medium ;
+}
+
+.member-more{
+  @apply bg-letter-color icon-small ;
+}
+
+.teams-more-hover{
+  @apply bg-black hover:bg-secondary hover:opacity-80;
+}
