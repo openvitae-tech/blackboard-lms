@@ -85,6 +85,7 @@ en:
     complete_and_continue: "Complete & Continue"
     previous: "Previous"
     next: "Next"
+    duration_not_set: "for the video is not set"
   quiz:
     empty: "There are no quizzes to show."
   team:

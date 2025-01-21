@@ -1,16 +1,17 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ['notificationList']
+    static targets = ['notificationList', 'polingInterval']
     path = "/notifications/count"
     headers = { 'Accept' : 'text/vnd.turbo-stream.html' }
     connect() {
+        const interval = parseInt(this.polingIntervalTarget.dataset.interval);
         const checkNotificationInterval = setInterval(() => {
             fetch(this.path, { headers: this.headers })
                 .then(response => response.text())
                 .then(html => Turbo.renderStreamMessage(html))
                 .catch(error => console.log(error))
-        }, 60000);
+        }, interval * 1000);
 
         // clear the interval after 24 hours
         setTimeout(() => {

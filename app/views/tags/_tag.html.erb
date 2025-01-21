@@ -9,11 +9,11 @@
 
   <td class="px-4 md:px-6 py-4 w-1/3">
     <div class="flex flex-col md:flex-row justify-end gap-4">
-      <%= link_to edit_tag_path(tag), data: { turbo_frame: "tag-modal" } do %>
+      <%= link_to edit_tag_path(tag), data: { turbo_frame: "modal" } do %>
         <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
       <% end %>
 
-      <%= link_to tag_path(tag), data: { turbo_frame: "tag-modal" } do %>
+      <%= link_to tag_path(tag), data: { turbo_frame: "modal" } do %>
         <%= render "shared/components/button_default_small", label: 'Delete', icon_name: 'icon-trash' %>
       <% end %>
     </div>

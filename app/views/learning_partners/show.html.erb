@@ -13,7 +13,7 @@
         <% end %>
       <% end %>
       <% if policy(:invite).new? && policy(@learning_partner).invite? %>
-        <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "add-user-modal" } do %>
+        <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "modal" } do %>
           <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus' %>
         <% end %>
       <% else %>
@@ -23,16 +23,17 @@
       <% end %>
     </div>
   </div>
-  <div class="w-full mt-8">
-    <div class="flex flex-col pb-6">
-      <div class="bg-line-colour-light rounded">
-        <%= image_tag partner_banner(@learning_partner), class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
-      </div>
-      <div class="flex justify-start -mt-10 ml-4">
-        <%= image_tag partner_logo(@learning_partner, :large), class: 'h-20 w-20 object-cover rounded-full border border-line-colour-light box-shadow-medium' %>
-      </div>
+  <div class="w-full mt-8">   
+    <div class="relative h-[250px] w-full">
+        <div class="relative h-full">
+          <%= image_tag partner_banner(@learning_partner), class: 'h-full w-full object-cover' %>
+        </div>
+        <div class="absolute inset-0 bg-black opacity-60"></div>
+        <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
+          <%= image_tag partner_logo(@learning_partner, :large), class: 'h-16 w-16 object-cover rounded-full border-2 border-white box-shadow-medium' %>
+          <span class="text-white font-bold text-xl"><%= @learning_partner.name %></span>
+        </div> 
     </div>
-    <h1 class="mb-4 text-xl font-semibold"><%= @learning_partner.name %></h1>
     <div class="flex flex-col gap-4 my-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="border border-line-colour-light px-1 py-4 text-center">
@@ -98,4 +99,3 @@
   </div>
   <%= render 'teams/member_list', team: @learning_partner.parent_team %>
 <% end %>
-<%= turbo_frame_tag 'add-user-modal' %>

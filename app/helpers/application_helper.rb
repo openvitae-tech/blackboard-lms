@@ -77,5 +77,9 @@ module ApplicationHelper
   def product_name
     Rails.application.credentials.org_name
   end
+
+  def poling_interval
+    Rails.env.local? ? 600 : 60
+  end
   
 end
