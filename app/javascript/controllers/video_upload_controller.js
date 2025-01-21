@@ -18,7 +18,7 @@ export default class extends Controller {
     "durationField",
     "uploadControls",
     "failedUploadMessage"
-    ];
+  ];
 
   connect() {
     this.fileInputTarget.addEventListener(
