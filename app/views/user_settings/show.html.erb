@@ -1,17 +1,23 @@
 <%= render "shared/components/layout" do %>
   <h1 class="mb-4 text-xl font-semibold">User settings</h1>
   <% if current_user.not_admin? %>
-    <div class="flex flex-col">
-      <div class="mt-2 bg-line-colour-light rounded">
-        <%= image_tag team_banner(current_user.team, 'desktop'), class: 'h-[194px] w-full object-cover rounded box-shadow-medium' %>
+    <div class="relative h-[250px] w-full">
+        <div class="relative h-full">
+          <%= image_tag team_banner(current_user.team, 'desktop'), class: 'h-full w-full object-cover' %>
+        </div>
+        <div class="absolute inset-0 bg-black opacity-60"></div>
+        <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
+          <%= link_to "javascript:void(0);", class: "inline-block w-20 h-20" do %>
+            <%= render 'shared/components/profile_pic', letter: letter_avatar(@user) %>
+          <% end %>
+          <%= render 'user_settings/profile_header', user: @user %>
+        </div>
+          
       </div>
-      <div class="flex justify-start -mt-10 ml-6">
-        <%= link_to "javascript:void(0);", class: "inline-block w-20 h-20" do %>
-          <%= render 'shared/components/profile_pic', letter: letter_avatar(@user) %>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+    <% end %>
+
+
+
   <%= render 'user_settings/page_header', user: @user %>
   <div class="rounded box-shadow-medium">
     <%= render 'user_settings/page_body', user: @user  %>

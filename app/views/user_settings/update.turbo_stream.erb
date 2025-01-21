@@ -1,3 +1,4 @@
+<%= turbo_stream.replace "user-settings-profile-header", partial: "user_settings/profile_header", locals: { user: @user } %>
 <%= turbo_stream.replace "user-settings-page-header", partial: "user_settings/page_header", locals: { user: @user } %>
 <%= turbo_stream.replace "user-settings-page-body", partial: "user_settings/page_body", locals: { user: @user } %>
 <%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
