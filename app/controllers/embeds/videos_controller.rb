@@ -10,6 +10,7 @@ module Embeds
     def show
       @is_token_valid = valid_token?
       @video_iframe = @local_content.present? ? get_video_iframe(@local_content) : nil
+      render layout: false, content_type: 'text/html'
     end
 
     private
@@ -27,7 +28,7 @@ module Embeds
     end
 
     def valid_token?
-       @learning_partner.scorm_token.token == params[:scorm_token]
+       @learning_partner.scorm_token.token == request.headers['X-Scorm-Token']
     end
   end
 end

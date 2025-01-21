@@ -1,14 +1,10 @@
-<div data-controller="lessons" class="flex items-center justify-center min-h-screen">
-  <% if @is_token_valid %>
-    <% if @video_iframe.present? %>
-      <div class="absolute inset-0 flex justify-center items-center" data-lessons-target="loader">
-        <%= render "shared/components/spinner" %>
-      </div>
-      <%= @video_iframe.gsub('<iframe', '<iframe data-lessons-target="videoPlayer"').html_safe %>
-    <% else %>
-      <div><%= t("local_content.video_not_available") %></div>
-    <% end %>
+<% if @is_token_valid %>
+  <% if @video_iframe.present? %>
+    <%= @video_iframe.gsub('<iframe', '<iframe data-lessons-target="videoPlayer"').html_safe %>
   <% else %>
-    <div>Token is invalid</div>
+    <div><%= t("local_content.video_not_available") %></div>
   <% end %>
+<% else %>
+  <div>Token is invalid</div>
+<% end %>
 </div>

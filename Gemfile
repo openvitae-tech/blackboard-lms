@@ -118,3 +118,5 @@ gem 'sidekiq-failures'
 gem 'sidekiq-unique-jobs'
 
 gem 'rails-html-sanitizer', '1.6.1'
+
+gem 'rack-cors', require: 'rack/cors'
