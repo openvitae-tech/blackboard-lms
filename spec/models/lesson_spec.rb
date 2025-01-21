@@ -14,6 +14,14 @@ RSpec.describe Lesson, type: :model do
     end
   end
 
+  describe '#duration' do
+    it 'is not valid without duration' do
+      lesson.duration = nil
+      expect(lesson).not_to be_valid
+      expect(lesson.errors.full_messages.to_sentence).to include('Duration for the video is not set')
+    end
+  end
+
   describe '#course_module' do
     it 'is not valid without course module' do
       lesson.course_module = nil
