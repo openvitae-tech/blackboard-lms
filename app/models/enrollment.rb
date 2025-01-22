@@ -98,8 +98,8 @@ class Enrollment < ApplicationRecord
     quiz_answers.includes(:quiz).where(course_module_id: course_module.id)
   end
 
-  def update_score!(score)
-    self.score - score
+  def set_score!(score)
+    self.score = score
     save!
   end
 end

@@ -124,7 +124,7 @@ class CourseManagementService
 
     quiz_answer = enrollment.quiz_answers.new(quiz:, status:, answer:, course_module_id: quiz.course_module_id)
     quiz_answer.save!
-    enrollment.update_score!(quiz_answer.score)
+    enrollment.set_score!(enrollment.score + quiz_answer.score)
   end
 
   def update_lesson_ordering!(course_module, lesson, action)
@@ -162,7 +162,7 @@ class CourseManagementService
   def redo_quiz(course_module, enrollment)
     score = enrollment.score_earned_for(course_module)
     enrollment.delete_recorded_answers_for(course_module)
-    enrollment.update_score!(score)
+    enrollment.set_score!(enrollment.score - score)
   end
 
   private
