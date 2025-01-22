@@ -85,4 +85,9 @@ module ApplicationHelper
   def pending_notifications
     NotificationService.instance.pending_notification_for(current_user)
   end
+
+  def days_remaining(deadline_date)
+    days = (deadline_date.to_date - Date.current).to_i
+    days > 0 ? days : 0
+  end
 end

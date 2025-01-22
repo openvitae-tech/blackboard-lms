@@ -102,4 +102,8 @@ class Enrollment < ApplicationRecord
     self.score = score
     save!
   end
+
+  def has_deadline?
+    deadline_at.present?
+  end
 end
