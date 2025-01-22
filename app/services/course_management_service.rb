@@ -19,8 +19,8 @@ class CourseManagementService
 
     NotificationService.notify(
       user,
-      I18n.t('notifications.course.enrolled_title'),
-      format(I18n.t('notifications.course.enrolled_message'), title: course.title), link: course_path(course))
+      I18n.t('notifications.course.enrolled.title'),
+      format(I18n.t('notifications.course.enrolled.message'), title: course.title), link: course_path(course))
     :ok
   end
 
@@ -63,12 +63,32 @@ class CourseManagementService
     return if enrollment.lesson_completed?(lesson.id)
 
     enrollment.complete_lesson!(course_module.id, lesson.id, time_spent_in_seconds)
+    NotificationService.notify(
+      user,
+      I18n.t('notifications.lesson.completed.title'),
+      format(I18n.t('notifications.lesson.completed.message'), title: lesson.title),
+      link: course_module_lesson_path(course_module.course, course_module, lesson)
+    )
 
-    enrollment.complete_module!(course_module.id) if module_completed?(enrollment, course_module)
+    if module_completed?(enrollment, course_module)
+      enrollment.complete_module!(course_module.id)
+      NotificationService.notify(
+        user, I18n.t('notifications.course_module.completed.title'),
+        format(I18n.t('notifications.course_module.completed.message'), title: course_module.title),
+        link: course_module_path(course_module.course, course_module)
+      )
+    end
 
     if course_completed?(enrollment)
       enrollment.complete_course!
       EVENT_LOGGER.publish_course_completed(user, enrollment.course_id)
+      UserMailer.course_completed(user, course_module.course).deliver_later
+      NotificationService.notify(
+        user,
+        I18n.t('notifications.course.completed.title'),
+        format(I18n.t('notifications.course.completed.message'), title: course_module.course.title),
+        link: course_path(course_module.course)
+      )
     end
   end
 

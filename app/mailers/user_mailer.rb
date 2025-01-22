@@ -24,4 +24,14 @@ class UserMailer < ApplicationMailer
       subject: "Course deadline approaching",
       )
   end
+
+  def course_completed(user, course)
+    @user = user
+    @course = course
+
+    mail(
+      to: @user.email,
+      subject: "You have completed a course",
+      )
+  end
 end

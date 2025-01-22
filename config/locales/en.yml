@@ -110,5 +110,17 @@ en:
   page_not_found: "The page you're looking for is missing."
   notifications:
     course:
-      enrolled_title: "Course enrolled"
-      enrolled_message: "You are enrolled for a new course %{title}"
+      enrolled:
+        title: "Course enrolled"
+        message: "You are enrolled for a new course %{title}"
+      completed:
+        title: "Course completed"
+        message: "Congratulations you have completed the course %{title}"
+    course_module:
+      completed:
+        title: "Module completed"
+        message: "Congratulations you have completed the module %{title}"
+    lesson:
+      completed:
+        title: "Lesson completed"
+        message: "Congratulations you have completed the lesson %{title}"
