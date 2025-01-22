@@ -90,7 +90,7 @@ class LessonsController < ApplicationController
 
   def complete
     service = CourseManagementService.instance
-    time_spent_in_seconds = (params[:time_spent] || 0).to_i
+    time_spent_in_seconds = [(params[:time_spent] || 0).to_i, @lesson.duration].min
     enrollment = current_user.get_enrollment_for(@course)
 
     service.set_progress!(current_user, enrollment, @course_module, @lesson, time_spent_in_seconds)
