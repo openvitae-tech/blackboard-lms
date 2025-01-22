@@ -81,5 +81,8 @@ module ApplicationHelper
   def poling_interval
     Rails.env.local? ? 600 : 60
   end
-  
+
+  def pending_notifications
+    NotificationService.instance.pending_notification_for(current_user)
+  end
 end
