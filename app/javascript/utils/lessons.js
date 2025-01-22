@@ -1,12 +1,7 @@
-export function toggleButtonState(type) {
+export function toggleButtonState({ type, pendingCount }) {
   const submitButton = document.getElementById("submit-button");
-  const addNewButton = document.getElementById("add-new-lang");
 
-  if(type === "disabled") {
-    submitButton.classList.add("disabled");
-    addNewButton.classList.add("disabled");
-  } else {
-    submitButton.classList.remove("disabled");
-    addNewButton.classList.remove("disabled");
-  }
+  type === "disabled" && submitButton.classList.add("disabled");
+
+  pendingCount === 0 && submitButton.classList.remove("disabled");
 }
