@@ -3,6 +3,7 @@
 class CourseManagementService
   include Singleton
   include Errors
+  include Rails.application.routes.url_helpers
 
   def enroll!(user, course, assigned_by = nil, deadline = nil)
     # Enrolling to an unpublished course is unacceptable
@@ -15,6 +16,11 @@ class CourseManagementService
     EVENT_LOGGER.publish_course_enrolled(user, course.id, self_enrolled)
 
     course.enroll!(user, assigned_by, deadline)
+
+    NotificationService.notify(
+      user,
+      I18n.t('notifications.course.enrolled_title'),
+      format(I18n.t('notifications.course.enrolled_message'), title: course.title), link: course_path(course))
     :ok
   end
 

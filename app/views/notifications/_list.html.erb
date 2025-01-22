@@ -15,9 +15,9 @@
           <li class="border-b border-line-colour-light px-6 py-4 w-full">
             <%= link_to mark_as_read_notifications_path(message: notification.encoded_message, redirect_url: notification.link), data: { turbo_stream: true } do %>
               <% if notification.ntype == 'error' %>
-                <p class="text-xs text-danger font-semibold mb-1"><%= notification.text %></p>
+                <p class="text-xs text-danger font-semibold mb-1"><%= notification.title %></p>
               <% else %>
-                <p class="text-xs text-primary font-semibold mb-1"><%= notification.text %></p>
+                <p class="text-xs text-primary font-semibold mb-1"><%= notification.title %></p>
               <% end %>
               <p class="text-xs text-letter-color-light mb-1"><%= notification.text %></p>
               <p class="text-xs text-letter-color-light text-right"><%= time_ago_in_words(notification.created_at) %> ago</p>
