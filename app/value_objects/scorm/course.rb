@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-
-class Scorm::Course < ScormEngine::Course
+class Scorm::Course < ScormPackage::AbstractCourse
   attr_reader :course
 
   def initialize(course)
