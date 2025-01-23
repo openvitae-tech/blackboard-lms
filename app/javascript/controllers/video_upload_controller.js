@@ -26,6 +26,7 @@ export default class extends Controller {
       "change",
       this.handleFileSelect.bind(this)
     );
+    store.pendingCount = 0;
   }
 
   handleFileSelect(event) {
