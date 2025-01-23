@@ -14,9 +14,16 @@ class Scorm::Lesson < ScormPackage::AbstractLesson
   def videos
     lesson.local_contents.map do |local_content|
       {
+        id: local_content.id,
         language: local_content.lang,
-        video_url: local_content.video.blob&.metadata['url']&.gsub("https://vimeo.com/", "https://player.vimeo.com/video/")
+        video_url: get_video_url(local_content.id)
       }
     end
+  end
+
+  private
+
+  def get_video_url(id)
+    "http://127.0.0.1:3000/embeds/videos/#{id}"
   end
 end

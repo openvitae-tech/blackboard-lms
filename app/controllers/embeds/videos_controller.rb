@@ -4,7 +4,6 @@ module Embeds
 
     skip_before_action :authenticate_user!
     before_action :set_local_content
-    before_action :set_learning_partner
     after_action :allow_iframe
 
     def show
@@ -19,16 +18,12 @@ module Embeds
       @local_content = LocalContent.find_by(id: params[:id])
     end
 
-    def set_learning_partner
-      @learning_partner = LearningPartner.find(params[:learning_partner_id])
-    end
-
     def allow_iframe
       response.headers.except! 'X-Frame-Options'
     end
 
     def valid_token?
-       @learning_partner.scorm_token.token == request.headers['X-Scorm-Token']
+       ScormToken.find_by(token: request.headers['X-Scorm-Token'])
     end
   end
 end

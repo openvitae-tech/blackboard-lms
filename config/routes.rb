@@ -93,9 +93,7 @@ Rails.application.routes.draw do
   end
 
   namespace :embeds do
-    resources :learning_partners, only: [] do
-      resources :videos, only: :show
-    end
+    resources :videos, only: :show
   end
 
   devise_for :users, controllers: {
