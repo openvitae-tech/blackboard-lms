@@ -46,15 +46,15 @@ body{
   }
 
   .page-heading {
-    @apply text-xl font-bold md:text-3xl md:font-semibold;
+    @apply text-xl font-bold md:text-3xl md:font-semibold font-poppins;
   }
 
   .page-heading-medium {
-    @apply text-xl font-semibold;
+    @apply text-xl font-semibold font-poppins;
   }
 
   .page-sub-heading {
-    @apply text-base md:text-lg font-semibold;
+    @apply text-base md:text-lg font-semibold font-poppins;
   }
 
   .btn-primary {
