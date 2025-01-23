@@ -43,7 +43,7 @@
                   </span>
                 </p>
               </div>
-              <div class="flex gap-4">
+              <div class="flex gap-4 header-font">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
                   <%= link_to replay_course_module_lesson_path(course, course_module, lesson), data: { turbo_method: "put" } do %>
                     <span class="text-primary">Replay</span>

@@ -8,7 +8,7 @@
     <% end %>
   >
     <summary class="flex items-center justify-between p-4 cursor-pointer focus:outline-none md:p-6">
-      <h2 class="text-black0 font-semibold text-sm justify-start md:text-base">
+      <h2 class="text-black0 font-semibold text-sm justify-start md:text-base header-font">
         <% if policy(course_module).show? %>
           <%= link_to course_module.title, course_module_path(course, course_module), class: 'nav-link' %>
         <% else %>

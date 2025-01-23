@@ -2,7 +2,7 @@
   <div data-controller="courses">
     <%= render 'filters', tags: @tags %>
     <div class="flex flex-row justify-between mb-4">
-      <h1 class="mb-4 text-xl font-semibold">My Courses</h1>
+      <h1 class="header-font mb-4 text-xl font-semibold">My Courses</h1>
       <% if policy(:course).new? %>
         <%= link_to new_course_path, class: "nav-link" do %>
           <%= render 'shared/components/icon_button_primary', label: 'Add course', icon_name: 'icon-plus' %>
@@ -58,7 +58,7 @@
       <%= render 'courses/not_found_msg', type: (params[:tags].present? && params[:term].present? ? 'search_and_tags' : params[:term].present? ? 'search' : 'tags') %>
     <% end %>
     <% if has_enrolled_courses? && @type != "all" %>
-      <p class="text-base font-medium mb-4">
+      <p class="text-base font-medium mb-4 header-font">
         <span class="">Assigned courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses_count, 'course') %>)</span>
         <%= link_to 'View more', courses_path(type: 'enrolled', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
       </p>
@@ -72,7 +72,7 @@
       <%= paginate(@enrolled_courses) if @type.present? %>
     <% end %>
     <% if has_available_courses? && @type != "enrolled" %>
-      <p class="text-base font-medium my-4">
+      <p class="text-base font-medium my-4 header-font">
         <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses_count, 'course') %> )</span>
         <%= link_to 'View more', courses_path(type: 'all', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
       </p>
