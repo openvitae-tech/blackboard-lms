@@ -16,7 +16,7 @@ class CoursesController < ApplicationController
       @enrolled_courses = result[:enrolled_courses]
       @enrolled_courses_count = result[:enrolled_courses_count]
     end
-    @tags = Tag.all
+    @tags = Tag.load_tags
     @type = permitted_type(params[:type])
     apply_pagination if @type.present?
   end
@@ -177,8 +177,8 @@ class CoursesController < ApplicationController
   end
 
   def set_tags
-    @categories = Tag.category
-    @levels = Tag.level
+    @categories = Tag.category.load_tags
+    @levels = Tag.level.load_tags
   end
 
   def updated_params
