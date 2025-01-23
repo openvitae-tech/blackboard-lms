@@ -20,7 +20,7 @@ class DirectUploadsController < ActiveStorage::DirectUploadsController
   end
 
   def upload_blob_attributes
-    if Rails.env.development? && params[:service] == 'video'
+    if Rails.env.production? && params[:service] == 'video'
       blob_args.merge(service_name: 's3_video_store')
     else
       blob_args
