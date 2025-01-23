@@ -17,7 +17,7 @@ class Courses::FilterService
   def admin_courses(tags, courses)
    filtered_courses = filter_by_tags(tags, courses)
     {
-      available_courses: filtered_courses.includes(:banner_attachment, :tags).limit(10),
+      available_courses: filtered_courses.includes(:banner_attachment, :tags).limit(Course::PER_PAGE_LIMIT),
       available_courses_count: filtered_courses.length
     }
   end
@@ -27,8 +27,8 @@ class Courses::FilterService
     filtered_enrolled = filter_by_tags(tags, courses[:current_user_enrolled_courses])
     available_excluding_enrolled = filtered_available.where.not(id: filtered_enrolled.pluck(:id))
     {
-      enrolled_courses: (type != 'all' ? filtered_enrolled.includes(:banner_attachment, :tags).limit(2) : []),
-      available_courses: (type != 'enrolled' ? available_excluding_enrolled.includes(:banner_attachment, :tags).limit(10) : []),
+      enrolled_courses: (type != 'all' ? filtered_enrolled.includes(:banner_attachment, :tags).limit(Course::ENROLLED_COURSES_LIMIT) : []),
+      available_courses: (type != 'enrolled' ? available_excluding_enrolled.includes(:banner_attachment, :tags).limit(Course::PER_PAGE_LIMIT) : []),
       enrolled_courses_count: (type != 'all' ? filtered_enrolled.size : 0),
       available_courses_count: (type != 'enrolled' ? available_excluding_enrolled.size : 0)
     }

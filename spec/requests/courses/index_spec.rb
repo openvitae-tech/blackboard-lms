@@ -31,13 +31,13 @@ RSpec.describe 'Request spec for GET /courses' do
       expect(assigns[:available_courses].pluck(:id).sort).to eq(Course.published.pluck(:id).sort)
     end
 
-    it 'shows only 2 enrolled courses on the learner dashboard' do
+    it 'shows only 4 enrolled courses on the learner dashboard' do
       [0, 2, 4, 6].each do |index|
         courses[index].enroll!(user)
       end
       get('/courses')
       expect(assigns[:enrolled_courses].pluck(:id).sort)
-        .to eq(user.courses.order(created_at: :desc).limit(2).pluck(:id).sort)
+        .to eq(user.courses.order(created_at: :desc).limit(4).pluck(:id).sort)
     end
 
     it 'lists all enrolled courses when type is enrolled' do
@@ -104,10 +104,10 @@ RSpec.describe 'Request spec for GET /courses' do
       expect(response.status).to render_template(:index)
     end
 
-    it 'shows only the first 10 available courses on the admin dashboard' do
+    it 'shows only the first 12 available courses on the admin dashboard' do
       get('/courses')
       expect(assigns[:available_courses].pluck(:id).sort)
-        .to eq(Course.limit(10).order(created_at: :desc).pluck(:id).sort)
+        .to eq(Course.limit(12).order(created_at: :desc).pluck(:id).sort)
     end
 
     it 'shows all available courses when type is all' do
