@@ -4,11 +4,11 @@
     <%= form.hidden_field :has_error, value: @lesson.errors.any?, data: { lessons_form_target: "hasError" } %>
     <%= render "shared/components/form_errors", resource: lesson %>
     <div class="my-8 text-sm" >
-      <%= form.label :title, class: "text-sm font-medium header-font" %>
+      <%= form.label :title, class: "text-sm font-medium" %>
       <%= form.text_field :title, class: "input-text mt-2", placeholder: "Title for lesson eg: Wine serving" %>
     </div>
     <div class="my-8 text-sm flex flex-col gap-2" >
-      <%= form.label :rich_description, 'Description', class: "text-sm font-medium header-font" %>
+      <%= form.label :rich_description, 'Description', class: "text-sm font-medium" %>
       <%= form.rich_text_area :rich_description, class: "input-text mt-2", placeholder: "A short description about the lesson." %>
     </div>
     <template data-lessons-form-target="nestedRecordTemplate">
