@@ -3,6 +3,7 @@
 class CourseManagementService
   include Singleton
   include Errors
+  include Rails.application.routes.url_helpers
 
   def enroll!(user, course, assigned_by = nil, deadline = nil)
     # Enrolling to an unpublished course is unacceptable
@@ -15,6 +16,11 @@ class CourseManagementService
     EVENT_LOGGER.publish_course_enrolled(user, course.id, self_enrolled)
 
     course.enroll!(user, assigned_by, deadline)
+
+    NotificationService.notify(
+      user,
+      I18n.t('notifications.course.enrolled.title'),
+      format(I18n.t('notifications.course.enrolled.message'), title: course.title), link: course_path(course))
     :ok
   end
 
@@ -57,12 +63,32 @@ class CourseManagementService
     return if enrollment.lesson_completed?(lesson.id)
 
     enrollment.complete_lesson!(course_module.id, lesson.id, time_spent_in_seconds)
+    NotificationService.notify(
+      user,
+      I18n.t('notifications.lesson.completed.title'),
+      format(I18n.t('notifications.lesson.completed.message'), title: lesson.title),
+      link: course_module_lesson_path(course_module.course, course_module, lesson)
+    )
 
-    enrollment.complete_module!(course_module.id) if module_completed?(enrollment, course_module)
+    if module_completed?(enrollment, course_module)
+      enrollment.complete_module!(course_module.id)
+      NotificationService.notify(
+        user, I18n.t('notifications.course_module.completed.title'),
+        format(I18n.t('notifications.course_module.completed.message'), title: course_module.title),
+        link: course_module_path(course_module.course, course_module)
+      )
+    end
 
     if course_completed?(enrollment)
       enrollment.complete_course!
       EVENT_LOGGER.publish_course_completed(user, enrollment.course_id)
+      UserMailer.course_completed(user, course_module.course).deliver_later
+      NotificationService.notify(
+        user,
+        I18n.t('notifications.course.completed.title'),
+        format(I18n.t('notifications.course.completed.message'), title: course_module.course.title),
+        link: course_path(course_module.course)
+      )
     end
   end
 
@@ -91,7 +117,7 @@ class CourseManagementService
       next if result != :ok
 
       EVENT_LOGGER.publish_course_assigned(assigned_by, user.id, course.id)
-      NotificationService.notify(user, I18n.t('course.assigned.title'), format(I18n.t('course.assigned.text'), course: course.title, name: assigned_by.name), link: '/')
+      NotificationService.notify(user, I18n.t('course.assigned.title'), format(I18n.t('course.assigned.text'), course: course.title, name: assigned_by.name), link: course_path(course))
       UserMailer.course_assignment(user, assigned_by, course).deliver_later
     end
   end
@@ -124,7 +150,7 @@ class CourseManagementService
 
     quiz_answer = enrollment.quiz_answers.new(quiz:, status:, answer:, course_module_id: quiz.course_module_id)
     quiz_answer.save!
-    enrollment.update_score!(quiz_answer.score)
+    enrollment.set_score!(enrollment.score + quiz_answer.score)
   end
 
   def update_lesson_ordering!(course_module, lesson, action)
@@ -162,7 +188,7 @@ class CourseManagementService
   def redo_quiz(course_module, enrollment)
     score = enrollment.score_earned_for(course_module)
     enrollment.delete_recorded_answers_for(course_module)
-    enrollment.update_score!(score)
+    enrollment.set_score!(enrollment.score - score)
   end
 
   private
