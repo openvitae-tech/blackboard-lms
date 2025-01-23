@@ -251,6 +251,11 @@ input.tags-checkbox:checked:focus {
 .teams-more-hover{
   @apply bg-black hover:bg-secondary hover:opacity-80;
 }
+
 .header-font{
   @apply !font-poppins;
+}
+
+.name-header{
+  @apply text-white font-bold text-xl font-poppins;
 }
