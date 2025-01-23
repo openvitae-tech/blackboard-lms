@@ -1,4 +1,4 @@
-<%= link_to course_path(course), class: "inline-block rounded box-shadow-medium border border-line-colour-light relative" do %>
+<div class="inline-block rounded box-shadow-medium border border-line-colour-light relative">
   <div class="w-full rounded md:w-[310px] relative">
     <div class="absolute top-0 right-0 z-10 flex flex-wrap justify-start gap-2">
       <% course.tags.each do |tag| %>
@@ -53,4 +53,4 @@
       </div>      
     </div>
   </div>
-<% end %>
+</div>
