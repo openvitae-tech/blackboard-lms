@@ -121,7 +121,7 @@ body{
   }
 
   .side-bar-item-inner {
-    @apply flex  w-full h-11 flex-row items-center gap-4;
+    @apply flex  w-full h-11 flex-row items-center gap-4 font-poppins;
   }
 
   .side-bar-footer {
