@@ -39,6 +39,8 @@ en:
     unauthorized: "Sorry you are not authorized to perform that action."
   course:
     label: "My Courses"
+    enroll:
+      label: 'Self assign'
     created: 'Course was successfully created.'
     updated: 'Course was successfully updated.'
     deleted: 'Course was deleted successfully.'

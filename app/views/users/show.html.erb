@@ -14,7 +14,7 @@
   <div class="my-8">
     <% if has_enrolled_courses? %>
       <p class="text-base font-medium mb-4">
-        <span class="">Enrolled courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'enrollment') %>)</span>
+        <span class="">Assigned courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'course') %>)</span>
       </p>
 
       <div class="flex flex-wrap gap-4">
