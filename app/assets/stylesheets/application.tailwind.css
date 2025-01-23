@@ -259,3 +259,7 @@ input.tags-checkbox:checked:focus {
 .name-header{
   @apply text-white font-bold text-xl font-poppins;
 }
+
+.small-heading {
+  @apply text-base font-semibold font-poppins;
+}
