@@ -3,32 +3,32 @@
   <%= form_with(url: form_url, model:  quiz) do |form| %>
     <%= render "shared/components/form_errors", resource: quiz %>
     <div class="mb-8 text-sm">
-      <%= form.label :question, class: "text-sm font-medium" %>
+      <%= form.label :question, class: "text-sm font-medium header-font" %>
       <%= form.text_area :question, class: "input-text mt-2 resize-none h-20", rows: 2, placeholder: "Enter your question here..." %>
     </div>
     <div class="my-8 text-sm">
-      <%= form.label :option_a, class: "text-sm font-medium" %>
+      <%= form.label :option_a, class: "text-sm font-medium header-font" %>
       <div class="relative mt-2">
         <%= form.text_field :option_a, class: "input-text pr-10" %>
         <%= form.radio_button :answer, "a", class: "radio-check-button" %>
       </div>
     </div>
     <div class="my-8 text-sm">
-      <%= form.label :option_b, class: "text-sm font-medium" %>
+      <%= form.label :option_b, class: "text-sm font-medium header-font" %>
       <div class="relative mt-2">
         <%= form.text_field :option_b, class: "input-text pr-10" %>
         <%= form.radio_button :answer, "b", class: "radio-check-button" %>
       </div>
     </div>
     <div class="my-8 text-sm">
-      <%= form.label :option_c, class: "text-sm font-medium" %>
+      <%= form.label :option_c, class: "text-sm font-medium header-font" %>
       <div class="relative mt-2">
         <%= form.text_field :option_c, class: "input-text pr-10" %>
         <%= form.radio_button :answer, "c", class: "radio-check-button" %>
       </div>
     </div>
     <div class="my-8 text-sm">
-      <%= form.label :option_d, class: "text-sm font-medium" %>
+      <%= form.label :option_d, class: "text-sm font-medium header-font" %>
       <div class="relative mt-2">
         <%= form.text_field :option_d, class: "input-text pr-10" %>
         <%= form.radio_button :answer, "d", class: "radio-check-button" %>
@@ -36,10 +36,10 @@
     </div>
     <div class="my-8 text-sm  flex gap-6 items-center">
       <div class="my-8">
-        <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
+        <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link header-font" %>
       </div>
       <div>
-        <%= form.submit submit_label_for(quiz), class: "btn-primary" do %>
+        <%= form.submit submit_label_for(quiz), class: "btn-primary header-font" do %>
           <span><%= text %></span>
         <% end %>
       </div>
