@@ -43,6 +43,11 @@
             <div class="w-[83px]">
               <%= render 'shared/components/progress_bar_short', progress: enrollment.progress %>
             </div>
+            <% if enrollment.has_deadline? %>
+              <div class="text-sm">
+                <%= pluralize(days_remaining(enrollment.deadline_at), "day") %> left
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>      

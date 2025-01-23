@@ -37,7 +37,8 @@ class DevelopmentSeed
         password: 'password',
         password_confirmation: 'password',
         learning_partner: partner,
-        team:
+        team:,
+        state: 'active'
       )
 
       user.confirm

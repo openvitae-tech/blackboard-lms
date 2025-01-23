@@ -13,10 +13,15 @@
         <% end %>
       </div>
 
-      <% if enrollment && (enrollment.progress > 0) %>
+      <% if local_assigns[:enrollment].present? %>
         <div class="w-80">
           <%= render "shared/components/progress_bar", progress: enrollment.progress %>
         </div>
+        <% if enrollment.has_deadline? %>
+          <div class="text-sm">
+            <%= pluralize(days_remaining(enrollment.deadline_at), "day") %> left
+          </div>
+        <% end %>
       <% end %>
       <div class="flex justify-between space-x-2">
         <div class="flex justify-between space-x-4">
