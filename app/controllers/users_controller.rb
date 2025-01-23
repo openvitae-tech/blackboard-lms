@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     authorize @user
     @enrolled_courses = @user.courses.includes(:enrollments)
     service = UserStatisticsService.instance
-    @user_stats = service.build_stats_for(current_user)
+    @user_stats = service.build_stats_for(@user)
   end
 
   def deactivate

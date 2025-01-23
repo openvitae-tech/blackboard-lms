@@ -1,31 +1,33 @@
 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center py-4 md:px-4 shadow-[0px_0px_4px_0px_#33333329] rounded md:shadow-none">
-  <div class="flex flex-wrap justify-between gap-2 items-center col-span-1 md:col-span-4 border-b md:border-none border-line-colour pl-4 pb-2 md:pb-0 md:pl-0">
-    <%= link_to member_path(member), class: "cursor-pointer" do %>
-      <div class="flex gap-2 items-center">
-        <span class="inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large flex-shrink-0">
-          <%= render 'shared/components/profile_pic', letter: letter_avatar(member) %>
-        </span>
-        <span class="ml-2 font-medium text-sm text-ellipsis"><%= member.name %></span>
+  <div class="col-span-1 flex flex-wrap items-center justify-between gap-2 border-b pb-2 pl-4 border-line-colour md:col-span-4 md:border-none md:pb-0 md:pl-0">
+    <% link = policy(member).show? ? member_path(member) : "javascript:void(0);" %>
+
+    <%= link_to link, class: "cursor-pointer" do %>
+      <div class="flex items-center gap-2">
+          <span class="inline-block flex-shrink-0 text-xs icon-medium hover:pointer md:icon-large md:text-sm">
+            <%= render 'shared/components/profile_pic', letter: letter_avatar(member) %>
+          </span>
+        <span class="ml-2 text-ellipsis text-sm font-medium"><%= member.name %></span>
       </div>
     <% end %>
     <% if member.verified? %>
-      <div class="mt-1 md:mt-0 flex flex-1 justify-end pe-6">
+      <div class="mt-1 flex flex-1 justify-end pe-6 md:mt-0">
         <%= render 'shared/components/label_small_success', label: 'Verified', icon_name: 'icon-complete' %>
       </div>
     <% end %>
   </div>
-  <div class="col-span-1 md:col-span-3 text-xs md:text-sm break-words px-4 md:px-0">
+  <div class="col-span-1 break-words px-4 text-xs md:col-span-3 md:px-0 md:text-sm">
     <%= member.email %>
   </div>
 
-  <div class="col-span-1 md:col-span-2 text-xs md:text-sm pl-4 md:pl-0"><%= member.phone %></div>
+  <div class="col-span-1 pl-4 text-xs md:col-span-2 md:pl-0 md:text-sm"><%= member.phone %></div>
 
-  <div class="col-span-1 md:col-span-3 text-xs md:text-sm px-4 md:px-0">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-between">
-      <div class="col-span-1 md:col-span-2 text-xs md:text-sm">
+  <div class="col-span-1 px-4 text-xs md:col-span-3 md:px-0 md:text-sm">
+    <div class="grid grid-cols-2 justify-between gap-4 md:grid-cols-4">
+      <div class="col-span-1 text-xs md:col-span-2 md:text-sm">
         <%= role_text(member.role) %>
       </div>
-      <div class="flex flex-col gap-2 col-span-1 md:col-span-2 items-end md:items-start text-xs md:text-sm">
+      <div class="col-span-1 flex flex-col items-end gap-2 text-xs md:col-span-2 md:items-start md:text-sm">
         <% if member.verified_learner? && policy(:course_assigns).new? %>
           <%= link_to new_course_assign_path(user_id: member) do %>
             <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
@@ -40,5 +42,5 @@
       </div>
     </div>
   </div>
-  
+
 </div>
