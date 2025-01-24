@@ -3,6 +3,9 @@
 class Course < ApplicationRecord
   include CustomValidations
 
+  ENROLLED_COURSES_LIMIT = 4
+  PER_PAGE_LIMIT = 12
+
   has_many :course_modules, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments
