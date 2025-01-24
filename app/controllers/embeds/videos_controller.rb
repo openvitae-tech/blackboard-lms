@@ -3,13 +3,18 @@ module Embeds
     include LessonsHelper
 
     skip_before_action :authenticate_user!
+
     before_action :set_local_content
+    before_action :set_scorm_token
     after_action :allow_iframe
 
     def show
-      @is_token_valid = valid_token?
-      @video_iframe = @local_content.present? ? get_video_iframe(@local_content) : nil
-      render layout: false, content_type: 'text/html'
+      if @scorm_token.present?
+        @video_iframe = @local_content.present? ? get_video_iframe(@local_content) : nil
+        render layout: false, content_type: 'text/html'
+      else
+        render plain: 'Invalid token'
+      end
     end
 
     private
@@ -22,8 +27,8 @@ module Embeds
       response.headers.except! 'X-Frame-Options'
     end
 
-    def valid_token?
-       ScormToken.find_by(token: request.headers['X-Scorm-Token'])
+    def set_scorm_token
+      @scorm_token = ScormToken.find_by(token: request.headers['X-Scorm-Token'])
     end
   end
 end

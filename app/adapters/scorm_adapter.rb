@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ScormAdaptor
+class ScormAdapter
   attr_reader :course
 
   def initialize(course)
