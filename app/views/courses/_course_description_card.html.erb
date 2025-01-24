@@ -3,7 +3,7 @@
     <%= image_tag course_banner(course, :vertical), class: "md:h-[216px] md:w-[140px] h-[120px] w-[328px] object-cover" %>
     <div class="flex w-full flex-col gap-4">
       <div class="flex justify-between">
-        <p class="overflow-hidden text-ellipsis text-2xl font-extrabold text-primary header-font">
+        <p class="overflow-hidden text-ellipsis text-2xl font-extrabold text-primary heading">
           <%= course.title %>
         </p>
         <% if policy(course).edit? %>
@@ -39,7 +39,7 @@
           </div>
         </div>     
       </div>
-      <p class="overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px] header-font">
+      <p class="overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px] heading">
         Course Description
       </p>
       <div class="p-4 text-justify text-sm tracking-tight bg-primary-light-50 rounded-lg">

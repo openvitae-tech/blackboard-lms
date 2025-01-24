@@ -17,7 +17,7 @@
                 <div class="bg-primary-light-50 h-1 w-[252px] rounded-full">
                   <div class="bg-secondary h-1 rounded-full" style="width: <% enrollment.module_progress(course_module) %>%"></div>
                 </div>
-                <span class="text-secondary text-sm font-semibold"><%= enrollment.module_progress(course_module) %>%</span>
+                <span class="text-secondary small-label"><%= enrollment.module_progress(course_module) %>%</span>
               <% else %>
                 <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
               <% end %>
@@ -43,7 +43,7 @@
                   </span>
                 </p>
               </div>
-              <div class="flex gap-4 header-font">
+              <div class="flex gap-4 heading">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
                   <%= link_to replay_course_module_lesson_path(course, course_module, lesson), data: { turbo_method: "put" } do %>
                     <span class="text-primary">Replay</span>

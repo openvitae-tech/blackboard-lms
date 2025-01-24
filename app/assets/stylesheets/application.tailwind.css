@@ -45,16 +45,32 @@ body{
     @apply text-sm font-normal;
   }
 
+  .heading{
+    @apply !font-poppins;
+  }
+
   .page-heading {
-    @apply text-xl font-bold md:text-3xl md:font-semibold font-poppins;
+    @apply text-xl font-bold md:text-3xl md:font-semibold;
   }
 
   .page-heading-medium {
-    @apply text-xl font-semibold font-poppins;
+    @apply text-xl font-semibold;
   }
 
   .page-sub-heading {
-    @apply text-base md:text-lg font-semibold font-poppins;
+    @apply text-base md:text-lg font-semibold;
+  }
+
+  .overlay-heading{
+    @apply text-white font-bold text-xl font-poppins;
+  }
+
+  .small-heading {
+    @apply text-base font-semibold;
+  }
+
+  .small-label {
+    @apply text-sm font-semibold;
   }
 
   .btn-primary {
@@ -250,16 +266,4 @@ input.tags-checkbox:checked:focus {
 
 .teams-more-hover{
   @apply bg-black hover:bg-secondary hover:opacity-80;
-}
-
-.header-font{
-  @apply !font-poppins;
-}
-
-.name-header{
-  @apply text-white font-bold text-xl font-poppins;
-}
-
-.small-heading {
-  @apply text-base font-semibold font-poppins;
 }
