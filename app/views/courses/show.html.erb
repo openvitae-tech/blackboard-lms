@@ -35,7 +35,7 @@
     </div>
   <% else %>
     <div class="flex flex-col items-center justify-center flex-grow py-6">
-      <h2 class="text-base font-semibold"><%= t("course.course_module.empty") %></h2>
+      <h2 class="semibold-heading"><%= t("course.course_module.empty") %></h2>
       <% if policy(:course_module).new? %>
         <%= link_to new_course_module_path(@course), class: "mt-4" do %>
           <%= render 'shared/components/icon_button_primary_small', label: 'Add module', icon_name: 'icon-plus' %>

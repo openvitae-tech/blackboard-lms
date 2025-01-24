@@ -69,7 +69,7 @@ body{
     @apply text-base font-medium;
   }
 
-  .small-heading {
+  .semibold-heading {
     @apply text-base font-semibold;
   }
 
