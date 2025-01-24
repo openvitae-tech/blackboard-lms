@@ -58,7 +58,7 @@
       <%= render 'courses/not_found_msg', type: (params[:tags].present? && params[:term].present? ? 'search_and_tags' : params[:term].present? ? 'search' : 'tags') %>
     <% end %>
     <% if has_enrolled_courses? && @type != "all" %>
-      <p class="text-base font-medium mb-4 heading">
+      <p class="heading medium-heading mb-4">
         <span class="">Assigned courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses_count, 'course') %>)</span>
         <%= link_to 'View more', courses_path(type: 'enrolled', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
       </p>
@@ -72,7 +72,7 @@
       <%= paginate(@enrolled_courses) if @type.present? %>
     <% end %>
     <% if has_available_courses? && @type != "enrolled" %>
-      <p class="text-base font-medium my-4 heading">
+      <p class="heading medium-heading my-4">
         <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses_count, 'course') %> )</span>
         <%= link_to 'View more', courses_path(type: 'all', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
       </p>

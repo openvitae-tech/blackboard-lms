@@ -63,6 +63,10 @@ body{
 
   .overlay-heading{
     @apply text-white font-bold text-xl font-poppins;
+  } 
+
+  .medium-heading {
+    @apply text-base font-medium;
   }
 
   .small-heading {

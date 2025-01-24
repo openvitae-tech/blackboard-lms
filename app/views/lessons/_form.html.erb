@@ -32,7 +32,7 @@
     <div class="my-8 text-sm flex gap-4 items-center" >
       <%= link_to "Cancel", course_module_path(@course, @course_module), class: "nav-link" %>
       <div data-lessons-form-target="uploadButton">
-        <%= form.submit submit_label_for(lesson), class: "btn-default header-font", id: "submit-button", data: { action: "video-upload:stateChange->lessons-form#setButtonState" } %>
+        <%= form.submit submit_label_for(lesson), class: "btn-default", id: "submit-button", data: { action: "video-upload:stateChange->lessons-form#setButtonState" } %>
       </div>
     </div>
   <% end %>
