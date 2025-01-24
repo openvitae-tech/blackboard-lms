@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include HandleNotFound
 
   before_action :authenticate_user!
+  before_action :set_back_link
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -27,5 +28,10 @@ class ApplicationController < ActionController::Base
       courses_path
     end
   end
+
+  def set_back_link
+    @back_link = params[:source_path].present? ? params[:source_path] : request.referer
+  end
+
   helper_method :after_sign_in_path_for
 end
