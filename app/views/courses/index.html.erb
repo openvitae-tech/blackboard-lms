@@ -64,7 +64,9 @@
       </p>
       <div class="flex flex-col md:flex-row md:flex-wrap min-w-screen gap-4">
         <% @enrolled_courses.each do |course| %>
-          <%= render 'courses/course_card_with_top_image', course: course, enrollment: course.enrollments.first %>
+          <%= link_to course_path(course) do %>
+            <%= render 'courses/course_card_with_top_image', course: course, enrollment: course.enrollments.first %>
+          <% end %>
         <% end %>
       </div>
       <%= paginate(@enrolled_courses) if @type.present? %>
@@ -76,7 +78,9 @@
       </p>
       <div class="flex flex-wrap gap-4">
         <% @available_courses.each do |course| %>
-          <%= render 'courses/course_card_with_top_image', course: course %>
+          <%= link_to course_path(course) do %>
+            <%= render 'courses/course_card_with_top_image', course: course %>
+          <% end %>
         <% end %>
       </div>
       <%= paginate(@available_courses) if @type.present? %>
