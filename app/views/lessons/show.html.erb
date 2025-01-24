@@ -1,6 +1,6 @@
 <%= render "shared/components/layout" do %>
   <div class="flex justify-between items-center">
-    <%= render "shared/components/bread_crumbs", title: "Courses", links: [[@course.title, course_path(@course)], [@course_module.title, nil]] %>
+    <%= render "shared/components/bread_crumbs", links: [[I18n.t('course.label'),courses_path], [@course.title, course_path(@course)], [@course_module.title, nil]] %>
     <% if current_user.is_admin? %>
       <div class="flex justify-end gap-4">
         <% if policy(@lesson).edit? %>
