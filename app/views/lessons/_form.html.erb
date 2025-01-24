@@ -30,7 +30,7 @@
       <span class="text-xs text-primary header-font">Add another language</span>
     </a>
     <div class="my-8 text-sm flex gap-4 items-center" >
-      <%= link_to "Cancel", course_module_path(@course, @course_module), class: "nav-link header-font" %>
+      <%= link_to "Cancel", course_module_path(@course, @course_module), class: "nav-link" %>
       <div data-lessons-form-target="uploadButton">
         <%= form.submit submit_label_for(lesson), class: "btn-default header-font", id: "submit-button", data: { action: "video-upload:stateChange->lessons-form#setButtonState" } %>
       </div>

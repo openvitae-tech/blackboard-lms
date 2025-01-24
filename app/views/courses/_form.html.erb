@@ -29,13 +29,13 @@
     <div class="my-8 flex items-center gap-6 text-sm">
       <div class="my-8">
         <% if @course.persisted? %>
-          <%= link_to "Cancel", course_path(@course), class: "nav-link header-font" %>
+          <%= link_to "Cancel", course_path(@course), class: "nav-link" %>
         <% else %>
-          <%= link_to "Cancel", courses_path, class: "nav-link header-font" %>
+          <%= link_to "Cancel", courses_path, class: "nav-link" %>
         <% end %>
       </div>
       <div>
-        <%= form.submit class: "btn-primary header-font" do %>
+        <%= form.submit class: "btn-primary" do %>
           <span><%= submit_label_for(course) %></span>
         <% end %>
       </div>

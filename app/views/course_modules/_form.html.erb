@@ -10,13 +10,13 @@
       <div class="my-8 text-sm  flex gap-6 items-center">
         <div>
           <% if @course_module.persisted? %>
-            <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link header-font" %>
+            <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
           <% else %>
-            <%= link_to "Cancel" , course_path(@course), class: "nav-link header-font" %>
+            <%= link_to "Cancel" , course_path(@course), class: "nav-link" %>
           <% end %>
         </div>
         <div>
-          <%= form.submit submit_label_for(course_module), class: "btn-primary header-font" do %>
+          <%= form.submit submit_label_for(course_module), class: "btn-primary" do %>
             <span><%= text %></span>
           <% end %>
         </div>

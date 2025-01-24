@@ -36,10 +36,10 @@
     </div>
     <div class="my-8 text-sm  flex gap-6 items-center">
       <div class="my-8">
-        <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link header-font" %>
+        <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
       </div>
       <div>
-        <%= form.submit submit_label_for(quiz), class: "btn-primary header-font" do %>
+        <%= form.submit submit_label_for(quiz), class: "btn-primary" do %>
           <span><%= text %></span>
         <% end %>
       </div>

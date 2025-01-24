@@ -58,7 +58,7 @@ body{
   }
 
   .btn-primary {
-    @apply rounded border px-4 text-center py-3.5 min-w-40 border-primary bg-primary text-white;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-primary bg-primary text-white font-poppins;
     &:hover {
       @apply cursor-pointer opacity-95;
     }
@@ -80,7 +80,7 @@ body{
   }
 
   .btn-default {
-    @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour bg-line-colour;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour bg-line-colour font-poppins;
 
     &:hover {
       @apply cursor-pointer opacity-95;
@@ -189,7 +189,7 @@ body{
 }
 
 .nav-link {
-  @apply text-xs font-normal md:text-sm;
+  @apply text-xs font-normal md:text-sm font-poppins;
 
   &:hover {
     @apply cursor-pointer text-secondary underline;
