@@ -1,16 +1,16 @@
 <details class="flex items-center">
-  <summary class="flex cursor-pointer items-center justify-between select_language p-2">
+  <summary class="flex cursor-pointer items-center justify-between select_language p-2 focus:outline-none">
     <h2 class="flex flex-col justify-start text-base">
       <span class="text-primary"><%= selected_label %></span>
     </h2>
     <span class="icon icon-down bg-primary icon-small"></span>
     <span class="icon-up bg-primary hidden icon-small"></span>
   </summary>
-  <ul class="absolute bg-white border border-line-colour-light mt-2 rounded-lg box-shadow-small  w-[178px]">
+  <ul class="absolute right-0 bg-white border border-line-colour-light mt-5 rounded-lg box-shadow-small  w-[178px]">
     <% menu.each do |item| %>
       <li>
         <% if item.respond_to?(:link) %>
-          <%= link_to item.label, item.link, class: 'block p-4 text-letter-color-light text-sm border-b border-line-colour bg-slate-grey-light' %>
+          <%= link_to item.label, item.link, class: 'block p-4 text-letter-color text-sm border-b border-line-colour bg-primary-light-50' %>
         <% else %>
           item.label
         <% end %>
@@ -18,3 +18,4 @@
     <% end %>
   </ul>
 </details>
+ 
