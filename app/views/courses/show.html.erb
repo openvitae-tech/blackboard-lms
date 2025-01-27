@@ -31,6 +31,27 @@
   </div>
   <% if @course.course_modules.present? %>
     <div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6 pb-6 md:pb-6 pt-6">
+      <div class="flex md:justify-center bg-primary p-4 md:p-6 mx-4 rounded">
+        <div class="flex flex-col md:flex-row md:flex-wrap gap-6 md:justify-center md:w-[724px]">
+          <div class="flex items-center space-x-2">
+            <span class="icon-small icon icon-clock bg-white"></span>
+            <span class="ml-2 text-xs font-medium text-white">Total time spent : <%= course_duration(@course) %></span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="icon-small icon icon-quiz-score bg-white"></span>
+            <span class="ml-2 text-xs font-medium text-white">Total score : 4/5</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="icon-small icon icon-calendar bg-white"></span>
+            <span class="ml-2 text-xs font-medium text-white">Completion date : 01/01/2025</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="icon-small icon icon-user bg-white"></span>
+            <span class="ml-2 text-xs font-medium text-white">Assigned by : Jubin shaju</span>
+          </div>
+        </div>
+      </div>
+      
       <%= render 'courses/course_lessons', course: @course, enrollment: @enrollment %>
     </div>
   <% else %>
