@@ -61,15 +61,15 @@ body{
     @apply text-base md:text-lg font-semibold;
   }
 
-  .overlay-heading{
-    @apply text-white font-bold text-xl font-poppins;
+  .heading-overlay{
+    @apply text-white font-bold text-xl;
   } 
 
-  .medium-heading {
+  .heading-medium {
     @apply text-base font-medium;
   }
 
-  .semibold-heading {
+  .heading-semibold {
     @apply text-base font-semibold;
   }
 

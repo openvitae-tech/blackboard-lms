@@ -2,7 +2,7 @@
   <div class="flex border-b p-4 md:p-6  border-line-colour ">
     <div class="flex w-full flex-col gap-4 md:gap-8">
       <div class="flex justify-between">
-        <h1 class="semibold-heading">Personal information</h1>
+        <h1 class="heading-semibold">Personal information</h1>
         <%= link_to edit_user_settings_path, data: { turbo_frame: "modal" }, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm py-1 px-2" do %>
           <span class="text-xs font-medium text-secondary">Edit</span>
           <span class="icon icon-edit bg-secondary h-[10px] w-[10px]"></span>
@@ -10,19 +10,19 @@
       </div>
       <div>
         <div class="text-sm font-normal text-letter-color-light">Organization</div>
-        <div class="mt-2 medium-heading"><%= org_name(user.learning_partner) %></div>
+        <div class="mt-2 heading-medium"><%= org_name(user.learning_partner) %></div>
       </div>
       <div>
         <div class="text-sm font-normal text-letter-color-light">Role</div>
-        <div class="mt-2 medium-heading"><%= role_text(user.role) %></div>
+        <div class="mt-2 heading-medium"><%= role_text(user.role) %></div>
       </div>
       <div>
         <div class="text-sm font-normal text-letter-color-light">Email</div>
-        <div class="mt-2 medium-heading"><%= user.email %></div>
+        <div class="mt-2 heading-medium"><%= user.email %></div>
       </div>
       <div>
         <div class="text-sm font-normal text-letter-color-light">Phone</div>
-        <div class="mt-2 medium-heading"><%= user.phone %></div>
+        <div class="mt-2 heading-medium"><%= user.phone %></div>
       </div>
     </div>
   </div>
