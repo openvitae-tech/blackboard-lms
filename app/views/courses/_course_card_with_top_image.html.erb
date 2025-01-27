@@ -1,4 +1,4 @@
-<%= link_to course_path(course), class: "inline-block rounded box-shadow-medium border border-line-colour-light relative" do %>
+<div class="inline-block rounded box-shadow-medium border border-line-colour-light relative">
   <div class="w-full rounded md:w-[310px] relative">
     <div class="absolute top-0 right-0 z-10 flex flex-wrap justify-start gap-2">
       <% course.tags.each do |tag| %>
@@ -10,7 +10,7 @@
       <% end %>
     </div>
 
-    <%= image_tag course_banner(course, :horizontal), class: 'w-full h-[120px] rounded-t object-cover' %>
+    <%= image_tag course_banner(course, :horizontal), class: 'w-screen h-[120px] rounded-t object-cover' %>
     
     <div class="flex flex-col justify-between">
       <div class="p-4">
@@ -53,4 +53,4 @@
       </div>      
     </div>
   </div>
-<% end %>
+</div>

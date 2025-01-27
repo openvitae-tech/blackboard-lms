@@ -38,6 +38,9 @@ en:
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
   course:
+    label: "My Courses"
+    enroll:
+      label: 'Self assign'
     created: 'Course was successfully created.'
     updated: 'Course was successfully updated.'
     deleted: 'Course was deleted successfully.'
@@ -89,6 +92,7 @@ en:
   quiz:
     empty: "There are no quizzes to show."
   team:
+    label: 'Teams'
     created: 'Team created successfully'
     updated: 'Team updated successfully'
     banner_file_tip: 'File size should be less than 1MB and use a good resolution image of minimum 1120 X 194px'

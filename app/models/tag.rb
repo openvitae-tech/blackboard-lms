@@ -3,6 +3,7 @@
 class Tag < ApplicationRecord
 
   DEFAULT_PER_PAGE_SIZE = 9
+  TAG_LOAD_LIMIT = 100
 
   enum tag_type: { category: "category", level: "level" }, _default: "category"
 
@@ -10,4 +11,8 @@ class Tag < ApplicationRecord
   validates :tag_type, presence: true
 
   has_and_belongs_to_many :courses
+
+  def self.load_tags
+    limit(TAG_LOAD_LIMIT).order('name ASC')
+  end
 end

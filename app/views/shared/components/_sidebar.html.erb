@@ -27,14 +27,14 @@
         <li class="side-bar-item <%= sidebar_active('courses') %>">
           <%= link_to courses_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-course bg-letter-color icon-small"></span>
-            <span>My Course</span>
+            <span><%= t('course.label') %></span>
           <% end %>
         </li>
         <% if policy(current_user.team || :team).show? %>
           <li class="side-bar-item <%= sidebar_active('teams') %>">
             <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
               <span class="icon icon-team bg-letter-color icon-small"></span>
-              <span>Team</span>
+              <span><%= t('team.label') %></span>
             <% end %>
           </li>
         <% end %>

@@ -58,7 +58,7 @@
     <% end %>
     <% if policy(course).enroll? %>
       <%= link_to enroll_course_path(course), data: { turbo_method: :put }  do %>
-        <%= render "shared/components/button_primary_small", label: 'Enroll' %>
+        <%= render "shared/components/button_primary_small", label: I18n.t('course.enroll.label') %>
       <% end %>
     <% end %>
     <% if policy(course).proceed? %>
