@@ -10,7 +10,7 @@
     <% menu.each do |item| %>
       <li>
         <% if item.respond_to?(:link) %>
-          <%= link_to item.label, item.link, class: 'block p-4 text-letter-color-light text-sm border-b border-line-colour bg-slate-grey-light' %>
+          <%= link_to item.label, item.link, class: 'block p-4 text-letter-color text-sm border-b border-line-colour bg-primary-light-50' %>
         <% else %>
           item.label
         <% end %>
