@@ -4,11 +4,11 @@
       <span class="h-4 w-4 icon <%= icon_name.present? ? icon_name : 'icon-support-placeholder' %> bg-primary"></span>
     </div>
     <div class="order-3 md:order-2 text-left mt-2 md:mt-0 grow">
-      <span class="text-base font-semibold text-primary"><%= title %></span>
+      <span class="heading semibold-heading text-primary"><%= title %></span>
     </div>
     <div class="flex-none order-2 md:order-3 flex items-center justify-center md:justify-end">
       <button class="flex items-center justify-center focus:outline-none" data-show-less-target="showMoreToggle" data-action="click->show-less#showMoreToggle">
-        <span class="text-xs text-primary">Show more</span>
+        <span class="text-xs text-primary heading">Show more</span>
         <span class="hidden icon-arrow-up icon-small bg-primary" data-show-less-target="upArrow"></span>
         <span class="icon icon-arrow-down icon-small bg-primary" data-show-less-target="downArrow"></span>
       </button>

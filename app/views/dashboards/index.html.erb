@@ -1,6 +1,6 @@
 <%= render "shared/components/layout" do %>
   <div class="flex items-center justify-between py-4 px-1">
-    <div class="text-base font-medium flex gap-1">
+    <div class="medium-heading flex gap-1 heading">
       <span class="">Welcome</span><span class=""><%= current_user.display_name %></span>
     </div>
     <div class="flex justify-between relative">
@@ -11,7 +11,7 @@
   <%= render 'dashboards/average_time_spend_chart', dashboard: @dashboard %>
 
   <div class="p-6 bg-white rounded-lg box-shadow-medium mt-6">
-    <p class="text-lg md:text-xl font-semibold text-center">
+    <p class="text-lg md:text-xl font-semibold text-center heading">
       Your team have spent in
       <span class="text-primary "><%= duration_in_words(@dashboard.total_time_spent_metric) %></span> during this period
     </p>
@@ -20,17 +20,17 @@
     <!--   </p>-->
     <div class="mt-6 flex flex-row justify-between text-start">
       <div class="text-center">
-        <p class="text-primary text-xl md:text-2xl font-bold">
+        <p class="text-primary text-xl md:text-2xl font-bold heading">
           <%= duration_in_words(@dashboard.average_time_spent_metric) %>
         </p>
         <p class="pt-1 text-sm">AVG watch time per user</p>
       </div>
       <div class="text-center">
-        <p class="text-primary text-xl md:text-2xl font-bold"><%= @dashboard.active_course_count_metric %></p>
+        <p class="text-primary text-xl md:text-2xl font-bold heading"><%= @dashboard.active_course_count_metric %></p>
         <p class="pt-1 text-sm">Active courses</p>
       </div>
       <div class="text-center">
-        <p class="text-primary text-xl md:text-2xl font-bold"><%= @dashboard.team_score_metric %></p>
+        <p class="text-primary text-xl md:text-2xl font-bold heading"><%= @dashboard.team_score_metric %></p>
         <p class="pt-1 text-sm">Team score</p>
       </div>
     </div>

@@ -9,7 +9,7 @@
       <%= form.label :type, class: "block text-sm" %>
       <%= form.select :tag_type, options_for_select(tag_list) %>
     </div>
-    <div class="flex flex-col gap-6 justify-between">
+    <div class="flex flex-col gap-6 justify-between heading">
       <%= form.button "Create", class: "bg-primary text-white p-4 rounded" %>
       <%= form.button "Cancel", data: { action: "click->modals#closeModal" } %>
     </div>

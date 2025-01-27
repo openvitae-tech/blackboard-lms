@@ -2,7 +2,7 @@
   <%= render "devise/shared/top_mobile" %>
   <div class="px-4 py-6">
     <div class="mb-6">
-      <h1 class="page-heading">OTP</h1>
+      <h1 class="heading page-heading">OTP</h1>
     </div>
     <%= form_with url: login_path, scope: :login, method: :post, data: { controller: "otp", action: "input->otp#updateHiddenOtp" } do |form| %>
       <div class="flex flex-col gap-6">

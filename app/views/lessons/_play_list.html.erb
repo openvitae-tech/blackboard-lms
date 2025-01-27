@@ -10,14 +10,14 @@
         <% end %>
       >
         <summary class="flex cursor-pointer items-center justify-between p-4 focus:outline-none">
-          <div class="flex flex-col justify-start text-base font-semibold">
+          <div class="flex flex-col justify-start semibold-heading">
             <span class=""><%= course_module.title %></span>
             <div class="md:flex md:items-center md:gap-4">
               <% if enrollment.present? && enrollment.module_progress(course_module) > 0 %>
                 <div class="bg-primary-light-50 h-1 w-[252px] rounded-full">
                   <div class="bg-secondary h-1 rounded-full" style="width: <% enrollment.module_progress(course_module) %>%"></div>
                 </div>
-                <span class="text-secondary text-sm font-semibold"><%= enrollment.module_progress(course_module) %>%</span>
+                <span class="text-secondary small-label"><%= enrollment.module_progress(course_module) %>%</span>
               <% else %>
                 <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
               <% end %>
@@ -43,7 +43,7 @@
                   </span>
                 </p>
               </div>
-              <div class="flex gap-4">
+              <div class="flex gap-4 heading">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
                   <%= link_to replay_course_module_lesson_path(course, course_module, lesson), data: { turbo_method: "put" } do %>
                     <span class="text-primary">Replay</span>

@@ -9,6 +9,7 @@
         <% end %>
       <% end %>      
     </div>
+
     <div class="flex justify-end w-full gap-4 text-right">
       <% if policy(@course_module).edit? %>
         <%= link_to edit_course_module_path(@course, @course_module) do %>
@@ -18,10 +19,10 @@
     </div>
   </div>
 
-  <div class="page-heading my-4"><%= @course_module.title %></div>
+  <div class="heading page-heading my-4"><%= @course_module.title %></div>
 
   <div class="flex justify-between">
-    <h1 class="page-sub-heading">Lessons</h1>
+    <h1 class="heading page-sub-heading">Lessons</h1>
     <% if policy(:lesson).new? && @course_module.lessons.present? %>
       <%= link_to new_course_module_lesson_path(@course, @course_module), class: "nav-link" do %>
         <%= render 'shared/components/icon_button_primary', label: 'New lesson', icon_name: 'icon-plus' %>
@@ -67,7 +68,7 @@
       <% else %>
         <li class="mb-4 rounded border p-6 text-sm border-line-colour-light">
           <div class="flex flex-col items-center justify-center">
-            <h2 class="text-base font-semibold pb-4"><%= t("lesson.empty") %></h2>
+            <h2 class="semibold-heading pb-4"><%= t("lesson.empty") %></h2>
             <%= link_to new_course_module_lesson_path(@course, @course_module), class: "nav-link" do %>
               <%= render 'shared/components/icon_button_primary_small', label: 'New lesson', icon_name: 'icon-plus' %>
             <% end %>
@@ -78,7 +79,7 @@
   </div>
 
   <div class="flex justify-between">
-    <h1 class="page-sub-heading">Quizzes</h1>
+    <h1 class="heading page-sub-heading">Quizzes</h1>
     <% if policy(:quiz).new? && @course_module.quizzes.present? %>
       <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
         <%= render 'shared/components/icon_button_primary', label: 'New quiz', icon_name: 'icon-plus' %>
@@ -125,7 +126,7 @@
         <% else %>
           <li class="mb-4 gap-2 justify-between rounded border p-6 text-sm border-line-colour-light">
             <div class="flex flex-col items-center justify-center">
-              <h2 class="text-base font-semibold pb-4"><%= t("quiz.empty") %></h2>
+              <h2 class="semibold-heading pb-4"><%= t("quiz.empty") %></h2>
               <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
                 <%= render 'shared/components/icon_button_primary', label: 'New quiz', icon_name: 'icon-plus' %>
               <% end %>

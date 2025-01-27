@@ -8,7 +8,7 @@
     <div class="absolute inset-0 bg-black opacity-60"></div>
     <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
       <%= image_tag partner_logo(team.learning_partner, :medium), class: 'h-16 w-16 object-cover rounded-full border-2 border-white box-shadow-medium' %>
-      <span class="text-white font-bold text-xl"><%= team.name %></span>
+      <span class="overlay-heading"><%= team.name %></span>
     </div>
     <div class="absolute bottom-4 md:top-6 right-6 flex gap-4  z-10">    
       <%= render 'shared/components/more_action', icon_class: 'teams-more', label_hover:"teams-more-hover" do %>
