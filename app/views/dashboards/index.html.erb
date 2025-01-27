@@ -1,7 +1,7 @@
 <%= render "shared/components/layout" do %>
   <div class="flex items-center justify-between py-4 px-1">
     <div class="medium-heading flex gap-1 heading">
-      <span class="">Welcome</span><span class=""><%= current_user.display_name %></span>
+      <span class="">Team: </span><span class=""><%= @team.name %></span>
     </div>
     <div class="flex justify-between relative">
       <%= render 'shared/components/dropdown_menu', menu: duration_menu_for(@team), selected_item: selected_label %>
