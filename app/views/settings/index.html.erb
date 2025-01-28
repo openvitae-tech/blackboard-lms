@@ -1,5 +1,5 @@
 <%= render "shared/components/layout" do %>
-  <h1 class="heading page-heading-medium my-6"><%= t("settings.label") %></h1>
+  <h1 class="heading page-heading-medium mb-4"><%= t("settings.label") %></h1>
   <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-6">
     <% settings_list.each do |setting| %>
       <%= link_to setting[:path], class: "block" do %>
