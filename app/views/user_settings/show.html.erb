@@ -22,7 +22,7 @@
   <div class="rounded box-shadow-medium">
     <%= render 'user_settings/page_body', user: @user  %>
     <div class="p-6 border-b border-line-colour-light">
-      <h1 class="heading-semibold">Change password</h1>
+      <h1 class="text-semibold">Change password</h1>
       <div class="mt-2">
         <%= link_to 'Change your password', change_password_user_settings_path, data: { turbo_frame: 'modal' }, class: 'link-text text-purple hover:font-medium' %>
       </div>

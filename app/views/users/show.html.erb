@@ -13,7 +13,7 @@
   <%= render 'users/team_user_course_status' %>
   <div class="my-8">
     <% if has_enrolled_courses? %>
-      <p class="heading-medium mb-4">
+      <p class="heading heading-medium mb-4">
         <span class="">Assigned courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'course') %>)</span>
       </p>
 

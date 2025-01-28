@@ -10,14 +10,14 @@
         <% end %>
       >
         <summary class="flex cursor-pointer items-center justify-between p-4 focus:outline-none">
-          <div class="flex flex-col justify-start heading-semibold">
+          <div class="flex flex-col justify-start heading heading-semibold">
             <span class=""><%= course_module.title %></span>
             <div class="md:flex md:items-center md:gap-4">
               <% if enrollment.present? && enrollment.module_progress(course_module) > 0 %>
                 <div class="bg-primary-light-50 h-1 w-[252px] rounded-full">
                   <div class="bg-secondary h-1 rounded-full" style="width: <% enrollment.module_progress(course_module) %>%"></div>
                 </div>
-                <span class="text-secondary small-label"><%= enrollment.module_progress(course_module) %>%</span>
+                <span class="text-secondary label-small"><%= enrollment.module_progress(course_module) %>%</span>
               <% else %>
                 <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
               <% end %>

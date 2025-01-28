@@ -73,8 +73,16 @@ body{
     @apply text-base font-semibold;
   }
 
-  .small-label {
+  .label-small {
     @apply text-sm font-semibold;
+  }
+
+  .text-semibold {
+    @apply text-base font-semibold;
+  }
+
+  .text-medium {
+    @apply text-base font-medium;
   }
 
   .btn-primary {
