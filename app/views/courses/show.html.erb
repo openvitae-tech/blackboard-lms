@@ -31,33 +31,9 @@
   </div>
   <% if @course.course_modules.present? %>
     <div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6 pb-6 md:pb-6 pt-6">
-      <div class="flex flex-col md:items-center gap-6 md:justify-center bg-primary p-4 md:p-6 mx-4 rounded">
-        <h2 class="flex items-center md:justify-center gap-2">
-          <div class="flex items-center justify-center bg-white rounded-full px-[2px] pt-[2px] w-6 h-6">
-          <span class="icon icon-check icon-small bg-primary"></span>
-          </div>
-          <span class="text-white heading page-heading-medium">Course completed</span>
-        </h2>
-        <div class="flex flex-col md:flex-row md:flex-wrap gap-6 md:justify-center md:w-[715px]">
-          <div class="flex items-center space-x-2">
-            <span class="icon-small icon icon-clock bg-white"></span>
-            <span class="ml-2 text-xs font-medium text-white">Total time spent : <%= course_duration(@course) %></span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <span class="icon-small icon icon-quiz-score bg-white"></span>
-            <span class="ml-2 text-xs font-medium text-white">Total score : 4/5</span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <span class="icon-small icon icon-calendar bg-white"></span>
-            <span class="ml-2 text-xs font-medium text-white">Completion date : 01/01/2025</span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <span class="icon-small icon icon-user bg-white"></span>
-            <span class="ml-2 text-xs font-medium text-white">Assigned by : Jubin shaju</span>
-          </div>
-        </div>
-      </div>
-      
+      <% if course_completed?(@enrollment) %>
+        <%= render "courses/course_stats", course: @course, enrollment: @enrollment %>
+      <% end %>
       <%= render 'courses/course_lessons', course: @course, enrollment: @enrollment %>
     </div>
   <% else %>

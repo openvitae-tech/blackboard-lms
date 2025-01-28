@@ -1,0 +1,28 @@
+<div class="flex flex-col md:items-center gap-6 md:justify-center bg-primary p-4 md:p-6 mx-4 rounded">
+  <h2 class="flex items-center md:justify-center gap-2">
+    <div class="flex items-center justify-center bg-white rounded-full px-[2px] pt-[2px] w-6 h-6">
+      <span class="icon icon-check icon-small bg-primary"></span>
+    </div>
+    <span class="text-white heading page-heading-medium">Course completed</span>
+  </h2>
+  <div class="flex flex-col md:flex-row md:flex-wrap gap-6 md:justify-center md:w-[715px]">
+    <div class="flex items-center space-x-2">
+      <span class="icon-small icon icon-clock bg-white"></span>
+      <span class="ml-2 text-xs font-medium text-white">Total time spent : <%= duration_in_words(enrollment.time_spent) %></span>
+    </div>
+    <div class="flex items-center space-x-2">
+      <span class="icon-small icon icon-quiz-score bg-white"></span>
+      <span class="ml-2 text-xs font-medium text-white">Total score : <%= enrollment.score %></span>
+    </div>
+    <div class="flex items-center space-x-2">
+      <span class="icon-small icon icon-calendar bg-white"></span>
+      <span class="ml-2 text-xs font-medium text-white">Completion date : NA</span>
+    </div>
+    <% if enrollment.assigned_by.present? %>
+      <div class="flex items-center space-x-2">
+        <span class="icon-small icon icon-user bg-white"></span>
+        <span class="ml-2 text-xs font-medium text-white">Assigned by : <%= enrollment.assigned_by.display_name %></span>
+      </div>
+    <% end %>
+  </div>
+</div>
