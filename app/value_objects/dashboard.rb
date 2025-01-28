@@ -21,11 +21,12 @@ class Dashboard
   def time_spent_series
     events = time_spent_query.call
     events = filter_by_teams(events)
+
     data = {}
     grouped_data = events.group_by { |event| to_grouping_key(event) }
 
     grouped_data.each do |key, values|
-      data[key] = values.map(&:data).map { |v| v[:time_spent].to_i }.reduce(&:+) || 0
+      data[key] = values.map(&:data).map { |v| v['time_spent'].to_i }.reduce(&:+) / 60
     end
 
     data
@@ -34,18 +35,22 @@ class Dashboard
   def total_time_spent_metric
     events = time_spent_query.call
     events = filter_by_teams(events)
-    events.map(&:data).map { |v| v[:time_spent].to_i }.reduce(&:+) || 0
+    events.map(&:data).map { |v| v['time_spent'].to_i }.reduce(&:+) || 0
   end
 
   def average_time_spent_metric
-    return 0 if @team.users.count.zero?
-    total_time_spent_metric / @team.users.count
+    events = time_spent_query.call
+    events = filter_by_teams(events)
+    count = user_count(events)
+    return 0 if count.zero?
+
+    total_time_spent_metric / count
   end
 
   def active_course_count_metric
     events = time_spent_query.call
     events = filter_by_teams(events)
-    events.map(&:data).map { |v| v[:course_id] }.uniq.count || 0
+    events.map(&:data).map { |v| v['course_id'] }.uniq.count || 0
   end
 
   def team_score_metric
@@ -56,7 +61,7 @@ class Dashboard
   def total_course_time_metric
     events = time_spent_query.call
     events = filter_by_teams(events)
-    course_ids = events.map(&:data).map { |v| v[:course_id] }.uniq
+    course_ids = events.map(&:data).map { |v| v['course_id'] }.uniq
     Course.includes(:course_modules).where(id: course_ids).map(&:duration).sum
   end
 
@@ -115,6 +120,10 @@ class Dashboard
     end
 
     data
+  end
+
+  def user_count(events)
+    events.collect(&:user_id).uniq.count
   end
 
   private
