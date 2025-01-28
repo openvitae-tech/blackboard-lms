@@ -1,10 +1,10 @@
 <%= render "shared/components/layout" do %>
-  <div class="flex justify-end text-right">
+  <div class="flex justify-between items-center">
+    <h1 class="heading page-heading-medium mb-4">Partners List</h1>
     <%= link_to new_learning_partner_path do %>
       <%= render 'shared/components/icon_button_primary', icon_name: 'icon-plus', label: 'Add Partner' %>
     <% end %>
   </div>
-  <h1 class="heading page-heading-medium my-6">Partners List</h1>
   <ul class="w-full">
     <% @learning_partners.each do |learning_partner| %>
       <li class="my-6">
