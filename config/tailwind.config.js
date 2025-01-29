@@ -11,7 +11,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        montserrat: ['Montserrat'],
+        poppins: ['Poppins'],
+        roboto: ['Roboto'],
+
       },
     },
     colors: {

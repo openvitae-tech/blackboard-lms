@@ -5,7 +5,7 @@
       <div class="bg-white w-[528px]">
         <%= image_tag "instruo_logo_blue.png", alt: "Instruo", class: "mx-auto mb-12 h-10" %>
         <div class="rounded-lg px-8 pt-8 pb-24 box-shadow-large">
-          <h1 class="my-8 text-3xl page-heading">Forgot password?</h1>
+          <h1 class="my-8 text-3xl heading page-heading">Forgot password?</h1>
           <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
             <%= f.hidden_field :reset_password_token %>
             <%= render "devise/shared/error_messages", resource: resource %>

@@ -1,7 +1,7 @@
 <div class="box-shadow-medium md:basis-1/2 p-4 md:p-6">
   <div class="flex w-full flex-col gap-2">
     <div class="flex flex-col gap-3 md:gap-2">
-      <h3 class="text-basic font-semibold">Course Watch time</h3>
+      <h3 class="heading heading-semibold">Course Watch time</h3>
       <div class="flex items-center space-x-6">
         <div class="flex items-center space-x-2">
           <span class="icon-tiny bg-[#0075A4]"></span>
@@ -16,14 +16,14 @@
 
     <div class="flex flex-col md:flex-row gap-2 md:items-center md:justify-between">
       <div class="mt-4">
-        <span class="text-primary text-2xl md:text-4xl font-semibold"><%= duration_in_words(dashboard.total_time_spent_metric) %></span>
-        <span class="text-xl md:text-2xl font-light text-[#0075A4]">/<%= duration_in_words(dashboard.total_course_time_metric) %></span>
+        <span class="text-primary text-2xl md:text-4xl font-semibold heading"><%= duration_in_words(dashboard.total_time_spent_metric) %></span>
+        <span class="text-xl md:text-2xl font-light text-[#0075A4] heading">/<%= duration_in_words(dashboard.total_course_time_metric) %></span>
       </div>
       <div class="flex justify-end">
-        <div class="relative h-48 w-48 rounded-full" style="background: conic-gradient(#0075a4 0% <%= dashboard.completion_percent_metric %>%, #00b48d <%= dashboard.completion_percent_metric %>% 100%)">
+        <div class="relative h-48 w-48 rounded-full heading" style="background: conic-gradient(#0075a4 0% <%= dashboard.completion_percent_metric %>%, #00b48d <%= dashboard.completion_percent_metric %>% 100%)">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="flex h-32 w-32 items-center justify-center rounded-full bg-white">
-              <span class="text-center text-lg font-semibold text-primary"><%= dashboard.completion_percent_metric %>%<br />Completed</span>
+              <span class="text-center text-lg font-semibold text-primary heading"><%= dashboard.completion_percent_metric %>%<br />Completed</span>
             </div>
           </div>
         </div>

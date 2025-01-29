@@ -5,7 +5,7 @@
       <div class="bg-white w-[528px]">
         <%= image_tag "instruo_logo_blue.png", alt: "Instruo", class: "mx-auto mb-12 h-10" %>
         <div class="rounded-lg px-8 pt-8 pb-24 box-shadow-large">
-          <h1 class="my-8 page-heading ">Login</h1>
+          <h1 class="my-8 heading page-heading ">Login</h1>
           <%= form_with url: otp_login_path, method: :post, scope: :login, data: { turbo: false } do |form| %>
             <div class="flex flex-col gap-14">
               <div class="input-group">

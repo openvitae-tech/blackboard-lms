@@ -5,7 +5,7 @@
       <div class="w-[528px] bg-white">
         <%= image_tag "instruo_logo_blue.png", alt: "Instruo", class: "mx-auto mb-12 h-10" %>
         <div class="box-shadow-large rounded-lg px-8 pb-24 pt-8">
-          <h1 class="page-heading my-8 text-3xl">Didn't get confirmation ?</h1>
+          <h1 class="heading page-heading my-8 text-3xl">Didn't get confirmation ?</h1>
           <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
             <div class="flex flex-col gap-14">
               <div class="input-group">

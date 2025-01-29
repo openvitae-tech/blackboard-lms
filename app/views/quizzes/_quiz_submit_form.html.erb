@@ -1,7 +1,7 @@
 
 <div class="box-shadow-medium flex flex-col rounded">
   <div class="flex items-center justify-between border-b border-line-colour-light p-6">
-    <span class="text-gray5 text-base font-semibold">Quiz</span>
+    <span class="heading heading-semibold">Quiz</span>
   </div>
   <div class="flex justify-center gap-4 pt-6">
     <% current_index = position_of_quiz(course_module, quiz) - 1 %>
@@ -9,12 +9,12 @@
       <div class="indicator <%= 'active' if index == current_index %>"></div>
     <% end %>
   </div>
-  <h2 class="text-black0 flex items-center justify-center pt-4 text-base font-medium">
+  <h2 class="flex items-center justify-center pt-4 text-medium">
     <%= quiz_position_text(course_module, quiz) %> Questions
   </h2>
   <ul class="w-full pb-6">
     <li class="carousel-container m-6 rounded box-shadow-medium">
-      <h2 class="bg-primary-light-50 p-6 text-base font-medium">
+      <h2 class="bg-primary-light-50 p-6 text-medium">
        <span>1.</span> <%= quiz.question %>
       </h2>
 

@@ -8,14 +8,22 @@
     <% end %>
   >
     <summary class="flex items-center justify-between p-4 cursor-pointer focus:outline-none md:p-6">
-      <h2 class="text-black0 font-semibold text-sm justify-start md:text-base">
-        <% if policy(course_module).show? %>
-          <%= link_to course_module.title, course_module_path(course, course_module), class: 'nav-link' %>
-        <% else %>
-          <%= course_module.title %>
+      <h2 class="flex flex-row gap-4 items-center font-semibold text-sm justify-start md:text-base heading">
+        <% if module_completed?(enrollment, course_module) %>
+          <div class="flex items-center justify-center bg-primary rounded-full px-[2px] pt-[2px] w-5 h-5">
+            <span class="icon icon-check icon-small bg-white"></span>
+          </div>
         <% end %>
-        <span class="text-primary text-xs font-normal md:pl-5 md:text-sm md:font-medium">(<%= lessons_count(course_module) %>)</span>
+        <div class="flex flex-col gap-1 md:gap-4 md:flex-row items-start md:items-center">
+          <% if policy(course_module).show? %>
+          <%= link_to course_module.title, course_module_path(course, course_module), class: 'nav-link' %>
+          <% else %>
+          <%= course_module.title %>
+          <% end %>
+          <span class="text-primary text-xs font-normal md:text-sm md:font-medium">(<%= lessons_count(course_module) %>)</span>
+        </div>
       </h2>
+     
       <div class="flex gap-4 items-center">
         <% if policy(@course).edit? %>
           <%= link_to course_module_path(course, course_module) do %>
@@ -34,10 +42,18 @@
             <% end %>
           <% end %>
         </div>
-        <div class="flex items-center">
-          <span class="icon icon-down icon-small bg-letter-color down-arrow"></span>
-          <span class="icon icon-up icon-small bg-letter-color hidden up-arrow"></span>
-        </div>
+        <div class="flex flex-row gap-6">
+          <% if score_earned_for_module(enrollment, course_module) != 0 %>
+            <div class="flex items-center justify-center">
+              <p class="flex items-center justify-center gap-1"><span class="hidden md:block">Score :</span> <%= enrollment.score_earned_for(course_module) %>
+              <%= image_tag 'coin.png', alt: 'coin', class: 'h-4' %></p>
+            </div>
+          <% end %>
+          <div class="flex items-center">
+            <span class="icon icon-down icon-small bg-letter-color down-arrow"></span>
+            <span class="icon icon-up icon-small bg-letter-color hidden up-arrow"></span>
+          </div>
+        </div>        
       </div>
     </summary>
     <ul>

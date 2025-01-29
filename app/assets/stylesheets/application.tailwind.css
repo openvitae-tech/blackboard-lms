@@ -12,6 +12,10 @@
   }
 }
 
+body{
+  @apply font-roboto;
+}
+
 @layer components {
   .input-text {
     @apply w-full px-3 py-2 rounded border border-line-colour h-[48px] md:h-[52px] focus:border-primary focus:ring-0;
@@ -41,6 +45,10 @@
     @apply text-sm font-normal;
   }
 
+  .heading{
+    @apply !font-poppins;
+  }
+
   .page-heading {
     @apply text-xl font-bold md:text-3xl md:font-semibold;
   }
@@ -53,8 +61,36 @@
     @apply text-base md:text-lg font-semibold;
   }
 
+  .heading-overlay{
+    @apply text-white font-bold text-xl;
+  } 
+
+  .heading-medium {
+    @apply text-base font-medium;
+  }
+
+  .heading-semibold {
+    @apply text-base font-semibold;
+  }
+  
+  .labels{
+    @apply !font-poppins;
+  }
+
+  .label-small {
+    @apply text-sm font-semibold;
+  }
+
+  .text-semibold {
+    @apply text-base font-semibold;
+  }
+
+  .text-medium {
+    @apply text-base font-medium;
+  }
+
   .btn-primary {
-    @apply rounded border px-4 text-center py-3.5 min-w-40 border-primary bg-primary text-white;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-primary bg-primary text-white font-poppins;
     &:hover {
       @apply cursor-pointer opacity-95;
     }
@@ -76,7 +112,7 @@
   }
 
   .btn-default {
-    @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour bg-line-colour;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour bg-line-colour font-poppins;
 
     &:hover {
       @apply cursor-pointer opacity-95;
@@ -117,7 +153,7 @@
   }
 
   .side-bar-item-inner {
-    @apply flex  w-full h-11 flex-row items-center gap-4;
+    @apply flex  w-full h-11 flex-row items-center gap-4 font-poppins;
   }
 
   .side-bar-footer {
@@ -185,7 +221,7 @@
 }
 
 .nav-link {
-  @apply text-xs font-normal md:text-sm;
+  @apply text-xs font-normal md:text-sm font-poppins;
 
   &:hover {
     @apply cursor-pointer text-secondary underline;

@@ -8,20 +8,18 @@
     <div class="absolute inset-0 bg-black opacity-60"></div>
     <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
       <%= image_tag partner_logo(team.learning_partner, :medium), class: 'h-16 w-16 object-cover rounded-full border-2 border-white box-shadow-medium' %>
-      <span class="text-white font-bold text-xl"><%= team.name %></span>
+      <span class="heading heading-overlay"><%= team.name %></span>
     </div>
     <div class="absolute bottom-4 md:top-6 right-6 flex gap-4  z-10">    
       <%= render 'shared/components/more_action', icon_class: 'teams-more', label_hover:"teams-more-hover" do %>
         <% if policy(:dashboard).index? %>
-          <%= link_to dashboard_path(team: team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2' do%>
+          <%= link_to dashboard_path(team_id: team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2' do%>
             <span class="text-secondary text-xs font-medium">Team dashboard</span>
-            <span class="icon icon-arrow-right icon-small bg-secondary"></span>
           <% end %>
         <% end %>
         <% if policy(team).edit? %>
           <%= link_to edit_team_path(team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2', data: { turbo_frame: "modal"} do%>
             <span class="text-secondary text-xs font-medium">Edit</span>
-            <span class="icon icon-edit h-[10px] w-[10px] bg-secondary"></span>
           <% end %>
         <% end %>
       <% end %>  

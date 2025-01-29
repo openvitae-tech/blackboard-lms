@@ -1,6 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import { toggleButtonState } from "../utils/lessons";
-import store from '../store';
+import store from "store";
 
 export default class extends Controller {
   static targets = [
@@ -21,6 +20,9 @@ export default class extends Controller {
       this.videoFieldCount--;
 
       this.setButtonState(event.detail.isActive);
+    });
+    this.element.addEventListener("upload:changed", () => {
+      this.updateButtonState();
     });
     this.isValidForAddRecord && this.addRecord();
   }
@@ -78,9 +80,17 @@ export default class extends Controller {
     languageSection.style.display = "none";
 
     this.videoFieldCount--;
-    if(store.pendingCount > 0) {
-      store.pendingCount -= 1;
+    store.removeUpload();
+    this.updateButtonState();
+  }
+
+  updateButtonState() {
+    const submitButton = this.uploadButtonTarget.querySelector("#submit-button");
+
+    if (store.hasPendingUploads()) {
+      submitButton.classList.add("disabled");
+    } else {
+      submitButton.classList.remove("disabled");
     }
-    toggleButtonState({ pendingCount: store.pendingCount });
   }
 }

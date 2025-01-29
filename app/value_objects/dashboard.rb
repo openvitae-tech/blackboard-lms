@@ -15,15 +15,18 @@ class Dashboard
   def initialize(team, duration)
     @team = team
     @duration = to_duration(duration)
+    @team_and_subteam_ids = []
   end
 
   def time_spent_series
     events = time_spent_query.call
+    events = filter_by_teams(events)
+
     data = {}
     grouped_data = events.group_by { |event| to_grouping_key(event) }
 
     grouped_data.each do |key, values|
-      data[key] = values.map(&:data).map { |v| v[:time_spent].to_i }.reduce(&:+) || 0
+      data[key] = values.map(&:data).map { |v| v['time_spent'].to_i }.reduce(&:+) / 60
     end
 
     data
@@ -31,16 +34,23 @@ class Dashboard
 
   def total_time_spent_metric
     events = time_spent_query.call
-    events.map(&:data).map { |v| v[:time_spent].to_i }.reduce(&:+) || 0
+    events = filter_by_teams(events)
+    events.map(&:data).map { |v| v['time_spent'].to_i }.reduce(&:+) || 0
   end
 
   def average_time_spent_metric
-    total_time_spent_metric / @team.users.count
+    events = time_spent_query.call
+    events = filter_by_teams(events)
+    count = user_count(events)
+    return 0 if count.zero?
+
+    total_time_spent_metric / count
   end
 
   def active_course_count_metric
     events = time_spent_query.call
-    events.map(&:data).map { |v| v[:course_id] }.uniq.count || 0
+    events = filter_by_teams(events)
+    events.map(&:data).map { |v| v['course_id'] }.uniq.count || 0
   end
 
   def team_score_metric
@@ -50,7 +60,8 @@ class Dashboard
 
   def total_course_time_metric
     events = time_spent_query.call
-    course_ids = events.map(&:data).map { |v| v[:course_id] }.uniq
+    events = filter_by_teams(events)
+    course_ids = events.map(&:data).map { |v| v['course_id'] }.uniq
     Course.includes(:course_modules).where(id: course_ids).map(&:duration).sum
   end
 
@@ -61,6 +72,7 @@ class Dashboard
 
   def lesson_views_series
     events = lesson_viewed_query.call
+    events = filter_by_teams(events)
     data = {}
     grouped_data = events.group_by { |event| to_grouping_key(event) }
 
@@ -73,6 +85,7 @@ class Dashboard
 
   def course_enrolled_series
     events = user_enrolled_query.call
+    events = filter_by_teams(events)
     data = {}
     grouped_data = events.group_by { |event| to_grouping_key(event) }
 
@@ -85,6 +98,7 @@ class Dashboard
 
   def course_started_series
     events = course_started_query.call
+    events = filter_by_teams(events)
     data = {}
     grouped_data = events.group_by { |event| to_grouping_key(event) }
 
@@ -97,6 +111,7 @@ class Dashboard
 
   def course_completed_series
     events = course_completed_query.call
+    events = filter_by_teams(events)
     data = {}
     grouped_data = events.group_by { |event| to_grouping_key(event) }
 
@@ -105,6 +120,10 @@ class Dashboard
     end
 
     data
+  end
+
+  def user_count(events)
+    events.collect(&:user_id).uniq.count
   end
 
   private
@@ -142,5 +161,21 @@ class Dashboard
 
   def course_completed_query
     @course_completed_query ||= CourseCompletedQuery.new(@team.learning_partner_id, @duration)
+  end
+
+  def team_and_subteam_ids(team)
+    return @team_and_subteam_ids unless @team_and_subteam_ids.empty?
+    recursive_traverse_team_tree(team)
+    @team_and_subteam_ids
+  end
+
+  def recursive_traverse_team_tree(team)
+    @team_and_subteam_ids.push(team.id)
+    team.sub_teams.includes(:sub_teams).each { |sub_team| recursive_traverse_team_tree(sub_team) }
+  end
+
+  def filter_by_teams(events)
+    team_ids = team_and_subteam_ids(@team)
+    events.filter { |event| event.data['team_id'].nil? || team_ids.include?(event.data['team_id']) }
   end
 end

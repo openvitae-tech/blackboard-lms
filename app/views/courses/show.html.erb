@@ -32,11 +32,14 @@
   </div>
   <% if @course.course_modules.present? %>
     <div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6 pb-6 md:pb-6 pt-6">
+      <% if course_completed?(@enrollment) %>
+        <%= render "courses/course_stats", course: @course, enrollment: @enrollment %>
+      <% end %>
       <%= render 'courses/course_lessons', course: @course, enrollment: @enrollment %>
     </div>
   <% else %>
     <div class="flex flex-col items-center justify-center flex-grow py-6">
-      <h2 class="text-base font-semibold"><%= t("course.course_module.empty") %></h2>
+      <h2 class="text-semibold"><%= t("course.course_module.empty") %></h2>
       <% if policy(:course_module).new? %>
         <%= link_to new_course_module_path(@course), class: "mt-4" do %>
           <%= render 'shared/components/icon_button_primary_small', label: 'Add module', icon_name: 'icon-plus' %>
