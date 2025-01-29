@@ -1,6 +1,9 @@
 <%= render "shared/components/layout" do %>
   <div class="flex justify-end">
     <div class="flex justify-between gap-4">
+      <%= link_to new_course_scorm_path(@course), class: "nav-link", data: { turbo_frame: "modal" } do %>
+        <%= render 'shared/components/icon_button_primary', icon_name: 'icon-download' %>
+      <% end %>
       <% if policy(@course).destroy? %>
         <%= link_to course_path(@course), data: { turbo_method: "delete" } do %>
           <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
@@ -23,9 +26,7 @@
       <% end %>
     </div>
   </div>
-
   <%= render "shared/components/bread_crumbs", links: [[I18n.t('course.label'),courses_path], [@course.title, nil]] %>
-
   <div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6">
     <%= render 'courses/course_description_card', course: @course, enrollment: @enrollment %>
   </div>

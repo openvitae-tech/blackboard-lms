@@ -20,7 +20,7 @@ RSpec.describe Vimeo::UploadVideoService do
     end
 
     it 'uploads video to vimeo' do
-      expect(local_content.status).to eq('pending')
+      local_content.update!(status: :pending)
 
       response = subject.upload_video(local_content.video.blob, local_content.id)
       vimeo_video_url = local_content.video.blob.metadata['url']

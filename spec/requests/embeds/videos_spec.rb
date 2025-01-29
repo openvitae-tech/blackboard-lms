@@ -3,7 +3,7 @@
 RSpec.describe 'Request spec for Embeds Videos', type: :request do
   let(:lesson) { create :lesson }
   let(:learning_partner) { create :learning_partner }
-  let(:scorm_token) { create :scorm_token, learning_partner: }
+  let(:scorm) { create :scorm, learning_partner: }
 
   before do
     @local_content = lesson.local_contents.first
@@ -11,10 +11,10 @@ RSpec.describe 'Request spec for Embeds Videos', type: :request do
 
   describe 'GET /embeds/videos/:id' do
     it 'when scorm token and video is valid' do
-      get embeds_video_path(@local_content.id), headers: { 'X-Scorm-Token' => scorm_token.token }
+      get embeds_video_path(@local_content.id), headers: { 'X-Scorm-Token' => scorm.token }
 
       expect(assigns[:local_content]).to eq(@local_content)
-      expect(assigns[:scorm_token]).to eq(scorm_token)
+      expect(assigns[:scorm]).to eq(scorm)
       expect(response).to have_http_status(:ok)
       expect(response).to render_template(:show)
     end
@@ -27,7 +27,7 @@ RSpec.describe 'Request spec for Embeds Videos', type: :request do
   end
 
   it 'when local content does not exist' do
-    get embeds_video_path('123'), headers: { 'X-Scorm-Token' => scorm_token.token }
+    get embeds_video_path('123'), headers: { 'X-Scorm-Token' => scorm.token }
 
     expect(assigns(:video_iframe)).to be_nil
   end

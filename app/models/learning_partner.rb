@@ -6,7 +6,7 @@ class LearningPartner < ApplicationRecord
   include CustomValidations
 
   has_many :users, dependent: :destroy
-  has_one :scorm_token, dependent: :destroy
+  has_one :scorm, dependent: :destroy
 
   validates :name, presence: true, length: { in: 2..255 }
   validates :content, length: { maximum: 4096 }

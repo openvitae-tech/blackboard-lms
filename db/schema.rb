@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_17_152940) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_28_174201) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -179,14 +179,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_152940) do
     t.index ["course_module_id"], name: "index_quizzes_on_course_module_id"
   end
 
-  create_table "scorm_tokens", force: :cascade do |t|
+  create_table "scorms", force: :cascade do |t|
     t.string "token", null: false
     t.boolean "is_valid", default: true
     t.bigint "learning_partner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["learning_partner_id"], name: "index_scorm_tokens_on_learning_partner_id", unique: true
-    t.index ["token"], name: "index_scorm_tokens_on_token", unique: true
+    t.index ["learning_partner_id"], name: "index_scorms_on_learning_partner_id", unique: true
+    t.index ["token"], name: "index_scorms_on_token", unique: true
   end
 
   create_table "tags", force: :cascade do |t|
@@ -268,7 +268,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_152940) do
   add_foreign_key "quiz_answers", "enrollments"
   add_foreign_key "quiz_answers", "quizzes"
   add_foreign_key "quizzes", "course_modules"
-  add_foreign_key "scorm_tokens", "learning_partners"
+  add_foreign_key "scorms", "learning_partners"
   add_foreign_key "team_enrollments", "courses"
   add_foreign_key "team_enrollments", "teams"
   add_foreign_key "team_enrollments", "users", column: "assigned_by_id"

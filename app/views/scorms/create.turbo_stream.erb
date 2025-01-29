@@ -1,0 +1,20 @@
+<%= turbo_stream.replace "modal" do %>
+  <%= render "shared/components/modal", modalTitle: "Download SCORM package" do %>
+    <div class="flex flex-col p-6">
+      <div class="flex flex-col justify-between">
+        <input class="rounded" type="text" value="<%= @download_link %>" readonly>
+        <a href="<%= @download_link %>" target="_blank">
+          <button
+          class="bg-primary text-white p-4 rounded w-full mt-6">
+            Download
+          </button>
+        </a>
+        <button
+          class="bg-gray-200 text-black p-4 rounded"
+          data-action="click->modals#closeModal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  <% end %>
+<% end %>
