@@ -43,7 +43,7 @@
           <% end %>
         </div>
         <div class="flex flex-row gap-6">
-          <% if enrollment.score_earned_for(course_module) != 0 %>
+          <% if score_earned_for_module(enrollment, course_module) != 0 %>
             <div class="flex items-center justify-center">
               <p class="flex items-center justify-center gap-1"><span class="hidden md:block">Score :</span> <%= enrollment.score_earned_for(course_module) %>
               <%= image_tag 'coin.png', alt: 'coin', class: 'h-4' %></p>

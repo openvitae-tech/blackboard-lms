@@ -83,11 +83,11 @@ module CoursesHelper
   end
 
   def module_completed?(enrollment, course_module)
-    enrollment.module_completed?(course_module.id)
+    enrollment.present? && enrollment.module_completed?(course_module.id)
   end
 
   def course_completed?(enrollment)
-    enrollment.course_completed?
+    enrollment.present? && enrollment.course_completed?
   end
 
   def next_quiz_path(course, course_module, current_quiz)
@@ -167,5 +167,9 @@ module CoursesHelper
 
   def updated_tags_query_params(tag)
     url_for(request.query_parameters.merge(tags: params[:tags] - [tag]))
+  end
+
+  def score_earned_for_module(enrollment, course_module)
+    enrollment.present? ? enrollment.score_earned_for(course_module) : 0
   end
 end
