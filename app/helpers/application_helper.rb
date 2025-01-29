@@ -90,4 +90,9 @@ module ApplicationHelper
     days = (deadline_date.to_date - Date.current).to_i
     days > 0 ? days : 0
   end
+
+  def feature_enabled?(feature_flag)
+    # user feature flags from constants.rb
+    feature_flag || Rails.env.local?
+  end
 end

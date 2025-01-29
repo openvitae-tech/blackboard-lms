@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= product_name %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="turbo-prefetch" content="false">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/instruo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=New+Amsterdam&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="https://player.vimeo.com/api/player.js"></script>
+
+  <% if Rails.env.production? %>
+    <meta name="google-analytics-id" content="<%= Rails.application.credentials.dig(:google, :ga_id) %>">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.credentials.dig(:google, :ga_id) %>"></script>
+  <% end %>
+
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+  <%= Sentry.get_trace_propagation_meta.html_safe %>
+</head>
+
+<body>
+  <%= yield %>
+</body>
+</html>
