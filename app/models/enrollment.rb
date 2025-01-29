@@ -87,7 +87,7 @@ class Enrollment < ApplicationRecord
   end
 
   def score_earned_for(course_module)
-    quiz_answers_for(course_module).map(&:score).reduce(:+)
+    quiz_answers_for(course_module).map(&:score).reduce(:+) || 0
   end
 
   def delete_recorded_answers_for(course_module)
