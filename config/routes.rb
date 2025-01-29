@@ -3,6 +3,10 @@
 Rails.application.routes.draw do
   match 'search', to: 'searches#index', via: %i[get post]
 
+  namespace :onboarding do
+    resource :welcome, only: [:new]
+  end
+
   resources :teams, except: %i[index destroy]
 
   resources :direct_uploads, only: :create
