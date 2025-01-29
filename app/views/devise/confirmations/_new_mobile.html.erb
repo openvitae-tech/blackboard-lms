@@ -23,7 +23,7 @@
       </div>
     </form>
     <div class="mt-4">
-      <% if FLAG_LOGIN_WITH_OTP %>
+      <% if feature_enabled?(FLAG_LOGIN_WITH_OTP) %>
         <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
       <% end %>
       <%= link_to "Login with email and password", new_user_session_path, class: "link-text" %><br/>
