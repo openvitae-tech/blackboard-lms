@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :onboarding do
+    resource :welcome, only: [:new]
+  end
+
   resources :teams, except: %i[index destroy]
 
   resources :direct_uploads, only: :create
