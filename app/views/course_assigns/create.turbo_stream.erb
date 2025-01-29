@@ -1,1 +1,5 @@
 <%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
+
+<% @courses_with_deadline.each do |course, _| %>
+  <%= turbo_stream.remove dom_id(course, "unassigned") %>
+<% end %>
