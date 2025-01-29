@@ -72,6 +72,10 @@ body{
   .heading-semibold {
     @apply text-base font-semibold;
   }
+  
+  .labels{
+    @apply !font-poppins;
+  }
 
   .label-small {
     @apply text-sm font-semibold;

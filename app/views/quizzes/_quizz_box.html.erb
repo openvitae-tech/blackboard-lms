@@ -24,23 +24,23 @@
         <%  if prev_link.blank? %>
           <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
             <span class="icon icon-arrow-left bg-letter-color icon-small"></span>
-            <span class="heading label-small">Previous</span>
+            <span class="labels label-small">Previous</span>
           <% end %>      
         <% else %>
           <%= link_to prev_link, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
             <span class="icon icon-arrow-left bg-letter-color icon-small"></span>
-            <span class="heading label-small">Previous</span>
+            <span class="labels label-small">Previous</span>
           <% end %>
       <% end %>
       <% next_link = next_quiz_path(@course, @course_module, @quiz) %>
         <%  if next_link.blank? %>
           <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
-            <span class="heading label-small">Skip</span>
+            <span class="labels label-small">Skip</span>
             <%= render "shared/svg/forward" %>
           <% end %>
         <% else %>
           <%= link_to next_link, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
-            <span class="heading label-small">Skip</span>
+            <span class="labels label-small">Skip</span>
             <%= render "shared/svg/forward" %>
           <% end %>
         <% end %>
