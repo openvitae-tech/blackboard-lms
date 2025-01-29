@@ -26,6 +26,13 @@ RSpec.describe 'Request spec for Embeds Videos', type: :request do
     expect(response.body).to eq('Invalid token')
   end
 
+  it 'when scorm token is expired' do
+    scorm.update!(is_valid: false)
+    get embeds_video_path(@local_content.id), headers: { 'X-Scorm-Token' => scorm.token }
+
+    expect(response.body).to eq('Invalid token')
+  end
+
   it 'when local content does not exist' do
     get embeds_video_path('123'), headers: { 'X-Scorm-Token' => scorm.token }
 
