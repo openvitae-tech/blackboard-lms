@@ -37,6 +37,9 @@ en:
     deleted: "The %{resource_name} is successfully deleted."
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
+  button:
+    edit: "Edit %{resource_name}"
+    delete: "Delete"
   course:
     label: "My Courses"
     enroll:
