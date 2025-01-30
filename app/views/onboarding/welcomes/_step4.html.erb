@@ -13,7 +13,8 @@
       <button 
       class="px-3 py-1 bg-primary-light-50 text-xs rounded"
       data-action="click->onboarding#skip"
-      data-next="step3Screen">
+      data-current="step4Screen"
+      data-skip="form1Screen">
       Skip Intro
       </button>
       <div class="flex space-x-2 mt-4">
@@ -25,15 +26,15 @@
     </div>  
   </div>
   <div 
-    class="absolute inset-y-0 left-0 w-1/2 cursor-pointer" 
+    class="absolute inset-y-0 left-0 w-1/4 cursor-pointer" 
     data-action="click->onboarding#back" 
     data-current="step4Screen" 
     data-previous="step3Screen">
   </div>
   <div 
-    class="absolute inset-y-0 right-0 w-1/2 cursor-pointer" 
+    class="absolute inset-y-0 right-0 w-1/4 cursor-pointer" 
     data-action="click->onboarding#next" 
     data-current="step4Screen"
-    data-next="step4Screen">
+    data-next="form1Screen">
   </div>
 </div>
