@@ -6,21 +6,23 @@ export default class extends Controller {
     "nestedRecordContainer",
     "nestedRecordTemplate",
     "uploadButton",
-    "hasError"
-    ];
+    "hasError",
+  ];
 
   initialize() {
-    this.videoFieldCount = 1;
-    this.isValidForAddRecord = this.hasErrorTarget.value === "false" && this.data.get("actionName") !== "edit";
+    this.videoFieldCount = 0;
+    this.isValidForAddRecord =
+      this.hasErrorTarget.value === "false" &&
+      this.data.get("actionName") !== "edit";
   }
   connect() {
     this.nestedRecordTemplate = this.nestedRecordTemplateTarget;
     this.nestedRecordContainer = this.nestedRecordContainerTarget;
-    this.element.addEventListener("video-upload:stateChange", (event) => {
+    this.element.addEventListener("video-upload:stateChange", () => {
       this.videoFieldCount--;
-
-      this.setButtonState(event.detail.isActive);
+      this.setButtonState();
     });
+
     this.element.addEventListener("upload:changed", () => {
       this.updateButtonState();
     });
@@ -54,21 +56,18 @@ export default class extends Controller {
 
     uploadButton.style.color = "";
   }
-  setButtonState(isActive) {
-    const uploadButton = this.uploadButtonTarget;
-    if (isActive) {
-      if (this.videoFieldCount === 0) {
-        this.uploadButtonTarget
-          .querySelector("#submit-button")
-          .classList.remove("btn-default");
-        this.uploadButtonTarget
-          .querySelector("#submit-button")
-          .classList.add("btn-primary");
 
-        uploadButton.style.color = "#FFFFFF";
-      }
-    } else {
-      this.resetButtonState();
+  setButtonState() {
+    const uploadButton = this.uploadButtonTarget;
+    if (this.videoFieldCount === 0) {
+      this.uploadButtonTarget
+        .querySelector("#submit-button")
+        .classList.remove("btn-default");
+      this.uploadButtonTarget
+        .querySelector("#submit-button")
+        .classList.add("btn-primary");
+
+      uploadButton.style.color = "#FFFFFF";
     }
   }
 
@@ -79,13 +78,17 @@ export default class extends Controller {
     languageSection.querySelector('[name*="_destroy"]').value = "1";
     languageSection.style.display = "none";
 
-    this.videoFieldCount--;
+    if (this.videoFieldCount > 0) {
+      this.videoFieldCount--;
+    }
+    this.setButtonState();
     store.removeUpload();
     this.updateButtonState();
   }
 
   updateButtonState() {
-    const submitButton = this.uploadButtonTarget.querySelector("#submit-button");
+    const submitButton =
+      this.uploadButtonTarget.querySelector("#submit-button");
 
     if (store.hasPendingUploads()) {
       submitButton.classList.add("disabled");
