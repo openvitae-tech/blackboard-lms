@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["input", "submitButton", "hiddenOtp"];
 
   connect() {
-    console.log("OTP controller");
     if (this.inputTargets.length > 0) {
       this.inputTargets[0].focus();
     }

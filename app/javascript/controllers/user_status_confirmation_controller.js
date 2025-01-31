@@ -11,11 +11,6 @@ export default class extends Controller {
   ];
 
   showConfirmation() {
-    console.log(
-      "Updated data-activate:",
-      this.deactivateMenuTarget.getAttribute("data-activate")
-    );
-
     const isActivate =
       this.deactivateMenuTarget.getAttribute("data-activate") === "true";
     isActivate

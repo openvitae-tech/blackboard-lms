@@ -36,13 +36,12 @@ export default class extends Controller {
     }
   }
   handleFileChange(event) {
-    console.log("hi");
     const inputId = event.currentTarget.dataset.content;
     const fileName = event.target.files[0]?.name || "No file chosen";
     if (inputId === "logoFileInput") {
-      this.logoFileLabelTarget.textContent = fileName; 
+      this.logoFileLabelTarget.textContent = fileName;
     } else if (inputId === "csvFileInput") {
-      this.csvFileLabelTarget.textContent = fileName; 
+      this.csvFileLabelTarget.textContent = fileName;
     }
   }
 }
