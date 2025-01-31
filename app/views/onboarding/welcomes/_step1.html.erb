@@ -1,4 +1,4 @@
-<div class="flex flex-col bg-white w-full md:w-[456px] h-[656px] py-6 relative">
+<div class="flex flex-col bg-white w-full md:w-[456px] h-[740px] md:h-[656px] py-6 relative">
   <div class="flex flex-col gap-4 px-8 pb-6 border-b border-line-colour-light">
     <h2 class="heading page-heading-medium">Hello, David</h2>
     <p class="heading text-sm">Your journey to mastering hospitality starts here.</p>
@@ -12,13 +12,8 @@
       Learn at your pace with curated courses designed for hospitality professionals.
     </p>   
     <div class="flex flex-col absolute bottom-6 items-center">
-      <button 
-        class="px-3 py-1 bg-primary-light-50 text-xs rounded"
-        data-action="click->onboarding#skip"
-        data-current="step1Screen"
-        data-skip="form1Screen">
-        Skip Intro
-      </button>
+      <%= render "shared/components/button_primary_light_small", label: 'Skip Intro',  
+                 data: { action: 'click->onboarding#skip', current: 'step1Screen', skip: 'form1Screen' } %>
       <div class="flex space-x-2 mt-4">
         <div class="w-2 h-2 bg-primary rounded-full"></div>
         <div class="w-2 h-2 bg-line-colour-light rounded-full"></div>
@@ -26,6 +21,12 @@
         <div class="w-2 h-2 bg-line-colour-light rounded-full"></div>
       </div>    
     </div>       
+  </div>
+  <div 
+    class="absolute inset-y-0 left-0 w-1/4 cursor-pointer" 
+    data-action="click->onboarding#back" 
+    data-current="step1Screen" 
+    data-previous="welcomeScreen">
   </div>
   <div 
     class="absolute inset-y-0 right-0 w-1/4 cursor-pointer" 
