@@ -6,24 +6,25 @@ export default class extends Controller {
     "nestedRecordContainer",
     "nestedRecordTemplate",
     "uploadButton",
-    "hasError"
-    ];
+    "hasError",
+  ];
 
   initialize() {
-    this.videoFieldCount = 1;
-    this.isValidForAddRecord = this.hasErrorTarget.value === "false" && this.data.get("actionName") !== "edit";
+    this.videoFieldCount = 0;
+    this.isValidForAddRecord =
+      this.hasErrorTarget.value === "false" &&
+      this.data.get("actionName") !== "edit";
   }
+
   connect() {
     this.nestedRecordTemplate = this.nestedRecordTemplateTarget;
     this.nestedRecordContainer = this.nestedRecordContainerTarget;
-    this.element.addEventListener("video-upload:stateChange", (event) => {
-      this.videoFieldCount--;
 
-      this.setButtonState(event.detail.isActive);
-    });
-    this.element.addEventListener("upload:changed", () => {
+    this.element.addEventListener("upload:changed", (event) => {
+      event.detail.shouldDecreaseCount && this.videoFieldCount--;
       this.updateButtonState();
     });
+
     this.isValidForAddRecord && this.addRecord();
   }
 
@@ -43,32 +44,14 @@ export default class extends Controller {
       field.name = field.name.replace("new-index", timestamp);
     });
   }
+
   resetButtonState() {
-    const uploadButton = this.uploadButtonTarget;
-    this.uploadButtonTarget
-      .querySelector("#submit-button")
-      .classList.add("btn-default");
-    this.uploadButtonTarget
-      .querySelector("#submit-button")
-      .classList.remove("btn-primary");
-
-    uploadButton.style.color = "";
+    this.uploadButtonTarget.classList.add("disabled");
   }
-  setButtonState(isActive) {
-    const uploadButton = this.uploadButtonTarget;
-    if (isActive) {
-      if (this.videoFieldCount === 0) {
-        this.uploadButtonTarget
-          .querySelector("#submit-button")
-          .classList.remove("btn-default");
-        this.uploadButtonTarget
-          .querySelector("#submit-button")
-          .classList.add("btn-primary");
 
-        uploadButton.style.color = "#FFFFFF";
-      }
-    } else {
-      this.resetButtonState();
+  setButtonState() {
+    if (this.videoFieldCount === 0) {
+      this.uploadButtonTarget.classList.remove("disabled");
     }
   }
 
@@ -79,18 +62,21 @@ export default class extends Controller {
     languageSection.querySelector('[name*="_destroy"]').value = "1";
     languageSection.style.display = "none";
 
-    this.videoFieldCount--;
+    if (this.videoFieldCount > 0) {
+      this.videoFieldCount--;
+    }
+
+    this.setButtonState();
     store.removeUpload();
     this.updateButtonState();
   }
 
   updateButtonState() {
-    const submitButton = this.uploadButtonTarget.querySelector("#submit-button");
-
     if (store.hasPendingUploads()) {
-      submitButton.classList.add("disabled");
+      this.uploadButtonTarget.classList.add("disabled");
     } else {
-      submitButton.classList.remove("disabled");
+      this.videoFieldCount === 0 &&
+        this.uploadButtonTarget.classList.remove("disabled");
     }
   }
 }
