@@ -1,0 +1,6 @@
+<button class="flex items-center gap-2 px-3 py-1 bg-primary-light-50 text-xs rounded heading" 
+        <% if data.present? %>
+          <%= data.map { |key, value| "data-#{key}=\"#{value}\"" }.join(" ").html_safe %>
+        <% end %> >
+  <span><%= label %></span>
+</button>

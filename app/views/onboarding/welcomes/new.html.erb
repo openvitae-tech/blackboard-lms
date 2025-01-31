@@ -1,1 +1,25 @@
-here goes user onboarding
+<div class="flex items-center justify-center min-h-screen bg-primary-light-50" data-controller="onboarding">
+  <div data-onboarding-target="welcomeScreen">
+    <%= render "onboarding/welcomes/welcome" %>
+  </div>
+
+  <div data-onboarding-target="step1Screen" class="hidden">
+    <%= render "onboarding/welcomes/step1" %>
+  </div>
+
+  <div data-onboarding-target="step2Screen" class="hidden">
+    <%= render "onboarding/welcomes/step2" %>
+  </div>
+
+  <div data-onboarding-target="step3Screen" class="hidden">
+    <%= render "onboarding/welcomes/step3" %>
+  </div>
+
+  <div data-onboarding-target="step4Screen" class="hidden">
+    <%= render "onboarding/welcomes/step4" %>
+  </div>
+  
+  <div data-onboarding-target="form1Screen" class="hidden">
+    <%= render "onboarding/welcomes/form1" %>
+  </div>
+</div>
