@@ -1,3 +1,6 @@
+<%= turbo_stream.replace "selected-tags", partial: "searches/selected_tags", locals: {
+  tags: @search_context.tags
+} %>
 <% if @search_context.team_assign? || @search_context.user_assign? %>
   <%= turbo_stream.replace "course-list-with-assign-form",
                            partial: "course_assigns/course_list_with_assign_form",

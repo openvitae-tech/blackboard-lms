@@ -6,15 +6,15 @@
   <div class="h-full flex flex-col justify-between">
     <div class="overflow-y-auto max-h-[calc(100vh-220px)] pb-4">
       <div class="flex flex-col gap-2 p-4 border-b-2 border-line-colour">
-        <div class=" flex justify-between">
+        <div class="flex justify-between">
           <h3 class="text-xs font-medium text-primary mb-2">Levels</h3>
           <span class="text-xs cursor-pointer mb-2" data-action="click->searches#clearFilters">Clear filter</span>
         </div>
         <ul class="flex flex-col gap-4">
           <% tags.level.each do |tag| %>
             <li class="mb-2 flex items-center">
-              <%= form.check_box :tags, { multiple: true, class: 'mr-2 h-3 w-3 tags-checkbox', data: { searches_target: 'checkbox' } }, tag.name, nil %>
-              <span class="text-sm"><%= tag.name %></span>
+              <%= form.check_box :tags, { multiple: true, class: 'mr-2 h-3 w-3 tags-checkbox', id: dom_id(tag, 'check'), data: { searches_target: 'checkbox' } }, tag.name, nil %>
+              <label for="<%= dom_id(tag, 'check') %>" class="text-sm"><%= tag.name %></label>
             </li>
           <% end %>
         </ul>
@@ -26,8 +26,8 @@
         <ul class="flex flex-col gap-4">
           <% tags.category.each do |tag| %>
             <li class="mb-2 flex items-center">
-              <%= form.check_box :tags, { multiple: true, class: 'mr-2 h-3 w-3 tags-checkbox', data: { searches_target: 'checkbox' } }, tag.name, nil %>
-              <span class="text-sm"><%= tag.name %></span>
+              <%= form.check_box :tags, { multiple: true, class: 'mr-2 h-3 w-3 tags-checkbox', id: dom_id(tag, 'check'), data: { searches_target: 'checkbox' } }, tag.name, nil %>
+              <label for="<%= dom_id(tag, 'check') %>" class="text-sm"><%= tag.name %></label>
             </li>
           <% end %>
         </ul>

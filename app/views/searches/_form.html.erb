@@ -1,6 +1,6 @@
 <div data-controller="searches" class="w-full mb-4">
   <div class="flex items-center gap-4">
-    <%= form_with url: search_path, method: :post, data: { action: "submit->searches#formSubmit" }, class: "w-full" do |form| %>
+    <%= form_with url: search_path, method: :post, data: { action: "submit->searches#formSubmit", searches_target: "form" }, class: "w-full" do |form| %>
       <%= form.hidden_field :context, value: context %>
 
       <% if context == "team_assign" %>
@@ -10,7 +10,7 @@
       <% end %>
 
       <div class="relative rounded-md border border-line-colour-light w-full">
-        <div class="pointer-events-none absolute inset-y-0 left-3 flex items-center">
+        <div class="hidden pointer-events-none absolute inset-y-0 left-3 md:flex items-center">
           <span class="icon icon-search icon-small bg-letter-color"></span>
         </div>
         <%= form.text_field :term,
@@ -22,11 +22,10 @@
                               searches_target: 'searchInput',
                             }
         %>
-        <% if params[:term].present? %>
-          <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" data-action="click->searches#clearSearch">
-            <span class="flex cursor-pointer items-center text-purple text-sm">Clear search</span>
-          </div>
-        <% end %>
+
+        <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" data-action="click->searches#formSubmit">
+          <span class="flex cursor-pointer items-center text-purple text-sm">Search</span>
+        </div>
       </div>
       <%= render 'searches/filters', tags: tags, form: form %>
     <% end %>
@@ -35,13 +34,5 @@
     </div>
   </div>
 
-  <div class="flex flex-row justify-between my-4">
-    <div class="space-x-2 flex flex-row">
-      <% params[:tags]&.each do |tag| %>
-        <%= link_to updated_tags_query_params(tag), method: :get do %>
-          <%= render 'shared/components/button_default_small', label: tag, icon_name: 'icon-close' %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+  <div id="selected-tags"></div>
 </div>
