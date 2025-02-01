@@ -102,7 +102,7 @@ class Courses::FilterService
   end
 
   def filter_scope_for(user)
-    all_courses = Course.includes([:banner_attachment]).order(created_at: :desc)
+    all_courses = Course.includes([:banner_attachment, :tags]).order(created_at: :desc)
 
     if user.is_admin?
       all_courses

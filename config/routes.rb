@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  match 'search', to: 'searches#index', via: %i[get post]
+
   resources :teams, except: %i[index destroy]
 
   resources :direct_uploads, only: :create

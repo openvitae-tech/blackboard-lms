@@ -1,0 +1,13 @@
+<% if @search_context.team_assign? || @search_context.user_assign? %>
+  <%= turbo_stream.replace "course-list-with-assign-form",
+                           partial: "course_assigns/course_list_with_assign_form",
+                           locals: {
+                             courses: @courses,
+                             team_assign: @search_context.team_assign?,
+                             user: @user,
+                             team: @team,
+                             cancel_link: @back_link
+                           }
+  %>
+<% else %>
+<% end %>

@@ -4,7 +4,7 @@ class SearchContext
   include ActiveModel::API
 
   # from where the search/filter action is initiated
-  VALID_CONTEXTS = %i(home course team_assign user_assign)
+  VALID_CONTEXTS = %i(home_page course_listing team_assign user_assign)
 
   attr_accessor :term, :tags, :context, :team, :user
 
