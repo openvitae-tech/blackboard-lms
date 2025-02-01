@@ -77,4 +77,11 @@ export default class extends Controller {
         const newEvent = new Event("submit", { bubbles: true, cancelable: true });
         this.formTarget.dispatchEvent(newEvent);
     }
+
+    clearSearch(event) {
+        event.preventDefault();
+        this.searchInputTarget.value = "";
+        const newEvent = new Event("submit", { bubbles: true, cancelable: true });
+        this.formTarget.dispatchEvent(newEvent);
+    }
 }
