@@ -14,8 +14,6 @@ export default class extends Controller {
       setTimeout(() => {
         button.textContent = originalText
       }, 2000)
-    } catch (err) {
-      console.error("Failed to copy: ", err)
     }
   }
 }

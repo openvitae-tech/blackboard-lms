@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-class Scorm::Course < ScormPackage::AbstractCourse
+class Scorm::Course < ScormPackage::BaseCourse
   attr_reader :course
 
   def initialize(course)
+    super()
     @course = course
   end
 

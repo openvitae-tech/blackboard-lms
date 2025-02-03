@@ -17,7 +17,7 @@ class ScormsController < ApplicationController
     course_object = ScormAdapter.new(@course).process
     scorm = Scorm.find_or_create_by!(learning_partner_id: params[:learning_partner])
 
-    file = ScormPackage::Packaging::Generate.new(course_object, scorm.token).process
+    file = ScormPackage::Packaging::Generator.new(course_object, scorm.token).generate
 
     send_data file, type: "application/zip", filename: "#{@course.title}_scorm.zip"
   end

@@ -1,3 +1,8 @@
+PATH
+  remote: ../scorm_package
+  specs:
+    scorm-package (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -378,7 +383,6 @@ GEM
     ruby-vips (2.2.1)
       ffi (~> 1.12)
     rubyzip (2.3.2)
-    scorm-package (0.1.0)
     securerandom (0.3.1)
     selenium-webdriver (4.18.1)
       base64 (~> 0.2)
@@ -501,7 +505,7 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   rubocop-rspec
-  scorm-package (~> 0.1.0)
+  scorm-package!
   selenium-webdriver
   sentry-rails
   sentry-ruby

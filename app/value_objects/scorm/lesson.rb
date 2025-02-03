@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-class Scorm::Lesson < ScormPackage::AbstractLesson
+class Scorm::Lesson < ScormPackage::BaseLesson
   attr_reader :lesson
 
   def initialize(lesson)
+    super()
     @lesson = lesson
   end
 

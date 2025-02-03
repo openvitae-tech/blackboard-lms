@@ -121,4 +121,4 @@ gem 'rails-html-sanitizer', '1.6.1'
 
 gem 'rack-cors', require: 'rack/cors'
 
-gem 'scorm-package', '~> 0.1.0', require: 'scorm_package'
+gem 'scorm-package', path: '../scorm_package', require: 'scorm_package'
