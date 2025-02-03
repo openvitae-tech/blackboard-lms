@@ -1,4 +1,13 @@
-<li class="flex flex-col md:flex-row p-6 box-shadow-medium w-full relative rounded" data-controller="assigns">
+<div class="flex flex-col md:flex-row p-6 box-shadow-medium w-full relative rounded" data-controller="assigns">
+  <div class="absolute top-1 left-1 z-10 flex flex-wrap justify-start gap-2 heading">
+    <% course.tags.each do |tag| %>
+      <% if tag.tag_type == "level" %>
+          <span class="px-2 py-1 text-xs font-medium bg-secondary text-white">
+            <%= tag.name %>
+          </span>
+      <% end %>
+    <% end %>
+  </div>
   <%= image_tag course_banner(course, :vertical), class: 'h-[118px] w-[152px] md:h-[208px] md:w-[140px] rounded-l object-cover' %>
   
   <div class="flex flex-col md:ps-4 pt-2 w-full gap-4">
@@ -36,6 +45,17 @@
             <%= course_description(course) %>
           </div>
         </div>
+        <div>
+          <div class="h-full overflow-hidden flex items-center text-sm">
+            <% course.tags.each do |tag| %>
+              <% if tag.tag_type == "category" %>
+              <span class="px-2 py-1 text-xs font-medium bg-primary-light-50 rounded">
+                <%= tag.name %>
+              </span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
       </div>
       <div class="flex flex-col md:flex-row gap-2 items-end md:items-center absolute -top-24 md:top-0 -right-4 md:right-12 invisible opacity-0" data-assigns-target="durationContainer">
         <label for="duration" class="heading font-medium text-sm md:text-base">Assign Duration:</label>
@@ -49,4 +69,4 @@
       </div>
     </div>
   </div>
-</li>
+</div>

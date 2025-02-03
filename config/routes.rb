@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  match 'search', to: 'searches#index', via: %i[get post]
+
   resources :teams, except: %i[index destroy]
 
   resources :direct_uploads, only: :create
@@ -43,10 +45,6 @@ Rails.application.routes.draw do
       get :proceed
       put :publish
       put :unpublish
-    end
-
-    collection do
-      get :search
     end
 
     resource :scorm, only: %i[new create] do

@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
-import { DirectUpload } from "@rails/activestorage"
-import store from "store"
+import { DirectUpload } from "@rails/activestorage";
+import store from "store";
 
 export default class extends Controller {
   static targets = [
@@ -17,7 +17,7 @@ export default class extends Controller {
     "hideCancelUploadButton",
     "durationField",
     "uploadControls",
-    "failedUploadMessage"
+    "failedUploadMessage",
   ];
 
   connect() {
@@ -36,8 +36,7 @@ export default class extends Controller {
       this.loadVideo(file);
     }
 
-    this.uploadFile(file)
-    this.checkActiveState();
+    this.uploadFile(file);
   }
 
   truncateFileName(name, maxLength) {
@@ -72,37 +71,27 @@ export default class extends Controller {
     return `${minutes}:${secs < 10 ? "0" + secs : secs}`;
   }
 
-  checkActiveState() {
-    const hasVideo = this.fileInputTarget.files.length > 0;
-
-    const event = new CustomEvent("video-upload:stateChange", {
-      detail: { isActive: hasVideo },
-      bubbles: true,
-      composed: true,
-    });
-
-    this.element.dispatchEvent(event);
-  }
-
   toggleCancelUploadButtons(hidden) {
-    this.hideCancelUploadButtonTargets.forEach(item => {
+    this.hideCancelUploadButtonTargets.forEach((item) => {
       item.hidden = hidden;
     });
   }
 
   removeVideoNameAttribute() {
-    this.fileInputTarget.removeAttribute("name")
+    this.fileInputTarget.removeAttribute("name");
   }
 
   uploadFile(file) {
     this.toggleCancelUploadButtons(false);
     store.addUpload();
-    this.dispatchUploadEvent();
 
+    const upload = new DirectUpload(
+      file,
+      "/direct_uploads?service=video",
+      this
+    );
 
-    const upload = new DirectUpload(file, '/direct_uploads?service=video', this);
-
-    upload.create((error,blob) => {
+    upload.create((error, blob) => {
       store.removeUpload();
       if (error) {
         this.failedUploadMessageTarget.classList.remove("hidden");
@@ -118,7 +107,9 @@ export default class extends Controller {
   directUploadWillStoreFileWithXHR(request) {
     this.currentXHR = request;
 
-    request.upload.addEventListener("progress", (event) => this.directUploadDidProgress(event));
+    request.upload.addEventListener("progress", (event) =>
+      this.directUploadDidProgress(event)
+    );
   }
 
   directUploadDidProgress(event) {
@@ -135,21 +126,24 @@ export default class extends Controller {
       this.currentXHR = null;
       this.resetUploader();
       store.removeUpload();
-      this.dispatchUploadEvent();
+      this.dispatchUploadEvent(false);
     }
   }
 
   resetUploader() {
-    this.videoUploaderTarget.classList.add('hidden');
-    this.fileLabelTarget.textContent = 'No file chosen';
-    this.hiddenBlobIdTarget.value = '';
-    this.fileInputTarget.value = '';
+    this.videoUploaderTarget.classList.add("hidden");
+    this.fileLabelTarget.textContent = "No file chosen";
+    this.hiddenBlobIdTarget.value = "";
+    this.fileInputTarget.value = "";
   }
 
-  dispatchUploadEvent() {
+  dispatchUploadEvent(shouldDecreaseCount = true) {
     const event = new CustomEvent("upload:changed", {
-      detail: { hasPendingUploads: store.hasPendingUploads() },
-      bubbles: true
+      detail: {
+        hasPendingUploads: store.hasPendingUploads(),
+        shouldDecreaseCount,
+      },
+      bubbles: true,
     });
     this.element.dispatchEvent(event);
   }

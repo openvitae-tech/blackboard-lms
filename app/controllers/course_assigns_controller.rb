@@ -5,20 +5,18 @@ class CourseAssignsController < ApplicationController
   before_action :set_user_or_team
 
   def new
-    published_courses = Course.includes([:banner_attachment]).published
-
-    if @team_assign
-      enrolled_courses_ids = @team.team_enrollments.pluck(:course_id)
-      @courses = published_courses.where.not(id: enrolled_courses_ids).order(:id)
-    else
-      enrolled_courses_ids = @user.enrollments.pluck(:course_id)
-      @courses = published_courses.where.not(id: enrolled_courses_ids).order(:id)
-    end
+    @context = @team_assign ? 'team_assign' : 'user_assign'
+    search_context = SearchContext.new({ context: @context, team: @team, user: @user })
+    service = Courses::FilterService.instance
+    @courses = service.filter(current_user, search_context)
+    @tags = Tag.load_tags
   end
 
   def create
     course_ids = (params[:course_ids] || []).filter { |id| !id.empty? }
     deadlines = (params[:duration] || []).map { |d| to_deadline(d) }
+
+    @courses_with_deadline = []
 
     if course_ids.empty?
       flash.now[:error] = 'No courses selected'
@@ -27,13 +25,13 @@ class CourseAssignsController < ApplicationController
 
     courses = Course.find(course_ids)
 
-    courses_with_deadline = courses.zip(deadlines)
+    @courses_with_deadline = courses.zip(deadlines)
     service = CourseManagementService.instance
 
     if @team_assign
-      service.assign_team_to_courses(@team, courses_with_deadline, current_user)
+      service.assign_team_to_courses(@team, @courses_with_deadline, current_user)
     else
-      service.assign_user_to_courses(@user, courses_with_deadline, current_user)
+      service.assign_user_to_courses(@user, @courses_with_deadline, current_user)
     end
 
     flash.now[:success] = 'Courses assigned successfully'
