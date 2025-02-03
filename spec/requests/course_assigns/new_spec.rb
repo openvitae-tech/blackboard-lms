@@ -8,7 +8,7 @@ RSpec.describe 'Request spec for GET /course_assigns/new' do
 
     before do
       sign_in manager
-      @courses = Array.new(2) { course_with_associations(published: true) }
+      @courses = Array.new(2) { course_with_associations(published: true) }.reverse
     end
 
     it 'Returns list of unassigned courses to the user to which the course is getting assigned' do

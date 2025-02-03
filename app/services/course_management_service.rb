@@ -92,23 +92,10 @@ class CourseManagementService
     end
   end
 
-  def search(user, term)
-    courses_scope = Course.where('title ILIKE ?', "%#{term}%").order(created_at: :desc)
-
-    if user.is_admin?
-      courses_scope
-    else
-      {
-        current_user_enrolled_courses: user.courses.merge(courses_scope),
-        current_user_available_courses: courses_scope.published
-      }
-    end
-  end
-
   def set_lesson_attributes(_course_module, lesson)
     lesson.video_streaming_source = 'vimeo'
   end
-
+  
   def assign_user_to_courses(user, courses_with_deadline, assigned_by)
     return unless user.is_learner?
 
