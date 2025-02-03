@@ -8,10 +8,6 @@ class SearchesController < ApplicationController
     @courses = service.filter(current_user, @search_context)
   end
 
-  def test
-
-  end
-
   private
 
   def search_params
