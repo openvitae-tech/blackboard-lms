@@ -1,4 +1,9 @@
-<div class="flex items-center justify-center min-h-screen bg-white md:bg-primary-light-50" data-controller="onboarding">
+<div class="flex md:items-center md:justify-center min-h-screen bg-white md:bg-primary-light-50 w-full" data-controller="onboarding">
+
+  <div class="w-full h-1 fixed top-0 left-0">
+    <div class="h-full bg-light-green transition-all duration-300" data-onboarding-target="progressBar" style="width: 0%;"></div>
+  </div>
+
   <div data-onboarding-target="welcomeScreen">
     <%= render "onboarding/welcomes/welcome" %>
   </div>
@@ -19,7 +24,24 @@
     <%= render "onboarding/welcomes/step4" %>
   </div>
   
-  <div data-onboarding-target="form1Screen" class="hidden">
-    <%= render "onboarding/welcomes/form1" %>
+  <div data-onboarding-target="basicDetailsScreen1" class="hidden">
+    <%= render "onboarding/welcomes/basic_details_screen1" %>
   </div>
+
+  <div data-onboarding-target="basicDetailsScreen2" class="hidden">
+    <%= render "onboarding/welcomes/basic_details_screen2" %>
+  </div>
+
+  <div data-onboarding-target="preferedLanguageScreen" class="hidden">
+    <%= render "onboarding/welcomes/prefered-language-screen" %>
+  </div>
+
+  <div data-onboarding-target="setPasswordScreen" class="hidden">
+    <%= render "onboarding/welcomes/set_password_screen" %>
+  </div>
+
+  <div data-onboarding-target="allSetScreen" class="hidden">
+    <%= render "onboarding/welcomes/all_set_screen" %>
+  </div>
+  
 </div>

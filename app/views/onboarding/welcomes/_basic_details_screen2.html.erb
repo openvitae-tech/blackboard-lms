@@ -1,0 +1,33 @@
+<div class="flex flex-col bg-white w-screen md:w-[456px] h-[740px] md:h-[656px] py-6 mt-2 md:mt-0 relative">
+   <div class="flex flex-col gap-6 items-center px-4 md:px-8 mt-12 md:mt-0">
+      <h2 class="heading pt-2 md:pt-6 text-base md:text-xl font-semibold">
+         Add your Date of Birth and Gender (optional)
+      </h2>
+      
+      <%= form_with url: "", class: "h-full w-full flex flex-col gap-6 md:gap-4" do |form| %>
+        <div class="flex flex-col gap-3 relative" data-controller="date-picker">
+          <%= form.label :dob, "Date of Birth" %>            
+          <div class="flex flex-row items-center w-full relative">
+            <input type="date" id="datePicker" class="invisible w-[2px] p-0" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker"/>            
+              <%= form.text_field :duration, disabled: true, id: 'duration', class: "border border-line-colour rounded focus:ring-0 py-3 px-4 w-full", data: { date_picker_target: "dateSelector" } %>
+            <div class="absolute right-2 flex items-center pl-2">
+              <span class="icon-small icon icon-calendar bg-letter-color cursor-pointer" data-action="click->date-picker#openDatePicker"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <%= form.label :gender, "Gender" %>
+          <%= form.select :gender, ["Male", "Female", "Other"], {}, class: "rounded border border-line-colour py-3 px-4" %>
+        </div>
+
+        <div class="absolute bottom-6 left-0 w-full flex gap-4 justify-center px-4">
+        <%= render "shared/components/button_secondary_outline_medium", label: 'Back',  
+              data: { action: "click->onboarding#back", current: 'basicDetailsScreen2', previous: 'basicDetailsScreen1' } %>
+        <%= form.submit "Next", class: "btn-primary", 
+              data: { action: "click->onboarding#next", current: "basicDetailsScreen2", next: "preferedLanguageScreen" } %>
+        </div>
+      <% end %>
+
+   </div>
+</div>

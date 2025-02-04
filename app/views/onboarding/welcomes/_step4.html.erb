@@ -11,7 +11,7 @@
     <p class="text-sm text-center px-20 pb-4">Compete with fellow learners on the leaderboard</p>
     <div class="flex flex-col absolute bottom-6 items-center">     
       <%= render "shared/components/button_primary_light_small", label: 'Skip Intro',  
-                 data: { action: 'click->onboarding#skip', current: 'step4Screen', skip: 'form1Screen' } %>
+                 data: { action: 'click->onboarding#skip', current: 'step4Screen', skip: 'basicDetailsScreen1' } %>
       <div class="flex space-x-2 mt-4">
         <div class="w-2 h-2 bg-line-colour-light rounded-full"></div>
         <div class="w-2 h-2 bg-line-colour-light rounded-full"></div>
@@ -30,6 +30,6 @@
     class="absolute inset-y-0 right-0 w-1/4 cursor-pointer" 
     data-action="click->onboarding#next" 
     data-current="step4Screen"
-    data-next="form1Screen">
+    data-next="basicDetailsScreen1">
   </div>
 </div>
