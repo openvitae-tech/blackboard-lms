@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   resources :events, only: :index
   resources :tags
+  resource :alert_modal, only: :show, controller: 'commons/alert_modal'
 
   resources :courses do
     member do
