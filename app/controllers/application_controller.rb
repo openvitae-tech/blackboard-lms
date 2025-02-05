@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   include HandleNotFound
+  include UserOnboarding
 
   before_action :authenticate_user!
   before_action :set_back_link
