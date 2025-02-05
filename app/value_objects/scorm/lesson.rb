@@ -14,11 +14,11 @@ class Scorm::Lesson < ScormPackage::BaseLesson
 
   def videos
     lesson.local_contents.map do |local_content|
-      {
-        id: local_content.id,
-        language: local_content.lang,
-        video_url: get_video_url(local_content.id)
-      }
+      Scorm::Video.new(
+        local_content.id,
+        local_content.lang,
+        get_video_url(local_content.id)
+      )
     end
   end
 
