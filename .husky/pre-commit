@@ -2,4 +2,3 @@ echo "Running precommit hooks"
 bundle exec rubocop -A
 
 . "$(dirname "$0")/helpers/no_console.sh"
-no_console
