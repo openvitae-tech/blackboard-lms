@@ -1,0 +1,37 @@
+<div class="flex flex-col bg-white w-screen md:w-[456px] h-[740px] md:h-[656px] py-6 mt-2 md:mt-0  relative">
+  <div class="flex flex-col gap-4 px-4 md:px-8 mt-12 md:mt-2 pb-4 md:pb-6">     
+    <h2 class="heading page-heading-medium">Welcome, David</h2>
+    <p class="heading text-sm">Let’s set up your account.</p>
+  </div>
+
+  <h2 class="heading px-4 md:px-8 pt-2 md:pt-6 pb-6 text-base md:text-xl font-semibold">
+    Confirm your details to get started
+  </h2>
+
+  <div class="flex flex-col gap-6 items-center px-4 md:px-8">
+    <%= form_with url: "", 
+                  class: "h-full w-full flex flex-col gap-6 md:gap-4"  do |form| %>
+      
+      <div class="flex flex-col gap-3">
+        <%= form.label :name, "Name" %>
+        <%= form.text_field :name, class: "rounded border border-line-colour py-3 px-4", required: true %>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <%= form.label :email, "Email" %>
+        <%= form.email_field :email, class: "rounded bg-line-colour-light border border-line-colour py-3 px-4 text-secondary", 
+                             disabled: true, value: "David@gmail.com" %>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <%= form.label :mobile, "Mobile number" %>
+        <%= form.telephone_field :mobile, class: "rounded border border-line-colour py-3 px-4", required: true %>
+      </div>
+
+      <div class="absolute bottom-6 left-0 w-full flex justify-center px-4">
+        <%= form.submit "Confirm", class: "btn-primary", 
+              data: { action: "click->onboarding#next", current: "basicDetailsScreen1", next: "basicDetailsScreen2" } %>
+      </div>
+    <% end %>
+  </div>
+</div>
