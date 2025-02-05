@@ -1,0 +1,37 @@
+<div class="flex flex-col bg-white w-screen md:w-[456px] h-[740px] md:h-[656px] py-6 mt-2 md:mt-0 relative">
+  <div class="flex flex-col gap-6 px-4 md:px-8 mt-12 md:mt-0">
+    <h2 class="heading pt-2 text-base md:text-xl font-semibold">
+      Select your preferred regional language
+    </h2>
+
+    <%= form_with url: "", class: "h-full w-full flex flex-col gap-6 md:gap-4" do |form| %>
+      <div class="grid grid-cols-2 gap-x-6 gap-y-8 w-full">
+        <% ["English", "Hindi", "Marathi", "Bengali", "Assamese", "Kannada", "Telugu", "Tamil", "Malayalam", "Others"].each do |language| %>
+          <label class="flex items-center justify-between border border-line-colour rounded-lg p-3 w-full cursor-pointer">
+            <%= form.radio_button :preferred_language, language, class: "hidden peer", 
+                  data: { action: "change->onboarding#showOtherLanguageField",target: "onboarding.radioButtons" } %>
+            <span class="text-sm font-medium peer-checked:text-primary peer-checked:font-bold">
+              <%= language %>
+            </span>
+            
+            <span class="w-4 h-4 border border-line-colour rounded-full flex items-center justify-center  peer-checked:border-primary">
+              <span class="w-2 h-2 bg-primary radio-dot rounded-full hidden" data-onboarding-target="radioDots"></span>
+            </span>
+          </label>
+        <% end %>
+      </div>
+
+      <div class="w-full hidden" data-onboarding-target="otherLanguageField">
+        <%= form.text_field :other_language, placeholder: "Enter your preferred language", 
+              class: "border border-line-colour rounded-lg p-3 w-full" %>
+      </div>
+
+      <div class="absolute bottom-6 left-0 w-full flex gap-4 justify-center px-4">
+          <%= render "shared/components/button_secondary_outline_medium", label: 'Back',  
+                data: { action: 'click->onboarding#back', current: 'preferedLanguageScreen', previous: 'basicDetailsScreen2' } %>
+          <%= form.submit "Next", class: "btn-primary", 
+            data: { action: "click->onboarding#next", current: "preferedLanguageScreen", next: "setPasswordScreen" } %>
+      </div>
+    <% end %>
+  </div>
+</div>
