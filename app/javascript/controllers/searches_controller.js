@@ -54,7 +54,8 @@ export default class extends Controller {
       body: JSON.stringify(formValues),
     })
       .then((response) => response.text())
-      .then((html) => Turbo.renderStreamMessage(html));
+      .then((html) => Turbo.renderStreamMessage(html))
+      .catch((error) => console.error(error));
 
     // this.closeFilter();
   }

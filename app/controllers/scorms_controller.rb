@@ -25,7 +25,7 @@ class ScormsController < ApplicationController
   private
 
   def set_course
-    @course = Course.includes(load_eager_data).find(params[:course_id])
+    @course = Course.find(params[:course_id])
   end
 
   def set_learning_partners
@@ -34,12 +34,5 @@ class ScormsController < ApplicationController
 
   def scorm_params
     params.require(:scorm).permit(:learning_partner_id)
-  end
-
-  def load_eager_data
-    case action_name
-    when 'download'
-       [course_modules: { lessons: :local_contents }]
-    end
   end
 end

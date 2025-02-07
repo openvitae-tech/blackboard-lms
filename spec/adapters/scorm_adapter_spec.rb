@@ -7,8 +7,7 @@ RSpec.describe ScormAdapter do
 
   describe '#process' do
     it 'returns course object' do
-      scorm_adaptor_service = described_class.new(course)
-
+      scorm_adaptor_service = described_class.new(course).process
       expect(course.id).to eq(scorm_adaptor_service.course.id)
     end
   end

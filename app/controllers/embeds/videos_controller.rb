@@ -13,7 +13,7 @@ module Embeds
         @video_iframe = @local_content.present? ? get_video_iframe(@local_content) : nil
         render layout: false, content_type: 'text/html'
       else
-        render plain: 'Invalid token'
+        render plain: t("embeds.invalid_token")
       end
     end
 

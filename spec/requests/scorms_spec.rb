@@ -54,7 +54,6 @@ RSpec.describe 'Request specs for Scorms', type: :request do
     end
 
     it 'does not allow generating scorm package by non-admin' do
-      Bullet.enable = false
       user.update(role: :learner)
       get download_course_scorm_path(course, learning_partner: learning_partner.id)
 

@@ -9,7 +9,8 @@ export default class extends Controller {
     const checkNotificationInterval = setInterval(() => {
       fetch(this.path, { headers: this.headers })
         .then((response) => response.text())
-        .then((html) => Turbo.renderStreamMessage(html));
+        .then((html) => Turbo.renderStreamMessage(html))
+        .catch((error) => console.error(error));
     }, interval * 1000);
 
     // clear the interval after 24 hours

@@ -16,7 +16,7 @@ class Scorm::Course < ScormPackage::BaseCourse
   end
 
   def course_modules
-    course.course_modules.map do |course_module|
+    course.course_modules.includes(lessons: :local_contents).map do |course_module|
       Scorm::CourseModule.new(course_module)
     end
   end
