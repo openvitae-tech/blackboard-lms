@@ -7,7 +7,12 @@
         <% end %>
       <% end %>
       <% if policy(@course).destroy? %>
-        <%= link_to course_path(@course), data: { turbo_method: "delete" } do %>
+        <%= link_to alert_modal_path(
+              title: t("course.alert.title"),
+              description: t("course.alert.description", label: @course.title),
+              action_path: course_path(@course),
+              method: :delete,
+            ), data: { turbo_frame: "modal" } do %>
           <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
         <% end %>
       <% end %>
