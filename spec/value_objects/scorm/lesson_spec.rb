@@ -22,7 +22,7 @@ RSpec.describe Scorm::Lesson do
 
     it 'returns the local contents of the lesson' do
       lesson.reload
-      lesson_ids = scorm_lesson.videos.pluck(:id)
+      lesson_ids = scorm_lesson.videos.map(&:id)
       expect(lesson.local_contents.pluck(:id).sort).to eq(lesson_ids.sort)
     end
   end
