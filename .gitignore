@@ -55,3 +55,4 @@ docker-build
 *.md
 package.json
 .DS_STORE
+.vscode
