@@ -139,6 +139,7 @@ Rails.application.routes.draw do
   end
 
   resources :supports, only: :index
+  resources :all_users, only: [:index]
 
   get 'error_401' => 'pages#unauthorized'
   get 'dashboard' => 'dashboards#index'
