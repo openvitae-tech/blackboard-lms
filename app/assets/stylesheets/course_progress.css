@@ -11,10 +11,15 @@ details[open] .icon-up{
     display: inline;
 }
 .indicator{
-    width: 32px;
+    width: 16px;
     height: 3px;
     background-color:#D9D9D9;
 
+}
+@media (min-width: 768px) {
+    .indicator {
+        width: 32px;
+    }
 }
 .indicator.active {
     background-color:#005f6b;

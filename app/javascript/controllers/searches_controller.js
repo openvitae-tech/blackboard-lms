@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import Logger from "utils/logger";
 export default class extends Controller {
   static targets = ["form", "filters", "checkbox", "searchInput"];
   headers = {
@@ -55,7 +56,7 @@ export default class extends Controller {
     })
       .then((response) => response.text())
       .then((html) => Turbo.renderStreamMessage(html))
-      .catch((error) => console.error(error));
+      .catch((error) => Logger.error(error));
 
     // this.closeFilter();
   }

@@ -56,4 +56,9 @@ module LessonsHelper
   def lesson_in_course_module?(course_module, lesson_id)
     course_module.lessons.pluck(:id).include?(lesson_id.to_i)
   end
+
+  def next_button_link(course, course_module, lesson)
+    next_path = next_lesson_path(course, course_module, lesson)
+    next_path.present? ? next_path : course_path(course)
+  end
 end
