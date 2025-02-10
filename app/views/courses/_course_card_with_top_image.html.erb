@@ -1,4 +1,4 @@
-<div class="inline-block rounded box-shadow-medium border border-line-colour-light relative">
+<div class="inline-block rounded box-shadow-medium border border-line-colour-light relative h-[256px]">
   <div class="w-full rounded md:w-[310px] relative">
     <div class="absolute top-0 right-0 z-10 flex flex-wrap justify-start gap-2 heading">
       <% course.tags.each do |tag| %>
@@ -14,7 +14,7 @@
     
     <div class="flex flex-col justify-between">
       <div class="p-4">
-        <p class="mb-2 overflow-hidden text-ellipsis heading heading-semibold text-primary max-h-[68px]">
+        <p class="mb-2 overflow-hidden text-ellipsis heading heading-semibold text-primary h-12 line-clamp-2">
           <%= course.title %>
         </p>
         <div class="flex justify-between mt-2">
