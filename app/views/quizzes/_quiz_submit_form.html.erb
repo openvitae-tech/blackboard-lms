@@ -3,7 +3,7 @@
   <div class="flex items-center justify-between border-b border-line-colour-light p-6">
     <span class="heading heading-semibold">Quiz</span>
   </div>
-  <div class="flex justify-center gap-4 pt-6">
+  <div class="flex flex-wrap justify-center gap-4 pt-6 px-2">
     <% current_index = position_of_quiz(course_module, quiz) - 1 %>
     <% course_module.quizzes_count.times do |index| %>
       <div class="indicator <%= 'active' if index == current_index %>"></div>
