@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import Logger from "utils/logger";
 
 export default class extends Controller {
   static targets = ["source", "copyButton"];
@@ -15,7 +16,7 @@ export default class extends Controller {
         button.textContent = originalText;
       }, 2000);
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
     }
   }
 }
