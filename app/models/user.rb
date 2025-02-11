@@ -3,6 +3,7 @@
 class User < ApplicationRecord
 
   include UserState
+  include CustomValidations
 
 
   EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -36,6 +37,11 @@ class User < ApplicationRecord
                          message: '%<value>s is not a valid user role' }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true
   validates :state, inclusion: { in: USER_STATES, message: '%<value>s is not a valid user state' }
+  validate :dob_within_valid_age_range
+  validates :gender,
+            inclusion: { in: GENDERS,
+                         message: '%<value>s is not a valid gender' }, allow_blank: true
+
 
   has_secure_password :otp, validations: false
 

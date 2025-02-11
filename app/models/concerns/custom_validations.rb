@@ -29,6 +29,21 @@ module CustomValidations
 
       errors.add(field_name.to_sym, 'is too big')
     end
+
+    def dob_within_valid_age_range
+      return if dob.blank?
+
+      min_age = 18
+      max_age = 80
+      today = Date.today
+      age = today.year - dob.year
+
+      if age < min_age
+        errors.add(:dob, "Age must be at least #{min_age} years old.")
+      elsif age > max_age
+        errors.add(:dob, "Age must be at most #{max_age} years old.")
+      end
+    end
   end
 
   class_methods do

@@ -10,7 +10,7 @@
         <span class="ml-2 text-ellipsis text-sm font-medium"><%= member.name %></span>
       </div>
     <% end %>
-    <% if member.verified? %>
+    <% if member.verified? || member.active? %>
       <div class="mt-1 flex flex-1 justify-end pe-6 md:mt-0">
         <%= render 'shared/components/label_small_success', label: 'Verified', icon_name: 'icon-complete' %>
       </div>
