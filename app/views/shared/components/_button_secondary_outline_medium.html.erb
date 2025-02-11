@@ -1,6 +1,3 @@
-<button class="flex flex-row justify-center gap-2 rounded border px-4 text-center py-3.5 min-w-40 border-line-colour text-secondary heading" 
-        <% if data.present? %>
-          <%= data.map { |key, value| "data-#{key}=\"#{value}\"" }.join(" ").html_safe %>
-        <% end %> >
+<button class="flex flex-row justify-center gap-2 rounded border px-4 text-center py-3.5 min-w-40 border-line-colour text-secondary heading">
   <span class="text-secondary text-sm"><%= label %></span>
 </button>

@@ -4,7 +4,16 @@ Rails.application.routes.draw do
   match 'search', to: 'searches#index', via: %i[get post]
 
   namespace :onboarding do
-    resource :welcome, only: [:new]
+    resource :welcome, only: %i[new update] do
+      collection do
+        get :set_name_and_phone
+        get :set_dob_and_gender
+        get :set_language
+        get :set_password
+        put :update_password
+        get :all_set
+      end
+    end
   end
 
   resources :teams, except: %i[index destroy]
