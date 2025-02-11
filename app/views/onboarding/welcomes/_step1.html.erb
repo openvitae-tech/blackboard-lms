@@ -1,7 +1,7 @@
 <div class="flex flex-col bg-white w-full md:w-[456px] h-[740px] md:h-[656px] py-6 relative">
   <div class="flex flex-col gap-4 px-8 pb-5 border-b border-line-colour-light mt-14 md:mt-2">
-    <h2 class="heading page-heading-medium">Hello, David</h2>
-    <p class="heading text-sm">Your journey to mastering hospitality starts here.</p>
+    <h2 class="heading page-heading-medium">Hello, <%= current_user.display_name %></h2>
+    <p class="heading text-sm"><%= t('onboarding.learner.your_journey') %></p>
   </div>
   <div class="flex flex-col items-center pt-6">
     <h2 class="text-lg font-semibold pb-4">Courses</h2>   
@@ -9,11 +9,11 @@
       <%= image_tag "welcome_course_illustration.gif", class:"w-[328px] h-[328px]", alt: "Course Step" %>
     </div>
     <p class="text-sm text-center px-14 pb-4">
-      Learn at your pace with curated courses designed for hospitality professionals.
+      <%= t('onboarding.learner.step1.desc') %>
     </p>   
     <div class="flex flex-col absolute bottom-6 items-center">
-      <%= render "shared/components/button_primary_light_small", label: 'Skip Intro',  
-                data: { action: 'click->onboarding#skip', current: 'step1Screen', skip: 'basicDetailsScreen1' } %>
+      <%= render "onboarding/welcomes/skip_intro" %>
+
       <div class="flex space-x-2 mt-4">
         <div class="w-2 h-2 bg-primary rounded-full"></div>
         <div class="w-2 h-2 bg-line-colour-light rounded-full"></div>
@@ -30,7 +30,7 @@
   </div>
   <div 
     class="absolute inset-y-0 right-0 w-1/4 cursor-pointer" 
-    data-action="click->onboarding#next" 
+    data-action="click->onboarding#nextScreen"
     data-current="step1Screen"
     data-next="step2Screen">
   </div>

@@ -6,7 +6,12 @@ Rails.application.routes.draw do
   namespace :onboarding do
     resource :welcome, only: %i[new update] do
       collection do
-        post :set_password
+        get :set_name_and_phone
+        get :set_dob_and_gender
+        get :set_language
+        get :set_password
+        put :update_password
+        get :all_set
       end
     end
   end
