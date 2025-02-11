@@ -3,8 +3,8 @@
     <div class="flex justify-between gap-4">
       <% if policy(@course).destroy? %>
         <%= link_to alert_modal_path(
-              title: t("course.alert.title"),
-              description: t("course.alert.description", label: @course.title),
+              title: t("alert.title", resource_name: "course"),
+              description: t("alert.description", label: @course.title, resource_name: "course"),
               action_path: course_path(@course),
               method: :delete,
             ), data: { turbo_frame: "modal" } do %>

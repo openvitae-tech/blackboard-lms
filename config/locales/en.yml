@@ -40,11 +40,11 @@ en:
   button:
     edit: "Edit %{resource_name}"
     delete: "Delete"
+  alert:
+    title: "Delete %{resource_name}?"
+    description: "You are permanently deleting the <b>%{label}</b> %{resource_name}. This action can't be undone."
   course:
     label: "My Courses"
-    alert:
-      title: "Delete course?"
-      description: "You are permanently deleting the <b>%{label}</b> course. This action can't be undone."
     enroll:
       label: 'Self assign'
     created: 'Course was successfully created.'

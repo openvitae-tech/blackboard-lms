@@ -2,7 +2,12 @@
   <div class="flex justify-end">
     <div class="flex justify-between gap-4">
       <% if policy(@course_module).destroy? %>
-        <%= link_to course_module_path(@course, @course_module), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete this module along with its lessons?" } do %>
+        <%= link_to alert_modal_path(
+              title: t("alert.title", resource_name: "course module"),
+              description: t("alert.description", label: @course_module.title, resource_name: "course module"),
+              action_path: course_module_path(@course, @course_module),
+              method: :delete,
+            ), data: { turbo_frame: "modal" } do %>
           <%= render 'shared/components/outline_button_danger', label: t("button.delete") %>
         <% end %>
       <% end %>
