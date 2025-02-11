@@ -25,6 +25,6 @@ class Scorm::Lesson < ScormPackage::BaseLesson
   private
 
   def get_video_url(id)
-    "#{Rails.application.credentials.dig(:host, :url)}/embeds/videos/#{id}"
+    "#{Rails.application.credentials.dig(:app, :base_url)}/embeds/videos/#{id}"
   end
 end
