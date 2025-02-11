@@ -1,0 +1,40 @@
+<%= turbo_frame_tag "onboarding-frame", class: "flex flex-col bg-white w-screen md:w-[456px] h-[740px] md:h-[656px] py-6 mt-2 md:mt-0  relative" do %>
+  <div class="flex flex-col gap-4 px-4 md:px-8 mt-12 md:mt-2 pb-4 md:pb-6">
+    <h2 class="heading page-heading-medium">Welcome <%= current_user.display_name %></h2>
+    <p class="heading text-sm"><%= t('onboarding.setup_account') %></p>
+  </div>
+
+  <h2 class="heading px-4 md:px-8 pt-2 md:pt-6 pb-6 text-base md:text-xl font-semibold">
+    <%= t('onboarding.confirm_details') %>
+  </h2>
+
+  <div class="flex flex-col gap-6 items-center px-4 md:px-8">
+    <%= form_with model: current_user, url: onboarding_welcome_path, method: :put,
+                  class: "h-full w-full flex flex-col gap-6 md:gap-4", local: false do |form| %>
+
+      <%= render "shared/components/form_errors", resource: current_user %>
+
+      <%= hidden_field_tag :step, "set_name_and_phone" %>
+
+      <div class="flex flex-col gap-3">
+        <%= form.label :name, "Name" %>
+        <%= form.text_field :name, class: "rounded border border-line-colour py-3 px-4", required: true %>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <%= form.label :email, "Email" %>
+        <%= form.email_field :email, class: "rounded bg-line-colour-light border border-line-colour py-3 px-4 text-secondary",
+                             disabled: true %>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <%= form.label :phone, "Mobile number" %>
+        <%= form.text_field :phone, class: "rounded border border-line-colour py-3 px-4", required: true %>
+      </div>
+
+      <div class="absolute bottom-6 left-0 w-full flex justify-center px-4">
+        <%= form.submit "Confirm", class: "btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -25,6 +25,8 @@ class User < ApplicationRecord
     end
   end
 
+  GENDERS = %w[Male Female Other]
+
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
