@@ -14,7 +14,7 @@
       <div class="flex justify-end w-full gap-4 text-right">
         <% if policy(@course_module).edit? %>
           <%= link_to edit_course_module_path(@course, @course_module) do %>
-            <%= render 'shared/components/icon_button_primary', label: t("button.edit", resource_name: "module"), icon_name: 'icon-edit' %>
+            <%= render 'shared/components/icon_button_primary', label: t("button.edit"), icon_name: 'icon-edit' %>
           <% end %>
         <% end %>
       </div>

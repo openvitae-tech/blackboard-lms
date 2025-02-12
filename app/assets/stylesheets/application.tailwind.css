@@ -18,8 +18,8 @@ body{
 
 @layer components {
   .input-text {
-    @apply w-full px-3 py-2 rounded border border-line-colour h-[48px] md:h-[52px] focus:border-primary focus:ring-0;
-  }
+    @apply w-full px-3 py-2 rounded border border-line-colour min-h-[48px] md:min-h-[52px] max-h-[200px] overflow-auto focus:border-primary focus:ring-0;
+  }  
 
   .input-textarea {
     @apply w-full px-3 py-2 rounded border border-line-colour focus:border-primary focus:ring-0;

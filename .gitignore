@@ -56,3 +56,4 @@ docker-build
 package.json
 .vscode
 .DS_STORE
+.vscode

@@ -22,7 +22,7 @@ AllCops:
     - "app/**/*"
 
 Style/Documentation:
-  Enabled: true
+  Enabled: false
 Metrics/BlockLength:
   Enabled: false
 Metrics/ClassLength:
