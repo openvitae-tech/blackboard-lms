@@ -42,6 +42,13 @@ en:
     delete: "Delete"
     ok: "Ok"
     cancel: "Cancel"
+    download: "Download"
+    generate: "Generate"
+  embeds:
+    invalid_token: "Invalid token"
+  scorm:
+    download_modal:
+      title: "Download SCORM package"
   course:
     label: "My Courses"
     alert:

@@ -1,0 +1,12 @@
+<%= render "shared/components/modal", modalTitle: t("scorm.download_modal.title") do %>
+  <%= form_with(url: course_scorm_path(@course), method: :post, model: @scorm, class: "flex flex-col gap-6 p-6") do |form| %>
+    <div class="flex flex-col gap-4">
+      <%= form.label :learning_partner, class: "block text-sm" %>
+      <%= form.select :learning_partner_id, options_for_select(@learning_partners.map { |lp| [lp.name, lp.id] }) %>
+    </div>
+    <div class="flex flex-col gap-6 justify-between">
+      <%= form.button t("button.generate"), class: "bg-primary text-white p-4 rounded" %>
+      <%= form.button t("button.cancel"), data: { action: "click->modals#closeModal" } %>
+    </div>
+  <% end %>
+<% end %>

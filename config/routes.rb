@@ -48,6 +48,12 @@ Rails.application.routes.draw do
       put :unpublish
     end
 
+    resource :scorm, only: %i[new create] do
+      collection do
+        get :download
+      end
+    end
+
     resources :course_modules, as: 'modules', except: :index do
       member do
         put :moveup
@@ -89,6 +95,10 @@ Rails.application.routes.draw do
     collection do
       post :otp
     end
+  end
+
+  namespace :embeds do
+    resources :videos, only: :show
   end
 
   devise_for :users, controllers: {
