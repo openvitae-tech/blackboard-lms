@@ -38,11 +38,11 @@ en:
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
   button:
-    edit: "Edit %{resource_name}"
+    edit: "Edit"
     delete: "Delete"
-    download: "Download"
     ok: "Ok"
     cancel: "Cancel"
+    download: "Download"
     generate: "Generate"
   embeds:
     invalid_token: "Invalid token"
