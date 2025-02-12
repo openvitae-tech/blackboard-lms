@@ -40,6 +40,15 @@ en:
   button:
     edit: "Edit %{resource_name}"
     delete: "Delete"
+    download: "Download"
+    ok: "Ok"
+    cancel: "Cancel"
+    generate: "Generate"
+  embeds:
+    invalid_token: "Invalid token"
+  scorm:
+    download_modal:
+      title: "Download SCORM package"
   course:
     label: "My Courses"
     alert:
@@ -134,7 +143,3 @@ en:
       completed:
         title: "Lesson completed"
         message: "Congratulations you have completed the lesson %{title}"
-  button:
-    delete: "Delete"
-    ok: "Ok"
-    cancel: "Cancel"

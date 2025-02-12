@@ -1,0 +1,9 @@
+<% if @video_iframe.present? %>
+  <% if Rails.env.production? %>
+    <%= @video_iframe.gsub('<iframe', '<iframe data-lessons-target="videoPlayer"').html_safe %>
+  <% else %>
+    <%= video_tag rails_blob_url(@local_content.video), controls: true %>
+  <% end %>
+<% else %>
+  <div><%= t("local_content.video_not_available") %></div>
+<% end %>

@@ -54,4 +54,5 @@ docker-build
 .idea/*
 *.md
 package.json
+.vscode
 .DS_STORE

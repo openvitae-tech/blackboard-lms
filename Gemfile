@@ -118,3 +118,7 @@ gem 'sidekiq-failures'
 gem 'sidekiq-unique-jobs'
 
 gem 'rails-html-sanitizer', '1.6.1'
+
+gem 'rack-cors', require: 'rack/cors'
+
+gem 'scorm-package', '~> 0.1.1', require: 'scorm_package'
