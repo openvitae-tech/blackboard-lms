@@ -86,7 +86,7 @@
         </div>
         <div class="border border-line-colour-light px-1 py-4 text-center">
           <p>Time spent</p>
-          <p><%= @metrics.time_spent_total %></p>
+          <p><%= duration_in_words(@metrics.time_spent_total) %></p>
         </div>
       </div>
     </div>
