@@ -6,16 +6,14 @@
           <%= render 'shared/components/icon_button_primary', icon_name: 'icon-download' %>
         <% end %>
       <% end %>
-      <% if policy(@course).destroy? %>
-        <%= link_to alert_modal_path(
-              title: t("course.alert.title"),
-              description: t("course.alert.description", label: @course.title),
-              action_path: course_path(@course),
-              method: :delete,
-            ), data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
-        <% end %>
-      <% end %>
+      <%= link_to alert_modal_path(
+            title: t("course.alert.title"),
+            description: t("course.alert.description", label: @course.title),
+            action_path: course_path(@course),
+            method: :delete,
+          ), class: @course.has_enrollments? ? 'disabled' : '', data: { turbo_frame: "modal" } do %>
+          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: @course.has_enrollments? ? "Do you want to delete" : "" %>
+      <% end %> 
       <% if policy(@course).publish? %>
         <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
           <%= render 'shared/components/outline_button_secondary', label: 'Publish' %>

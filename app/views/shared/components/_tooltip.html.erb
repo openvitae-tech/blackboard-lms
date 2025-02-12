@@ -1,0 +1,6 @@
+<div class="relative group inline-block">
+  <%= yield %>
+  <span class="absolute left-1/2 bottom-[-35px] transform -translate-x-1/2 whitespace-nowrap px-2 py-1 text-xs text-white bg-secondary rounded opacity-0 group-hover:opacity-100 transition before:absolute before:content-[''] before:w-0 before:h-0 before:border-l-4 before:border-r-4 before:border-b-4 before:border-l-transparent before:border-r-transparent before:border-b-secondary before:left-1/2 before:bottom-full before:-translate-x-1/2">
+    <%= tooltip_text %>
+  </span>
+</div>

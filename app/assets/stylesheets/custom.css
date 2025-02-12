@@ -1,7 +1,18 @@
 .disabled {
-  pointer-events: none !important;
   cursor: not-allowed !important;
+  &:active {
+	  pointer-events: none;
+    }
+}
+
+.disabled button, 
+#submit-button.disabled,
+button.disabled {
   opacity: 0.3 !important;
+}
+
+a.disabled{
+  color: #808285;
 }
 
 .side-bar {
