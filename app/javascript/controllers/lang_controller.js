@@ -15,8 +15,10 @@ export default class extends Controller {
             // show the text field if the checked item is 'Other'
             if (target.checked && (target.dataset.index === "radio-other")) {
                 this.otherLanguageFieldTarget.classList.remove("hidden");
+                this.otherLanguageInputTarget.required = true;
             } else {
                 this.otherLanguageFieldTarget.classList.add("hidden");
+                this.otherLanguageInputTarget.required = false;
             }
         });
 
