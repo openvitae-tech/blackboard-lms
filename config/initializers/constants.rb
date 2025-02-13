@@ -17,4 +17,4 @@ STATIC_ASSETS = {
   logo: 'logo_place_holder.png'
 }.freeze
 
-FLAG_LOGIN_WITH_OTP = false
+FLAG_LOGIN_WITH_OTP = true
