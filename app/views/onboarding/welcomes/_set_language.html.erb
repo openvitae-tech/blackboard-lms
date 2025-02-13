@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "onboarding-frame", class: "flex flex-col bg-white w-screen md:w-[456px] h-[740px] md:h-[656px] py-6 mt-2 md:mt-0 relative" do %>
   <%= render "onboarding/welcomes/progress", progress: 75 %>
-  <div class="mt-12 flex flex-col gap-6 px-4 md:mt-0 md:px-8" data-controller="foo">
+  <div class="mt-12 flex flex-col gap-6 px-4 md:mt-0 md:px-8" data-controller="lang">
     <h2 class="pt-2 text-base font-semibold heading md:text-xl">
       Select your preferred regional language
     </h2>
@@ -16,9 +16,9 @@
         <%= render "onboarding/welcomes/radio_button", f: form, language: 'Other', index: 'other' %>
       </div>
 
-      <div class="hidden w-full" data-foo-target="otherLanguageField">
+      <div class="hidden w-full" data-lang-target="otherLanguageField">
         <%= text_field_tag :other_language, other_local_language(current_user.preferred_local_language), placeholder: "Enter your preferred language",
-                           class: "border border-line-colour rounded-lg p-3 w-full", data: { foo_target: "otherLanguageInput", action: "change->foo#useOtherLanguage" } %>
+                           class: "border border-line-colour rounded-lg p-3 w-full", data: { lang_target: "otherLanguageInput", action: "change->lang#useOtherLanguage" } %>
       </div>
 
       <div class="absolute bottom-6 left-0 flex w-full justify-center gap-4 px-4">
