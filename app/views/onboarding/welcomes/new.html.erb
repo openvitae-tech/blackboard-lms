@@ -1,4 +1,6 @@
 <%= turbo_frame_tag "onboarding-frame" do %>
+  <%= render "onboarding/welcomes/progress", progress: 5 %>
+
   <div data-onboarding-target="welcomeScreen">
     <%= render "onboarding/welcomes/welcome" %>
   </div>

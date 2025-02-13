@@ -1,4 +1,5 @@
 <%= turbo_frame_tag "onboarding-frame", class: "flex flex-col bg-white w-screen md:w-[456px] h-[740px] md:h-[656px] py-6 mt-2 md:mt-0  relative" do %>
+  <%= render "onboarding/welcomes/progress", progress: 25 %>
   <div class="flex flex-col gap-4 px-4 md:px-8 mt-12 md:mt-2 pb-4 md:pb-6">
     <h2 class="heading page-heading-medium">Welcome <%= current_user.display_name %></h2>
     <p class="heading text-sm"><%= t('onboarding.setup_account') %></p>
