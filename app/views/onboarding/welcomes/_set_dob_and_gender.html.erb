@@ -7,6 +7,7 @@
 
     <%= form_with model: current_user, url: onboarding_welcome_path, method: :put, local: false, class: "h-full w-full flex flex-col gap-6 md:gap-4" do |form| %>
       <%= hidden_field_tag :step, "set_dob_and_gender" %>
+      <%= render "shared/components/form_errors", resource: current_user %>
 
       <div class="relative flex flex-col gap-3" data-controller="date-picker">
         <%= form.label :dob, "Date of Birth" %>

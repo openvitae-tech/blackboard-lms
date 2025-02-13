@@ -24,3 +24,7 @@ input:-webkit-autofill {
 .black-shield {
   z-index: 51;
 }
+
+.field_with_errors {
+  width: 100%;
+}
