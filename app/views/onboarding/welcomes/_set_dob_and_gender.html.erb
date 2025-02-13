@@ -26,8 +26,8 @@
       </div>
 
       <div class="absolute bottom-6 left-0 flex w-full justify-center gap-4 px-4">
-        <%= link_to set_name_and_phone_onboarding_welcome_path do %>
-          <%= render "shared/components/button_secondary_outline_medium", label: 'Back' %>
+        <%= link_to set_name_and_phone_onboarding_welcome_path, class:"btn-secondary-outline" do %>
+          Back   
         <% end %>
         <%= form.submit "Next", class: "btn-primary" %>
       </div>
