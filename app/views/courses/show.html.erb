@@ -12,8 +12,8 @@
             action_path: course_path(@course),
             method: :delete,
           ), class: @course.has_enrollments? ? 'disabled' : '', data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: @course.has_enrollments? ? "Do you want to delete" : "" %>
-      <% end %> 
+        <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: @course.has_enrollments? ? t("course.cannot_delete") : "" %>
+      <% end %>
       <% if policy(@course).publish? %>
         <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
           <%= render 'shared/components/outline_button_secondary', label: 'Publish' %>

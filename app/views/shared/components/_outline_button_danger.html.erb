@@ -1,5 +1,5 @@
-<% if tooltip_text.present? %>
-  <%= render 'shared/components/tooltip', tooltip_text: tooltip_text do %>
+<% if local_assigns[:tooltip_text].present? %>
+  <%= render 'shared/components/tooltip', tooltip_text: local_assigns[:tooltip_text] do %>
     <button class="flex items-center gap-2 rounded px-4 py-2 border border-danger heading">
       <span class="text-sm text-danger"><%= label %></span>
     </button>

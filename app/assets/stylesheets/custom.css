@@ -1,17 +1,17 @@
 .disabled {
   cursor: not-allowed !important;
   &:active {
-	  pointer-events: none;
-    }
+    pointer-events: none;
+  }
 }
 
-.disabled button, 
+.disabled button,
 #submit-button.disabled,
 button.disabled {
   opacity: 0.3 !important;
 }
 
-a.disabled{
+a.disabled {
   color: #808285;
 }
 

@@ -59,6 +59,7 @@ en:
     created: 'Course was successfully created.'
     updated: 'Course was successfully updated.'
     deleted: 'Course was deleted successfully.'
+    cannot_delete: "The course cannot be deleted because it has enrolled users."
     enrolled: 'Successfully enrolled for the course'
     duplicate_enrolled: 'Already enrolled in this course'
     unenrolled: 'Successfully dropped out of the course'
