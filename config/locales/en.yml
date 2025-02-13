@@ -44,6 +44,9 @@ en:
     cancel: "Cancel"
     download: "Download"
     generate: "Generate"
+  alert:
+    title: "Delete %{resource_name}?"
+    description: "You are permanently deleting the <b>%{label}</b> %{resource_name}. This action can't be undone."
   embeds:
     invalid_token: "Invalid token"
   scorm:
@@ -51,9 +54,6 @@ en:
       title: "Download SCORM package"
   course:
     label: "My Courses"
-    alert:
-      title: "Delete course?"
-      description: "You are permanently deleting the <b>%{label}</b> course. This action can't be undone."
     enroll:
       label: 'Self assign'
     created: 'Course was successfully created.'
