@@ -45,7 +45,7 @@ class Onboarding::WelcomesController < ApplicationController
     @after_onboarding_path =
       if current_user.is_admin?
         after_sign_in_path_for(current_user)
-      elsif current_user.is_manager?
+      elsif current_user.is_manager? || current_user.is_owner?
         team_path(current_user.team)
       else
         # learners

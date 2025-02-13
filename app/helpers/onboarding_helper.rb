@@ -16,4 +16,14 @@ module OnboardingHelper
     return true if listed_language_selected
     (language == "Other") && !local_languages.include?(current_user.preferred_local_language)
   end
+
+  def set_language_value(language)
+    if language == "Other"
+      other_lang = other_local_language(current_user.preferred_local_language)
+      other_lang.blank? ? "Other" : other_lang
+    else
+      language
+    end
+  end
+
 end
