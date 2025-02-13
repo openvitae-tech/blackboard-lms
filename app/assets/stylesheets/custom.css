@@ -26,7 +26,8 @@ input:-webkit-autofill {
 }
 
 .field_with_errors {
- width: 100%;
+  width: 100%;
+  display: contents;
 }
 
 .field_with_errors input,

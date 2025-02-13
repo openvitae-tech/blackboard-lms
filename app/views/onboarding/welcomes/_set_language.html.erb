@@ -1,14 +1,14 @@
 <%= turbo_frame_tag "onboarding-frame", class: "flex flex-col bg-white w-screen md:w-[456px] h-[740px] md:h-[656px] py-6 mt-2 md:mt-0 relative" do %>
   <%= render "onboarding/welcomes/progress", progress: 75 %>
-  <div class="flex flex-col gap-6 px-4 md:px-8 mt-12 md:mt-0" data-controller="foo">
-    <h2 class="heading pt-2 text-base md:text-xl font-semibold">
+  <div class="mt-12 flex flex-col gap-6 px-4 md:mt-0 md:px-8" data-controller="foo">
+    <h2 class="pt-2 text-base font-semibold heading md:text-xl">
       Select your preferred regional language
     </h2>
 
     <%= form_with model: current_user, url: onboarding_welcome_path, local: false, class: "h-full w-full flex flex-col gap-6 md:gap-4" do |form| %>
       <%= hidden_field_tag :step, "set_language" %>
 
-      <div class="grid grid-cols-2 gap-x-6 gap-y-8 w-full">
+      <div class="grid w-full grid-cols-2 gap-x-6 gap-y-8">
         <% local_languages.each_with_index do |language, index| %>
           <%= render "onboarding/welcomes/radio_button", f: form, language: language, index: index %>
         <% end %>
@@ -16,15 +16,13 @@
         <%= render "onboarding/welcomes/radio_button", f: form, language: 'Other', index: 'other' %>
       </div>
 
-      <div class="w-full hidden" data-foo-target="otherLanguageField">
+      <div class="hidden w-full" data-foo-target="otherLanguageField">
         <%= text_field_tag :other_language, other_local_language(current_user.preferred_local_language), placeholder: "Enter your preferred language",
-              class: "border border-line-colour rounded-lg p-3 w-full", data: { foo_target: "otherLanguageInput", action: "change->foo#useOtherLanguage" } %>
+                           class: "border border-line-colour rounded-lg p-3 w-full", data: { foo_target: "otherLanguageInput", action: "change->foo#useOtherLanguage" } %>
       </div>
 
-      <div class="absolute bottom-6 left-0 w-full flex gap-4 justify-center px-4">
-        <%= link_to set_dob_and_gender_onboarding_welcome_path, class:"btn-secondary-outline" do %>
-          Back
-        <% end %>
+      <div class="absolute bottom-6 left-0 flex w-full justify-center gap-4 px-4">
+        <%= link_to "Back", set_dob_and_gender_onboarding_welcome_path, class: "btn-secondary-outline" %>
         <%= form.submit "Next", class: "btn-primary" %>
       </div>
     <% end %>
