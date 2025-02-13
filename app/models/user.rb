@@ -96,7 +96,7 @@ class User < ApplicationRecord
   end
 
   def send_reset_password_instructions
-    unless active?
+    if deactivated? || unverified?
       errors.add(:base, inactive_message)
       return false
     end
