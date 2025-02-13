@@ -9,4 +9,11 @@ module OnboardingHelper
   def other_local_language(selected_language)
     local_languages.include?(selected_language) ? "" : selected_language
   end
+
+  def show_selected_option(language)
+    return false unless current_user.preferred_local_language.present?
+    listed_language_selected = current_user.preferred_local_language == language
+    return true if listed_language_selected
+    (language == "Other") && !local_languages.include?(current_user.preferred_local_language)
+  end
 end

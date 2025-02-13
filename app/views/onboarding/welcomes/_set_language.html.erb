@@ -16,9 +16,11 @@
         <%= render "onboarding/welcomes/radio_button", f: form, language: 'Other', index: 'other' %>
       </div>
 
-      <div class="hidden w-full" data-lang-target="otherLanguageField">
-        <%= text_field_tag :other_language, other_local_language(current_user.preferred_local_language), placeholder: "Enter your preferred language",
-                           class: "border border-line-colour rounded-lg p-3 w-full", data: { lang_target: "otherLanguageInput", action: "change->lang#useOtherLanguage" } %>
+      <div class="<%= 'hidden' unless other_local_language(current_user.preferred_local_language).present? %> w-full" data-lang-target="otherLanguageField">
+        <%= text_field_tag :other_language, other_local_language(current_user.preferred_local_language),
+                           placeholder: "Enter your preferred language",
+                           class: "border border-line-colour rounded-lg p-3 w-full",
+                           data: { lang_target: "otherLanguageInput", action: "change->lang#useOtherLanguage" } %>
       </div>
 
       <div class="absolute bottom-6 left-0 flex w-full justify-center gap-4 px-4">

@@ -113,7 +113,7 @@ en:
     banner_file_tip: 'File size should be less than 1MB and use a good resolution image of minimum 1120 X 194px'
   user_settings:
     updated: 'User settings updated successfully'
-    password_updated: 'Password updated successfully, please login with your new password.'
+    password_updated: 'Password updated successfully, you can login with your new password.'
     password_change: 'After changing the password you will be logged out and need to login with new password.'
   settings:
     label: "Settings"
