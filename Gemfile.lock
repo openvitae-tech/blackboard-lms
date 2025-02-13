@@ -502,6 +502,7 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   rubocop-rspec
+  rubyzip
   scorm-package (~> 0.1.1)
   selenium-webdriver
   sentry-rails

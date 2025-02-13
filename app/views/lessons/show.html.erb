@@ -9,7 +9,12 @@
           <% end %>
         <% end %>
         <% if policy(@lesson).destroy? %>
-          <%= link_to course_module_lesson_path(@course, @course_module, @lesson), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" } do %>
+          <%= link_to alert_modal_path(
+              title: t("alert.title", resource_name: "lesson"),
+              description: t("alert.description", label: @lesson.title, resource_name: "lesson"),
+              action_path: course_module_lesson_path(@course, @course_module, @lesson),
+              method: :delete,
+            ), data: { turbo_frame: "modal" } do %>
             <%= render "shared/components/button_default_small", label: 'Delete', icon_name: 'icon-trash' %>
           <% end %>
         <% end %>
