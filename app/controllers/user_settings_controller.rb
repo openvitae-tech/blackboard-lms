@@ -29,7 +29,8 @@ class UserSettingsController < ApplicationController
     authorize :user_settings
 
     if @user.update(password_params)
-      redirect_to new_user_session_path, notice: I18n.t('user_settings.password_updated')
+      sign_in(current_user, bypass: true)
+      redirect_to user_settings_path, notice: I18n.t('user_settings.password_updated')
     else
       render 'change_password'
     end

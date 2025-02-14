@@ -249,6 +249,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_13_131528) do
     t.string "otp"
     t.datetime "otp_generated_at"
     t.string "state", default: "unverified"
+    t.string "preferred_local_language"
+    t.string "gender"
+    t.date "dob"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["learning_partner_id"], name: "index_users_on_learning_partner_id"
