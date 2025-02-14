@@ -1,0 +1,37 @@
+<%= turbo_frame_tag "onboarding-frame" do %>
+  <div data-onboarding-target="welcomeScreen">
+    <%= render "onboarding/welcomes/welcome" %>
+  </div>
+
+  <div data-onboarding-target="step1Screen" class="hidden">
+    <% if current_user.is_learner? %>
+      <%= render "onboarding/welcomes/step1" %>
+    <% else %>
+      <%= render "onboarding/welcomes/manager_step1" %>
+    <% end %>
+  </div>
+
+  <div data-onboarding-target="step2Screen" class="hidden">
+    <% if current_user.is_learner? %>
+      <%= render "onboarding/welcomes/step2" %>
+    <% else %>
+      <%= render "onboarding/welcomes/manager_step2" %>
+    <% end %>
+  </div>
+
+  <div data-onboarding-target="step3Screen" class="hidden">
+    <% if current_user.is_learner? %>
+      <%= render "onboarding/welcomes/step3" %>
+    <% else %>
+      <%= render "onboarding/welcomes/manager_step3" %>
+    <% end %>
+  </div>
+
+  <div data-onboarding-target="step4Screen" class="hidden">
+    <% if current_user.is_learner? %>
+      <%= render "onboarding/welcomes/step4" %>
+    <% else %>
+      <%= render "onboarding/welcomes/manager_step4" %>
+    <% end %>
+  </div>
+<% end %>

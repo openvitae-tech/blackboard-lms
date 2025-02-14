@@ -25,10 +25,6 @@ module UsersHelper
     user.confirmed_at ? 'Verified' : 'Invited'
   end
 
-  def user_verified?(user)
-    user.confirmed_at.present?
-  end
-
   def user_name(user)
     ActiveSupport::Deprecation.warn(
       "UsersHelper#user_name is deprecated. " \

@@ -1,0 +1,7 @@
+<%= turbo_frame_tag "onboarding-frame", class: "flex flex-col bg-white w-screen md:w-[456px] h-[740px] md:h-[656px] py-6 mt-2 md:mt-0 relative" do %>
+  <%= render "onboarding/welcomes/progress", progress: 100 %>
+  <div class="flex flex-col gap-4 items-center justify-center w-screen md:w-[456px] h-[740px] md:h-[656px] py-6">
+    <%= image_tag "all_set_illustration.gif", alt: "All set" %>
+    <%= link_to "Home", @after_onboarding_path, class: "btn-primary", data: { turbo: false } %>
+  </div>
+<% end %>
