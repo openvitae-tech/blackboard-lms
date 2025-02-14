@@ -26,7 +26,7 @@ class User < ApplicationRecord
     end
   end
 
-  GENDERS = %w[Male Female Other]
+  GENDERS = ['Male', 'Female', 'Other', 'Prefer not to say']
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
