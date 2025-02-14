@@ -4,7 +4,7 @@ class Onboarding::WelcomesController < ApplicationController
   layout 'onboarding'
 
   skip_before_action :proceed_to_onboarding_steps
-  before_action :skip_onboarding_for_active_users
+  before_action :skip_onboarding_for_active_users, except: :all_set
 
   def new
   end

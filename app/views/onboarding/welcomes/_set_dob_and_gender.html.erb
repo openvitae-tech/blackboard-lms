@@ -22,7 +22,7 @@
 
       <div class="flex flex-col gap-3">
         <%= form.label :gender, "Gender" %>
-        <%= form.select :gender, User::GENDERS, {}, class: "rounded border border-line-colour py-3 px-4" %>
+        <%= form.select :gender, User::GENDERS, { prompt: 'Please choose a gender' }, required: true, class: "rounded border border-line-colour py-3 px-4" %>
       </div>
 
       <div class="absolute bottom-6 left-0 flex w-full justify-center gap-4 px-4">
