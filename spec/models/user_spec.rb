@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:user_one) { create :user, :learner }
+
   describe '#set_temp_password' do
     subject { described_class.new }
 
@@ -10,6 +12,62 @@ RSpec.describe User, type: :model do
       allow(subject).to receive(:password_verifier).and_return('test_verifier')
       subject.set_temp_password
       expect(subject.temp_password_enc).not_to be_empty
+    end
+  end
+
+  describe '#phone' do
+    before do
+      user_one.update!(phone: '1234567890')
+    end
+
+    it 'is unique' do
+      user_two = build :user, :learner, phone: '1234567890'
+      expect(user_two).not_to be_valid
+      expect(user_two.errors.full_messages.to_sentence).to include(t('already_taken',
+                                                                     field: 'Phone'))
+    end
+  end
+
+  describe '#otp' do
+    before do
+      otp = '123456'
+      @encrypted_otp = Rails.application.message_verifier(password_verifier).generate(otp)
+      user_one.update!(otp: @encrypted_otp, otp_generated_at: DateTime.now)
+    end
+
+    it 'is unique' do
+      user_two = build :user, :learner, otp: @encrypted_otp
+      expect(user_two).not_to be_valid
+      expect(user_two.errors.full_messages.to_sentence).to include(t('already_taken',
+                                                                     field: 'Otp'))
+    end
+
+    it 'does not regenerate OTP if otp requested within 5 minutes' do
+      encrypted_old_otp = user_one.otp
+
+      user_one.set_otp!
+      expect(encrypted_old_otp).to eq(user_one.otp)
+    end
+
+    it 'when OTP is expired' do
+      user_one.update!(otp_generated_at: 10.minutes.ago)
+      encrypted_old_otp = user_one.otp
+
+      user_one.set_otp!
+      expect(encrypted_old_otp).not_to eq(user_one.otp)
+    end
+
+    it 'ables to generate otp' do
+      user_two = create :user, :learner
+      user_two.set_otp!
+
+      expect(user_two.otp).not_to be_nil
+    end
+
+    it 'able to clear otp' do
+      user_one.clear_otp!
+
+      expect(user_one.otp).to be_nil
     end
   end
 
@@ -45,5 +103,11 @@ RSpec.describe User, type: :model do
       course.enroll!(user)
       expect(user.get_enrollment_for(course)).not_to be_nil
     end
+  end
+
+  private
+
+  def password_verifier
+    Rails.application.credentials[:password_verifier]
   end
 end

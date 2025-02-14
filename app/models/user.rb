@@ -75,7 +75,6 @@ class User < ApplicationRecord
   def set_otp!
     return if otp_generated_at.present? && otp_generated_at >= 5.minutes.ago && otp.present?
 
-
     otp = Rails.env.production? ? rand(1000..9999) : TEST_OTP
     encrypt = Rails.application.message_verifier(password_verifier).generate(otp)
     update!(otp: encrypt, otp_generated_at: DateTime.now)
