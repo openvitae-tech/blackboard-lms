@@ -28,7 +28,7 @@ module Embeds
     end
 
     def set_scorm
-      @scorm = Scorm.find_by(token: request.headers['X-Scorm-Token'])
+      @scorm = Scorm.find_by(token: params[:token])
     end
   end
 end

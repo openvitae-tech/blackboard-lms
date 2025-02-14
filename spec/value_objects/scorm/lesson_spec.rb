@@ -3,11 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Scorm::Lesson do
-  let(:course) { create :course }
-  let(:course_module) { create :course_module, course: }
-  let(:lesson) { create :lesson, course_module: }
-
-  let(:scorm_lesson) { described_class.new(lesson) }
+  let(:learning_partner) { create(:learning_partner) }
+  let(:scorm) { create(:scorm, learning_partner:) }
+  let(:lesson) { create(:lesson, course_module: create(:course_module, course: create(:course))) }
+  let(:scorm_lesson) { described_class.new(lesson, scorm.token) }
 
   describe '#title' do
     it 'returns the title of the lesson' do

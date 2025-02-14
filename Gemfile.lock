@@ -378,7 +378,7 @@ GEM
     ruby-vips (2.2.1)
       ffi (~> 1.12)
     rubyzip (2.3.2)
-    scorm-package (0.1.1)
+    scorm-package (0.1.2)
     securerandom (0.3.1)
     selenium-webdriver (4.18.1)
       base64 (~> 0.2)
@@ -503,7 +503,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubyzip
-  scorm-package (~> 0.1.1)
+  scorm-package (~> 0.1.2)
   selenium-webdriver
   sentry-rails
   sentry-ruby
