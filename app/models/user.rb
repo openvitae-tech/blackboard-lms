@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+
+  include UserState
+  include CustomValidations
+
+
   EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   TEST_OTP = 1212
 
@@ -13,8 +18,6 @@ class User < ApplicationRecord
 
   USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
 
-  USER_STATES = %w[unverified active in-active]
-
   # add dynamic methods using meta programming for checking the current role
   # of a user.
   USER_ROLES.each do |role|
@@ -22,6 +25,8 @@ class User < ApplicationRecord
       self.role == role
     end
   end
+
+  GENDERS = %w[Male Female Other]
 
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
@@ -32,6 +37,11 @@ class User < ApplicationRecord
                          message: '%<value>s is not a valid user role' }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true
   validates :state, inclusion: { in: USER_STATES, message: '%<value>s is not a valid user state' }
+  validate :dob_within_valid_age_range
+  validates :gender,
+            inclusion: { in: GENDERS,
+                         message: '%<value>s is not a valid gender' }, allow_blank: true
+
 
   has_secure_password :otp, validations: false
 
@@ -69,10 +79,6 @@ class User < ApplicationRecord
     enrollments.find_by(course: course)
   end
 
-  def verified?
-    confirmed_at.present?
-  end
-
   def set_otp!
     return unless otp_generated_at.blank? || otp_generated_at < 5.minutes.ago
 
@@ -90,7 +96,7 @@ class User < ApplicationRecord
   end
 
   def send_reset_password_instructions
-    unless active?
+    if deactivated? || unverified?
       errors.add(:base, inactive_message)
       return false
     end
@@ -99,7 +105,7 @@ class User < ApplicationRecord
   end
 
   def active_for_authentication?
-    super && self.active?
+    super && (self.active? || self.verified?)
   end
 
   def inactive_message
@@ -114,28 +120,9 @@ class User < ApplicationRecord
     @score ||= enrollments.map(&:score).reduce(:+) || 0
   end
 
-  def verified_learner?
-    verified? && is_learner?
+  def active_learner?
+    active? && is_learner?
   end
-
-  def active?
-    state == 'active'
-  end
-
-  def deactivated?
-    state == 'in-active'
-  end
-
-  def deactivate
-    self.state = 'in-active'
-    self.save
-  end
-
-  def activate
-    self.state = 'active'
-    self.save
-  end
-
   def is_manager_of?(other_user)
     return false unless other_user.learning_partner_id == self.learning_partner_id
     is_owner? || other_user.team.ancestors.include?(self.team)
