@@ -33,7 +33,7 @@ module CustomValidations
     def dob_within_valid_age_range
       return if dob.blank?
 
-      min_age = 18
+      min_age = 16
       max_age = 80
       today = Date.today
       age = today.year - dob.year

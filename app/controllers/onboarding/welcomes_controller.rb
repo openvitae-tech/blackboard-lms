@@ -4,6 +4,7 @@ class Onboarding::WelcomesController < ApplicationController
   layout 'onboarding'
 
   skip_before_action :proceed_to_onboarding_steps
+  before_action :skip_onboarding_for_active_users
 
   def new
   end
@@ -54,6 +55,10 @@ class Onboarding::WelcomesController < ApplicationController
   end
 
   private
+
+  def skip_onboarding_for_active_users
+    redirect_to after_sign_in_path_for(current_user) if current_user.active?
+  end
 
   def user_params
     params.require(:user).permit(:name, :phone, :dob, :gender, :preferred_local_language)
