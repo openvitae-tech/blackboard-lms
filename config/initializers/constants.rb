@@ -20,4 +20,3 @@ STATIC_ASSETS = {
 # Feature flags user feature_enabled? helper to
 # check if feature is enabled or not in views or controller
 FLAG_LOGIN_WITH_OTP = false
-FLAG_USER_ONBOARDING = false
