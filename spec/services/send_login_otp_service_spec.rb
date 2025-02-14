@@ -7,12 +7,12 @@ RSpec.describe SendLoginOtpService do
 
   describe '#send_sms' do
     before do
-      stub_msg91_sms_api(user.phone, user.otp)
+      user.set_otp!
+      stub_fast2sms_api(user.phone, password_decrypter(user.otp))
     end
 
     it 'should_send_otp_as_sms' do
-      response = send_login_otp_service(user.phone, user).process
-
+      response = send_login_otp_service(user.phone, password_decrypter(user.otp)).process
       expect(response).to be_a(Net::HTTPOK)
     end
   end
@@ -21,5 +21,11 @@ RSpec.describe SendLoginOtpService do
 
   def send_login_otp_service(mobile_number, user)
     SendLoginOtpService.new(mobile_number, user)
+  end
+
+  def password_decrypter(otp)
+    password_verifier = Rails.application.message_verifier(Rails.application.credentials[:password_verifier])
+
+    password_verifier.verify(otp)
   end
 end
