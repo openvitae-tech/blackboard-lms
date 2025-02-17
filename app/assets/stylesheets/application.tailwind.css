@@ -100,6 +100,17 @@ body{
     }
   }
 
+  .btn-secondary-outline{
+    @apply rounded border px-4 text-center py-3.5 min-w-40 gap-2 border-line-colour text-secondary heading;
+  }
+
+  .btn-simple {
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour text-secondary font-poppins;
+    &:hover {
+      @apply cursor-pointer opacity-95;
+    }
+  }
+
   .btn-secondary {
     @apply rounded border px-4 text-center py-3.5 min-w-40 border-secondary bg-secondary text-white;
     &:hover {

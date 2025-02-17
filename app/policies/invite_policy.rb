@@ -31,6 +31,6 @@ class InvitePolicy < ApplicationPolicy
 
   def resend?
     # record is the other user whom the current user want to send a re-invite
-    user.verified? && !record.verified? && (user.is_admin? || user.is_manager? || user.is_owner?)
+    user.active? && record.unverified? && (user.is_admin? || user.is_manager? || user.is_owner?)
   end
 end

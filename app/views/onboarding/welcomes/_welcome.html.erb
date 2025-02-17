@@ -1,0 +1,19 @@
+<div class="flex w-full flex-col bg-white py-6 h-[656px] md:w-[456px]">
+  <div class="mt-14 flex flex-col gap-4 rounded border-b px-8 pb-5 border-line-colour-light md:mt-2">
+    <h2 class="heading page-heading-medium">Hello, <%= current_user.display_name %></h2>
+    <% if current_user.is_learner? %>
+      <p class="text-sm heading"><%= t("onboarding.learner.your_journey") %></p>
+    <% else %>
+      <p class="hidden text-sm heading"><%= t("onboarding.manager.your_journey") %></p>
+    <% end %>
+  </div>
+  <div class="flex flex-col items-center pt-14">
+    <div class="flex justify-center px-8">
+      <%= image_tag "welcome_illustration.gif", class: "w-[328px] h-[328px]", alt: "welcome" %>
+    </div>
+    <p class="px-7 pt-8 pb-6 text-center text-sm"><%= t("onboarding.explore_courses") %></p>
+    <%= link_to 'javascript:void(0);', class: "inline-block", data: { action: 'click->onboarding#nextScreen', current: 'welcomeScreen', next: 'step1Screen' } do %>
+      <%= render "shared/components/button_primary_medium", label: 'Get Started!' %>
+    <% end %>
+  </div>
+</div>

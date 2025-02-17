@@ -26,7 +26,7 @@
             </div>
           <% end %>
           <div class="mt-6">
-            <% if FLAG_LOGIN_WITH_OTP %>
+            <% if feature_enabled?(FLAG_LOGIN_WITH_OTP) %>
               <%= link_to "Login with OTP", new_login_path, class: "link-text" %><br/>
             <% end %>
             <%= link_to "Login with email and password", new_session_path(resource_name), class: "link-text" %><br/>

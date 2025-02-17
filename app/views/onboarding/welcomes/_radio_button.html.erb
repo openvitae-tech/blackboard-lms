@@ -1,0 +1,10 @@
+<div class="z-20 flex w-full cursor-pointer items-center justify-between rounded-lg border p-3 border-line-colour" data-action="click->lang#languageSelected" data-index="radio-<%= index %>">
+  <%= f.radio_button :preferred_local_language, set_language_value(language), class: "hidden peer", data: { lang_target: "langOption", index: "radio-#{index}" } %>
+  <span class="text-sm font-medium peer-checked:font-bold peer-checked:text-primary">
+    <%= language %>
+  </span>
+
+  <span class="flex h-4 w-4 items-center justify-center rounded-full border border-line-colour peer-checked:border-primary">
+    <span class="<%= 'hidden' unless show_selected_option(language) %> h-2 w-2 rounded-full bg-primary radio-dot" data-lang-target="radioDots" data-index="radio-<%= index %>"></span>
+  </span>
+</div>

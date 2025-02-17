@@ -35,7 +35,7 @@ module.exports = {
       "slate-grey-light":"#D1D3D4",
       "purple":"#3456DA",
       "black": "#000000",
-      "light-green":"#A9D500",
+      "theme-highlight":"#A9D500",
       "light-green-50":"#F9FFE0",
 
     },

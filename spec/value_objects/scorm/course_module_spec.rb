@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Scorm::CourseModule do
+  let(:learning_partner) { create :learning_partner }
+  let(:scorm) { create :scorm, learning_partner: }
   let(:course) { create :course }
   let(:course_module) { create :course_module, course: }
-
-  let(:scorm_course_module) { described_class.new(course_module) }
+  let(:scorm_course_module) { described_class.new(course_module, scorm.token) }
 
   describe '#title' do
     it 'returns the title of the course module' do

@@ -44,6 +44,9 @@ en:
     cancel: "Cancel"
     download: "Download"
     generate: "Generate"
+  alert:
+    title: "Delete %{resource_name}?"
+    description: "You are permanently deleting the <b>%{label}</b> %{resource_name}. This action can't be undone."
   embeds:
     invalid_token: "Invalid token"
   scorm:
@@ -51,9 +54,6 @@ en:
       title: "Download SCORM package"
   course:
     label: "My Courses"
-    alert:
-      title: "Delete course?"
-      description: "You are permanently deleting the <b>%{label}</b> course. This action can't be undone."
     enroll:
       label: 'Self assign'
     created: 'Course was successfully created.'
@@ -113,7 +113,7 @@ en:
     banner_file_tip: 'File size should be less than 1MB and use a good resolution image of minimum 1120 X 194px'
   user_settings:
     updated: 'User settings updated successfully'
-    password_updated: 'Password updated successfully, please login with your new password.'
+    password_updated: 'Password updated successfully, you can login with your new password.'
     password_change: 'After changing the password you will be logged out and need to login with new password.'
   settings:
     label: "Settings"
@@ -143,3 +143,15 @@ en:
       completed:
         title: "Lesson completed"
         message: "Congratulations you have completed the lesson %{title}"
+  onboarding:
+    learner:
+      your_journey: 'Your journey to mastering hospitality starts here.'
+      step1:
+        desc: 'Explore tailored courses, connect with experts and achieve your career goals.'
+    manager:
+      your_journey: 'Your journey to shaping hospitality excellence starts here.'
+      step1:
+        desc: 'Track learner progress, identify skill gaps, and enhance performance with detailed analytics.'
+    explore_courses: 'Explore tailored courses, connect with experts and achieve your career goals.'
+    setup_account: "Let's set up your account."
+    confirm_details: 'Confirm your details to get started'
