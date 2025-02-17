@@ -275,7 +275,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.8)
+    rack (3.1.10)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
     rack-session (2.0.0)
@@ -378,7 +378,7 @@ GEM
     ruby-vips (2.2.1)
       ffi (~> 1.12)
     rubyzip (2.3.2)
-    scorm-package (0.1.1)
+    scorm-package (0.1.2)
     securerandom (0.3.1)
     selenium-webdriver (4.18.1)
       base64 (~> 0.2)
@@ -493,6 +493,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (>= 6.4.3)
   pundit (~> 2.3)
+  rack (>= 3.1.10)
   rack-cors
   rails (= 7.2.2.1)
   rails-controller-testing
@@ -503,7 +504,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubyzip
-  scorm-package (~> 0.1.1)
+  scorm-package (~> 0.1.2)
   selenium-webdriver
   sentry-rails
   sentry-ruby

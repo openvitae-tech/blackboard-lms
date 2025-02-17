@@ -6,7 +6,7 @@ RSpec.describe Scorm::Video do
   let(:lesson) { create :lesson }
   let(:local_content) { lesson.local_contents.first }
 
-  let(:scorm_video) { described_class.new(local_content.id, local_content.lang, 'www.example.com') }
+  let(:scorm_video) { described_class.new(local_content.id, local_content.lang, 'www.example.com?token=123456') }
 
   describe '#id' do
     it 'returns the id of the local content' do
@@ -22,7 +22,7 @@ RSpec.describe Scorm::Video do
 
   describe '#video_url' do
     it 'returns the video_url of the local content' do
-      expect(scorm_video.video_url).to eq('www.example.com')
+      expect(scorm_video.video_url).to eq('www.example.com?token=123456')
     end
   end
 end
