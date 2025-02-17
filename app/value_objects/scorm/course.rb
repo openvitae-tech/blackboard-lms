@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 class Scorm::Course < ScormPackage::BaseCourse
-  attr_reader :course
+  attr_reader :course, :scorm_token
 
-  def initialize(course)
+  def initialize(course, scorm_token)
     super()
     @course = course
+    @scorm_token = scorm_token
   end
 
   def title
@@ -17,7 +18,7 @@ class Scorm::Course < ScormPackage::BaseCourse
 
   def course_modules
     course.course_modules.includes(lessons: :local_contents).map do |course_module|
-      Scorm::CourseModule.new(course_module)
+      Scorm::CourseModule.new(course_module, scorm_token)
     end
   end
 end
