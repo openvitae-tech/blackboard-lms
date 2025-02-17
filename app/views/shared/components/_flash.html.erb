@@ -1,18 +1,17 @@
 <div id="flash">
-
-    <% flash.each do |flash_type, message| %>
-      <% if flash_type == :success %>
-        <div class="fixed top-20 right-4 left-4 md:top-24 md:right-20 md:left-auto">
-          <%= render "shared/components/notice_success", message: message %>
-        </div>
-      <% elsif flash_type == :error %>
-        <div class="fixed top-20 right-4 left-4 md:top-24 md:right-20 md:left-auto">
-          <%= render "shared/components/notice_error", message: message %>
-        </div>
-      <% else %>
-        <div class="fixed top-20 right-4 left-4 md:top-24 md:right-20 md:left-auto">
-          <%= render "shared/components/notice", message: message %>
-        </div>
-      <% end %>
+  <% flash.each do |flash_type, message| %>
+    <% if flash_type == "success" %>
+      <div class="fixed top-20 right-4 left-4 md:top-24 md:right-20 md:left-auto">
+        <%= render "shared/components/notice_success", message: message %>
+      </div>
+    <% elsif flash_type == "error" %>
+      <div class="fixed top-20 right-4 left-4 md:top-24 md:right-20 md:left-auto">
+        <%= render "shared/components/notice_error", message: message %>
+      </div>
+    <% else %>
+      <div class="fixed top-20 right-4 left-4 md:top-24 md:right-20 md:left-auto">
+        <%= render "shared/components/notice", message: message %>
+      </div>
     <% end %>
+  <% end %>
 </div>
