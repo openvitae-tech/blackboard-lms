@@ -10,8 +10,8 @@
               description: t("alert.description", label: @course.title, resource_name: "course"),
               action_path: course_path(@course),
               method: :delete,
-            ), class: policy(@course).destroy? ? '' : "disabled" , data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: policy(@course).destroy? ?  "" : delete_tooltip_message(@course) %>
+            ), class: !policy(@course).destroy? && "disabled" , data: { turbo_frame: "modal" } do %>
+          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: !policy(@course).destroy? && delete_tooltip_message(@course) %>
         <% end %>
       <% end %>
       <% if policy(@course).publish? %>
