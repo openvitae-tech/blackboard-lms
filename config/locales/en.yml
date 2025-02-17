@@ -59,7 +59,8 @@ en:
     created: 'Course was successfully created.'
     updated: 'Course was successfully updated.'
     deleted: 'Course was deleted successfully.'
-    cannot_delete: "The course cannot be deleted because it has enrolled users."
+    cannot_delete_published: "Published course cannot be deleted."
+    cannot_delete_enrolled: "The course cannot be deleted because it has enrolled users."
     enrolled: 'Successfully enrolled for the course'
     duplicate_enrolled: 'Already enrolled in this course'
     unenrolled: 'Successfully dropped out of the course'
@@ -144,10 +145,6 @@ en:
       completed:
         title: "Lesson completed"
         message: "Congratulations you have completed the lesson %{title}"
-  button:
-    delete: "Delete"
-    ok: "Ok"
-    cancel: "Cancel"
   onboarding:
     learner:
       your_journey: 'Your journey to mastering hospitality starts here.'

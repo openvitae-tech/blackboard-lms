@@ -172,4 +172,12 @@ module CoursesHelper
   def score_earned_for_module(enrollment, course_module)
     enrollment.present? ? enrollment.score_earned_for(course_module) : 0
   end
+
+  def delete_tooltip_message(course)
+    if course.published?
+      t("course.cannot_delete_published")
+    else
+      t("course.cannot_delete_enrolled")
+    end
+  end
 end
