@@ -27,7 +27,7 @@
       <div class="flex gap-4 items-center">
         <% if policy(@course).edit? %>
           <%= link_to course_module_path(course, course_module) do %>
-            <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
+            <%= render 'shared/components/outline_icon_button_small', label: 'View module', icon_name: 'icon-eye' %>
           <% end %>
         <% end %>
         <div class="flex flex-col items-center">
