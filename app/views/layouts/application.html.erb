@@ -23,7 +23,16 @@
     <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>
   <body>
-    <%= yield %>
+    <div class="flex">
+      <%= render 'shared/components/sidebar' %>
+      <div class="flex flex-col w-full min-h-screen">
+        <%= render 'shared/components/navbar' %>
+        <main class="flex flex-col p-6 md:p-8 max-w-[1360px] min-w-screen w-full mx-auto">
+          <%= yield %>
+        </main>
+      </div>
+    </div>
+
     <%= render "shared/components/flash" %>
     <%= turbo_frame_tag "modal" %>
   </body>

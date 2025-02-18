@@ -1,38 +1,36 @@
-<%= render "shared/components/layout" do %>
-  <h1 class="mb-4 heading page-heading-medium">User settings</h1>
-  <% if current_user.not_admin? %>
-    <div class="relative h-[250px] w-full">
-        <div class="relative h-full">
-          <%= image_tag team_banner(current_user.team, 'desktop'), class: 'h-full w-full object-cover' %>
-        </div>
-        <div class="absolute inset-0 bg-black opacity-60"></div>
-        <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
-          <%= link_to "javascript:void(0);", class: "inline-block w-20 h-20" do %>
-            <%= render 'shared/components/profile_pic', letter: letter_avatar(@user) %>
-          <% end %>
-          <%= render 'user_settings/profile_header', user: @user %>
-        </div>
-          
-      </div>
-    <% end %>
-
-
-
-  <%= render 'user_settings/page_header', user: @user %>
-  <div class="rounded box-shadow-medium">
-    <%= render 'user_settings/page_body', user: @user  %>
-    <div class="p-6 border-b border-line-colour-light">
-      <h1 class="text-semibold">Change password</h1>
-      <div class="mt-2">
-        <%= link_to 'Change your password', change_password_user_settings_path, data: { turbo_frame: 'modal' }, class: 'link-text text-purple hover:font-medium' %>
-      </div>
+<h1 class="mb-4 heading page-heading-medium">User settings</h1>
+<% if current_user.not_admin? %>
+  <div class="relative h-[250px] w-full">
+    <div class="relative h-full">
+      <%= image_tag team_banner(current_user.team, 'desktop'), class: 'h-full w-full object-cover' %>
     </div>
-
-    <div class="p-6">
-      <%= button_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete } do %>
-        <span class="text-danger hover:font-medium">Logout</span>
+    <div class="absolute inset-0 bg-black opacity-60"></div>
+    <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
+      <%= link_to "javascript:void(0);", class: "inline-block w-20 h-20" do %>
+        <%= render 'shared/components/profile_pic', letter: letter_avatar(@user) %>
       <% end %>
+      <%= render 'user_settings/profile_header', user: @user %>
     </div>
 
   </div>
 <% end %>
+
+
+
+<%= render 'user_settings/page_header', user: @user %>
+<div class="rounded box-shadow-medium">
+  <%= render 'user_settings/page_body', user: @user %>
+  <div class="p-6 border-b border-line-colour-light">
+    <h1 class="text-semibold">Change password</h1>
+    <div class="mt-2">
+      <%= link_to 'Change your password', change_password_user_settings_path, data: { turbo_frame: 'modal' }, class: 'link-text text-purple hover:font-medium' %>
+    </div>
+  </div>
+
+  <div class="p-6">
+    <%= button_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete } do %>
+      <span class="text-danger hover:font-medium">Logout</span>
+    <% end %>
+  </div>
+
+</div>

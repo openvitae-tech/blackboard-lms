@@ -1,17 +1,15 @@
-<%= render "shared/components/layout" do %>
-  <%= render 'shared/components/back_button', back_link: @back_link %>
-  <div class="flex flex-col md:flex-row  gap-4 justify-between items-start my-6">
-    <h1 class="heading page-heading-medium pl-0">Assign course</h1>
-  </div>
+<%= render 'shared/components/back_button', back_link: @back_link %>
+<div class="flex flex-col md:flex-row  gap-4 justify-between items-start my-6">
+  <h1 class="heading page-heading-medium pl-0">Assign course</h1>
+</div>
 
 
-  <%= render "searches/form", context: @context, tags: @tags, user: @user, team: @team %>
+<%= render "searches/form", context: @context, tags: @tags, user: @user, team: @team %>
 
-  <%= render "course_assigns/course_list_with_assign_form",
-             courses: @courses,
-             team_assign: @team_assign,
-             user: @user,
-             team: @team,
-             cancel_link: @back_link
-  %>
-<% end %>
+<%= render "course_assigns/course_list_with_assign_form",
+           courses: @courses,
+           team_assign: @team_assign,
+           user: @user,
+           team: @team,
+           cancel_link: @back_link
+%>

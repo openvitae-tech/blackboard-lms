@@ -1,55 +1,53 @@
-<%= render "shared/components/layout" do %>
-  <div class="flex justify-end">
-    <div class="flex justify-between gap-4">
-      <% if current_user.is_admin? %>
-        <%= link_to new_course_scorm_path(@course), class: "nav-link", data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/icon_button_primary', icon_name: 'icon-download' %>
-        <% end %>
-        <%= link_to alert_modal_path(
-              title: t("alert.title", resource_name: "course"),
-              description: t("alert.description", label: @course.title, resource_name: "course"),
-              action_path: course_path(@course),
-              method: :delete,
-            ), class: !policy(@course).destroy? && "disabled" , data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: !policy(@course).destroy? && delete_tooltip_message(@course) %>
-        <% end %>
+<div class="flex justify-end">
+  <div class="flex justify-between gap-4">
+    <% if current_user.is_admin? %>
+      <%= link_to new_course_scorm_path(@course), class: "nav-link", data: { turbo_frame: "modal" } do %>
+        <%= render 'shared/components/icon_button_primary', icon_name: 'icon-download' %>
       <% end %>
-      <% if policy(@course).publish? %>
-        <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
-          <%= render 'shared/components/outline_button_secondary', label: 'Publish' %>
-        <% end %>
+      <%= link_to alert_modal_path(
+                    title: t("alert.title", resource_name: "course"),
+                    description: t("alert.description", label: @course.title, resource_name: "course"),
+                    action_path: course_path(@course),
+                    method: :delete,
+                  ), class: !policy(@course).destroy? && "disabled", data: { turbo_frame: "modal" } do %>
+        <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: !policy(@course).destroy? && delete_tooltip_message(@course) %>
       <% end %>
-      <% if policy(@course).unpublish? %>
-        <%= link_to unpublish_course_path(@course), data: { turbo_method: "put" } do %>
-          <%= render 'shared/components/outline_button_secondary', label: 'Unpublish' %>
-        <% end %>
+    <% end %>
+    <% if policy(@course).publish? %>
+      <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
+        <%= render 'shared/components/outline_button_secondary', label: 'Publish' %>
       <% end %>
-      <% if policy(:course_module).new? %>
-        <%= link_to new_course_module_path(@course) do %>
-          <%= render 'shared/components/icon_button_primary', label: 'Add module', icon_name: 'icon-plus' %>
-        <% end %>
+    <% end %>
+    <% if policy(@course).unpublish? %>
+      <%= link_to unpublish_course_path(@course), data: { turbo_method: "put" } do %>
+        <%= render 'shared/components/outline_button_secondary', label: 'Unpublish' %>
       <% end %>
-    </div>
+    <% end %>
+    <% if policy(:course_module).new? %>
+      <%= link_to new_course_module_path(@course) do %>
+        <%= render 'shared/components/icon_button_primary', label: 'Add module', icon_name: 'icon-plus' %>
+      <% end %>
+    <% end %>
   </div>
-  <%= render "shared/components/bread_crumbs", links: [[I18n.t('course.label'),courses_path], [@course.title, nil]] %>
-  <div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6">
-    <%= render 'courses/course_description_card', course: @course, enrollment: @enrollment %>
+</div>
+<%= render "shared/components/bread_crumbs", links: [[I18n.t('course.label'), courses_path], [@course.title, nil]] %>
+<div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6">
+  <%= render 'courses/course_description_card', course: @course, enrollment: @enrollment %>
+</div>
+<% if @course.course_modules.present? %>
+  <div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6 pb-6 md:pb-6 pt-6">
+    <% if course_completed?(@enrollment) %>
+      <%= render "courses/course_stats", course: @course, enrollment: @enrollment %>
+    <% end %>
+    <%= render 'courses/course_lessons', course: @course, enrollment: @enrollment %>
   </div>
-  <% if @course.course_modules.present? %>
-    <div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6 pb-6 md:pb-6 pt-6">
-      <% if course_completed?(@enrollment) %>
-        <%= render "courses/course_stats", course: @course, enrollment: @enrollment %>
+<% else %>
+  <div class="flex flex-col items-center justify-center flex-grow py-6">
+    <h2 class="text-semibold"><%= t("course.course_module.empty") %></h2>
+    <% if policy(:course_module).new? %>
+      <%= link_to new_course_module_path(@course), class: "mt-4" do %>
+        <%= render 'shared/components/icon_button_primary_small', label: 'Add module', icon_name: 'icon-plus' %>
       <% end %>
-      <%= render 'courses/course_lessons', course: @course, enrollment: @enrollment %>
-    </div>
-  <% else %>
-    <div class="flex flex-col items-center justify-center flex-grow py-6">
-      <h2 class="text-semibold"><%= t("course.course_module.empty") %></h2>
-      <% if policy(:course_module).new? %>
-        <%= link_to new_course_module_path(@course), class: "mt-4" do %>
-          <%= render 'shared/components/icon_button_primary_small', label: 'Add module', icon_name: 'icon-plus' %>
-        <% end %>
-      <% end %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 <% end %>

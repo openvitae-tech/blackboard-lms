@@ -1,16 +1,14 @@
-<%= render "shared/components/layout" do %>
-  <h1 class="heading page-heading-medium mb-4"><%= t("settings.label") %></h1>
-  <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-6">
-    <% settings_list.each do |setting| %>
-      <%= link_to setting[:path], class: "block" do %>
-        <div class="p-6 bg-white border border-line-colour rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <div class="flex items-start space-x-4">
-            <span class="icon <%= setting[:icon] %> bg-secondary icon-base"></span>
-            <h3 class="heading page-heading-medium text-letter-color"><%= setting[:label] %></h3>
-          </div>
-          <p class="text-sm text-gray-600 mt-2"><%= setting[:description] %></p>
+<h1 class="heading page-heading-medium mb-4"><%= t("settings.label") %></h1>
+<div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-6">
+  <% settings_list.each do |setting| %>
+    <%= link_to setting[:path], class: "block" do %>
+      <div class="p-6 bg-white border border-line-colour rounded-lg shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-start space-x-4">
+          <span class="icon <%= setting[:icon] %> bg-secondary icon-base"></span>
+          <h3 class="heading page-heading-medium text-letter-color"><%= setting[:label] %></h3>
         </div>
-      <% end %>
+        <p class="text-sm text-gray-600 mt-2"><%= setting[:description] %></p>
+      </div>
     <% end %>
-  </div>
-<% end %>
+  <% end %>
+</div>

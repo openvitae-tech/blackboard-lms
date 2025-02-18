@@ -1,101 +1,99 @@
-<%= render "shared/components/layout" do %>
-  <div class="flex justify-between items-center">
-    <%= render 'shared/components/back_button', back_link: learning_partners_path %>
-    <div class="flex items-center gap-4">
-      <% if policy(@learning_partner).destroy? %>
-        <%= link_to @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" }, class: "btn-default" do %>
-          <span>Delete</span>
-        <% end %>
+<div class="flex justify-between items-center">
+  <%= render 'shared/components/back_button', back_link: learning_partners_path %>
+  <div class="flex items-center gap-4">
+    <% if policy(@learning_partner).destroy? %>
+      <%= link_to @learning_partner, data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" }, class: "btn-default" do %>
+        <span>Delete</span>
       <% end %>
-      <% if policy(@learning_partner).edit? %>
-        <%= link_to edit_learning_partner_path(@learning_partner) do %>
-          <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
-        <% end %>
+    <% end %>
+    <% if policy(@learning_partner).edit? %>
+      <%= link_to edit_learning_partner_path(@learning_partner) do %>
+        <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
       <% end %>
-      <% if policy(:invite).new? && policy(@learning_partner).invite? %>
-        <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus' %>
-        <% end %>
-      <% else %>
-        <%= link_to 'javascript:void(0);', class: 'disabled' do %>
-          <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus' %>
-        <% end %>
+    <% end %>
+    <% if policy(:invite).new? && policy(@learning_partner).invite? %>
+      <%= link_to new_invite_path(team_id: @learning_partner.parent_team.id), data: { turbo_frame: "modal" } do %>
+        <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus' %>
       <% end %>
+    <% else %>
+      <%= link_to 'javascript:void(0);', class: 'disabled' do %>
+        <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="w-full mt-8">
+  <div class="relative h-[250px] w-full">
+    <div class="relative h-full">
+      <%= image_tag partner_banner(@learning_partner), class: 'h-full w-full object-cover' %>
+    </div>
+    <div class="absolute inset-0 bg-black opacity-60"></div>
+    <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
+      <%= image_tag partner_logo(@learning_partner, :large), class: 'h-16 w-16 object-cover rounded-full border-2 border-white box-shadow-medium' %>
+      <span class="heading heading-overlay"><%= @learning_partner.name %></span>
     </div>
   </div>
-  <div class="w-full mt-8">   
-    <div class="relative h-[250px] w-full">
-        <div class="relative h-full">
-          <%= image_tag partner_banner(@learning_partner), class: 'h-full w-full object-cover' %>
-        </div>
-        <div class="absolute inset-0 bg-black opacity-60"></div>
-        <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
-          <%= image_tag partner_logo(@learning_partner, :large), class: 'h-16 w-16 object-cover rounded-full border-2 border-white box-shadow-medium' %>
-          <span class="heading heading-overlay"><%= @learning_partner.name %></span>
-        </div> 
-    </div>
-    <div class="flex flex-col gap-4 my-8">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Onboarding Initiated</p>
-          <p><%= @metrics.onboarding_initiated? %></p>
-        </div>
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Owner Joined</p>
-          <p><%= @metrics.first_owner_joined? %></p>
-        </div>
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>User Login</p>
-          <p><%= @metrics.user_login_count %></p>
-        </div>
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>User Logout</p>
-          <p><%= @metrics.user_logout_count %></p>
-        </div>
+  <div class="flex flex-col gap-4 my-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Onboarding Initiated</p>
+        <p><%= @metrics.onboarding_initiated? %></p>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Users</p>
-          <p><%= @metrics.user_invited_count %></p>
-        </div>
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Verified users</p>
-          <p><%= @metrics.user_joined_count %></p>
-        </div>
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Course Enrolled</p>
-          <p><%= @metrics.user_enrolled_count %></p>
-        </div>
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Course Started</p>
-          <p><%= @metrics.course_started_count %></p>
-        </div>
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Owner Joined</p>
+        <p><%= @metrics.first_owner_joined? %></p>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Course Completed</p>
-          <p><%= @metrics.course_completed_count %></p>
-        </div>
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Course Views</p>
-          <p><%= @metrics.course_views_count %></p>
-        </div>
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Lesson Views</p>
-          <p><%= @metrics.lesson_views_count %></p>
-        </div>
-        <div class="border border-line-colour-light px-1 py-4 text-center">
-          <p>Time spent</p>
-          <p><%= duration_in_words(@metrics.time_spent_total) %></p>
-        </div>
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>User Login</p>
+        <p><%= @metrics.user_login_count %></p>
+      </div>
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>User Logout</p>
+        <p><%= @metrics.user_logout_count %></p>
       </div>
     </div>
-    <div class="my-4">
-      <h3 class="text-sm font-medium">About</h3>
-      <div class="my-4 p-6 box-shadow-medium">
-        <%= @learning_partner.content %>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Users</p>
+        <p><%= @metrics.user_invited_count %></p>
+      </div>
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Verified users</p>
+        <p><%= @metrics.user_joined_count %></p>
+      </div>
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Course Enrolled</p>
+        <p><%= @metrics.user_enrolled_count %></p>
+      </div>
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Course Started</p>
+        <p><%= @metrics.course_started_count %></p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Course Completed</p>
+        <p><%= @metrics.course_completed_count %></p>
+      </div>
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Course Views</p>
+        <p><%= @metrics.course_views_count %></p>
+      </div>
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Lesson Views</p>
+        <p><%= @metrics.lesson_views_count %></p>
+      </div>
+      <div class="border border-line-colour-light px-1 py-4 text-center">
+        <p>Time spent</p>
+        <p><%= duration_in_words(@metrics.time_spent_total) %></p>
       </div>
     </div>
   </div>
-  <%= render 'teams/member_list', team: @learning_partner.parent_team %>
-<% end %>
+  <div class="my-4">
+    <h3 class="text-sm font-medium">About</h3>
+    <div class="my-4 p-6 box-shadow-medium">
+      <%= @learning_partner.content %>
+    </div>
+  </div>
+</div>
+<%= render 'teams/member_list', team: @learning_partner.parent_team %>

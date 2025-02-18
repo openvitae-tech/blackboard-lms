@@ -1,27 +1,26 @@
-<%= render "shared/components/layout" do %>
-  <div>
-    <ol class="flex items-center space-x-2 text-secondary text-xs">
-      <% team_list(current_user.team, @user.team).each do |team| %>
-        <li class="flex space-x-1">
-          <%= link_to team.name, team_path(team) %>
-          <span class="icon icon-simple-arrow-right bg-letter-color icon-small"></span>
-        </li>
-      <% end %>
-    </ol>
-  </div>
-  <%= render 'users/team_user_info', user: @user %>
-  <%= render 'users/team_user_course_status' %>
-  <div class="my-8">
-    <% if has_enrolled_courses? %>
-      <p class="heading heading-medium mb-4">
-        <span class="">Assigned courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'course') %>)</span>
-      </p>
-
-      <div class="flex flex-wrap gap-4">
-        <% @enrolled_courses.each do |course| %>
-          <%= render 'courses/course_card_with_top_image', course: course, enrollment: course.enrollments.first %>
-        <% end %>
-      </div>
+<div>
+  <ol class="flex items-center space-x-2 text-secondary text-xs">
+    <% team_list(current_user.team, @user.team).each do |team| %>
+      <li class="flex space-x-1">
+        <%= link_to team.name, team_path(team) %>
+        <span class="icon icon-simple-arrow-right bg-letter-color icon-small"></span>
+      </li>
     <% end %>
-  </div>
-<% end %>
+  </ol>
+</div>
+<%= render 'users/team_user_info', user: @user %>
+<%= render 'users/team_user_course_status' %>
+<div class="my-8">
+  <% if has_enrolled_courses? %>
+    <p class="heading heading-medium mb-4">
+      <span class="">Assigned courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'course') %>
+      )</span>
+    </p>
+
+    <div class="flex flex-wrap gap-4">
+      <% @enrolled_courses.each do |course| %>
+        <%= render 'courses/course_card_with_top_image', course: course, enrollment: course.enrollments.first %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

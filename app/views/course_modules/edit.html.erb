@@ -1,7 +1,5 @@
-<%= render "shared/components/layout" do %>
-  <div class="my-4 mx-auto w-full text-left md:max-w-3xl">
-    <%= render 'shared/components/back_button', back_link: course_module_path(@course, @course_module) %>
-    <div class="heading page-heading my-4">Edit module</div>
-    <%= render "form", course: @course, course_module: @course_module %>
-  </div>
-<% end %>
+<div class="my-4 mx-auto w-full text-left md:max-w-3xl">
+  <%= render 'shared/components/back_button', back_link: course_module_path(@course, @course_module) %>
+  <div class="heading page-heading my-4">Edit module</div>
+  <%= render "form", course: @course, course_module: @course_module %>
+</div>
