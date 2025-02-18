@@ -16,7 +16,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :teams, except: %i[index destroy]
+  resources :teams, except: %i[index destroy] do
+    member do
+      get :all_users
+    end
+  end
 
   resources :direct_uploads, only: :create
 
