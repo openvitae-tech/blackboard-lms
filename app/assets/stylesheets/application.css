@@ -17,9 +17,12 @@
 * {
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
-    color: #404041;
+    box-sizing: border-box;    
     letter-spacing: 0.025em;
+}
+
+body {
+    color: #404041;
 }
 
 @import 'actiontext.css';
