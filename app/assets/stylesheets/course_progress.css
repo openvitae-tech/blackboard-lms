@@ -22,7 +22,7 @@ details[open] .icon-up{
     }
 }
 .indicator.active {
-    background-color:#005f6b;
+    background-color:#0041B9; 
 }
 
 .form-radio {
@@ -31,7 +31,7 @@ details[open] .icon-up{
     -moz-appearance: none;
     width: 1.25rem;
     height: 1.25rem;
-    border: 2px solid #005f6b;
+    border: 2px solid #0041B9;
     border-radius: 50%;
     display: inline-block;
     position: relative;
@@ -44,7 +44,7 @@ details[open] .icon-up{
     box-shadow: none;   
 }
 .form-radio:checked {
-    border: 2px solid #005f6b;
+    border: 2px solid #0041B9;
     outline: none;
 }
 
@@ -54,14 +54,14 @@ details[open] .icon-up{
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background-color: #005f6b;
+    background-color: #0041B9;
     position:absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 .form-radio:checked:focus{
-    border: 2px solid #005f6b;
+    border: 2px solid #0041B9;
     box-shadow: none;
     outline:none;
    
@@ -69,8 +69,8 @@ details[open] .icon-up{
 
 .active-border {
     font-weight: 700;
-    color:#005f6b;
-    border-bottom: 4px solid #005f6b;
+    color:#0041B9;
+    border-bottom: 4px solid #0041B9;
 
 }
 

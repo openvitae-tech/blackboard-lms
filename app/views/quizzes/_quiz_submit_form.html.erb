@@ -1,7 +1,7 @@
 
-<div class="box-shadow-medium flex flex-col rounded">
-  <div class="flex items-center justify-between border-b border-line-colour-light p-6">
-    <span class="heading heading-semibold">Quiz</span>
+<div class="box-shadow-medium flex flex-col items-center rounded md:w-[960px]">
+  <div class="flex items-center justify-between pt-6">
+    <span class="heading page-heading text-primary">Quiz</span>
   </div>
   <div class="flex flex-wrap justify-center gap-4 pt-6 px-2">
     <% current_index = position_of_quiz(course_module, quiz) - 1 %>
@@ -12,48 +12,47 @@
   <h2 class="flex items-center justify-center pt-4 text-medium">
     <%= quiz_position_text(course_module, quiz) %> Questions
   </h2>
-  <ul class="w-full pb-6">
-    <li class="carousel-container m-6 rounded box-shadow-medium">
-      <h2 class="bg-primary-light-50 p-6 text-medium">
-       <span>1.</span> <%= quiz.question %>
-      </h2>
+  <%= form_with model: @quiz, url: submit_answer_course_module_quiz_path(course, course_module, quiz), method: :post, class:"md:w-[910px]" do |form| %>
+    <ul class="w-full pb-6">
+      <li class="carousel-container mt-6 rounded box-shadow-medium">
+        <h2 class="bg-primary-light-50 p-6 text-medium">
+          <span>1.</span> <%= quiz.question %>
+        </h2>
 
-      <div class="carousel-item active pt-6">
-      <%= form_with model: @quiz, url: submit_answer_course_module_quiz_path(course, course_module, quiz), method: :post do |form| %>
-        <ul class="flex flex-col gap-2">
-            <li class="box-shadow-medium rounded p-6">
+        <div class="carousel-item active">
+          <ul class="flex flex-col">
+            <li class="border-t border-line-colour-light p-6">
               <label class="flex items-center justify-between">
                 <%= form.label "opt-a", quiz.option_a %>
                 <%= form.radio_button 'answer', "a", class: "mx-2 form-radio", id: "quiz_opt-a", data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
-            <li class="box-shadow-medium rounded p-6">
+            <li class="border-t border-line-colour-light p-6">
               <label class="flex items-center justify-between">
                 <%= form.label "opt-b", quiz.option_b %>
                 <%= form.radio_button 'answer', "b", class: "mx-2 form-radio", id: "quiz_opt-b", data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
-            <li class="box-shadow-medium rounded p-6">
+            <li class="border-t border-line-colour-light p-6">
               <label class="flex items-center justify-between">
                 <%= form.label "opt-c", quiz.option_c %>
                 <%= form.radio_button 'answer', "c", class: "mx-2 form-radio", id: "quiz_opt-c", data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
-            <li class="box-shadow-medium rounded p-6">
+            <li class="border-t border-line-colour-light p-6">
               <label class="flex items-center justify-between">
                 <%= form.label "opt-d", quiz.option_a %>
                 <%= form.radio_button 'answer', "d", class: "mx-2 form-radio", id: "quiz_opt-d", data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
-          </ul>
-          <div class="py-4 flex items-center justify-center">
-            <%= form.button 'Submit', class: "bg-primary rounded px-20 py-2 text-sm text-white", id: "quiz-submit-button" %>
-          </div>
-        <% end %>
+          </ul>         
         </div>
-    </li>
-    
-  </ul>
+      </li>      
+    </ul>
+    <div class="pb-6 flex items-center justify-center">
+      <%= form.button 'Submit', class: "bg-primary rounded px-20 py-2 text-sm text-white", id: "quiz-submit-button" %>
+    </div>
+   <% end %>
 </div>
 
   

@@ -1,8 +1,8 @@
 <div>
-  <div class="box text-right">
+  <div class="box text-right flex justify-end">
     <% if policy(@quiz).edit? %>
-      <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz), class: "btn-default" do %>
-        <span>Edit</span>
+      <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz) do %>
+        <%= render 'shared/components/icon_button_primary', label: t("button.edit"), icon_name: 'icon-edit' %>
       <% end %>
     <% end %>
     <% if policy(@quiz).destroy? %>
