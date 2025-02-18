@@ -1,10 +1,11 @@
 class Scorm < ApplicationRecord
 
   validates :token, presence: true, uniqueness: true
+  validates :expires_at, presence: true
 
   has_secure_token :token
 
-  before_create :set_expires_at
+  before_validation :set_expires_at
 
   belongs_to :learning_partner
 
