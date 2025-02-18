@@ -5,15 +5,13 @@
         <%= link_to new_course_scorm_path(@course), class: "nav-link", data: { turbo_frame: "modal" } do %>
           <%= render 'shared/components/icon_button_primary', icon_name: 'icon-download' %>
         <% end %>
-      <% end %>
-      <% if policy(@course).destroy? %>
         <%= link_to alert_modal_path(
               title: t("alert.title", resource_name: "course"),
               description: t("alert.description", label: @course.title, resource_name: "course"),
               action_path: course_path(@course),
               method: :delete,
-            ), data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
+            ), class: !policy(@course).destroy? && "disabled" , data: { turbo_frame: "modal" } do %>
+          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: !policy(@course).destroy? && delete_tooltip_message(@course) %>
         <% end %>
       <% end %>
       <% if policy(@course).publish? %>
