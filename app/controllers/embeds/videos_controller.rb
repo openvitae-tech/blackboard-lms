@@ -9,7 +9,7 @@ module Embeds
     after_action :allow_iframe
 
     def show
-      if @scorm.present? && @scorm.is_valid?
+      if @scorm.present? && DateTime.now <= @scorm.expires_at
         @video_iframe = @local_content.present? ? get_video_iframe(@local_content) : nil
         render layout: false, content_type: 'text/html'
       else
