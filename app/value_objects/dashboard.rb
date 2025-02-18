@@ -62,7 +62,7 @@ class Dashboard
     events = time_spent_query.call
     events = filter_by_teams(events)
     course_ids = events.map(&:data).map { |v| v['course_id'] }.uniq
-    Course.includes(:course_modules).where(id: course_ids).map(&:duration).sum
+    Course.where(id: course_ids).map(&:duration).sum
   end
 
   def completion_percent_metric
