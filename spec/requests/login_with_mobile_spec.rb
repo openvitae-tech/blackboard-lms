@@ -12,9 +12,11 @@ RSpec.describe 'Login with mobile number' do
     it 'requests otp for the give mobile number and renders the otp page' do
       user = create :user, :learner
       post '/login/otp', params: { login: { mobile_number: user.phone } }
+      expect(user.otp).to be_nil
       expect(response).to render_template(:otp)
+
       user.reload
-      expect(user.authenticate_otp(User::TEST_OTP)).to be user
+      expect(user.otp).not_to be_nil
       expect(user.otp_generated_at).not_to be_nil
     end
 
@@ -29,15 +31,25 @@ RSpec.describe 'Login with mobile number' do
     it 'creates a successful login if the otp is a match' do
       user = create :user, :learner
       user.set_otp!
-      post '/login', params: { login: { mobile_number: user.phone, otp: user.otp } }
+      post '/login', params: { login: { mobile_number: user.phone, otp: password_decrypter(user.otp) } }
       expect(response).to redirect_to('/courses')
     end
 
-    it 'redirects to login page if the otp is a mismatch' do
+    it 'when otp is a mismatch' do
       user = create :user, :learner
       user.set_otp!
       post '/login', params: { login: { mobile_number: user.phone, otp: '1234' } }
-      expect(response).to redirect_to('/login/new')
+
+      expect(flash[:error]).to eq(t('login.invalid_or_incorrect_otp'))
+      expect(response.status).to be(404)
     end
+  end
+
+  private
+
+  def password_decrypter(otp)
+    password_verifier = Rails.application.message_verifier(Rails.application.credentials[:password_verifier])
+
+    password_verifier.verify(otp)
   end
 end

@@ -27,9 +27,10 @@ class LoginsController < ApplicationController
       user = User.where(phone: login_params[:mobile_number]).first
       if service.valid_otp?(user, login_params[:otp])
         build_user_session(user)
+        user.clear_otp!
         redirect_to after_sign_in_path_for(user), notice: t('devise.sessions.signed_in')
       else
-        redirect_to new_login_path, notice: t('login.invalid_or_incorrect_otp')
+        flash.now[:error] = t('login.invalid_or_incorrect_otp')
       end
     else
       redirect_to new_login_path, notice: t('login.incorrect_mobile_or_otp')

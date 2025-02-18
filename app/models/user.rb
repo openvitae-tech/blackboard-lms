@@ -35,15 +35,15 @@ class User < ApplicationRecord
   validates :role,
             inclusion: { in: USER_ROLES,
                          message: '%<value>s is not a valid user role' }
-  validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true
+  validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true, uniqueness: true
   validates :state, inclusion: { in: USER_STATES, message: '%<value>s is not a valid user state' }
+  validates :otp, uniqueness: true, allow_nil: true
+
   validate :dob_within_valid_age_range
   validates :gender,
             inclusion: { in: GENDERS,
                          message: '%<value>s is not a valid gender' }, allow_blank: true
 
-
-  has_secure_password :otp, validations: false
 
   belongs_to :learning_partner, optional: true, counter_cache: true
 
@@ -80,10 +80,15 @@ class User < ApplicationRecord
   end
 
   def set_otp!
-    return unless otp_generated_at.blank? || otp_generated_at < 5.minutes.ago
+    return if otp_generated_at.present? && otp_generated_at >= 5.minutes.ago && otp.present?
 
     otp = Rails.env.production? ? rand(1000..9999) : TEST_OTP
-    update!(otp: otp.to_s, otp_generated_at: DateTime.now)
+    encrypt = Rails.application.message_verifier(password_verifier).generate(otp)
+    update!(otp: encrypt, otp_generated_at: DateTime.now)
+  end
+
+  def clear_otp!
+    update!(otp: nil)
   end
 
   def not_admin?

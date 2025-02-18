@@ -6,7 +6,7 @@ require_relative 'support/factory_bot'
 require_relative 'support/chrome'
 require_relative 'support/helpers'
 require 'webmock/rspec'
-require 'stubs/msg91_stubs'
+require 'stubs/fast2sms_stubs'
 require 'stubs/vimeo_api_stubs'
 require 'sidekiq/testing'
 
