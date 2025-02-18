@@ -3,7 +3,7 @@
 RSpec.describe 'Request spec for Embeds Videos', type: :request do
   let(:lesson) { create :lesson }
   let(:learning_partner) { create :learning_partner }
-  let(:scorm) { create :scorm, learning_partner: }
+  let!(:scorm) { create :scorm, learning_partner: }
 
   before do
     @local_content = lesson.local_contents.first
@@ -27,7 +27,8 @@ RSpec.describe 'Request spec for Embeds Videos', type: :request do
   end
 
   it 'when scorm token is expired' do
-    scorm.update!(is_valid: false)
+    travel_to Time.zone.today + 4.months
+
     get embeds_video_path(@local_content.id), params: { token: scorm.token }
 
     expect(response.body).to eq('Invalid token')

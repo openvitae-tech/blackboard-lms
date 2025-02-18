@@ -35,4 +35,11 @@ RSpec.describe Scorm, type: :model do
                                                                   entity: 'Learning partner'))
     end
   end
+
+  describe '#set_expires_at' do
+    it 'ables to set token expires_at' do
+      expect(scorm.expires_at).not_to be_nil
+      expect(scorm.expires_at).to be >= DateTime.now
+    end
+  end
 end

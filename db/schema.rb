@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_13_131528) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_18_062725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -181,10 +181,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_13_131528) do
 
   create_table "scorms", force: :cascade do |t|
     t.string "token", null: false
-    t.boolean "is_valid", default: true
     t.bigint "learning_partner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "expires_at", null: false
     t.index ["learning_partner_id"], name: "index_scorms_on_learning_partner_id", unique: true
     t.index ["token"], name: "index_scorms_on_token", unique: true
   end
