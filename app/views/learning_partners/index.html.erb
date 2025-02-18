@@ -1,4 +1,3 @@
-<%= render "shared/components/layout" do %>
   <div class="flex justify-between items-center">
     <h1 class="heading page-heading-medium mb-4">Partners List</h1>
     <%= link_to new_learning_partner_path do %>
@@ -25,4 +24,3 @@
     <%= link_to_prev_page @learning_partners, 'Prev', class: 'nav_link' %>
     <%= link_to_next_page @learning_partners, 'Next', class: 'nav_link' %>
   </div>
-<% end %>
