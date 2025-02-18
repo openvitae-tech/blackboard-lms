@@ -1,7 +1,6 @@
-<div class="box-shadow-medium flex flex-col rounded">
-  <div class="flex items-center justify-between border-b border-line-colour-light p-6">
-    <span class="heading heading-semibold">Quiz</span>
-    <span class="icon icon-close bg-letter-color h-4 w-4"></span>
+<div class="box-shadow-medium flex flex-col  items-center rounded  md:w-[960px]">
+  <div class="flex items-center justify-between pt-6">
+    <span class="heading page-heading text-primary">Quiz</span>
   </div>
   <div class="flex justify-center gap-4 pt-6">
     <div class="indicator active"></div>
@@ -11,43 +10,44 @@
   <h2 class="flex items-center justify-center pt-4 text-medium">
     1/5 Questions
   </h2>
-  <ul class="w-full pb-6">
-    <li class="carousel-container m-6 rounded box-shadow-medium">
-      <h2 class="bg-primary-light-50 p-6 text-medium">
-        <span>1.</span><%= quiz.question %>
-      </h2>
-      <ul class="flex flex-col gap-2">
-        <li class="box-shadow-medium rounded p-6">
-          <label class="flex items-center justify-between">
-            <%= label_tag "opt-a", quiz.option_a %>
-            <%= radio_button_tag 'answer', quiz.option_a, id: "opt-a", class: "mx-2", checked: quiz.answer == "A", disabled: true %>
-          </label>
-        </li>
+  <div class="md:w-[910px]">
+    <ul class="w-full md:pb-6">
+      <li class="carousel-container mt-6 rounded box-shadow-medium">
+        <h2 class="bg-primary-light-50 p-6 text-medium">
+          <span>1.</span><%= quiz.question %>
+        </h2>
+        <ul class="flex flex-col">
+          <li class="border-t border-line-colour-light p-6">
+            <label class="flex items-center justify-between">
+              <%= label_tag "opt-a", quiz.option_a %>
+              <%= radio_button_tag 'answer', quiz.option_a, id: "opt-a", class: "mx-2", checked: quiz.answer == "A", disabled: true %>
+            </label>
+          </li>
 
-        <li class="box-shadow-medium rounded p-6">
-          <label class="flex items-center justify-between">
-            <%= label_tag "opt-b", quiz.option_b %>
-            <%= radio_button_tag 'answer', quiz.option_b, id: "opt-b", class: "mx-2", checked: quiz.answer == "B", disabled: true %>
-          </label>
-        </li>
+          <li class="border-t border-line-colour-light p-6">
+            <label class="flex items-center justify-between">
+              <%= label_tag "opt-b", quiz.option_b %>
+              <%= radio_button_tag 'answer', quiz.option_b, id: "opt-b", class: "mx-2", checked: quiz.answer == "B", disabled: true %>
+            </label>
+          </li>
 
-        <li class="box-shadow-medium rounded p-6">
-          <label class="flex items-center justify-between">
-            <%= label_tag "opt-b", quiz.option_c %>
-            <%= radio_button_tag 'answer', quiz.option_c, id: "opt-c", class: "mx-2", checked: quiz.answer == "C", disabled: true %>
-          </label>
-        </li>
+          <li class="border-t border-line-colour-light p-6">
+            <label class="flex items-center justify-between">
+              <%= label_tag "opt-b", quiz.option_c %>
+              <%= radio_button_tag 'answer', quiz.option_c, id: "opt-c", class: "mx-2", checked: quiz.answer == "C", disabled: true %>
+            </label>
+          </li>
 
-        <li class="box-shadow-medium rounded p-6">
-          <label class="flex items-center justify-between">
-            <%= label_tag "opt-d", quiz.option_d %>
-            <%= radio_button_tag 'answer', quiz.option_d, id: "opt-d", class: "mx-2", checked: quiz.answer == "D", disabled: true %>          
-          </label>
-        </li>
-      </ul>    
-    </li>
-  </ul>
-
+          <li class="border-t border-line-colour-light p-6">
+            <label class="flex items-center justify-between">
+              <%= label_tag "opt-d", quiz.option_d %>
+              <%= radio_button_tag 'answer', quiz.option_d, id: "opt-d", class: "mx-2", checked: quiz.answer == "D", disabled: true %>          
+            </label>
+          </li>
+        </ul>    
+      </li>
+    </ul>
+  </div>
   <% if @enrollment %>
   <p class="pb-4 px-6">    
    <%= answer_text(@enrollment.get_answer(quiz)) %>

@@ -1,8 +1,8 @@
 <div>
-  <div class="box text-right">
+  <div class="box text-right flex justify-end">
     <% if policy(@quiz).edit? %>
-      <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz), class: "btn-default" do %>
-        <span>Edit</span>
+      <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz) do %>
+        <%= render 'shared/components/icon_button_primary', label: t("button.edit"), icon_name: 'icon-edit' %>
       <% end %>
     <% end %>
     <% if policy(@quiz).destroy? %>
@@ -22,7 +22,7 @@
     <div class="flex gap-4 justify-between my-8">
       <% prev_link = prev_quiz_path(@course, @course_module, @quiz) %>
         <%  if prev_link.blank? %>
-          <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
+          <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer disabled" do %>
             <span class="icon icon-arrow-left bg-letter-color icon-small"></span>
             <span class="labels label-small">Previous</span>
           <% end %>      
@@ -34,7 +34,7 @@
       <% end %>
       <% next_link = next_quiz_path(@course, @course_module, @quiz) %>
         <%  if next_link.blank? %>
-          <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
+          <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer disabled" do %>
             <span class="labels label-small">Skip</span>
             <%= render "shared/svg/forward" %>
           <% end %>
