@@ -257,7 +257,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_13_131528) do
     t.index ["learning_partner_id"], name: "index_users_on_learning_partner_id"
     t.index ["manager_id"], name: "index_users_on_manager_id"
     t.index ["otp"], name: "index_users_on_otp", unique: true
-    t.index ["phone"], name: "index_users_on_phone", unique: true
+    t.index ["phone"], name: "index_users_on_phone", unique: true, where: "(phone IS NOT NULL)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["team_id"], name: "index_users_on_team_id"
   end
