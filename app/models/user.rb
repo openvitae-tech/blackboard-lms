@@ -35,7 +35,7 @@ class User < ApplicationRecord
   validates :role,
             inclusion: { in: USER_ROLES,
                          message: '%<value>s is not a valid user role' }
-  validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_blank: true, uniqueness: true
+  validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_nil: true, uniqueness: true
   validates :state, inclusion: { in: USER_STATES, message: '%<value>s is not a valid user state' }
   validates :otp, uniqueness: true, allow_nil: true
 
