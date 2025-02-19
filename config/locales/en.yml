@@ -55,6 +55,7 @@ en:
   course:
     label: "My Courses"
     enroll:
+      user: "enrolled user"
       label: 'Self assign'
     created: 'Course was successfully created.'
     updated: 'Course was successfully updated.'
