@@ -150,6 +150,7 @@ Rails.application.routes.draw do
     end
   end
 
+  draw :ui
   draw :sidekiq_web
   draw :catch_all
 end
