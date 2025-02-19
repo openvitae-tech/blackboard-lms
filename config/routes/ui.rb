@@ -5,5 +5,7 @@ Rails.application.routes.draw do
     get :components, to: 'components#index'
     get :typography, to: 'typography#index'
     get :buttons, to: 'buttons#index'
+    get :icons, to: 'icons#index'
+    get :inputs, to: 'inputs#index'
   end
 end

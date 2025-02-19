@@ -1,0 +1,16 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+
+<div class="heading heading-medium">Icons</div>
+
+<div class="grid grid-cols-4 gap-4 my-6">
+  <% @icons.each do |icon_name| %>
+    <div>
+      <p><%= icon_name %></p>
+      <div class="bg-black inline-block border">
+        <span class="icon icon-<%= icon_name %> bg-white icon-large"></span>
+      </div>
+    </div>
+  <% end %>
+</div>
