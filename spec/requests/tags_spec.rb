@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Request spec for Tags', type: :request do
   let(:user) { create(:user, :admin) }
+  let(:learner) { create(:user, :learner) }
 
   before do
     sign_in user
@@ -19,7 +20,8 @@ RSpec.describe 'Request spec for Tags', type: :request do
     end
 
     it 'Unauthorized when tags is accessed by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
+
 
       get tags_path
       expect(response.status).to be(302)
@@ -36,7 +38,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
     end
 
     it 'Unauthorized when new tag is accessed by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       get new_tag_path
       expect(response.status).to be(302)
@@ -57,7 +59,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
     end
 
     it 'Unauthorized when tag is accessed by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       get tag_path(@tag.id)
       expect(response.status).to be(302)
@@ -73,7 +75,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
     end
 
     it 'Does not allow creating tag by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       expect do
         post tags_path, params: tag_params
@@ -99,7 +101,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
     end
 
     it 'Does not allow updating tag by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       put tag_path(@tag.id), params: tag_params
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
@@ -125,7 +127,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
     end
 
     it 'Unauthorized when edit tag accessed by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       get edit_tag_path(@tag.id)
 
@@ -146,7 +148,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
     end
 
     it 'Does not allow deleting tag by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       expect do
         delete tag_path(@tag.id)

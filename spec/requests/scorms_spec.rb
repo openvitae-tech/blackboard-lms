@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Request specs for Scorms', type: :request do
   let(:user) { create(:user, :admin) }
+  let(:learner) { create(:user, :learner) }
   let(:course) { create :course }
   let(:learning_partner) { create :learning_partner }
 
@@ -20,7 +21,7 @@ RSpec.describe 'Request specs for Scorms', type: :request do
     end
 
     it 'Unauthorized when new scorm is accessed by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       get new_course_scorm_path(course)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
@@ -36,7 +37,7 @@ RSpec.describe 'Request specs for Scorms', type: :request do
     end
 
     it 'does not allow generating scorm package download link by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
       post course_scorm_path(course), params: scorm_params
 
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
@@ -54,7 +55,7 @@ RSpec.describe 'Request specs for Scorms', type: :request do
     end
 
     it 'does not allow generating scorm package by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
       get download_course_scorm_path(course, learning_partner: learning_partner.id)
 
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))

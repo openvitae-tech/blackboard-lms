@@ -4,4 +4,5 @@ module Errors
   class IllegalInviteError < StandardError; end
   class InvalidNotificationType < StandardError; end
   class IllegalUserState < StandardError; end
+  class IllegalPartnerState < StandardError; end
 end
