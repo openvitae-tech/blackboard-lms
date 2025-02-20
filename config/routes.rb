@@ -100,7 +100,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :learning_partners
+  resources :learning_partners do
+    member do
+      put :activate
+      put :deactivate
+    end
+  end
+
   resources :dashboards, only: :index
   resources :settings, only: :index
 

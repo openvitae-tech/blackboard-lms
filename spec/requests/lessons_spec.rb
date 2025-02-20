@@ -94,7 +94,6 @@ RSpec.describe 'Request spec for Lessons', type: :request do
       expect(response).to render_template(:edit)
     end
 
-
     it 'unauthorized when edit lesson accessed by non-admin' do
       sign_in learner
 
