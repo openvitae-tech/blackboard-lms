@@ -22,7 +22,6 @@ RSpec.describe 'Request spec for Tags', type: :request do
     it 'Unauthorized when tags is accessed by non-admin' do
       sign_in learner
 
-
       get tags_path
       expect(response.status).to be(302)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))

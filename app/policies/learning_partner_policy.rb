@@ -39,4 +39,12 @@ class LearningPartnerPolicy
   def invite?
     learning_partner.users_count < learning_partner.max_user_count
   end
+
+  def activate?
+    user.is_admin? && learning_partner.deactivated?
+  end
+
+  def deactivate?
+    user.is_admin? && learning_partner.active?
+  end
 end

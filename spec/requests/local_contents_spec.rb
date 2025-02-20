@@ -34,7 +34,6 @@ RSpec.describe 'Request spec for LocalContents', type: :request do
       user = create(:user, :learner)
       sign_in user
 
-
       put retry_course_module_lesson_local_content_path(
         course_id: @course.id,
         module_id: @course_module.id,
