@@ -17,7 +17,8 @@ RSpec.describe 'Request spec for Settings', type: :request do
     end
 
     it 'Unauthorized when tags is accessed by non-admin' do
-      user.update(role: :learner)
+      user = create(:user, :learner)
+      sign_in user
       get tags_path
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       expect(response).to redirect_to(error_401_path)

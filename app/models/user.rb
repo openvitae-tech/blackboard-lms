@@ -110,7 +110,13 @@ class User < ApplicationRecord
   end
 
   def active_for_authentication?
-    super && (self.active? || self.verified?)
+    active_or_verified_user = (active? || verified?)
+
+    if is_admin?
+      super && active_or_verified_user
+    else
+      super && self.learning_partner.active? && active_or_verified_user
+    end
   end
 
   def inactive_message

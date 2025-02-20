@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Request spec for CourseModules', type: :request do
   let(:user) { create(:user, :admin) }
+  let(:learner) { create(:user, :learner) }
 
   before do
     sign_in user
@@ -19,7 +20,7 @@ RSpec.describe 'Request spec for CourseModules', type: :request do
     end
 
     it 'Unauthorized when course module accessed by non-admin' do
-      user.update(role: :learner)
+      sign_in(learner)
 
       get course_module_path(@course.id, @course_module.id)
       expect(response.status).to be(302)
@@ -36,7 +37,8 @@ RSpec.describe 'Request spec for CourseModules', type: :request do
     end
 
     it 'Unauthorized when new course module is accessed by non-admin' do
-      user.update(role: :learner)
+      user = create(:user, :learner)
+      sign_in user
 
       get new_course_module_path(@course.id)
       expect(response.status).to be(302)
@@ -53,8 +55,7 @@ RSpec.describe 'Request spec for CourseModules', type: :request do
     end
 
     it 'Unauthorized when edit course module accessed by non-admin' do
-      user.update(role: :learner)
-
+      sign_in(learner)
       get edit_course_module_path(@course.id, @course_module.id)
 
       expect(response).to have_http_status(:found)
@@ -72,7 +73,7 @@ RSpec.describe 'Request spec for CourseModules', type: :request do
     end
 
     it 'Does not allow creating course module by non-admin' do
-      user.update(role: :learner)
+      sign_in(learner)
 
       expect do
         post course_modules_path(@course.id), params: course_module_params
@@ -103,7 +104,7 @@ RSpec.describe 'Request spec for CourseModules', type: :request do
     end
 
     it 'Does not allow updating course module by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       put course_module_path(@course.id, @course_module.id), params: course_module_params
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
@@ -125,7 +126,7 @@ RSpec.describe 'Request spec for CourseModules', type: :request do
     end
 
     it 'Does not allow deleting course module by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       expect do
         delete course_module_path(@course.id, @course_module.id)
@@ -158,7 +159,7 @@ RSpec.describe 'Request spec for CourseModules', type: :request do
     end
 
     it 'Does not allow changing the order of course module by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       put moveup_course_module_path(@course.id, @module_one.id)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
@@ -182,7 +183,7 @@ RSpec.describe 'Request spec for CourseModules', type: :request do
     end
 
     it 'Does not allow changing the order of course module by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       put movedown_course_module_path(@course.id, @module_one.id)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))

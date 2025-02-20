@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Request spec for Home', type: :request do
   let(:user) { create(:user, :admin) }
+  let(:learner) { create(:user, :learner) }
 
   before do
     sign_in user
@@ -16,14 +17,15 @@ RSpec.describe 'Request spec for Home', type: :request do
     end
 
     it 'when user signed in as a manager' do
-      user.update(role: :manager)
+      manager = create(:user, :manager)
+      sign_in manager
 
       get '/'
       expect(response).to redirect_to(dashboards_path)
     end
 
     it 'when user signed in as a learner' do
-      user.update(role: :learner)
+      sign_in learner
 
       get '/'
       expect(response).to redirect_to(courses_path)

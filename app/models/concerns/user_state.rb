@@ -29,13 +29,13 @@ module UserState
     end
 
     def activate
-      raise Errors::IllegalUserState.new("User state #{self.state} can't switch to active state") unless verified?
+      raise Errors::IllegalUserState.new("User state #{self.state} can't switch to active state") unless verified? || deactivated?
       self.state = 'active'
       self.save
     end
 
     def deactivate
-      raise Errors::IllegalUserState.new("User state #{self.state} can't switch to deactivate state") unless deactivated?
+      raise Errors::IllegalUserState.new("User state #{self.state} can't switch to deactivate state") unless active?
       self.state = 'in-active'
       self.save
     end
