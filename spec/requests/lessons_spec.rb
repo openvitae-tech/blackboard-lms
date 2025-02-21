@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Request spec for Lessons', type: :request do
   let(:user) { create(:user, :admin) }
+  let(:learner) { create(:user, :learner) }
 
   before do
     sign_in user
@@ -38,7 +39,8 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'unauthorized when new lesson is accessed by non-admin' do
-      user.update(role: :learner)
+      user = learner
+      sign_in user
 
       get new_course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
@@ -63,7 +65,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'does not allow creating lessons by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       expect do
         post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
@@ -93,7 +95,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'unauthorized when edit lesson accessed by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       get edit_course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
@@ -115,7 +117,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'does not allow updating lesson by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       put course_module_lesson_path(course_id: @course.id, module_id: @course_module_two.id, id: @lesson.id),
           params: { lesson: { title: @lesson_title } }
@@ -144,7 +146,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'does not allow deleting lesson by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       expect do
         delete course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
@@ -174,7 +176,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'does not allow changing the lessons order by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       put moveup_course_module_lesson_path(course_id: @course.id, module_id: @course_module_two.id,
                                            id: @lesson_three.id)
@@ -197,7 +199,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'does not allow changing the lessons order by non-admin' do
-      user.update(role: :learner)
+      sign_in learner
 
       put movedown_course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id,
                                              id: @lesson_one.id)
@@ -214,8 +216,9 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'learner should able to mark enrolled course lesson as completed' do
+      user = learner
       @course.enroll!(user)
-      user.update(role: :learner)
+      sign_in user
 
       post complete_course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
 
@@ -238,8 +241,9 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'learner should able to replay the enrolled course lesson' do
+      user = learner
       @course.enroll!(user)
-      user.update(role: :learner)
+      sign_in user
 
       post complete_course_module_lesson_path(course_id: @course, module_id: @course_module_one.id, id: @lesson)
       expect(user.enrollments.first.completed_lessons).to eq([@lesson.id])

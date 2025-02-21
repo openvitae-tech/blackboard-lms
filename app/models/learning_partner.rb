@@ -4,6 +4,7 @@ class LearningPartner < ApplicationRecord
   MAX_USER_COUNT = 50
 
   include CustomValidations
+  include PartnerState
 
   has_many :users, dependent: :destroy
   has_one :scorm, dependent: :destroy

@@ -1,29 +1,35 @@
 # frozen_string_literal: true
 
 class LearningPartnersController < ApplicationController
-  before_action :authorize_admin!
-  before_action :set_learning_partner, only: %i[show edit update destroy]
+  before_action :set_learning_partner, only: %i[show edit update destroy activate deactivate]
 
   # GET /learning_partners or /learning_partners.json
   def index
+    authorize :learning_partner
     @learning_partners = LearningPartner.includes(:logo_attachment).order(:name).page(params[:page])
   end
 
   # GET /learning_partners/1 or /learning_partners/1.json
   def show
+    authorize :learning_partner
     @metrics = PartnerMetrics.new(@learning_partner)
   end
 
   # GET /learning_partners/new
   def new
+    authorize :learning_partner
     @learning_partner = LearningPartner.new
   end
 
   # GET /learning_partners/1/edit
-  def edit; end
+  def edit
+    authorize :learning_partner
+  end
 
   # POST /learning_partners or /learning_partners.json
   def create
+    authorize :learning_partner
+
     @learning_partner = LearningPartner.new(learning_partner_params)
 
     service = PartnerOnboardingService.instance
@@ -45,10 +51,12 @@ class LearningPartnersController < ApplicationController
 
   # PATCH/PUT /learning_partners/1 or /learning_partners/1.json
   def update
+    authorize :learning_partner
+
     respond_to do |format|
       if @learning_partner.update(learning_partner_params)
         format.html do
-          redirect_to learning_partner_url(@learning_partner), notice: 'Learning partner was successfully updated.'
+          redirect_to learning_partner_path(@learning_partner), notice: 'Learning partner was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @learning_partner }
       else
@@ -60,12 +68,26 @@ class LearningPartnersController < ApplicationController
 
   # DELETE /learning_partners/1 or /learning_partners/1.json
   def destroy
+    authorize :learning_partner
+
     @learning_partner.destroy!
 
     respond_to do |format|
       format.html { redirect_to learning_partners_url, notice: 'Learning partner was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def activate
+    authorize @learning_partner
+    @learning_partner.activate
+    redirect_to @learning_partner, notice: 'Learning partner is re-activated.'
+  end
+
+  def deactivate
+    authorize @learning_partner
+    @learning_partner.deactivate
+    redirect_to @learning_partner, notice: 'Learning partner is deactivated.'
   end
 
   private
