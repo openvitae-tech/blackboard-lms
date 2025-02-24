@@ -12,7 +12,6 @@
           <% end %>
         <% end %>
       </div>
-
       <% if local_assigns[:enrollment].present? %>
         <div class="w-80">
           <%= render "shared/components/progress_bar", progress: enrollment.progress %>
@@ -33,11 +32,13 @@
             <span class="icon icon-clock h-3.5 w-3.5 bg-primary"></span>
             <span class="ml-2 text-xs font-medium"><%= course_duration(course) %></span>
           </div>
-          <div class="flex items-center">
-            <span class="icon icon-user h-3.5 w-3.5 bg-primary"></span>
-            <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
-          </div>
-        </div>     
+          <%= render 'shared/components/tooltip', tooltip_text: pluralize(enroll_count(course), t("course.enroll.user")) do %>
+            <div class="flex items-center">
+              <span class="icon icon-user h-3.5 w-3.5 bg-primary"></span>
+              <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
+            </div>
+          <% end %>
+        </div>
       </div>
       <p class="overflow-hidden text-ellipsis text-sm font-medium tracking-tight max-h-[20px] heading">
         Course Description
@@ -47,7 +48,6 @@
           <%= course_description(course) %>
         </div>
       </div>
-
     </div>
   </div>
   <div class="flex justify-center md:justify-end  gap-4 mt-6">

@@ -31,7 +31,8 @@ RSpec.describe 'Request spec for LocalContents', type: :request do
     end
 
     it 'Unauthorized when retry is accessed by non-admin' do
-      user.update(role: :learner)
+      user = create(:user, :learner)
+      sign_in user
 
       put retry_course_module_lesson_local_content_path(
         course_id: @course.id,

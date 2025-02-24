@@ -200,6 +200,10 @@ body{
     @apply h-2 w-2;
   }
 
+  .icon-mini {
+    @apply h-3 w-3;
+  }
+
   .icon-small {
     @apply h-4 w-4;
   }

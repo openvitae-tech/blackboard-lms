@@ -1,0 +1,59 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+
+<div class="heading heading-medium">Buttons</div>
+
+<section class="my-6">
+  <h2>Primary Button</h2>
+  <p>
+    <%= button(label: "Button", size: "sm") %>
+    <%= button(label: "Button") %>
+    <%= button(label: "Button", size: "lg") %>
+    <%= button(label: "Button", size: "xl") %>
+  </p>
+</section>
+
+<section class="my-6">
+  <h2>Secondary Button</h2>
+  <p>
+    <%= button(label: "Button", size: "sm", type: "secondary") %>
+    <%= button(label: "Button", type: "secondary") %>
+    <%= button(label: "Button", size: "lg", type: "secondary") %>
+    <%= button(label: "Button", size: "xl", type: "secondary") %>
+  </p>
+</section>
+
+
+<section class="my-6">
+  <h2>Primary Button with icons</h2>
+  <div class="my-6">
+    <%= button(label: "Button", size: "sm", icon_name: "adjustments-vertical") %>
+    <%= button(label: "Button", icon_name: "adjustments-vertical") %>
+    <%= button(label: "Button", size: "lg", icon_name: "adjustments-vertical") %>
+    <%= button(label: "Button", size: "xl", icon_name: "adjustments-vertical") %>
+  </div>
+  <div class="my-6">
+    <%= button(label: "Button", size: "sm", icon_name: "adjustments-vertical", icon_position: "right") %>
+    <%= button(label: "Button", icon_name: "adjustments-vertical", icon_position: "right") %>
+    <%= button(label: "Button", size: "lg", icon_name: "adjustments-vertical", icon_position: "right") %>
+    <%= button(label: "Button", size: "xl", icon_name: "adjustments-vertical", icon_position: "right") %>
+  </div>
+</section>
+
+
+<section class="my-6">
+  <h2>Secondary Button with icons</h2>
+  <div class="my-6">
+    <%= button(label: "Button", type: "secondary", size: "sm", icon_name: "adjustments-vertical") %>
+    <%= button(label: "Button", type: "secondary", icon_name: "adjustments-vertical") %>
+    <%= button(label: "Button", type: "secondary", size: "lg", icon_name: "adjustments-vertical") %>
+    <%= button(label: "Button", type: "secondary", size: "xl", icon_name: "adjustments-vertical") %>
+  </div>
+  <div class="my-6">
+    <%= button(label: "Button", type: "secondary", size: "sm", icon_name: "adjustments-vertical", icon_position: "right") %>
+    <%= button(label: "Button", type: "secondary", icon_name: "adjustments-vertical", icon_position: "right") %>
+    <%= button(label: "Button", type: "secondary", size: "lg", icon_name: "adjustments-vertical", icon_position: "right") %>
+    <%= button(label: "Button", type: "secondary", size: "xl", icon_name: "adjustments-vertical", icon_position: "right") %>
+  </div>
+</section>
