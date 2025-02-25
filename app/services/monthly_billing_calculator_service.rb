@@ -1,11 +1,10 @@
-class MonthlyBillingCalculator
+class MonthlyBillingCalculatorService
   def initialize
     @total_billed_days = 0
   end
 
   def process
     process_learning_partners
-    @total_billed_days
   end
 
   private
@@ -13,6 +12,9 @@ class MonthlyBillingCalculator
   def process_learning_partners
     LearningPartner.find_each(batch_size: 10) do |learning_partner|
       process_users_billing(learning_partner.users)
+      Payment.create!(billable_days: @total_billed_days, amount: 0, learning_partner:)
+
+      @total_billed_days = 0
     end
   end
 
@@ -25,7 +27,7 @@ class MonthlyBillingCalculator
       events = fetch_user_events(user, billing_start_date, billing_end_date)
       if events.any?
         calculate_billable_days_from_events(events, billing_start_date, billing_end_date)
-      elsif user.state == "active" || last_user_event.name == "user_activated"
+      elsif user_last_event_before_billing_month(user, billing_start_date)&.name == "user_activated"
         @total_billed_days += (billing_end_date - billing_start_date + 1).to_i
       end
     end
@@ -59,7 +61,7 @@ class MonthlyBillingCalculator
     @total_billed_days += (billing_end_date - last_activation_date + 1).to_i if last_activation_date
   end
 
-  def last_user_event(user, billing_start_date, billing_end_date)
+  def user_last_event_before_billing_month(user, billing_start_date)
     Event.where(
       "data->>'target_user_id' = ? AND created_at < ? AND name IN (?)",
       user.id, billing_start_date, ["user_activated", "user_deactivated"]

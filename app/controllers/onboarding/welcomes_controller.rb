@@ -43,6 +43,7 @@ class Onboarding::WelcomesController < ApplicationController
   end
 
   def all_set
+    EVENT_LOGGER.publish_user_activated(current_user, nil)
     @after_onboarding_path =
       if current_user.is_admin?
         after_sign_in_path_for(current_user)
