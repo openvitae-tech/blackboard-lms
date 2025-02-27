@@ -16,7 +16,7 @@
     <ul class="w-full pb-6">
       <li class="carousel-container mt-6 rounded box-shadow-medium">
         <h2 class="bg-primary-light-50 p-6 text-medium">
-          <span>1.</span> <%= quiz.question %>
+          <span>Q.</span> <%= quiz.question %>
         </h2>
 
         <div class="carousel-item active">
@@ -24,25 +24,25 @@
             <li class="border-t border-line-colour-light p-6">
               <label class="flex items-center justify-between">
                 <%= form.label "opt-a", quiz.option_a %>
-                <%= form.radio_button 'answer', "a", class: "mx-2 form-radio", id: "quiz_opt-a", data: { action: "change->quiz#valueChanged"} %>
+                <%= form.radio_button 'answer', "a", checked: @answer&.answer == 'a', class: "mx-2 form-radio", id: "quiz_opt-a", required: true, data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
             <li class="border-t border-line-colour-light p-6">
               <label class="flex items-center justify-between">
                 <%= form.label "opt-b", quiz.option_b %>
-                <%= form.radio_button 'answer', "b", class: "mx-2 form-radio", id: "quiz_opt-b", data: { action: "change->quiz#valueChanged"} %>
+                <%= form.radio_button 'answer', "b", checked: @answer&.answer == 'b', class: "mx-2 form-radio", id: "quiz_opt-b", required: true, data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
             <li class="border-t border-line-colour-light p-6">
               <label class="flex items-center justify-between">
                 <%= form.label "opt-c", quiz.option_c %>
-                <%= form.radio_button 'answer', "c", class: "mx-2 form-radio", id: "quiz_opt-c", data: { action: "change->quiz#valueChanged"} %>
+                <%= form.radio_button 'answer', "c", checked: @answer&.answer == 'c', class: "mx-2 form-radio", id: "quiz_opt-c", required: true, data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
             <li class="border-t border-line-colour-light p-6">
               <label class="flex items-center justify-between">
                 <%= form.label "opt-d", quiz.option_a %>
-                <%= form.radio_button 'answer', "d", class: "mx-2 form-radio", id: "quiz_opt-d", data: { action: "change->quiz#valueChanged"} %>
+                <%= form.radio_button 'answer', "d", checked: @answer&.answer == 'd', class: "mx-2 form-radio", id: "quiz_opt-d", required: true, data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
           </ul>         

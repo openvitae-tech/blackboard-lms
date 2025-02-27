@@ -35,9 +35,7 @@ class QuizPolicy < ApplicationPolicy
   end
 
   def submit_answer?
-    return false unless user.enrolled_for_course?(quiz.course_module.course)
-    enrollment = user.get_enrollment_for(quiz.course_module.course)
-    !enrollment.quiz_answered?(quiz)
+    user.enrolled_for_course?(quiz.course_module.course)
   end
 
   def moveup?
