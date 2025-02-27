@@ -48,7 +48,6 @@ class LoginsController < ApplicationController
 
   def user_exists?
     @mobile_number = MobileNumber.new(value: login_params[:mobile_number])
-    return false unless @mobile_number.valid?
-    @user_exists = User.exists?(phone: @mobile_number.value)
+    @user_exists = @mobile_number.valid? && User.exists?(phone: @mobile_number.value)
   end
 end
