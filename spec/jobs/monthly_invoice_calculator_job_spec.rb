@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe MonthlyInvoiceCalculatorJob do
+  let(:user) { create :user, :admin }
+
   after do
     Sidekiq::Job.clear_all
   end

@@ -1,8 +1,9 @@
 class MonthlyInvoiceCalculatorService
-  attr_reader :billing_month
+  attr_reader :billing_month, :learning_partners
 
-  def initialize(billing_month)
+  def initialize(billing_month, learning_partners)
     @billing_month = billing_month
+    @learning_partners = learning_partners
     @total_billed_days = 0
     @active_users_count = 0
   end
@@ -14,12 +15,11 @@ class MonthlyInvoiceCalculatorService
   private
 
   def process_learning_partners
-    LearningPartner.find_each(batch_size: 10) do |learning_partner|
+    learning_partners.each do |learning_partner|
       process_billing(learning_partner)
       Invoice.create!(billable_days: @total_billed_days,
                       amount: @total_billed_days * Invoice::PER_DAY_RATE, active_users: @active_users_count,
                       bill_date: billing_month.end_of_month, learning_partner:)
-      # puts "#{learning_partner.name}: #{@total_billed_days}, active users: #{@active_users_count}"
       @total_billed_days = 0
       @active_users_count = 0
     end
@@ -29,7 +29,7 @@ class MonthlyInvoiceCalculatorService
     billing_start_date = billing_month.beginning_of_month.to_date
     billing_end_date = billing_month.end_of_month.to_date
 
-    last_billing = Invoice.where(learning_partner: learning_partner)
+    last_billing = Invoice.where(learning_partner:)
                   .where(bill_date: billing_month.last_month.all_month)
                   .order(:bill_date)
                   .last
