@@ -52,6 +52,10 @@ en:
   scorm:
     download_modal:
       title: "Download SCORM package"
+  invoice:
+    notification:
+      invoice_generated: "Invoice generated"
+      description: "The invoice for %{month} has been created for the learning partners."
   course:
     label: "My Courses"
     enroll:

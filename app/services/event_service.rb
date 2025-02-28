@@ -174,7 +174,7 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      target_user_id: target_user.id,
+      target_user_id: target_user.present? ? target_user.id : user.id,
     )
 
     publish_event(user, event)

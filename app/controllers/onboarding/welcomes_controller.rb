@@ -35,7 +35,7 @@ class Onboarding::WelcomesController < ApplicationController
     if current_user.update(password_params)
       sign_in(current_user, bypass: true)
       current_user.activate
-      EVENT_LOGGER.publish_active_user_count(current_user)
+      EVENT_LOGGER.publish_user_activated(current_user, nil)
       redirect_to all_set_onboarding_welcome_path
     else
       render turbo_stream: turbo_stream.replace("onboarding-frame", partial: "onboarding/welcomes/set_password")
