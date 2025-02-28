@@ -4,6 +4,40 @@
 
 <div class="heading heading-medium">Inputs</div>
 
-<ul class="my-6">
-  <li>Headings</li>
+<ul class="my-6 flex flex-col gap-4">
+  <li>
+    <%= input_field(label: "Text Input", placeholder: "Enter text") %>
+  </li>
+  <li>
+    <%= input_field(label: "Text Input", placeholder: "Search here",left_icon: "search",) %>
+  </li>
+  <li>
+    <%= input_field(label: "Select an Option", type: "dropdown_field", options: ["Option 1", "Option 2", "Option 3"]) %>
+  </li>
+  <li>
+    <%= input_field(label: "Radio Option", placeholder: "English", type: "radio_field") %>
+  </li>
 </ul>
+
+<h3>Form with fields</h3>
+
+<%= form_with model: User.new, url: courses_path, method: :post do |f| %>
+  <ul class="my-6 flex flex-col gap-4">
+    <li class="">
+      <%= input_field(f: f, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email") %>
+    </li>
+    <li class="">
+      <%= input_field(f: f, field_name: :password, label: "Password", placeholder: "Enter password", type: "password") %>
+    </li>
+    <li class="">
+      <%= input_field(f: f, field_name: :number, label: "Number", placeholder: "Enter number", type: "number") %>
+    </li>
+    <li>
+      <%= input_field(f: f,label: "Select an Option", type: "dropdown_field", options: ["Option 1", "Option 2", "Option 3"]) %>
+    </li>
+    <li>
+      <%= input_field(f: f,label: "Radio Option", placeholder: "English", type: "radio_field") %>
+    </li>
+  </ul>
+  <%= f.submit "Submit", class: "btn-primary" %>
+<% end %>

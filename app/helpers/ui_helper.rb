@@ -31,4 +31,21 @@ module UiHelper
     ordered = position == "left" ? [icon, label_tag] : [label_tag, icon]
     ordered.compact.join("").html_safe
   end
+  def input_field(f: nil, field_name: nil, label: nil, placeholder: "Enter text", width: "w-56", left_icon: nil, right_icon: nil, type: "text_field", options: [],value:"nil")
+    partial_path = "ui/inputs/#{type}"
+    partial_path = "ui/inputs/text_field" unless lookup_context.exists?(partial_path, [], true)
+  
+    render partial: partial_path, locals: {
+      f: f,
+      field_name: field_name,
+      label: label,
+      placeholder: placeholder,
+      width: width,
+      left_icon: left_icon,
+      right_icon: right_icon,
+      type: type,
+      options: options,
+      value:value
+    }
+  end
 end
