@@ -9,12 +9,11 @@ class LoginsController < ApplicationController
   def new; end
 
   def otp
-    @mobile_number = login_params[:mobile_number]
     service = LoginWithOtpService.instance
 
     if @user_exists
-      user = User.where(phone: @mobile_number).first
-      service.set_and_send_otp(@mobile_number, user)
+      user = User.where(phone: @mobile_number.value).first
+      service.set_and_send_otp(@mobile_number.value, user)
     else
       redirect_to new_login_path, notice: t('login.incorrect_phone')
     end
@@ -24,7 +23,7 @@ class LoginsController < ApplicationController
     service = LoginWithOtpService.instance
 
     if @user_exists
-      user = User.where(phone: login_params[:mobile_number]).first
+      user = User.where(phone: @mobile_number.value).first
       if service.valid_otp?(user, login_params[:otp])
         build_user_session(user)
         user.clear_otp!
@@ -48,6 +47,7 @@ class LoginsController < ApplicationController
   end
 
   def user_exists?
-    @user_exists = User.exists?(phone: login_params[:mobile_number])
+    @mobile_number = MobileNumber.new(value: login_params[:mobile_number])
+    @user_exists = @mobile_number.valid? && User.exists?(phone: @mobile_number.value)
   end
 end
