@@ -7,7 +7,10 @@ class QuizzesController < ApplicationController
 
   def show
     authorize @quiz
-    @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
+    if current_user.enrolled_for_course?(@course)
+      @enrollment = current_user.get_enrollment_for(@course)
+      @answer = @enrollment.get_answer(@quiz) if @enrollment.quiz_answered?(@quiz)
+    end
   end
 
   def new
@@ -34,11 +37,12 @@ class QuizzesController < ApplicationController
 
   def update
     authorize @quiz
-      if @quiz.update(quiz_params)
-          redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully updated.'
-      else
-        render :edit, status: :unprocessable_entity
-      end
+
+    if @quiz.update(quiz_params)
+        redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

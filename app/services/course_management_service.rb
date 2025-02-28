@@ -95,7 +95,7 @@ class CourseManagementService
   def set_lesson_attributes(_course_module, lesson)
     lesson.video_streaming_source = 'vimeo'
   end
-  
+
   def assign_user_to_courses(user, courses_with_deadline, assigned_by)
     return unless user.is_learner?
 
@@ -135,7 +135,16 @@ class CourseManagementService
                QuizAnswer::STATUS_MAPPING[:incorrect]
              end
 
-    quiz_answer = enrollment.quiz_answers.new(quiz:, status:, answer:, course_module_id: quiz.course_module_id)
+    quiz_answer =
+      if enrollment.quiz_answered?(quiz)
+        quiz_answer = enrollment.get_answer(quiz)
+        quiz_answer.answer = answer
+        quiz_answer.status = status
+        quiz_answer
+      else
+        enrollment.quiz_answers.new(quiz:, status:, answer:, course_module_id: quiz.course_module_id)
+      end
+
     quiz_answer.save!
     enrollment.set_score!(enrollment.score + quiz_answer.score)
   end

@@ -12,7 +12,7 @@
     <% end %>
   </div>
 
-  <% if current_user.is_admin? || @enrollment.quiz_answered?(@quiz) %>
+  <% if current_user.is_admin? %>
     <%= render "quizzes/quiz", course: @course, course_module: @course_module, quiz: @quiz %>
   <% else %>
     <%= render "quizzes/quiz_submit_form", course: @course, course_module: @course_module, quiz: @quiz %>
