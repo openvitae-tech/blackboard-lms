@@ -4,5 +4,5 @@ course_deadline_reminder:
   class: "CourseDeadlineReminder"
   queue: "daily_jobs"
 generate_monthly_invoices:
-  cron: "2 0 1 * *"
+  cron: "5 0 1 * *"
   class: "MonthlyInvoiceCalculatorJob"
