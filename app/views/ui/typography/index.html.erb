@@ -2,8 +2,111 @@
   <%= render "shared/components/back_button", back_link: ui_components_path %>
 </div>
 
-<div class="heading heading-medium">Typography</div>
+<div class="heading heading-medium pb-6">Typography</div>
 
-<ul class="my-6">
-  <li>Headings</li>
-</ul>
+<table class="w-full border-collapse border border-line-colour-light rounded">
+  <thead>
+    <tr class="">
+      <th class="border border-line-colour-light px-2 md:px-4 py-2 text-left text-sm md:text-base">Typographic Class Name</th>
+      <th class="border border-line-colour-light px-2 md:px-4 py-2 text-left text-sm md:text-base">Font Properties <br>(font-size/line height(font-weight))</th>
+      <th class="border border-line-colour-light px-2 md:px-4 py-2 text-left text-sm md:text-base">Example Display</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="bg-slate-grey-light font-bold">
+      <td colspan="3" class="px-2 md:px-4 py-2 text-sm md:text-base">Heading</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">heading-extra-large </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">30/36 (semibold)</td>
+      <td class="px-2 md:px-4 py-2 heading-extra-large">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">heading-large </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">24/32 (semibold)</td>
+      <td class="px-2 md:px-4 py-2 heading-large">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">heading-medium </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">20/28 (semibold)</td>
+      <td class="px-2 md:px-4 py-2 heading-medium">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">heading-small </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">16/24 (semibold)</td>
+      <td class="px-2 md:px-4 py-2 heading-small">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">heading-extra-small </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">14/20 (semibold)</td>
+      <td class="px-2 md:px-4 py-2 heading-extra-small">Example Text</td>
+    </tr>
+
+    <tr class="bg-slate-grey-light font-bold">
+      <td colspan="3" class="px-2 md:px-4 py-2 text-sm md:text-base">Title</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">title-large </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">16/24 (Medium)</td>
+      <td class="px-2 md:px-4 py-2 title-large">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">title-medium </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">14/20 (Medium)</td>
+      <td class="px-2 md:px-4 py-2 title-medium">Example Text</td>
+    </tr>
+    <tr class="border  border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">title-small </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">12/16 (Medium)</td>
+      <td class="px-2 md:px-4 py-2 title-small">Example Text</td>
+    </tr>
+
+    <tr class="bg-slate-grey-light font-bold">
+      <td colspan="3" class="px-2 md:px-4 py-2 text-sm md:text-base">Subtitle</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">subtitle-large </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">16/24 (Regular)</td>
+      <td class="px-2 md:px-4 py-2 subtitle-large">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">subtitle-medium </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">14/20 (Regular)</td>
+      <td class="px-2 md:px-4 py-2 subtitle-medium">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">subtitle-small </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">12/16 (Regular)</td>
+      <td class="px-2 md:px-4 py-2 subtitle-small">Example Text</td>
+    </tr>
+
+    <tr class="bg-slate-grey-light font-bold">
+      <td colspan="3" class="px-2 md:px-4 py-2 text-sm md:text-base">Body Text (Font Name: Roboto)</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body-large </td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">16/24 (Regular)</td>
+      <td class="px-2 md:px-4 py-2 body-large">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body-medium</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">14/20 (Medium)</td>
+      <td class="px-2 md:px-4 py-2 body-medium">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body-small</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">14/20 (Regular)</td>
+      <td class="px-2 md:px-4 py-2 body-small">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body-extra-small-medium</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">12/16 (Medium)</td>
+      <td class="px-2 md:px-4 py-2 body-extra-small-medium">Example Text</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body-extra-small-regular</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">12/16 (Regular)</td>
+      <td class="px-2 md:px-4 py-2 body-extra-small-regular">Example Text</td>
+    </tr>
+  </tbody>
+</table>

@@ -298,3 +298,67 @@ input.tags-checkbox:checked:focus {
 .teams-more-hover{
   @apply bg-black hover:bg-secondary hover:opacity-80;
 }
+
+.heading-extra-large {
+  @apply text-3xl font-semibold;
+}
+
+.heading-large {
+  @apply text-2xl font-semibold;
+}
+
+.heading-medium {
+  @apply text-xl font-semibold;
+}
+
+.heading-small {
+  @apply text-lg font-semibold;
+}
+
+.heading-extra-small {
+  @apply text-base font-semibold;
+} 
+
+.title-large {
+  @apply text-lg font-medium;
+}
+
+.title-medium {
+  @apply text-base font-medium;
+}
+
+.title-small {
+  @apply text-sm font-medium;
+}
+
+.subtitle-large {
+  @apply text-lg font-normal;
+}
+
+.subtitle-medium {
+  @apply text-base font-normal;
+}
+
+.subtitle-small {
+  @apply text-sm font-normal;
+}
+
+.body-large {
+  @apply text-lg font-normal;
+}
+
+.body-medium {
+  @apply text-base font-medium;
+}
+
+.body-small {
+  @apply text-base font-normal;
+}
+
+.body-extra-small-medium {
+  @apply text-sm font-medium;
+}
+
+.body-extra-small-regular {
+  @apply text-sm font-normal;
+}
