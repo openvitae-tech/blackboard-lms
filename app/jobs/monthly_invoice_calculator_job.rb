@@ -8,6 +8,6 @@ class MonthlyInvoiceCalculatorJob < BaseJob
 
     NotificationService.notify(
       User.where(role: "admin").last,
-      t("invoice.notification.title"), t("invoice.notification.description", month: billing_month.strftime("%B")))
+      I18n.t("invoice.notification.title"), I18n.t("invoice.notification.description", month: billing_month.strftime("%B")))
   end
 end

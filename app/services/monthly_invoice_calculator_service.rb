@@ -42,7 +42,7 @@ class MonthlyInvoiceCalculatorService
 
       @total_billed_days = (@active_users_count - deactivated_users_count) * billing_month.end_of_month.day
 
-      calculate_billable_days_from_events(events, billing_start_date, billing_end_date) #calculate bill for the existing learning partners
+      calculate_billable_days_from_events(events, billing_start_date, billing_end_date)
     else
       @total_billed_days+= @active_users_count*billing_month.end_of_month.day
     end
