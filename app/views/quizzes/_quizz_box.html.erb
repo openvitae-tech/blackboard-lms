@@ -34,12 +34,12 @@
         <%  if next_link.blank? %>
           <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer disabled" do %>
             <span class="labels label-small">Skip</span>
-            <%= render "shared/svg/forward" %>
+            <span class="block icon icon-arrow-right icon-small bg-letter-color"></span>
           <% end %>
         <% else %>
           <%= link_to next_link, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
             <span class="labels label-small">Skip</span>
-            <%= render "shared/svg/forward" %>
+            <span class="block icon icon-arrow-right icon-small bg-letter-color"></span>
           <% end %>
         <% end %>
     </div>
