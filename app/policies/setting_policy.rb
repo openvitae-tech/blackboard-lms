@@ -9,6 +9,6 @@ class SettingPolicy
   end
 
   def index?
-    user.is_admin?
+    user.is_admin? || user.is_owner?
   end
 end

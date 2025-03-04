@@ -1,0 +1,21 @@
+<div class="flex gap-4 justify-between">
+  <%= render 'shared/components/bread_crumbs', links: [[t("settings.label"), settings_path], ["Invoice", nil]] %>
+</div>
+<div class="mt-5">
+  <div class="flex flex-col py-4 md:px-6 md:shadow-[0px_0px_4px_0px_#33333329] rounded">
+    <div class="hidden md:grid grid-cols-12 gap-4 text-left text-sm font-medium px-6 py-4 border-b border-line-colour-light w-full">
+      <div class="col-span-2 flex justify-start">Invoice ID</div>
+      <div class="col-span-2 flex justify-start">Amount (₹)</div>
+      <div class="col-span-2 flex justify-start">Billing date</div>
+      <div class="col-span-2 flex justify-start">Due date</div>
+      <div class="col-span-2 flex justify-start">Status</div>
+      <div class="col-span-2 flex justify-start">Action</div>
+    </div>
+
+    <div id="team-member-list" class="bg-white md:divide-y md:divide-slate-grey-light flex flex-col gap-4 md:gap-0  max-h-[350px] overflow-y-auto p-1">
+      <% @invoices.each do |invoice| %>
+        <%= render "invoices/invoice", invoice: %>
+      <% end %>
+    </div>
+  </div>
+</div>

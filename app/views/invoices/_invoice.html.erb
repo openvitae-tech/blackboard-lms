@@ -1,0 +1,20 @@
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center py-4 md:px-4 shadow-[0px_0px_4px_0px_#33333329] rounded md:shadow-none">
+  <div class="col-span-1 text-xs md:col-span-2 md:text-sm">
+    #<%= invoice.id %>
+  </div>
+  <div class="col-span-1 text-xs md:col-span-2 md:text-sm">
+    <%= invoice.amount %>
+  </div>
+  <div class="col-span-1 text-xs md:col-span-2 md:text-sm">
+    <%= formatted_bill_date(invoice.bill_date) %>
+  </div>
+  <div class="col-span-1 text-xs md:col-span-2 md:text-sm <%= 'text-[#FF0000]' if invoice.bill_date < Time.zone.now %>">
+    <%= due_date(invoice.bill_date) %>
+  </div>
+  <div class="col-span-1 text-xs md:col-span-2 md:text-sm">
+    <%= invoice.status.capitalize %>
+  </div>
+  <div class="col-span-1 text-xs md:col-span-2 md:text-sm">
+    <%= render "shared/components/button_primary_small", label: "Pay now" %>
+  </div>
+</div>
