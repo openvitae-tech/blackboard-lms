@@ -33,9 +33,6 @@ class MonthlyInvoiceCalculatorService
   end
 
   def process_billing(learning_partner)
-    billing_start_date = billing_month.beginning_of_month.to_date
-    billing_end_date = billing_month.end_of_month.to_date
-
     last_billing_month_invoice = last_billing(learning_partner, billing_month.last_month.all_month)
     @active_users_count = last_billing_month_invoice&.active_users.to_i
     events = learning_partner_events(learning_partner, billing_month)
@@ -46,7 +43,7 @@ class MonthlyInvoiceCalculatorService
 
       @total_billed_days = (@active_users_count - deactivated_users_count) * billing_month.end_of_month.day
 
-      calculate_billable_days_from_events(events, billing_start_date, billing_end_date)
+      calculate_billable_days_from_events(events)
     else
       @total_billed_days+= @active_users_count*billing_month.end_of_month.day
     end
@@ -56,7 +53,10 @@ class MonthlyInvoiceCalculatorService
     UserActivatedDeactivatedQuery.new(learning_partner.id, billing_month.all_month).call
   end
 
-  def calculate_billable_days_from_events(events, billing_start_date, billing_end_date)
+  def calculate_billable_days_from_events(events)
+    billing_start_date = billing_month.beginning_of_month.to_date
+    billing_end_date = billing_month.end_of_month.to_date
+
     active_periods = {}
     last_event_type = {}
 
