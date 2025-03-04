@@ -1,14 +1,12 @@
 <div class="flex justify-end">
   <div class="flex justify-between gap-4">
-    <% if policy(@course_module).destroy? %>
-      <%= link_to alert_modal_path(
-                    title: t("alert.title", resource_name: "course module"),
-                    description: t("alert.description", label: @course_module.title, resource_name: "course module"),
-                    action_path: course_module_path(@course, @course_module),
-                    method: :delete,
-                  ), data: { turbo_frame: "modal" } do %>
-        <%= render 'shared/components/outline_button_danger', label: t("button.delete") %>
-      <% end %>
+    <%= link_to alert_modal_path(
+                  title: t("alert.title", resource_name: "course module"),
+                  description: t("alert.description", label: @course_module.title, resource_name: "course module"),
+                  action_path: course_module_path(@course, @course_module),
+                  method: :delete,
+                ),class: !policy(@course_module).destroy? && "disabled", data: { turbo_frame: "modal" } do %>
+      <%= render 'shared/components/outline_button_danger', label: t("button.delete"), tooltip_text: "A module cannot be deleted if the course has any enrollments or is in a published state." %>
     <% end %>
     <div class="flex justify-end w-full gap-4 text-right">
       <% if policy(@course_module).edit? %>

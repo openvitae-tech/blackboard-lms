@@ -1,14 +1,12 @@
 <div>
-  <div class="box text-right flex justify-end">
+  <div class="box text-right flex justify-end gap-4">
     <% if policy(@quiz).edit? %>
       <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz) do %>
         <%= render 'shared/components/icon_button_primary', label: t("button.edit"), icon_name: 'icon-edit' %>
       <% end %>
     <% end %>
-    <% if policy(@quiz).destroy? %>
-      <%= link_to course_module_quiz_path(@course, @course_module, @quiz), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"}, class: "btn-default" do %>
-        <span>Delete</span>
-      <% end %>
+    <%= link_to course_module_quiz_path(@course, @course_module, @quiz),class: !policy(@quiz).destroy? && "disabled", data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"} do %>
+      <%= render 'shared/components/outline_button_danger', label: t("button.delete"), tooltip_text: "A quiz cannot be deleted if the course has any enrollments or is in a published state." %>
     <% end %>
   </div>
 
