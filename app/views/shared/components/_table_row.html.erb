@@ -1,0 +1,48 @@
+
+<div id="<%= type %>_<%= row_data.id %>" class="grid grid-cols-12 gap-4 items-center py-4 md:px-4 shadow-[0px_0px_4px_0px_#33333329] md:shadow-none">
+
+  <% columns.each do |col| %>
+   <% if col[:is_action] %>
+    <div class="col-span-<%= col[:span] %> flex justify-end gap-4 text-xs md:text-sm">
+      <% if type == "member" %>
+        <% if row_data.active_learner? && policy(:course_assigns).new? %>
+          <%= link_to new_course_assign_path(user_id: row_data, source_path: team_path(extra_data[:team])) do %>
+            <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
+          <% end %>
+        <% end %>
+
+        <% if InvitePolicy.new(current_user, row_data).resend? %>
+          <%= link_to resend_invite_path(row_data, team_id: extra_data[:team].id), data: { turbo_method: "put" } do %>
+            <%= render 'shared/components/label_medium_success', label: 'Re-Invite', icon_name: 'icon-re-invite' %>
+          <% end %>
+        <% end %>
+      <% elsif type == "tag" %>
+        <%= link_to edit_tag_path(row_data), data: { turbo_frame: "modal" } do %>
+          <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
+        <% end %>
+
+        <%= link_to tag_path(row_data), data: { turbo_frame: "modal" }, method: :delete do %>
+          <%= render "shared/components/button_default_small", label: 'Delete', icon_name: 'icon-trash' %>
+        <% end %>
+      <% end %>
+    </div>
+   <% else %>
+    <div class="col-span-<%= col[:span] %> text-xs md:text-sm <%= col[:alignment] %>">
+      <% if col[:field] == :name %>
+        <% link = policy(row_data).show? ? member_path(row_data) : "javascript:void(0);" %>
+        <%= link_to link, class: "cursor-pointer flex items-center gap-2" do %>
+          <% if type == "member" %>
+            <span class="inline-block flex-shrink-0 text-xs icon-medium hover:pointer md:icon-large md:text-sm">
+              <%= render 'shared/components/profile_pic', letter: letter_avatar(row_data) %>
+            </span>
+          <% end %>
+          <span class="ml-2 text-ellipsis text-sm font-medium"><%= row_data.name %></span>
+        <% end %>
+      <% else %>
+        <%= row_data.send(col[:field]) %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+</div>

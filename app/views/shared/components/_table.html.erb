@@ -1,0 +1,15 @@
+<div class="mt-5">
+  <div class="flex flex-col py-4 md:px-6 md:shadow-[0px_0px_4px_0px_#33333329] rounded">   
+    <div class="hidden md:grid grid-cols-12 gap-4 text-left text-sm font-medium px-6 py-4 border-b border-line-colour-light w-full">
+      <% columns.each do |col| %>
+        <div class="col-span-<%= col[:span] %> flex <%= col[:alignment] %>"><%= col[:name] %></div>
+      <% end %>
+    </div>
+
+    <div id="<%= table_type %>-list" class="bg-white md:divide-y md:divide-slate-grey-light flex flex-col gap-4 md:gap-0 max-h-[350px] overflow-y-auto p-1">
+      <% rows.each do |row| %>
+        <%= render partial: row_partial, locals: { row_data: row, columns: columns, extra_data: extra_data || {}, type:table_type } %>
+      <% end %>
+    </div>
+  </div>
+</div>
