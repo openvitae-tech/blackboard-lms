@@ -3,7 +3,7 @@ class MonthlyInvoiceCalculatorJob < BaseJob
     billing_month = Time.zone.now.last_month
 
     LearningPartner.find_each(batch_size: 10) do |learning_partner|
-      MonthlyInvoiceCalculatorService.new(billing_month, [learning_partner]).process
+      MonthlyInvoiceCalculatorService.new(billing_month, [learning_partner], false).process
     end
 
     NotificationService.notify(

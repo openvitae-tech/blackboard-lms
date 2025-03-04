@@ -31,7 +31,7 @@ RSpec.describe MonthlyInvoiceCalculatorService do
                       amount: 31 * Invoice::PER_DAY_RATE, active_users: 1,
                       bill_date: 2.months.ago.beginning_of_month, learning_partner: learning_partner_two)
 
-      described_class.new(Time.zone.now.last_month, [learning_partner_one, learning_partner_two]).process
+      described_class.new(Time.zone.now.last_month, [learning_partner_one, learning_partner_two], false).process
       partner_one_invoice = billing_month_invoice(learning_partner_one)
       partner_two_invoice = billing_month_invoice(learning_partner_two)
       partner_one_billable_days_in_jan = 93
@@ -52,7 +52,7 @@ RSpec.describe MonthlyInvoiceCalculatorService do
       publish_user_deactivated(@manager_two, @learner_three, Time.utc(2025, 1, 10))
 
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
       invoice = billing_month_invoice(learning_partner_two)
       billable_days_in_jan = 8
@@ -64,7 +64,7 @@ RSpec.describe MonthlyInvoiceCalculatorService do
       publish_user_deactivated(@manager_one, @learner_two, Time.utc(2025, 1, 10))
       publish_user_deactivated(@manager_one, @learner_one, Time.utc(2025, 1, 20))
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
 
       invoice = billing_month_invoice(learning_partner_one)
@@ -80,7 +80,7 @@ RSpec.describe MonthlyInvoiceCalculatorService do
       publish_user_deactivated(@manager_one, @learner_two, Time.utc(2025, 1, 8))
       publish_user_activated(@manager_one, @learner_two, Time.utc(2025, 1, 15))
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
 
       invoice = billing_month_invoice(learning_partner_one)
@@ -96,7 +96,7 @@ RSpec.describe MonthlyInvoiceCalculatorService do
       publish_user_activated(@manager_one, @learner_one, Time.utc(2025, 1, 15))
       publish_user_deactivated(@manager_one, @learner_one, Time.utc(2025, 1, 20))
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
 
       invoice = billing_month_invoice(learning_partner_one)
@@ -110,7 +110,7 @@ RSpec.describe MonthlyInvoiceCalculatorService do
       new_learner = create :user, :learner, team:, learning_partner: learning_partner_one
       publish_user_activated(@manager_one, new_learner, Time.utc(2025, 1, 8))
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
 
       invoice = billing_month_invoice(learning_partner_one)
@@ -126,7 +126,7 @@ RSpec.describe MonthlyInvoiceCalculatorService do
       publish_user_activated(@manager_one, @learner_two, Time.utc(2025, 1, 11))
 
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
       invoice = billing_month_invoice(learning_partner_one)
       billable_days_in_jan = 83
@@ -140,7 +140,7 @@ RSpec.describe MonthlyInvoiceCalculatorService do
       publish_user_activated(@manager_two, @learner_three, Time.utc(2025, 1, 10))
       publish_user_deactivated(@manager_two, @learner_three, Time.utc(2025, 1, 10))
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
 
       invoice = billing_month_invoice(learning_partner_two)
@@ -158,7 +158,7 @@ RSpec.describe MonthlyInvoiceCalculatorService do
       publish_user_deactivated(@manager_two, @learner_three, Time.utc(2025, 1, 25))
 
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
 
       invoice = billing_month_invoice(learning_partner_two)
@@ -174,23 +174,42 @@ RSpec.describe MonthlyInvoiceCalculatorService do
       publish_user_deactivated(@manager_two, @learner_three, Time.utc(2025, 1, 20))
 
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
 
-      invoice = billing_month_invoice(learning_partner_two)
+      first_invoice = billing_month_invoice(learning_partner_two)
       billable_days_in_jan = 7
 
-      expect(invoice.billable_days).to eq(billable_days_in_jan)
-      expect(invoice.active_users).to eq(0)
-      expect(invoice.amount.to_f).to eq(billable_days_in_jan * Invoice::PER_DAY_RATE)
+      expect(first_invoice.billable_days).to eq(billable_days_in_jan)
+      expect(first_invoice.active_users).to eq(0)
+      expect(first_invoice.amount.to_f).to eq(billable_days_in_jan * Invoice::PER_DAY_RATE)
 
       LearningPartner.find_each do |learning_partner|
-        described_class.new(Time.zone.now.last_month, [learning_partner]).process
+        described_class.new(Time.zone.now.last_month, [learning_partner], false).process
       end
 
-      expect(invoice.billable_days).to eq(billable_days_in_jan)
-      expect(invoice.active_users).to eq(0)
-      expect(invoice.amount.to_f).to eq(billable_days_in_jan * Invoice::PER_DAY_RATE)
+      second_invoice = billing_month_invoice(learning_partner_two)
+      learning_partner_two_billing_month_invoice_count = get_billing_month_invoice_count(learning_partner_two)
+      learning_partner_one_billing_month_invoice_count = get_billing_month_invoice_count(learning_partner_one)
+
+      expect(first_invoice).to eq(second_invoice)
+      expect(learning_partner_two_billing_month_invoice_count).to eq(1)
+      expect(learning_partner_one_billing_month_invoice_count).to eq(1)
+    end
+
+    it 'regenerate invoice for the learning partner' do
+      described_class.new(Time.zone.now.last_month, [learning_partner_one], false).process
+      learning_partner_two_billing_month_invoice_count = get_billing_month_invoice_count(learning_partner_one)
+
+      first_invoice = billing_month_invoice(learning_partner_one)
+      expect(learning_partner_two_billing_month_invoice_count).to eq(1)
+
+      described_class.new(Time.zone.now.last_month, [learning_partner_one], true).process
+      learning_partner_two_billing_month_invoice_count = get_billing_month_invoice_count(learning_partner_one)
+      second_invoice = billing_month_invoice(learning_partner_one)
+
+      expect(learning_partner_two_billing_month_invoice_count).to eq(1)
+      expect(first_invoice).not_to eq(second_invoice)
     end
   end
 
@@ -198,9 +217,15 @@ RSpec.describe MonthlyInvoiceCalculatorService do
 
   def billing_month_invoice(learning_partner)
     Invoice.where(learning_partner:)
-           .where(bill_date: Time.zone.now.last_month.end_of_month)
+           .where(bill_date: Time.zone.now.last_month.all_month)
            .order(:bill_date)
            .last
+  end
+
+  def get_billing_month_invoice_count(learning_partner)
+    Invoice.where(learning_partner:)
+           .where(bill_date: Time.zone.now.last_month.all_month)
+           .order(:bill_date).count
   end
 
   def publish_user_activated(manager, user, jump_time)

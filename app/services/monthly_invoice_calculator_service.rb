@@ -1,11 +1,12 @@
 class MonthlyInvoiceCalculatorService
-  attr_reader :billing_month, :learning_partners
+  attr_reader :billing_month, :learning_partners, :is_recalculation_needed
 
-  def initialize(billing_month, learning_partners)
+  def initialize(billing_month, learning_partners, is_recalculation_needed)
     @billing_month = billing_month
     @learning_partners = learning_partners
     @total_billed_days = 0
     @active_users_count = 0
+    @is_recalculation_needed = is_recalculation_needed
   end
 
   def process
@@ -16,7 +17,13 @@ class MonthlyInvoiceCalculatorService
 
   def process_learning_partners
     learning_partners.each do |learning_partner|
+      billing_month_invoice = last_billing(learning_partner, billing_month.all_month)
+
+      next if billing_month_invoice.present? && !is_recalculation_needed
+
       process_billing(learning_partner)
+      destroy_existing_invoice!(billing_month_invoice) if is_recalculation_needed
+
       Invoice.create!(billable_days: @total_billed_days,
                       amount: @total_billed_days * Invoice::PER_DAY_RATE, active_users: @active_users_count,
                       bill_date: billing_month.end_of_month, learning_partner:)
@@ -29,12 +36,9 @@ class MonthlyInvoiceCalculatorService
     billing_start_date = billing_month.beginning_of_month.to_date
     billing_end_date = billing_month.end_of_month.to_date
 
-    last_billing = Invoice.where(learning_partner:)
-                  .where(bill_date: billing_month.last_month.all_month)
-                  .order(:bill_date)
-                  .last
-    @active_users_count = last_billing&.active_users.to_i
-    events = fetch_learning_partner_events(learning_partner, billing_start_date, billing_end_date)
+    last_billing_month_invoice = last_billing(learning_partner, billing_month.last_month.all_month)
+    @active_users_count = last_billing_month_invoice&.active_users.to_i
+    events = learning_partner_events(learning_partner, billing_month)
 
     if events.any?
       user_events = events.group_by { |e| e.data["target_user_id"] }
@@ -48,11 +52,8 @@ class MonthlyInvoiceCalculatorService
     end
   end
 
-  def fetch_learning_partner_events(learning_partner, billing_start_date, billing_end_date)
-    Event.where(
-      "partner_id = ? AND created_at BETWEEN ? AND ? AND name IN (?)",
-      learning_partner.id, billing_start_date, billing_end_date, ["user_activated", "user_deactivated"]
-    ).order(:created_at)
+  def learning_partner_events(learning_partner, billing_month)
+    UserActivatedDeactivatedQuery.new(learning_partner.id, billing_month.all_month).call
   end
 
   def calculate_billable_days_from_events(events, billing_start_date, billing_end_date)
@@ -81,5 +82,16 @@ class MonthlyInvoiceCalculatorService
     active_periods.each_value do |activation_date|
       @total_billed_days += (billing_end_date - activation_date).to_i + 1
     end
+  end
+
+  def last_billing(learning_partner, bill_date)
+    Invoice.where(learning_partner:)
+                  .where(bill_date:)
+                  .order(:bill_date)
+                  .last
+  end
+
+  def destroy_existing_invoice!(last_month_invoice)
+    last_month_invoice.destroy! if last_month_invoice
   end
 end
