@@ -1,4 +1,7 @@
-<%= turbo_stream.prepend 'tag-list', partial: 'tags/tag', locals: { tag: @tag } %>
+<%= turbo_stream.prepend "tag-list", partial: "shared/components/table_row", locals: { 
+  row_data: @tag, 
+  table_type: "tag"
+} %>
 <%= turbo_stream.update 'tags-count' do %>
   <h1 class="mb-4 label-small"><%= pluralize(@tags_count, "tag") %></h1>
 <% end %>

@@ -1,5 +1,8 @@
 <% unless @bulk_invite %>
-  <%= turbo_stream.prepend "team-member-list", partial: "teams/member_list_items", locals: { team: @team, member: @user } %>
+<%= turbo_stream.prepend "member-list", 
+  partial: "shared/components/table_row", 
+  locals: { row_data: @user, columns: table_columns("member"), extra_data: { team: @team }, table_type: "member" } 
+%>
 <% end %>
 <%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
 <%= turbo_stream.replace "modal" do %>

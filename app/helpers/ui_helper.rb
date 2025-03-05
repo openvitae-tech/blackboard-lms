@@ -48,4 +48,24 @@ module UiHelper
       value:value
     }
   end
+  def table_columns(table_type)
+    case table_type
+    when "tag"
+      [
+        { name: "Name", span: "col-span-4", alignment: "justify-start", field: :name },
+        { name: "Type", span: "col-span-4", alignment: "justify-start", field: :tag_type },
+        { name: "Actions", span: "col-span-4", alignment: "justify-end", is_action: true }
+      ]
+    when "member"
+      [
+        { name: "Name", span: "col-span-4", alignment: "justify-start", field: :name },
+        { name: "Email", span: "col-span-3", alignment: "justify-start", field: :email },
+        { name: "Phone", span: "col-span-2", alignment: "justify-start", field: :phone },
+        { name: "Role", span: "col-span-1", alignment: "justify-start", field: :role },
+        { name: "Actions", span: "col-span-2", alignment: "justify-end", is_action: true }
+      ]
+    else
+      []
+    end
+  end
 end

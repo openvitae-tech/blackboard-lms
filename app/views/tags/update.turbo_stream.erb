@@ -1,4 +1,7 @@
-<%= turbo_stream.replace "tag_#{@tag.id}", partial: 'tags/tag', locals: { tag: @tag } %>
+<%= turbo_stream.replace "tag_#{@tag.id}", partial: "shared/components/table_row", locals: { 
+  row_data: @tag, 
+  table_type: "tag"
+} %>
 <%= turbo_stream.update "flash", partial: "shared/components/flash" %>
 <%= turbo_stream.replace "modal" do %>
   <%= turbo_frame_tag "modal" %>

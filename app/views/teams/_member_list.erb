@@ -1,24 +1,5 @@
-<div class="mt-5">
-  <div id="teams-list" class="flex flex-col py-4 md:px-6 md:shadow-[0px_0px_4px_0px_#33333329] rounded">
-    
-    <div class="hidden md:grid grid-cols-12 gap-4 text-left text-sm font-medium px-6 py-4 border-b border-line-colour-light w-full">
-      <div class="col-span-4 flex justify-start">Name</div>
-      <div class="col-span-3 flex justify-start">Email</div>
-      <div class="col-span-2 flex justify-start">Phone</div>
-      <div class="col-span-3">
-        <div class="grid grid-cols-4 gap-4 justify-between">
-          <div class="col-span-2 flex justify-start">Role</div>
-          <div class="col-span-2 flex justify-start">Actions</div>
-        </div>
-      </div>
-
-      
-    </div>
-
-    <div id="team-member-list" class="bg-white md:divide-y md:divide-slate-grey-light flex flex-col gap-4 md:gap-0  max-h-[350px] overflow-y-auto p-1">
-      <% team.members.each do |member| %>
-        <%= render "teams/member_list_items", team: team, member: member %>
-      <% end %>
-    </div>
-  </div>
-</div>
+<%= render "shared/components/table",
+  rows: team.members,
+  table_type: "member",
+  extra_data: { team: team }
+%>
