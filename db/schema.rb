@@ -118,7 +118,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_24_142117) do
 
   create_table "invoices", force: :cascade do |t|
     t.integer "billable_days", null: false
-    t.integer "invoice_id", null: false
     t.decimal "amount", precision: 10, scale: 2, null: false
     t.datetime "paid_at"
     t.datetime "bill_date", null: false
@@ -127,7 +126,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_24_142117) do
     t.bigint "learning_partner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["invoice_id"], name: "index_invoices_on_invoice_id", unique: true
     t.index ["learning_partner_id"], name: "index_invoices_on_learning_partner_id"
   end
 
