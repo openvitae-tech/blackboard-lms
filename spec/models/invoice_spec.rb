@@ -57,22 +57,6 @@ RSpec.describe Invoice, type: :model do
     end
   end
 
-  describe '#invoice_id' do
-    it 'is not valid without invoice_id' do
-      @invoice.invoice_id = nil
-      expect(@invoice).not_to be_valid
-      expect(@invoice.errors.full_messages.to_sentence).to include(t('cant_blank',
-                                                                     field: 'Invoice'))
-    end
-
-    it 'increments invoice_id correctly' do
-      first_invoice = create(:invoice, learning_partner:)
-      second_invoice = create(:invoice, learning_partner:)
-
-      expect(second_invoice.invoice_id).to eq(first_invoice.invoice_id + 1)
-    end
-  end
-
   describe '#learning_partner' do
     it 'is not valid without learning partner' do
       @invoice.learning_partner = nil

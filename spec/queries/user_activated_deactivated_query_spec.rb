@@ -18,7 +18,7 @@ RSpec.describe UserActivatedDeactivatedQuery do
   describe '#call' do
     it 'list user activated and deactivated events' do
       events = Event.where(
-        partner_id: learning_partner,
+        partner_id: learning_partner.id,
         created_at: Time.zone.now.all_month,
         name: %w[user_activated user_deactivated]
       )
