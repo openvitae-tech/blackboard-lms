@@ -1,0 +1,75 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+
+<div class="heading heading-medium">table1</div>
+
+<div class="mt-5">
+  <div class="flex flex-col py-4 md:px-6 md:shadow-[0px_0px_4px_0px_#33333329] rounded">
+    
+    <%= render "shared/components/table_heading", 
+      columns: [
+        { name: "Name", span: "col-span-4", alignment: "justify-start" },
+        { name: "Type", span: "col-span-4", alignment: "justify-center" },
+        { name: "Actions", span: "col-span-4", alignment: "justify-end" }
+      ]
+    %>
+
+    <div id="tag-list" class="bg-white md:divide-y md:divide-slate-grey-light">
+      <% @tags.each do |tag| %>
+        <%= render "shared/components/table_rows", 
+          data: [
+            { span: "col-span-4", alignment: "justify-start", method: ->(row) { table_cell_name(row, avatar: false) } },
+            { span: "col-span-4", alignment: "justify-center", method: ->(row) { { partial: nil, locals: { value: row.tag_type.capitalize } } } },
+            { span: "col-span-4", alignment: "justify-end", method: ->(row) { 
+                table_actions(row, [
+                  { label: "Edit", icon: "icon-edit", component: "button_default_small" },
+                  { label: "Delete", icon: "icon-trash", component: "button_default_small" }
+                ]) 
+              }
+            }
+          ],
+          row: tag,
+          table_type: "tag",
+          extra_data: {}
+        %>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
+<div class="heading heading-medium">table2</div>
+
+<div class="mt-5">
+  <div class="flex flex-col py-4 md:px-6 md:shadow-[0px_0px_4px_0px_#33333329] rounded">
+    
+    <%= render "shared/components/table_heading", 
+      columns: [
+        { name: "Name", span: "col-span-6", alignment: "justify-start" },
+        { name: "Actions", span: "col-span-6", alignment: "justify-end" }
+      ]
+    %>
+
+    <div id="tag-list" class="bg-white md:divide-y md:divide-slate-grey-light">
+      <% @learning_partners.each do |partner| %>
+        <%= render "shared/components/table_rows", 
+          data: [
+            { span: "col-span-6", alignment: "justify-start", method: ->(row) { table_cell_name(row, avatar: true) } },
+            { span: "col-span-6", alignment: "justify-end", method: ->(row) { 
+                table_actions(row, [
+                  { label: "Edit", icon: "icon-edit", component: "button_default_small" },
+                  { label: "Delete", icon: "icon-trash", component: "button_default_small" }
+                ]) 
+              }
+            }
+          ],
+          row: partner,
+          table_type: "tag",
+          extra_data: {}
+        %>
+      <% end %>
+    </div>
+
+  </div>
+</div>

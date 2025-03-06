@@ -1,0 +1,13 @@
+<% if avatar %>
+  <% link = policy(row_data).show? ? member_path(row_data) : "javascript:void(0);" %>
+  <%= link_to link, class: "cursor-pointer" do %>
+    <div class="flex items-center gap-2">
+      <span class="inline-block flex-shrink-0 text-xs icon-medium hover:pointer md:icon-large md:text-sm">
+        <%= render 'shared/components/profile_pic', letter: letter_avatar(row_data) %>
+      </span>
+      <span class="ml-2 text-ellipsis text-sm font-medium"><%= row_data.name %></span>
+    </div>
+  <% end %>
+<% else %>
+  <%= row_data.name %>
+<% end %>

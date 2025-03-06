@@ -48,4 +48,22 @@ module UiHelper
       value:value
     }
   end
+
+  def table_cell_name(row_data, avatar: false)
+    { partial: "shared/components/table_cell_name", locals: { row_data: row_data, avatar:avatar } }
+  end
+
+  def table_cell_role(row_data)
+    { partial: "shared/components/table_cell_role", locals: { row_data: row_data } }
+  end
+
+  def table_actions(row_data, actions = [])
+    actions.each do |action|
+      action[:data] ||= {} 
+      action[:data][:turbo_frame] = action[:turbo_frame] if action[:turbo_frame].present?
+    end
+
+    { partial: "shared/components/table_actions", locals: { row_data: row_data, actions: actions } }
+  
+  end
 end
