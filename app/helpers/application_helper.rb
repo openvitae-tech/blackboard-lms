@@ -10,10 +10,6 @@ module ApplicationHelper
     default_header_options.merge!(opts)
   end
 
-  def is_mobile_view_for_turbo?
-    request.user_agent =~ /Mobile|webOS/
-  end
-
   def active(name, link)
     link == name ? 'active' : ''
   end
@@ -73,7 +69,7 @@ module ApplicationHelper
      "#{duration / 60 % 60} #{duration / 60 % 60 == 1 ? 'min' : 'mins'}"]
       .select { |str| str =~ /^[1-9]/ }.join(" ")
   end
-  
+
   def product_name
     Rails.application.credentials.org_name
   end
@@ -94,5 +90,9 @@ module ApplicationHelper
   def feature_enabled?(feature_flag)
     # user feature flags from constants.rb
     feature_flag || Rails.env.local?
+  end
+
+  def is_settings_tab_visible?
+    current_user.is_admin? || current_user.is_owner?
   end
 end

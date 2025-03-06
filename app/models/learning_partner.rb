@@ -21,6 +21,7 @@ class LearningPartner < ApplicationRecord
   validate :acceptable_max_user_count
   after_initialize :assign_defaults
 
+  has_many :invoices, dependent: :destroy
   has_rich_text :content
 
   def parent_team

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_18_062725) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_24_142117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,6 +114,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_18_062725) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.jsonb "data", default: {}, null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer "billable_days", null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.datetime "paid_at"
+    t.datetime "bill_date", null: false
+    t.string "status", default: "pending", null: false
+    t.integer "active_users", null: false
+    t.bigint "learning_partner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learning_partner_id"], name: "index_invoices_on_learning_partner_id"
   end
 
   create_table "learning_partners", force: :cascade do |t|
@@ -268,6 +281,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_18_062725) do
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"
   add_foreign_key "enrollments", "users", column: "assigned_by_id"
+  add_foreign_key "invoices", "learning_partners"
   add_foreign_key "lessons", "course_modules"
   add_foreign_key "local_contents", "lessons"
   add_foreign_key "quiz_answers", "enrollments"

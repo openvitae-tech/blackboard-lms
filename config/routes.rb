@@ -50,6 +50,7 @@ Rails.application.routes.draw do
 
   resources :events, only: :index
   resources :tags
+  resources :invoices, only: :index
   resource :alert_modal, only: :show, controller: 'commons/alert_modal'
 
   resources :courses do
@@ -104,6 +105,7 @@ Rails.application.routes.draw do
     member do
       put :activate
       put :deactivate
+      get :invoices, to: 'invoices#index'
     end
   end
 
