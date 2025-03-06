@@ -4,7 +4,7 @@ class InvoicesController < ApplicationController
   before_action :set_learning_partner
 
   def index
-    #add permission only for admin and owner
+    authorize :invoice
     @invoices = @learning_partner.invoices.order(bill_date: :desc)
   end
 
