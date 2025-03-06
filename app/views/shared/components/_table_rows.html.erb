@@ -1,0 +1,13 @@
+<div id="<%= table_type == 'tag' ? "tag_#{row.id}" : nil %>" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 shadow-[0px_0px_4px_0px_#33333329] md:shadow-none">
+  <% data.each do |col| %>
+      <div class="<%= col[:span] %> flex <%= col[:alignment] %> items-center">
+      <% cell = col[:method].arity == 2 ? col[:method].call(row, extra_data) : col[:method].call(row) %>
+      <% if cell[:partial].present? %>
+          <%= render cell[:partial], cell[:locals] %>
+      <% else %>
+          <%= cell[:locals][:value] %>
+      <% end %>
+      </div>
+  <% end %>
+</div>
+
