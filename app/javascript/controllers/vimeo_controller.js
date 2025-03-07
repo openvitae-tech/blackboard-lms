@@ -1,14 +1,20 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["videoPlayer"];
+  static targets = ["videoPlayer", "completeButton"];
 
   connect() {
     this.player = new Vimeo.Player(this.videoPlayerTarget);
 
+    this.player.getDuration().then((duration) => {
+      this.completionThreshold = duration * (0.90 + Math.random() * 0.05);
+    });
+
     ["play", "pause", "ended"].forEach(event => {
       this.player.on(event, () => this.handleEvent(event));
     });
+
+    this.player.on("timeupdate", (data) => this.checkCompletion(data.seconds));
   }
 
   async handleEvent(eventType) {
@@ -20,6 +26,31 @@ export default class extends Controller {
     let formattedRemainingTime = this.formatTime(remainingTime);
 
     alert(`Video ${eventType} at ${formattedCurrentTime}\nRemaining: ${formattedRemainingTime}`);
+
+    if (eventType === "ended") {
+      await this.handleVideoEnd();
+    }
+  }
+
+  checkCompletion(currentTime) {
+    if (currentTime >= this.completionThreshold) {
+      this.enableCompleteButton();
+    }
+  }
+
+  handleVideoEnd() {
+    this.player.pause();
+
+    if (this.hasCompleteButtonTarget) {
+      this.enableCompleteButton();
+    }
+  }
+
+  enableCompleteButton() {
+    if (this.hasCompleteButtonTarget) {
+      this.completeButtonTarget.classList.remove("disabled");
+      this.completeButtonTarget.removeAttribute("disabled");
+    }
   }
 
   formatTime(seconds) {
