@@ -124,5 +124,5 @@ gem 'scorm-package', '~> 0.1.2', require: 'scorm_package'
 
 gem 'net-imap', '0.5.6'
 gem 'nokogiri', '1.18.3'
-gem 'rack', '>= 3.1.10'
+gem 'rack', '>= 3.1.11'
 gem 'rubyzip'
