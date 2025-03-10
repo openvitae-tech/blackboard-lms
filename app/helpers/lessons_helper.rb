@@ -11,7 +11,7 @@ module LessonsHelper
     vendor_response['html'] if vendor_response.has_key?('html')
   end
 
-  def is_upload_pending(local_content)
+  def upload_pending?(local_content)
     if local_content.video.blob.metadata['url'].nil? && local_content.status == "complete"
       true
     else
