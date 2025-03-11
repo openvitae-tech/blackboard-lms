@@ -53,7 +53,16 @@
             <span class="text-xs text-white heading"><%= t("lesson.next") %></span>
           <% end %>
         <% else %>
-          <%= button_to complete_course_module_lesson_path(course, course_module, lesson), params: { time_spent: 0}, class: "bg-primary flex items-center gap-2 rounded px-4 py-3 disabled", data: { action: "click->lessons#completeLesson", lessons_target: 'timeSpent', turbo_method: :post,vimeo_target: "completeButton" } do %>
+          <%= button_to complete_course_module_lesson_path(course, course_module, lesson),
+                        params: {
+                          time_spent: 0
+                        },
+                        class: "bg-primary flex items-center gap-2 rounded px-4 py-3 disabled",
+                        data: {
+                          lessons_target: 'timeSpent',
+                          vimeo_target: "completeButton",
+                          turbo_method: :post
+                        } do %>
             <span class="text-xs text-white heading"><%= t("lesson.complete_and_continue") %></span>
             <span class="icon icon-next icon-small bg-white"></span>
           <% end %>

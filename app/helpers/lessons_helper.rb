@@ -12,6 +12,9 @@ module LessonsHelper
   end
 
   def upload_pending?(local_content)
+    # TODO: Scope for refactoring
+    # this checks upload to vimeo is pending or not. May be this is better renamed as upload_to_vimeo_pending?
+    # also the status can be better named as vimeo_upload_status instead of status.
     if local_content.video.blob.metadata['url'].nil? && local_content.status == "complete"
       true
     else
