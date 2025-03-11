@@ -64,8 +64,10 @@
         </li>
       <% else %>
         <% lessons.each do |lesson| %>
-          <li class="flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6 <%= 'highlighted' if current_lesson?(lesson, enrollment) %>
-            <%= 'disabled' unless current_lesson?(lesson, enrollment) || (enrollment && lesson_completed?(enrollment, lesson)) %>">
+          <%= content_tag :li, class:
+            class_names("flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6",
+                        'highlighted': current_lesson?(lesson, enrollment),
+                        'disabled': !(current_lesson?(lesson, enrollment) || lesson_completed?(enrollment, lesson) || current_user.is_admin?)) do %>
 
             <div class="flex items-center gap-4">
               <% if enrollment %>
@@ -87,7 +89,7 @@
                 </div>
               <% end %>
             </div>
-          </li>
+        <% end %>
         <% end %>
       <% end %>
       <% if policy(@course).edit? %>

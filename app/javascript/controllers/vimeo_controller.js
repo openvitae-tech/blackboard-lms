@@ -7,6 +7,8 @@ export default class extends Controller {
     // return if the vimeo player is not present, for example in local
     if (!this.hasVimeoPlayerTarget) return;
 
+    this.disableCompleteButton();
+
     if (this.hasVimeoLoaderTarget) {
       // show loader
       this.showLoader();
@@ -72,6 +74,13 @@ export default class extends Controller {
       this.completeButtonTarget.removeAttribute("disabled");
     }
   }
+
+  disableCompleteButton() {
+    if (this.hasCompleteButtonTarget) {
+      this.completeButtonTarget.classList.add("disabled");
+    }
+  }
+
 
   showLoader() {
     this.vimeoLoaderTarget.classList.remove("hidden");

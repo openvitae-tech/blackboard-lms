@@ -30,9 +30,10 @@
         </summary>
         <ul>
           <% lessons_in_order(course_module).each do |lesson| %>
-            <li class="flex gap-4 items-center justify-between border-t border-line-colour px-4 py-4 text-sm 
-              <%= 'highlighted' if is_current_lesson(lesson.id, params[:id]) %> 
-              <%= 'disabled' unless is_current_lesson(lesson.id, params[:id]) || (enrollment && lesson_completed?(enrollment, lesson)) %>">
+            <%= content_tag :li, class:
+              class_names("flex gap-4 items-center justify-between border-t border-line-colour px-4 py-4 text-sm",
+                          'highlighted': is_current_lesson(lesson.id, params[:id]),
+                          'disabled': !(is_current_lesson(lesson.id, params[:id]) || lesson_completed?(enrollment, lesson) || current_user.is_admin?)) do %>
               <div class="flex items-center gap-4">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
                   <div class="flex items-center bg-primary-light-50 border border-primary-light p-1">
@@ -57,7 +58,7 @@
                   </div>
                 <% end %>
               </div>
-            </li>
+            <% end %>
           <% end %>
         </ul>
       </details>

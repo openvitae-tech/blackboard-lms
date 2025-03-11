@@ -100,7 +100,6 @@ Rails.application.routes.draw do
     end
   end
 
-
   resources :learning_partners do
     member do
       put :activate
