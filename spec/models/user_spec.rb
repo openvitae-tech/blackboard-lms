@@ -28,6 +28,26 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#role' do
+    it 'able to create support user' do
+      user = create :user, role: 'support'
+
+      expect(user.role).to eq('support')
+    end
+  end
+
+  describe '#privileged_user?' do
+    it 'returns true for privileged user' do
+      user = create :user, :owner
+
+      expect(user.privileged_user?).to be true
+    end
+
+    it 'returns false for non-privileged user' do
+      expect(user_one.privileged_user?).to be false
+    end
+  end
+
   describe '#otp' do
     before do
       otp = '123456'

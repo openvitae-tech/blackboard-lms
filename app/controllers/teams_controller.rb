@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
   def show
     authorize @team
     @learning_partner = current_user.learning_partner
-    @members = @team.members
+    @members = @team.members.where.not(role: "support")
   end
 
   def create

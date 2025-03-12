@@ -14,7 +14,7 @@ class UserManagementService
       learning_partner_id: team.learning_partner_id
     )
 
-    user.team = team.learning_partner.parent_team if user.is_owner?
+    user.team = team.learning_partner.parent_team if user.is_owner? || user.is_support?
 
     user.set_temp_password
 

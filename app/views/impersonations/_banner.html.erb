@@ -1,0 +1,9 @@
+<% label = content_tag(:div, class: "flex items-center gap-2") do %>
+  <p class="text-sm font-normal text-gray-500">
+    You are currently impersonating.
+  </p>
+  <%= button_to impersonation_path, method: :delete, class: "text-sm" do %>
+    <span class="underline hover:no-underline">Stop impersonating</span>
+  <% end %>
+<% end %>
+<%= render 'shared/components/banner', label: %>

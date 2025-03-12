@@ -73,6 +73,33 @@ RSpec.describe 'Request spec for POST /course_assigns' do
     end
   end
 
+  describe 'A support user can assign course to a user' do
+    let(:team) { create :team }
+
+    before do
+      support_user = create(:user, :manager, team:, learning_partner: team.learning_partner)
+
+      sign_in support_user
+      @courses = Array.new(2) { course_with_associations(published: true) }
+      @learner = create(:user, :learner, team:, learning_partner: team.learning_partner)
+    end
+
+    it 'assigns the courses successfully' do
+      params = {
+        course_ids: @courses.map(&:id),
+        duration: %w[none one_week],
+        user_id: @learner.id
+      }
+
+      expect do
+        post('/course_assigns', params:)
+      end.to change(Enrollment, :count).by(2)
+
+      expect(assigns[:user]).to eq(@learner)
+      expect(flash['success']).to eq('Courses assigned successfully')
+    end
+  end
+
   describe 'by admin' do
     let(:admin) { create :user, :admin }
     let(:learner) { create(:user, :learner) }
@@ -85,6 +112,7 @@ RSpec.describe 'Request spec for POST /course_assigns' do
       post('/course_assigns')
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       expect(response.status).to be(302)
+      expect(response).to redirect_to(error_401_path)
     end
   end
 
@@ -100,6 +128,7 @@ RSpec.describe 'Request spec for POST /course_assigns' do
       post('/course_assigns')
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       expect(response.status).to be(302)
+      expect(response).to redirect_to(error_401_path)
     end
   end
 end

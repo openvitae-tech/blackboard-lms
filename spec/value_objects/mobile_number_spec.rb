@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe MobileNumber do
   subject { described_class.new(value:) }
 
-  context 'validations' do
+  describe 'validations' do
     context 'when the value is valid' do
       let(:value) { '1234567890' }
 

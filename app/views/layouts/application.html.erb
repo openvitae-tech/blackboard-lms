@@ -23,17 +23,25 @@
     <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>
   <body>
-    <div class="flex">
-      <%= render 'shared/components/sidebar' %>
-      <div class="flex flex-col w-full min-h-screen">
-        <%= render 'shared/components/navbar' %>
+    <div class="flex flex-col min-h-screen">
+      <div class="sticky top-0 left-0 w-full z-50 flex flex-col">
+        <div class="w-full">
+          <% if impersonating? %>
+            <%= render 'impersonations/banner' %>
+          <% end %>
+          <div class="flex flex-grow">
+            <%= render 'shared/components/sidebar' %>
+            <%= render 'shared/components/navbar' %>
+          </div>
+          <%= render "shared/components/flash" %>
+        </div>
+      </div>
+      <div class="flex flex-col w-full overflow-y-auto h-[calc(100vh-64px)]">
         <main class="flex flex-col p-6 md:p-8 max-w-[1360px] min-w-screen w-full mx-auto">
           <%= yield %>
         </main>
       </div>
     </div>
-
-    <%= render "shared/components/flash" %>
     <%= turbo_frame_tag "modal" %>
   </body>
 </html>
