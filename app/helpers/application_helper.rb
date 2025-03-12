@@ -95,4 +95,11 @@ module ApplicationHelper
     # user feature flags from constants.rb
     feature_flag || Rails.env.local?
   end
+
+  # apply classes conditionally on a content tag
+  # Example: content_tag(:div, class: class_names("flex", 'disabled': !permitted?))
+  def class_names(*classes)
+    class_array = [(classes.shift if classes.first.is_a? String), classes.first.select { |_, v| v }.keys]
+    class_array.compact.join(" ")
+  end
 end

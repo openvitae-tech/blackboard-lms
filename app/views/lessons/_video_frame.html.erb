@@ -1,4 +1,4 @@
-<div class="flex flex-col md:basis-3/5">
+<div class="flex flex-col md:basis-3/5" data-controller="vimeo">
   <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
     <% if @local_content.video.attached? %>
       <% if Rails.env.production? && upload_pending?(@local_content) && current_user.is_admin? %>
@@ -49,11 +49,19 @@
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
         <% if is_lesson_completed(course.id, lesson.id) %>
-          <%= link_to next_button_link(course, course_module, lesson), class: "bg-primary flex items-center gap-2 rounded px-4 py-3" do %>
+          <%= link_to next_button_link(course, course_module, lesson), class: "bg-primary flex items-center gap-2 rounded px-4 py-3 " do %>
             <span class="text-xs text-white heading"><%= t("lesson.next") %></span>
           <% end %>
         <% else %>
-          <%= button_to complete_course_module_lesson_path(course, course_module, lesson), params: { time_spent: 0}, class: "bg-primary flex items-center gap-2 rounded px-4 py-3", data: { action: "click->lessons#completeLesson", lessons_target: 'timeSpent', turbo_method: :post } do %>
+          <%= button_to complete_course_module_lesson_path(course, course_module, lesson),
+                        params: {
+                          time_spent: 0
+                        },
+                        class: "bg-primary flex items-center gap-2 rounded px-4 py-3",
+                        data: {
+                          vimeo_target: "completeButton",
+                          turbo_method: :post
+                        } do %>
             <span class="text-xs text-white heading"><%= t("lesson.complete_and_continue") %></span>
             <span class="icon icon-next icon-small bg-white"></span>
           <% end %>

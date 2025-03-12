@@ -79,7 +79,7 @@ module CoursesHelper
   end
 
   def lesson_completed?(enrollment, lesson)
-    enrollment.completed_lessons.include? lesson.id
+    enrollment.present? && enrollment.completed_lessons.include?(lesson.id)
   end
 
   def module_completed?(enrollment, course_module)
