@@ -71,7 +71,6 @@ export default class extends Controller {
   enableCompleteButton() {
     if (this.hasCompleteButtonTarget) {
       this.completeButtonTarget.classList.remove("disabled");
-      this.completeButtonTarget.removeAttribute("disabled");
     }
   }
 
