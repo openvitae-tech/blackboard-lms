@@ -1,0 +1,50 @@
+<div class="heading-extra-large pb-6">
+  Login with OTP
+</div>
+<div class="heading-extra-large pb-6 hidden">
+  Forgot Password
+</div>
+
+<div class="justify-start pb-8">
+  <span class="body-small">
+    Please enter the verification code sent to<br/>
+  </span>
+  <span class="text-primary body-small">
+    +91 9656284605
+  </span>
+</div>
+
+<%= form_with url: otp_login_path, method: :post, scope: :login, data: { controller: "otp" } do |form| %>
+  <div class="input-group">
+    <%= otp_input_field(
+      f: form, 
+      field_name_prefix: :otp_value, 
+      label: "Verification code (OTP)", 
+      field_count: 4, 
+      target: "otp"
+    ) %>
+
+    <div class="flex justify-between pt-4">
+      <div class="relative justify-start">
+        <span class="text-letter-color-light body-extra-small-medium">
+          OTP will be valid for :
+        </span>                    
+        <span class="text-primary body-extra-small-medium">4:57 min</span>
+      </div>
+      <a href="#" class="float-right link-text text-danger disabled">Resend OTP</a>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center gap-4 mt-10 w-full">
+    <%= link_button(
+      label: "Verify",
+      path: reset_password_path,
+      size: "xl",
+      width: "w-full",
+      disabled: true,
+      target: "submitButton",
+      controller: "otp"
+    ) %>
+    <%= link_to "Login with password", new_session_path(:user), class: "link-text" %>
+  </div>
+<% end %>

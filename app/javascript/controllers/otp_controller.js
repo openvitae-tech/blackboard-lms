@@ -9,10 +9,10 @@ export default class extends Controller {
     }
   }
 
-  updateHiddenOtp() {
-    const otpValues = this.inputTargets.map((input) => input.value).join("");
-    this.hiddenOtpTarget.value = otpValues;
-  }
+  // updateHiddenOtp() {
+  //   const otpValues = this.inputTargets.map((input) => input.value).join("");
+  //   this.hiddenOtpTarget.value = otpValues;
+  // }
 
   inputTargetConnected(input) {
     input.addEventListener("input", this.handleInputOrKeyDown.bind(this));
@@ -27,7 +27,7 @@ export default class extends Controller {
         const nextInput = this.nextInput(input);
         if (nextInput) nextInput.focus();
       }
-      this.updateHiddenOtp();
+      // this.updateHiddenOtp();
     }
 
     if (event.type === "keydown") {
@@ -36,11 +36,11 @@ export default class extends Controller {
           const previousInput = this.previousInput(input);
           if (previousInput) {
             previousInput.focus();
-            this.updateHiddenOtp();
+            // this.updateHiddenOtp();
           }
         } else {
           input.value = "";
-          this.updateHiddenOtp();
+          // this.updateHiddenOtp();
         }
       }
 
@@ -67,13 +67,7 @@ export default class extends Controller {
       (input) => input.value.length === 1
     );
     if (allFilled) {
-      this.submitButtonTarget.classList.remove("btn-default");
-      this.submitButtonTarget.classList.add("btn-primary");
-      this.submitButtonTarget.removeAttribute("disabled");
-    } else {
-      this.submitButtonTarget.classList.remove("btn-primary");
-      this.submitButtonTarget.classList.add("btn-default");
-      this.submitButtonTarget.setAttribute("disabled", "true");
+      this.submitButtonTarget.classList.remove("disabled");
     }
   }
 

@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-4">
   <% if label.present? %>
-    <label class="text-letter-color-light text-sm leading-tight">
+    <label class="text-sm leading-tight">
       <%= label %>
     </label>
   <% end %>
@@ -14,15 +14,22 @@
     <% end %>
 
     <% if f.present? %>
-      <% case type %>
-        <% when "password" %>
-          <%= f.password_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
-        <% when "email" %>
-          <%= f.email_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
-        <% when "number" %>
-          <%= f.number_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
-        <% else %>
-          <%= f.text_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+      <% if type == "number" && field_name == :phone_number %>
+        <div class="flex items-center justify-center">
+          <span class="text-base text-letter-color-light">+91</span>
+        </div>
+        <%= f.number_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+      <% else %>
+        <% case type %>
+          <% when "password" %>
+            <%= f.password_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+          <% when "email" %>
+            <%= f.email_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+          <% when "number" %>
+            <%= f.number_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+          <% else %>
+            <%= f.text_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+        <% end %>
       <% end %>
     <% else %>
       <input type="<%= type %>" placeholder="<%= placeholder %>" 

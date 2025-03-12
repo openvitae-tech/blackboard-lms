@@ -1,23 +1,23 @@
 <% if size == "xl" %>
-  <div class="inline-flex h-14 items-center justify-center gap-2 rounded-sm border bg-white px-6 py-3.5 border-secondary text-letter-color-light hover:border-primary hover:text-primary">
+  <div class="inline-flex <%= width if width.present? %> h-14 items-center justify-center gap-2 rounded-sm border bg-white px-6 py-3.5 border-secondary text-letter-color-light hover:border-primary hover:text-primary">
     <% content = content_tag(:div, label, class: "text-xl font-semibold font-['Poppins'] leading-7") %>
     <% icon = icon("adjustments-vertical", css: "icon-medium") if icon_name.present? %>
     <%= label_with_icon(icon, content, icon_position) %>
   </div>
 <% elsif size == "lg" %>
-  <div class="inline-flex h-10 items-center justify-center gap-2 rounded-sm border bg-white px-6 py-2 border-secondary text-letter-color-light hover:border-primary hover:text-primary">
+  <div class="inline-flex <%= width if width.present? %> h-10 items-center justify-center gap-2 rounded-sm border bg-white px-6 py-2 border-secondary text-letter-color-light hover:border-primary hover:text-primary">
     <% content = content_tag(:div, label, class: "text-base font-medium font-['Poppins'] leading-normal") %>
     <% icon = icon("adjustments-vertical", css: "icon-medium") if icon_name.present? %>
     <%= label_with_icon(icon, content, icon_position) %>
   </div>
 <% elsif size == "md" %>
-  <div class="inline-flex h-9 items-center justify-center gap-2 rounded-sm border bg-white px-4 py-2 border-secondary text-letter-color-light hover:border-primary hover:text-primary">
+  <div class="inline-flex <%= width if width.present? %> h-9 items-center justify-center gap-2 rounded-sm border bg-white px-4 py-2 border-secondary text-letter-color-light hover:border-primary hover:text-primary">
     <% content = content_tag(:div, label, class: "text-sm font-medium font-['Poppins'] leading-tight") %>
     <% icon = icon("adjustments-vertical", css: "icon-medium") if icon_name.present? %>
     <%= label_with_icon(icon, content, icon_position) %>
   </div>
 <% elsif size == "sm" %>
-  <div class="inline-flex h-6 items-center justify-center gap-2 rounded-sm border bg-white px-3 py-1 border-secondary text-letter-color-light hover:border-primary hover:text-primary">
+  <div class="inline-flex <%= width if width.present? %> h-6 items-center justify-center gap-2 rounded-sm border bg-white px-3 py-1 border-secondary text-letter-color-light hover:border-primary hover:text-primary">
     <% content = content_tag(:div, label, class: "text-xs font-normal font-['Poppins'] leading-none") %>
     <% icon = icon("adjustments-vertical", css: "icon-mini") if icon_name.present? %>
     <%= label_with_icon(icon, content, icon_position) %>
