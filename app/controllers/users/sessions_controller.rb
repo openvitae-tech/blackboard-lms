@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  include Impersonation
-
   before_action :configure_sign_in_params, only: [:create]
   before_action :authenticate_user!, only: [:destroy]
 
