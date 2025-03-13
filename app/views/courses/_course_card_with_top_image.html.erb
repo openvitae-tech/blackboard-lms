@@ -1,4 +1,4 @@
-<div class="inline-block rounded box-shadow-medium border border-line-colour-light relative h-[256px]">
+<div class="inline-block rounded box-shadow-medium border border-line-colour-light relative h-[275px]">
   <div class="w-full rounded md:w-[310px] relative">
     <div class="absolute top-0 right-0 z-10 flex flex-wrap justify-start gap-2 heading">
       <% course.tags.each do |tag| %>
@@ -32,24 +32,27 @@
           </div>
         </div>          
         <div class="flex flex-row items-center justify-between gap-2 mt-2 heading">
-          <% course.tags.each do |tag| %>
-            <% if tag.tag_type == "category" %>
-              <span class="px-2 py-1 text-xs font-medium bg-primary-light-50 rounded">
-                <%= tag.name %>
-              </span>
+          <div class="flex flex-wrap gap-2 w-1/2">
+            <% course.tags.each do |tag| %>
+              <% if tag.tag_type == "category" %>
+                <span class="px-2 py-1 text-xs font-medium bg-primary-light-50 rounded">
+                  <%= tag.name %>
+                </span>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
           <% if local_assigns[:enrollment].present? %>
-            <div class="w-[83px]">
+            <div class="w-[83px] flex flex-col gap-2 justify-end ml-auto">
               <%= render 'shared/components/progress_bar_short', progress: enrollment.progress %>
+              <% if enrollment.has_deadline? %>
+                <div class="text-sm">
+                  <%= pluralize(days_remaining(enrollment.deadline_at), "day") %> left
+                </div>
+              <% end %>
             </div>
-            <% if enrollment.has_deadline? %>
-              <div class="text-sm">
-                <%= pluralize(days_remaining(enrollment.deadline_at), "day") %> left
-              </div>
-            <% end %>
           <% end %>
         </div>
+
       </div>      
     </div>
   </div>
