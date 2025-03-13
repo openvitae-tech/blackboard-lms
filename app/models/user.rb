@@ -142,7 +142,7 @@ class User < ApplicationRecord
 
   def is_manager_of?(other_user) #check this
     return false unless other_user.learning_partner_id == self.learning_partner_id
-    is_owner? || other_user.team.ancestors.include?(self.team)
+    is_owner? || is_support? ||other_user.team.ancestors.include?(self.team)
   end
 
   private
