@@ -83,6 +83,8 @@ en:
     no_courses_with_filter: "No courses found with the selected filters."
     course_module:
       empty: "There are no modules to show."
+      cannot_delete_published: "Module cannot be deleted since the course is published."
+      cannot_delete_enrolled: "Module cannot be deleted since the course has enrolled users."
   login:
     invalid_or_incorrect_otp: "Incorrect otp or otp expired"
     incorrect_phone: "Incorrect mobile number"
@@ -100,6 +102,8 @@ en:
     video_under_process: 'Uploaded video is under process. Please refresh the page after some time.'
     video_not_available: "Sorry! Video is not available."
   lesson:
+    cannot_delete_published: "Lesson cannot be deleted since the course is published."
+    cannot_delete_enrolled: "Lesson cannot be deleted since the course has enrolled users."
     duplicate_lesson: 'Lesson cannot have multiple local contents for the same language: %{langs}'
     must_have_local_content: "Lesson must have at least one local content."
     empty: "There are no lessons to show."
@@ -109,6 +113,8 @@ en:
     duration_not_set: "for the video is not set"
   quiz:
     empty: "There are no quizzes to show."
+    cannot_delete_published: "Quiz cannot be deleted since the course is published."
+    cannot_delete_enrolled: "Quiz cannot be deleted since the course has enrolled users."
   team:
     label: 'Teams'
     created: 'Team created successfully'
