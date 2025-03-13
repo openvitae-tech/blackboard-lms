@@ -3,6 +3,7 @@
 RSpec.describe 'Request spec for LearningPartner state changes' do
   describe 'PUT /learning_partners/:id/(activate|deactivate)' do
     before do
+      REDIS_CLIENT.call('FLUSHDB')
       @admin_user = create :user, :admin
       sign_in @admin_user
     end

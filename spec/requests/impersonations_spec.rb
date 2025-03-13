@@ -7,6 +7,7 @@ RSpec.describe 'Request spec for Impersonations', type: :request do
   let(:learning_partner) { create :learning_partner }
 
   before do
+    REDIS_CLIENT.call('FLUSHDB')
     team = create(:team, learning_partner:)
     @learner = create(:user, :learner, team:, learning_partner:)
     sign_in user
@@ -16,6 +17,7 @@ RSpec.describe 'Request spec for Impersonations', type: :request do
     it 'able to impersonate' do
       expect do
         post impersonation_path, params: { id: learning_partner.id }
+        expect(flash[:notice]).to eq(t('impersonation.logged_in_as_support_user'))
       end.to change(learning_partner.users.where(role: 'support'), :count).by(1)
       support_user = learning_partner.users.find_by!(role: 'support')
       expect(REDIS_CLIENT.call('GET', "impersonated_support_user_#{support_user.id}")).to be_present
@@ -28,7 +30,7 @@ RSpec.describe 'Request spec for Impersonations', type: :request do
 
       sign_in user
       post impersonation_path, params: { id: learning_partner.id }
-      expect(flash[:notice]).to eq('Already impersonating')
+      expect(flash[:notice]).to eq(t('impersonation.already_impersonating'))
       expect(response).to redirect_to(learning_partner_path(learning_partner))
     end
 
@@ -54,7 +56,7 @@ RSpec.describe 'Request spec for Impersonations', type: :request do
       delete impersonation_path
 
       expect(REDIS_CLIENT.call('GET', "impersonated_support_user_#{@support_user.id}")).to be_nil
-      expect(flash[:notice]).to eq('You have exited impersonation mode and are now logged in as admin.')
+      expect(flash[:notice]).to eq(t('impersonation.stop_and_login'))
     end
 
     it 'Unauthorized when accessed by non-support user' do
