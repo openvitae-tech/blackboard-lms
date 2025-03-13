@@ -2,7 +2,7 @@
     Login
 </div>
 
-<%= form_with url: otp_login_path, method: :post, scope: :login, data: { turbo: false } do |form| %>
+<%= form_with url: "login_path" do |form| %>
     <%= input_field(
         f: form,
         field_name: :phone_number,
@@ -13,23 +13,16 @@
     ) %>
 
     <div class="mt-12 flex flex-col justify-center gap-4">
-        <%= link_button(
-            label: "Login with OTP",
-            path: otp_field_path,
-            size: "xl",
-            width: "w-full"
-        ) %>
-
-        <%= link_button(
-            label: "Login with password",
-            path: password_field_path,
-            size: "xl",
-            width: "w-full"
-        ) %> 
+        <%= link_to otp_field_path do %>
+          <%= button(label: "Login with OTP", size: "xl",width: "w-full") %>
+        <% end %>
+        <%= link_to password_field_path do %>
+          <%= button(label: "Login with password", size: "xl",width: "w-full") %>
+        <% end %>
     </div>
 
     <div class="flex gap-4 items-start mt-8">
-        <%= check_box_tag :terms, '1', false, class: "w-4 h-4 border border-letter-color focus:ring-0" %>
+        <%= check_box_tag false,class: "w-4 h-4 border border-letter-color focus:ring-0" %>
         <label class="body-extra-small-regular">
             I confirm that I have read, consent, and agree to Instruo's
             <%= link_to "Terms of Use", "/terms-of-use", class: "text-primary underline no-underline" %> and

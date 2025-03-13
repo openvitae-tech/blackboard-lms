@@ -14,7 +14,7 @@
   </span>
 </div>
 
-<%= form_with url: otp_login_path, method: :post, scope: :login, data: { controller: "otp" } do |form| %>
+<%= form_with url: "otp_path", data: { controller: "otp" } do |form| %>
   <div class="input-group">
     <%= otp_input_field(
       f: form, 
@@ -35,16 +35,12 @@
     </div>
   </div>
 
-  <div class="flex flex-col items-center gap-4 mt-10 w-full">
-    <%= link_button(
-      label: "Verify",
-      path: reset_password_path,
-      size: "xl",
-      width: "w-full",
-      disabled: true,
-      target: "submitButton",
-      controller: "otp"
-    ) %>
-    <%= link_to "Login with password", new_session_path(:user), class: "link-text" %>
+  <div class="flex flex-col justify-center gap-4 mt-10">
+  
+    <%= link_to reset_password_path, class: "disabled", data: { otp_target: "submitButton" } do %>
+      <%= button(label: "Verify", size: "xl",width: "w-full") %>
+    <% end %>
+
+    <%= link_to "Login with password", new_session_path(:user), class: "link-text flex justify-center" %>
   </div>
 <% end %>

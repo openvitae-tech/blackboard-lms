@@ -31,26 +31,6 @@ module UiHelper
     )
   end
 
-  def link_button(label:, path:, size: 'md', type: 'primary', icon_name: nil, 
-                  icon_position: 'left', method: :get, html_options: {}, 
-                  width:, disabled: false, target: nil, controller: nil)
-
-    html_options[:data] = html_options.fetch(:data, {}).merge("#{controller}_target" => target.presence).compact
-
-    link_to path, method: method, class: "w-full block #{'disabled' if disabled}", **html_options do
-      button(
-        label:,
-        size:,
-        type:,
-        icon_name:,
-        icon_position: ,
-        width:,
-        target:,
-        controller:
-      )
-    end
-  end
-
   def label_with_icon(icon, label_tag, position)
     ordered = position == "left" ? [icon, label_tag] : [label_tag, icon]
     ordered.compact.join("").html_safe
