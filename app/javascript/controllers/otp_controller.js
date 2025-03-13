@@ -1,18 +1,43 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["input", "submitButton", "hiddenOtp"];
+  static targets = ["input", "submitButton", "timer", "resendOtp"];
 
   connect() {
     if (this.inputTargets.length > 0) {
       this.inputTargets[0].focus();
     }
+    this.startTimer(120); 
+
+  }
+  startTimer(duration) {
+    let timer = duration;
+    this.resendOtpTarget.classList.add("disabled"); 
+
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval); 
+    }
+
+    this.timerInterval = setInterval(() => {
+      const minutes = Math.floor(timer / 60);
+      const seconds = timer % 60;
+      this.timerTarget.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds} min`;
+
+      if (timer === 0) {
+        clearInterval(this.timerInterval);
+        this.resendOtpTarget.classList.remove("disabled"); 
+      }
+
+      timer--;
+    }, 1000);
   }
 
-  // updateHiddenOtp() {
-  //   const otpValues = this.inputTargets.map((input) => input.value).join("");
-  //   this.hiddenOtpTarget.value = otpValues;
-  // }
+  resendOtp(event) {
+    event.preventDefault();
+    this.startTimer(120); 
+    this.resendOtpTarget.classList.add("disabled"); 
+  }
+
 
   inputTargetConnected(input) {
     input.addEventListener("input", this.handleInputOrKeyDown.bind(this));
@@ -27,7 +52,6 @@ export default class extends Controller {
         const nextInput = this.nextInput(input);
         if (nextInput) nextInput.focus();
       }
-      // this.updateHiddenOtp();
     }
 
     if (event.type === "keydown") {
@@ -36,11 +60,9 @@ export default class extends Controller {
           const previousInput = this.previousInput(input);
           if (previousInput) {
             previousInput.focus();
-            // this.updateHiddenOtp();
           }
         } else {
           input.value = "";
-          // this.updateHiddenOtp();
         }
       }
 
