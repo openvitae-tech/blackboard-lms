@@ -26,6 +26,7 @@ RSpec.describe 'Request spec for Impersonations', type: :request do
         post impersonation_path, params: { id: learning_partner.id }
       end.to change(learning_partner.users.where(role: 'support'), :count).by(1)
 
+      sign_in user
       post impersonation_path, params: { id: learning_partner.id }
       expect(flash[:notice]).to eq('Already impersonating')
       expect(response).to redirect_to(learning_partner_path(learning_partner))
