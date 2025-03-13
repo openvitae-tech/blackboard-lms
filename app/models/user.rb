@@ -140,7 +140,7 @@ class User < ApplicationRecord
     active? && is_learner?
   end
 
-  def is_manager_of?(other_user) #check this
+  def is_manager_of?(other_user)
     return false unless other_user.learning_partner_id == self.learning_partner_id
     is_owner? || is_support? ||other_user.team.ancestors.include?(self.team)
   end
