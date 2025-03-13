@@ -14,7 +14,7 @@ RSpec.describe MobileNumber do
       end
     end
 
-    context 'when the value is not numerical' do
+    describe 'when the value is not numerical' do
       let(:value) { 'abcdefghij' }
 
       it 'is not valid' do
@@ -23,7 +23,7 @@ RSpec.describe MobileNumber do
       end
     end
 
-    context 'when the value is too short' do
+    describe 'when the value is too short' do
       let(:value) { '12345' }
 
       it 'is not valid' do
@@ -32,7 +32,7 @@ RSpec.describe MobileNumber do
       end
     end
 
-    context 'when the value is too long' do
+    describe 'when the value is too long' do
       let(:value) { '12345678901' }
 
       it 'is not valid' do

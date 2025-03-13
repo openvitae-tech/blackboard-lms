@@ -1,20 +1,22 @@
 # frozen_string_literal: true
 
 class LocalContentsController < ApplicationController
-  before_action :authenticate_user!
-
-  before_action :set_course
-  before_action :set_course_module
-  before_action :set_lesson
   before_action :set_local_content
 
   def retry
     authorize @local_content
 
+    @lesson = @local_content.lesson
+    @course_module = @lesson.course_module
+    @course = @course_module.course
+
     blob = @local_content.video.blob
     vimeo_url = blob.metadata['url']
-    @local_content.update!(status: :pending, updated_at: Time.now)
 
+    @local_content.update!(status: :pending)
+
+    # Here we want to delete any previous video instance at Vimeo we do that only after uploading and setting a new
+    # video otherwise any existing instance will be unavailable till the new video is read at vimeo.
     UploadVideoToVimeoJob.perform_async(blob.id, @local_content.id)
     DeleteVideoFromVimeoJob.perform_async(vimeo_url)
 
@@ -23,19 +25,7 @@ class LocalContentsController < ApplicationController
 
   private
 
-  def set_course
-    @course = Course.find(params[:course_id])
-  end
-
-  def set_course_module
-    @course_module = @course.course_modules.find(params[:module_id])
-  end
-
-  def set_lesson
-    @lesson = @course_module.lessons.find(params[:lesson_id])
-  end
-
   def set_local_content
-    @local_content = @lesson.local_contents.find_by!(lang: params[:lang])
+    @local_content = LocalContent.find(params[:id])
   end
 end

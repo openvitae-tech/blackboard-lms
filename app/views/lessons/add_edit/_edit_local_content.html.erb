@@ -13,7 +13,7 @@
     <div class="flex items-center justify-center">
       <div class="w-4/6 flex flex-col gap-4">
         <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
-          <% if Rails.env.production? && is_upload_pending(builder.object) %>
+          <% if Rails.env.production? && upload_pending?(builder.object) %>
             <div class="absolute inset-0 flex justify-center items-center">
               <span class="text-center"><%= t("local_content.video_not_available") %></span>
             </div>

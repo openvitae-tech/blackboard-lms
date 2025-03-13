@@ -82,12 +82,6 @@ Rails.application.routes.draw do
           put :movedown
           put :replay
         end
-
-        resources :local_contents, param: :lang, only: :retry do
-          member do
-            put :retry
-          end
-        end
       end
 
       resources :quizzes, except: :index do
@@ -97,6 +91,12 @@ Rails.application.routes.draw do
           put :movedown
         end
       end
+    end
+  end
+
+  resources :local_contents do
+    member do
+      put :retry
     end
   end
 
