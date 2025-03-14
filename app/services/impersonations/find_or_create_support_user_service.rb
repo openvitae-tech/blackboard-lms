@@ -7,19 +7,19 @@ class Impersonations::FindOrCreateSupportUserService
     support_user = learning_partner.users.find_by(role: "support")
     return support_user if support_user.present?
 
-      generated_password = password
-      support_user = User.create!(
-        name: "#{learning_partner.name} Support",
-        role: "support",
-        email: support_email(learning_partner.name),
-        password: generated_password,
-        password_confirmation: generated_password,
-        learning_partner:,
-        team_id: learning_partner.parent_team.id,
-        state: 'active'
-      )
-      support_user.confirm
-      support_user
+    generated_password = password
+    support_user = User.create!(
+      name: "#{learning_partner.name} Support",
+      role: "support",
+      email: support_email(learning_partner.name),
+      password: generated_password,
+      password_confirmation: generated_password,
+      learning_partner:,
+      team_id: learning_partner.parent_team.id,
+      state: 'active'
+    )
+    support_user.confirm
+    support_user
   end
 
   private
