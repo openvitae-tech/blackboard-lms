@@ -1,15 +1,18 @@
-<div class="heading-extra-large pb-6">
-  Login with OTP
-</div>
-<div class="heading-extra-large pb-6 hidden">
-  Forgot Password
-</div>
+<% if params[:type] == "forgot_password" %>
+  <div class="heading-extra-large pb-6">
+    Forgot Password
+  </div>
+<% else %>
+  <div class="heading-extra-large pb-6">
+    Login with OTP
+  </div>
+<% end %>
 
 <div class="justify-start pb-8">
-  <span class="body-small">
+  <span class="text-xs md:text-base font-normal">
     Please enter the verification code sent to<br/>
   </span>
-  <span class="text-primary body-small">
+  <span class="text-primary text-xs md:text-base font-normal">
     +91 9656284605
   </span>
 </div>
@@ -24,14 +27,14 @@
       target: "otp"
     ) %>
 
-    <div class="flex justify-between pt-4">
+    <div class="flex justify-between items-center pt-4">
       <div class="relative justify-start">
         <span class="text-letter-color-light body-extra-small-medium">
           OTP will be valid for :
         </span>                    
         <span data-otp-target="timer" class="text-primary body-extra-small-medium">2:00 min</span>
       </div>
-      <a href="#" data-otp-target="resendOtp" class="float-right link-text text-danger disabled" data-action="click->otp#resendOtp">send OTP again</a>
+      <a href="#" data-otp-target="resendOtp" class="float-right link-text text-danger disabled" data-action="click->otp#resendOtp">Resend OTP</a>
     </div>
   </div>
 
@@ -41,6 +44,16 @@
       <%= button(label: "Verify", size: "xl",width: "w-full") %>
     <% end %>
 
-    <%= link_to "Login with password", new_session_path(:user), class: "link-text flex justify-center" %>
+    <% if params[:type] == "login" %>
+      <div class="flex justify-center text-letter-color-light w-full">
+        <%= link_to "Login with password", new_session_path(:user), class: "link-text text-sm" %>
+      </div>
+    <% else %>
+      <div class="flex flex-row items-center justify-between text-letter-color-light w-full">
+        <%= link_to "Login with password", new_session_path(:user), class: "link-text text-sm" %>
+        <%= link_to "Login with OTP", new_session_path(:user), class: "link-text text-sm" %>
+      </div>
+    <% end %>  
+    
   </div>
 <% end %>

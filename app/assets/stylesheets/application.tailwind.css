@@ -38,7 +38,7 @@ body{
   }
 
   .input-text-otp {
-    @apply h-12 rounded text-center text-xl font-semibold border-line-colour min-w-[86px] text-secondary focus:border-primary focus:ring-0;
+    @apply h-12 rounded text-center text-xl font-semibold border-line-colour min-w-[61px] md:min-w-[86px] text-secondary focus:border-primary focus:ring-0;
   }
 
   .label-text {
