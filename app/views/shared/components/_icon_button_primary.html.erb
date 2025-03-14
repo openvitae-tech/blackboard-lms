@@ -6,4 +6,4 @@
     <% end %>
   </button>
 <% end %>
-<%= local_assigns[:tooltip_text].present? ? render('shared/components/tooltip', tooltip_text: local_assigns[:tooltip_text]) { button_content } : button_content %>
+<%= local_assigns[:tooltip_text].present? ? render('shared/components/tooltip', tooltip_position: local_assigns[:tooltip_position], tooltip_text: local_assigns[:tooltip_text]) { button_content } : button_content %>

@@ -14,7 +14,7 @@ module UiHelper
     content_tag(:span, svg.to_html.html_safe, class: "inline-flex justify-center items-center #{span_css}")
   end
 
-  def button(label: 'Button', type: 'primary', size: 'md', icon_name: nil, icon_position: 'left')
+  def button(label: 'Button', type: 'primary', size: 'md', icon_name: nil, icon_position: 'left', tooltip_text: "", tooltip_position: "bottom")
     ApplicationController.renderer.render(
       partial: "ui/buttons/#{type}",
       locals: {
@@ -22,7 +22,9 @@ module UiHelper
         type:,
         size:,
         icon_name:,
-        icon_position:
+        icon_position:,
+        tooltip_text:,
+        tooltip_position:
       }
     )
   end
@@ -34,7 +36,7 @@ module UiHelper
   def input_field(f: nil, field_name: nil, label: nil, placeholder: "Enter text", width: "w-56", left_icon: nil, right_icon: nil, type: "text_field", options: [],value:"nil")
     partial_path = "ui/inputs/#{type}"
     partial_path = "ui/inputs/text_field" unless lookup_context.exists?(partial_path, [], true)
-  
+
     render partial: partial_path, locals: {
       f: f,
       field_name: field_name,
@@ -47,5 +49,23 @@ module UiHelper
       options: options,
       value:value
     }
+  end
+
+  def table_cell_name(row_data, avatar: false)
+    { partial: "shared/components/table_cell_name", locals: { row_data: row_data, avatar:avatar } }
+  end
+
+  def table_cell_role(row_data)
+    { partial: "shared/components/table_cell_role", locals: { row_data: row_data } }
+  end
+
+  def table_actions(row_data, actions = [])
+    actions.each do |action|
+      action[:data] ||= {} 
+      action[:data][:turbo_frame] = action[:turbo_frame] if action[:turbo_frame].present?
+    end
+
+    { partial: "shared/components/table_actions", locals: { row_data: row_data, actions: actions } }
+  
   end
 end

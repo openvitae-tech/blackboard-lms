@@ -4,13 +4,19 @@
       <%= link_to new_course_scorm_path(@course), class: "nav-link", data: { turbo_frame: "modal" } do %>
         <%= render 'shared/components/icon_button_primary', icon_name: 'icon-download', tooltip_text: t("scorm.download_modal.title") %>
       <% end %>
-      <%= link_to alert_modal_path(
+      <% if policy(@course).destroy? %>
+        <%= link_to alert_modal_path(
                     title: t("alert.title", resource_name: "course"),
                     description: t("alert.description", label: @course.title, resource_name: "course"),
                     action_path: course_path(@course),
                     method: :delete,
-                  ), class: !policy(@course).destroy? && "disabled", data: { turbo_frame: "modal" } do %>
-        <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: !policy(@course).destroy? && delete_tooltip_message(@course) %>
+                  ), data: { turbo_frame: "modal" } do %>
+          <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
+        <% end %>
+      <% else %>
+        <div class="disabled">
+          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: delete_tooltip_message(@course) %>
+        </div>
       <% end %>
     <% end %>
     <% if policy(@course).publish? %>
