@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "tooltip.css";
 
 @layer base {
   input[type="number"]::-webkit-outer-spin-button,
