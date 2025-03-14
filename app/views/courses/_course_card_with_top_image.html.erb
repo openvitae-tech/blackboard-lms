@@ -1,4 +1,4 @@
-<div class="inline-block rounded box-shadow-medium border border-line-colour-light relative max-h-[290px]">
+<div class="inline-block rounded box-shadow-medium border border-line-colour-light relative max-h-[298px]">
   <div class="w-full rounded md:w-[310px] relative">
     <div class="absolute top-0 right-0 z-10 flex flex-wrap justify-start gap-2 heading">
       <% course.tags.each do |tag| %>
@@ -31,8 +31,8 @@
             <span class="ml-2 text-xs font-medium"><%= enroll_count(course) %></span>
           </div>
         </div>          
-        <div class="flex flex-col gap-3 mt-3 heading">
-          <div class="flex flex-wrap gap-2 h-[24px]">
+        <div class="flex flex-col gap-3 mt-3">
+          <div class="flex flex-wrap gap-2 h-[24px] heading">
             <% course.tags.each do |tag| %>
               <% if tag.tag_type == "category" %>
                 <span class="px-2 py-1 text-xs font-medium bg-primary-light-50 rounded">
@@ -47,8 +47,8 @@
                 <%= render 'shared/components/progress_bar_short', progress: enrollment.progress %>
               </div>
               <% if enrollment.has_deadline? %>
-                <div class="text-sm flex flex-row items-center gap-2">
-                  <span class="icon-small icon icon-calendar bg-letter-color"></span>  
+                <div class="text-xs flex flex-row items-center gap-2">
+                  <span class="h-3.5 w-3.5 icon icon-calendar bg-letter-color"></span>  
                   <%= pluralize(days_remaining(enrollment.deadline_at), "day") %> left
                 </div>
               <% end %>
