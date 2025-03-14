@@ -9,13 +9,19 @@
           <%= render "shared/components/button_default_small", label: 'Edit', icon_name: 'icon-edit' %>
         <% end %>
       <% end %>
-      <%= link_to alert_modal_path(
+      <% if policy(@lesson).destroy? %>
+        <%= link_to alert_modal_path(
                     title: t("alert.title", resource_name: "lesson"),
                     description: t("alert.description", label: @lesson.title, resource_name: "lesson"),
                     action_path: course_module_lesson_path(@course, @course_module, @lesson),
                     method: :delete,
-                  ), class: !policy(@lesson).destroy? && "disabled", data: { turbo_frame: "modal" } do %>
-        <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: "A lesson cannot be deleted if the course has any enrollments or is in a published state." %>
+                  ), data: { turbo_frame: "modal" } do %>
+          <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
+        <% end %>
+      <% else %>
+        <div class="disabled">
+          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_position: "left", tooltip_text: lesson_delete_tooltip_message(@course) %>
+        </div>
       <% end %>
     </div>
   <% end %>

@@ -1,12 +1,18 @@
 <div class="flex justify-end">
   <div class="flex justify-between gap-4">
-    <%= link_to alert_modal_path(
+    <% if policy(@course_module).destroy? %>
+      <%= link_to alert_modal_path(
                   title: t("alert.title", resource_name: "course module"),
                   description: t("alert.description", label: @course_module.title, resource_name: "course module"),
                   action_path: course_module_path(@course, @course_module),
                   method: :delete,
-                ),class: !policy(@course_module).destroy? && "disabled", data: { turbo_frame: "modal" } do %>
-      <%= render 'shared/components/outline_button_danger', label: t("button.delete"), tooltip_text: "A module cannot be deleted if the course has any enrollments or is in a published state." %>
+                ), data: { turbo_frame: "modal" } do %>
+        <%= render 'shared/components/outline_button_danger', label: t("button.delete") %>
+      <% end %>
+    <% else %>
+      <div class="disabled">
+        <%= render 'shared/components/outline_button_danger', label: t("button.delete"), tooltip_position: "left", tooltip_text: module_delete_tooltip_message(@course) %>
+      </div>
     <% end %>
     <div class="flex justify-end w-full gap-4 text-right">
       <% if policy(@course_module).edit? %>
@@ -34,9 +40,9 @@
         <li class="mb-4 rounded border p-4 md:p-6 text-sm border-line-colour-light">
           <div class="flex items-center justify-between">
             <%= link_to course_module_lesson_path(@course, @course_module, lesson, class: "nav-link") do %>
-                <span class="text-sm md:text-base font-medium hover:underline">
-                  <%= lesson.title %>
-                </span>
+              <span class="text-sm md:text-base font-medium hover:underline">
+                <%= lesson.title %>
+              </span>
             <% end %>
             <div class="flex items-center gap-6">
               <% if policy(@course_module).edit? %>
@@ -90,9 +96,9 @@
           <li class="mb-4 gap-2 justify-between rounded border p-4 md:p-6 text-sm border-line-colour-light">
             <div class="flex items-center justify-between">
               <%= link_to course_module_quiz_path(@course, @course_module, quiz) do %>
-                  <span class="text-sm md:text-base font-medium hover:underline">
-                    <%= quiz.question %>
-                  </span>
+                <span class="text-sm md:text-base font-medium hover:underline">
+                  <%= quiz.question %>
+                </span>
               <% end %>
               <div class="flex items-center gap-6">
                 <% if policy(@course_module).edit? %>
