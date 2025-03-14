@@ -39,6 +39,21 @@ RSpec.describe 'Request spec for GET /course_assigns/new' do
     end
   end
 
+  describe 'by support user' do
+    before do
+      team = create :team
+      @support_user = create(:user, role: 'support', team:, learning_partner: team.learning_partner)
+      sign_in @support_user
+    end
+
+    it 'render new course_assigns' do
+      get new_course_assign_path(user_id: @support_user.id)
+
+      expect(response.status).to be(200)
+      expect(response).to render_template(:new)
+    end
+  end
+
   describe 'by admin' do
     let(:admin) { create :user, :admin }
     let(:learner) { create(:user, :learner) }
@@ -51,6 +66,7 @@ RSpec.describe 'Request spec for GET /course_assigns/new' do
       get("/course_assigns/new?user_id=#{learner.id}")
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       expect(response.status).to be(302)
+      expect(response).to redirect_to(error_401_path)
     end
   end
 
@@ -66,6 +82,7 @@ RSpec.describe 'Request spec for GET /course_assigns/new' do
       get("/course_assigns/new?user_id=#{learner_two.id}")
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       expect(response.status).to be(302)
+      expect(response).to redirect_to(error_401_path)
     end
   end
 end

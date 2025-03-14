@@ -13,7 +13,8 @@ class User < ApplicationRecord
     admin: 'Admin',
     owner: 'Owner',
     manager: 'Manager',
-    learner: 'Learner'
+    learner: 'Learner',
+    support: 'Support'
   }.freeze
 
   USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
@@ -79,6 +80,10 @@ class User < ApplicationRecord
     enrollments.find_by(course: course)
   end
 
+  def privileged_user?
+    is_manager? || is_owner? || is_support?
+  end
+
   def set_otp!
     return if otp_generated_at.present? && otp_generated_at >= 5.minutes.ago && otp.present?
 
@@ -134,9 +139,10 @@ class User < ApplicationRecord
   def active_learner?
     active? && is_learner?
   end
+
   def is_manager_of?(other_user)
     return false unless other_user.learning_partner_id == self.learning_partner_id
-    is_owner? || other_user.team.ancestors.include?(self.team)
+    is_owner? || is_support? ||other_user.team.ancestors.include?(self.team)
   end
 
   private

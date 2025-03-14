@@ -52,6 +52,12 @@ en:
   scorm:
     download_modal:
       title: "Download SCORM package"
+  impersonation:
+    stop_and_login: "You have exited impersonation mode and are now logged in as admin."
+    impersonate: "Impersonate"
+    logged_in_as_support_user: "Logged in as support user"
+    stop_impersonation: "Stop impersonation"
+    already_impersonating: "Already impersonating"
   course:
     label: "My Courses"
     enroll:

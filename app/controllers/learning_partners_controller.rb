@@ -87,6 +87,8 @@ class LearningPartnersController < ApplicationController
   def deactivate
     authorize @learning_partner
     @learning_partner.deactivate
+    terminate_impersonation
+
     redirect_to @learning_partner, notice: 'Learning partner is deactivated.'
   end
 
@@ -104,5 +106,10 @@ class LearningPartnersController < ApplicationController
 
   def authorize_admin!
     authorize :learning_partner
+  end
+
+  def terminate_impersonation
+    impersonated_user = @learning_partner.users.find_by(role: "support")
+    destroy_impersonation(impersonated_user.id) if impersonated_user.present?
   end
 end
