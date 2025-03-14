@@ -36,6 +36,19 @@ class LoginsController < ApplicationController
     end
   end
 
+  def otp_field
+    render 'devise/sessions/otp_field'
+  end
+  def password_field
+    render 'devise/sessions/password_field'
+  end
+  def forgot_password
+    render 'devise/sessions/forgot_password'
+  end
+  def reset_password
+    render 'devise/sessions/reset_password'
+  end
+
   private
 
   def login_params
@@ -50,4 +63,6 @@ class LoginsController < ApplicationController
     @mobile_number = MobileNumber.new(value: login_params[:mobile_number])
     @user_exists = @mobile_number.valid? && User.exists?(phone: @mobile_number.value)
   end
+
+  
 end

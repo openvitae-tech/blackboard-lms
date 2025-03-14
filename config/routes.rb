@@ -138,6 +138,10 @@ Rails.application.routes.draw do
 
   get 'error_401' => 'pages#unauthorized'
   get 'dashboard' => 'dashboards#index'
+  get 'devise/sessions/otp_field', to: 'logins#otp_field', as: 'otp_field'
+  get 'devise/sessions/password_field', to: 'logins#password_field', as: 'password_field'
+  get 'devise/sessions/forgot_password', to: 'logins#forgot_password', as: 'forgot_password'
+  get 'devise/sessions/reset_password', to: 'logins#reset_password', as: 'reset_password'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

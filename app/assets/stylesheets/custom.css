@@ -8,13 +8,10 @@
 
 
 #submit-button.disabled,
-button.disabled ,
-a.disabled{
+button.disabled,
+a.disabled,
+div.disabled{
   opacity: 0.5 !important;
-}
-
-a.disabled {
-  color: #808285;
 }
 
 .side-bar {
