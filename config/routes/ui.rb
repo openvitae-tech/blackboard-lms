@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     get :buttons, to: 'buttons#index'
     get :icons, to: 'icons#index'
     get :inputs, to: 'inputs#index'
+    get :tables, to: 'tables#index'
   end
 end

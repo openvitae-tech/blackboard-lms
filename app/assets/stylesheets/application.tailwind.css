@@ -12,14 +12,14 @@
   }
 }
 
-body{
+body {
   @apply font-roboto;
 }
 
 @layer components {
   .input-text {
     @apply w-full px-3 py-2 rounded border border-line-colour min-h-[48px] md:min-h-[52px] max-h-[200px] overflow-auto focus:border-primary focus:ring-0;
-  }  
+  }
 
   .input-textarea {
     @apply w-full px-3 py-2 rounded border border-line-colour focus:border-primary focus:ring-0;
@@ -45,7 +45,7 @@ body{
     @apply text-sm font-normal;
   }
 
-  .heading{
+  .heading {
     @apply !font-poppins;
   }
 
@@ -61,9 +61,9 @@ body{
     @apply text-base md:text-lg font-semibold;
   }
 
-  .heading-overlay{
+  .heading-overlay {
     @apply text-white font-bold text-xl;
-  } 
+  }
 
   .heading-medium {
     @apply text-base font-medium;
@@ -72,8 +72,8 @@ body{
   .heading-semibold {
     @apply text-base font-semibold;
   }
-  
-  .labels{
+
+  .labels {
     @apply !font-poppins;
   }
 
@@ -100,7 +100,7 @@ body{
     }
   }
 
-  .btn-secondary-outline{
+  .btn-secondary-outline {
     @apply rounded border px-4 text-center py-3.5 min-w-40 gap-2 border-line-colour text-secondary heading;
   }
 
@@ -221,8 +221,6 @@ body{
   }
 }
 
-
-
 .btn-watch-demo {
   @apply flex items-center gap-2 px-3 py-2 text-white bg-black max-w-[188px] rounded-[32px] md:max-w-[296px] md:gap-5 md:px-5 md:py-3;
 
@@ -287,15 +285,15 @@ input.tags-checkbox:checked:focus {
   @apply ring-0 focus:outline-none;
 }
 
-.teams-more{
-  @apply bg-white icon-medium ;
+.teams-more {
+  @apply bg-white icon-medium;
 }
 
-.member-more{
-  @apply bg-letter-color icon-small ;
+.member-more {
+  @apply bg-letter-color icon-small;
 }
 
-.teams-more-hover{
+.teams-more-hover {
   @apply bg-black hover:bg-secondary hover:opacity-80;
 }
 
@@ -317,7 +315,7 @@ input.tags-checkbox:checked:focus {
 
 .heading-extra-small {
   @apply text-base font-semibold;
-} 
+}
 
 .title-large {
   @apply text-lg font-medium;

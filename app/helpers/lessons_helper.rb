@@ -64,4 +64,12 @@ module LessonsHelper
     next_path = next_lesson_path(course, course_module, lesson)
     next_path.present? ? next_path : course_path(course)
   end
+
+  def lesson_delete_tooltip_message(course)
+    if course.published?
+      t("lesson.cannot_delete_published")
+    else
+      t("lesson.cannot_delete_enrolled")
+    end
+  end
 end
