@@ -18,7 +18,7 @@ module LessonsHelper
     if local_content.video.blob.metadata['url'].nil? && local_content.status == "complete"
       true
     else
-      local_content.status == "pending" && local_content.updated_at < 30.minutes.ago
+      local_content.status == "pending" && local_content.video_published_at < 30.minutes.ago
     end
   end
 

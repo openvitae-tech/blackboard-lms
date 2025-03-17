@@ -17,12 +17,14 @@ RSpec.describe 'Request spec for LocalContents', type: :request do
   describe 'GET /local_contents/:id/retry' do
     it 'Allow retry upload video to vimeo by admin' do
       Sidekiq::Testing.fake! do
+        travel_to Time.zone.today + 1.month
+
         put retry_local_content_path(@local_content)
+        @local_content.reload
 
         expect(UploadVideoToVimeoJob.jobs.size).to be(1)
         expect(DeleteVideoFromVimeoJob.jobs.size).to be(1)
-        expect(response).to redirect_to(course_module_lesson_path(@course, @course_module, @lesson,
-                                                                  lang: 'english'))
+        expect(@local_content.video_published_at).to be_within(1.second).of(Time.zone.now)
       end
     end
 
