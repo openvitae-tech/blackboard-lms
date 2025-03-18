@@ -120,6 +120,8 @@ Rails.application.routes.draw do
     resources :videos, only: :show
   end
 
+  resource :impersonation, only: %i[create destroy]
+
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',
     sessions: 'users/sessions'
