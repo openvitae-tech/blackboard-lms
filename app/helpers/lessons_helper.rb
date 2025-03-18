@@ -11,14 +11,14 @@ module LessonsHelper
     vendor_response['html'] if vendor_response.has_key?('html')
   end
 
-  def upload_pending?(local_content)
+  def vimeo_upload_timed_out?(local_content)
     # TODO: Scope for refactoring
     # this checks upload to vimeo is pending or not. May be this is better renamed as upload_to_vimeo_pending?
     # also the status can be better named as vimeo_upload_status instead of status.
     if local_content.video.blob.metadata['url'].nil? && local_content.status == "complete"
       true
     else
-      local_content.status == "pending" && local_content.updated_at < 30.minutes.ago
+      local_content.status == "pending" && local_content.video_published_at < 30.minutes.ago
     end
   end
 
