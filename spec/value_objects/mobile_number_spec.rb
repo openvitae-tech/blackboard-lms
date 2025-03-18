@@ -6,7 +6,7 @@ RSpec.describe MobileNumber do
   subject { described_class.new(value:) }
 
   describe 'validations' do
-    describe 'when the value is valid' do
+    context 'when the value is valid' do
       let(:value) { '1234567890' }
 
       it 'is valid' do

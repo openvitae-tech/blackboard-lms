@@ -9,6 +9,6 @@ class DashboardPolicy < ApplicationPolicy
   end
 
   def index?
-    user && (user.is_manager? || user.is_owner?)
+    user && (user.privileged_user?)
   end
 end

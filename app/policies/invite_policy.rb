@@ -10,7 +10,7 @@ class InvitePolicy < ApplicationPolicy
   end
 
   def new?
-    user.is_admin? || user.is_manager? || user.is_owner?
+    user.is_admin? || user.privileged_user?
   end
 
   def new_admin?
@@ -20,7 +20,7 @@ class InvitePolicy < ApplicationPolicy
   def create?
     return true if user.is_admin?
 
-    return record.ancestors.include?(user.team) if user.is_manager? || user.is_owner?
+    return record.ancestors.include?(user.team) if user.privileged_user?
 
     false
   end
@@ -31,6 +31,6 @@ class InvitePolicy < ApplicationPolicy
 
   def resend?
     # record is the other user whom the current user want to send a re-invite
-    user.active? && record.unverified? && (user.is_admin? || user.is_manager? || user.is_owner?)
+    user.active? && record.unverified? && (user.is_admin? || user.privileged_user?)
   end
 end

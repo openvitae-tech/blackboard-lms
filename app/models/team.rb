@@ -36,7 +36,7 @@ class Team < ApplicationRecord
   ]
 
   def members
-    users.skip_deactivated
+    users.where.not(role: "support").skip_deactivated
   end
 
   def ancestors
