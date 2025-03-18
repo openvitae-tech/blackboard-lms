@@ -19,7 +19,16 @@ AllCops:
     - "docker-build"
     - "db/seeds.rb"
     - "db/migrate/*"
-    - "app/**/*"
+    - "app/controllers/**/*"
+    - "app/helpers/**/*"
+    - "app/javascript/**/*"
+    - "app/jobs/**/*"
+    - "app/mailers/**/*"
+    - "app/models/**/*"
+    - "app/queries/**/*"
+    - "app/services/**/*"
+    - "app/value_objects/**/*"
+    - "app/views/**/*"
 
 Style/Documentation:
   Enabled: false
