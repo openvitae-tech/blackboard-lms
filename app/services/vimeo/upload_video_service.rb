@@ -30,7 +30,7 @@ class Vimeo::UploadVideoService
     end
 
     file.update!(metadata: file.metadata.merge(url: vimeo_link))
-    local_content.update!(status: :complete)
+    local_content.update!(status: :complete, video_published_at: Time.zone.now)
     upload_response
   end
 

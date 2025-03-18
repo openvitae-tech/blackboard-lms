@@ -30,6 +30,6 @@
   <%= @lesson.title %>
 </p>
 <div class="flex flex-col md:flex-row gap-6">
-  <%= render "lessons/video_frame", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
+  <%= render "lessons/lesson", course: @course, all_modules: @course_modules, course_module: @course_module, lesson: @lesson %>
   <%= render "lessons/play_list", course: @course, enrollment: @enrollment %>
 </div>

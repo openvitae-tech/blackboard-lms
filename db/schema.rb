@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_18_062725) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_17_155053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -148,6 +148,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_18_062725) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
+    t.datetime "video_published_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["lesson_id", "lang"], name: "index_local_contents_on_lesson_id_and_lang", unique: true
     t.index ["lesson_id"], name: "index_local_contents_on_lesson_id"
   end
