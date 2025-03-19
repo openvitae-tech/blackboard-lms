@@ -12,7 +12,7 @@ class SendLoginOtpService
     response = send_sms
     log_error_to_sentry(response) unless response.is_a?(Net::HTTPSuccess)
     response
-  rescue
+  rescue StandardError
     log_general_error
   end
 
@@ -30,12 +30,12 @@ class SendLoginOtpService
     request['Content-Type'] = 'application/json'
 
     request.set_form_data({
-      "route" => "dlt",
-      "sender_id" => Rails.application.credentials.dig(:fast2sms, :sender_id),
-      "message" => Rails.application.credentials.dig(:fast2sms, :message_id),
-      "variables_values" => otp,
-      "numbers" => mobile_number
-    })
+                            'route' => 'dlt',
+                            'sender_id' => Rails.application.credentials.dig(:fast2sms, :sender_id),
+                            'message' => Rails.application.credentials.dig(:fast2sms, :message_id),
+                            'variables_values' => otp,
+                            'numbers' => mobile_number
+                          })
 
     request
   end
@@ -49,7 +49,7 @@ class SendLoginOtpService
 
   def log_general_error
     Sentry.capture_message('An error occurred while sending OTP', level: :warning, extra: {
-                             mobile_number: mobile_number
+                             mobile_number:
                            })
   end
 end
