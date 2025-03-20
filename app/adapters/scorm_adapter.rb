@@ -9,6 +9,6 @@ class ScormAdapter
   end
 
   def process
-    Scorm::Course.new(course, scorm_token)
+    ScormService::Course.new(course, scorm_token)
   end
 end

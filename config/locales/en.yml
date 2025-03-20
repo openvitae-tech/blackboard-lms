@@ -31,6 +31,7 @@ en:
   must_exist: "%{entity} must exist"
   cant_blank: "%{field} can't be blank"
   already_taken: "%{field} has already been taken"
+  invalid_search: "%{value} is not a valid search context"
   resource:
     created: "The %{resource_name} is successfully created."
     updated: "The %{resource_name} is successfully updated."
@@ -60,6 +61,9 @@ en:
     already_impersonating: "Already impersonating"
   course:
     label: "My Courses"
+    course_assigned: "Course assigned"
+    deadline_approaching: "Course deadline approaching"
+    course_completed: "You have completed a course"
     enroll:
       user: "enrolled user"
       label: 'Self assign'
