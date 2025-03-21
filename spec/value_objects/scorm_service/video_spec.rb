@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Scorm::Video do
+RSpec.describe ScormService::Video do
   let(:lesson) { create :lesson }
   let(:local_content) { lesson.local_contents.first }
 

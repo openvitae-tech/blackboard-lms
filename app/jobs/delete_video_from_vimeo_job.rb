@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DeleteVideoFromVimeoJob < BaseJob
   def perform(url)
     with_tracing "url=#{url}" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UploadVideoToVimeoJob < BaseJob
   def perform(id, local_content_id)
     with_tracing "blob_id=#{id}" do

@@ -2,7 +2,7 @@
 
 # PORO class for Notification
 class Notification
-  VALID_TYPES = %w[info error]
+  VALID_TYPES = %w[info error].freeze
 
   attr_accessor :user, :title, :text, :ntype, :timestamp, :link
 
@@ -14,21 +14,21 @@ class Notification
     @ntype = ntype
     @timestamp = timestamp
 
-    raise Errors::InvalidNotificationType.new("Invalid notification type #{ntype}") unless VALID_TYPES.include? ntype
+    raise Errors::InvalidNotificationType, "Invalid notification type #{ntype}" unless VALID_TYPES.include? ntype
   end
 
-  def to_json
+  def to_json(*_args)
     {
-      title: self.title,
-      text: self.text,
-      link: self.link,
-      ntype: self.ntype,
-      timestamp: self.timestamp
+      title:,
+      text:,
+      link:,
+      ntype:,
+      timestamp:
     }.to_json
   end
 
   def created_at
-    Time.at(self.timestamp)
+    Time.zone.at(timestamp)
   end
 
   def encoded_message

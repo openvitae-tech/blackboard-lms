@@ -8,7 +8,7 @@ class CourseDeadlineReminderJob < BaseJob
       # send at most one email per day, kept 1 hours as buffer for any retries
       if enrollment.reminder_send_at.blank? || enrollment.reminder_send_at < 23.hours.ago
         UserMailer.course_deadline_reminder(enrollment.user, enrollment.course, enrollment.deadline_at).deliver_later
-        enrollment.touch(:reminder_send_at)
+        enrollment.touch(:reminder_send_at) # rubocop:disable Rails/SkipsModelValidations
       end
     end
   end

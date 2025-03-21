@@ -19,7 +19,15 @@ AllCops:
     - "docker-build"
     - "db/seeds.rb"
     - "db/migrate/*"
-    - "app/**/*"
+    - "app/controllers/**/*"
+    - "app/helpers/**/*"
+    - "app/javascript/**/*"
+    - "app/models/**/*"
+    - "app/queries/**/*"
+    - "app/services/**/*"
+    - "app/errors/**/*"
+    - "app/policies/**/*"
+    - "app/views/**/*"
 
 Style/Documentation:
   Enabled: false
@@ -30,6 +38,8 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 30
 Metrics/AbcSize:
+  Enabled: false
+Metrics/ParameterLists:
   Enabled: false
 RSpec/NamedSubject:
   Enabled: false

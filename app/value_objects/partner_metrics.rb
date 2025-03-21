@@ -4,22 +4,21 @@
 # naming use _value for any resulting single value such as counts
 # for multiple items in the results use _values
 class PartnerMetrics
-
   attr_reader :partner
 
-  COUNTS = [
-    :onboarding_initiated_count,
-    :user_login_count,
-    :user_logout_count,
-    :first_owner_joined_count,
-    :user_invited_count,
-    :user_joined_count,
-    :user_enrolled_count,
-    :course_started_count,
-    :course_completed_count,
-    :course_views_count,
-    :lesson_views_count,
-  ]
+  COUNTS = %i[
+    onboarding_initiated_count
+    user_login_count
+    user_logout_count
+    first_owner_joined_count
+    user_invited_count
+    user_joined_count
+    user_enrolled_count
+    course_started_count
+    course_completed_count
+    course_views_count
+    lesson_views_count
+  ].freeze
 
   def initialize(partner)
     @partner = partner
@@ -36,7 +35,7 @@ class PartnerMetrics
 
     query = init_query_object('user_enrolled_query')
     results = query.call
-    grouped_events = results.group_by { |event| event.data["course_id"] }
+    grouped_events = results.group_by { |event| event.data['course_id'] }
     grouped_events.each do |key, value|
       @course_enrollment_values[key] = value.count
     end
@@ -45,31 +44,32 @@ class PartnerMetrics
   end
 
   def onboarding_initiated?
-    onboarding_initiated_count > 0
+    onboarding_initiated_count.positive?
   end
 
   def first_owner_joined?
-    first_owner_joined_count > 0
+    first_owner_joined_count.positive?
   end
   # dynamically define counter methods
   COUNTS.each do |count_name|
-      define_method count_name do
-        value = instance_variable_get("@#{count_name.to_s}")
-        return value if value.present?
+    define_method count_name do
+      value = instance_variable_get("@#{count_name}")
+      return value if value.present?
 
-        # eg: course_views_count_query
-        query_object_name = count_name.to_s.sub('_count', '_query')
+      # eg: course_views_count_query
+      query_object_name = count_name.to_s.sub('_count', '_query')
 
-        query = init_query_object(query_object_name)
+      query = init_query_object(query_object_name)
 
-        value = query.call.count
-        instance_variable_set("@#{count_name[1..]}".to_sym, value)
-        value
-      end
+      value = query.call.count
+      instance_variable_set(:"@#{count_name[1..]}", value)
+      value
     end
+  end
 
   def time_spent_total
     return @time_spent_total if @time_spent_total
+
     query = init_query_object('time_spent_query')
     @time_spent_total = query.call.map { |x| x.data['time_spent'] }.sum
   end
