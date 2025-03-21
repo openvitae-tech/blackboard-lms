@@ -26,8 +26,6 @@ AllCops:
     - "app/mailers/**/*"
     - "app/models/**/*"
     - "app/queries/**/*"
-    - "app/errors/**/*"
-    - "app/policies/**/*"
     - "app/value_objects/**/*"
     - "app/views/**/*"
 

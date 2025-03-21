@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-class TeamPolicy < ApplicationPolicy
+class TeamPolicy
   attr_reader :user, :team
 
-  def initialize(user, team)
-    super
+  def initialize(user, record)
     @user = user
     @team = record
   end
