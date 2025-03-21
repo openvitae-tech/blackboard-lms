@@ -127,6 +127,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_17_155053) do
     t.boolean "first_owner_joined", default: false
     t.integer "max_user_count"
     t.integer "users_count", default: 0
+    t.text "content"
   end
 
   create_table "lessons", force: :cascade do |t|
