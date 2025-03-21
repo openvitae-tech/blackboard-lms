@@ -7,7 +7,9 @@ class CourseManagementService
 
   def enroll!(user, course, assigned_by = nil, deadline = nil)
     # Enrolling to an unpublished course is unacceptable
-    raise InvalidEnrollmentError.new("Cannot enroll to unpublished course. Course Id: #{course.id}") unless course.published?
+    unless course.published?
+      raise InvalidEnrollmentError, "Cannot enroll to unpublished course. Course Id: #{course.id}"
+    end
 
     return :duplicate if user.enrolled_for_course?(course)
 
@@ -20,7 +22,8 @@ class CourseManagementService
     NotificationService.notify(
       user,
       I18n.t('notifications.course.enrolled.title'),
-      format(I18n.t('notifications.course.enrolled.message'), title: course.title), link: course_path(course))
+      format(I18n.t('notifications.course.enrolled.message'), title: course.title), link: course_path(course)
+    )
     :ok
   end
 
@@ -79,17 +82,17 @@ class CourseManagementService
       )
     end
 
-    if course_completed?(enrollment)
-      enrollment.complete_course!
-      EVENT_LOGGER.publish_course_completed(user, enrollment.course_id)
-      UserMailer.course_completed(user, course_module.course).deliver_later
-      NotificationService.notify(
-        user,
-        I18n.t('notifications.course.completed.title'),
-        format(I18n.t('notifications.course.completed.message'), title: course_module.course.title),
-        link: course_path(course_module.course)
-      )
-    end
+    return unless course_completed?(enrollment)
+
+    enrollment.complete_course!
+    EVENT_LOGGER.publish_course_completed(user, enrollment.course_id)
+    UserMailer.course_completed(user, course_module.course).deliver_later
+    NotificationService.notify(
+      user,
+      I18n.t('notifications.course.completed.title'),
+      format(I18n.t('notifications.course.completed.message'), title: course_module.course.title),
+      link: course_path(course_module.course)
+    )
   end
 
   def set_lesson_attributes(_course_module, lesson)
@@ -104,7 +107,9 @@ class CourseManagementService
       next if result != :ok
 
       EVENT_LOGGER.publish_course_assigned(assigned_by, user.id, course.id)
-      NotificationService.notify(user, I18n.t('course.assigned.title'), format(I18n.t('course.assigned.text'), course: course.title, name: assigned_by.name), link: course_path(course))
+      NotificationService.notify(user, I18n.t('course.assigned.title'),
+                                 format(I18n.t('course.assigned.text'),
+                                        course: course.title, name: assigned_by.name), link: course_path(course))
       UserMailer.course_assignment(user, assigned_by, course).deliver_later
     end
   end
@@ -112,7 +117,7 @@ class CourseManagementService
   def assign_team_to_courses(team, courses_with_deadline, assigned_by)
     ActiveRecord::Base.transaction do
       # create team_enrollment record at team level
-      courses_with_deadline.each do |course, _deadline|
+      courses_with_deadline.each do |(course, _)|
         next if team.enrolled_for_course?(course)
 
         course.enroll_team!(team, assigned_by)
@@ -199,15 +204,23 @@ class CourseManagementService
     when :create
       ordering.append(record.id) unless ordering.include? record.id
     when :up
-      i = ordering.find_index(record.id)
-
-      ordering[i], ordering[i - 1] = ordering[i - 1], ordering[i] if i.positive?
+      move_up(ordering, record)
     when :down
-      i = ordering.find_index(record.id)
-
-      ordering[i], ordering[i + 1] = ordering[i + 1], ordering[i] if ordering[i + 1].present?
+      move_down(ordering, record)
     end
 
     parent.save! if parent.changed?
+  end
+
+  def move_up(ordering, record)
+    index = ordering.find_index(record.id)
+
+    ordering[index], ordering[index - 1] = ordering[index - 1], ordering[index] if index.positive?
+  end
+
+  def move_down(ordering, record)
+    index = ordering.find_index(record.id)
+
+    ordering[index], ordering[index + 1] = ordering[index + 1], ordering[index] if ordering[index + 1].present?
   end
 end

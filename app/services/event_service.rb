@@ -83,7 +83,7 @@ class EventService
       user_id: user.id,
       team_id: user.team_id,
       assigned_to_user: other_user_id,
-      course_id: course_id
+      course_id:
     )
 
     publish_event(user, event)
@@ -106,7 +106,7 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      course_id: course_id,
+      course_id:
     )
 
     publish_event(user, event)
@@ -117,8 +117,8 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      course_id: course_id
-      )
+      course_id:
+    )
 
     publish_event(user, event)
   end
@@ -128,7 +128,7 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      course_id: course_id
+      course_id:
     )
 
     publish_event(user, event)
@@ -139,7 +139,7 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      course_id: course_id,
+      course_id:,
       time_spent: time_spent_in_seconds
     )
 
@@ -151,7 +151,7 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      course_id: course_id
+      course_id:
     )
 
     publish_event(user, event)
@@ -162,8 +162,8 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      course_id: course_id,
-      lesson_id: lesson_id
+      course_id:,
+      lesson_id:
     )
 
     publish_event(user, event)
@@ -174,7 +174,7 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      target_user_id: target_user.id,
+      target_user_id: target_user.id
     )
 
     publish_event(user, event)
@@ -185,7 +185,7 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      target_user_id: target_user.id,
+      target_user_id: target_user.id
     )
 
     publish_event(user, event)
@@ -197,7 +197,7 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      active_user_count: active_user_count
+      active_user_count:
     )
 
     publish_event(user, event)

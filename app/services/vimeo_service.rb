@@ -9,7 +9,7 @@ class VimeoService
   BASE_URL = 'https://vimeo.com/api/oembed.json'
 
   # Example success response
-  # {
+  #   {
   #   "type": "video",
   #   "version": "1.0",
   #   "provider_name": "Vimeo",
@@ -19,19 +19,28 @@ class VimeoService
   #   "author_url": "https://vimeo.com/user1234",
   #   "is_plus": "0",
   #   "account_type": "starter",
-  #   "html": "<iframe src=\"https://player.vimeo.com/video/1220475835?app_id=1234\" width=\"424\" height=\"240\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" title=\"Suggestive Selling and Upselling\"></iframe>",
+  #   "html": "<iframe src=\"https://player.vimeo.com/video/1220475835?app_id=1234\" "\
+  #           "width=\"424\" height=\"240\" frameborder=\"0\" allow=\"autoplay; fullscreen; "\
+  #           "picture-in-picture; clipboard-write\" title=\"Suggestive Selling and Upselling\">"\
+  #           "</iframe>",
   #   "width": 424,
   #   "height": 240,
   #   "duration": 204,
   #   "description": "",
-  #   "thumbnail_url": "https://i.vimeocdn.com/video/1939052232-0700935b457fe6a49a6288bc0f3416dbddfa2b6d269057e7411251646875e4c7-d_295x166",
+  #   "thumbnail_url": "https://i.vimeocdn.com/video/1939052232-0700935b457fe6a49a6288bc0f"\
+  #                    "3416dbddfa2b6d269057e7411251646875e4c7-d_295x166",
   #   "thumbnail_width": 295,
   #   "thumbnail_height": 167,
-  #   "thumbnail_url_with_play_button": "https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F1939050232-1700935b457fe6a49a6288bc0f3416dbddfa2b6d269057e7411251646875e4c7-d_295x166&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcrawler_play.png",
+  #   "thumbnail_url_with_play_button": "https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F"\
+  #                                     "%2Fi.vimeocdn.com%2Fvideo%2F1939050232-1700935b457fe6a"\
+  #                                     "49a6288bc0f3416dbddfa2b6d269057e7411251646875e4c7-d_295x"\
+  #                                     "166&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcraw"\
+  #                                     "ler_play.png",
   #   "upload_date": "2024-10-17 02:05:47",
   #   "video_id": 1220475835,
   #   "uri": "/videos/1220475835"
   # }
+
   def resolve_video_url(url)
     uri = URI(BASE_URL)
     uri.query = URI.encode_www_form({ url: })
@@ -52,7 +61,6 @@ class VimeoService
       else
         { error: 'Failed to fetch video' }
       end
-
     rescue SocketError => e
       { error: "Network error: #{e.message}" }
     rescue Timeout::Error => e

@@ -1,19 +1,23 @@
-class Lessons::UpdateService
-  include Singleton
+# frozen_string_literal: true
 
-  def update_lesson!(lesson, lesson_params)
-   lesson.update!(lesson_params)
-    upload_to_vimeo(lesson_params) if Rails.env.production?
-  end
+module Lessons
+  class UpdateService
+    include Singleton
 
-  private
+    def update_lesson!(lesson, lesson_params)
+      lesson.update!(lesson_params)
+      upload_to_vimeo(lesson_params) if Rails.env.production?
+    end
 
-  def upload_to_vimeo(lesson_params)
-    lesson_params[:local_contents_attributes].each do |_, item|
+    private
 
-      next if item[:blob_id].nil?
-      local_content =  ActiveStorage::Attachment.find_by!(blob_id: item[:blob_id]).record
-      UploadVideoToVimeoJob.perform_async(item[:blob_id], local_content.id)
+    def upload_to_vimeo(lesson_params)
+      lesson_params[:local_contents_attributes].each_value do |item|
+        next if item[:blob_id].nil?
+
+        local_content = ActiveStorage::Attachment.find_by!(blob_id: item[:blob_id]).record
+        UploadVideoToVimeoJob.perform_async(item[:blob_id], local_content.id)
+      end
     end
   end
 end

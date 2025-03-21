@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'utilities/queue_client'
 
 class NotificationService
@@ -22,7 +23,8 @@ class NotificationService
 
   def pending_notification_for(user)
     read_all_notifications_for(user).map do |obj|
-      Notification.new(user, obj['title'], obj['text'], link: obj['link'], ntype: obj['ntype'], timestamp: obj['timestamp'])
+      Notification.new(user, obj['title'], obj['text'], link: obj['link'], ntype: obj['ntype'],
+                                                        timestamp: obj['timestamp'])
     end
   end
 
