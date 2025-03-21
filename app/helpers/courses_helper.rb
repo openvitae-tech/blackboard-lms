@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
 module CoursesHelper
-  def has_search_results?
-    defined?(@search_results)
+  def enrolled_courses?(courses)
+    defined?(courses) && courses.present?
   end
 
-  def has_enrolled_courses?
-    defined?(@enrolled_courses) && @enrolled_courses.present?
-  end
-
-  def has_available_courses?
-    defined?(@available_courses) && @available_courses.present?
+  def available_courses?(courses)
+    defined?(courses) && courses.present?
   end
 
   # @param version [Symbol] Values are :vertical or :horizontal
@@ -27,7 +23,7 @@ module CoursesHelper
   end
 
   def course_description(course, limit = nil)
-    return "" if course.description.blank?
+    return '' if course.description.blank?
 
     text = limit.present? ? course.description[0..limit] : course.description
     sanitize text
@@ -41,7 +37,7 @@ module CoursesHelper
       next_lesson = course_module.first_lesson if course_module.present?
     end
 
-    return unless next_lesson.present?
+    return if next_lesson.blank?
 
     course_module_lesson_path(course, course_module, next_lesson)
   end
@@ -54,16 +50,15 @@ module CoursesHelper
       prev_lesson = course_module.last_lesson if course_module.present?
     end
 
-    return unless prev_lesson.present?
+    return if prev_lesson.blank?
 
     course_module_lesson_path(course, course_module, prev_lesson)
   end
 
   def enroll_count(course)
     return course.enrollments_count if current_user.is_admin?
-    # probably cache this in a short term basis rather than on demand memoization
-    @partner_metrics ||= PartnerMetrics.new(current_user.learning_partner)
-    number_with_delimiter(@partner_metrics.course_enrollment_counts_for(course))
+
+    number_with_delimiter(partner_metrics.course_enrollment_counts_for(course))
   end
 
   def modules_count(course)
@@ -93,7 +88,7 @@ module CoursesHelper
   def next_quiz_path(course, course_module, current_quiz)
     next_quiz = course_module.next_quiz(current_quiz)
 
-    return unless next_quiz.present?
+    return if next_quiz.blank?
 
     course_module_quiz_path(course, course_module, next_quiz)
   end
@@ -101,7 +96,7 @@ module CoursesHelper
   def prev_quiz_path(course, course_module, current_quiz)
     prev_quiz = course_module.prev_quiz(current_quiz)
 
-    return unless prev_quiz.present?
+    return if prev_quiz.blank?
 
     course_module_quiz_path(course, course_module, prev_quiz)
   end
@@ -175,9 +170,16 @@ module CoursesHelper
 
   def delete_tooltip_message(course)
     if course.published?
-      t("course.cannot_delete_published")
+      t('course.cannot_delete_published')
     else
-      t("course.cannot_delete_enrolled")
+      t('course.cannot_delete_enrolled')
     end
+  end
+
+  private
+
+  def partner_metrics
+    # probably cache this in a short term basis rather than on demand memoization
+    @partner_metrics ||= PartnerMetrics.new(current_user.learning_partner)
   end
 end

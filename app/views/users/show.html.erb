@@ -11,12 +11,11 @@
 <%= render 'users/team_user_info', user: @user %>
 <%= render 'users/team_user_course_status' %>
 <div class="my-8">
-  <% if has_enrolled_courses? %>
+  <% if enrolled_courses?(@enrolled_courses) %>
     <p class="heading heading-medium mb-4">
       <span class="">Assigned courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses.count, 'course') %>
-      )</span>
+        )</span>
     </p>
-
     <div class="flex flex-wrap gap-4">
       <% @enrolled_courses.each do |course| %>
         <%= render 'courses/course_card_with_top_image', course: course, enrollment: course.enrollments.first %>

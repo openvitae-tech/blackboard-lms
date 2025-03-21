@@ -3,7 +3,6 @@
 require 'utilities/tracing'
 
 class AppQuery
-
   include Utilities::Tracing
 
   attr_reader :results, :executed

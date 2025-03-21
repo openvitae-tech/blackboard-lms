@@ -56,10 +56,10 @@
   <% elsif @type == "all" && @available_courses.blank? %>
     <%= render 'courses/not_found_msg', type: (params[:tags].present? && params[:term].present? ? 'search_and_tags' : params[:term].present? ? 'search' : 'tags') %>
   <% end %>
-  <% if has_enrolled_courses? && @type != "all" %>
+  <% if enrolled_courses?(@enrolled_courses) && @type != "all" %>
     <p class="heading heading-medium mb-4">
       <span class="">Assigned courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@enrolled_courses_count, 'course') %>
-      )</span>
+        )</span>
       <%= link_to 'View more', courses_path(type: 'enrolled', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
     </p>
     <div class="flex flex-col md:flex-row md:flex-wrap min-w-screen gap-4">
@@ -71,10 +71,10 @@
     </div>
     <%= paginate(@enrolled_courses) if @type.present? %>
   <% end %>
-  <% if has_available_courses? && @type != "enrolled" %>
+  <% if available_courses?(@available_courses) && @type != "enrolled" %>
     <p class="heading heading-medium my-4">
       <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses_count, 'course') %>
-      )</span>
+        )</span>
       <%= link_to 'View more', courses_path(type: 'all', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
     </p>
     <div class="flex flex-wrap gap-4">

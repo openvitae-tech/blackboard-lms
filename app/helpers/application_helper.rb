@@ -10,10 +10,6 @@ module ApplicationHelper
     default_header_options.merge!(opts)
   end
 
-  def is_mobile_view_for_turbo?
-    request.user_agent =~ /Mobile|webOS/
-  end
-
   def active(name, link)
     link == name ? 'active' : ''
   end
@@ -44,8 +40,8 @@ module ApplicationHelper
     LocalContent::SUPPORTED_LANGUAGES.slice(*languages)
   end
 
-  def selected_language
-    LocalContent::SUPPORTED_LANGUAGES[@local_content.lang.to_sym]
+  def selected_language(local_content)
+    LocalContent::SUPPORTED_LANGUAGES[local_content.lang.to_sym]
   end
 
   def language_options
@@ -57,23 +53,23 @@ module ApplicationHelper
   end
 
   def submit_label_for(resource)
-    resource.persisted? ? "Update" : "Create"
+    resource.persisted? ? 'Update' : 'Create'
   end
 
   def sidebar_active(page)
-    "item-selected" if page == controller_name
+    'item-selected' if page == controller_name
   end
 
   def duration_in_words(duration)
-    return "< 1 min" if duration < 60
+    return '< 1 min' if duration < 60
 
     duration = (duration.to_f / 60).round * 60
 
     ["#{duration / 3600} #{duration / 3600 == 1 ? 'hr' : 'hrs'}",
      "#{duration / 60 % 60} #{duration / 60 % 60 == 1 ? 'min' : 'mins'}"]
-      .select { |str| str =~ /^[1-9]/ }.join(" ")
+      .grep(/^[1-9]/).join(' ')
   end
-  
+
   def product_name
     Rails.application.credentials.org_name
   end
@@ -88,7 +84,7 @@ module ApplicationHelper
 
   def days_remaining(deadline_date)
     days = (deadline_date.to_date - Date.current).to_i
-    days > 0 ? days : 0
+    days.positive? ? days : 0
   end
 
   def feature_enabled?(feature_flag)
@@ -100,6 +96,6 @@ module ApplicationHelper
   # Example: content_tag(:div, class: class_names("flex", 'disabled': !permitted?))
   def class_names(*classes)
     class_array = [(classes.shift if classes.first.is_a? String), classes.first.select { |_, v| v }.keys]
-    class_array.compact.join(" ")
+    class_array.compact.join(' ')
   end
 end
