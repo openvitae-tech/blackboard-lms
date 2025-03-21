@@ -4,13 +4,12 @@
       <%= label %>
     </label>
   <% end %>
-
   <div class="h-12 px-4 py-3 bg-white rounded border border-line-colour flex justify-between items-center gap-2.5 <%= width %>">
     <span class="text-letter-color-light text-base font-normal"><%= placeholder %></span>
-    <% if f.present? %>
-      <%= f.radio_button field_name, value || field_name, class: "form-radio w-5 h-5" %>
+    <% if form.present? %>
+      <%= form.radio_button field_name, value || field_name, class: "form-radio w-5 h-5" %>
     <% else %>
       <input type="radio" name="<%= field_name %>" value="<%= value %>" class="form-radio w-5 h-5" />
-    <% end %> 
+    <% end %>
   </div>
 </div>

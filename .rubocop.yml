@@ -21,7 +21,6 @@ AllCops:
     - "db/migrate/*"
     - "app/controllers/**/*"
     - "app/errors/**/*"
-    - "app/helpers/**/*"
     - "app/javascript/**/*"
     - "app/jobs/**/*"
     - "app/mailers/**/*"
@@ -40,6 +39,10 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 30
 Metrics/AbcSize:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/ModuleLength:
   Enabled: false
 RSpec/NamedSubject:
   Enabled: false

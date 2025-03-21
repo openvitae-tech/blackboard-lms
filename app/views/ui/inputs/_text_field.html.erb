@@ -4,36 +4,31 @@
       <%= label %>
     </label>
   <% end %>
-
   <div class="h-12 px-4 py-3 bg-white rounded border border-line-colour justify-between items-center gap-2.5 flex <%= width %>">
-    
     <% if left_icon.present? %>
       <div>
         <%= icon(left_icon, css: "icon-mini") %>
       </div>
     <% end %>
-
-    <% if f.present? %>
+    <% if form.present? %>
       <% case type %>
-        <% when "password" %>
-          <%= f.password_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
-        <% when "email" %>
-          <%= f.email_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
-        <% when "number" %>
-          <%= f.number_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
-        <% else %>
-          <%= f.text_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+      <% when "password" %>
+        <%= form.password_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+      <% when "email" %>
+        <%= form.email_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+      <% when "number" %>
+        <%= form.number_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
+      <% else %>
+        <%= form.text_field field_name, class: "border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0", placeholder: placeholder %>
       <% end %>
     <% else %>
-      <input type="<%= type %>" placeholder="<%= placeholder %>" 
+      <input type="<%= type %>" placeholder="<%= placeholder %>"
         class="border-none w-full text-letter-color-light text-base focus:outline-none focus:ring-0" />
     <% end %>
-
     <% if right_icon.present? %>
       <div>
         <%= icon(right_icon, css: "icon-mini") %>
       </div>
     <% end %>
-
   </div>
 </div>

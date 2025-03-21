@@ -1,7 +1,7 @@
 <details class="flex items-center">
   <summary class="flex cursor-pointer items-center justify-between select_language p-2 heading focus:outline-none">
     <h2 class="flex flex-col justify-start text-base">
-      <span class="text-primary"><%= selected_label %></span>
+      <span class="text-primary"><%= selected_label(@duration) %></span>
     </h2>
     <span class="icon icon-down bg-primary icon-small"></span>
     <span class="icon-up bg-primary hidden icon-small"></span>
@@ -18,4 +18,3 @@
     <% end %>
   </ul>
 </details>
- 
