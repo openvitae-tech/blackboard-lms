@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EventPolicy < ApplicationPolicy
+class EventPolicy
   attr_reader :user, :record
 
   def initialize(user, _record)

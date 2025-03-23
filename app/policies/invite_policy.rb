@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-class InvitePolicy < ApplicationPolicy
+class InvitePolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    super
     @user = user
     @record = record
   end

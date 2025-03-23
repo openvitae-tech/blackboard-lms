@@ -3,7 +3,7 @@ require:
   - rubocop-rails
   - rubocop-rspec
 AllCops:
-  TargetRubyVersion: '3.3.0'
+  TargetRubyVersion: "3.3.0"
   SuggestExtensions: false
   NewCops: enable
   Exclude:
@@ -24,9 +24,6 @@ AllCops:
     - "app/javascript/**/*"
     - "app/models/**/*"
     - "app/queries/**/*"
-    - "app/services/**/*"
-    - "app/errors/**/*"
-    - "app/policies/**/*"
     - "app/views/**/*"
 
 Style/Documentation:

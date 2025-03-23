@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LessonPolicy < ApplicationPolicy
+class LessonPolicy
   attr_reader :user, :lesson
 
   def initialize(user, record)
@@ -36,7 +36,7 @@ class LessonPolicy < ApplicationPolicy
   end
 
   def complete?
-    user.enrolled_for_course?(lesson.course_module.course) ? true : false
+    user.enrolled_for_course?(lesson.course_module.course)
   end
 
   def moveup?
@@ -47,7 +47,7 @@ class LessonPolicy < ApplicationPolicy
     user.is_admin?
   end
 
-  # Note: avoid using this in view policy(lesson).replay? could trigger n+1 queries
+  # NOTE: avoid using this in view policy(lesson).replay? could trigger n+1 queries
   def replay?
     return false unless user.enrolled_for_course?(lesson.course_module.course)
 
