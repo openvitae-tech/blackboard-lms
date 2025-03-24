@@ -91,13 +91,13 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#get_temp_password' do
+  describe '#temp_password' do
     subject { described_class.new }
 
     it 'decrypts the temporary password for the user' do
       allow(subject).to receive(:password_verifier).and_return('test_verifier')
       subject.set_temp_password
-      expect(subject.get_temp_password).not_to be_empty
+      expect(subject.temp_password).not_to be_empty
     end
   end
 

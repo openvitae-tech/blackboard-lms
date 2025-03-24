@@ -58,34 +58,36 @@ en:
     logged_in_as_support_user: "Logged in as support user"
     stop_impersonation: "Stop impersonation"
     already_impersonating: "Already impersonating"
+  event:
+    invalid: "%{value} is not a valid event name."
   course:
     label: "My Courses"
     enroll:
       user: "enrolled user"
-      label: 'Self assign'
-    created: 'Course was successfully created.'
-    updated: 'Course was successfully updated.'
-    deleted: 'Course was deleted successfully.'
+      label: "Self assign"
+    created: "Course was successfully created."
+    updated: "Course was successfully updated."
+    deleted: "Course was deleted successfully."
     cannot_delete_published: "Published course cannot be deleted."
     cannot_delete_enrolled: "The course cannot be deleted because it has enrolled users."
-    enrolled: 'Successfully enrolled for the course'
-    duplicate_enrolled: 'Already enrolled in this course'
-    unenrolled: 'Successfully dropped out of the course'
-    not_enrolled: 'You are not enrolled in this course'
+    enrolled: "Successfully enrolled for the course"
+    duplicate_enrolled: "Already enrolled in this course"
+    unenrolled: "Successfully dropped out of the course"
+    not_enrolled: "You are not enrolled in this course"
     assigned:
-      title: 'New course assigned'
+      title: "New course assigned"
       text: "You have been assigned with new course %{course} by %{name}"
     drop_warning: "Are you sure want to drop out ? Please note that all your progress will be lost!"
-    published: 'Course is now available to everyone'
-    unpublished: 'Course is unpublished and is not available for new enrollments'
-    duplicate_publish: 'Course is already published.'
-    duplicate_unpublish: 'Course is not published yet.'
-    module_created: 'Course module was successfully created.'
-    module_updated: 'Course module was successfully updated.'
-    module_deleted: 'Course module was successfully destroyed.'
+    published: "Course is now available to everyone"
+    unpublished: "Course is unpublished and is not available for new enrollments"
+    duplicate_publish: "Course is already published."
+    duplicate_unpublish: "Course is not published yet."
+    module_created: "Course module was successfully created."
+    module_updated: "Course module was successfully updated."
+    module_deleted: "Course module was successfully destroyed."
     unique_tags: "Course cannot have duplicate tags"
-    no_courses_found_with_filters_and_search: "No courses found matching your search query \"%{search_term}\" and applied filters."
-    no_courses_with_search: "No courses found matching your search query \"%{search_term}\"."
+    no_courses_found_with_filters_and_search: 'No courses found matching your search query "%{search_term}" and applied filters.'
+    no_courses_with_search: 'No courses found matching your search query "%{search_term}".'
     no_courses_with_filter: "No courses found with the selected filters."
     course_module:
       empty: "There are no modules to show."
@@ -96,21 +98,21 @@ en:
     incorrect_phone: "Incorrect mobile number"
     incorrect_mobile_or_otp: "Incorrect mobile number or otp"
   invite:
-    bulk: 'An email invitation will be sent to each of the users in the input file'
-    single: 'Invitation sent to user.'
-    invalid_csv: 'Failed to send invite. Please check the csv file format.'
-    invite_sent: 'Invitation sent to %{email}'
-    invalid_user: 'Failed to invite user, are you sure that this user exists ?'
+    bulk: "An email invitation will be sent to each of the users in the input file"
+    single: "Invitation sent to user."
+    invalid_csv: "Failed to send invite. Please check the csv file format."
+    invite_sent: "Invitation sent to %{email}"
+    invalid_user: "Failed to invite user, are you sure that this user exists ?"
     exceeds_user_limit: "Can't add more than %{limit} users in your current plan."
   local_content:
-    video_not_found: 'Video for %{lang} must exists'
-    lang_exists: '%{lang} already exists'
-    video_under_process: 'Uploaded video is under process. Please refresh the page after some time.'
+    video_not_found: "Video for %{lang} must exists"
+    lang_exists: "%{lang} already exists"
+    video_under_process: "Uploaded video is under process. Please refresh the page after some time."
     video_not_available: "Sorry! Video is not available."
   lesson:
     cannot_delete_published: "Lesson cannot be deleted since the course is published."
     cannot_delete_enrolled: "Lesson cannot be deleted since the course has enrolled users."
-    duplicate_lesson: 'Lesson cannot have multiple local contents for the same language: %{langs}'
+    duplicate_lesson: "Lesson cannot have multiple local contents for the same language: %{langs}"
     must_have_local_content: "Lesson must have at least one local content."
     empty: "There are no lessons to show."
     complete_and_continue: "Complete & Continue"
@@ -122,25 +124,28 @@ en:
     cannot_delete_published: "Quiz cannot be deleted since the course is published."
     cannot_delete_enrolled: "Quiz cannot be deleted since the course has enrolled users."
   team:
-    label: 'Teams'
-    created: 'Team created successfully'
-    updated: 'Team updated successfully'
-    banner_file_tip: 'File size should be less than 1MB and use a good resolution image of minimum 1120 X 194px'
+    label: "Teams"
+    created: "Team created successfully"
+    updated: "Team updated successfully"
+    banner_file_tip: "File size should be less than 1MB and use a good resolution image of minimum 1120 X 194px"
   user_settings:
-    updated: 'User settings updated successfully'
-    password_updated: 'Password updated successfully, you can login with your new password.'
-    password_change: 'After changing the password you will be logged out and need to login with new password.'
+    updated: "User settings updated successfully"
+    password_updated: "Password updated successfully, you can login with your new password."
+    password_change: "After changing the password you will be logged out and need to login with new password."
   settings:
     label: "Settings"
     description: "Create and manage tags"
   tags:
     label: "Tags"
   user:
-    activate: 'User account activated'
-    activate_failed: 'User account activation failed'
-    deactivate: 'User deactivated'
-    deactivate_failed: 'User deactivate failed'
-    deactivated_account: 'Your account is deactivated, please contact your team manager.'
+    invalid_role: "%{value} is not a valid user role"
+    invalid_state: "%{value} is not a valid user state"
+    invalid_gender: "%{value} is not a valid gender"
+    activate: "User account activated"
+    activate_failed: "User account activation failed"
+    deactivate: "User deactivated"
+    deactivate_failed: "User deactivate failed"
+    deactivated_account: "Your account is deactivated, please contact your team manager."
   page_not_found: "The page you're looking for is missing."
   notifications:
     course:
@@ -160,13 +165,13 @@ en:
         message: "Congratulations you have completed the lesson %{title}"
   onboarding:
     learner:
-      your_journey: 'Your journey to mastering hospitality starts here.'
+      your_journey: "Your journey to mastering hospitality starts here."
       step1:
-        desc: 'Explore tailored courses, connect with experts and achieve your career goals.'
+        desc: "Explore tailored courses, connect with experts and achieve your career goals."
     manager:
-      your_journey: 'Your journey to shaping hospitality excellence starts here.'
+      your_journey: "Your journey to shaping hospitality excellence starts here."
       step1:
-        desc: 'Track learner progress, identify skill gaps, and enhance performance with detailed analytics.'
-    explore_courses: 'Explore tailored courses, connect with experts and achieve your career goals.'
+        desc: "Track learner progress, identify skill gaps, and enhance performance with detailed analytics."
+    explore_courses: "Explore tailored courses, connect with experts and achieve your career goals."
     setup_account: "Let's set up your account."
-    confirm_details: 'Confirm your details to get started'
+    confirm_details: "Confirm your details to get started"

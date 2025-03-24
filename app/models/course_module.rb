@@ -23,7 +23,7 @@ class CourseModule < ApplicationRecord
   def next_lesson(current_lesson)
     index = lessons_in_order.find_index(current_lesson.id)
 
-    return unless lessons_in_order[index + 1].present?
+    return if lessons_in_order[index + 1].blank?
 
     lessons.find(lessons_in_order[index + 1])
   end
@@ -44,7 +44,7 @@ class CourseModule < ApplicationRecord
     course.prev_module(self)
   end
 
-  def has_quiz?
+  def quiz_present?
     quizzes_count.positive?
   end
 
@@ -61,7 +61,7 @@ class CourseModule < ApplicationRecord
   def next_quiz(current_quiz)
     index = quizzes_in_order.find_index(current_quiz.id)
 
-    return unless quizzes_in_order[index + 1].present?
+    return if quizzes_in_order[index + 1].blank?
 
     quizzes.find(quizzes_in_order[index + 1])
   end

@@ -3,9 +3,9 @@
 module PartnerState
   extend ActiveSupport::Concern
 
-  included do
-    PARTNER_STATES = %w[new in-active]
+  PARTNER_STATES = %w[new in-active].freeze
 
+  included do
     validates :state, presence: true, inclusion: { in: PARTNER_STATES }
 
     def active?
@@ -18,24 +18,17 @@ module PartnerState
     end
 
     def activate
-      if deactivated?
-        self.state = 'new'
-        self.save
-      else
-        raise Errors::IllegalPartnerState.new("User state #{self.state} can't switch to in-active state")
-      end
+      raise Errors::IllegalPartnerState, "User state #{state} can't switch to in-active state" unless deactivated?
+
+      self.state = 'new'
+      save
     end
 
     def deactivate
-      if active?
-        self.state = 'in-active'
-        self.save
-      else
-        raise Errors::IllegalPartnerState.new("User state #{self.state} can't switch to in-active state")
-      end
-    end
-  end
+      raise Errors::IllegalPartnerState, "User state #{state} can't switch to in-active state" unless active?
 
-  class_methods do
+      self.state = 'in-active'
+      save
+    end
   end
 end

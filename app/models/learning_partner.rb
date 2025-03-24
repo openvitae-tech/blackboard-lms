@@ -24,7 +24,7 @@ class LearningPartner < ApplicationRecord
   has_rich_text :content
 
   def parent_team
-    @parent_team ||= Team.where(learning_partner_id: self.id, parent_team_id: nil).first
+    @parent_team ||= Team.where(learning_partner_id: id, parent_team_id: nil).first
   end
 
   def assign_defaults
@@ -34,8 +34,8 @@ class LearningPartner < ApplicationRecord
   private
 
   def acceptable_max_user_count
-    if self.max_user_count < self.users_count
-      errors.add(:max_user_count, "cannot be less than actual number of active users (#{self.users_count}).")
-    end
+    return unless self.max_user_count < users_count
+
+    errors.add(:max_user_count, "cannot be less than actual number of active users (#{users_count}).")
   end
 end

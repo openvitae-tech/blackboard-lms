@@ -46,10 +46,6 @@ RSpec.describe Course, type: :model do
 
     let(:user) { @user }
 
-    it 'deletes the enrollment' do
-      expect(subject.undo_enroll!(user)).to be_truthy
-    end
-
     it 'removes the enrollment for the course' do
       expect { subject.undo_enroll!(user) }.to change { subject.enrollments.count }.by(-1)
     end

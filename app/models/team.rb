@@ -9,10 +9,10 @@ class Team < ApplicationRecord
   has_one_attached :banner
 
   belongs_to :learning_partner
-  has_many :users
+  has_many :users # rubocop:disable Rails/HasManyOrHasOneDependent
 
   belongs_to :parent_team, class_name: 'Team', optional: true
-  has_many :sub_teams, class_name: 'Team', foreign_key: 'parent_team_id'
+  has_many :sub_teams, class_name: 'Team', foreign_key: 'parent_team_id' # rubocop:disable Rails/HasManyOrHasOneDependent,Rails/InverseOf
 
   has_many :team_enrollments, dependent: :destroy
   has_many :courses, through: :team_enrollments
@@ -33,10 +33,10 @@ class Team < ApplicationRecord
     'Legal/Compliance',
     'Administration',
     'NA'
-  ]
+  ].freeze
 
   def members
-    users.where.not(role: "support").skip_deactivated
+    users.where.not(role: 'support').skip_deactivated
   end
 
   def ancestors
