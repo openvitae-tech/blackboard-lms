@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module TeamsHelper
   def my_team_path
     if current_user.is_admin?
@@ -30,10 +31,11 @@ module TeamsHelper
   end
 
   def team_breadcrumbs_links(root_team, team)
-    list = team_list(root_team, team).map { |team| [team.name, team_path(team)] }
+    list = team_list(root_team, team).map { |item| [item.name, team_path(item)] }
     last = list.pop
     list.push([last[0], nil])
   end
+
   def save_button_label_for(team)
     team.persisted? ? 'Update team' : 'Create team'
   end
@@ -44,13 +46,7 @@ module TeamsHelper
 
   def team_banner(team, version)
     if team.banner.attached?
-      if version == 'desktop'
-        team.banner&.variant(resize_to_fill: [1120, 194])
-      elsif version == 'mobile'
-        team.banner&.variant(resize_to_fill: [328, 194])
-      else
-        team.banner
-      end
+      resize_banner(team.banner, version)
     else
       version == 'mobile' ? STATIC_ASSETS[:banner_mobile] : STATIC_ASSETS[:banner_desktop]
     end
@@ -68,6 +64,20 @@ module TeamsHelper
 
   def partner_banner(learning_partner)
     return STATIC_ASSETS[:team_banner] unless learning_partner.banner.attached?
+
     learning_partner.banner.variant(resize_to_limit: [320, nil])
+  end
+
+  private
+
+  def resize_banner(banner, version)
+    case version
+    when 'desktop'
+      banner.variant(resize_to_fill: [1120, 194])
+    when 'mobile'
+      banner.variant(resize_to_fill: [328, 194])
+    else
+      banner
+    end
   end
 end

@@ -6,7 +6,7 @@
         <details class="flex items-center">
           <summary class="flex cursor-pointer items-center justify-between select_language p-2 heading">
             <h2 class="flex flex-col justify-start text-base">
-              <span class="text-primary"><%= selected_language %></span>
+              <span class="text-primary"><%= selected_language(@local_content) %></span>
             </h2>
             <span class="icon icon-down bg-primary icon-small"></span>
             <span class="icon-up bg-primary hidden icon-small"></span>
@@ -27,13 +27,13 @@
     <% else %>
       <div class="flex justify-start heading">
         <div class="select_language p-2">
-          <h2 class="text-primary"><%= selected_language %></h2>
+          <h2 class="text-primary"><%= selected_language(@local_content) %></h2>
         </div>
       </div>
     <% end %>
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
-        <% if is_lesson_completed(course.id, lesson.id) %>
+        <% if lesson_completed_by_user?(course.id, lesson.id) %>
           <%= link_to next_button_link(course, course_module, lesson), class: "bg-primary flex items-center gap-2 rounded px-4 py-3 " do %>
             <span class="text-xs text-white heading"><%= t("lesson.next") %></span>
           <% end %>
