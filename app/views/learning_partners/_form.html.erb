@@ -7,10 +7,8 @@
     </div>
     <div>
       <%= form.label :content, "About", style: "display: block" %>
-      <%= form.rich_text_area :content,
-                              class: "input-text mt-2 font-sm",
-                              style: "min-height: 300px; max-height: 500px; overflow-y: auto;",
-                              oninput: "this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 500) + 'px';" %>  </div>
+      <%= form.text_area :about, class: "input-textarea mt-2", rows: "5" %>
+  </div>
     <div class="my-8 text-sm">
       <div class="flex justify-between">
         <%= form.label :logo, style: "display: block" %>
