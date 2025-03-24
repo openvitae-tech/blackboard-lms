@@ -7,7 +7,7 @@ class BulkInviteInputService
 
   def process(file_input)
     return [] unless file_input.respond_to? :read
-    return [] unless file_input.content_type == 'text/csv' || file_input.content_type == 'text/plain'
+    return [] unless ['text/csv', 'text/plain'].include?(file_input.content_type)
 
     parse_csv(file_input.read)
   rescue IOError => _e

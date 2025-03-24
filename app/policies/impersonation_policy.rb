@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ImpersonationPolicy < ApplicationPolicy
+class ImpersonationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)

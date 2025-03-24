@@ -22,12 +22,6 @@ AllCops:
     - "app/controllers/**/*"
     - "app/helpers/**/*"
     - "app/javascript/**/*"
-    - "app/jobs/**/*"
-    - "app/mailers/**/*"
-    - "app/queries/**/*"
-    - "app/errors/**/*"
-    - "app/policies/**/*"
-    - "app/value_objects/**/*"
     - "app/views/**/*"
 
 Style/Documentation:
@@ -39,6 +33,8 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 30
 Metrics/AbcSize:
+  Enabled: false
+Metrics/ParameterLists:
   Enabled: false
 RSpec/NamedSubject:
   Enabled: false

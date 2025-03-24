@@ -11,9 +11,9 @@
         <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus' %>
       <% end %>
     <% else %>
-      <%= link_to 'javascript:void(0);', class: 'disabled' do %>
-        <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus' %>
-      <% end %>
+      <div class="disabled">
+        <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus', tooltip_text: t('invite.max_user_count'), tooltip_position: "left" %>
+      </div>
     <% end %>
     <%= render 'shared/components/more_action', icon_class: 'bg-white icon-medium', label_hover: "bg-secondary hover:opacity-80" do %>
       <div class="min-w-[10rem] pt-2 pb-2 flex flex-col">

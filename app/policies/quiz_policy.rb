@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class QuizPolicy < ApplicationPolicy
+class QuizPolicy
   attr_reader :user, :quiz
 
   def initialize(user, record)
@@ -30,6 +30,7 @@ class QuizPolicy < ApplicationPolicy
 
   def destroy?
     return false unless user.is_admin?
+
     course = quiz.course_module.course
     CoursePolicy.new(user, course).destroy?
   end

@@ -22,6 +22,7 @@ class CoursePolicy
 
   def show?
     return true if user.is_admin?
+
     @course.published? || user.enrolled_for_course?(course)
   end
 
@@ -46,17 +47,20 @@ class CoursePolicy
     # once enrolled a course cannot be dropped by users in production
     # but this will be very useful for testing
     return false if Rails.env.production?
+
     !user.is_admin? && user.enrolled_for_course?(course)
   end
 
   def proceed?
     return false unless user.enrolled_for_course?(course)
+
     enrollment = user.get_enrollment_for(course)
     !enrollment.course_completed?
   end
 
   def publish?
     return false if !user.is_admin? || course.published?
+
     course.ready_to_publish?
   end
 

@@ -10,19 +10,19 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Course assigned",
+      subject: t('course.course_assigned')
     )
   end
 
   def course_deadline_reminder(user, course, deadline)
     @user = user
     @course = course
-    @deadline = deadline.to_formatted_s(:short)
+    @deadline = deadline.to_fs(:short)
 
     mail(
       to: @user.email,
-      subject: "Course deadline approaching",
-      )
+      subject: t('course.deadline_approaching')
+    )
   end
 
   def course_completed(user, course)
@@ -31,7 +31,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "You have completed a course",
-      )
+      subject: t('course.course_completed')
+    )
   end
 end
