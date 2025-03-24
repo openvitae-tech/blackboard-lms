@@ -2,13 +2,12 @@
 
 # PORO class for Dashboard
 class Dashboard
-
   VALID_DURATIONS = {
     last_7_days: 'Last 7 days',
     last_14_days: 'Last 14 days',
     last_30_days: 'Last 30 days',
     last_month: 'Last month'
-  }
+  }.freeze
 
   attr_reader :team, :duration
 
@@ -50,7 +49,7 @@ class Dashboard
   def active_course_count_metric
     events = time_spent_query.call
     events = filter_by_teams(events)
-    events.map(&:data).map { |v| v['course_id'] }.uniq.count || 0
+    events.map(&:data).pluck('course_id').uniq.count || 0
   end
 
   def team_score_metric
@@ -61,12 +60,13 @@ class Dashboard
   def total_course_time_metric
     events = time_spent_query.call
     events = filter_by_teams(events)
-    course_ids = events.map(&:data).map { |v| v['course_id'] }.uniq
+    course_ids = events.map(&:data).pluck('course_id').uniq
     Course.where(id: course_ids).map(&:duration).sum
   end
 
   def completion_percent_metric
     return 0 if total_course_time_metric < 1
+
     (total_time_spent_metric / total_course_time_metric.to_f * 100).round
   end
 
@@ -130,17 +130,16 @@ class Dashboard
 
   def to_duration(duration)
     case duration
-    when "last_7_days" then 7.days.ago.beginning_of_day..Time.zone.now
-    when "last_14_days" then 14.days.ago.beginning_of_day..Time.zone.now
-    when "last_30_days" then 30.days.ago.beginning_of_day..Time.zone.now
-    when "last_month" then 2.months.ago.beginning_of_month..2.months.ago.end_of_month
+    when 'last_14_days' then 14.days.ago.beginning_of_day..Time.zone.now
+    when 'last_30_days' then 30.days.ago.beginning_of_day..Time.zone.now
+    when 'last_month' then 2.months.ago.all_month
     else
       7.days.ago.beginning_of_day..Time.zone.now
     end
   end
 
   def to_grouping_key(event)
-    [event.created_at.day.to_s.rjust(2, "0"), Date::MONTHNAMES[event.created_at.month][0..2]].join(' ')
+    [event.created_at.day.to_s.rjust(2, '0'), Date::MONTHNAMES[event.created_at.month][0..2]].join(' ')
   end
 
   def time_spent_query
@@ -165,13 +164,14 @@ class Dashboard
 
   def team_and_subteam_ids(team)
     return @team_and_subteam_ids unless @team_and_subteam_ids.empty?
+
     recursive_traverse_team_tree(team)
     @team_and_subteam_ids
   end
 
   def recursive_traverse_team_tree(team)
     @team_and_subteam_ids.push(team.id)
-    team.sub_teams.includes(:sub_teams).each { |sub_team| recursive_traverse_team_tree(sub_team) }
+    team.sub_teams.includes(:sub_teams).each { |sub_team| recursive_traverse_team_tree(sub_team) } # rubocop:disable Rails/FindEach
   end
 
   def filter_by_teams(events)

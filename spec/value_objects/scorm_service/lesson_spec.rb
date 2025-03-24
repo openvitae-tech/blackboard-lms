@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Scorm::Lesson do
+RSpec.describe ScormService::Lesson do
   let(:learning_partner) { create(:learning_partner) }
   let(:scorm) { create(:scorm, learning_partner:) }
   let(:lesson) { create(:lesson, course_module: create(:course_module, course: create(:course))) }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CourseModulePolicy < ApplicationPolicy
+class CourseModulePolicy
   attr_reader :user, :course_module
 
   def initialize(user, record)

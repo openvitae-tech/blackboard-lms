@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DashboardPolicy < ApplicationPolicy
+class DashboardPolicy
   attr_reader :user, :record
 
   def initialize(user, _record)
@@ -9,6 +9,6 @@ class DashboardPolicy < ApplicationPolicy
   end
 
   def index?
-    user && (user.privileged_user?)
+    user.privileged_user?
   end
 end
