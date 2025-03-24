@@ -3,7 +3,7 @@ require:
   - rubocop-rails
   - rubocop-rspec
 AllCops:
-  TargetRubyVersion: '3.3.0'
+  TargetRubyVersion: "3.3.0"
   SuggestExtensions: false
   NewCops: enable
   Exclude:
@@ -22,11 +22,8 @@ AllCops:
     - "app/controllers/**/*"
     - "app/helpers/**/*"
     - "app/javascript/**/*"
-    - "app/jobs/**/*"
-    - "app/mailers/**/*"
     - "app/models/**/*"
     - "app/queries/**/*"
-    - "app/value_objects/**/*"
     - "app/views/**/*"
 
 Style/Documentation:
@@ -38,6 +35,8 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 30
 Metrics/AbcSize:
+  Enabled: false
+Metrics/ParameterLists:
   Enabled: false
 RSpec/NamedSubject:
   Enabled: false
