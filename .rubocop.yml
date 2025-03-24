@@ -20,10 +20,8 @@ AllCops:
     - "db/seeds.rb"
     - "db/migrate/*"
     - "app/controllers/**/*"
-    - "app/helpers/**/*"
     - "app/javascript/**/*"
     - "app/models/**/*"
-    - "app/queries/**/*"
     - "app/views/**/*"
 
 Style/Documentation:
@@ -37,6 +35,8 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Enabled: false
 Metrics/ParameterLists:
+  Enabled: false
+Metrics/ModuleLength:
   Enabled: false
 RSpec/NamedSubject:
   Enabled: false

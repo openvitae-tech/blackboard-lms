@@ -6,7 +6,7 @@ class UserEnrolledQuery < AppQuery
     run_query do
       query = Event.where(
         name: 'course_enrolled',
-        partner_id: @partner_id,
+        partner_id: @partner_id
       ).order(:id)
 
       query = query.where(created_at: @duration) if @duration.present?
