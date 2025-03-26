@@ -95,7 +95,7 @@ class LessonsController < ApplicationController
 
     service.set_progress!(current_user, enrollment, @course_module, @lesson, time_spent_in_seconds)
 
-    if enrollment.module_completed?(@course_module.id) && @course_module.has_quiz? && !enrollment.quiz_completed_for?(@course_module)
+    if enrollment.module_completed?(@course_module.id) && @course_module.quiz_present? && !enrollment.quiz_completed_for?(@course_module)
       redirect_to course_module_quiz_path(@course, @course_module, @course_module.first_quiz)
       return
     end

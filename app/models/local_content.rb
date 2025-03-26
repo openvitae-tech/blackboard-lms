@@ -3,7 +3,7 @@
 class LocalContent < ApplicationRecord
   attr_accessor :blob_id
 
-  enum status: { pending: "pending", complete: "complete" }, _default: :pending
+  enum :status, { pending: 'pending', complete: 'complete' }, default: :pending
 
   SUPPORTED_LANGUAGES = {
     english: 'English',
@@ -41,6 +41,6 @@ class LocalContent < ApplicationRecord
   end
 
   def set_status_to_complete
-    self.status = "complete" if Rails.env.development?
+    self.status = 'complete' if Rails.env.development?
   end
 end

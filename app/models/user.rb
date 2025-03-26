@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-
   include UserState
   include CustomValidations
-
 
   EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   TEST_OTP = 1212
@@ -18,6 +16,7 @@ class User < ApplicationRecord
   }.freeze
 
   USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
+  GENDERS = ['Male', 'Female', 'Other', 'Prefer not to say'].freeze
 
   # add dynamic methods using meta programming for checking the current role
   # of a user.
@@ -27,30 +26,23 @@ class User < ApplicationRecord
     end
   end
 
-  GENDERS = ['Male', 'Female', 'Other', 'Prefer not to say']
-
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   validates :name, presence: true, length: { minimum: 2, maximum: 64 }
   validates :role,
             inclusion: { in: USER_ROLES,
-                         message: '%<value>s is not a valid user role' }
+                         message: I18n.t('user.invalid_role') }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_nil: true, uniqueness: true
-  validates :state, inclusion: { in: USER_STATES, message: '%<value>s is not a valid user state' }
+  validates :state, inclusion: { in: USER_STATES, message: I18n.t('user.invalid_state') }
   validates :otp, uniqueness: true, allow_nil: true
 
   validate :dob_within_valid_age_range
   validates :gender,
             inclusion: { in: GENDERS,
-                         message: '%<value>s is not a valid gender' }, allow_blank: true
-
+                         message: I18n.t('user.invalid_gender') }, allow_blank: true
 
   belongs_to :learning_partner, optional: true, counter_cache: true
-
-  # This is a self referential relationship, learner and his manager are mapped to same User model.
-  belongs_to :manager, class_name: 'User', optional: true
-  has_many :learners, class_name: 'User', foreign_key: 'manager_id'
 
   has_many :enrollments, dependent: :destroy
   has_many :courses, through: :enrollments
@@ -66,8 +58,8 @@ class User < ApplicationRecord
     self.temp_password_enc = enc_password
   end
 
-  def get_temp_password
-    return unless temp_password_enc.present?
+  def temp_password
+    return if temp_password_enc.blank?
 
     Rails.application.message_verifier(password_verifier).verify(temp_password_enc)
   end
@@ -77,7 +69,7 @@ class User < ApplicationRecord
   end
 
   def get_enrollment_for(course)
-    enrollments.find_by(course: course)
+    enrollments.find_by(course:)
   end
 
   def privileged_user?
@@ -101,8 +93,8 @@ class User < ApplicationRecord
   end
 
   # overridden methods for Devise specific actions
-  def send_devise_notification(notification, *args)
-    devise_mailer.send(notification, self, *args).deliver_later
+  def send_devise_notification(notification, *)
+    devise_mailer.send(notification, self, *).deliver_later
   end
 
   def send_reset_password_instructions
@@ -115,12 +107,12 @@ class User < ApplicationRecord
   end
 
   def active_for_authentication?
-    active_or_verified_user = (active? || verified?)
+    active_or_verified_user = active? || verified?
 
     if is_admin?
       super && active_or_verified_user
     else
-      super && self.learning_partner.active? && active_or_verified_user
+      super && learning_partner.active? && active_or_verified_user
     end
   end
 
@@ -140,9 +132,10 @@ class User < ApplicationRecord
     active? && is_learner?
   end
 
-  def is_manager_of?(other_user)
-    return false unless other_user.learning_partner_id == self.learning_partner_id
-    is_owner? || is_support? ||other_user.team.ancestors.include?(self.team)
+  def manager_of?(other_user)
+    return false unless other_user.learning_partner_id == learning_partner_id
+
+    is_owner? || is_support? || other_user.team.ancestors.include?(team)
   end
 
   private

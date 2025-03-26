@@ -21,7 +21,6 @@ AllCops:
     - "db/migrate/*"
     - "app/controllers/**/*"
     - "app/javascript/**/*"
-    - "app/models/**/*"
     - "app/views/**/*"
 
 Style/Documentation:

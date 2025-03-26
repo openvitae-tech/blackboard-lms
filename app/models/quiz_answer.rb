@@ -28,9 +28,7 @@ class QuizAnswer < ApplicationRecord
     status == STATUS_MAPPING[:skipped]
   end
 
-  def question
-    quiz.question
-  end
+  delegate :question, to: :quiz
 
   def answer_text
     case answer

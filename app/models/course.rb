@@ -9,11 +9,10 @@ class Course < ApplicationRecord
   has_many :course_modules, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments
-  has_and_belongs_to_many :tags
+  has_and_belongs_to_many :tags # rubocop:disable Rails/HasAndBelongsToMany
 
   has_many :team_enrollments, dependent: :destroy
   has_many :teams, through: :team_enrollments
-
 
   has_one_attached :banner
   validates :title, presence: true, length: { minimum: 6, maximum: 255 }
@@ -34,7 +33,7 @@ class Course < ApplicationRecord
 
   def undo_enroll!(user)
     # there will be only one enrollment record for a user, course pair
-    enrollments.where(user:).each(&:destroy)
+    enrollments.where(user:).find_each(&:destroy)
   end
 
   def duration
@@ -81,13 +80,15 @@ class Course < ApplicationRecord
     update(is_published: false)
   end
 
-  def has_enrollments?
-    enrollments_count > 0
+  def enrollments_present?
+    enrollments_count.positive?
   end
 
   def ready_to_publish?
-    rule_at_least_one_module = course_modules_count > 0
-    rule_at_least_one_lesson_per_module = course_modules.map { |course_module|  course_module.lessons_count > 0 }.all?
+    rule_at_least_one_module = course_modules_count.positive?
+    rule_at_least_one_lesson_per_module = course_modules.map do |course_module|
+      course_module.lessons_count.positive?
+    end.all?
     [rule_at_least_one_module, rule_at_least_one_lesson_per_module].all?
   end
 
@@ -95,8 +96,8 @@ class Course < ApplicationRecord
 
   def unique_tags
     duplicates = tags.group_by(&:id).select { |_, group| group.size > 1 }
-    if duplicates.any?
-      errors.add(:course, "cannot have duplicate tags")
-    end
+    return unless duplicates.any?
+
+    errors.add(:course, 'cannot have duplicate tags')
   end
 end

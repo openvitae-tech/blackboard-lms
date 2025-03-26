@@ -3,7 +3,7 @@
 class Enrollment < ApplicationRecord
   belongs_to :user, counter_cache: true
   belongs_to :course, counter_cache: true
-  belongs_to :assigned_by, class_name: 'User', foreign_key: 'assigned_by_id', optional: true
+  belongs_to :assigned_by, class_name: 'User', optional: true
   has_many :quiz_answers, dependent: :destroy
 
   validates :user_id, uniqueness: { scope: :course_id }
@@ -59,7 +59,7 @@ class Enrollment < ApplicationRecord
   end
 
   def progress
-    @progress ||= (course.lessons_count) > 0 ? (completed_lessons.size / course.lessons_count.to_f * 100).floor : 0
+    @progress ||= course.lessons_count.positive? ? (completed_lessons.size / course.lessons_count.to_f * 100).floor : 0
   end
 
   def module_progress(course_module)
@@ -67,11 +67,17 @@ class Enrollment < ApplicationRecord
     return @module_progress[course_module.id] if @module_progress[course_module.id].present?
 
     finished_lessons_of_module = completed_lessons & course_module.lessons.map(&:id)
-    @module_progress[course_module.id] = course_module.lessons_count > 0 ? (finished_lessons_of_module.size / course_module.lessons_count.to_f * 100).floor : 0
+    @module_progress[course_module.id] =
+      if course_module.lessons_count.positive?
+        (finished_lessons_of_module.size / course_module.lessons_count.to_f * 100).floor
+      else
+        0
+      end
   end
 
   def quiz_completed_for?(course_module)
-    (course_module.quizzes.map(&:id) & quiz_answers_for(course_module).map(&:quiz_id)).size == course_module.quizzes_count
+    (course_module.quizzes.map(&:id) &
+    quiz_answers_for(course_module).map(&:quiz_id)).size == course_module.quizzes_count
   end
 
   def correct_quiz_count_for(course_module)
@@ -103,7 +109,7 @@ class Enrollment < ApplicationRecord
     save!
   end
 
-  def has_deadline?
+  def deadline_present?
     deadline_at.present?
   end
 end

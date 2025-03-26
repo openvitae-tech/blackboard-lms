@@ -35,7 +35,7 @@ module CustomValidations
 
       min_age = 16
       max_age = 80
-      today = Date.today
+      today = Time.zone.today
       age = today.year - dob.year
 
       if age < min_age
@@ -44,8 +44,5 @@ module CustomValidations
         errors.add(:dob, "Age must be at most #{max_age} years old.")
       end
     end
-  end
-
-  class_methods do
   end
 end

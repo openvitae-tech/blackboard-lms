@@ -36,7 +36,7 @@ class CoursePolicy
 
   def destroy?
     # course should not be published and should not have any enrollments
-    user.is_admin? && !course.published? && !course.has_enrollments?
+    user.is_admin? && !course.published? && !course.enrollments_present?
   end
 
   def enroll?

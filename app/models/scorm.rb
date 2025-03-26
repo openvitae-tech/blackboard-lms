@@ -1,5 +1,6 @@
-class Scorm < ApplicationRecord
+# frozen_string_literal: true
 
+class Scorm < ApplicationRecord
   validates :token, presence: true, uniqueness: true
   validates :expires_at, presence: true
 

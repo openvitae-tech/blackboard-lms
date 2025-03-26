@@ -9,11 +9,11 @@ class UserPolicy
   end
 
   def show?
-    user.is_manager_of?(other_user)
+    user.manager_of?(other_user)
   end
 
   def deactivate?
-    other_user.active? && user.is_manager_of?(other_user)
+    other_user.active? && user.manager_of?(other_user)
   end
 
   def confirm_deactivate?
@@ -21,7 +21,7 @@ class UserPolicy
   end
 
   def activate?
-    other_user.deactivated? && user.is_manager_of?(other_user)
+    other_user.deactivated? && user.manager_of?(other_user)
   end
 
   def confirm_activate?

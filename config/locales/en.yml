@@ -59,6 +59,8 @@ en:
     logged_in_as_support_user: "Logged in as support user"
     stop_impersonation: "Stop impersonation"
     already_impersonating: "Already impersonating"
+  event:
+    invalid: "%{value} is not a valid event name."
   course:
     label: "My Courses"
     course_assigned: "Course assigned"
@@ -141,6 +143,9 @@ en:
   tags:
     label: "Tags"
   user:
+    invalid_role: "%{value} is not a valid user role"
+    invalid_state: "%{value} is not a valid user state"
+    invalid_gender: "%{value} is not a valid gender"
     activate: "User account activated"
     activate_failed: "User account activation failed"
     deactivate: "User deactivated"
