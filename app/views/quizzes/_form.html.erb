@@ -2,39 +2,40 @@
   <% form_url = quiz.persisted? ? course_module_quiz_path(course, course_module, quiz) :  course_module_quizzes_path(course, course_module) %>
   <%= form_with(url: form_url, model:  quiz) do |form| %>
     <%= render "shared/components/form_errors", resource: quiz %>
-    <div class="mb-8 text-sm">
-      <%= form.label :question, class: "text-sm font-medium" %>
-      <%= form.text_area :question, class: "input-text mt-2 resize-none h-20", rows: 2, placeholder: "Enter your question here..." %>
-    </div>
-    <div class="my-8 text-sm">
-      <%= form.label :option_a, class: "text-sm font-medium" %>
-      <div class="relative mt-2">
-        <%= form.text_field :option_a, class: "input-text pr-10" %>
+    <div class="border border-line-colour-light p-8 rounded">
+      <div class="mb-8 text-sm">
+      <%= form.label :question, class: "text-base font-medium" %>
+      <%= form.text_area :question, class: "input-text mt-4 resize-none h-20 content-center", rows: 2, placeholder: "Enter your question here..." %>
+      </div>
+      
+      <div class="mb-4">
+        <%= form.label "Answer options", class:"text-base font-medium" %>
+      </div>
+
+      <div class="mb-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
+        <span class="text-sm font-medium">A.</span>
+        <%= form.text_field :option_a, class: "input-text pr-10 border-none" %>
         <%= form.radio_button :answer, "a", class: "radio-check-button" %>
       </div>
-    </div>
-    <div class="my-8 text-sm">
-      <%= form.label :option_b, class: "text-sm font-medium" %>
-      <div class="relative mt-2">
-        <%= form.text_field :option_b, class: "input-text pr-10" %>
-        <%= form.radio_button :answer, "b", class: "radio-check-button" %>
+     
+      <div class="my-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
+          <span class="text-sm font-medium">B.</span>
+          <%= form.text_field :option_b, class: "input-text pr-10 border-none" %>
+          <%= form.radio_button :answer, "b", class: "radio-check-button" %>
+      </div>
+      <div class="my-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
+          <span class="text-sm font-medium">C.</span>
+          <%= form.text_field :option_c, class: "input-text pr-10 border-none" %>
+          <%= form.radio_button :answer, "c", class: "radio-check-button" %>
+      </div>
+      <div class="mt-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
+          <span class="text-sm font-medium">D.</span>
+          <%= form.text_field :option_d, class: "input-text pr-10 border-none" %>
+          <%= form.radio_button :answer, "d", class: "radio-check-button" %>
       </div>
     </div>
-    <div class="my-8 text-sm">
-      <%= form.label :option_c, class: "text-sm font-medium" %>
-      <div class="relative mt-2">
-        <%= form.text_field :option_c, class: "input-text pr-10" %>
-        <%= form.radio_button :answer, "c", class: "radio-check-button" %>
-      </div>
-    </div>
-    <div class="my-8 text-sm">
-      <%= form.label :option_d, class: "text-sm font-medium" %>
-      <div class="relative mt-2">
-        <%= form.text_field :option_d, class: "input-text pr-10" %>
-        <%= form.radio_button :answer, "d", class: "radio-check-button" %>
-      </div>
-    </div>
-    <div class="my-8 text-sm  flex gap-6 items-center">
+    
+    <div class="my-8 text-sm flex gap-6 items-center">
       <div class="my-8">
         <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
       </div>

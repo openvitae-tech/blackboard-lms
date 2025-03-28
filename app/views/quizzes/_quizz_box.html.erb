@@ -1,18 +1,20 @@
 <div>
-  <div class="box text-right flex justify-end gap-4">
+  <div class="text-right flex justify-end gap-4 my-6">
     <% if policy(@quiz).edit? %>
       <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz) do %>
         <%= render 'shared/components/icon_button_primary', label: t("button.edit"), icon_name: 'icon-edit' %>
       <% end %>
     <% end %>
-    <% if policy(@quiz).destroy? %>
-      <%= link_to course_module_quiz_path(@course, @course_module, @quiz), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"} do %>
-        <%= render 'shared/components/outline_button_danger', label: t("button.delete") %>
+    <% if current_user.is_admin? %>
+      <% if policy(@quiz).destroy? %>
+        <%= link_to course_module_quiz_path(@course, @course_module, @quiz), data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"} do %>
+          <%= render 'shared/components/outline_button_danger', label: t("button.delete") %>
+        <% end %>
+      <% else %>
+        <div class="disabled">
+          <%= render 'shared/components/outline_button_danger', label: t("button.delete"), tooltip_position: "left", tooltip_text: quiz_delete_tooltip_message(@course) %>
+        </div>
       <% end %>
-    <% else %>
-      <div class="disabled">
-        <%= render 'shared/components/outline_button_danger', label: t("button.delete"), tooltip_position: "left", tooltip_text: quiz_delete_tooltip_message(@course) %>
-      </div>
     <% end %>
   </div>
   <% if current_user.is_admin? %>
@@ -25,25 +27,25 @@
       <% prev_link = prev_quiz_path(@course, @course_module, @quiz) %>
       <%  if prev_link.blank? %>
         <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer disabled" do %>
-          <span class="icon icon-arrow-left bg-letter-color icon-small"></span>
+          <span class="icon icon-chevron-left bg-letter-color icon-small"></span>
           <span class="labels label-small">Previous</span>
         <% end %>
       <% else %>
         <%= link_to prev_link, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
-          <span class="icon icon-arrow-left bg-letter-color icon-small"></span>
+          <span class="icon icon-chevron-left bg-letter-color icon-small"></span>
           <span class="labels label-small">Previous</span>
         <% end %>
       <% end %>
       <% next_link = next_quiz_path(@course, @course_module, @quiz) %>
       <%  if next_link.blank? %>
         <%= link_to "javascript:void(0);", class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer disabled" do %>
-          <span class="labels label-small">Skip</span>
-          <span class="block icon icon-arrow-right icon-small bg-letter-color"></span>
+          <span class="labels label-small">Next</span>
+          <span class="block icon icon-chevron-right icon-small bg-letter-color"></span>
         <% end %>
       <% else %>
         <%= link_to next_link, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm p-2 hover:cursor-pointer" do %>
-          <span class="labels label-small">Skip</span>
-          <span class="block icon icon-arrow-right icon-small bg-letter-color"></span>
+          <span class="labels label-small">Next</span>
+          <span class="block icon icon-chevron-right icon-small bg-letter-color"></span>
         <% end %>
       <% end %>
     </div>
