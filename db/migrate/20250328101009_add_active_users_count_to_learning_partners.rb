@@ -4,7 +4,7 @@ class AddActiveUsersCountToLearningPartners < ActiveRecord::Migration[7.2]
 
     LearningPartner.find_each do |learning_partner|
       active_users = learning_partner.users.where(state: "active")
-      learning_partner.update(active_users_count: active_users.count)
+      learning_partner.update_column(:active_users_count, active_users.count)
     end
   end
 end
