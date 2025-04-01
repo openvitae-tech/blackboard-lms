@@ -1,0 +1,16 @@
+<div id="payment_plan_details" class="my-4">
+  <% if learning_partner.payment_plan.present? %>
+    <h3 class="text-sm font-medium"><%= t("learning_partner.payment_plan.label")%></h3>
+    <div class="my-4 p-4 shadow-md bg-white flex justify-between items-center">
+      <div class="text-sm font-medium">
+        <%= t("learning_partner.payment_plan.remaining_days")%>: <span class="text-sm font-normal"><%= payment_plan_days_remaining(payment_plan.start_date, payment_plan.end_date) %></span>
+      </div>
+      <div class="text-sm font-medium">
+        <%= t("learning_partner.payment_plan.seats_available")%>: <span class="text-sm font-normal"><%= activate_users_count(learning_partner) %> / <%= payment_plan.total_seats %></span>
+      </div>
+      <div class="text-sm font-medium">
+       <%= t("learning_partner.payment_plan.per_seat_cost")%>: ₹<span class="text-sm font-normal"><%= payment_plan.per_seat_cost %></span>
+      </div>
+    </div>
+  <% end %>
+</div>

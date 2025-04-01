@@ -139,9 +139,10 @@ RSpec.describe 'Request spec for LearningPartner' do
       }
 
       post('/learning_partners', params:)
-      expect(response).to redirect_to(assigns(:learning_partner))
+      expect(response).to redirect_to(new_learning_partner_payment_plan_path(LearningPartner.first))
       expect(assigns(:learning_partner).logo).not_to be_nil
       expect(assigns(:learning_partner).banner).not_to be_nil
+      expect(flash[:notice]).to eq(I18n.t('resource.created', resource_name: 'Learning Partner'))
     end
 
     it 'Creates a default team for a partner' do

@@ -50,9 +50,9 @@ class UserManagementService
   private
 
   def raise_error_if_exceeds_user_limit!(learning_partner)
-    return if learning_partner.users_count < learning_partner.max_user_count
+    return if learning_partner.users_count < learning_partner.payment_plan.total_seats
 
     raise Errors::IllegalInviteError,
-          format(I18n.t('invite.exceeds_user_limit'), limit: learning_partner.max_user_count)
+          format(I18n.t('invite.exceeds_user_limit'), limit: learning_partner.payment_plan.total_seats)
   end
 end

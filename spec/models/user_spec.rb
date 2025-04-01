@@ -125,6 +125,21 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#update_active_users_count' do
+    it 'decrements active users count when user state changes to inactive' do
+      expect do
+        user_one.update!(state: 'in-active')
+      end.to change { user_one.learning_partner.active_users_count }.by(-1)
+    end
+
+    it 'increment active users count when user state changes to active' do
+      user_one.update!(state: 'in-active')
+      expect do
+        user_one.update!(state: 'active')
+      end.to change { user_one.learning_partner.active_users_count }.by(1)
+    end
+  end
+
   private
 
   def password_verifier

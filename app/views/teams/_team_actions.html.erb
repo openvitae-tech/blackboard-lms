@@ -7,15 +7,7 @@
           <%= render 'shared/components/icon_button_secondary', label: 'Assign course', icon_name: 'icon-assign-user' %>
         <% end %>
       <% end %>
-      <% if policy(:invite).new? && policy(@learning_partner).invite? %>
-        <%= link_to new_invite_path(team_id: @team.id), data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus' %>
-        <% end %>
-      <% else %>
-        <div class="disabled">
-          <%= render 'shared/components/icon_button_primary', label: 'Invite user', icon_name: 'icon-plus', tooltip_text: t('invite.max_user_count') %>
-        </div>
-      <% end %>
+      <%= render "commons/invite_user", learning_partner: @learning_partner %>
     </div>
   </div>
 </div>

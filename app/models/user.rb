@@ -4,6 +4,9 @@ class User < ApplicationRecord
   include UserState
   include CustomValidations
 
+  scope :active, -> { where(state: 'active') }
+  scope :skip_deactivated, -> { where.not(state: 'in-active') }
+
   EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   TEST_OTP = 1212
 
@@ -44,12 +47,13 @@ class User < ApplicationRecord
 
   belongs_to :learning_partner, optional: true, counter_cache: true
 
+  after_create :update_active_users_count, if: :saved_change_to_state?
+  after_update :update_active_users_count, if: :saved_change_to_state?
+
   has_many :enrollments, dependent: :destroy
   has_many :courses, through: :enrollments
 
   belongs_to :team, optional: true
-
-  scope :skip_deactivated, -> { where.not(state: 'in-active') }
 
   def set_temp_password
     temp_password = SecureRandom.alphanumeric(8)
@@ -142,5 +146,11 @@ class User < ApplicationRecord
 
   def password_verifier
     Rails.application.credentials[:password_verifier]
+  end
+
+  def update_active_users_count
+    return unless learning_partner
+
+    learning_partner.update!(active_users_count: learning_partner.users.active.count)
   end
 end
