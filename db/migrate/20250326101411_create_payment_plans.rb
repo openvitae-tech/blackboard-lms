@@ -13,7 +13,7 @@ class CreatePaymentPlans < ActiveRecord::Migration[7.2]
       learning_partner.create_payment_plan!(
         start_date: Time.zone.now,
         end_date: 1.months.from_now,
-        total_seats: PaymentPlan::DEFAULT_TOTAL_SEATS,
+        total_seats: learning_partner.max_user_count,
         per_seat_cost: PaymentPlan::DEFAULT_PER_SEAT_COST
       )
     end
