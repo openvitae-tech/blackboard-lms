@@ -1,5 +1,5 @@
 
-<div class="box-shadow-medium flex flex-col items-center rounded md:w-[960px]">
+<div class="box-shadow-medium flex flex-col items-center rounded md:w-[960px] px-4">
   <div class="flex items-center justify-between pt-6">
     <span class="heading page-heading text-primary">Quiz</span>
   </div>
@@ -14,34 +14,34 @@
   </h2>
   <%= form_with model: @quiz, url: submit_answer_course_module_quiz_path(course, course_module, quiz), method: :post, class:"md:w-[910px]" do |form| %>
     <ul class="w-full pb-6">
-      <li class="carousel-container mt-6 rounded box-shadow-medium">
-        <h2 class="bg-primary-light-50 p-6 text-medium">
+      <li class="carousel-container mt-6">
+        <h2 class="bg-primary-light-50 p-6 text-medium rounded box-shadow-medium">
           <span>Q.</span> <%= quiz.question %>
         </h2>
 
-        <div class="carousel-item active">
-          <ul class="flex flex-col">
-            <li class="border-t border-line-colour-light p-6">
+        <div class="carousel-item active mt-6">
+          <ul class="flex flex-col gap-6">
+            <li class="border border-line-colour-light p-6 rounded">
               <label class="flex items-center justify-between">
-                <%= form.label "opt-a", quiz.option_a %>
+                <span><%= "A. #{quiz.option_a}" %></span>
                 <%= form.radio_button 'answer', "a", checked: @answer&.answer == 'a', class: "mx-2 form-radio", id: "quiz_opt-a", required: true, data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
-            <li class="border-t border-line-colour-light p-6">
+            <li class="border border-line-colour-light p-6 rounded">
               <label class="flex items-center justify-between">
-                <%= form.label "opt-b", quiz.option_b %>
+                <span><%= "B. #{quiz.option_b}" %></span>
                 <%= form.radio_button 'answer', "b", checked: @answer&.answer == 'b', class: "mx-2 form-radio", id: "quiz_opt-b", required: true, data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
-            <li class="border-t border-line-colour-light p-6">
+            <li class="border border-line-colour-light p-6 rounded">
               <label class="flex items-center justify-between">
-                <%= form.label "opt-c", quiz.option_c %>
+                <span><%= "C. #{quiz.option_c}" %></span>
                 <%= form.radio_button 'answer', "c", checked: @answer&.answer == 'c', class: "mx-2 form-radio", id: "quiz_opt-c", required: true, data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
-            <li class="border-t border-line-colour-light p-6">
+            <li class="border border-line-colour-light p-6 rounded">
               <label class="flex items-center justify-between">
-                <%= form.label "opt-d", quiz.option_a %>
+                <span><%= "D. #{quiz.option_d}" %></span>
                 <%= form.radio_button 'answer', "d", checked: @answer&.answer == 'd', class: "mx-2 form-radio", id: "quiz_opt-d", required: true, data: { action: "change->quiz#valueChanged"} %>
               </label>
             </li>
@@ -50,7 +50,7 @@
       </li>      
     </ul>
     <div class="pb-6 flex items-center justify-center">
-      <%= form.button 'Submit', class: "flex items-center rounded px-10 md:px-20 py-2 md:py-3 bg-primary heading text-white", id: "quiz-submit-button" %>
+      <%= form.button 'Submit', class: "btn-primary w-full", id: "quiz-submit-button" %>
     </div>
    <% end %>
 </div>
