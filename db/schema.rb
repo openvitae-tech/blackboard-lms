@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_28_101009) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_02_053616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -125,7 +125,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_28_101009) do
     t.string "banner"
     t.string "state", default: "new"
     t.boolean "first_owner_joined", default: false
-    t.integer "max_user_count"
     t.integer "users_count", default: 0
     t.integer "active_users_count", default: 0, null: false
   end

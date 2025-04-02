@@ -33,11 +33,12 @@ class PaymentPlan < ApplicationRecord
   end
 
   def acceptable_total_seats_count
-    users_count = learning_partner.users_count
+    active_users_count = learning_partner.active_users_count
 
-    return unless total_seats < users_count # check users_count or active_users_count
+    return unless total_seats < active_users_count
 
-    errors.add(:total_seats, I18n.t('learning_partner.payment_plan.total_seats_less_than_users', count: users_count))
+    errors.add(:total_seats,
+               I18n.t('learning_partner.payment_plan.total_seats_less_than_users', count: active_users_count))
   end
 
   def validate_end_date
