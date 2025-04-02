@@ -63,7 +63,7 @@ RSpec.describe PaymentPlan, type: :model do
 
   describe '#acceptable_total_seats_count' do
     before do
-      learning_partner.update!(users_count: 5)
+      learning_partner.update!(active_users_count: 5)
     end
 
     it 'ensures total_seats is not less than the number of active users' do
@@ -71,7 +71,7 @@ RSpec.describe PaymentPlan, type: :model do
 
       expect(payment_plan).not_to be_valid
       expect(payment_plan.errors.full_messages.to_sentence)
-        .to eq("Total seats cannot be less than the actual number of users (#{learning_partner.users_count}).")
+        .to eq("Total seats cannot be less than the actual number of users (#{learning_partner.active_users_count}).")
     end
   end
 
