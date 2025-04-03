@@ -39,6 +39,7 @@ RSpec.describe 'Request spec for PaymentPlans' do
       end.to change(PaymentPlan, :count).by(1)
       total_seats = learning_partner.payment_plan.total_seats
       expect(total_seats).to eq(payment_plan_params.dig(:payment_plan, :total_seats))
+      expect(Event.last.name).to eq('payment_plan_created')
       expect(flash[:notice]).to eq(I18n.t('resource.created', resource_name: 'Payment plan'))
     end
 
@@ -99,6 +100,7 @@ RSpec.describe 'Request spec for PaymentPlans' do
       @payment_plan.reload
       expect(@payment_plan.total_seats).to eq(payment_plan_params[:payment_plan][:total_seats])
       expect(@payment_plan.per_seat_cost).to eq(payment_plan_params[:payment_plan][:per_seat_cost])
+      expect(Event.last.name).to eq('payment_plan_updated')
       expect(flash[:success]).to eq(I18n.t('resource.updated', resource_name: 'Payment plan'))
     end
 
