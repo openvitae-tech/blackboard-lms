@@ -17,9 +17,11 @@ class InvitePolicy
   end
 
   def create?
-    return true if user.is_admin?
+    return true if user.is_admin? && record.learning_partner.payment_plan.present?
 
-    return record.ancestors.include?(user.team) if user.privileged_user?
+    if user.privileged_user? && record.learning_partner.payment_plan.present?
+      return record.ancestors.include?(user.team)
+    end
 
     false
   end

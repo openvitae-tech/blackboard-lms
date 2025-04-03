@@ -39,7 +39,7 @@ class LearningPartnersController < ApplicationController
       if status == 'ok'
         EVENT_LOGGER.publish_onboarding_initiated(current_user, @learning_partner)
         format.html do
-          redirect_to learning_partner_url(@learning_partner), notice: 'Learning partner was successfully created.'
+          redirect_to new_learning_partner_payment_plan_path(@learning_partner), notice: t("resource.created", resource_name: "Learning Partner")
         end
         format.json { render :show, status: :created, location: @learning_partner }
       else
@@ -101,7 +101,7 @@ class LearningPartnersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def learning_partner_params
-    params.require(:learning_partner).permit(:name, :content, :logo, :banner, :max_user_count)
+    params.require(:learning_partner).permit(:name, :content, :logo, :banner)
   end
 
   def authorize_admin!

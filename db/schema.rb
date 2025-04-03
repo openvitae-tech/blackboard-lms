@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_24_073118) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_02_080139) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -125,8 +125,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_24_073118) do
     t.string "banner"
     t.string "state", default: "new"
     t.boolean "first_owner_joined", default: false
-    t.integer "max_user_count"
     t.integer "users_count", default: 0
+    t.integer "active_users_count", default: 0, null: false
   end
 
   create_table "lessons", force: :cascade do |t|
@@ -151,6 +151,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_24_073118) do
     t.datetime "video_published_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["lesson_id", "lang"], name: "index_local_contents_on_lesson_id_and_lang", unique: true
     t.index ["lesson_id"], name: "index_local_contents_on_lesson_id"
+  end
+
+  create_table "payment_plans", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
+    t.integer "total_seats", null: false
+    t.decimal "per_seat_cost", null: false
+    t.bigint "learning_partner_id", null: false
+    t.index ["learning_partner_id"], name: "index_payment_plans_on_learning_partner_id"
   end
 
   create_table "quiz_answers", force: :cascade do |t|
@@ -269,6 +280,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_24_073118) do
   add_foreign_key "enrollments", "users", column: "assigned_by_id"
   add_foreign_key "lessons", "course_modules"
   add_foreign_key "local_contents", "lessons"
+  add_foreign_key "payment_plans", "learning_partners"
   add_foreign_key "quiz_answers", "enrollments"
   add_foreign_key "quiz_answers", "quizzes"
   add_foreign_key "quizzes", "course_modules"

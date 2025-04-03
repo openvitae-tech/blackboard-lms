@@ -1,7 +1,6 @@
 <div  data-controller="file-upload">
   <%= form_with(model: learning_partner) do |form| %>
     <%= render "shared/components/form_errors", resource: learning_partner %>
-
     <div class="my-8 text-sm">
       <%= form.label :name, style: "display: block" %>
       <%= form.text_field :name, class: "input-text mt-2" %>
@@ -17,27 +16,20 @@
         <%= form.label :logo, style: "display: block" %>
       </div>
       <div class="relative mt-2">
-
         <%= render "shared/components/file_select",
                    hidden_file_field: form.file_field(:logo, class: "hidden", data: { forms_target: "fileInput" }),
                    preview: "logo" %>
       </div>
-
     </div>
     <div class="my-8 text-sm">
       <div class="flex justify-between">
         <%= form.label :banner, style: "display: block" %>
       </div>
       <div class="relative mt-2">
-
         <%= render "shared/components/file_select",
                    hidden_file_field: form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput" }),
                    preview: "banner" %>
       </div>
-    </div>
-    <div class="my-8 text-sm">
-      <%= form.label :max_user_count, 'User limit', style: "display: block" %>
-      <%= form.text_field :max_user_count, class: "input-text mt-2" %>
     </div>
     <div class="my-8 flex items-center gap-4 text-sm">
       <div class="mx-4 my-8">

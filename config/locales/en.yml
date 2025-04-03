@@ -42,9 +42,11 @@ en:
     edit: "Edit"
     delete: "Delete"
     ok: "Ok"
+    submit: "Submit"
     cancel: "Cancel"
     download: "Download"
     generate: "Generate"
+    update: "Update"
   alert:
     title: "Delete %{resource_name}?"
     description: "You are permanently deleting the <b>%{label}</b> %{resource_name}. This action can't be undone."
@@ -102,6 +104,7 @@ en:
     incorrect_phone: "Incorrect mobile number"
     incorrect_mobile_or_otp: "Incorrect mobile number or otp"
   invite:
+    invite_user: "Invite user"
     max_user_count: "Reached maximum user count."
     bulk: "An email invitation will be sent to each of the users in the input file"
     single: "Invitation sent to user."
@@ -152,6 +155,24 @@ en:
     deactivate_failed: "User deactivate failed"
     deactivated_account: "Your account is deactivated, please contact your team manager."
   page_not_found: "The page you're looking for is missing."
+  learning_partner:
+    activate: "Activate"
+    block: "Block"
+    payment_plan:
+      label: "Payment Plan"
+      remaining_days: "Remaining Days"
+      seats_available: "Seats Available"
+      per_seat_cost: "Per seat cost"
+      create: "Create payment plan"
+      total_seats_less_than_users: "cannot be less than the actual number of users (%{count})."
+      end_date_must_be_greater: "must be greater than start date"
+      create_plan_to_invite: "Create payment plan to invite user"
+      contact_admin_to_create_plan: "Payment plan is required to invite users. Contact the admin to create payment plan"
+      modify: Modify payment plan
+      subscription_start_date: "Subscription start date"
+      subscription_end_date: "Subscription end date"
+      user_limit: "User limit"
+      per_user_amount: "Per user amount (₹)"
   notifications:
     course:
       enrolled:

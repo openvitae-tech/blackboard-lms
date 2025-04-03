@@ -1,41 +1,25 @@
 # frozen_string_literal: true
 
 class LearningPartner < ApplicationRecord
-  MAX_USER_COUNT = 50
-
   include CustomValidations
   include PartnerState
 
   has_many :users, dependent: :destroy
   has_one :scorm, dependent: :destroy
+  has_one :payment_plan, dependent: :destroy
 
   validates :name, presence: true, length: { in: 2..255 }
+  validates :active_users_count, presence: true
   validates :content, length: { maximum: 4096 }
-  validates :max_user_count, numericality: { only_integer: true, greater_than: 0 }
-  validate :acceptable_max_user_count
 
   has_one_attached :logo
   has_one_attached :banner
   validate :acceptable_logo
   validate :acceptable_banner
-  validate :acceptable_max_user_count
-  after_initialize :assign_defaults
 
   has_rich_text :content
 
   def parent_team
     @parent_team ||= Team.where(learning_partner_id: id, parent_team_id: nil).first
-  end
-
-  def assign_defaults
-    self.max_user_count ||= MAX_USER_COUNT
-  end
-
-  private
-
-  def acceptable_max_user_count
-    return unless self.max_user_count < users_count
-
-    errors.add(:max_user_count, "cannot be less than actual number of active users (#{users_count}).")
   end
 end

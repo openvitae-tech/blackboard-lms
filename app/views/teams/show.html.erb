@@ -1,4 +1,7 @@
 <%= render 'teams/page_header', team: @team %>
 <%= render 'teams/team_actions' %>
 <%= render 'teams/member_list', team: @team, members: @members %>
+<div class="mt-4">
+  <%= render "commons/payment_plan_details", learning_partner: @learning_partner, payment_plan: @learning_partner.payment_plan, users_count: @learning_partner.users_count  %>
+</div>
 <%= render 'teams/sub_teams', team: @team, sub_teams: @team.sub_teams.includes(:banner_attachment) %>

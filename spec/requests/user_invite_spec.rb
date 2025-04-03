@@ -2,10 +2,15 @@
 
 RSpec.describe 'Request spec for user invites' do
   let(:team) { create(:team) }
+  let(:learning_partner) { team.learning_partner }
+
+  before do
+    @payment_plan = create(:payment_plan, learning_partner:)
+  end
 
   describe 'GET /invites/new' do
     before do
-      support_user = create :user, role: 'support', team:, learning_partner: team.learning_partner
+      support_user = create(:user, role: 'support', team:, learning_partner:)
       sign_in support_user
     end
 
@@ -79,18 +84,17 @@ RSpec.describe 'Request spec for user invites' do
     end
 
     it 'Allow inviting new users by support user' do
-      params = {
-        user: {
-          name: Faker::Name.name,
-          email: Faker::Internet.email,
-          role: 'learner',
-          team_id: team.id
-        }
-      }
-
       expect do
-        post invites_path, params:
+        post invites_path, params: create_invite_params
       end.to change(User, :count).by(1)
+    end
+
+    it 'Returns unauthorized if payment plan not present' do
+      learning_partner.payment_plan = nil
+      post invites_path, params: create_invite_params
+
+      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      expect(response).to redirect_to(error_401_path)
     end
   end
 
@@ -125,5 +129,18 @@ RSpec.describe 'Request spec for user invites' do
         post '/invites', params:
       end.not_to change(User, :count)
     end
+  end
+
+  private
+
+  def create_invite_params
+    {
+      user: {
+        name: Faker::Name.name,
+        email: Faker::Internet.email,
+        role: 'learner',
+        team_id: team.id
+      }
+    }
   end
 end

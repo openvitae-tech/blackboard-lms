@@ -1,0 +1,50 @@
+<%= form_with(url:, model: payment_plan, method:, class: "flex flex-col gap-6 p-6") do |form| %>
+  <%= render 'shared/components/form_errors', resource: payment_plan %>
+  <div class="flex flex-row space-x-5 justify-between">
+    <div class="flex flex-col">
+      <div class="relative flex flex-col gap-3" data-controller="date-picker">
+        <%= form.label :start_date, t("learning_partner.payment_plan.subscription_start_date"), class: "text-sm font-medium" %>
+        <div class="relative flex w-full flex-row items-center">
+          <input type="date" id="datePicker" class="invisible p-0 w-[2px]" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker" min="<%= Date.today.strftime('%Y-%m-%d') %>" />
+          <%= form.text_field :start_date, id: 'duration', placeholder: "YYYY-MM-DD", class: "border border-line-colour rounded focus:ring-0 py-3 px-4 w-full", data: { date_picker_target: "dateSelector" } %>
+          <div class="absolute right-2 flex items-center pl-2">
+            <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->date-picker#openDatePicker"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <div class="relative flex flex-col gap-3" data-controller="date-picker">
+        <%= form.label :end_date, t("learning_partner.payment_plan.subscription_end_date"), class: "text-sm font-medium" %>
+        <div class="relative flex w-full flex-row items-center">
+          <input type="date" id="datePicker" class="invisible p-0 w-[2px]" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker" min="<%= Date.today.strftime('%Y-%m-%d') %>" />
+          <%= form.text_field :end_date, id: 'duration', placeholder: "YYYY-MM-DD", class: "border border-line-colour rounded focus:ring-0 py-3 px-4 w-full", data: { date_picker_target: "dateSelector" } %>
+          <div class="absolute right-2 flex items-center pl-2">
+            <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->date-picker#openDatePicker"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <%= form.label :total_seats, t("learning_partner.payment_plan.user_limit"), class: "text-sm font-medium" %>
+    <%= form.number_field :total_seats, class: "input-text" %>
+  </div>
+  <div>
+    <%= form.label :per_seat_cost, t("learning_partner.payment_plan.per_user_amount"), class: "text-sm font-medium" %>
+    <%= form.number_field :per_seat_cost, class: "input-text" %>
+  </div>
+  <% if action_name == "new" %>
+    <div class="flex items-center gap-6 text-sm">
+      <%= link_to t("button.cancel"), cancel_path, class: "nav-link" %>
+      <div>
+        <%= form.submit t("button.submit"), class: "btn-primary" %>
+      </div>
+    </div>
+  <% else %>
+    <div class="flex flex-col gap-6 justify-between heading">
+      <%= form.button t("button.update"), class: "bg-primary text-white p-4 rounded" %>
+      <%= link_to t("button.cancel"), cancel_path, data: { action: "click->modals#closeModal" }, class: "flex justify-center" %>
+    </div>
+  <% end %>
+<% end %>

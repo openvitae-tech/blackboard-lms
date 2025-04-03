@@ -14,7 +14,7 @@ class InvitesController < ApplicationController
 
   def create
     service = UserManagementService.instance
-    @team = Team.find(invite_params[:team_id])
+    @team = Team.includes(learning_partner: :payment_plan).find(invite_params[:team_id])
     authorize @team, :create?, policy_class: InvitePolicy
     partner = @team.learning_partner
     authorize partner, :invite?
@@ -31,8 +31,8 @@ class InvitesController < ApplicationController
         if valid_records.empty?
           @user.errors.add(:base, I18n.t('invite.invalid_csv'))
           :error
-        elsif (valid_records.length + partner.users_count) > partner.max_user_count
-          @user.errors.add(:base, I18n.t('invite.exceeds_user_limit') % { limit: partner.max_user_count })
+        elsif (valid_records.length + partner.users_count) > partner.payment_plan.total_seats
+          @user.errors.add(:base, I18n.t('invite.exceeds_user_limit') % { limit: partner.payment_plan.total_seats })
           :error
         else
           service.bulk_invite(current_user, valid_records, :learner, @team)

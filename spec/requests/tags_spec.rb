@@ -23,20 +23,20 @@ RSpec.describe 'Request spec for Tags', type: :request do
       sign_in learner
 
       get tags_path
-      expect(response.status).to be(302)
+      expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
 
   describe 'GET /tags/new' do
-    it 'Allow access new tag by admin' do
+    it 'Renders the new template for admin' do
       get new_tag_path
 
       expect(response.status).to be(200)
       expect(response).to render_template(:new)
     end
 
-    it 'Unauthorized when new tag is accessed by non-admin' do
+    it 'Returns unauthorized for non-admin' do
       sign_in learner
 
       get new_tag_path

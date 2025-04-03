@@ -105,6 +105,8 @@ Rails.application.routes.draw do
       put :activate
       put :deactivate
     end
+
+    resource :payment_plan, only: %i[new create edit update]
   end
 
   resources :dashboards, only: :index
