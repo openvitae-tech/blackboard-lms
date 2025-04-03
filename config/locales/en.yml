@@ -167,6 +167,7 @@ en:
       total_seats_less_than_users: "cannot be less than the actual number of users (%{count})."
       end_date_must_be_greater: "must be greater than start date"
       create_plan_to_invite: "Create payment plan to invite user"
+      contact_admin_to_create_plan: "Payment plan is required to invite users. Contact the admin to create payment plan"
       modify: Modify payment plan
       subscription_start_date: "Subscription start date"
       subscription_end_date: "Subscription end date"

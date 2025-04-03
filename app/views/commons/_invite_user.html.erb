@@ -11,7 +11,11 @@
     <% end %>
   <% else %>
     <div class="disabled">
-      <%= render 'shared/components/icon_button_primary', label: t("invite.invite_user"), icon_name: 'icon-plus', tooltip_text: t("learning_partner.payment_plan.create_plan_to_invite"), tooltip_position: "left" %>
+      <%= render 'shared/components/icon_button_primary',
+        label: t("invite.invite_user"),
+        icon_name: 'icon-plus',
+        tooltip_text: current_user.is_admin? ? t("learning_partner.payment_plan.create_plan_to_invite") : t("learning_partner.payment_plan.contact_admin_to_create_plan"),
+        tooltip_position: "left" %>
     </div>
   <% end %>
 </div>
