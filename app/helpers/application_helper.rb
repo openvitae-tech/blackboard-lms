@@ -98,4 +98,10 @@ module ApplicationHelper
     class_array = [(classes.shift if classes.first.is_a? String), classes.first.select { |_, v| v }.keys]
     class_array.compact.join(' ')
   end
+
+  def text_with_paragraph(text)
+    text.split("\n").map do |para|
+      content_tag(:p, para.html_safe, class: 'my-2')
+    end.join.html_safe
+  end
 end
