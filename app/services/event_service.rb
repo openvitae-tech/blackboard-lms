@@ -203,6 +203,20 @@ class EventService
     publish_event(user, event)
   end
 
+  def publish_payment_plan_modified(user, learning_partner)
+    event = Event::PaymentPlanModified.new(
+      partner_id: learning_partner.id,
+      user_id: user.id,
+      payment_plan_id: learning_partner.payment_plan.id,
+      plan_start_date: learning_partner.payment_plan.start_date,
+      plan_end_date: learning_partner.payment_plan.end_date,
+      per_seat_amount: learning_partner.payment_plan.per_seat_cost,
+      total_seats: learning_partner.payment_plan.total_seats
+    )
+
+    publish_event(user, event)
+  end
+
   private
 
   def build_event(user, event_data)
