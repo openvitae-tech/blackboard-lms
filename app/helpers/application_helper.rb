@@ -100,6 +100,8 @@ module ApplicationHelper
   end
 
   def text_with_paragraph(text)
+    return '' if text.blank?
+
     safe_join(text.split("\n").map { |para| content_tag(:p, para, class: 'my-2') })
   end
 end
