@@ -67,4 +67,19 @@ module UiHelper
 
     { partial: 'shared/components/table_actions', locals: { row_data:, actions: } }
   end
+
+  def banner(image: nil, text: nil, text_color: 'letter-color', icon_color: 'letter-color')
+    height_class = image.present? ? 'h-14' : 'h-8'
+
+    ApplicationController.renderer.render(
+      partial: 'ui/banners/banner',
+      locals: {
+        image:,
+        text:,
+        text_color:,
+        height_class:,
+        icon_color:
+      }
+    )
+  end
 end
