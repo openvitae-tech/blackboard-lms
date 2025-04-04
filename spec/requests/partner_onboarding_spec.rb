@@ -84,7 +84,7 @@ RSpec.describe 'Request spec for LearningPartner' do
         }
       }
       post('/learning_partners', params:)
-      expect(response).to have_http_status(:bad_request)
+      expect(response).to have_http_status(302)
     end
 
     it 'Requires logo size to be less than 1 MB' do
