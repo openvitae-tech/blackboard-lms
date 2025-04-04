@@ -1,4 +1,4 @@
-<div class="mb-4 text-left">
+<div class="mb-4 text-left md:max-w-3xl w-full">
   <% form_url = quiz.persisted? ? course_module_quiz_path(course, course_module, quiz) :  course_module_quizzes_path(course, course_module) %>
   <%= form_with(url: form_url, model:  quiz) do |form| %>
     <%= render "shared/components/form_errors", resource: quiz %>

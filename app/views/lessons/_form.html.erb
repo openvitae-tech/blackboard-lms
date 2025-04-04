@@ -1,4 +1,4 @@
-<div class="my-8 text-left" data-controller="lessons-form" data-lessons-form-action-name="<%= action_name %>">
+<div class="my-8 text-left md:max-w-3xl" data-controller="lessons-form" data-lessons-form-action-name="<%= action_name %>">
   <% url = lesson.persisted? ? course_module_lesson_path(course, course_module, lesson) : course_module_lessons_path(course, course_module, lesson) %>
   <%= form_with(model: lesson, url: url) do |form| %>
     <%= form.hidden_field :has_error, value: @lesson.errors.any?, data: { lessons_form_target: "hasError" } %>
