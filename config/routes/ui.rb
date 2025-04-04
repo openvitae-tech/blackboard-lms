@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     get :icons, to: 'icons#index'
     get :inputs, to: 'inputs#index'
     get :tables, to: 'tables#index'
+    get :banners, to: 'banners#index'
   end
 end
