@@ -18,8 +18,7 @@ class Event < ApplicationRecord
     user_activated
     user_deactivated
     active_user_count
-    payment_plan_created
-    payment_plan_updated
+    payment_plan_modified
   ].freeze
 
   OnboardingInitiated = Struct.new(:partner_id, :partner_name,  keyword_init: true)
@@ -41,8 +40,8 @@ class Event < ApplicationRecord
   UserActivated = Struct.new(:partner_id, :team_id, :user_id, :target_user_id, keyword_init: true)
   UserDeactivated = Struct.new(:partner_id, :team_id, :user_id, :target_user_id, keyword_init: true)
   ActiveUserCount = Struct.new(:partner_id, :team_id, :user_id, :active_user_count, keyword_init: true)
-  PaymentPlanCreated = Struct.new(:partner_id, :user_id, :payment_plan_id, keyword_init: true)
-  PaymentPlanUpdated = Struct.new(:partner_id, :user_id, :payment_plan_id, keyword_init: true)
+  PaymentPlanModified = Struct.new(:partner_id, :user_id, :payment_plan_id, :plan_start_date, :plan_end_date,
+                                   :per_seat_amount, :total_seats, keyword_init: true)
 
   validates :name, presence: true
   validates :name, inclusion: { in: VALID_EVENTS, message: I18n.t('event.invalid') }

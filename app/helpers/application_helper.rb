@@ -100,8 +100,6 @@ module ApplicationHelper
   end
 
   def text_with_paragraph(text)
-    text.split("\n").map do |para|
-      content_tag(:p, para.html_safe, class: 'my-2')
-    end.join.html_safe
+    safe_join(text.split("\n").map { |para| content_tag(:p, para, class: 'my-2') })
   end
 end
