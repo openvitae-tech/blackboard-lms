@@ -12,6 +12,13 @@
   pointer-events: none;
 }
 
+@media (max-width: 640px) {
+  .tooltip {
+    white-space: normal;
+    width: 100%;
+  }
+}
+
 .group:hover .tooltip {
   opacity: 1;
 }
