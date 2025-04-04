@@ -1,4 +1,4 @@
-<div  data-controller="file-upload" class="md:max-w-3xl">
+<div class="md:max-w-3xl"  data-controller="file-upload">
   <%= form_with(model: learning_partner) do |form| %>
     <%= render "shared/components/form_errors", resource: learning_partner %>
     <div class="my-8 text-sm">
@@ -8,7 +8,7 @@
     <div>
       <%= form.label :content, "About", style: "display: block" %>
       <%= form.text_area :about, class: "input-textarea mt-2", rows: "5" %>
-  </div>
+    </div>
     <div class="my-8 text-sm">
       <div class="flex justify-between">
         <%= form.label :logo, style: "display: block" %>
