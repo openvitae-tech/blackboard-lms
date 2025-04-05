@@ -16,8 +16,8 @@ class TeamsController < ApplicationController
   end
 
   def all_users
-    @team = Team.find_by(id: params[:id] || params[:team_id])  
-    render 'all_users/index'
+    @team = Team.find_by(id: params[:id])
+    @members = @team.all_members
   end
   
   def create
