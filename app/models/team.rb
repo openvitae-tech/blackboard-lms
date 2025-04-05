@@ -39,6 +39,10 @@ class Team < ApplicationRecord
     users.where.not(role: 'support').skip_deactivated
   end
 
+  def all_members
+    users.where.not(role: 'support')
+  end
+
   def ancestors
     return @ancestors if @ancestors.present?
 

@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <div id="team-member-list" class="bg-white md:divide-y md:divide-slate-grey-light flex flex-col gap-4 md:gap-0  max-h-[350px] overflow-y-auto p-1">
+    <div id="team-member-list" class="bg-white md:divide-y md:divide-slate-grey-light flex flex-col gap-4 md:gap-0  <%= 'max-h-[350px]' if limited_height %> overflow-y-auto p-1">
       <% members.each do |member| %>
         <%= render "teams/member_list_items", team: team, member: member %>
       <% end %>

@@ -15,6 +15,11 @@ class TeamsController < ApplicationController
     @members = @team.members
   end
 
+  def all_users
+    @team = Team.find_by(id: params[:id])
+    @members = @team.all_members
+  end
+  
   def create
     authorize @parent_team
 
