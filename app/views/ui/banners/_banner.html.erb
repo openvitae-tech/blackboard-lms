@@ -1,10 +1,10 @@
-<div class="relative <%= height_class %> shadow-md border border-line-colour-light flex items-center justify-center">
+<div class="relative <%= height_class %> shadow-md border border-line-colour-light flex items-center justify-center <%= bg_color %>">
   <% if image.present? %>
     <%= image_tag image, alt: "Banner Image", class: "absolute inset-0 w-full h-full object-fill" %>
   <% end %>
 
   <% if text.present? %>
-    <div class="absolute flex items-center justify-center p-2 rounded text-sm w-fit text-<%= text_color %>">
+    <div class="absolute flex items-center justify-center p-2 rounded text-sm w-fit <%= text_color %>">
       <span>
         <strong><%= text.html_safe %></strong> 
       </span>
@@ -12,6 +12,6 @@
   <% end %>
 
   <div class="absolute top-2 right-2">
-    <span class="icon icon-close icon-small cursor-pointer bg-<%= icon_color %>"></span>
+    <span class="icon icon-close icon-small cursor-pointer <%= icon_color %>"></span>
   </div>
 </div>
