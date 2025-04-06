@@ -2,7 +2,7 @@
   <label class="flex items-center cursor-pointer rounded-full <%= label_hover %>" data-action="click->more-action#toggleDropdown">
     <span class="icon icon-more-vertical icon-small <%= icon_class %>"></span>
   </label>
-  <div class="absolute right-0 bg-white rounded box-shadow-medium hidden mt-3 z-10 w-auto" data-more-action-target="moreMenu" data-user-status-confirmation-target="moreMenu">
+  <div class="absolute right-0 bg-white rounded box-shadow-medium hidden mt-3 z-50 w-auto" data-more-action-target="moreMenu" data-user-status-confirmation-target="moreMenu">
     <%= yield %>
   </div>
 </div>
