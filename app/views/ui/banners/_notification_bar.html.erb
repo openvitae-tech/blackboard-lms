@@ -1,0 +1,14 @@
+<div class="relative h-8 shadow-md border border-line-colour-light flex items-center justify-center <%= bg_color %>" data-controller="notification-bar"
+  data-notification-bar-target="banner">  
+  <% if text.present? %>
+    <div class="absolute flex items-center justify-center p-2 rounded text-sm w-fit <%= text_color %>">
+      <span>
+        <strong><%= text.html_safe %></strong> 
+      </span>
+    </div>
+  <% end %>
+
+  <div class="absolute top-2 right-6">
+    <span class="icon icon-close icon-small cursor-pointer <%= icon_color %>" data-action="click->notification-bar#close"></span>
+  </div>
+</div>
