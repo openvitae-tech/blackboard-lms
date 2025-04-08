@@ -71,7 +71,7 @@ module UiHelper
   def notification_bar(text: nil, text_color: 'text-letter-color', bg_color: 'bg-white',
                        icon_color: 'bg-letter-color')
     ApplicationController.renderer.render(
-      partial: 'ui/banners/notification_bar',
+      partial: 'ui/notification_bars/notification_bar',
       locals: {
         text:,
         text_color:,

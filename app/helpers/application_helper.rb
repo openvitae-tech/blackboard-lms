@@ -106,6 +106,6 @@ module ApplicationHelper
   end
 
   def show_notification_bar?
-    false
+    @show_notification_bar == true
   end
 end
