@@ -1,3 +1,9 @@
+<% height_class = if members.size <= 50
+                    'max-h-[450px]'
+                  else
+                    'max-h-[750px]'
+                  end %>
+
 <div class="mt-5">
   <div id="teams-list" class="flex flex-col py-4 md:px-6 md:shadow-[0px_0px_4px_0px_#33333329] rounded">
     <div class="hidden md:grid grid-cols-12 gap-4 text-left text-sm font-medium px-6 py-4 border-b border-line-colour-light w-full">
@@ -11,7 +17,8 @@
         </div>
       </div>
     </div>
-    <div id="team-member-list" class="bg-white md:divide-y md:divide-slate-grey-light flex flex-col gap-4 md:gap-0  <%= 'max-h-[350px]' if limited_height %> overflow-y-auto p-1">
+
+    <div id="team-member-list" class="bg-white md:divide-y md:divide-slate-grey-light flex flex-col gap-4 md:gap-0 <%= height_class %> overflow-y-auto p-1">
       <% members.each do |member| %>
         <%= render "teams/member_list_items", team: team, member: member %>
       <% end %>
