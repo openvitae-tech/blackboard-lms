@@ -140,6 +140,13 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#communication_channel' do
+    it 'assign sms as default communication_channel' do
+      user = create :user, :learner
+      expect(user.communication_channel).to eq('sms')
+    end
+  end
+
   private
 
   def password_verifier
