@@ -29,4 +29,6 @@
   </div>
 </div>
 
-<%= render 'teams/member_list', team: @team , members: @members, limited_height: false %>
+<div class="max-h-[750px] overflow-hidden p-1 mt-5 shadow rounded">
+  <%= render 'teams/member_list', team: @team, members: @members %>
+</div>
