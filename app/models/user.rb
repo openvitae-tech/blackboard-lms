@@ -21,6 +21,8 @@ class User < ApplicationRecord
   USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
   GENDERS = ['Male', 'Female', 'Other', 'Prefer not to say'].freeze
 
+  enum :communication_channel, { sms: 'sms', whatsapp: 'whatsapp' }, default: 'sms'
+
   # add dynamic methods using meta programming for checking the current role
   # of a user.
   USER_ROLES.each do |role|
