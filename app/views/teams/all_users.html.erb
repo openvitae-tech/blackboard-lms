@@ -1,4 +1,4 @@
-<%= render 'shared/components/back_button', back_link: @back_link %>
+<%= render 'shared/components/back_button', back_link: team_path(current_user.team) %>
 <div class="flex flex-col md:flex-row  gap-4 justify-between items-start my-6">
   <h1 class="heading page-heading-medium pl-0">My team</h1>
 </div>
@@ -29,6 +29,6 @@
   </div>
 </div>
 
-<div class="max-h-[750px] overflow-hidden p-1 mt-5 md:shadow rounded">
-  <%= render 'teams/member_list', team: @team, members: @members %>
+<div class="overflow-hidden p-1 mt-5 md:shadow rounded">
+  <%= render 'teams/member_list', team: @team, members: @members.page(params[:page]).per(20) %> 
 </div>

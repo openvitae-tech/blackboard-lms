@@ -18,5 +18,6 @@
     <% members.each do |member| %>
       <%= render "teams/member_list_items", team: team, member: member %>
     <% end %>
+    <%= paginate members %>
   </div>
 </div>
