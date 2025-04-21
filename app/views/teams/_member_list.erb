@@ -18,6 +18,8 @@
     <% members.each do |member| %>
       <%= render "teams/member_list_items", team: team, member: member %>
     <% end %>
-    <%= paginate members %>
+    <% if members.total_pages > 1 %>
+      <%= paginate members %>
+    <% end %>
   </div>
 </div>

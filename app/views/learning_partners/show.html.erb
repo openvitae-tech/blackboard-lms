@@ -85,6 +85,12 @@
     </div>
   </div>
 </div>
-<div class="max-h-[500px] overflow-hidden p-1 mt-5 md:shadow rounded">
-  <%= render 'teams/member_list', team: @learning_partner.parent_team, members: @learning_partner.parent_team.members.page(params[:page]).per(10) %>
-</div>
+<% if @learning_partner.parent_team.members.any? %>
+  <div class="max-h-[520px] overflow-hidden p-1 mt-5 md:shadow rounded">
+    <%= render 'teams/member_list', team: @learning_partner.parent_team, members: @learning_partner.parent_team.members.page(params[:page]).per(5) %>
+  </div>
+<% else %>
+  <div class="text-center text-sm mt-6">
+    No users available.
+  </div>
+<% end %>
