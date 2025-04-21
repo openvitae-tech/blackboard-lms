@@ -3,10 +3,8 @@
 module CommunicationChannels
   module Whatsapp
     class MessagingChannel < CommunicationChannels::MessagingChannelBase
-      def send_message(mobile_number, template_name, parameters = nil)
-        return if mobile_number.empty? || template_name.empty?
-
-        response = send_request(mobile_number, template_name, parameters)
+      def send_message(mobile_number, template, parameters = nil)
+        response = send_request(mobile_number, template, parameters)
 
         return response if response.is_a?(Net::HTTPSuccess)
 
@@ -15,13 +13,13 @@ module CommunicationChannels
 
       private
 
-      def send_request(mobile_number, template_name, parameters)
+      def send_request(mobile_number, template, parameters)
         url = URI.parse(Rails.application.credentials.dig(:whatsapp, :url))
-        request = build_request(url, mobile_number, template_name, parameters)
+        request = build_request(url, mobile_number, template, parameters)
         Net::HTTP.start(url.hostname, url.port, use_ssl: true, read_timeout: 2) { |http| http.request(request) }
       end
 
-      def build_request(url, mobile_number, template_name, parameters)
+      def build_request(url, mobile_number, template, parameters)
         request = Net::HTTP::Post.new(url)
         request['Authorization'] =
           "Bearer #{Rails.application.credentials.dig(:whatsapp, :auth_token)}"
@@ -32,7 +30,7 @@ module CommunicationChannels
           to: mobile_number,
           type: 'template',
           template: {
-            name: template_name,
+            name: template,
             language: {
               code: 'en'
             }

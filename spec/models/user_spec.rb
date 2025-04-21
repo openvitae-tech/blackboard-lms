@@ -141,9 +141,12 @@ RSpec.describe User, type: :model do
   end
 
   describe '#communication_channel' do
-    it 'assign sms as default communication_channel' do
-      user = create :user, :learner
-      expect(user.communication_channel).to eq('sms')
+    it 'raise error for invalid communication channel' do
+      user = build :user, :learner, communication_channels: ['invalid_channel']
+
+      expect(user).not_to be_valid
+      expect(user.errors.full_messages.to_sentence)
+        .to eq('Communication channels contains invalid channels: invalid_channel')
     end
   end
 
