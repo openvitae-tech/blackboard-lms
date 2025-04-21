@@ -3,7 +3,7 @@
 module CommunicationChannels
   class SendWhatsappMessageJob < BaseJob
     def perform(template, mobile_number, parameters)
-      return if mobile_number.nil? || template.empty?
+      return unless mobile_number.present? || template.present?
 
       updated_mobile = "91#{mobile_number}"
       whatsapp_channel = CommunicationChannels::Whatsapp::MessagingChannel.new
