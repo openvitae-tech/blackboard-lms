@@ -7,9 +7,9 @@ RSpec.describe SendLoginOtpService do
 
   describe '#send_sms' do
     before do
-      message_id = Rails.application.credentials.dig(:fast2sms, :message_id)
+      template_id = Rails.application.credentials.dig(:fast2sms, :template, :otp)
       user.set_otp!
-      stub_fast2sms_api(user.phone, password_decrypter(user.otp), message_id)
+      stub_fast2sms_api(user.phone, password_decrypter(user.otp), template_id)
     end
 
     it 'should_send_otp_as_sms' do
@@ -20,8 +20,8 @@ RSpec.describe SendLoginOtpService do
 
   private
 
-  def send_login_otp_service(mobile_number, user)
-    SendLoginOtpService.new(mobile_number, user)
+  def send_login_otp_service(mobile_number, otp)
+    SendLoginOtpService.new(mobile_number, otp)
   end
 
   def password_decrypter(otp)

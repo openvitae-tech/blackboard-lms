@@ -23,14 +23,16 @@ RSpec.describe CommunicationChannels::Sms::MessagingChannel do
     it 'when SMS sending fails' do
       http_response = instance_double(Net::HTTPResponse, is_a?: false, code: '400', body: 'Bad Request')
 
-      allow(subject).to receive(:send_sms).and_return(http_response)
+      allow(Sentry).to receive(:capture_message)
+      allow(subject).to receive(:dispatch_sms_request).and_return(http_response)
+
+      subject.send_message(user.phone, 'test value', 'template123')
+
       expect(Sentry).to have_received(:capture_message).with(
         'Failed to send OTP via SMS',
         level: :error,
         extra: { status: '400', body: 'Bad Request' }
       )
-
-      subject.send_message(user.phone, 'test value', 'template123')
     end
   end
 end

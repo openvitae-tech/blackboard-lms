@@ -9,8 +9,8 @@ class SendLoginOtpService
   end
 
   def process
-    message_id = Rails.application.credentials.dig(:fast2sms, :message_id)
+    template_id = Rails.application.credentials.dig(:fast2sms, :template, :otp)
     sms_channel = CommunicationChannels::Sms::MessagingChannel.new
-    sms_channel.send_message(mobile_number, otp, message_id)
+    sms_channel.send_message(mobile_number, otp, template_id)
   end
 end

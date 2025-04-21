@@ -25,7 +25,7 @@ RSpec.describe UserChannelNotifierService do
       parameters = { sms_variables_values: 'test value' }
       Sidekiq::Testing.fake! do
         expect do
-          subject.notify_user(new_user, 'test_template', parameters:)
+          subject.notify_user(new_user, 'course_enrolled_template', parameters)
         end.to change(CommunicationChannels::SendSmsJob.jobs, :size).by(1)
       end
     end
