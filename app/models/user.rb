@@ -8,6 +8,8 @@ class User < ApplicationRecord
   scope :skip_deactivated, -> { where.not(state: 'in-active') }
 
   EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  COMMUNICATION_CHANNELS = %w[sms whatsapp].freeze
+
   TEST_OTP = 1212
 
   USER_ROLE_MAPPING = {
@@ -20,8 +22,6 @@ class User < ApplicationRecord
 
   USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
   GENDERS = ['Male', 'Female', 'Other', 'Prefer not to say'].freeze
-
-  enum :communication_channel, { sms: 'sms', whatsapp: 'whatsapp' }, default: 'sms'
 
   # add dynamic methods using meta programming for checking the current role
   # of a user.
@@ -43,6 +43,7 @@ class User < ApplicationRecord
   validates :otp, uniqueness: true, allow_nil: true
 
   validate :dob_within_valid_age_range
+  validate :communication_channels_are_valid
   validates :gender,
             inclusion: { in: GENDERS,
                          message: I18n.t('user.invalid_gender') }, allow_blank: true
@@ -154,5 +155,10 @@ class User < ApplicationRecord
     return unless learning_partner
 
     learning_partner.update!(active_users_count: learning_partner.users.active.count)
+  end
+
+  def communication_channels_are_valid
+    invalid = communication_channels - COMMUNICATION_CHANNELS
+    errors.add(:communication_channels, "contains invalid channels: #{invalid.join(', ')}") if invalid.any?
   end
 end

@@ -263,7 +263,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_08_152105) do
     t.string "preferred_local_language"
     t.string "gender"
     t.date "dob"
-    t.string "communication_channel", null: false
+    t.string "communication_channels", default: ["sms"], null: false, array: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["learning_partner_id"], name: "index_users_on_learning_partner_id"
