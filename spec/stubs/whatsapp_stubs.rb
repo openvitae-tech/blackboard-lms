@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def stub_whatsapp_api(mobile_number, template_name)
+def stub_whatsapp_api(mobile_number, template)
   stub_request(
     :post,
     Rails.application.credentials.dig(:whatsapp, :url)
@@ -14,7 +14,7 @@ def stub_whatsapp_api(mobile_number, template_name)
       'to' => mobile_number,
       'type' => 'template',
       'template' => {
-        'name' => template_name,
+        'name' => template,
         'language' => { 'code' => 'en' }
       }
     }
