@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ChannelMessageTemplate = Data.define do
+ChannelMessageTemplates = Data.define do
   def course_assigned_template
     {
       sms: Rails.application.credentials.dig(:fast2sms, :template, :course_assigned),

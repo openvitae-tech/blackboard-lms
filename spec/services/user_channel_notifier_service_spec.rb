@@ -15,7 +15,7 @@ RSpec.describe UserChannelNotifierService do
     it 'enqueues the WhatsApp message job' do
       Sidekiq::Testing.fake! do
         expect do
-          subject.notify_user(user, ChannelMessageTemplate.new.course_assigned_template)
+          subject.notify_user(user, ChannelMessageTemplates.new.course_assigned_template)
         end.to change(CommunicationChannels::SendWhatsappMessageJob.jobs, :size).by(1)
       end
     end

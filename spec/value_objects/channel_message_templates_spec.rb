@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ChannelMessageTemplate do
+RSpec.describe ChannelMessageTemplates do
   subject { described_class.new }
 
   describe '#course_assigned_template' do
