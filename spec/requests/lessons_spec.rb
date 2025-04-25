@@ -49,6 +49,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
       expect(response.status).to be(302)
       expect(response).to redirect_to(course_module_lesson_path(course_id: @course.id,
                                                                 module_id: @course_module_one.id, id: @lesson.id))
+      expect(flash[:notice]).to eq('You are not allowed to access this lesson.')
     end
   end
 

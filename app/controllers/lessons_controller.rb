@@ -187,6 +187,6 @@ class LessonsController < ApplicationController
                   @course,
                   @enrollment&.current_module_id || @course.first_module,
                   @enrollment&.current_lesson_id || @course.first_module.first_lesson
-                ), notice: "You are not allowed to access this lesson yet."
+                ), notice: t("lesson.lesson_not_accessible")
   end
 end
