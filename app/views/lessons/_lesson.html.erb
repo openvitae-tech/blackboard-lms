@@ -33,7 +33,7 @@
     <% end %>
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
-        <% if lesson_completed_by_user?(course.id, lesson.id) %>
+        <% if lesson_completed?(enrollment, lesson) %>
           <%= link_to next_button_link(course, course_module, lesson), class: "bg-primary flex items-center gap-2 rounded px-4 py-3 " do %>
             <span class="text-xs text-white heading"><%= t("lesson.next") %></span>
           <% end %>

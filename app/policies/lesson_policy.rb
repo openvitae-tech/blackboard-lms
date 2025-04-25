@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class LessonPolicy
-  attr_reader :user, :lesson
+  attr_reader :user, :record
 
   def initialize(user, record)
     @user = user
-    @lesson = record
+    @record = record
   end
 
   def new?
@@ -13,7 +13,7 @@ class LessonPolicy
   end
 
   def show?
-    user.present?
+    user.is_admin? || user.enrolled_for_course?(record)
   end
 
   def create?
@@ -31,12 +31,12 @@ class LessonPolicy
   def destroy?
     return false unless user.is_admin?
 
-    course = lesson.course_module.course
+    course = record.course_module.course
     CoursePolicy.new(user, course).destroy?
   end
 
   def complete?
-    user.enrolled_for_course?(lesson.course_module.course)
+    user.enrolled_for_course?(record.course_module.course)
   end
 
   def moveup?
@@ -45,13 +45,5 @@ class LessonPolicy
 
   def movedown?
     user.is_admin?
-  end
-
-  # NOTE: avoid using this in view policy(lesson).replay? could trigger n+1 queries
-  def replay?
-    return false unless user.enrolled_for_course?(lesson.course_module.course)
-
-    enrollment = user.get_enrollment_for(lesson.course_module.course)
-    enrollment.completed_lessons.include?(lesson.id)
   end
 end

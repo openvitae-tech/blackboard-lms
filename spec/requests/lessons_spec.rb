@@ -17,16 +17,38 @@ RSpec.describe 'Request spec for Lessons', type: :request do
   describe 'GET /lessons/:id' do
     before do
       @lesson = create :lesson, course_module: @course_module_one
+      @lesson_two = create :lesson, course_module: @course_module_one
       @course_module_one.update!(lessons_in_order: [@lesson.id])
     end
 
-    it 'user should able to access lesson' do
+    it 'admin should able to access lesson' do
       get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
 
       expect(response.status).to be(200)
       expect(assigns(:lesson)).to eq(@lesson)
       expect(assigns(:course_modules).pluck(:id).sort).to eq(@course.course_modules.pluck(:id).sort)
       expect(response).to render_template(:show)
+    end
+
+    it 'Returns unauthorized for user if not enrolled to the course' do
+      sign_in learner
+
+      get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
+      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      expect(response).to redirect_to(error_401_path)
+    end
+
+    it 'Redirect to the last completed lesson when accessing lessons other than the one next to it' do
+      sign_in learner
+
+      @course.enroll!(learner)
+      get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
+      expect(response.status).to be(200)
+
+      get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson_two.id)
+      expect(response.status).to be(302)
+      expect(response).to redirect_to(course_module_lesson_path(course_id: @course.id,
+                                                                module_id: @course_module_one.id, id: @lesson.id))
     end
   end
 
@@ -49,18 +71,10 @@ RSpec.describe 'Request spec for Lessons', type: :request do
   end
 
   describe 'POST /lessons' do
-    before do
-      @blob = ActiveStorage::Blob.create_and_upload!(
-        io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
-        filename: 'sample_video.mp4',
-        content_type: 'video/mp4'
-      )
-    end
-
     it 'allow creating lessons by admin' do
       expect do
         post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
-             params: lesson_params(@blob)
+             params: lesson_params(new_blob)
       end.to change(@course_module_two.lessons, :count).by(1)
     end
 
@@ -69,7 +83,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
 
       expect do
         post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
-             params: lesson_params(@blob)
+             params: lesson_params(new_blob)
       end.not_to(change(@course_module_two.lessons, :count))
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       expect(response).to redirect_to(error_401_path)
@@ -111,9 +125,15 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'allow updating lesson by admin' do
-      put course_module_lesson_path(course_id: @course.id, module_id: @course_module_two.id, id: @lesson.id),
-          params: { lesson: { title: @lesson_title } }
-      expect(@lesson.reload.title).to eq(@lesson_title)
+      expect do
+        put course_module_lesson_path(course_id: @course.id, module_id: @course_module_two.id, id: @lesson.id),
+            params: { lesson: update_lesson_params(@lesson_title, @lesson, new_blob) }
+      end.to change(@lesson.local_contents, :count).by(1)
+
+      @lesson.reload
+      local_contents_langs = @lesson.local_contents.pluck(:lang)
+      expect(local_contents_langs).to eq(%w[english hindi])
+      expect(@lesson.title).to eq(@lesson_title)
     end
 
     it 'does not allow updating lesson by non-admin' do
@@ -217,8 +237,8 @@ RSpec.describe 'Request spec for Lessons', type: :request do
 
     it 'learner should able to mark enrolled course lesson as completed' do
       user = learner
-      @course.enroll!(user)
       sign_in user
+      @course.enroll!(user)
 
       post complete_course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
 
@@ -227,33 +247,22 @@ RSpec.describe 'Request spec for Lessons', type: :request do
                                                                 id: @lesson_two))
     end
 
+    it 'Redirect to course module page upon completing the last lesson' do
+      sign_in learner
+      @course.enroll!(learner)
+
+      enrollment = learner.get_enrollment_for(@course)
+      enrollment.update!(completed_lessons: [@lesson.id], current_module_id: @course_module_one.id,
+                         current_lesson_id: @lesson.id)
+
+      post complete_course_module_lesson_path(course_id: @course.id,
+                                              module_id: @course_module_one.id, id: @lesson_two.id)
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(course_path(@course.id))
+    end
+
     it 'does not allow non-learner to mark course lesson as completed' do
       post complete_course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
-      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
-      expect(response).to redirect_to(error_401_path)
-    end
-  end
-
-  describe 'PUT /lessons/:id/replay' do
-    before do
-      @lesson = create :lesson, course_module: @course_module_one
-      @course_module_one.update!(lessons_in_order: [@lesson.id])
-    end
-
-    it 'learner should able to replay the enrolled course lesson' do
-      user = learner
-      @course.enroll!(user)
-      sign_in user
-
-      post complete_course_module_lesson_path(course_id: @course, module_id: @course_module_one.id, id: @lesson)
-      expect(user.enrollments.first.completed_lessons).to eq([@lesson.id])
-
-      put replay_course_module_lesson_path(course_id: @course, module_id: @course_module_one.id, id: @lesson)
-      expect(user.enrollments.first.completed_lessons).not_to include(@lesson.id)
-    end
-
-    it 'does not allow non-learner to replay the lesson' do
-      put replay_course_module_lesson_path(course_id: @course, module_id: @course_module_one.id, id: @lesson)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
       expect(response).to redirect_to(error_401_path)
     end
@@ -269,5 +278,30 @@ RSpec.describe 'Request spec for Lessons', type: :request do
         local_contents_attributes: { '1735550839123' => { lang: 'english', blob_id: blob.id } }
       }
     }
+  end
+
+  def update_lesson_params(updated_lesson_title, lesson, blob)
+    {
+      title: updated_lesson_title,
+      local_contents_attributes: {
+        '0' => {
+          id: lesson.local_contents.first.id,
+          _destroy: false
+        },
+        '1' => {
+          lang: 'hindi',
+          _destroy: false,
+          blob_id: blob.id
+        }
+      }
+    }
+  end
+
+  def new_blob
+    ActiveStorage::Blob.create_and_upload!(
+      io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
+      filename: 'sample_video.mp4',
+      content_type: 'video/mp4'
+    )
   end
 end
