@@ -12,7 +12,7 @@ module UiHelper
   end
 
   def button(label: 'Button', type: 'primary', size: 'md', icon_name: nil, icon_position: 'left', tooltip_text: '',
-             tooltip_position: 'bottom')
+             tooltip_position: 'bottom', disabled: false)
     ApplicationController.renderer.render(
       partial: "ui/buttons/#{type}",
       locals: {
@@ -22,7 +22,8 @@ module UiHelper
         icon_name:,
         icon_position:,
         tooltip_text:,
-        tooltip_position:
+        tooltip_position:,
+        disabled:
       }
     )
   end
