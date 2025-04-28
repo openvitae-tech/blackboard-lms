@@ -53,17 +53,17 @@
   <div class="flex justify-center md:justify-end  gap-4 mt-6">
     <% if policy(course).unenroll? %>
       <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
-        <%= render "shared/components/outline_icon_button_secondary_small", icon_name: 'icon-minus', label: 'Drop' %>
+        <%= button(label: "Drop", type: "secondary", icon_name: "minus") %>
       <% end %>
     <% end %>
     <% if policy(course).enroll? %>
       <%= link_to enroll_course_path(course), data: { turbo_method: :put }  do %>
-        <%= render "shared/components/button_primary_small", label: I18n.t('course.enroll.label') %>
+        <%= button(label: I18n.t('course.enroll.label')) %>
       <% end %>
     <% end %>
     <% if policy(course).proceed? %>
       <%= link_to proceed_course_path(course) do %>
-        <%= render "shared/components/icon_button_primary_small", label: 'Continue', icon_name: 'icon-next', icon_right: true %>
+        <%= button(label: "Continue", icon_name: "chevron-double-right", icon_position: "right") %>
       <% end %>
     <% end %>
   </div>
