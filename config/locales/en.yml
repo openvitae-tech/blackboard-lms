@@ -127,6 +127,7 @@ en:
     previous: "Previous"
     next: "Next"
     duration_not_set: "for the video is not set"
+    lesson_not_accessible: "You are not allowed to access this lesson."
   quiz:
     empty: "There are no quizzes to show."
     cannot_delete_published: "Quiz cannot be deleted since the course is published."

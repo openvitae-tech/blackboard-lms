@@ -44,11 +44,7 @@ module LessonsHelper
     ]
   end
 
-  def lesson_completed_by_user?(course_id, lesson_id)
-    current_user.get_enrollment_for(current_user.courses.find(course_id)).completed_lessons.include? lesson_id
-  end
-
-  def current_lesson?(lesson_id, current_lesson_id)
+  def active_lesson?(lesson_id, current_lesson_id)
     lesson_id.to_s == current_lesson_id
   end
 
@@ -67,5 +63,30 @@ module LessonsHelper
     else
       t('lesson.cannot_delete_enrolled')
     end
+  end
+
+  def disabled_lesson(lesson, enrollment, selected_lesson)
+    !(active_lesson?(lesson.id, selected_lesson) || lesson_completed?(enrollment, lesson) || current_user.is_admin?)
+  end
+
+  def lesson_accessible?(lesson, course, enrollment)
+    return false unless enrollment
+
+    completed_lessons = enrollment.completed_lessons || []
+
+    return true if completed_lessons.include?(lesson.id)
+
+    ordered_lessons_ids = CourseModule.find(course.course_modules_in_order).flat_map(&:lessons_in_order)
+
+    first_incomplete_lesson_id = ordered_lessons_ids.find { |id| completed_lessons.exclude?(id) }
+
+    lesson.id == first_incomplete_lesson_id
+  end
+
+  def association_preloader(records = [], associations = {})
+    ActiveRecord::Associations::Preloader.new(
+      records:,
+      associations:
+    ).call
   end
 end
