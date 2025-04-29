@@ -18,7 +18,10 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     before do
       @lesson = create :lesson, course_module: @course_module_one
       @lesson_two = create :lesson, course_module: @course_module_one
-      @course_module_one.update!(lessons_in_order: [@lesson.id])
+      @lesson_three = create :lesson, course_module: @course_module_one
+      @lesson_four = create :lesson, course_module: @course_module_two
+      @course_module_one.update!(lessons_in_order: [@lesson.id, @lesson_two.id, @lesson_three.id])
+      @course_module_two.update!(lessons_in_order: [@lesson_four.id])
     end
 
     it 'admin should able to access lesson' do
@@ -30,26 +33,74 @@ RSpec.describe 'Request spec for Lessons', type: :request do
       expect(response).to render_template(:show)
     end
 
-    it 'Returns unauthorized for user if not enrolled to the course' do
-      sign_in learner
+    context 'when logged in as learner' do
+      before do
+        sign_in learner
+      end
 
-      get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
-      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
-      expect(response).to redirect_to(error_401_path)
-    end
+      it 'Returns unauthorized for user if not enrolled to the course' do
+        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
+        expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+        expect(response).to redirect_to(error_401_path)
+      end
 
-    it 'Redirect to the last completed lesson when accessing lessons other than the one next to it' do
-      sign_in learner
+      it 'allows access to a completed lesson' do
+        enrollment = @course.enroll!(learner)
 
-      @course.enroll!(learner)
-      get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
-      expect(response.status).to be(200)
+        enrollment.update!(completed_lessons: [@lesson.id], current_module_id: @course_module_one.id,
+                           current_lesson_id: @lesson.id)
 
-      get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson_two.id)
-      expect(response.status).to be(302)
-      expect(response).to redirect_to(course_module_lesson_path(course_id: @course.id,
-                                                                module_id: @course_module_one.id, id: @lesson.id))
-      expect(flash[:notice]).to eq('You are not allowed to access this lesson.')
+        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson_two.id)
+        expect(response.status).to be(200)
+      end
+
+      it 'allows access to lessons that come before the last completed lesson after reordering' do
+        enrollment = @course.enroll!(learner)
+
+        enrollment.update!(completed_lessons: [@lesson.id], current_module_id: @course_module_one.id,
+                           current_lesson_id: @lesson.id)
+
+        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson_three.id)
+        expect(response.status).to be(302)
+        expect(response).to redirect_to(course_module_lesson_path(course_id: @course.id,
+                                                                  module_id: @course_module_one.id, id: @lesson_two.id))
+
+        @course_module_one.update!(lessons_in_order: [@lesson.id, @lesson_three.id, @lesson_two.id])
+
+        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson_three.id)
+        expect(response.status).to be(200)
+      end
+
+      it 'allows access to lessons that come before the last completed lesson after reordering course module' do
+        enrollment = @course.enroll!(learner)
+
+        enrollment.update!(completed_lessons: [@lesson.id, @lesson_two.id], current_module_id: @course_module_one.id,
+                           current_lesson_id: @lesson_two.id)
+
+        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_two.id,
+                                      id: @lesson_four.id)
+        expect(response.status).to be(302)
+        expect(response).to redirect_to(course_module_lesson_path(
+                                          course_id: @course.id,
+                                          module_id: @course_module_one.id, id: @lesson_three.id
+                                        ))
+
+        @course.update!(course_modules_in_order: [@course_module_two.id, @course_module_one.id])
+        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_two.id,
+                                      id: @lesson_four.id)
+        expect(response.status).to be(200)
+      end
+
+      it 'Redirect to the last completed lesson when accessing lessons other than the one next to it' do
+        @course.enroll!(learner)
+        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
+        expect(response.status).to be(200)
+
+        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson_two.id)
+        expect(response.status).to be(302)
+        expect(response).to redirect_to(course_module_lesson_path(course_id: @course.id,
+                                                                  module_id: @course_module_one.id, id: @lesson.id))
+      end
     end
   end
 

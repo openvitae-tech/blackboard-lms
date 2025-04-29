@@ -23,7 +23,7 @@
           <span class="text-primary text-xs font-normal md:text-sm md:font-medium">(<%= lessons_count(course_module) %>)</span>
         </div>
       </h2>
-     
+
       <div class="flex gap-4 items-center">
         <% if policy(@course).edit? %>
           <%= link_to course_module_path(course, course_module) do %>
@@ -53,7 +53,7 @@
             <span class="icon icon-down icon-small bg-letter-color down-arrow"></span>
             <span class="icon icon-up icon-small bg-letter-color hidden up-arrow"></span>
           </div>
-        </div>        
+        </div>
       </div>
     </summary>
     <ul>
@@ -67,7 +67,7 @@
           <%= content_tag :li, class:
             class_names("flex items-center justify-between border-t border-line-colour px-4 py-4 text-sm md:px-6",
                         'highlighted': current_lesson?(lesson, enrollment),
-                        'disabled': !(current_lesson?(lesson, enrollment) || lesson_completed?(enrollment, lesson) || current_user.is_admin?)) do %>
+                        'disabled': !lesson_accessible?(lesson, course, enrollment)) do %>
 
             <div class="flex items-center gap-4">
               <% if enrollment %>
