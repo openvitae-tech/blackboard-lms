@@ -65,10 +65,6 @@ module LessonsHelper
     end
   end
 
-  def disabled_lesson(lesson, enrollment, selected_lesson)
-    !(active_lesson?(lesson.id, selected_lesson) || lesson_completed?(enrollment, lesson) || current_user.is_admin?)
-  end
-
   def lesson_accessible?(lesson, course, enrollment)
     return false unless enrollment
 
