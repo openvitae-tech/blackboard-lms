@@ -31,7 +31,8 @@
     <% end %>
     <div class="flex flex-col gap-6 justify-between heading">
       <%= form.button "Invite user", class: "bg-primary text-white p-4 rounded" %>
-      <%= form.button "Cancel", data: { action: "click->modals#closeModal" } %>
+      <%= link_to 'Cancel','javascript:void(0);', class: 'text-center', data: { action: "click->modals#closeModal" } %>
+
     </div>
   <% end %>
 <% end %>
