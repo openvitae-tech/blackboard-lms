@@ -91,15 +91,15 @@ RSpec.describe 'Request spec for Lessons', type: :request do
         expect(response.status).to be(200)
       end
 
-      it 'Redirect to the last completed lesson when accessing lessons other than the one next to it' do
-        @course.enroll!(learner)
-        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
-        expect(response.status).to be(200)
+      it 'Redirect to the next incomplete lesson when accessing lessons which is not in order' do
+        enrollment = @course.enroll!(learner)
+        enrollment.update!(completed_lessons: [@lesson.id], current_module_id: @course_module_one.id,
+                           current_lesson_id: @lesson.id)
 
-        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson_two.id)
+        get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson_three.id)
         expect(response.status).to be(302)
         expect(response).to redirect_to(course_module_lesson_path(course_id: @course.id,
-                                                                  module_id: @course_module_one.id, id: @lesson.id))
+                                                                  module_id: @course_module_one.id, id: @lesson_two.id))
       end
     end
   end
