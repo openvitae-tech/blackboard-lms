@@ -20,7 +20,7 @@ class LessonsController < ApplicationController
     if @enrollment.present?
       EVENT_LOGGER.publish_lesson_viewed(current_user, @course.id, @lesson.id)
       unless lesson_accessible?(@lesson, @course, @enrollment)
-        redirect_to_current_lesson and return
+        redirect_to_next_lesson and return
       end
     end
 
@@ -182,11 +182,18 @@ class LessonsController < ApplicationController
     default_language.present? ? default_language : @lesson.local_contents.first
   end
 
-  def redirect_to_current_lesson
-    redirect_to course_module_lesson_path(
-                  @course,
-                  @enrollment&.current_module_id || @course.first_module,
-                  @enrollment&.current_lesson_id || @course.first_module.first_lesson
-                ), notice: t("lesson.lesson_not_accessible")
+  def redirect_to_next_lesson
+    first_incomplete_id = first_incomplete_lesson_id(@enrollment.completed_lessons, ordered_lesson_ids(@course))
+
+    if first_incomplete_id
+      first_incomplete_lesson = Lesson.find(first_incomplete_id)
+      first_incomplete_module = first_incomplete_lesson.course_module
+
+      redirect_to course_module_lesson_path(
+                    @course,
+                    first_incomplete_module,
+                    first_incomplete_lesson
+                  )
+    end
   end
 end
