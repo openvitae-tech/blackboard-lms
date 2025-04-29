@@ -38,7 +38,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
         sign_in learner
       end
 
-      it 'Returns unauthorized for user if not enrolled to the course' do
+      it 'returns unauthorized for user if not enrolled to the course' do
         get course_module_lesson_path(course_id: @course.id, module_id: @course_module_one.id, id: @lesson.id)
         expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
         expect(response).to redirect_to(error_401_path)
@@ -91,7 +91,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
         expect(response.status).to be(200)
       end
 
-      it 'Redirect to the next incomplete lesson when accessing lessons which is not in order' do
+      it 'redirect to the next incomplete lesson when accessing lessons which is not in order' do
         enrollment = @course.enroll!(learner)
         enrollment.update!(completed_lessons: [@lesson.id], current_module_id: @course_module_one.id,
                            current_lesson_id: @lesson.id)
