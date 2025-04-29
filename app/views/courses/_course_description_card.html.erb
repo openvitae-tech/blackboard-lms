@@ -8,7 +8,7 @@
         </p>
         <% if policy(course).edit? %>
           <%= link_to edit_course_path(course), class: "nav-link" do %>
-            <%= render "shared/components/button_default_small", label: "Edit", icon_name: "icon-edit" %>
+            <%= button(label: "Edit", type: "secondary",size:"sm", icon_name: "pencil") %>
           <% end %>
         <% end %>
       </div>

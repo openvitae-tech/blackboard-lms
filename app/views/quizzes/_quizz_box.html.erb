@@ -2,7 +2,7 @@
   <div class="text-right flex justify-end gap-4 my-6">
     <% if policy(@quiz).edit? %>
       <%= link_to edit_course_module_quiz_path(@course, @course_module, @quiz) do %>
-        <%= render 'shared/components/icon_button_primary', label: t("button.edit"), icon_name: 'icon-edit' %>
+        <%= button(label: t("button.edit"), type: "secondary",size:"sm", icon_name: "pencil") %>
       <% end %>
     <% end %>
     <% if current_user.is_admin? %>
