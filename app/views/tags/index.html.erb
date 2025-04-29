@@ -1,7 +1,7 @@
 <div class="flex gap-4 justify-between">
   <%= render 'shared/components/bread_crumbs', links: [[t("settings.label"), settings_path], [t("tags.label"), nil]] %>
   <%= link_to new_tag_path, class: "nav-link", data: { turbo_frame: "modal" } do %>
-    <%= render 'shared/components/icon_button_primary', label: 'Add tag', icon_name: 'icon-plus' %>
+    <%= button(label: 'Add tag', icon_name: "plus" ) %>
   <% end %>
 </div>
 <h1 class="mb-4 heading page-heading-medium pt-2">Tags</h1>
