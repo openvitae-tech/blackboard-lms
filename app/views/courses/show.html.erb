@@ -11,12 +11,10 @@
                     action_path: course_path(@course),
                     method: :delete,
                   ), data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
+          <%= button(label: "Delete", type: "danger") %>
         <% end %>
       <% else %>
-        <div class="disabled">
-          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_text: delete_tooltip_message(@course) %>
-        </div>
+        <%= button(label: "Delete", type: "danger",  tooltip_text: delete_tooltip_message(@course),disabled: true) %>
       <% end %>
     <% end %>
     <% if policy(@course).publish? %>

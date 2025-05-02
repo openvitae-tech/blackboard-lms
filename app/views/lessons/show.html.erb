@@ -6,7 +6,7 @@
     <div class="flex justify-end items-center gap-4">
       <% if policy(@lesson).edit? %>
         <%= link_to edit_course_module_lesson_path(@course, @course_module, @lesson) do %>
-          <%= button(label: "Edit", type: "secondary",size:"sm", icon_name: "pencil") %>
+          <%= button(label: "Edit", type: "secondary", icon_name: "pencil", icon_position: "right") %>
         <% end %>
       <% end %>
       <% if policy(@lesson).destroy? %>
@@ -16,12 +16,10 @@
                     action_path: course_module_lesson_path(@course, @course_module, @lesson),
                     method: :delete,
                   ), data: { turbo_frame: "modal" } do %>
-          <%= render 'shared/components/outline_button_danger', label: 'Delete' %>
+          <%= button(label: "Delete", type: "danger") %>
         <% end %>
       <% else %>
-        <div class="disabled">
-          <%= render 'shared/components/outline_button_danger', label: 'Delete', tooltip_position: "left", tooltip_text: lesson_delete_tooltip_message(@course) %>
-        </div>
+        <%= button(label: "Delete", type: "danger",  tooltip_text: lesson_delete_tooltip_message(@course), disabled: true) %>
       <% end %>
     </div>
   <% end %>
