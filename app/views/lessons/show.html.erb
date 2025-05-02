@@ -6,7 +6,7 @@
     <div class="flex justify-end items-center gap-4">
       <% if policy(@lesson).edit? %>
         <%= link_to edit_course_module_lesson_path(@course, @course_module, @lesson) do %>
-          <%= render "shared/components/button_default_small", label: 'Edit', icon_name: 'icon-edit' %>
+          <%= button(label: "Edit", type: "secondary",size:"sm", icon_name: "pencil") %>
         <% end %>
       <% end %>
       <% if policy(@lesson).destroy? %>
