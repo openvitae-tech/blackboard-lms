@@ -1,7 +1,7 @@
   <div class="flex justify-between items-center">
     <h1 class="heading page-heading-medium mb-4">Partners List</h1>
     <%= link_to new_learning_partner_path do %>
-      <%= render 'shared/components/icon_button_primary', icon_name: 'icon-plus', label: 'Add Partner' %>
+      <%= button(label: 'Add Partner',icon_name: "plus") %>
     <% end %>
   </div>
   <ul class="w-full">
