@@ -1,4 +1,6 @@
-<%= turbo_stream.remove "tag_#{@tag.id}" %>
+<%= turbo_stream.update "tags-table" do %>
+  <%= render "tags/tag_list", tags: @tags, tags_count: @tags_count %>
+<% end %>
 <%= turbo_stream.update 'tags-count' do %>
   <h1 class="mb-4 label-small"><%= pluralize(@tags_count, "tag") %></h1>
 <% end %>

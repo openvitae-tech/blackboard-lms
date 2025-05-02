@@ -11,6 +11,6 @@
     <button class="text-black px-4 py-2 rounded text-sm" data-action="click->modals#closeModal">
       Cancel
     </button>
-    <%= button_to "Delete", @tag, method: :delete, class: "text-white px-4 py-2 rounded text-sm bg-danger" %>
+    <%= button_to "Delete", @tag, params: {page: @page}, method: :delete, class: "text-white px-4 py-2 rounded text-sm bg-danger" %>
   </div>
 <% end %>

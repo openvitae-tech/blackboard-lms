@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TagsController < ApplicationController
-  before_action :load_tag, only: [:edit, :show, :update, :destroy]
+  before_action :set_tag, only: [:edit, :show, :update, :destroy]
 
   def new
     authorize :tag
@@ -16,17 +16,18 @@ class TagsController < ApplicationController
 
   def show
     authorize @tag
+    @page = params[:page]
   end
 
   def create
     authorize :tag
-    @tag = Tag.create!(tag_params)
-    @tags_count = Tag.count
-    flash.now[:success] = t("resource.created", resource_name: "Tag")
-
-  rescue ActiveRecord::RecordInvalid => exception
-    @tag = exception.record
-    render :new, status: :unprocessable_entity
+    @tag = Tag.new(tag_params)
+    if @tag.save
+      @tags_count = Tag.count
+      flash.now[:success] = t("resource.created", resource_name: "Tag")
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -36,11 +37,11 @@ class TagsController < ApplicationController
 
   def update
     authorize @tag
-    @tag.update!(tag_params)
-    flash.now[:success] = t("resource.updated", resource_name: "Tag")
-  rescue ActiveRecord::RecordInvalid => exception
-    @tag = exception.record
-    render :edit, status: :unprocessable_entity
+    if @tag.update(tag_params)
+      flash.now[:success] = t("resource.updated", resource_name: "Tag")
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -48,6 +49,7 @@ class TagsController < ApplicationController
     @tag.destroy!
     flash.now[:success] = t("resource.deleted", resource_name: "Tag")
     @tags_count = Tag.count
+    @tags = Tag.page(filter_params[:page]).per(Tag::DEFAULT_PER_PAGE_SIZE).order(created_at: :desc)
   end
 
   private
@@ -60,7 +62,7 @@ class TagsController < ApplicationController
     params.permit(:page)
   end
 
-  def load_tag
+  def set_tag
     @tag = Tag.find(params[:id])
   end
 end
