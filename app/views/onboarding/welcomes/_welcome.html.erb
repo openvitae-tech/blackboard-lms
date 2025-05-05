@@ -13,7 +13,7 @@
     </div>
     <p class="px-7 pt-8 pb-6 text-center text-sm"><%= t("onboarding.explore_courses") %></p>
     <%= link_to 'javascript:void(0);', class: "inline-block", data: { action: 'click->onboarding#nextScreen', current: 'welcomeScreen', next: 'step1Screen' } do %>
-      <%= render "shared/components/button_primary_medium", label: 'Get Started!' %>
+      <%= button(label: "Get Started!",size:"lg") %>
     <% end %>
   </div>
 </div>
