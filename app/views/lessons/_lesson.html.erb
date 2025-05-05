@@ -77,12 +77,10 @@
     <div class="flex justify-end gap-4 py-8">
       <% lesson_navigation_buttons(course, course_module, lesson).each do |item| %>
         <% if item[:link].blank? %>
-          <button class="border-primary rounded border px-4 py-2 disabled">
-            <span class="text-primary text-xs"><%= item[:label] %></span>
-          </button>
+          <%= button(label: item[:label], type: "secondary", disabled: true) %>
         <% else %>
-          <%= link_to item[:link], class: "border-primary rounded border px-4 py-2" do %>
-            <span class="text-primary text-xs"><%= item[:label] %></span>
+          <%= link_to item[:link] do %>
+            <%= button(label: item[:label], type: "secondary") %>
           <% end %>
         <% end %>
       <% end %>
