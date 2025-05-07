@@ -3,7 +3,7 @@
     <div class="space-x-2 flex flex-row">
       <% tags.each do |tag| %>
         <a class="inline-block" data-action="click->searches#removeTag" data-label="<%= tag %>">
-          <%= render 'shared/components/button_default_small', label: tag, icon_name: 'icon-close' %>
+          <%= button(label: tag, type: "secondary", size: "sm", icon_name: "x-circle", icon_position: "right") %>
         </a>
       <% end %>
     </div>

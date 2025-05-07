@@ -12,7 +12,7 @@
   </div>
   <div class="flex justify-center my-28">
     <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete } do %>
-      <%= render "shared/components/outline_button_danger", label: "Logout" %>
+      <%= button(label: 'Logout', type: "secondary") %>
     <% end %>
   </div>
 </div>
