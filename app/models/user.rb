@@ -8,6 +8,7 @@ class User < ApplicationRecord
   scope :skip_deactivated, -> { where.not(state: 'in-active') }
 
   EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  PHONE_REGEXP = /\A[6-9][0-9]{9}\z/
   COMMUNICATION_CHANNELS = %w[sms whatsapp].freeze
 
   TEST_OTP = 1212
@@ -143,6 +144,20 @@ class User < ApplicationRecord
     return false unless other_user.learning_partner_id == learning_partner_id
 
     is_owner? || is_support? || other_user.team.ancestors.include?(team)
+  end
+
+  def set_random_email
+    return if email.present?
+
+    self.email = "#{SecureRandom.uuid}@blackhole"
+  end
+
+  def blackhole_email?
+    email.end_with?('@blackhole')
+  end
+
+  def send_confirmation_notification?
+    !blackhole_email?
   end
 
   private

@@ -23,7 +23,7 @@ class BulkInviteInputService
     csv.each do |row|
       next if row.length < 2
       next if row[0].blank? || row[0].strip.length < 2
-      next if row[1].blank? || !User::EMAIL_REGEXP.match?(row[1].strip.downcase)
+      next if row[1].blank? || !User::PHONE_REGEXP.match?(row[1].strip)
 
       valid_records.push([row[0].strip, row[1].strip.downcase])
     end

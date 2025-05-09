@@ -104,4 +104,8 @@ module ApplicationHelper
 
     safe_join(text.split("\n").map { |para| content_tag(:p, para, class: 'my-2') })
   end
+
+  def email(user)
+    user.blackhole_email? ? 'NA' : user.email
+  end
 end

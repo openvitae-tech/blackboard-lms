@@ -41,7 +41,9 @@ class EventService
       partner_id: invitee.learning_partner_id,
       user_id: user.id,
       team_id: invitee.team_id,
-      invite_email: invitee.email
+      invite_email: invitee.email,
+      # now users are invited by phone number
+      invitee_phone: invitee.phone
     )
 
     publish_event(user, event)
