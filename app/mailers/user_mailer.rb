@@ -8,6 +8,8 @@ class UserMailer < ApplicationMailer
     @assigned_by = assigned_by
     @course = course
 
+    return if @user.blackhole_email?
+
     mail(
       to: @user.email,
       subject: t('course.course_assigned')
@@ -19,6 +21,8 @@ class UserMailer < ApplicationMailer
     @course = course
     @deadline = deadline.to_fs(:short)
 
+    return if @user.blackhole_email?
+
     mail(
       to: @user.email,
       subject: t('course.deadline_approaching')
@@ -28,6 +32,8 @@ class UserMailer < ApplicationMailer
   def course_completed(user, course)
     @user = user
     @course = course
+
+    return if @user.blackhole_email?
 
     mail(
       to: @user.email,

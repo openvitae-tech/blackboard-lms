@@ -88,7 +88,7 @@ class InvitesController < ApplicationController
   private
 
   def invite_params
-    params.require(:user).permit(:name, :email, :role, :team_id, :bulk_invite)
+    params.require(:user).permit(:name, :phone, :role, :team_id, :bulk_invite)
   end
 
   def invite_admin_params

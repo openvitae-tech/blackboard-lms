@@ -8,11 +8,15 @@ class UserManagementService
 
     user = User.new(
       name: params[:name],
-      email: params[:email],
+      phone: params[:phone],
       role: params[:role],
       team:,
       learning_partner_id: team.learning_partner_id
     )
+
+    # set email field to blackhole email because email field
+    # can't be blank and needs to be unique
+    user.set_random_email
 
     user.team = team.learning_partner.parent_team if user.is_owner? || user.is_support?
 
@@ -24,8 +28,8 @@ class UserManagementService
   end
 
   def bulk_invite(invited_by_user, records, role, team)
-    records.each do |name, email|
-      invite(invited_by_user, { name:, email:, role: }, team)
+    records.each do |name, phone|
+      invite(invited_by_user, { name:, phone:, role: }, team)
     end
   end
 
