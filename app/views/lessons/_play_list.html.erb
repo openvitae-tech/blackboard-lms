@@ -33,7 +33,7 @@
             <%= content_tag :li, class:
               class_names("flex gap-4 items-center justify-between border-t border-line-colour px-4 py-4 text-sm",
                           'highlighted': active_lesson?(lesson.id, params[:id]),
-                          'disabled': disabled_lesson(lesson, enrollment, params[:id])) do %>
+                          'disabled': !lesson_accessible?(lesson, course, enrollment)) do %>
               <div class="flex items-center gap-4">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
                   <div class="flex items-center bg-primary-light-50 border border-primary-light p-1">

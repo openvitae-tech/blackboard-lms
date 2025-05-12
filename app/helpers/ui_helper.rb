@@ -11,7 +11,7 @@ module UiHelper
     content_tag(:span, svg.to_html.html_safe, class: "inline-flex justify-center items-center #{span_css}") # rubocop:disable Rails/OutputSafety
   end
 
-  def button(label: 'Button', type: 'primary', size: 'md', icon_name: nil, icon_position: 'left', tooltip_text: '',
+  def button(label: nil, type: 'primary', size: 'md', icon_name: nil, icon_position: 'left', tooltip_text: '',
              tooltip_position: 'bottom', disabled: false)
     ApplicationController.renderer.render(
       partial: "ui/buttons/#{type}",

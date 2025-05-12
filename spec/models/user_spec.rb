@@ -140,6 +140,16 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#communication_channel' do
+    it 'raise error for invalid communication channel' do
+      user = build :user, :learner, communication_channels: ['invalid_channel']
+
+      expect(user).not_to be_valid
+      expect(user.errors.full_messages.to_sentence)
+        .to eq('Communication channels contains invalid channels: invalid_channel')
+    end
+  end
+
   private
 
   def password_verifier

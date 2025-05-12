@@ -65,22 +65,36 @@ module LessonsHelper
     end
   end
 
-  def disabled_lesson(lesson, enrollment, selected_lesson)
-    !(active_lesson?(lesson.id, selected_lesson) || lesson_completed?(enrollment, lesson) || current_user.is_admin?)
-  end
-
   def lesson_accessible?(lesson, course, enrollment)
     return false unless enrollment
 
-    completed_lessons = enrollment.completed_lessons || []
+    completed_lessons = enrollment.completed_lessons
+
+    return course.first_module&.first_lesson&.id == lesson.id if completed_lessons.empty?
 
     return true if completed_lessons.include?(lesson.id)
 
-    ordered_lessons_ids = CourseModule.find(course.course_modules_in_order).flat_map(&:lessons_in_order)
+    ordered_lesson_ids = ordered_lesson_ids(course)
 
-    first_incomplete_lesson_id = ordered_lessons_ids.find { |id| completed_lessons.exclude?(id) }
+    last_completed_id = last_completed_lesson_id(completed_lessons, ordered_lesson_ids)
+    first_incomplete_id = first_incomplete_lesson_id(completed_lessons, ordered_lesson_ids)
 
-    lesson.id == first_incomplete_lesson_id
+    lesson_index = ordered_lesson_ids.index(lesson.id)
+    last_completed_index = ordered_lesson_ids.index(last_completed_id)
+
+    lesson_index <= last_completed_index || lesson.id == first_incomplete_id
+  end
+
+  def first_incomplete_lesson_id(completed_lessons, ordered_lesson_ids)
+    ordered_lesson_ids.find { |id| completed_lessons.exclude?(id) }
+  end
+
+  def last_completed_lesson_id(completed_lessons, ordered_lesson_ids)
+    completed_lessons.max_by { |id| ordered_lesson_ids.index(id) }
+  end
+
+  def ordered_lesson_ids(course)
+    course.course_modules.find(course.course_modules_in_order).flat_map(&:lessons_in_order)
   end
 
   def association_preloader(records = [], associations = {})
