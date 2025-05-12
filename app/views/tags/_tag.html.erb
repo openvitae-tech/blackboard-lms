@@ -12,8 +12,13 @@
       <%= link_to edit_tag_path(tag), data: { turbo_frame: "modal" } do %>
         <%= render 'shared/components/button_default_small', label: 'Edit', icon_name: 'icon-edit' %>
       <% end %>
-      <%= link_to tag_path(tag, page: params[:page]), data: { turbo_frame: "modal" } do %>
-        <%= render "shared/components/button_default_small", label: 'Delete', icon_name: 'icon-trash' %>
+      <%= link_to alert_modal_path(
+          title: "Delete Tag?",
+          description: "You are permanently deleting the #{tag.name} tag. This action can't be undone.",
+          action_path: tag_path(tag, page: params[:page]),
+          method: :delete,
+        ), data: { turbo_frame: "modal" } do %>
+          <%= render 'shared/components/button_default_small', label: 'Delete', icon_name: 'icon-trash' %>
       <% end %>
     </div>
   </td>

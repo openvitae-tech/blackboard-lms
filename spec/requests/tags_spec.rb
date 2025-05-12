@@ -45,27 +45,6 @@ RSpec.describe 'Request spec for Tags', type: :request do
     end
   end
 
-  describe 'GET /tags/:id' do
-    before do
-      @tag = Tag.first
-    end
-
-    it 'Allow access tag by admin' do
-      get tag_path(@tag.id)
-      expect(response.status).to be(200)
-      expect(assigns(:tag)).to eq(@tag)
-      expect(response).to render_template(:show)
-    end
-
-    it 'Unauthorized when tag is accessed by non-admin' do
-      sign_in learner
-
-      get tag_path(@tag.id)
-      expect(response.status).to be(302)
-      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
-    end
-  end
-
   describe 'POST /tags' do
     it 'Allow creating tags by admin' do
       expect do

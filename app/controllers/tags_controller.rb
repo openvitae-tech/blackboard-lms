@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TagsController < ApplicationController
-  before_action :set_tag, only: [:edit, :show, :update, :destroy]
+  before_action :set_tag, only: [:edit, :update, :destroy]
 
   def new
     authorize :tag
@@ -12,11 +12,6 @@ class TagsController < ApplicationController
     authorize :tag
     @tags = Tag.page(filter_params[:page]).per(Tag::DEFAULT_PER_PAGE_SIZE).order(created_at: :desc)
     @tags_count = Tag.count
-  end
-
-  def show
-    authorize @tag
-    @page = params[:page]
   end
 
   def create
@@ -48,8 +43,12 @@ class TagsController < ApplicationController
     authorize @tag
     @tag.destroy!
     flash.now[:success] = t("resource.deleted", resource_name: "Tag")
-    @tags_count = Tag.count
-    @tags = Tag.page(filter_params[:page]).per(Tag::DEFAULT_PER_PAGE_SIZE).order(created_at: :desc)
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.redirect_to(tags_path(page: get_current_page(params[:page])))
+      end
+    end
   end
 
   private
@@ -64,5 +63,18 @@ class TagsController < ApplicationController
 
   def set_tag
     @tag = Tag.find(params[:id])
+  end
+
+  def get_current_page(page)
+    current_page = page.to_i
+    current_page = 1 if current_page.zero?
+
+    tags = Tag.page(current_page).per(Tag::DEFAULT_PER_PAGE_SIZE)
+    if tags.empty? && current_page > 1
+      new_page = current_page - 1
+    else
+      new_page = current_page
+    end
+    new_page
   end
 end

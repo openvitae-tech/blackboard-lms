@@ -1,9 +1,5 @@
-<%= turbo_stream.update "tags-table" do %>
-  <%= render "tags/tag_list", tags: @tags, tags_count: @tags_count %>
-<% end %>
-<%= turbo_stream.update 'tags-count' do %>
-  <h1 class="mb-4 label-small"><%= pluralize(@tags_count, "tag") %></h1>
-<% end %>
+
+
 <%= turbo_stream.update "flash", partial: "shared/components/flash" %>
 <%= turbo_stream.replace "modal" do %>
   <%= turbo_frame_tag "modal" %>
