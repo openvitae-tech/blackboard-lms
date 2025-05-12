@@ -42,7 +42,7 @@ class TagsController < ApplicationController
   def destroy
     authorize @tag
     @tag.destroy!
-    flash.now[:success] = t("resource.deleted", resource_name: "Tag")
+    flash[:success] = t("resource.deleted", resource_name: "Tag")
 
     respond_to do |format|
       format.turbo_stream do
