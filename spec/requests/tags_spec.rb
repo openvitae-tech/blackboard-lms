@@ -123,6 +123,21 @@ RSpec.describe 'Request spec for Tags', type: :request do
       expect do
         delete tag_path(@tag.id)
       end.to change(Tag, :count).by(-1)
+      expect(flash[:success]).to eq(I18n.t('resource.deleted', resource_name: 'Tag'))
+    end
+
+    it 'returns to previous page upon deleting the last item in the current page' do
+      create_list(:tag, 7)
+      tag = Tag.last
+
+      expect do
+        delete tag_path(tag), params: { page: 2 }, headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
+      end.to change(Tag, :count).by(-1)
+
+      expect(response).to have_http_status(:ok)
+      expect(flash[:success]).to eq(I18n.t('resource.deleted', resource_name: 'Tag'))
+      expect(response.body)
+        .to include('<turbo-stream url="/tags?page=1" action="redirect_to"><template></template></turbo-stream>')
     end
 
     it 'Does not allow deleting tag by non-admin' do
