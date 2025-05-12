@@ -40,7 +40,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
       sign_in learner
 
       get new_tag_path
-      expect(response.status).to be(302)
+      expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
@@ -59,6 +59,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
         post tags_path, params: tag_params
       end.not_to(change(Tag, :count))
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      expect(response).to redirect_to(error_401_path)
     end
 
     it 'Create tag failure' do
@@ -82,6 +83,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
       sign_in learner
 
       put tag_path(@tag.id), params: tag_params
+      expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
 
@@ -109,7 +111,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
 
       get edit_tag_path(@tag.id)
 
-      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
@@ -147,6 +149,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
         delete tag_path(@tag.id)
       end.not_to change(Tag, :count)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      expect(response).to redirect_to(error_401_path)
     end
 
     it 'Destroy tag failure' do
