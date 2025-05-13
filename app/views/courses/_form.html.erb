@@ -2,12 +2,11 @@
   <%= form_with(model: course) do |form| %>
     <%= render "shared/components/form_errors", resource: course %>
     <div class="mb-8 text-sm">
-      <%= form.label :title, class: "text-sm font-medium" %>
-      <%= form.text_field :title, class: "input-text mt-2" %>
+      <%= input_field(form:, field_name: :title, label: "Title", placeholder: "Enter the Title",type: "text",width:"w-full") %>     
     </div>
     <div class="my-8 text-sm">
       <div class="flex justify-between">
-        <%= form.label :banner, class: "text-sm font-medium" %>
+        <%= form.label :banner, class: "text-sm font-medium text-letter-color-light" %>
       </div>
       <div class="relative mt-2">
         <%= render "shared/components/file_select", hidden_file_field: form.file_field(:banner,
@@ -15,16 +14,13 @@
       </div>
     </div>
     <div class="my-8 text-sm flex flex-col">
-      <%= form.label :category, class: "text-sm font-medium mb-2" %>
-      <%= form.select :category_id, options_for_select(@categories.pluck(:name, :id), @category&.id) %>
+      <%= input_field(form:, field_name: :category_id, label: "Category", type: "dropdown_field", options: @categories.pluck(:name, :id), value: @category&.id) %>
     </div>
     <div class="my-8 text-sm flex flex-col">
-      <%= form.label :level, class: "text-sm font-medium mb-2" %>
-      <%= form.select :level_id, options_for_select(@levels.pluck(:name, :id), @level&.id) %>
+      <%= input_field(form:, field_name: :category_id, label: "Category", type: "dropdown_field", options: @levels.pluck(:name, :id), value: @level&.id) %>
     </div>
     <div class="my-8 text-sm">
-      <%= form.label :description, class: "text-sm font-medium" %>
-      <%= form.text_area :description, class: "input-textarea mt-2", rows: "5" %>
+      <%= input_field(form:, field_name: :description,label: "Description", placeholder: "Enter description",type: "text_area", width:"w-full") %>
     </div>
     <div class="my-8 flex items-center gap-6 text-sm">
       <div class="my-8">

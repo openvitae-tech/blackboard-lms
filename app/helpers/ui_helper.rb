@@ -33,14 +33,17 @@ module UiHelper
     ordered.compact.join.html_safe # rubocop:disable Rails/OutputSafety
   end
 
-  def input_field(form: nil, field_name: nil, label: nil, placeholder: 'Enter text', width: 'w-56', left_icon: nil,
-                  right_icon: nil, type: 'text_field', options: [], value: 'nil')
+  def input_field(form: nil, field_name: nil, text_field_name: nil, radio_field_name: nil, label: nil,
+                  placeholder: 'Enter text', width: 'w-56', left_icon: nil, right_icon: nil, type: 'text',
+                  options: [], value: 'nil', rows: '5', option: nil)
     partial_path = "ui/inputs/#{type}"
     partial_path = 'ui/inputs/text_field' unless lookup_context.exists?(partial_path, [], true)
 
     render partial: partial_path, locals: {
       form:,
       field_name:,
+      text_field_name: text_field_name || field_name,
+      radio_field_name: radio_field_name || field_name,
       label:,
       placeholder:,
       width:,
@@ -48,7 +51,9 @@ module UiHelper
       right_icon:,
       type:,
       options:,
-      value:
+      value:,
+      rows:,
+      option:
     }
   end
 
