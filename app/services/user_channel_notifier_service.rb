@@ -3,9 +3,7 @@
 class UserChannelNotifierService
   include Singleton
 
-  def notify_user(user, template_identifier, parameters = nil)
-    template = message_template(template_identifier)
-
+  def notify_user(user, template, parameters = nil)
     return if template.nil?
 
     user.communication_channels.each do |channel|
@@ -21,16 +19,9 @@ class UserChannelNotifierService
       CommunicationChannels::SendWhatsappMessageJob.perform_async(template[:whatsapp],
                                                                   user.phone, parameters)
     when 'sms'
-      CommunicationChannels::SendSmsJob.perform_async(template[:sms], user.phone, parameters[:sms_variables_values])
-    end
-  end
-
-  def message_template(template_identifier)
-    case template_identifier
-    when 'course_assigned_template'
-      { sms: Rails.application.credentials.dig(:fast2sms, :template, :course_assigned), whatsapp: 'course_assigned' }
-    when 'course_enrolled_template'
-      { sms: Rails.application.credentials.dig(:fast2sms, :template, :course_enrolled), whatsapp: 'course_enrolled' }
+      CommunicationChannels::SendSmsJob.perform_async(
+        template[:sms], user.phone, parameters[:sms_variables_values]
+      )
     end
   end
 end

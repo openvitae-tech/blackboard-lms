@@ -1,26 +1,27 @@
 <% button_content = capture do %>
+  <% disabled_class = disabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : '' %>
   <% if size == "xl" %>
-    <div class="inline-flex h-14 items-center justify-center gap-2 rounded-sm px-6 text-white py-3.5 bg-primary hover:bg-primary-light">
-      <% content = content_tag(:div, label, class: "text-white text-xl font-semibold font-['Poppins'] leading-7") %>
-      <% icon = icon("adjustments-vertical", css: "icon-medium") if icon_name.present? %>
+    <div class="inline-flex h-14 items-center justify-center gap-2 rounded-sm px-6 text-white py-3.5 bg-primary hover:bg-primary-light <%= disabled_class %>">
+      <% content = content_tag(:div, label, class: "text-white text-xl font-semibold font-['Poppins'] leading-7") if label.present? %>
+      <% icon = icon(icon_name || "adjustments-vertical", css: "icon-base") if icon_name.present? %>
       <%= label_with_icon(icon, content, icon_position) %>
     </div>
   <% elsif size == "lg" %>
-    <div class="inline-flex h-10 items-center justify-center gap-2 rounded-sm px-6 py-2 text-white bg-primary hover:bg-primary-light">
-      <% content = content_tag(:div, label, class: "text-white text-base font-medium font-['Poppins'] leading-normal") %>
-      <% icon = icon("adjustments-vertical", css: "icon-medium") if icon_name.present? %>
+    <div class="inline-flex h-10 items-center justify-center gap-2 rounded-sm px-6 py-2 text-white bg-primary hover:bg-primary-light <%= disabled_class %>">
+      <% content = content_tag(:div, label, class: "text-white text-base font-medium font-['Poppins'] leading-normal") if label.present? %>
+      <% icon = icon(icon_name || "adjustments-vertical", css: "icon-small") if icon_name.present? %>
       <%= label_with_icon(icon, content, icon_position) %>
     </div>
   <% elsif size == "md" %>
-    <div class="inline-flex h-9 items-center justify-center gap-2 rounded-sm px-4 py-2 text-white bg-primary hover:bg-primary-light">
-      <% content = content_tag(:div, label, class: "text-white text-sm font-medium font-['Poppins'] leading-tight") %>
-      <% icon = icon("adjustments-vertical", css: "icon-medium") if icon_name.present? %>
+    <div class="inline-flex h-9 items-center justify-center gap-2 rounded-sm px-4 py-2 text-white bg-primary hover:bg-primary-light <%= disabled_class %>">
+      <% content = content_tag(:div, label, class: "text-white text-sm font-medium font-['Poppins'] leading-tight") if label.present? %>
+      <% icon = icon(icon_name || "adjustments-vertical", css: "icon-small") if icon_name.present? %>
       <%= label_with_icon(icon, content, icon_position) %>
     </div>
   <% elsif size == "sm" %>
-    <div class="inline-flex h-6 items-center justify-center gap-2 rounded-sm px-3 py-1 text-white bg-primary hover:bg-primary-light">
-      <% content = content_tag(:div, label, class: "text-white text-xs font-normal font-['Poppins'] leading-none") %>
-      <% icon = icon("adjustments-vertical", css: "icon-mini") if icon_name.present? %>
+    <div class="inline-flex h-6 items-center justify-center gap-2 rounded-sm px-3 py-1 text-white bg-primary hover:bg-primary-light <%= disabled_class %>">
+      <% content = content_tag(:div, label, class: "text-white text-xs font-normal font-['Poppins'] leading-none") if label.present? %>
+      <% icon = icon(icon_name || "adjustments-vertical", css: "icon-mini") if icon_name.present? %>
       <%= label_with_icon(icon, content, icon_position) %>
     </div>
   <% end %>

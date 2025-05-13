@@ -180,12 +180,6 @@ class CourseManagementService
     :ok
   end
 
-  def replay!(enrollment, lesson)
-    return false unless enrollment.lesson_completed?(lesson.id)
-
-    enrollment.mark_as_incomplete!(lesson)
-  end
-
   def redo_quiz(course_module, enrollment)
     score = enrollment.score_earned_for(course_module)
     enrollment.delete_recorded_answers_for(course_module)

@@ -3,9 +3,8 @@
     <div class="flex w-full flex-col gap-4 md:gap-8">
       <div class="flex justify-between">
         <h1 class="text-semibold">Personal information</h1>
-        <%= link_to edit_user_settings_path, data: { turbo_frame: "modal" }, class: "box-shadow-medium flex items-center justify-between gap-1 rounded-sm py-1 px-2" do %>
-          <span class="text-xs font-medium text-secondary">Edit</span>
-          <span class="icon icon-edit bg-secondary h-[10px] w-[10px]"></span>
+        <%= link_to edit_user_settings_path, data: { turbo_frame: "modal" }, class: "flex items-center" do %>
+          <%= button(label: 'Edit', type: "secondary", size:"sm", icon_name: "pencil") %>
         <% end %>
       </div>
       <div>

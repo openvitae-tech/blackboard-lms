@@ -32,8 +32,8 @@
           <% lessons_in_order(course_module).each do |lesson| %>
             <%= content_tag :li, class:
               class_names("flex gap-4 items-center justify-between border-t border-line-colour px-4 py-4 text-sm",
-                          'highlighted': current_lesson?(lesson.id, params[:id]),
-                          'disabled': !(current_lesson?(lesson.id, params[:id]) || lesson_completed?(enrollment, lesson) || current_user.is_admin?)) do %>
+                          'highlighted': active_lesson?(lesson.id, params[:id]),
+                          'disabled': !lesson_accessible?(lesson, course, enrollment)) do %>
               <div class="flex items-center gap-4">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
                   <div class="flex items-center bg-primary-light-50 border border-primary-light p-1">
@@ -47,11 +47,6 @@
                 </p>
               </div>
               <div class="flex gap-4 heading">
-                <% if enrollment && lesson_completed?(enrollment, lesson) %>
-                  <%= link_to replay_course_module_lesson_path(course, course_module, lesson), data: { turbo_method: "put" } do %>
-                    <span class="text-primary">Replay</span>
-                  <% end %>
-                <% end %>
                 <%= link_to course_module_lesson_path(course, course_module, lesson) do %>
                   <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center">
                     <span class="icon icon-play bg-primary h-2 w-2 md:h-3 md:w-3"></span>

@@ -26,16 +26,16 @@
       </div>
     <% else %>
       <div class="flex justify-start heading">
-        <div class="select_language p-2">
+        <div class="select_language p-2 flex items-center">
           <h2 class="text-primary"><%= selected_language(@local_content) %></h2>
         </div>
       </div>
     <% end %>
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
-        <% if lesson_completed_by_user?(course.id, lesson.id) %>
+        <% if lesson_completed?(enrollment, lesson) %>
           <%= link_to next_button_link(course, course_module, lesson), class: "bg-primary flex items-center gap-2 rounded px-4 py-3 " do %>
-            <span class="text-xs text-white heading"><%= t("lesson.next") %></span>
+            <%= button(label: t("lesson.next"), size: "sm") %>
           <% end %>
         <% else %>
           <%= button_to complete_course_module_lesson_path(course, course_module, lesson),
@@ -46,9 +46,8 @@
                         data: {
                           vimeo_target: "completeButton",
                           turbo_method: :post
-                        } do %>
-            <span class="text-xs text-white heading"><%= t("lesson.complete_and_continue") %></span>
-            <span class="icon icon-next icon-small bg-white"></span>
+                        } do %>            
+            <%= button(label: t("lesson.complete_and_continue"),size: "sm", icon_name: "chevron-double-right", icon_position: "right") %>
           <% end %>
         <% end %>
       </div>
@@ -78,12 +77,10 @@
     <div class="flex justify-end gap-4 py-8">
       <% lesson_navigation_buttons(course, course_module, lesson).each do |item| %>
         <% if item[:link].blank? %>
-          <button class="border-primary rounded border px-4 py-2 disabled">
-            <span class="text-primary text-xs"><%= item[:label] %></span>
-          </button>
+          <%= button(label: item[:label], type: "secondary", disabled: true) %>
         <% else %>
-          <%= link_to item[:link], class: "border-primary rounded border px-4 py-2" do %>
-            <span class="text-primary text-xs"><%= item[:label] %></span>
+          <%= link_to item[:link] do %>
+            <%= button(label: item[:label], type: "secondary") %>
           <% end %>
         <% end %>
       <% end %>

@@ -35,8 +35,8 @@
       <span class="flex cursor-pointer items-center text-purple text-sm">Clear search </span>
     </div>
 
-    <div data-action="click->searches#openFilter">
-      <%= render 'shared/components/button_default_small', label: 'Filter', icon_name: 'icon-filter' %>
+    <div data-action="click->searches#openFilter"class="cursor-pointer">
+      <%= button(label: 'Filter', type: "secondary", size: "sm", icon_name: "funnel", icon_position: "right") %>
     </div>
   </div>
 

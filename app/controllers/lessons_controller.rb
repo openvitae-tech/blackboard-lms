@@ -5,33 +5,34 @@ class LessonsController < ApplicationController
 
   before_action :set_course
   before_action :set_course_module
-  before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown replay]
-  before_action :authorize_resource
-  before_action :load_eager_data, only: %i[show edit complete]
+  before_action :set_enrollment, only: %i[show complete]
+  before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown]
   before_action :set_local_content, only: :show
 
-  # GET /lessons or /lessons.json # GET /lessons/1 or /lessons/1.json
+  def new
+    authorize Lesson
+    @lesson = @course_module.lessons.new
+  end
+
   def show
-    @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
+    authorize @course,  policy_class: LessonPolicy
 
     if @enrollment.present?
       EVENT_LOGGER.publish_lesson_viewed(current_user, @course.id, @lesson.id)
+      unless lesson_accessible?(@lesson, @course, @enrollment)
+        redirect_to_next_lesson and return
+      end
     end
+
+    association_preloader([@course], { course_modules: :lessons })
 
     @course_modules = helpers.modules_in_order(@course)
     @video_iframe = get_video_iframe(@local_content)
   end
 
-  # GET /lessons/new
-  def new
-    @lesson = @course_module.lessons.new
-  end
-
-  # GET /lessons/1/edit
-  def edit;  end
-
-  # POST /lessons or /lessons.json
   def create
+    authorize Lesson
+
     service = Lessons::CreateService.instance
 
     begin
@@ -52,8 +53,14 @@ class LessonsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /lessons/1 or /lessons/1.json
+  def edit
+    authorize @lesson
+
+    association_preloader([@lesson], { local_contents: :video_attachment })
+  end
+
   def update
+    authorize @lesson
     service = Lessons::UpdateService.instance
 
     begin
@@ -74,8 +81,8 @@ class LessonsController < ApplicationController
     end
   end
 
-  # DELETE /lessons/1 or /lessons/1.json
   def destroy
+    authorize @lesson
     service = CourseManagementService.instance
     @lesson.destroy!
     service.update_lesson_ordering!(@course_module, @lesson, :destroy)
@@ -89,18 +96,19 @@ class LessonsController < ApplicationController
   end
 
   def complete
+    authorize @lesson
+
     service = CourseManagementService.instance
     time_spent_in_seconds = [(params[:time_spent] || 0).to_i, @lesson.duration].min
-    enrollment = current_user.get_enrollment_for(@course)
 
-    service.set_progress!(current_user, enrollment, @course_module, @lesson, time_spent_in_seconds)
+    service.set_progress!(current_user, @enrollment, @course_module, @lesson, time_spent_in_seconds)
 
-    if enrollment.module_completed?(@course_module.id) && @course_module.quiz_present? && !enrollment.quiz_completed_for?(@course_module)
+    if @enrollment.module_completed?(@course_module.id) && @course_module.quiz_present? && !@enrollment.quiz_completed_for?(@course_module)
       redirect_to course_module_quiz_path(@course, @course_module, @course_module.first_quiz)
       return
     end
 
-    next_path = enrollment.course_completed? ? course_path(@course) : helpers.next_lesson_path(@course, @course_module, @lesson)
+    next_path = @enrollment.course_completed? ? course_path(@course) : helpers.next_lesson_path(@course, @course_module, @lesson)
 
     next_path = course_path(@course) if next_path.blank?
 
@@ -108,6 +116,8 @@ class LessonsController < ApplicationController
   end
 
   def moveup
+    authorize @lesson
+
     service = CourseManagementService.instance
     service.update_lesson_ordering!(@course_module, @lesson, :up)
 
@@ -118,6 +128,8 @@ class LessonsController < ApplicationController
   end
 
   def movedown
+    authorize @lesson
+
     service = CourseManagementService.instance
     service.update_lesson_ordering!(@course_module, @lesson, :down)
 
@@ -125,13 +137,6 @@ class LessonsController < ApplicationController
       format.html { redirect_to course_module_path(@course, @course_module) }
       format.json { head :no_content }
     end
-  end
-
-  def replay
-    service = CourseManagementService.instance
-    enrollment = current_user.get_enrollment_for(@course)
-    service.replay!(enrollment, @lesson)
-    redirect_to course_module_lesson_url(@course, @course_module, @lesson)
   end
 
   private
@@ -147,6 +152,10 @@ class LessonsController < ApplicationController
 
   def set_lesson
     @lesson = @course_module.lessons.find(params[:id])
+  end
+
+  def set_enrollment
+    @enrollment = current_user.get_enrollment_for(@course)
   end
 
   def lesson_params
@@ -173,20 +182,18 @@ class LessonsController < ApplicationController
     default_language.present? ? default_language : @lesson.local_contents.first
   end
 
-  def authorize_resource
-    if action_name == 'new' || action_name == 'create'
-      authorize Lesson
-    else
-      authorize @lesson
-    end
-  end
+  def redirect_to_next_lesson
+    first_incomplete_id = first_incomplete_lesson_id(@enrollment.completed_lessons, ordered_lesson_ids(@course))
 
-  def load_eager_data
-    case action_name
-    when 'show', 'complete'
-      @course = Course.includes(course_modules: :lessons).find(@course.id)
-    when 'edit'
-      @lesson = Lesson.includes(local_contents: :video_attachment).find(@lesson.id)
+    if first_incomplete_id
+      first_incomplete_lesson = Lesson.find(first_incomplete_id)
+      first_incomplete_module = first_incomplete_lesson.course_module
+
+      redirect_to course_module_lesson_path(
+                    @course,
+                    first_incomplete_module,
+                    first_incomplete_lesson
+                  )
     end
   end
 end

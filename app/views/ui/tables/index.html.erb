@@ -23,9 +23,9 @@
             { span: "col-span-4", alignment: "justify-center", method: ->(row) { { partial: nil, locals: { value: row.tag_type.capitalize } } } },
             { span: "col-span-4", alignment: "justify-end", method: ->(row) { 
                 table_actions(row, [
-                  { label: "Edit", icon: "icon-edit", component: "button_default_small" },
-                  { label: "Delete", icon: "icon-trash", component: "button_default_small" }
-                ]) 
+                  { label: "Edit", icon: "pencil", type: "secondary", size: "sm" },
+                  { label: "Delete", type: "danger", size: "sm" }
+                ])
               }
             }
           ],
@@ -58,8 +58,8 @@
             { span: "col-span-6", alignment: "justify-start", method: ->(row) { table_cell_name(row, avatar: true) } },
             { span: "col-span-6", alignment: "justify-end", method: ->(row) { 
                 table_actions(row, [
-                  { label: "Edit", icon: "icon-edit", component: "button_default_small" },
-                  { label: "Delete", icon: "icon-trash", component: "button_default_small" }
+                  { label: "Edit", icon: "pencil",  type: "secondary", size: "sm" },
+                  { label: "Delete",  type: "danger", size: "sm" }
                 ]) 
               }
             }

@@ -11,8 +11,8 @@ module UiHelper
     content_tag(:span, svg.to_html.html_safe, class: "inline-flex justify-center items-center #{span_css}") # rubocop:disable Rails/OutputSafety
   end
 
-  def button(label: 'Button', type: 'primary', size: 'md', icon_name: nil, icon_position: 'left', tooltip_text: '',
-             tooltip_position: 'bottom')
+  def button(label: nil, type: 'primary', size: 'md', icon_name: nil, icon_position: 'left', tooltip_text: '',
+             tooltip_position: 'bottom', disabled: false)
     ApplicationController.renderer.render(
       partial: "ui/buttons/#{type}",
       locals: {
@@ -22,7 +22,8 @@ module UiHelper
         icon_name:,
         icon_position:,
         tooltip_text:,
-        tooltip_position:
+        tooltip_position:,
+        disabled:
       }
     )
   end
@@ -66,5 +67,18 @@ module UiHelper
     end
 
     { partial: 'shared/components/table_actions', locals: { row_data:, actions: } }
+  end
+
+  def notification_bar(text: nil, text_color: 'text-letter-color', bg_color: 'bg-white',
+                       icon_color: 'bg-letter-color')
+    ApplicationController.renderer.render(
+      partial: 'ui/notification_bars/notification_bar',
+      locals: {
+        text:,
+        text_color:,
+        icon_color:,
+        bg_color:
+      }
+    )
   end
 end
