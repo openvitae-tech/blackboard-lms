@@ -35,7 +35,7 @@ module UiHelper
 
   def input_field(form: nil, field_name: nil, text_field_name: nil, radio_field_name: nil, label: nil,
                   placeholder: 'Enter text', width: 'w-56', left_icon: nil, right_icon: nil, type: 'text',
-                  options: [], value: 'nil', rows: '5', option: nil)
+                  options: [], value: 'nil', rows: '5', option: nil, html_options: {})
     partial_path = "ui/inputs/#{type}"
     partial_path = 'ui/inputs/text_field' unless lookup_context.exists?(partial_path, [], true)
 
@@ -53,7 +53,8 @@ module UiHelper
       options:,
       value:,
       rows:,
-      option:
+      option:,
+      html_options:
     }
   end
 
