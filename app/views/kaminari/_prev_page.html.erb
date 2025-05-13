@@ -1,1 +1,12 @@
-<%= link_to_unless current_page.first?, t('views.pagination.previous').html_safe, url, rel: 'prev', remote: remote, class: "bg-white hover:bg-gray-100 text-gray-800 font-light py-2 px-4 border border-gray-400 rounded shadow" %>
+<div data-controller="pagination">
+  <%= link_to_unless current_page.first?,
+      t('views.pagination.previous').html_safe,
+      url,
+      remote: remote,
+      data: {
+          turbo_stream: true,
+          pagination_target: "button",
+          action: "pagination#setPageParam"
+        }, class: "bg-white hover:bg-gray-100 text-gray-800 font-light py-2 px-4 border border-gray-400 rounded shadow"
+  %>
+</div>

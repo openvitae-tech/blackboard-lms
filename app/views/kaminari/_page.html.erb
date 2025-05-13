@@ -1,5 +1,15 @@
-<% if page.current? %>
-  <span class="px-4 py-3 rounded bg-primary-light text-white"><%= page %></span>
-<% else %>
-  <%= link_to page, url, remote: remote, rel: page.rel, class: "px-4" %>
-<% end %>
+<div data-controller="pagination">
+  <% if page.current? %>
+    <span class="px-4 py-3 rounded bg-primary-light text-white"><%= page %></span>
+  <% else %>
+    <%= link_to page,
+        url,
+        remote: remote,
+        data: {
+          turbo_stream: true,
+          pagination_target: "button",
+          action: "pagination#setPageParam"
+        },
+        class: "px-4 py-3 hover:bg-gray-100" %>
+  <% end %>
+</div>

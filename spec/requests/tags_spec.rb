@@ -40,28 +40,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
       sign_in learner
 
       get new_tag_path
-      expect(response.status).to be(302)
-      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
-    end
-  end
-
-  describe 'GET /tags/:id' do
-    before do
-      @tag = Tag.first
-    end
-
-    it 'Allow access tag by admin' do
-      get tag_path(@tag.id)
-      expect(response.status).to be(200)
-      expect(assigns(:tag)).to eq(@tag)
-      expect(response).to render_template(:show)
-    end
-
-    it 'Unauthorized when tag is accessed by non-admin' do
-      sign_in learner
-
-      get tag_path(@tag.id)
-      expect(response.status).to be(302)
+      expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
@@ -80,6 +59,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
         post tags_path, params: tag_params
       end.not_to(change(Tag, :count))
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      expect(response).to redirect_to(error_401_path)
     end
 
     it 'Create tag failure' do
@@ -103,6 +83,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
       sign_in learner
 
       put tag_path(@tag.id), params: tag_params
+      expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
 
@@ -130,7 +111,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
 
       get edit_tag_path(@tag.id)
 
-      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
@@ -144,6 +125,21 @@ RSpec.describe 'Request spec for Tags', type: :request do
       expect do
         delete tag_path(@tag.id)
       end.to change(Tag, :count).by(-1)
+      expect(flash[:success]).to eq(I18n.t('resource.deleted', resource_name: 'Tag'))
+    end
+
+    it 'returns to previous page upon deleting the last item in the current page' do
+      create_list(:tag, 7)
+      tag = Tag.last
+
+      expect do
+        delete tag_path(tag), params: { page: 2 }, headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
+      end.to change(Tag, :count).by(-1)
+
+      expect(response).to have_http_status(:ok)
+      expect(flash[:success]).to eq(I18n.t('resource.deleted', resource_name: 'Tag'))
+      expect(response.body)
+        .to include('<turbo-stream url="/tags?page=1" action="redirect_to"><template></template></turbo-stream>')
     end
 
     it 'Does not allow deleting tag by non-admin' do
@@ -153,6 +149,7 @@ RSpec.describe 'Request spec for Tags', type: :request do
         delete tag_path(@tag.id)
       end.not_to change(Tag, :count)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      expect(response).to redirect_to(error_401_path)
     end
 
     it 'Destroy tag failure' do
