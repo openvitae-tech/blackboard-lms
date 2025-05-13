@@ -13,8 +13,8 @@
         <%= button(label: 'Edit', type: "secondary",size:"sm", icon_name: "pencil") %>
       <% end %>
       <%= link_to alert_modal_path(
-          title: "Delete Tag?",
-          description: "You are permanently deleting the #{tag.name} tag. This action can't be undone.",
+          title: t("alert.title", resource_name: "tag"),
+          description: t("alert.description", label: tag.name, resource_name: "tag"),
           action_path: tag_path(tag, page: params[:page]),
           method: :delete,
         ), data: { turbo_frame: "modal" } do %>
