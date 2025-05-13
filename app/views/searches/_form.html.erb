@@ -11,18 +11,20 @@
     <% end %>
 
     <div class="relative rounded-md border border-line-colour-light w-full">
-      <div class="pointer-events-none absolute inset-y-0 left-3 flex items-center">
-        <span class="icon icon-search icon-small bg-letter-color"></span>
-      </div>
-      <%= form.text_field :term,
-                          value: params[:term],
-                          id: 'course-search',
-                          class: 'input-search w-full border-none pr-10',
-                          placeholder: 'Search courses ...',
-                          data: {
-                            searches_target: 'searchInput',
-                          }
-      %>
+      <%= input_field(
+        field_name: :term,
+        placeholder: "Search courses ...",
+        type: "search",
+        value: params[:term],
+        left_icon: "magnifying-glass",
+        width: "w-full",
+        html_options: {
+        data: {
+          searches_target: 'searchInput',
+        },
+        id: 'course-search'
+        }
+      ) %>
 
       <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" data-action="click->searches#formSubmit">
         <span class="flex cursor-pointer items-center text-purple text-base">Search</span>

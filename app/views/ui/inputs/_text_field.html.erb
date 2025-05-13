@@ -6,14 +6,14 @@
   <% end %>
 
   <% input_classes = "w-full text-letter-color-light text-base px-4 py-3 border-none rounded" %>
-  <% input_classes += (left_icon.present? || right_icon.present?) ? " focus:outline-none" : " focus:border focus:border-primary" %>
+  <% input_classes += (left_icon.present? || right_icon.present?) ? " focus:ring-0 focus:outline-none" : " focus:border focus:border-primary" %>
 
   <% is_text_area = type == "text_area" %>
 
   <div class="bg-white justify-between items-center flex rounded border border-line-colour <%= width %> ">
     <% if left_icon.present? %>
-      <div class="pl-4 pt-2">
-        <%= icon(left_icon, css: "icon-mini") %>
+      <div class="pl-4 flex items-center">
+        <%= icon(left_icon, css: "icon-small") %>
       </div>
     <% end %>
 
@@ -28,13 +28,13 @@
       <% when "text_area" %>
         <%= form.text_area field_name, class: input_classes, placeholder: placeholder, rows: rows %>
       <% else %>
-        <%= form.text_field field_name, class: input_classes, placeholder: placeholder %>
+        <%= form.text_field field_name, { class: input_classes, placeholder: placeholder, value: value }.merge(html_options) %>
       <% end %>
     <% else %>
       <% if is_text_area %>
         <textarea placeholder="<%= placeholder %>" class="<%= input_classes %>" rows="<%= rows %>"></textarea>
       <% else %>
-        <input type="<%= type %>" placeholder="<%= placeholder %>" class="<%= input_classes %>" />
+        <%= text_field_tag field_name, value, { class: input_classes, placeholder: placeholder }.merge(html_options) %>
       <% end %>
     <% end %>
 
