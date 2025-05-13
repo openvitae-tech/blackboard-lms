@@ -16,10 +16,7 @@
         </div>
 
         <div class="input-group">
-          <%= f.label :email, class: "label-text" %>
-          <p class="mt-4">
-            <%= f.email_field :email, class: "input-text", autofocus: true, autocomplete: "email" %>
-          </p>
+          <%= input_field(form:f, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email",width:"w-full") %>
         </div>
 
         <div class="mt-4">

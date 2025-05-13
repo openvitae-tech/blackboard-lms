@@ -9,22 +9,15 @@
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
             <div class="flex flex-col gap-6">
               <%= render "devise/shared/error_messages", resource: resource %>
-              <div class="input-group">
-                <%= f.label :email, 'Email', class: "label-text" %>
-                <p class="mt-4">
-                  <%= f.email_field :email, class: "input-text", autofocus: true, autocomplete: "email" %>
-                </p>
+              <div class="input-group pt-2">
+                <%= input_field(form:f, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email",width:"w-full") %>
               </div>
-              <div class="input-group">
-                <%= f.label :password, class: "label-text" %>
-                <p class="mt-4">
-                  <%= f.password_field :password, class: "input-text", autocomplete: "current-password" %>
-                </p>
+              <div class="input-group pt-2">
+                <%= input_field(form:f, field_name: :password, label: "Password", placeholder: "Enter password", type: "password",width:"w-full") %>
               </div>
               <% if devise_mapping.rememberable? %>
                 <div class="flex gap-2 input-group">
-                  <%= f.check_box :remember_me, class: "input-check" %>
-                  <%= f.label :remember_me, 'Remember me', class: "label-text" %>
+                  <%= input_field(form: f, field_name: :remember_me, label: "Remember me", type: "checkbox_field") %>
                 </div>
               <% end %>
               <div>

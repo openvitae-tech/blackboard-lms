@@ -1,0 +1,11 @@
+<div class="flex items-center gap-2 <%= width %>">
+  <% if form.present? %>
+    <%= form.check_box field_name, class: "input-check" %>
+    <%= form.label field_name, label, class: "label-text" if label.present? %>
+  <% else %>
+    <input class="input-check" type="checkbox" value="1" name="<%= field_name %>]">
+    <% if label.present? %>
+      <label class="label-text" for="user_remember_me"><%= label %></label>
+    <% end %>
+  <% end %>
+</div>
