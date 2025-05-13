@@ -25,15 +25,9 @@ RSpec.describe UserChannelNotifierService do
       parameters = { sms_variables_values: 'test value' }
       Sidekiq::Testing.fake! do
         expect do
-          subject.notify_user(new_user, 'course_enrolled_template', parameters)
+          subject.notify_user(new_user, ChannelMessageTemplates.new.course_assigned_template, parameters)
         end.to change(CommunicationChannels::SendSmsJob.jobs, :size).by(1)
       end
-    end
-
-    it 'does not enqueue any communication_channels job when template identifier is invalid' do
-      job_size = Sidekiq::Queues['default'].size
-      subject.notify_user(user, 'nonexistent_template')
-      expect(Sidekiq::Queues['default'].size).to eq(job_size)
     end
   end
 end
