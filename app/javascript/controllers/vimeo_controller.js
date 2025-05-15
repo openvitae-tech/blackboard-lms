@@ -13,16 +13,14 @@ export default class extends Controller {
       // show loader
       this.showLoader();
       // hide the loader once the video is loaded
-      this.vimeoPlayerTarget.addEventListener(
-          "load", () => this.hideLoader()
-      );
+      this.vimeoPlayerTarget.addEventListener("load", () => this.hideLoader());
     }
 
     this.player = new Vimeo.Player(this.vimeoPlayerTarget);
 
     this.player.getDuration().then((duration) => {
       // generate a random duration between 87% to 97% as completion threshold
-      this.completionThreshold = Math.floor((Math.random() * 11 + 87));
+      this.completionThreshold = Math.floor(Math.random() * 11 + 87);
     });
 
     this.player.on("loaded", (event) => this.handleLoadVideo(event));
@@ -32,7 +30,7 @@ export default class extends Controller {
     this.player.on("timeupdate", (event) => this.checkCompletion(event));
   }
 
-  async handleLoadVideo(event){
+  async handleLoadVideo(event) {
     self.timeSpent = 0;
     self.startTime = null;
     this.updateTimeSpent();
@@ -63,7 +61,7 @@ export default class extends Controller {
   }
 
   checkCompletion(event) {
-    const completionPercentage = event.percent * 100 ;
+    const completionPercentage = event.percent * 100;
     if (completionPercentage >= this.completionThreshold) {
       this.enableCompleteButton();
     }
@@ -71,15 +69,18 @@ export default class extends Controller {
   enableCompleteButton() {
     if (this.hasCompleteButtonTarget) {
       this.completeButtonTarget.classList.remove("disabled");
+      const tooltip = this.completeButtonTarget.querySelector(".tooltip");
+      tooltip.classList.add("hidden");
     }
   }
 
   disableCompleteButton() {
     if (this.hasCompleteButtonTarget) {
       this.completeButtonTarget.classList.add("disabled");
+      const tooltip = this.completeButtonTarget.querySelector(".tooltip");
+      tooltip.classList.remove("hidden");
     }
   }
-
 
   showLoader() {
     this.vimeoLoaderTarget.classList.remove("hidden");
