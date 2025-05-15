@@ -8,8 +8,8 @@
       <%= form.text_field :title, class: "input-text mt-2", placeholder: "Title for lesson eg: Wine serving" %>
     </div>
     <div class="my-8 text-sm flex flex-col gap-2" >
-      <%= form.label :rich_description, 'Description', class: "text-sm font-medium" %>
-      <%= form.rich_text_area :rich_description, class: "input-text mt-2", placeholder: "A short description about the lesson." %>
+      <%= form.label :description, 'Description', class: "text-sm font-medium" %>
+      <%= form.text_area :description, class: "input-textarea mt-2", rows: 5 %>
     </div>
     <template data-lessons-form-target="nestedRecordTemplate">
       <%= form.fields_for :local_contents, LocalContent.new, { child_index: "new-index" } do |f| %>

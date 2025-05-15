@@ -160,7 +160,7 @@ class LessonsController < ApplicationController
 
   def lesson_params
     params.require(:lesson).permit(:title,
-                                   :rich_description,
+                                   :description,
                                    :pdf_url,
                                    :lesson_type,
                                    :video_streaming_source,

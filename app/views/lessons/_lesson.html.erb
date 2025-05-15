@@ -69,7 +69,7 @@
     </div>
     <div class="flex gap-2 overflow-hidden show-less-desc text-sm" data-course-description-card-target="courseDescription">
       <div class="h-full overflow-hidden flex text-base">
-        <span><%= lesson.rich_description %></span>
+        <span><%= text_with_paragraph(lesson.description)%></span>
       </div>
     </div>
   </div>
