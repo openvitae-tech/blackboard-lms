@@ -12,9 +12,13 @@
       <%= link_to edit_tag_path(tag), data: { turbo_frame: "modal" } do %>
         <%= button(label: 'Edit', type: "secondary",size:"sm", icon_name: "pencil") %>
       <% end %>
-
-      <%= link_to tag_path(tag), data: { turbo_frame: "modal" } do %>
-        <%= button(label: 'Delete', type: "secondary",size:"sm", icon_name: "trash",icon_position: "right") %>
+      <%= link_to alert_modal_path(
+          title: t("alert.title", resource_name: "tag"),
+          description: t("alert.description", label: tag.name, resource_name: "tag"),
+          action_path: tag_path(tag, page: params[:page]),
+          method: :delete,
+        ), data: { turbo_frame: "modal" } do %>
+          <%= button(label: 'Delete', type: "secondary",size:"sm", icon_name: "trash",icon_position: "right") %>
       <% end %>
     </div>
   </td>

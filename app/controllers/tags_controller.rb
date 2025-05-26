@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TagsController < ApplicationController
-  before_action :load_tag, only: [:edit, :show, :update, :destroy]
+  before_action :set_tag, only: [:edit, :update, :destroy]
 
   def new
     authorize :tag
@@ -14,19 +14,15 @@ class TagsController < ApplicationController
     @tags_count = Tag.count
   end
 
-  def show
-    authorize @tag
-  end
-
   def create
     authorize :tag
-    @tag = Tag.create!(tag_params)
-    @tags_count = Tag.count
-    flash.now[:success] = t("resource.created", resource_name: "Tag")
-
-  rescue ActiveRecord::RecordInvalid => exception
-    @tag = exception.record
-    render :new, status: :unprocessable_entity
+    @tag = Tag.new(tag_params)
+    if @tag.save
+      @tags_count = Tag.count
+      flash.now[:success] = t("resource.created", resource_name: "Tag")
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -36,18 +32,23 @@ class TagsController < ApplicationController
 
   def update
     authorize @tag
-    @tag.update!(tag_params)
-    flash.now[:success] = t("resource.updated", resource_name: "Tag")
-  rescue ActiveRecord::RecordInvalid => exception
-    @tag = exception.record
-    render :edit, status: :unprocessable_entity
+    if @tag.update(tag_params)
+      flash.now[:success] = t("resource.updated", resource_name: "Tag")
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
     authorize @tag
     @tag.destroy!
-    flash.now[:success] = t("resource.deleted", resource_name: "Tag")
-    @tags_count = Tag.count
+    flash[:success] = t("resource.deleted", resource_name: "Tag")
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.redirect_to(tags_path(page: get_current_page(params[:page])))
+      end
+    end
   end
 
   private
@@ -60,7 +61,20 @@ class TagsController < ApplicationController
     params.permit(:page)
   end
 
-  def load_tag
+  def set_tag
     @tag = Tag.find(params[:id])
+  end
+
+  def get_current_page(page)
+    current_page = page.to_i
+    current_page = 1 if current_page.zero?
+
+    tags = Tag.page(current_page).per(Tag::DEFAULT_PER_PAGE_SIZE)
+    if tags.empty? && current_page > 1
+      new_page = current_page - 1
+    else
+      new_page = current_page
+    end
+    new_page
   end
 end
