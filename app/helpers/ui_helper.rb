@@ -34,10 +34,12 @@ module UiHelper
   end
 
   def input_field(form: nil, field_name: nil, text_field_name: nil, radio_field_name: nil, label: nil,
-                  placeholder: 'Enter text', width: 'w-56', left_icon: nil, right_icon: nil, type: 'text',
-                  options: [], value: 'nil', rows: '5', option: nil, html_options: {})
+                  placeholder: 'Enter text', width: 'w-56', height: nil, left_icon: nil, right_icon: nil, type: 'text',
+                  options: [], value: nil, rows: '5', option: nil, html_options: {})
     partial_path = "ui/inputs/#{type}"
     partial_path = 'ui/inputs/text_field' unless lookup_context.exists?(partial_path, [], true)
+
+    html_options[:data] ||= {}
 
     render partial: partial_path, locals: {
       form:,
@@ -47,6 +49,7 @@ module UiHelper
       label:,
       placeholder:,
       width:,
+      height:,
       left_icon:,
       right_icon:,
       type:,
@@ -86,5 +89,11 @@ module UiHelper
         bg_color:
       }
     )
+  end
+
+  def tag_attributes(data = {})
+    return '' if data.blank?
+
+    data.map { |k, v| %(data-#{k.to_s.dasherize}="#{v}") }.join(' ').html_safe
   end
 end

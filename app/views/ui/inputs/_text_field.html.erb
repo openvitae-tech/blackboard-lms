@@ -1,13 +1,13 @@
 <div class="flex flex-col gap-4">
   <% if label.present? %>
-    <label class="text-letter-color-light text-sm leading-tight">
+    <label class="text-letter-color-light text-sm md:text-base leading-tight">
       <%= label %>
     </label>
   <% end %>
 
   <% input_classes = "w-full text-letter-color-light text-base px-4 py-3 border-none rounded" %>
   <% input_classes += (left_icon.present? || right_icon.present?) ? " focus:ring-0 focus:outline-none" : " focus:border focus:border-primary" %>
-
+  <% html_options[:class] = [input_classes, html_options[:class] ].compact.join(" ") %>
   <% is_text_area = type == "text_area" %>
 
   <div class="bg-white justify-between items-center flex rounded border border-line-colour <%= width %> ">
@@ -20,19 +20,19 @@
     <% if form.present? %>
       <% case type %>
       <% when "password" %>
-        <%= form.password_field field_name, class: input_classes, placeholder: placeholder %>
+        <%= form.password_field field_name, { class: input_classes, placeholder: placeholder }.merge(html_options) %>
       <% when "email" %>
-        <%= form.email_field field_name, class: input_classes, placeholder: placeholder %>
+        <%= form.email_field field_name, { placeholder: placeholder }.merge(html_options) %>
       <% when "number" %>
-        <%= form.number_field field_name, class: input_classes, placeholder: placeholder %>
+        <%= form.number_field field_name, {  placeholder: placeholder }.merge(html_options)%>
       <% when "text_area" %>
-        <%= form.text_area field_name, class: input_classes, placeholder: placeholder, rows: rows %>
+        <%= form.text_area field_name, {placeholder: placeholder,rows: rows }.merge(html_options)  %>
       <% else %>
-        <%= form.text_field field_name, { class: input_classes, placeholder: placeholder, value: value }.merge(html_options) %>
+        <%= form.text_field field_name, {placeholder: placeholder, value: value }.merge(html_options) %>
       <% end %>
     <% else %>
       <% if is_text_area %>
-        <textarea placeholder="<%= placeholder %>" class="<%= input_classes %>" rows="<%= rows %>"></textarea>
+        <textarea placeholder="<%= placeholder %>" rows="<%= rows %>" class="<%= html_options[:class] %>"><%= value %>></textarea>
       <% else %>
         <%= text_field_tag field_name, value, { class: input_classes, placeholder: placeholder }.merge(html_options) %>
       <% end %>

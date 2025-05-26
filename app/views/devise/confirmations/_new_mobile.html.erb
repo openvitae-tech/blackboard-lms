@@ -10,10 +10,7 @@
           <label for="" class="label-text">No worries. We&apos;ll send you reset instructions.</label>
         </div>
         <div class="input-group">
-          <label for="number" class="label-text">Enter your email</label>
-          <p class="mt-4">
-            <input id="email" type="text" class="input-text"/>
-          </p>
+          <%= input_field(field_name: :email, label: "Email", placeholder: "Enter your email",type: "email",value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),width:"w-full") %>
         </div>
         <div class="mt-4">
           <button class="btn-primary w-full">
