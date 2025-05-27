@@ -13,7 +13,7 @@ class LoginsController < ApplicationController
 
     if @user_exists
       user = User.where(phone: @mobile_number.value).first
-      service.set_and_send_otp(@mobile_number.value, user)
+      service.generate_and_send_otp(user)
     else
       redirect_to new_login_path, notice: t('login.incorrect_phone')
     end
