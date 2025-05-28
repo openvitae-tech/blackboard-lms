@@ -90,10 +90,4 @@ module UiHelper
       }
     )
   end
-
-  def tag_attributes(data = {})
-    return '' if data.blank?
-
-    data.map { |k, v| %(data-#{k.to_s.dasherize}="#{v}") }.join(' ').html_safe
-  end
 end

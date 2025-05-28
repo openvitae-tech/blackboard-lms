@@ -28,10 +28,16 @@
       <%= form.radio_button radio_field_name, value || field_name,
             **merged_options.merge(class: "form-radio w-5 h-5") %>
     <% else %>
-      <input type="radio" name="<%= radio_field_name %>" value="<%= value || option %>" class="form-radio w-5 h-5 <%= custom_class %>"
-        <%= merged_options[:checked] ? 'checked' : '' %>
-        <%= "id='#{merged_options[:id]}'" if merged_options[:id] %>
-        <%= tag_attributes(merged_options[:data]) %> />
+      <%= tag(:input,
+        type: "radio",
+        name: radio_field_name,
+        value: value || option,
+        id: merged_options[:id],
+        class: "form-radio w-5 h-5 #{custom_class}",
+        checked: merged_options[:checked],
+        disabled: merged_options[:disabled],
+        data: merged_options[:data]
+      ) %>
     <% end %>
   </label>
 </div>
