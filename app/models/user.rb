@@ -36,12 +36,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   validates :name, presence: true, length: { minimum: 2, maximum: 64 }
+  validates :unverified_email, format: EMAIL_REGEXP, allow_nil: true
+
   validates :role,
             inclusion: { in: USER_ROLES,
                          message: I18n.t('user.invalid_role') }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_nil: true, uniqueness: true
   validates :state, inclusion: { in: USER_STATES, message: I18n.t('user.invalid_state') }
-  validates :otp, uniqueness: true, allow_nil: true
 
   validate :dob_within_valid_age_range
   validate :communication_channels_are_valid
@@ -98,6 +99,10 @@ class User < ApplicationRecord
 
   def not_admin?
     !is_admin?
+  end
+
+  def reset_confirmation_token
+    generate_confirmation_token!
   end
 
   # overridden methods for Devise specific actions

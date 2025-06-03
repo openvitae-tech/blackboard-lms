@@ -43,7 +43,7 @@ class EventService
       team_id: invitee.team_id,
       invite_email: invitee.email,
       # now users are invited by phone number
-      invitee_phone: invitee.phone
+      invite_phone: invitee.phone
     )
 
     publish_event(user, event)

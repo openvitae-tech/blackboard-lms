@@ -19,11 +19,11 @@ class UserManagementService
     user.set_random_email
 
     user.team = team.learning_partner.parent_team if user.is_owner? || user.is_support?
-
     user.set_temp_password
 
-    EVENT_LOGGER.publish_user_invited(invited_by_user, user) if user.save
+    send_sms_invite(user)
 
+    EVENT_LOGGER.publish_user_invited(invited_by_user, user) if user.save
     user
   end
 
@@ -49,6 +49,18 @@ class UserManagementService
     EVENT_LOGGER.publish_user_deactivated(manager, target_user)
     EVENT_LOGGER.publish_active_user_count(target_user)
     true
+  end
+
+  def send_sms_invite(user)
+    # this will reset the confirmation token
+    user.reset_confirmation_token
+
+    confirmation_link = Rails.application.routes.url_helpers.user_confirmation_url(
+      confirmation_token: user.confirmation_token,
+      host: Rails.application.credentials.dig(:app, :base_url)
+    )
+
+    Rails.logger.info "Hi welcome to instruo, please click here to activate your account #{confirmation_link}"
   end
 
   private
