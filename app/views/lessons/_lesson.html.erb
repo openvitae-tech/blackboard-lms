@@ -45,8 +45,8 @@
                         data: {
                           vimeo_target: "completeButton",
                           turbo_method: :post
-                        } do %>            
-            <%= button(label: t("lesson.complete_and_continue"),size: "lg", icon_name: "chevron-double-right", icon_position: "right") %>
+                        } do %>
+            <%= button(label: t("lesson.complete_and_continue"),size: "lg", icon_name: "chevron-double-right", icon_position: "right", tooltip_text: Rails.env.production? && "Complete the lesson to continue.") %>
           <% end %>
         <% end %>
       </div>
