@@ -8,8 +8,8 @@ class Onboarding::WelcomesController < ApplicationController
 
   def new
   end
-  def set_name_and_phone
-    render turbo_stream: turbo_stream.replace("onboarding-frame", partial: "onboarding/welcomes/set_name_and_phone")
+  def set_name_and_email
+    render turbo_stream: turbo_stream.replace("onboarding-frame", partial: "onboarding/welcomes/set_name_and_email")
   end
 
   def set_dob_and_gender
@@ -21,7 +21,7 @@ class Onboarding::WelcomesController < ApplicationController
   end
 
   def update
-    steps = %w[set_name_and_phone set_dob_and_gender set_language set_password]
+    steps = %w[set_name_and_email set_dob_and_gender set_language set_password]
     step_index = steps.index(params[:step])
 
     if current_user.update(user_params)
@@ -61,7 +61,7 @@ class Onboarding::WelcomesController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :phone, :dob, :gender, :preferred_local_language)
+    params.require(:user).permit(:name, :unverified_email, :dob, :gender, :preferred_local_language)
   end
 
   def password_params
