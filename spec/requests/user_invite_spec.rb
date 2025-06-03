@@ -117,6 +117,19 @@ RSpec.describe 'Request spec for user invites' do
       end.to change(User, :count).by(3)
     end
 
+    it 'Skip the duplicate numbers while inviting learners in bulk' do
+      params = {
+        user: {
+          bulk_invite: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/valid_bulk_invite_with_duplicates.csv')),
+          team_id: team.id
+        }
+      }
+
+      expect do
+        post '/invites', params:
+      end.to change(User, :count).by(1)
+    end
+
     it 'Does not creates invitation for invalid rows in the csv' do
       params = {
         user: {
