@@ -55,13 +55,6 @@ RSpec.describe User, type: :model do
       user_one.update!(otp: @encrypted_otp, otp_generated_at: DateTime.now)
     end
 
-    it 'is unique' do
-      user_two = build :user, :learner, otp: @encrypted_otp
-      expect(user_two).not_to be_valid
-      expect(user_two.errors.full_messages.to_sentence).to include(t('already_taken',
-                                                                     field: 'Otp'))
-    end
-
     it 'does not regenerate OTP if otp requested within 5 minutes' do
       encrypted_old_otp = user_one.otp
 

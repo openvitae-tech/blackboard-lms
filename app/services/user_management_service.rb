@@ -21,9 +21,12 @@ class UserManagementService
     user.team = team.learning_partner.parent_team if user.is_owner? || user.is_support?
     user.set_temp_password
 
-    send_sms_invite(user)
+    if user.valid?
+      user.save
+      send_sms_invite(user)
+      EVENT_LOGGER.publish_user_invited(invited_by_user, user) if user.save
+    end
 
-    EVENT_LOGGER.publish_user_invited(invited_by_user, user) if user.save
     user
   end
 
