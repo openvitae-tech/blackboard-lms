@@ -3,9 +3,14 @@
 class LoginWithOtpService
   include Singleton
 
-  def set_and_send_otp(mobile_number, user)
+  def generate_and_send_otp(user)
     user.set_otp!
-    SendLoginOtpService.new(mobile_number, password_decrypter(user.otp)).process if Rails.env.production?
+
+    return unless Rails.env.production?
+
+    parameters = { sms_variables_values: password_decrypter(user.otp) }
+    service = UserChannelNotifierService.instance
+    service.notify_user(user, ChannelMessageTemplates.new.sms_otp_template, parameters)
   end
 
   def valid_otp?(user, otp)

@@ -18,6 +18,10 @@ class UserChannelNotifierService
     when 'whatsapp'
       CommunicationChannels::SendWhatsappMessageJob.perform_async(template[:whatsapp],
                                                                   user.phone, parameters)
+    when 'sms'
+      CommunicationChannels::SendSmsJob.perform_async(
+        template[:sms], user.phone, parameters[:sms_variables_values]
+      )
     end
   end
 end
