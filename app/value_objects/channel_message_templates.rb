@@ -14,4 +14,10 @@ ChannelMessageTemplates = Data.define do
       whatsapp: 'course_enrolled'
     }
   end
+
+  def sms_otp_template
+    {
+      sms: Rails.application.credentials.dig(:fast2sms, :template, :otp)
+    }
+  end
 end

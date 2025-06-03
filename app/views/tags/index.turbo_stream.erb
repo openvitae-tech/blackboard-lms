@@ -1,0 +1,3 @@
+<%= turbo_stream.update "tags-table" do %>
+  <%= render "tags/tag_list", tags: @tags, tags_count: @tags_count %>
+<% end %>

@@ -34,20 +34,19 @@
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
         <% if lesson_completed?(enrollment, lesson) %>
-          <%= link_to next_button_link(course, course_module, lesson), class: "bg-primary flex items-center gap-2 rounded px-4 py-3 " do %>
-            <%= button(label: t("lesson.next"), size: "sm") %>
+          <%= link_to next_button_link(course, course_module, lesson) do %>
+            <%= button(label: t("lesson.next"), size: "lg") %>
           <% end %>
         <% else %>
           <%= button_to complete_course_module_lesson_path(course, course_module, lesson),
                         params: {
                           time_spent: 0
                         },
-                        class: "bg-primary flex items-center gap-2 rounded px-4 py-3",
                         data: {
                           vimeo_target: "completeButton",
                           turbo_method: :post
                         } do %>
-              <%= button(label: t("lesson.complete_and_continue"),size: "sm", icon_name: "chevron-double-right", icon_position: "right", tooltip_text: Rails.env.production? && "Complete the lesson to continue.") %>
+            <%= button(label: t("lesson.complete_and_continue"),size: "lg", icon_name: "chevron-double-right", icon_position: "right", tooltip_text: Rails.env.production? && "Complete the lesson to continue.") %>
           <% end %>
         <% end %>
       </div>
