@@ -122,9 +122,9 @@ class User < ApplicationRecord
     active_or_verified_user = active? || verified?
 
     if is_admin?
-      super && active_or_verified_user
+      active_or_verified_user
     else
-      super && learning_partner.active? && active_or_verified_user
+      learning_partner.active? && active_or_verified_user
     end
   end
 
@@ -156,6 +156,15 @@ class User < ApplicationRecord
 
   def email_required?
     false
+  end
+
+  def reset_phone_confirmation_token
+    self.phone_confirmation_token = Devise.friendly_token
+    save!
+  end
+
+  def phone_verified?
+    user.phone_confirmed_at.present?
   end
 
   private
