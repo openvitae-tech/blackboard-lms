@@ -106,10 +106,8 @@ module ApplicationHelper
   end
 
   def email(user)
-    if user.blackhole_email?
-      user.unverified_email.blank? ? 'NA' : "#{user.unverified_email} (Unverified)"
-    else
-      user.email
-    end
+    return user.email if user.email.present?
+
+    user.unconfirmed_email.present? ? "#{user.unconfirmed_email} (Unverified)" : 'NA'
   end
 end

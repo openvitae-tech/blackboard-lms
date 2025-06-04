@@ -36,7 +36,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   validates :name, presence: true, length: { minimum: 2, maximum: 64 }
-  validates :unverified_email, format: EMAIL_REGEXP, allow_nil: true
 
   validates :role,
             inclusion: { in: USER_ROLES,
@@ -151,18 +150,12 @@ class User < ApplicationRecord
     is_owner? || is_support? || other_user.team.ancestors.include?(team)
   end
 
-  def set_random_email
-    return if email.present?
-
-    self.email = "#{SecureRandom.uuid}@blackhole"
-  end
-
-  def blackhole_email?
-    email.end_with?('@blackhole')
-  end
-
   def send_confirmation_notification?
-    !blackhole_email?
+    email.present?
+  end
+
+  def email_required?
+    false
   end
 
   private

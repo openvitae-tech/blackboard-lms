@@ -14,6 +14,12 @@
     </div>
   </div>
 
+  <% if @members.empty? %>
+    <div class="text-center text-sm mt-6">
+      No users available.
+    </div>
+  <% end %>
+
   <div id="team-member-list" class="flex-1 overflow-y-auto p-2 md:divide-y md:divide-slate-grey-light">
     <% members.each do |member| %>
       <%= render "teams/member_list_items", team: team, member: member %>
