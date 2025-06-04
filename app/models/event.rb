@@ -19,14 +19,15 @@ class Event < ApplicationRecord
     user_deactivated
     active_user_count
     payment_plan_modified
+    email_verified
   ].freeze
 
   OnboardingInitiated = Struct.new(:partner_id, :partner_name,  keyword_init: true)
-  FirstUserJoined = Struct.new(:partner_id, :team_id, :user_id, :partner_name, :email, keyword_init: true)
+  FirstUserJoined = Struct.new(:partner_id, :team_id, :user_id, :partner_name, :phone, keyword_init: true)
   # user invited by owner or manager not by admin
-  UserInvited = Struct.new(:partner_id, :team_id, :user_id, :invite_email, :invite_phone, keyword_init: true)
+  UserInvited = Struct.new(:partner_id, :team_id, :user_id, :invite_phone, keyword_init: true)
   # user joined via an invite
-  UserJoined = Struct.new(:partner_id, :team_id, :user_id, :invite_email, keyword_init: true)
+  UserJoined = Struct.new(:partner_id, :team_id, :user_id, :phone, keyword_init: true)
   UserLogin = Struct.new(:partner_id, :team_id, :user_id, :login_type, keyword_init: true)
   UserLogout = Struct.new(:partner_id, :team_id, :user_id, keyword_init: true)
   CourseAssigned = Struct.new(:partner_id, :team_id, :user_id, :assigned_to_user, :course_id, keyword_init: true)
@@ -42,6 +43,7 @@ class Event < ApplicationRecord
   ActiveUserCount = Struct.new(:partner_id, :team_id, :user_id, :active_user_count, keyword_init: true)
   PaymentPlanModified = Struct.new(:partner_id, :user_id, :payment_plan_id, :plan_start_date, :plan_end_date,
                                    :per_seat_amount, :total_seats, keyword_init: true)
+  EmailVerified = Struct.new(:partner_id, :team_id, :user_id, :email, keyword_init: true)
 
   validates :name, presence: true
   validates :name, inclusion: { in: VALID_EVENTS, message: I18n.t('event.invalid') }

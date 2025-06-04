@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     end
 
     collection do
+      get :verify_phone
       get :new_admin
       post :create_admin
       get :download
