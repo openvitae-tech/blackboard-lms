@@ -16,7 +16,7 @@ class UserManagementService
 
     # set email field to blackhole email because email field
     # can't be blank and needs to be unique
-    user.set_random_email
+    # user.set_random_email
 
     user.team = team.learning_partner.parent_team if user.is_owner? || user.is_support?
     user.set_temp_password
@@ -24,7 +24,8 @@ class UserManagementService
     if user.valid?
       user.save
       send_sms_invite(user)
-      EVENT_LOGGER.publish_user_invited(invited_by_user, user) if user.save
+      user.save!
+      EVENT_LOGGER.publish_user_invited(invited_by_user, user)
     end
 
     user

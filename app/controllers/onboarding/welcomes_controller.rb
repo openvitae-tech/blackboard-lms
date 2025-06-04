@@ -61,7 +61,7 @@ class Onboarding::WelcomesController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :unverified_email, :dob, :gender, :preferred_local_language)
+    params.require(:user).permit(:name, :email, :dob, :gender, :preferred_local_language)
   end
 
   def password_params
