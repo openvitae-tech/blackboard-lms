@@ -60,7 +60,7 @@ class UserManagementService
       host: Rails.application.credentials.dig(:app, :base_url)
     )
 
-    Rails.logger.info "Hi welcome to instruo, please click here to activate your account #{confirmation_link}"
+    Rails.logger.info "Hello, please click here to activate your Instruo account #{confirmation_link}"
   end
 
   private
