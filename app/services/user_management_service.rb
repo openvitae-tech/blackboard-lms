@@ -14,10 +14,6 @@ class UserManagementService
       learning_partner_id: team.learning_partner_id
     )
 
-    # set email field to blackhole email because email field
-    # can't be blank and needs to be unique
-    # user.set_random_email
-
     user.team = team.learning_partner.parent_team if user.is_owner? || user.is_support?
     user.set_temp_password
 

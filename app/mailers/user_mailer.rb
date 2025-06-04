@@ -8,7 +8,7 @@ class UserMailer < ApplicationMailer
     @assigned_by = assigned_by
     @course = course
 
-    return if @user.blackhole_email?
+    return if @user.email.blank?
 
     mail(
       to: @user.email,
@@ -21,7 +21,7 @@ class UserMailer < ApplicationMailer
     @course = course
     @deadline = deadline.to_fs(:short)
 
-    return if @user.blackhole_email?
+    return if @user.email.blank?
 
     mail(
       to: @user.email,
@@ -33,7 +33,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @course = course
 
-    return if @user.blackhole_email?
+    return if @user.email.blank?
 
     mail(
       to: @user.email,
