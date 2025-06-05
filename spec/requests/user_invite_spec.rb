@@ -120,7 +120,8 @@ RSpec.describe 'Request spec for user invites' do
     it 'Skip the duplicate numbers while inviting learners in bulk' do
       params = {
         user: {
-          bulk_invite: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/valid_bulk_invite_with_duplicates.csv')),
+          bulk_invite:
+            Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/valid_bulk_invite_with_duplicates.csv')),
           team_id: team.id
         }
       }
