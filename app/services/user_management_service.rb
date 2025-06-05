@@ -71,7 +71,7 @@ class UserManagementService
     EVENT_LOGGER.publish_user_joined(user)
 
     return unless user.is_owner? && !user.learning_partner.first_owner_joined
-    
+
     service = PartnerOnboardingService.instance
     service.first_owner_joined(partner, resource)
   end
