@@ -4,34 +4,17 @@
     <%= render "shared/components/form_errors", resource: quiz %>
     <div class="border border-line-colour-light p-8 rounded">
       <div class="mb-8 text-sm">
-      <%= form.label :question, class: "text-base font-medium" %>
-      <%= form.text_area :question, class: "input-text mt-4 resize-none h-20 content-center", rows: 2, placeholder: "Enter your question here..." %>
+        <%= input_field(form:, field_name: :question,label: "Description", placeholder: "Enter your question here...",type: "text_area", width:"w-full", rows:"2") %>
       </div>
       
       <div class="mb-4">
         <%= form.label "Answer options", class:"text-base font-medium" %>
       </div>
-
-      <div class="mb-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
-        <span class="text-sm font-medium">A.</span>
-        <%= form.text_field :option_a, class: "input-text pr-10 border-none" %>
-        <%= form.radio_button :answer, "a", class: "radio-check-button" %>
-      </div>
-     
-      <div class="my-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
-          <span class="text-sm font-medium">B.</span>
-          <%= form.text_field :option_b, class: "input-text pr-10 border-none" %>
-          <%= form.radio_button :answer, "b", class: "radio-check-button" %>
-      </div>
-      <div class="my-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
-          <span class="text-sm font-medium">C.</span>
-          <%= form.text_field :option_c, class: "input-text pr-10 border-none" %>
-          <%= form.radio_button :answer, "c", class: "radio-check-button" %>
-      </div>
-      <div class="mt-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
-          <span class="text-sm font-medium">D.</span>
-          <%= form.text_field :option_d, class: "input-text pr-10 border-none" %>
-          <%= form.radio_button :answer, "d", class: "radio-check-button" %>
+      <div class="flex flex-col gap-8">
+        <%= input_field(form: form, text_field_name: :option_a, radio_field_name: :answer, placeholder: "Enter an answer", value: "a", type: "radio_field", option: "A.", width:"w-full") %>
+        <%= input_field(form: form, text_field_name: :option_b, radio_field_name: :answer, placeholder: "Enter an answer", value: "b", type: "radio_field", option: "B.", width:"w-full") %>
+        <%= input_field(form: form, text_field_name: :option_c, radio_field_name: :answer, placeholder: "Enter an answer", value: "c", type: "radio_field", option: "C.", width:"w-full") %>
+        <%= input_field(form: form, text_field_name: :option_d, radio_field_name: :answer, placeholder: "Enter an answer", value: "d", type: "radio_field", option: "D.", width:"w-full") %>     
       </div>
     </div>
     
