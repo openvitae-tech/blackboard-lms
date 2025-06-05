@@ -54,7 +54,8 @@ class UserManagementService
   def send_sms_invite(user)
     # this will reset the confirmation token
     user.reset_phone_confirmation_token
-    user.touch(:phone_confirmation_sent_at)
+    user.phone_confirmation_sent_at = Time.current
+    user.save!
 
     confirmation_link = Rails.application.routes.url_helpers.verify_phone_invites_url(
       confirmation_token: user.phone_confirmation_token,
@@ -69,15 +70,10 @@ class UserManagementService
     user.verify!
     EVENT_LOGGER.publish_user_joined(user)
 
-    if user.is_owner?
-
-      partner = user.learning_partner
-
-      unless partner.first_owner_joined
-        service = PartnerOnboardingService.instance
-        service.first_owner_joined(partner, resource)
-      end
-    end
+    return unless user.is_owner? && !user.learning_partner.first_owner_joined
+    
+    service = PartnerOnboardingService.instance
+    service.first_owner_joined(partner, resource)
   end
 
   private
