@@ -27,7 +27,7 @@ class EventService
   def publish_first_user_joined(user, partner)
     event = Event::FirstUserJoined.new(
       partner_id: partner.id,
-      email: user.email,
+      phone: user.phone,
       team_id: user.team_id,
       user_id: user.id,
       partner_name: partner.name
@@ -41,7 +41,7 @@ class EventService
       partner_id: invitee.learning_partner_id,
       user_id: user.id,
       team_id: invitee.team_id,
-      invite_email: invitee.email
+      invite_phone: invitee.phone
     )
 
     publish_event(user, event)
@@ -52,7 +52,7 @@ class EventService
       partner_id: user.learning_partner_id,
       user_id: user.id,
       team_id: user.team_id,
-      invite_email: user.email
+      phone: user.phone
     )
 
     publish_event(user, event)
@@ -212,6 +212,17 @@ class EventService
       plan_end_date: learning_partner.payment_plan.end_date,
       per_seat_amount: learning_partner.payment_plan.per_seat_cost,
       total_seats: learning_partner.payment_plan.total_seats
+    )
+
+    publish_event(user, event)
+  end
+
+  def publish_email_verified(user)
+    event = Event::EmailVerified.new(
+      partner_id: user.learning_partner.id,
+      user_id: user.id,
+      team_id: user.team_id,
+      email: user.email
     )
 
     publish_event(user, event)

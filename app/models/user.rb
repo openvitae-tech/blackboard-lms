@@ -8,6 +8,7 @@ class User < ApplicationRecord
   scope :skip_deactivated, -> { where.not(state: 'in-active') }
 
   EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  PHONE_REGEXP = /\A[6-9][0-9]{9}\z/
   COMMUNICATION_CHANNELS = %w[sms whatsapp].freeze
 
   TEST_OTP = 1212
@@ -35,12 +36,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   validates :name, presence: true, length: { minimum: 2, maximum: 64 }
+
   validates :role,
             inclusion: { in: USER_ROLES,
                          message: I18n.t('user.invalid_role') }
   validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_nil: true, uniqueness: true
   validates :state, inclusion: { in: USER_STATES, message: I18n.t('user.invalid_state') }
-  validates :otp, uniqueness: true, allow_nil: true
 
   validate :dob_within_valid_age_range
   validate :communication_channels_are_valid
@@ -99,6 +100,10 @@ class User < ApplicationRecord
     !is_admin?
   end
 
+  def reset_confirmation_token
+    generate_confirmation_token!
+  end
+
   # overridden methods for Devise specific actions
   def send_devise_notification(notification, *)
     devise_mailer.send(notification, self, *).deliver_later
@@ -117,9 +122,9 @@ class User < ApplicationRecord
     active_or_verified_user = active? || verified?
 
     if is_admin?
-      super && active_or_verified_user
+      active_or_verified_user
     else
-      super && learning_partner.active? && active_or_verified_user
+      learning_partner.active? && active_or_verified_user
     end
   end
 
@@ -143,6 +148,23 @@ class User < ApplicationRecord
     return false unless other_user.learning_partner_id == learning_partner_id
 
     is_owner? || is_support? || other_user.team.ancestors.include?(team)
+  end
+
+  def send_confirmation_notification?
+    email.present?
+  end
+
+  def email_required?
+    false
+  end
+
+  def reset_phone_confirmation_token
+    self.phone_confirmation_token = Devise.friendly_token
+    save!
+  end
+
+  def phone_verified?
+    user.phone_confirmed_at.present?
   end
 
   private
