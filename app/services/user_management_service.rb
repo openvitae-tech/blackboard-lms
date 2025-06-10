@@ -65,7 +65,9 @@ class UserManagementService
     if Rails.env.local?
       Rails.logger.info "Hello, please click here to activate your Instruo account #{confirmation_link}"
     else
-      CommunicationChannels::SendSmsJob.perform_async(Rails.application.credentials.dig(:fast2sms, :template, :welcome), user.phone, confirmation_link)
+      CommunicationChannels::SendSmsJob.perform_async(
+        Rails.application.credentials.dig(:fast2sms, :template, :welcome), user.phone, confirmation_link
+      )
     end
   end
 
