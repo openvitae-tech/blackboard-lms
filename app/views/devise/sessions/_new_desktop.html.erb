@@ -17,7 +17,7 @@
               </div>
               <% if devise_mapping.rememberable? %>
                 <div class="flex gap-2 input-group">
-                  <%= input_field(form: f, field_name: :remember_me, label: "Remember me", type: "checkbox_field") %>
+                  <%= input_checkbox(form: f, field_name: :remember_me, label: "Remember me") %>
                 </div>
               <% end %>
               <div>

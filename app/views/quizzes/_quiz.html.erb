@@ -2,13 +2,14 @@
   <div class="flex items-center justify-between pt-6">
     <span class="heading page-heading text-primary">Quiz</span>
   </div>
-  <div class="flex justify-center gap-4 pt-6">
-    <div class="indicator active"></div>
-    <div class="indicator"></div>
-    <div class="indicator"></div>
+  <div class="flex flex-wrap justify-center gap-4 pt-6 px-2">
+    <% current_index = position_of_quiz(course_module, quiz) - 1 %>
+    <% course_module.quizzes_count.times do |index| %>
+      <div class="indicator <%= 'active' if index == current_index %>"></div>
+    <% end %>
   </div>
   <h2 class="flex items-center justify-center pt-4 text-medium">
-    1/5 Questions
+    <%= quiz_position_text(course_module, quiz) %> Questions
   </h2>
   <div class="md:w-[910px]">
     <ul class="w-full md:pb-6">
@@ -16,12 +17,11 @@
         <h2 class="bg-primary-light-50 p-6 text-medium text-letter-color-light rounded box-shadow-medium">
           <span>Q.</span><%= quiz.question %>
         </h2>
-        <ul class="flex flex-col gap-6 pt-6">
-            <li class="">
-              <%= input_field(
+        <ul class="flex flex-col gap-6 pt-6 px-1">
+            <li class="rounded-sm border border-line-colour">
+              <%= input_radio(
                 radio_field_name: :answer,
                 value: quiz.option_a,
-                type: "radio_field",
                 option: "A. #{quiz.option_a}",
                 width: "w-full",
                 height: "h-16",
@@ -30,17 +30,16 @@
                   data: {
                     action: "change->quiz#valueChanged"
                   },
-                  checked: quiz.answer == "A",
+                  checked: quiz.answer.to_s.downcase == "a",
                   disabled: true
                 }
             ) %>
             </li>
 
-          <li class="">
-              <%= input_field(
+            <li class="rounded-sm border border-line-colour">
+              <%= input_radio(
                 radio_field_name: :answer,
                 value: quiz.option_b,
-                type: "radio_field",
                 option: "B. #{quiz.option_b}",
                 width: "w-full",
                 height: "h-16",
@@ -49,17 +48,16 @@
                   data: {
                     action: "change->quiz#valueChanged"
                   },
-                  checked: quiz.answer == "B",
+                  checked: quiz.answer.to_s.downcase == "b",
                   disabled: true
                 }
             ) %>
             </li>
 
-           <li class="">
-              <%= input_field(
+            <li class="rounded-sm border border-line-colour">
+              <%= input_radio(
                 radio_field_name: :answer,
                 value: quiz.option_c,
-                type: "radio_field",
                 option: "C. #{quiz.option_c}",
                 width: "w-full",
                 height: "h-16",
@@ -68,17 +66,16 @@
                   data: {
                     action: "change->quiz#valueChanged"
                   },
-                  checked: quiz.answer == "C",
+                  checked: quiz.answer.to_s.downcase == "c",
                   disabled: true
                 }
             ) %>
             </li>
 
-          <li class="">
-            <%= input_field(
+            <li class="rounded-sm border border-line-colour">
+            <%= input_radio(
               radio_field_name: :answer,
               value: quiz.option_d,
-              type: "radio_field",
               option: "D. #{quiz.option_d}",
               width: "w-full",
               height: "h-16",
@@ -87,7 +84,7 @@
                 data: {
                   action: "change->quiz#valueChanged"
                 },
-                checked: quiz.answer == "D",
+                checked: quiz.answer.to_s.downcase == "d",
                 disabled: true
               }
           ) %>

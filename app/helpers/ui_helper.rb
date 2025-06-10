@@ -33,7 +33,7 @@ module UiHelper
     ordered.compact.join.html_safe # rubocop:disable Rails/OutputSafety
   end
 
-  def input_field(form: nil, field_name: nil, text_field_name: nil, radio_field_name: nil, label: nil,
+  def input_field(form: nil, field_name: nil, text_field_name: nil, label: nil,
                   placeholder: 'Enter text', width: 'w-56', height: nil, left_icon: nil, right_icon: nil, type: 'text',
                   options: [], value: nil, rows: '5', option: nil, html_options: {})
     partial_path = "ui/inputs/#{type}"
@@ -45,7 +45,6 @@ module UiHelper
       form:,
       field_name:,
       text_field_name: text_field_name || field_name,
-      radio_field_name: radio_field_name || field_name,
       label:,
       placeholder:,
       width:,
@@ -58,6 +57,51 @@ module UiHelper
       rows:,
       option:,
       html_options:
+    }
+  end
+
+  def input_radio(form: nil, field_name: nil, text_field_name: nil, radio_field_name: nil, label: nil,
+                  placeholder: 'Enter text', width: 'w-56', height: nil,
+                  value: nil, option: nil, html_options: {})
+    render partial: 'ui/inputs/radio_field', locals: {
+      form:,
+      field_name:,
+      text_field_name:,
+      radio_field_name:,
+      label:,
+      placeholder:,
+      width:,
+      height:,
+      value:,
+      option:,
+      html_options:
+    }
+  end
+
+  def dropdown_input(form: nil, field_name: nil, label: nil,
+                     width: 'w-56', height: nil, placeholder: nil,
+                     options: [], value: nil, html_options: {})
+    render partial: 'ui/inputs/dropdown_field', locals: {
+      form:,
+      field_name:,
+      label:,
+      width:,
+      height:,
+      placeholder:,
+      options:,
+      value:,
+      html_options:
+    }
+  end
+
+  def input_checkbox(form: nil, field_name: nil, label: nil, width: 'w-56',
+                     value: nil)
+    render partial: 'ui/inputs/checkbox_field', locals: {
+      form:,
+      field_name:,
+      label:,
+      width:,
+      value:
     }
   end
 

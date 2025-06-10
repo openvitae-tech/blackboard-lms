@@ -4,7 +4,7 @@
     <%= form.hidden_field :team_id %>
     <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter your name",type: "text",width:"w-full") %> 
     <%= input_field(form:, field_name: :email, label: "Email", placeholder: "yourname@yourdomain.com",type: "text",width:"w-full") %>     
-    <%= input_field(form:, field_name: :role, label: "Category", type: "dropdown_field", options:user_role_mapping_for_partner(current_user, @team)) %>
+    <%= dropdown_input(form:, field_name: :role, label: "Category", options:user_role_mapping_for_partner(current_user, @team)) %>
 
     <!-- admin cannot bulk import users, admin invites users to the top level team.
     Inviting in bulk can be done by managers or owners of the company -->

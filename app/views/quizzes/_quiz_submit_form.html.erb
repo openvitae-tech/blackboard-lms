@@ -22,11 +22,11 @@
         <div class="carousel-item active mt-6">
           <ul class="flex flex-col gap-6">
             <li class="">
-              <%= input_field(
+              <%= input_radio(
                 form: form,
                 radio_field_name: :answer,
                 value: "a",
-                type: "radio_field",
+               
                 option: "A. #{quiz.option_a}",
                 width: "w-full",
                 height: "h-16",
@@ -40,11 +40,11 @@
                 }
             ) %>
             </li><li class="">
-              <%= input_field(
+              <%= input_radio(
                 form: form,
                 radio_field_name: :answer,
                 value: "b",
-                type: "radio_field",
+              
                 option: "B. #{quiz.option_b}",
                 width: "w-full",
                 height: "h-16",
@@ -59,11 +59,11 @@
             ) %>
             </li>
             <li class="">
-              <%= input_field(
+              <%= input_radio(
                 form: form,
                 radio_field_name: :answer,
                 value: "c",
-                type: "radio_field",
+               
                 option: "C. #{quiz.option_c}",
                 width: "w-full",
                 height: "h-16",
@@ -78,11 +78,11 @@
             ) %>
             </li>
             <li class="">
-              <%= input_field(
+              <%= input_radio(
                 form: form,
                 radio_field_name: :answer,
                 value: "d",
-                type: "radio_field",
+                
                 option: "D. #{quiz.option_d}",
                 width: "w-full",
                 height: "h-16",

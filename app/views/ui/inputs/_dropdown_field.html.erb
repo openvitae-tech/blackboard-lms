@@ -7,7 +7,7 @@
   <% if form.present? %>
     <%= form.select field_name, options_for_select(options), {}, class: "px-4 py-3 rounded border border-line-colour flex justify-between items-center gap-2 w-full text-letter-color-light text-base focus:border-primary focus:ring-0 #{width}" %>
   <% else %>
-    <select class="px-4 py-3 rounded border border-line-colour flex justify-between items-center gap-2 w-full text-letter-color-light text-base focus:border-primary focus:ring-0 <%= width %>">
+    <select class="px-4 py-3 rounded border border-line-colour flex justify-between items-center gap-2 w-full text-letter-color-light text-base focus:border-primary focus:ring-0 <%= width %>" placeholder="<%= placeholder %>">
       <% options.each do |option| %>
         <option value="<%= option %>"><%= option %></option>
       <% end %>

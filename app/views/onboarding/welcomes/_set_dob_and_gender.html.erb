@@ -19,11 +19,10 @@
           </div>
         </div>
       </div>
-      <%= input_field(
+      <%= dropdown_input(
         form: form,
         field_name: :gender,
         label: "Gender",
-        type: "dropdown_field",
         options: User::GENDERS,
         placeholder: "Please choose a gender",
         html_options: {

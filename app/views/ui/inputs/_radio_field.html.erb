@@ -4,40 +4,28 @@
 <% custom_class = merged_options.delete(:class) || "" %>
 
 
-<div class="flex flex-col gap-4">
-  <% if label.present? %>
-    <label class="text-letter-color-light text-sm md:text-base font-normal leading-tight">
-      <%= label %>
-    </label>
+
+<label class="h-12 px-4 py-3 bg-white flex justify-between items-center gap-2.5 cursor-pointer <%= width %> <%= height %>">
+  <% if option.present? %>
+    <div class="flex flex-row items-center w-full">        
+      <span class="text-letter-color-light text-base font-normal"><%= option %></span>  
+    </div>
   <% end %>
 
-  <label class="h-12 px-4 py-3 bg-white rounded border border-line-colour flex justify-between items-center gap-2.5 cursor-pointer <%= width %> <%= height %>">
-    <div class="flex flex-row items-center w-full">
-      <% if option.present? %>
-        <span class="text-letter-color-light text-base font-normal"><%= option %></span>
-      <% end %>
+  <% if form.present? %>
+    <%= form.radio_button radio_field_name, value || field_name,
+          **merged_options.merge(class: "form-radio w-5 h-5") %>
+  <% else %>
+    <%= tag(:input,
+      type: "radio",
+      name: radio_field_name,
+      value: value || option,
+      id: merged_options[:id],
+      class: "form-radio w-5 h-5 #{custom_class}",
+      checked: merged_options[:checked],
+      disabled: merged_options[:disabled],
+      data: merged_options[:data]
+    ) %>
+  <% end %>
+</label>
 
-      <% if is_text_field %>
-        <%= form.text_field text_field_name,
-              class: 'mt-1 w-full text-letter-color-light text-base border-none rounded focus:ring-0 focus:outline-none',
-              placeholder: placeholder if form %>
-      <% end %>
-    </div>
-
-    <% if form.present? %>
-      <%= form.radio_button radio_field_name, value || field_name,
-            **merged_options.merge(class: "form-radio w-5 h-5") %>
-    <% else %>
-      <%= tag(:input,
-        type: "radio",
-        name: radio_field_name,
-        value: value || option,
-        id: merged_options[:id],
-        class: "form-radio w-5 h-5 #{custom_class}",
-        checked: merged_options[:checked],
-        disabled: merged_options[:disabled],
-        data: merged_options[:data]
-      ) %>
-    <% end %>
-  </label>
-</div>

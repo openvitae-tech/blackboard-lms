@@ -11,10 +11,63 @@
         <%= form.label "Answer options", class:"text-base font-medium" %>
       </div>
       <div class="flex flex-col gap-8">
-        <%= input_field(form: form, text_field_name: :option_a, radio_field_name: :answer, placeholder: "Enter an answer", value: "a", type: "radio_field", option: "A.", width:"w-full") %>
-        <%= input_field(form: form, text_field_name: :option_b, radio_field_name: :answer, placeholder: "Enter an answer", value: "b", type: "radio_field", option: "B.", width:"w-full") %>
-        <%= input_field(form: form, text_field_name: :option_c, radio_field_name: :answer, placeholder: "Enter an answer", value: "c", type: "radio_field", option: "C.", width:"w-full") %>
-        <%= input_field(form: form, text_field_name: :option_d, radio_field_name: :answer, placeholder: "Enter an answer", value: "d", type: "radio_field", option: "D.", width:"w-full") %>     
+        <ul class="flex flex-col gap-6 pt-6">
+          <li class="flex justify-between w-full">
+            <%= input_field(form:, text_field_name: :option_a, placeholder: "A. #{quiz.option_b.presence || 'Enter an answer'}" ,type: "text", width:"w-full", rows:"2") %>
+
+            <%= input_radio(
+            radio_field_name: :answer,
+            value: "a",
+            width:"w-4",
+            html_options: {
+              id: "opt-a",
+              checked: quiz.answer.to_s.downcase == "a",
+            }
+          ) %>
+          </li>
+          <li class="flex justify-between w-full">
+            <%= input_field(form:, text_field_name: :option_b, placeholder: "B. #{quiz.option_b.presence || 'Enter an answer'}" ,type: "text", width:"w-full", rows:"2") %>
+
+            <%= input_radio(
+            radio_field_name: :answer,
+            value: "b",
+            width:"w-4",
+            html_options: {
+              id: "opt-b",
+              checked: quiz.answer.to_s.downcase == "b",
+            }
+          ) %>
+          </li>
+          <li class="flex justify-between w-full">
+            <%= input_field(form:, text_field_name: :option_c, placeholder: "C. #{quiz.option_b.presence || 'Enter an answer'}" ,type: "text", width:"w-full", rows:"2") %>
+
+            <%= input_radio(
+            radio_field_name: :answer,
+            value: "c",
+            width:"w-4",
+            html_options: {
+              id: "opt-c",
+              checked: quiz.answer.to_s.downcase == "c",
+            }
+          ) %>
+          </li>
+          <li class="flex justify-between w-full">
+            <%= input_field(form:, text_field_name: :option_d, placeholder: "D. #{quiz.option_b.presence || 'Enter an answer'}" ,type: "text", width:"w-full", rows:"2") %>
+
+            <%= input_radio(
+            radio_field_name: :answer,
+            value: "d",
+            width:"w-4",
+            html_options: {
+              id: "opt-d",
+              checked: quiz.answer.to_s.downcase == "d",
+            }
+          ) %>
+          </li>
+
+
+        </ul> 
+ 
       </div>
     </div>
     
