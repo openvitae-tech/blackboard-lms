@@ -27,6 +27,7 @@ class LoginsController < ApplicationController
       if service.valid_otp?(user, login_params[:otp])
         build_user_session(user)
         user.clear_otp!
+        EVENT_LOGGER.publish_user_login(user, 'otp')
         redirect_to after_sign_in_path_for(user), notice: t('devise.sessions.signed_in')
       else
         flash.now[:error] = t('login.invalid_or_incorrect_otp')

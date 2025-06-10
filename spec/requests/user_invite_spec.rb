@@ -14,7 +14,7 @@ RSpec.describe 'Request spec for user invites' do
       sign_in support_user
     end
 
-    it 'Allow access new course module by support user' do
+    it 'Allow access new invite user by support user' do
       get new_invite_path(team_id: team.id)
 
       expect(response.status).to be(200)
@@ -117,6 +117,20 @@ RSpec.describe 'Request spec for user invites' do
       end.to change(User, :count).by(3)
     end
 
+    it 'Skip the duplicate numbers while inviting learners in bulk' do
+      params = {
+        user: {
+          bulk_invite:
+            Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/valid_bulk_invite_with_duplicates.csv')),
+          team_id: team.id
+        }
+      }
+
+      expect do
+        post '/invites', params:
+      end.to change(User, :count).by(1)
+    end
+
     it 'Does not creates invitation for invalid rows in the csv' do
       params = {
         user: {
@@ -131,13 +145,30 @@ RSpec.describe 'Request spec for user invites' do
     end
   end
 
+  describe 'GET /verify_phone' do
+    before do
+      support_user = create(:user, role: 'support', team:, learning_partner:)
+      sign_in support_user
+    end
+
+    it 'Verify the phone by clicking verification link' do
+      params = create_invite_params
+      post(invites_path, params:)
+      user = User.where(phone: params[:user][:phone]).last
+      expect(user.phone_confirmed_at).to be_nil
+      get verify_phone_invites_path(confirmation_token: user.phone_confirmation_token)
+      user.reload
+      expect(user.phone_confirmed_at).not_to be_nil
+    end
+  end
+
   private
 
   def create_invite_params
     {
       user: {
         name: Faker::Name.name,
-        email: Faker::Internet.email,
+        phone: Faker::Number.number(digits: 10),
         role: 'learner',
         team_id: team.id
       }

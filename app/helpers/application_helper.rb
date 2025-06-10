@@ -104,4 +104,10 @@ module ApplicationHelper
 
     safe_join(text.split("\n").map { |para| content_tag(:p, para, class: 'my-2') })
   end
+
+  def email(user)
+    return user.email if user.email.present?
+
+    user.unconfirmed_email.present? ? "#{user.unconfirmed_email} (Unverified)" : 'NA'
+  end
 end

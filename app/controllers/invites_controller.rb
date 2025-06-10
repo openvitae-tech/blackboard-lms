@@ -3,6 +3,8 @@
 # Invites Controller is used to invite new  members by the manager or owners.
 # This is not meant for inviting other admins.
 class InvitesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:verify_phone]
+
   def new
     authorize :invite
     @team = Team.find(params[:team_id])
@@ -51,14 +53,13 @@ class InvitesController < ApplicationController
   end
 
   def resend
+    service = UserManagementService.instance
     user = User.where(id: params[:id], team_id: params[:team_id]).first
 
     if user.present?
       authorize user,:resend?, policy_class: InvitePolicy
-      user.set_temp_password
-      user.save!
-      user.send_confirmation_instructions
-      flash.now[:success] = format(I18n.t('invite.invite_sent'), email: user.email)
+      service.send_sms_invite(user)
+      flash.now[:success] = format(I18n.t('invite.invite_sent'), phone: user.phone)
     else
       flash.now[:error] = I18n.t('invite.invalid_user')
     end
@@ -85,10 +86,28 @@ class InvitesController < ApplicationController
     send_file(Rails.root.join("app/views/invites/learner_bulk_invite_sample.csv"), type: "text/csv", disposition: "inline")
   end
 
+  def verify_phone
+    token = params[:confirmation_token]
+    user = User.where(phone_confirmation_token: token).first
+
+    if user.present?
+      user.touch(:phone_confirmed_at)
+      user.reset_phone_confirmation_token
+
+      service = UserManagementService.instance
+      service.verify_user(user)
+      notice = "Phone number verified"
+    else
+      notice = "User does not exists"
+    end
+
+    redirect_to new_login_url, notice: notice
+  end
+
   private
 
   def invite_params
-    params.require(:user).permit(:name, :email, :role, :team_id, :bulk_invite)
+    params.require(:user).permit(:name, :phone, :role, :team_id, :bulk_invite)
   end
 
   def invite_admin_params

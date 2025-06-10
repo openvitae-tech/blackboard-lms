@@ -1,29 +1,25 @@
 <div id="invite_button_section">
   <% if learning_partner.payment_plan.present? %>
     <% if policy(:invite).new? && policy(learning_partner).invite? %>
-      <%= link_to new_invite_path(team_id: learning_partner.parent_team.id), data: { turbo_frame: "modal" } do %>
-        <%= button(
-        label: t("invite.invite_user"),
-        icon_name: "plus",
-      ) %>
+      <%= link_to new_invite_path(team_id: team.id), data: { turbo_frame: "modal" } do %>
+        <%= button(label: t("invite.invite_user"), icon_name: "plus") %>
       <% end %>
-      
+
     <% else %>
-      <%= button(
-      label: t("invite.invite_user"), 
-      icon_name: "plus", 
-      tooltip_text:t('invite.max_user_count'), 
-      tooltip_position: "left",
-      disabled: true
-    ) %>
+      <%= button(label: t("invite.invite_user"),
+                 icon_name: "plus",
+                 tooltip_text: t('invite.max_user_count'),
+                 tooltip_position: "left",
+                 disabled: true
+          ) %>
     <% end %>
   <% else %>
     <%= button(
-    label: t("invite.invite_user"),
-    icon_name: "plus",
-    tooltip_text:current_user.is_admin? ? t("learning_partner.payment_plan.create_plan_to_invite") : t("learning_partner.payment_plan.contact_admin_to_create_plan"), 
-    tooltip_position: "left",
-    disabled: true
-  ) %>
+          label: t("invite.invite_user"),
+          icon_name: "plus",
+          tooltip_text: current_user.is_admin? ? t("learning_partner.payment_plan.create_plan_to_invite") : t("learning_partner.payment_plan.contact_admin_to_create_plan"),
+          tooltip_position: "left",
+          disabled: true
+        ) %>
   <% end %>
 </div>
