@@ -59,10 +59,6 @@ class InvitesController < ApplicationController
     if user.present?
       authorize user,:resend?, policy_class: InvitePolicy
       service.send_sms_invite(user)
-      # TODO: Resend opt here, move this code to email verify
-      # user.set_temp_password
-      # user.save!
-      # user.send_confirmation_instructions
       flash.now[:success] = format(I18n.t('invite.invite_sent'), phone: user.phone)
     else
       flash.now[:error] = I18n.t('invite.invalid_user')
