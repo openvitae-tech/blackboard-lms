@@ -153,7 +153,7 @@ RSpec.describe 'Request spec for user invites' do
 
     it 'Verify the phone by clicking verification link' do
       params = create_invite_params
-      post invites_path, params: params
+      post(invites_path, params:)
       user = User.where(phone: params[:user][:phone]).last
       expect(user.phone_confirmed_at).to be_nil
       get verify_phone_invites_path(confirmation_token: user.phone_confirmation_token)
