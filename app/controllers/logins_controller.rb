@@ -21,10 +21,15 @@ class LoginsController < ApplicationController
 
   def create
     service = LoginWithOtpService.instance
+    user_management_service = UserManagementService.instance
 
     if @user_exists
       user = User.where(phone: @mobile_number.value).first
+
       if service.valid_otp?(user, login_params[:otp])
+        # mark user as verified when logging in with otp for the first time
+        user_management_service.verify_user(user) if user.unverified?
+
         build_user_session(user)
         user.clear_otp!
         EVENT_LOGGER.publish_user_login(user, 'otp')

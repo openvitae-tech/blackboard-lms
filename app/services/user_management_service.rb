@@ -57,16 +57,14 @@ class UserManagementService
     user.phone_confirmation_sent_at = Time.current
     user.save!
 
-    confirmation_link = Rails.application.routes.url_helpers.verify_phone_invites_url(
-      confirmation_token: user.phone_confirmation_token,
-      host: Rails.application.credentials.dig(:app, :base_url)
-    )
+    login_url = Rails.application.routes.url_helpers.new_login_url(host: Rails.application.credentials.dig(:app,
+                                                                                                           :base_url))
 
     if Rails.env.local?
-      Rails.logger.info "Hello, please click here to activate your Instruo account #{confirmation_link}"
+      Rails.logger.info "Hello, please click here to activate your Instruo account #{login_url}"
     else
       CommunicationChannels::SendSmsJob.perform_async(
-        Rails.application.credentials.dig(:fast2sms, :template, :welcome), user.phone, confirmation_link
+        Rails.application.credentials.dig(:fast2sms, :template, :welcome), user.phone, login_url
       )
     end
   end
