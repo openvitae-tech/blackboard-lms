@@ -34,9 +34,8 @@ module UiHelper
   end
 
   def input_field(form: nil, field_name: nil, text_field_name: nil, label: nil,
-                  placeholder: 'Enter text', width: 'w-56', height: nil, left_icon: nil, right_icon: nil, type: 'text',
+                  placeholder: nil, width: 'w-56', height: nil, left_icon: nil, right_icon: nil, type: 'text',
                   options: [], value: nil, rows: '5', option: nil, html_options: {})
-    partial_path = "ui/inputs/#{type}"
     partial_path = 'ui/inputs/text_field' unless lookup_context.exists?(partial_path, [], true)
 
     html_options[:data] ||= {}
@@ -78,7 +77,7 @@ module UiHelper
     }
   end
 
-  def dropdown_input(form: nil, field_name: nil, label: nil,
+  def input_dropdown(form: nil, field_name: nil, label: nil,
                      width: 'w-56', height: nil, placeholder: nil,
                      options: [], value: nil, html_options: {})
     render partial: 'ui/inputs/dropdown_field', locals: {

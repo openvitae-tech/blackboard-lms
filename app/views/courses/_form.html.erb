@@ -14,10 +14,10 @@
       </div>
     </div>
     <div class="my-8 text-sm flex flex-col">
-      <%= dropdown_input(form:, field_name: :category_id, label: "Category", options: @categories.pluck(:name, :id), value: @category&.id) %>
+      <%= input_dropdown(form:, field_name: :category_id, label: "Category", options: @categories.pluck(:name, :id), value: @category&.id) %>
     </div>
     <div class="my-8 text-sm flex flex-col">
-      <%= dropdown_input(form:, field_name: :category_id, label: "Level", options: @levels.pluck(:name, :id), value: @level&.id) %>
+      <%= input_dropdown(form:, field_name: :category_id, label: "Level", options: @levels.pluck(:name, :id), value: @level&.id) %>
     </div>
     <div class="my-8 text-sm">
       <%= input_field(form:, field_name: :description,label: "Description", placeholder: "Enter description",type: "text_area", width:"w-full") %>
