@@ -20,8 +20,7 @@
       
       <%= input_field(form:form, field_name: :name, label: "Name", placeholder: "Name",type: "text",value: form.object.name, width:"w-full") %>
       <%= input_field(form:form, field_name: :email, label: "Email", placeholder: "email",type: "email",value: form.object.email, width:"w-full") %>
-      <%= input_field(form:form, field_name: :phone, label: "Mobile number", placeholder: "Mobile number",type: "number",width:"w-full") %>
-
+      <%= input_mobile(form: form, field_name: :phone,label: "Mobile number", placeholder: "Mobile number") %>
       <div class="absolute bottom-6 left-0 w-full flex justify-center px-4">
         <%= form.submit "Confirm", class: "btn-primary" %>
       </div>

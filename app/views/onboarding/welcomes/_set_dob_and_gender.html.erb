@@ -13,7 +13,7 @@
         <%= form.label :dob, "Date of Birth" %>
         <div class="relative flex w-full flex-row items-center">
           <input type="date" id="datePicker" class="invisible p-0 w-[2px]" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker" max="<%= (Date.today - 16.years).strftime('%Y-%m-%d') %>"/>
-          <%= input_field(form:form, field_name: :start_date, placeholder: "YYYY-MM-DD",type: "text", width:"w-full",value: form.object.start_date,html_options: { data: { date_picker_target: "dateSelector" } }) %>
+          <%= input_field(form:form, field_name: :dob, placeholder: "YYYY-MM-DD",type: "text", width:"w-full",html_options: { data: { date_picker_target: "dateSelector" } }) %>
           <div class="absolute right-2 flex items-center pl-2">
             <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->date-picker#openDatePicker"></span>
           </div>
