@@ -2,13 +2,11 @@
   <%= form_with(model: @tag, url: tag_path(@tag), method: :patch, class: "flex flex-col gap-6 p-6") do |form| %>
     <%= render "shared/components/form_errors", resource: @tag %>
     <div class="flex flex-col gap-4">
-      <%= form.label :name, class: "block text-sm" %>
-      <%= form.text_field :name, value: @tag.name, placeholder: "Enter tag name", class: "input-text" %>
+      <%= input_field(form:form, field_name: :name, label: "Name", placeholder: "Enter tag name",type: "text",value: @tag.name, width:"w-full") %>
     </div>
 
     <div class="flex flex-col gap-4">
-      <%= form.label :type, class: "block text-sm" %>
-      <%= form.select :tag_type, options_for_select(tag_list, @type) %>
+      <%= input_dropdown(form:, field_name: :tag_type, label: "Type", options:options_for_select(tag_list, @type)) %>
     </div>
     <div class="flex flex-col gap-6 justify-between heading">
       <%= form.button "Save", class: "bg-primary text-white p-4 rounded" %>
