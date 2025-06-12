@@ -4,13 +4,12 @@
     <%= render "shared/components/form_errors", resource: @user %>
 
     <div class="flex flex-col gap-4">
-      <%= form.label :name, class: "block text-sm" %>
-      <%= form.text_field :name, placeholder: "Set your name", class: "input-text" %>
+      <%= input_field(form:form, field_name: :name, label: "Name", placeholder: "Set your name",type: "text", width:"w-full") %> 
     </div>
 
     <div class="flex flex-col gap-4">
-      <%= form.label :phone, class: "block text-sm" %>
-      <%= form.text_field :phone, placeholder: "Set your 10 digit phone number", class: "input-number" %>
+
+      <%= input_mobile(form: form, field_name: :phone,label: "Phone number", placeholder: "Set your 10 digit phone number") %>
     </div>
 
     <div class="flex flex-col justify-between">
