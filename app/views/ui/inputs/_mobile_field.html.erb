@@ -1,0 +1,7 @@
+    <%= form.number_field :mobile_number,
+        placeholder: "Enter 10-digit mobile number",
+        pattern: "[0-9]{10}",
+        title: "Enter exactly 10 digits",
+        class: "input-mobile w-full border-none focus:ring-0 focus:outline-none",
+        required: true,
+        data: { controller: "input-mobile", action: "input->input-mobile#validateInput" } %>

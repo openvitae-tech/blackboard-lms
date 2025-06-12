@@ -16,7 +16,7 @@
             <div class="h-[52px] w-[96px] border-r border-line-colour-light focus-within:border-primary flex items-center justify-center">
               <%= image_tag "india.png",  alt: "IN", class: "w-8 h-8 rounded-full box-shadow-small" %>
             </div>
-            <%= form.text_field "mobile_number", class: "border-none input-number", placeholder: "Your 10 digit mobile number" %>
+            <%= input_mobile(form: form) %>
           </div>
         </div>
         <div class="mt-4">

@@ -21,66 +21,8 @@
               <div class="input-group">
                 <label for="otp" class="label-text">Verification code (OTP)</label>
                 <div id="otp" class="mt-6 flex justify-between gap-6">
-                  <%= input_field(
-                    form: form,
-                    field_name: :otp_value_one,
-                    type: "text", 
-                    width:"min-w-16",
-                    html_options: {
-                      class: "input-text-otp",
-                      maxlength: 1,
-                      inputmode: "numeric",         
-                      pattern: "[0-9]*",            
-                      data: {
-                        otp_target: "input"
-                      }
-                    }
-                ) %>
-                  <%= input_field(
-                      form: form,
-                      field_name: :otp_value_two,
-                      type: "text", 
-                      width:"min-w-16",
-                      html_options: {
-                        class: "input-text-otp",
-                        maxlength: 1,
-                        inputmode: "numeric",         
-                        pattern: "[0-9]*",            
-                        data: {
-                          otp_target: "input"
-                        }
-                      }
-                  ) %>
-                  <%= input_field(
-                      form: form,
-                      field_name: :otp_value_three,
-                      type: "text", 
-                      width:"min-w-16",
-                      html_options: {
-                        class: "input-text-otp",
-                        maxlength: 1,
-                        inputmode: "numeric",         
-                        pattern: "[0-9]*",            
-                        data: {
-                          otp_target: "input"
-                        }
-                      }
-                  ) %>
-                  <%= input_field(
-                      form: form,
-                      field_name: :otp_value_four,
-                      type: "text",
-                      width:"min-w-16",
-                      html_options: {
-                        class: "input-text-otp",
-                        maxlength: 1,
-                        inputmode: "numeric",         
-                        pattern: "[0-9]*",            
-                        data: {
-                          otp_target: "input"
-                        }
-                      }
-                  ) %>
+                  <%= input_otp(form: form, field_prefix: :otp_value, count: 4,input_options: { data: { otp_target: "input", action: "input->otp#handleInputOrKeyDown" }},) %>
+
                 </div>
                 <a href="#" class="float-right pt-6 link-text text-danger">Resend OTP</a>
               </div>
