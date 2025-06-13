@@ -2,18 +2,11 @@
   <%= form_with(url: invites_path, method: :post, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
     <%= render "shared/components/form_errors", resource: @user %>
     <%= form.hidden_field :team_id %>
-    <div class="flex flex-col gap-4">
-      <%= form.label :name, class: "block text-sm" %>
-      <%= form.text_field :name, placeholder: "Your name", class: "input-text" %>
-    </div>
-    <div class="flex flex-col gap-4">
-      <%= form.label :phone, class: "block text-sm" %>
-      <%= form.text_field :phone, placeholder: "10 digit mobile number", class: "input-text" %>
-    </div>
-    <div class="flex flex-col gap-4">
-      <%= form.label :role, 'Select role', class: "block text-sm" %>
-      <%= form.select :role, user_role_mapping_for_partner(current_user, @team), {}, class: "input-text" %>
-    </div>
+
+    <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter your name",type: "text",width:"w-full") %> 
+    <%= input_mobile(form:, field_name: :phone,label: "Mobile number", placeholder: "10 digit mobile number") %>
+    <%= input_dropdown(form:, field_name: :role, label: "Category", options:user_role_mapping_for_partner(current_user, @team),width:"w-full") %>
+
     <!-- admin cannot bulk import users, admin invites users to the top level team.
     Inviting in bulk can be done by managers or owners of the company -->
     <% if current_user.privileged_user? %>

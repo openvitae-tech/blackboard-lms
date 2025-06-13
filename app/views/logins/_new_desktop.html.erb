@@ -12,14 +12,7 @@
                 <label for="" class="label-text">Welcome! Please enter your mobile number</label>
               </div>
               <div class="input-group">
-                <%= form.label "mobile_number", class: "label-text" %>
-                <div tabindex="-1"
-                     class="mt-4 flex rounded border border-line-colour-light focus-within:border-primary">
-                  <div class="flex items-center justify-center border-r h-[52px] w-[96px] border-line-colour focus-within:border-primary">
-                    <%= image_tag "india.png",  alt: "IN", class: "h-8 w-8 rounded-full flag-box-shadow" %>
-                  </div>
-                  <%= form.text_field "mobile_number", class: "border-none input-number", placeholder: "Your 10 digit mobile number" %>
-                </div>
+                <%= input_mobile(form: form, field_name: :mobile_number,label:"Mobile number", placeholder: "Enter your mobile number", flag: "india.png") %>
               </div>
               <div class="mt-8">
                 <%= form.button class: "w-full btn-primary"  do %>

@@ -1,15 +1,25 @@
-<div class="flex flex-col gap-4">
-  <% if label.present? %>
-    <label class="text-letter-color-light text-sm font-normal leading-tight">
-      <%= label %>
-    </label>
+<% html_data = html_options[:data] || {} %>
+<% merged_options = html_options.merge(data: html_data) %>
+<% custom_class = merged_options.delete(:class) || "" %>
+<% radio_value = value || option %>
+
+<label class="h-12 px-4 py-3 bg-white flex justify-between items-center gap-2.5 cursor-pointer <%= width %> <%= height %>">
+  <% if option.present? %>
+    <div class="flex flex-row items-center w-full">        
+      <span class="text-letter-color-light text-base font-normal"><%= option %></span>  
+    </div>
   <% end %>
-  <div class="h-12 px-4 py-3 bg-white rounded border border-line-colour flex justify-between items-center gap-2.5 <%= width %>">
-    <span class="text-letter-color-light text-base font-normal"><%= placeholder %></span>
-    <% if form.present? %>
-      <%= form.radio_button field_name, value || field_name, class: "form-radio w-5 h-5" %>
-    <% else %>
-      <input type="radio" name="<%= field_name %>" value="<%= value %>" class="form-radio w-5 h-5" />
-    <% end %>
-  </div>
-</div>
+
+  <% if form.present? %>
+    <%= form.radio_button field_name, radio_value, merged_options.merge(class: "form-radio w-5 h-5 #{custom_class}") %>
+  <% else %>
+    <input type="radio"
+           name="<%= field_name %>"
+           value="<%= radio_value %>"
+           id="<%= merged_options[:id] %>"
+           class="form-radio w-5 h-5 <%= custom_class %>"
+           <%= "checked" if merged_options[:checked] %>
+           <%= "disabled" if merged_options[:disabled] %>
+           <%= tag.attributes(data: merged_options[:data]) %>>
+  <% end %>
+</label>

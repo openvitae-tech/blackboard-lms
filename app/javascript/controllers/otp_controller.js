@@ -7,6 +7,11 @@ export default class extends Controller {
     if (this.inputTargets.length > 0) {
       this.inputTargets[0].focus();
     }
+    this.inputTargets.forEach(input => {
+      input.addEventListener('input', e => {
+        e.target.value = e.target.value.replace(/\D/g, '').trim();
+      });
+    });
   }
 
   updateHiddenOtp() {
@@ -23,9 +28,11 @@ export default class extends Controller {
     const input = event.target;
 
     if (event.type === "input") {
-      if (input.value.length === 1) {
+      if (/^\d$/.test(input.value)) {
         const nextInput = this.nextInput(input);
         if (nextInput) nextInput.focus();
+      } else {
+        input.value = "";
       }
       this.updateHiddenOtp();
     }
