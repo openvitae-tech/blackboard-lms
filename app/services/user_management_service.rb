@@ -52,8 +52,6 @@ class UserManagementService
   end
 
   def send_sms_invite(user)
-    # this will reset the confirmation token
-    user.reset_phone_confirmation_token
     user.phone_confirmation_sent_at = Time.current
     user.save!
 
@@ -77,7 +75,7 @@ class UserManagementService
     return unless user.is_owner? && !user.learning_partner.first_owner_joined
 
     service = PartnerOnboardingService.instance
-    service.first_owner_joined(partner, resource)
+    service.first_owner_joined(user.learning_partner, resource)
   end
 
   private
