@@ -6,7 +6,8 @@
         <%= form.label :start_date, t("learning_partner.payment_plan.subscription_start_date"), class: "text-sm font-medium" %>
         <div class="relative flex w-full flex-row items-center">
           <input type="date" id="datePicker" class="invisible p-0 w-[2px]" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker" min="<%= Date.today.strftime('%Y-%m-%d') %>" />
-          <%= form.text_field :start_date, id: 'duration', placeholder: "YYYY-MM-DD", class: "border border-line-colour rounded focus:ring-0 py-3 px-4 w-full", data: { date_picker_target: "dateSelector" } %>
+          <%= input_field(form:form, field_name: :start_date, placeholder: "YYYY-MM-DD",type: "text", width:"w-full",value: form.object.start_date,html_options: { data: { date_picker_target: "dateSelector" } }) %>
+
           <div class="absolute right-2 flex items-center pl-2">
             <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->date-picker#openDatePicker"></span>
           </div>
@@ -18,7 +19,7 @@
         <%= form.label :end_date, t("learning_partner.payment_plan.subscription_end_date"), class: "text-sm font-medium" %>
         <div class="relative flex w-full flex-row items-center">
           <input type="date" id="datePicker" class="invisible p-0 w-[2px]" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker" min="<%= Date.today.strftime('%Y-%m-%d') %>" />
-          <%= form.text_field :end_date, id: 'duration', placeholder: "YYYY-MM-DD", class: "border border-line-colour rounded focus:ring-0 py-3 px-4 w-full", data: { date_picker_target: "dateSelector" } %>
+          <%= input_field(form:form, field_name: :end_date, placeholder: "YYYY-MM-DD",type: "text", width:"w-full",value: form.object.end_date,html_options: { data: { date_picker_target: "dateSelector"}}) %>
           <div class="absolute right-2 flex items-center pl-2">
             <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->date-picker#openDatePicker"></span>
           </div>
