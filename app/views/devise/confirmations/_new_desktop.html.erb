@@ -13,10 +13,7 @@
               </div>
               <%= render "devise/shared/error_messages", resource: resource %>
               <div class="input-group">
-                <%= f.label :email, 'Enter your email', class: "label-text" %>
-                <p class="mt-4">
-                  <%= f.email_field :email, class: "input-text", autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
-                </p>
+                <%= input_field(form:f, field_name: :email, label: "Enter your email", placeholder: "Enter your email",type: "email",value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),width:"w-full", html_options: { autofocus: true, autocomplete: "email"}) %>
               </div>
               <div class="mt-8">
                 <%= f.button class: "btn-primary w-full" do %>
