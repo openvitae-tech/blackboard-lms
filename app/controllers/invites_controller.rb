@@ -86,24 +86,6 @@ class InvitesController < ApplicationController
     send_file(Rails.root.join("app/views/invites/learner_bulk_invite_sample.csv"), type: "text/csv", disposition: "inline")
   end
 
-  def verify_phone
-    token = params[:confirmation_token]
-    user = User.where(phone_confirmation_token: token).first
-
-    if user.present?
-      user.touch(:phone_confirmed_at)
-      user.reset_phone_confirmation_token
-
-      service = UserManagementService.instance
-      service.verify_user(user)
-      notice = "Phone number verified"
-    else
-      notice = "User does not exists"
-    end
-
-    redirect_to new_login_url, notice: notice
-  end
-
   private
 
   def invite_params

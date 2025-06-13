@@ -158,11 +158,6 @@ class User < ApplicationRecord
     false
   end
 
-  def reset_phone_confirmation_token
-    self.phone_confirmation_token = Devise.friendly_token
-    save!
-  end
-
   def phone_verified?
     user.phone_confirmed_at.present?
   end
