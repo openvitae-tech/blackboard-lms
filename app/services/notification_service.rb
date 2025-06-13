@@ -19,6 +19,11 @@ class NotificationService
   def enqueue_notification(notification)
     clear_older_notifications(notification.user)
     enqueue_message(notification)
+
+    NotificationsChannel.broadcast_to(
+      notification.user,
+      { count: notifications_count_for(notification.user) }
+    )
   end
 
   def pending_notification_for(user)

@@ -31,6 +31,7 @@ RSpec.describe NotificationService do
     it 'clears older notifications and enqueues a new notification' do
       allow(queue_client).to receive(:trim_to_length)
       allow(queue_client).to receive(:enqueue)
+      allow(queue_client).to receive(:length).and_return(1)
 
       subject.enqueue_notification(notification)
 
