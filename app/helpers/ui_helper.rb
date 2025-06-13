@@ -117,20 +117,22 @@ module UiHelper
   def input_otp(form:, field_prefix:, count: 4, input_options: {}, wrapper_options: {})
     content_tag(:div, class: 'flex justify-between gap-6 w-full',
                       data: wrapper_options[:data] || { controller: 'otp' }) do
-      (1..count).map do |i|
-        input_field(
-          form:,
-          field_name: :"#{field_prefix}_#{i}",
-          type: 'text',
-          width: 'min-w-16',
-          html_options: {
-            class: 'input-text-otp',
-            maxlength: 1,
-            inputmode: 'numeric',
-            pattern: '[0-9]*'
-          }.merge(input_options)
-        )
-      end.join.html_safe
+      safe_join(
+        (1..count).map do |i|
+          input_field(
+            form:,
+            field_name: :"#{field_prefix}_#{i}",
+            type: 'text',
+            width: 'min-w-16',
+            html_options: {
+              class: 'input-text-otp',
+              maxlength: 1,
+              inputmode: 'numeric',
+              pattern: '[0-9]*'
+            }.merge(input_options)
+          )
+        end
+      )
     end
   end
 
