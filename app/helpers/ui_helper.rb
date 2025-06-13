@@ -115,13 +115,16 @@ module UiHelper
   end
 
   def input_otp(form:, field_prefix:, count: 4, input_options: {}, wrapper_options: {})
-    content_tag(:div, class: 'flex justify-between gap-6 w-full',
-                      data: wrapper_options[:data] || { controller: 'otp' }) do
+    number_words = %w[one two three four five six seven eight nine ten]
+
+    content_tag(:div, class: 'flex justify-between gap-6 w-full', **(wrapper_options || {}).except(:data)) do
       safe_join(
-        (1..count).map do |i|
+        (0...count).map do |i|
+          field_name = :"#{field_prefix}_#{number_words[i]}"
+
           input_field(
             form:,
-            field_name: :"#{field_prefix}_#{i}",
+            field_name:,
             type: 'text',
             width: 'min-w-16',
             html_options: {

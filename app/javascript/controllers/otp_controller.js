@@ -9,7 +9,7 @@ export default class extends Controller {
     }
     this.inputTargets.forEach(input => {
       input.addEventListener('input', e => {
-        e.target.value = e.target.value.replace(/[^0-9]/g, '')
+        e.target.value = e.target.value.replace(/\D/g, '').trim();
       });
     });
   }
