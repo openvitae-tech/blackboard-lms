@@ -1,24 +1,31 @@
-<div class="flex flex-col gap-4 w-full ">
+<div class="flex flex-col gap-4 w-full">
   <% if label.present? %>
     <label class="text-letter-color-light text-sm md:text-base leading-tight">
       <%= label %>
     </label>
   <% end %>
-    <div class="bg-white justify-between items-center flex rounded border border-line-colour">
-
+  <div class="bg-white justify-between items-center flex rounded border border-line-colour">
     <% if flag.present? %>
-        <div class="flex items-center justify-center border-r h-[52px] w-[96px] border-line-colour focus-within:border-primary">
+      <div class="flex items-center justify-center border-r h-[52px] w-[96px] border-line-colour focus-within:border-primary">
         <%= image_tag flag, alt: "IN", class: "h-8 w-8 rounded-full flag-box-shadow" %>
-        </div>
+      </div>
     <% end %>
 
+    <% 
+      base_data = { controller: "input-mobile", action: "input->input-mobile#validateInput" } 
+      merged_data = base_data.merge((html_options && html_options[:data]) || {})
+      html_options_without_data = (html_options || {}).except(:data)
+    %>
+
     <%= form.number_field field_name,
-        placeholder: placeholder,
-        pattern: "[0-9]{10}",
-        value: value,
-        title: "Enter exactly 10 digits",
-        class: "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:ring-0 focus:outline-none",
-        required: true,
-        data: { controller: "input-mobile", action: "input->input-mobile#validateInput" } %>
-    </div>
+        {
+          placeholder: placeholder,
+          pattern: "[0-9]{10}",
+          value: value,
+          title: "Enter exactly 10 digits",
+          class: "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:ring-0 focus:outline-none",
+          required: true,
+          data: merged_data
+        }.merge(html_options_without_data) %>
+  </div>
 </div>
