@@ -13,10 +13,8 @@
                 <label for="" class="label-text">No worries. We&apos;ll send you reset instructions.</label>
               </div>
               <div class="input-group">
-                <%= f.label :email, class: "label-text" %>
-                <p class="mt-4">
-                  <%= f.email_field :email, class: "input-text", autofocus: true, autocomplete: "email" %>
-                </p>
+                <%= input_field(form:f, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email",width:"w-full", html_options: { autofocus: true, autocomplete: "email"}) %>
+
               </div>
               <div class="my-4 actions">
                 <%= f.button class: "btn-primary w-full" do %>
