@@ -15,36 +15,83 @@
   <%= form_with model: @quiz, url: submit_answer_course_module_quiz_path(course, course_module, quiz), method: :post, class:"md:w-[910px]" do |form| %>
     <ul class="w-full pb-6">
       <li class="carousel-container mt-6">
-        <h2 class="bg-primary-light-50 p-6 text-medium rounded box-shadow-medium">
+        <h2 class="bg-primary-light-50 p-6 text-medium text-letter-color-light rounded box-shadow-medium">
           <span>Q.</span> <%= quiz.question %>
         </h2>
 
         <div class="carousel-item active mt-6">
           <ul class="flex flex-col gap-6">
-            <li class="border border-line-colour-light p-6 rounded">
-              <label class="flex items-center justify-between">
-                <span><%= "A. #{quiz.option_a}" %></span>
-                <%= form.radio_button 'answer', "a", checked: @answer&.answer == 'a', class: "mx-2 form-radio", id: "quiz_opt-a", required: true, data: { action: "change->quiz#valueChanged"} %>
-              </label>
+            <li class="">
+              <%= input_radio(
+                form: form,
+                field_name: :answer,
+                value: "a",             
+                option: "A. #{quiz.option_a}",
+                width: "w-full",
+                height: "h-16",
+                html_options: {
+                  required: true,
+                  id: "quiz_opt-a",
+                  data: {
+                    action: "change->quiz#valueChanged"
+                  },
+                  checked: @answer&.answer == 'a'
+                }
+            ) %>
+            </li><li class="">
+              <%= input_radio(
+                form: form,
+                field_name: :answer,
+                value: "b",             
+                option: "B. #{quiz.option_b}",
+                width: "w-full",
+                height: "h-16",
+                html_options: {
+                  required: true,
+                  id: "quiz_opt-b",
+                  data: {
+                    action: "change->quiz#valueChanged"
+                  },
+                  checked: @answer&.answer == 'b'
+                }
+            ) %>
             </li>
-            <li class="border border-line-colour-light p-6 rounded">
-              <label class="flex items-center justify-between">
-                <span><%= "B. #{quiz.option_b}" %></span>
-                <%= form.radio_button 'answer', "b", checked: @answer&.answer == 'b', class: "mx-2 form-radio", id: "quiz_opt-b", required: true, data: { action: "change->quiz#valueChanged"} %>
-              </label>
+            <li class="">
+              <%= input_radio(
+                form: form,
+                radio_field_name: :answer,
+                value: "c",              
+                option: "C. #{quiz.option_c}",
+                width: "w-full",
+                height: "h-16",
+                html_options: {
+                  required: true,
+                  id: "quiz_opt-c",
+                  data: {
+                    action: "change->quiz#valueChanged"
+                  },
+                  checked: @answer&.answer == 'c'
+                }
+            ) %>
             </li>
-            <li class="border border-line-colour-light p-6 rounded">
-              <label class="flex items-center justify-between">
-                <span><%= "C. #{quiz.option_c}" %></span>
-                <%= form.radio_button 'answer', "c", checked: @answer&.answer == 'c', class: "mx-2 form-radio", id: "quiz_opt-c", required: true, data: { action: "change->quiz#valueChanged"} %>
-              </label>
-            </li>
-            <li class="border border-line-colour-light p-6 rounded">
-              <label class="flex items-center justify-between">
-                <span><%= "D. #{quiz.option_d}" %></span>
-                <%= form.radio_button 'answer', "d", checked: @answer&.answer == 'd', class: "mx-2 form-radio", id: "quiz_opt-d", required: true, data: { action: "change->quiz#valueChanged"} %>
-              </label>
-            </li>
+            <li class="">
+              <%= input_radio(
+                form: form,
+                field_name: :answer,
+                value: "d",                
+                option: "D. #{quiz.option_d}",
+                width: "w-full",
+                height: "h-16",
+                html_options: {
+                  required: true,
+                  id: "quiz_opt-d",
+                  data: {
+                    action: "change->quiz#valueChanged"
+                  },
+                  checked: @answer&.answer == 'd'
+                }
+            ) %>
+            </li>            
           </ul>         
         </div>
       </li>      

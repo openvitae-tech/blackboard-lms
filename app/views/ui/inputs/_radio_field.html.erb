@@ -1,7 +1,7 @@
 <% html_data = html_options[:data] || {} %>
 <% merged_options = html_options.merge(data: html_data) %>
-<% is_text_field = text_field_name.present? %>
 <% custom_class = merged_options.delete(:class) || "" %>
+<% radio_value = value || option %>
 
 <label class="h-12 px-4 py-3 bg-white flex justify-between items-center gap-2.5 cursor-pointer <%= width %> <%= height %>">
   <% if option.present? %>
@@ -11,18 +11,15 @@
   <% end %>
 
   <% if form.present? %>
-    <%= form.radio_button radio_field_name, value || field_name,
-          **merged_options.merge(class: "form-radio w-5 h-5") %>
+    <%= form.radio_button field_name, radio_value, merged_options.merge(class: "form-radio w-5 h-5 #{custom_class}") %>
   <% else %>
-    <%= tag(:input,
-      type: "radio",
-      name: radio_field_name,
-      value: value || option,
-      id: merged_options[:id],
-      class: "form-radio w-5 h-5 #{custom_class}",
-      checked: merged_options[:checked],
-      disabled: merged_options[:disabled],
-      data: merged_options[:data]
-    ) %>
+    <input type="radio"
+           name="<%= field_name %>"
+           value="<%= radio_value %>"
+           id="<%= merged_options[:id] %>"
+           class="form-radio w-5 h-5 <%= custom_class %>"
+           <%= "checked" if merged_options[:checked] %>
+           <%= "disabled" if merged_options[:disabled] %>
+           <%= tag.attributes(data: merged_options[:data]) %>>
   <% end %>
 </label>

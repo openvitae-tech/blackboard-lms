@@ -1,15 +1,19 @@
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 <%= width %>">
   <% if label.present? %>
     <label class="text-letter-color-light text-sm md:text-base leading-tight">
       <%= label %>
     </label>
   <% end %>
+
   <% if form.present? %>
-    <%= form.select field_name, options_for_select(options), {}, class: "px-4 py-3 rounded border border-line-colour flex justify-between items-center gap-2 w-full text-letter-color-light text-base focus:border-primary focus:ring-0 #{width}" %>
+    <%= form.select field_name,
+        options_for_select(options, value),
+        {},
+        class: "px-4 py-3 rounded border border-line-colour w-full text-letter-color-light text-base focus:border-primary focus:ring-0 #{width}" %>
   <% else %>
-    <select class="px-4 py-3 rounded border border-line-colour flex justify-between items-center gap-2 w-full text-letter-color-light text-base focus:border-primary focus:ring-0 <%= width %>" placeholder="<%= placeholder %>">
-      <% options.each do |option| %>
-        <option value="<%= option %>"><%= option %></option>
+    <select class="px-4 py-3 rounded border border-line-colour w-full text-letter-color-light text-base focus:border-primary focus:ring-0 <%= width %>" placeholder="<%= placeholder %>">
+      <% options.each do |name, id| %>
+        <option value="<%= id %>" <%= 'selected' if id.to_s == value.to_s %>><%= name %></option>
       <% end %>
     </select>
   <% end %>

@@ -4,34 +4,67 @@
     <%= render "shared/components/form_errors", resource: quiz %>
     <div class="border border-line-colour-light p-8 rounded">
       <div class="mb-8 text-sm">
-      <%= form.label :question, class: "text-base font-medium" %>
-      <%= form.text_area :question, class: "input-text mt-4 resize-none h-20 content-center", rows: 2, placeholder: "Enter your question here..." %>
-      </div>
-      
+        <%= input_field(form:, field_name: :question,label: "Description", placeholder: "Enter your question here...",type: "text_area", width:"w-full", rows:"2") %>
+      </div>      
       <div class="mb-4">
         <%= form.label "Answer options", class:"text-base font-medium" %>
       </div>
-
-      <div class="mb-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
-        <span class="text-sm font-medium">A.</span>
-        <%= form.text_field :option_a, class: "input-text pr-10 border-none" %>
-        <%= form.radio_button :answer, "a", class: "radio-check-button" %>
-      </div>
-     
-      <div class="my-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
-          <span class="text-sm font-medium">B.</span>
-          <%= form.text_field :option_b, class: "input-text pr-10 border-none" %>
-          <%= form.radio_button :answer, "b", class: "radio-check-button" %>
-      </div>
-      <div class="my-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
-          <span class="text-sm font-medium">C.</span>
-          <%= form.text_field :option_c, class: "input-text pr-10 border-none" %>
-          <%= form.radio_button :answer, "c", class: "radio-check-button" %>
-      </div>
-      <div class="mt-8 text-sm border border-line-colour-light rounded pl-4 relative flex items-center">
-          <span class="text-sm font-medium">D.</span>
-          <%= form.text_field :option_d, class: "input-text pr-10 border-none" %>
-          <%= form.radio_button :answer, "d", class: "radio-check-button" %>
+      <div class="flex flex-col gap-8">
+        <ul class="flex flex-col gap-6 pt-6">
+          <li class="flex justify-between items-center w-full gap-2">
+            <span class="text-letter-color-light text-sm">A.</span>
+            <%= input_field(form:, field_name: :option_a, placeholder: "#{quiz.option_a.presence || 'Enter an answer'}" ,type: "text", width:"w-full", rows:"2") %>
+            <%= input_radio(
+              form: form,
+              field_name: :answer,
+              value: "a",
+              width:"w-4",
+              html_options: {
+                id: "opt-a",
+              }
+          ) %>
+            
+          </li>
+          <li class="flex justify-between items-center w-full gap-2">
+            <span class="text-letter-color-light text-sm">B.</span>
+            <%= input_field(form:, field_name: :option_b, placeholder: "Enter an answer" ,type: "text", width:"w-full", rows:"2") %>
+            <%= input_radio(
+              form: form,
+              field_name: :answer,
+              value: "b",
+              width:"w-4",
+              html_options: {
+                id: "opt-b",
+              }
+          ) %>
+          </li>
+          <li class="flex justify-between items-center w-full gap-2">
+            <span class="text-letter-color-light text-sm">C.</span>
+            <%= input_field(form:, field_name: :option_c, placeholder: "Enter an answer" ,type: "text", width:"w-full", rows:"2") %>
+            <%= input_radio(
+              form: form,
+              field_name: :answer,
+              value: "c",
+              width:"w-4",
+              html_options: {
+                id: "opt-c",
+              }
+          ) %>
+          </li>
+          <li class="flex justify-between items-center w-full gap-2">
+            <span class="text-letter-color-light text-sm">D.</span>
+            <%= input_field(form:, field_name: :option_d, placeholder: " Enter an answer" ,type: "text", width:"w-full", rows:"2") %>
+            <%= input_radio(
+              form: form,
+              field_name: :answer,
+              value: "d",
+              width:"w-4",
+              html_options: {
+                id: "opt-d",
+              }
+          ) %>
+          </li>
+        </ul> 
       </div>
     </div>
     
@@ -47,4 +80,3 @@
     </div>
   <% end %>
 </div>
-
