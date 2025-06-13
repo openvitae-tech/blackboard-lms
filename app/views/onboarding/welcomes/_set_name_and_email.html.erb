@@ -17,9 +17,9 @@
 
       <%= hidden_field_tag :step, "set_name_and_email" %>
       
-      <%= input_field(form:form, field_name: :name, label: "Name", placeholder: "Name",type: "text",value: form.object.name, width:"w-full") %>
-      <%= input_field(form:form, field_name: :email, label: "Email", placeholder: "email",type: "email",value: form.object.email, width:"w-full") %>
-      <%= input_mobile(form: form, field_name: :phone,label: "Mobile number", placeholder: "Mobile number") %>
+      <%= input_field(form:form, field_name: :name, label: "Name", placeholder: "Name",type: "text", width:"w-full") %>
+      <%= input_field(form:form, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email",value: form.object.email, width:"w-full") %>
+      <%= input_mobile(form: form, field_name: :phone,label: "Mobile number", placeholder: "Mobile number", html_options: { readonly: true }) %>
       <div class="absolute bottom-6 left-0 w-full flex justify-center px-4">
         <%= form.submit "Next", class: "btn-primary" %>
       </div>
