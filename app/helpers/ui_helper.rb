@@ -101,7 +101,7 @@ module UiHelper
     }
   end
 
-  def input_mobile(form:, field_name:, placeholder: 'Enter 10-digit mobile number', 
+  def input_mobile(form:, field_name:, placeholder: 'Enter 10-digit mobile number',
                    value: nil, label: nil, flag: nil, html_options: {})
     value ||= form.object.public_send(field_name) if form.object.respond_to?(field_name)
 
