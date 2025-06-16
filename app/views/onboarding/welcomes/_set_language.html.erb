@@ -15,7 +15,7 @@
       </div>
 
       <div class="<%= 'hidden' unless other_local_language(current_user.preferred_local_language).present? %> w-full pt-4" data-lang-target="otherLanguageField">
-       <%= input_field(form:form, field_name: :other_language, placeholder: "Enter your preferred language",type: "text", width:"w-full",html_options: { data: { lang_target: "otherLanguageInput" } }) %>
+       <%= input_field(form:form, field_name: :other_language, placeholder: "Enter your preferred language",type: "text", width:"w-full",html_options: {  required: true, data: { lang_target: "otherLanguageInput" } }) %>
       </div>
 
       <div class="absolute bottom-6 left-0 flex w-full justify-center gap-4 px-4">
