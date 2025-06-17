@@ -39,7 +39,7 @@ class UserSettingsController < ApplicationController
   private
 
   def profile_params
-    params.require(:user).permit(:name, :phone)
+    params.require(:user).permit(:name)
   end
 
   def password_params
@@ -47,11 +47,7 @@ class UserSettingsController < ApplicationController
   end
 
   def set_learning_partner
-    @learning_partner = if @user.is_admin?
-                          nil
-                        else
-                          @user.learning_partner
-                        end
+    @learning_partner =  @user.is_admin? ? nil : @user.learning_partner
   end
 
   def set_user
