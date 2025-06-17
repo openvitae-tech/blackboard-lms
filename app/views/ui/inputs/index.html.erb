@@ -13,12 +13,15 @@
     <%= input_field(label: "Select an Option", type: "dropdown_field", options: ["Option 1", "Option 2", "Option 3"]) %>
   </li>
   <li>
-    <%= input_field(label: "Radio Option", placeholder: "English", type: "radio_field") %>
+    <%= input_radio(label: "Radio Option", option:"A.English") %>
   </li>
 </ul>
 <h3>Form with fields</h3>
 <%= form_with model: User.new, url: courses_path, method: :post do |form| %>
   <ul class="my-6 flex flex-col gap-4">
+    <li>
+      <%= input_field(form:,label: "Text Input", placeholder: "Enter text") %>
+    </li>
     <li class="">
       <%= input_field(form:, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email") %>
     </li>
@@ -32,7 +35,11 @@
       <%= input_field(form:, label: "Select an Option", type: "dropdown_field", options: ["Option 1", "Option 2", "Option 3"]) %>
     </li>
     <li>
-      <%= input_field(form:, label: "Radio Option", placeholder: "English", type: "radio_field") %>
+      <%= input_radio(form:, label: "Radio Option", option:"A.English") %>
+    </li>
+    <li>
+      <%= input_checkbox(form:, field_name: :remember_me, label: "Remember me") %>
+
     </li>
   </ul>
   <%= form.submit "Submit", class: "btn-primary" %>

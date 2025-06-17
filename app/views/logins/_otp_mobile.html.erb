@@ -11,7 +11,7 @@
           <div class="flex justify-between">
             <label for="number" class="label-text text-primary">+91 <%= @mobile_number.value %></label>
             <%= link_to new_login_path(old_mobile_number: @mobile_number.value), class: "h-6 w-6 items-center rounded-full p-1.5 box-shadow-small" do %>
-              <%= image_tag "pencil.svg",  alt: "", class: "h-3 w-3" %>
+              <%= image_tag "pencil.svg", alt: "", class: "h-3 w-3" %>
               <%= form.hidden_field :mobile_number, value: @mobile_number.value %>
             <% end %>
           </div>
@@ -19,10 +19,8 @@
         <div class="input-group">
           <label for="" class="label-text">Verification code (OTP)</label>
           <div id="otp" class="mt-4 flex gap-4 justify-between">
-            <%= form.text_field :otp_value_one, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" }  %>
-            <%= form.text_field :otp_value_two, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" }   %>
-            <%= form.text_field :otp_value_three, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" }   %>
-            <%= form.text_field :otp_value_four, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" }   %>
+            <%= input_otp(form: form, count: 4, input_options: { data: { otp_target: "input", action: "input->otp#handleInputOrKeyDown" } }) %>
+
           </div>
         </div>
         <%= form.hidden_field :otp, data: { otp_target: "hiddenOtp" } %>

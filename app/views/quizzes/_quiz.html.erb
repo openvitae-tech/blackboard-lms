@@ -2,48 +2,93 @@
   <div class="flex items-center justify-between pt-6">
     <span class="heading page-heading text-primary">Quiz</span>
   </div>
-  <div class="flex justify-center gap-4 pt-6">
-    <div class="indicator active"></div>
-    <div class="indicator"></div>
-    <div class="indicator"></div>
+  <div class="flex flex-wrap justify-center gap-4 pt-6 px-2">
+    <% current_index = position_of_quiz(course_module, quiz) - 1 %>
+    <% course_module.quizzes_count.times do |index| %>
+      <div class="indicator <%= 'active' if index == current_index %>"></div>
+    <% end %>
   </div>
   <h2 class="flex items-center justify-center pt-4 text-medium">
-    1/5 Questions
+    <%= quiz_position_text(course_module, quiz) %> Questions
   </h2>
   <div class="md:w-[910px]">
     <ul class="w-full md:pb-6">
       <li class="carousel-container mt-6">
-        <h2 class="bg-primary-light-50 p-6 text-medium rounded box-shadow-medium">
+        <h2 class="bg-primary-light-50 p-6 text-medium text-letter-color-light rounded box-shadow-medium">
           <span>Q.</span><%= quiz.question %>
         </h2>
-        <ul class="flex flex-col gap-6 pt-6">
-          <li class="border border-line-colour-light p-6 rounded">
-            <label class="flex items-center justify-between">
-              <span><%= "A. #{quiz.option_a}" %></span>
-              <%= radio_button_tag 'answer', quiz.option_a, id: "opt-a", class: "mx-2", checked: quiz.answer == "A", disabled: true %>
-            </label>
-          </li>
+        <ul class="flex flex-col gap-6 pt-6 px-1">
+            <li class="rounded-sm border border-line-colour">
+              <%= input_radio(
+                field_name: :answer,
+                value: quiz.option_a,
+                option: "A. #{quiz.option_a}",
+                width: "w-full",
+                height: "h-16",
+                html_options: {
+                  id: "opt-a",
+                  data: {
+                    action: "change->quiz#valueChanged"
+                  },
+                  checked: quiz.answer.to_s.downcase == "a",
+                  disabled: true
+                }
+            ) %>
+            </li>
 
-          <li class="border border-line-colour-light p-6 rounded">
-            <label class="flex items-center justify-between">
-              <span><%= "B. #{quiz.option_b}" %></span>
-              <%= radio_button_tag 'answer', quiz.option_b, id: "opt-b", class: "mx-2", checked: quiz.answer == "B", disabled: true %>
-            </label>
-          </li>
+            <li class="rounded-sm border border-line-colour">
+              <%= input_radio(
+                field_name: :answer,
+                value: quiz.option_b,
+                option: "B. #{quiz.option_b}",
+                width: "w-full",
+                height: "h-16",
+                html_options: {
+                  id: "opt-b",
+                  data: {
+                    action: "change->quiz#valueChanged"
+                  },
+                  checked: quiz.answer.to_s.downcase == "b",
+                  disabled: true
+                }
+            ) %>
+            </li>
 
-          <li class="border border-line-colour-light p-6 rounded">
-            <label class="flex items-center justify-between">
-              <span><%= "C. #{quiz.option_c}" %></span>
-              <%= radio_button_tag 'answer', quiz.option_c, id: "opt-c", class: "mx-2", checked: quiz.answer == "C", disabled: true %>
-            </label>
-          </li>
+            <li class="rounded-sm border border-line-colour">
+              <%= input_radio(
+                field_name: :answer,
+                value: quiz.option_c,
+                option: "C. #{quiz.option_c}",
+                width: "w-full",
+                height: "h-16",
+                html_options: {
+                  id: "opt-c",
+                  data: {
+                    action: "change->quiz#valueChanged"
+                  },
+                  checked: quiz.answer.to_s.downcase == "c",
+                  disabled: true
+                }
+            ) %>
+            </li>
 
-          <li class="border border-line-colour-light p-6 rounded">
-            <label class="flex items-center justify-between">
-             <span><%= "D. #{quiz.option_d}" %></span>
-              <%= radio_button_tag 'answer', quiz.option_d, id: "opt-d", class: "mx-2", checked: quiz.answer == "D", disabled: true %>          
-            </label>
-          </li>
+            <li class="rounded-sm border border-line-colour">
+              <%= input_radio(
+                field_name: :answer,
+                value: quiz.option_d,
+                option: "D. #{quiz.option_d}",
+                width: "w-full",
+                height: "h-16",
+                html_options: {
+                  id: "opt-d",
+                  data: {
+                    action: "change->quiz#valueChanged"
+                  },
+                  checked: quiz.answer.to_s.downcase == "d",
+                  disabled: true
+                }
+            ) %>
+            </li>
         </ul>    
       </li>
     </ul>

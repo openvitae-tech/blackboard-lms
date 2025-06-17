@@ -6,7 +6,7 @@
         <span>Delete</span>
       <% end %>
     <% end %>
-    <%= render "commons/invite_user", learning_partner: @learning_partner %>
+    <%= render "commons/invite_user", learning_partner: @learning_partner, team: @learning_partner.parent_team %>
     <%= render "more_action", learning_partner: @learning_partner %>
   </div>
 </div>

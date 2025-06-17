@@ -21,10 +21,7 @@
               <div class="input-group">
                 <label for="otp" class="label-text">Verification code (OTP)</label>
                 <div id="otp" class="mt-6 flex justify-between gap-6">
-                  <%= form.text_field :otp_value_one, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" } %>
-                  <%= form.text_field :otp_value_two, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" } %>
-                  <%= form.text_field :otp_value_three, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" } %>
-                  <%= form.text_field :otp_value_four, class: "input-text-otp", maxlength: 1, data: { otp_target: "input" } %>
+                  <%= input_otp(form: form, input_options: { data: { otp_target: "input", action: "input->otp#handleInputOrKeyDown" } }) %>
                 </div>
                 <a href="#" class="float-right pt-6 link-text text-danger">Resend OTP</a>
               </div>

@@ -9,21 +9,17 @@
       <%= hidden_field_tag :step, "set_dob_and_gender" %>
       <%= render "shared/components/form_errors", resource: current_user %>
 
-      <div class="relative flex flex-col gap-3" data-controller="date-picker">
+      <div class="relative flex flex-col gap-3 text-letter-color-light text-sm " data-controller="date-picker">
         <%= form.label :dob, "Date of Birth" %>
         <div class="relative flex w-full flex-row items-center">
           <input type="date" id="datePicker" class="invisible p-0 w-[2px]" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker" max="<%= (Date.today - 16.years).strftime('%Y-%m-%d') %>"/>
-          <%= form.text_field :dob, id: 'duration', class: "border border-line-colour rounded focus:ring-0 py-3 px-4 w-full", data: { date_picker_target: "dateSelector" } %>
+          <%= input_field(form:form, field_name: :dob, placeholder: "YYYY-MM-DD",type: "text", width:"w-full",html_options: { data: { date_picker_target: "dateSelector" } }) %>
           <div class="absolute right-2 flex items-center pl-2">
             <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->date-picker#openDatePicker"></span>
           </div>
         </div>
       </div>
-
-      <div class="flex flex-col gap-3">
-        <%= form.label :gender, "Gender" %>
-        <%= form.select :gender, User::GENDERS, { prompt: 'Please choose a gender' }, required: true, class: "rounded border border-line-colour py-3 px-4" %>
-      </div>
+      <%= input_dropdown(form: form, field_name: :gender, label: "Gender", options: User::GENDERS, placeholder: "Please choose a gender",value: form.object.gender, html_options: { required: true }, width: "w-full" ) %>
 
       <div class="absolute bottom-6 left-0 flex w-full justify-center gap-4 px-4">
         <%= link_to "Back", set_name_and_email_onboarding_welcome_path, class: "btn-secondary-outline" %>

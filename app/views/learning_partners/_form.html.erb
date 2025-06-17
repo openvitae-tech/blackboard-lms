@@ -2,15 +2,13 @@
   <%= form_with(model: learning_partner) do |form| %>
     <%= render "shared/components/form_errors", resource: learning_partner %>
     <div class="my-8 text-sm">
-      <%= form.label :name, style: "display: block" %>
-      <%= form.text_field :name, class: "input-text mt-2" %>
+      <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter Name",type: "text",width:"w-full") %>     
     </div>
     <div>
-      <%= form.label :content, "About", style: "display: block" %>
-      <%= form.text_area :about, class: "input-textarea mt-2", rows: "5" %>
+      <%= input_field(form:, field_name: :content,label: "About", placeholder: "Enter about",type: "text_area", width:"w-full") %>
     </div>
     <div class="my-8 text-sm">
-      <div class="flex justify-between">
+      <div class="flex justify-between text-letter-color-light">
         <%= form.label :logo, style: "display: block" %>
       </div>
       <div class="relative mt-2">
@@ -20,7 +18,7 @@
       </div>
     </div>
     <div class="my-8 text-sm">
-      <div class="flex justify-between">
+      <div class="flex justify-between text-letter-color-light">
         <%= form.label :banner, style: "display: block" %>
       </div>
       <div class="relative mt-2">

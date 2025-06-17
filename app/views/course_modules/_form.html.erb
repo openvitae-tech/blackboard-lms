@@ -4,8 +4,7 @@
     <%= form_with(model: [course, course_module], url: url) do |form| %>
       <%= render "shared/components/form_errors", resource: course_module %>
       <div class="my-8 text-sm">
-        <%= form.label :title, class: "text-sm font-medium" %>
-        <%= form.text_field :title, class: "input-text mt-2" %>
+        <%= input_field(form:, field_name: :title, label: "Title", placeholder: "Enter title",type: "text",width:"w-full") %>     
       </div>
       <div class="my-8 text-sm  flex gap-6 items-center">
         <div>
