@@ -120,7 +120,7 @@ module UiHelper
     content_tag(:div, class: 'flex justify-between gap-6 w-full', **(wrapper_options || {}).except(:data)) do
       safe_join(
         count.times.map do |i|
-          field_name = "#{field_prefix}_#{number_to_human(i+1)}"
+          field_name = "#{field_prefix}_#{number_to_human(i + 1)}"
 
           input_field(
             form:,
