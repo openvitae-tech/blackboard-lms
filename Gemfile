@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '3.3.0'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '7.2.2.1'
+gem 'rails', '8.0.0'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -26,7 +26,7 @@ gem 'turbo-rails'
 gem 'stimulus-rails'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jbuilder'
+gem 'jbuilder', '~> 2.13'
 
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '>= 4.0.1'
@@ -48,10 +48,7 @@ gem 'image_processing', '~> 1.2'
 
 gem 'devise', '~> 4.9.2'
 
-# gem 'vimeo_me2', :git => "https://github.com/bo-oz/vimeo_me2.git"
-gem 'rubocop', require: false
-gem 'rubocop-rails', require: false
-gem 'rubocop-rspec', require: false
+gem 'yard'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -70,6 +67,9 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'letter_opener'
+  gem 'rubocop', '>= 1.76', require: false
+  gem 'rubocop-rails', '>= 2.25', require: false   # if present
+  gem 'rubocop-rspec', '>= 2.25', require: false   # if present
   gem 'web-console'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]

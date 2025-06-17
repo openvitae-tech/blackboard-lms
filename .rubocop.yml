@@ -1,5 +1,5 @@
 # .rubocop.yml
-require:
+plugins:
   - rubocop-rails
   - rubocop-rspec
 AllCops:
@@ -50,4 +50,6 @@ RSpec/SubjectStub:
 RSpec/AnyInstance:
   Enabled: false
 RSpec/BeforeAfterAll:
+  Enabled: false
+Naming/PredicateMethod:
   Enabled: false
