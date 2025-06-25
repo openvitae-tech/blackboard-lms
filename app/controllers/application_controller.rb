@@ -19,6 +19,14 @@ class ApplicationController < ActionController::Base
     redirect_to new_user_session_path unless current_user&.is_admin?
   end
 
+  def authenticate_user!
+    if user_signed_in?
+      super
+    else
+      redirect_to new_login_path
+    end
+  end
+
   def impersonating?
     fetch_impersonated_user(current_user.id).present? && current_user.is_support?
   end
