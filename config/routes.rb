@@ -159,7 +159,7 @@ Rails.application.routes.draw do
     end
 
     unauthenticated do
-      root 'users/sessions#new', as: :unauthenticated_root
+      root 'logins#new', as: :unauthenticated_root
     end
   end
 

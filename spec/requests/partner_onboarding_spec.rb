@@ -11,7 +11,7 @@ RSpec.describe 'Request spec for LearningPartner' do
       user = create :user, :owner
       sign_out user
       get '/learning_partners'
-      expect(response).to redirect_to('/users/sign_in')
+      expect(response).to redirect_to(new_login_path)
     end
 
     it 'Forbids non admin user to list partners' do
@@ -41,7 +41,7 @@ RSpec.describe 'Request spec for LearningPartner' do
       user = create :user, :owner
       sign_out user
       post '/learning_partners'
-      expect(response).to redirect_to('/users/sign_in')
+      expect(response).to redirect_to(new_login_path)
     end
 
     it 'Forbids non admin user to create partners' do

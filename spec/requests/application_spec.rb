@@ -8,7 +8,7 @@ RSpec.describe 'Request spec for Application', type: :request do
       get '/invalid_path'
 
       expect(response.status).to be(302)
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_login_path)
     end
 
     it 'redirect to not found page when the user is logged in' do
