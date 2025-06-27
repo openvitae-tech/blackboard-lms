@@ -33,7 +33,7 @@ class Onboarding::WelcomesController < ApplicationController
 
   def update_password
     if current_user.update(password_params)
-      sign_in(current_user, bypass: true)
+      bypass_sign_in(current_user)
       current_user.activate
       EVENT_LOGGER.publish_active_user_count(current_user)
       redirect_to all_set_onboarding_welcome_path

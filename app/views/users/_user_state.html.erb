@@ -9,10 +9,20 @@
       <span class="bg-cover inline-block icon-red-circle bg-danger icon-tiny"></span>
       <p class="text-xs text-danger">Deactivated</p>
     </div>
+  <% elsif user.verified? %>
+    <div class="flex items-center space-x-2 bg-danger-light py-1 px-2 rounded">
+      <span class="bg-cover inline-block icon-red-circle bg-danger icon-tiny"></span>
+      <p class="text-xs text-danger">Verified</p>
+    </div>
+  <% elsif user.unverified? %>
+    <div class="flex items-center space-x-2 bg-danger-light py-1 px-2 rounded">
+      <span class="bg-cover inline-block icon-red-circle bg-danger icon-tiny"></span>
+      <p class="text-xs text-danger">Unverified</p>
+    </div>
   <% else %>
     <div class="flex items-center space-x-2 bg-slate-grey-light py-1 px-2 rounded">
       <span class="bg-cover inline-block icon-red-circle bg-secondary icon-tiny"></span>
-      <p class="text-xs text-secondary">Unverified</p>
+      <p class="text-xs text-secondary">Unknown</p>
     </div>
   <% end %>
 </div>
