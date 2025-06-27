@@ -25,7 +25,7 @@
               <%= input_radio(
                 form: form,
                 field_name: :answer,
-                value: "a",             
+                value: "a",
                 option: "A. #{quiz.option_a}",
                 width: "w-full",
                 height: "h-16",
@@ -42,7 +42,7 @@
               <%= input_radio(
                 form: form,
                 field_name: :answer,
-                value: "b",             
+                value: "b",
                 option: "B. #{quiz.option_b}",
                 width: "w-full",
                 height: "h-16",
@@ -59,8 +59,8 @@
             <li class="">
               <%= input_radio(
                 form: form,
-                radio_field_name: :answer,
-                value: "c",              
+                field_name: :answer,
+                value: "c",
                 option: "C. #{quiz.option_c}",
                 width: "w-full",
                 height: "h-16",
@@ -78,7 +78,7 @@
               <%= input_radio(
                 form: form,
                 field_name: :answer,
-                value: "d",                
+                value: "d",
                 option: "D. #{quiz.option_d}",
                 width: "w-full",
                 height: "h-16",
@@ -91,15 +91,13 @@
                   checked: @answer&.answer == 'd'
                 }
             ) %>
-            </li>            
-          </ul>         
+            </li>
+          </ul>
         </div>
-      </li>      
+      </li>
     </ul>
     <div class="pb-6 flex items-center justify-center">
       <%= form.button 'Submit', class: "btn-primary w-full", id: "quiz-submit-button" %>
     </div>
    <% end %>
 </div>
-
-  

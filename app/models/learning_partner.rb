@@ -22,4 +22,11 @@ class LearningPartner < ApplicationRecord
   def parent_team
     @parent_team ||= Team.where(learning_partner_id: id, parent_team_id: nil).first
   end
+
+  def update_active_users_count!
+    users_count = users.where(state: %w[verified unverified
+                                        active]).where.not(role: 'support').count
+    self.active_users_count = users_count
+    save!
+  end
 end

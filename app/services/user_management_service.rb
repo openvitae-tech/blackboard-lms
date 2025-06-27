@@ -75,13 +75,13 @@ class UserManagementService
     return unless user.is_owner? && !user.learning_partner.first_owner_joined
 
     service = PartnerOnboardingService.instance
-    service.first_owner_joined(user.learning_partner, resource)
+    service.first_owner_joined(user.learning_partner)
   end
 
   private
 
   def raise_error_if_exceeds_user_limit!(learning_partner)
-    return if learning_partner.users_count < learning_partner.payment_plan.total_seats
+    return if learning_partner.active_users_count < learning_partner.payment_plan.total_seats
 
     raise Errors::IllegalInviteError,
           format(I18n.t('invite.exceeds_user_limit'), limit: learning_partner.payment_plan.total_seats)

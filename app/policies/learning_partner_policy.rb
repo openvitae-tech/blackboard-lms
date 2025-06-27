@@ -37,7 +37,7 @@ class LearningPartnerPolicy
   end
 
   def invite?
-    learning_partner.users_count < learning_partner.payment_plan.total_seats
+    learning_partner.active_users_count < learning_partner.payment_plan.total_seats
   end
 
   def activate?

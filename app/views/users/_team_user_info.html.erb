@@ -6,17 +6,22 @@
 
         <div class="flex space-x-3 items-start flex-shrink-0">
           <%= render 'users/user_state', user: user %>
-          <%= render 'shared/components/more_action',icon_class: 'member-more', label_hover:"hover:bg-line-colour" do %>
+          <%= render 'shared/components/more_action', icon_class: 'member-more', label_hover: "hover:bg-line-colour" do %>
             <% if policy(user).deactivate? %>
               <%= link_to 'Deactivate', deactivate_member_path(user), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left', data: { turbo_frame: "modal" } %>
-            <% end %>
-            <% if policy(user).activate? %>
-              <%= link_to 'Activate', activate_member_path(user), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left', data: { turbo_frame: "modal" } %>
+            <% else %>
+              <% if policy(user).activate? %>
+                <%= link_to 'Activate', activate_member_path(user), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left', data: { turbo_frame: "modal" } %>
+              <% else %>
+                <%= render 'shared/components/tooltip', tooltip_position: "bottom", tooltip_text: t('invite.max_user_count') do %>
+                  <span class="text-xs px-4 py-2 w-full text-left disabled text-secondary">Activate</span>
+                <% end %>
+              <% end %>
             <% end %>
           <% end %>
         </div>
       </div>
-      
+
       <div class="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-6">
         <div class="flex items-center">
           <span class="text-sm mr-1">Role:</span>
