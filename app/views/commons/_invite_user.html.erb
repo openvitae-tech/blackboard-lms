@@ -1,6 +1,6 @@
 <div id="invite_button_section">
   <% if learning_partner.payment_plan.present? %>
-    <% if policy(:invite).new? && policy(learning_partner).invite? %>
+    <% if policy(:invite).new? && LearningPartnerPolicy.new(current_user, learning_partner).invite? %>
       <%= link_to new_invite_path(team_id: team.id), data: { turbo_frame: "modal" } do %>
         <%= button(label: t("invite.invite_user"), icon_name: "plus") %>
       <% end %>

@@ -21,7 +21,11 @@ class UserPolicy
   end
 
   def activate?
-    other_user.deactivated? && user.manager_of?(other_user)
+    return false unless other_user.deactivated?
+    return false unless user.manager_of?(other_user)
+
+    partner = other_user.learning_partner
+    partner.active_users_count < partner.payment_plan.total_seats
   end
 
   def confirm_activate?

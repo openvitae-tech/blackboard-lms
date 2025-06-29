@@ -9,10 +9,6 @@ module CommonsHelper
   end
 
   def activate_users_count(learning_partner)
-    support_user = learning_partner.users.find_by(role: 'support')
-    active_count = learning_partner.active_users_count
-
-    active_count -= 1 if support_user.present?
-    learning_partner.payment_plan.total_seats - active_count
+    learning_partner.payment_plan.total_seats - learning_partner.active_users_count
   end
 end

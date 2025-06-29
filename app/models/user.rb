@@ -51,7 +51,7 @@ class User < ApplicationRecord
 
   belongs_to :learning_partner, optional: true, counter_cache: true
 
-  after_create :update_active_users_count, if: :saved_change_to_state?
+  after_create :update_active_users_count
   after_update :update_active_users_count, if: :saved_change_to_state?
 
   has_many :enrollments, dependent: :destroy
@@ -169,9 +169,9 @@ class User < ApplicationRecord
   end
 
   def update_active_users_count
-    return unless learning_partner
+    return if learning_partner.nil? || is_support?
 
-    learning_partner.update!(active_users_count: learning_partner.users.active.count)
+    learning_partner.update_active_users_count!
   end
 
   def communication_channels_are_valid
