@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    if user_signed_in?
+    if user_signed_in? || devise_controller?
       super
     else
       redirect_to new_login_path
