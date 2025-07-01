@@ -75,7 +75,7 @@ class UserManagementService
     return unless user.is_owner? && !user.learning_partner.first_owner_joined
 
     service = PartnerOnboardingService.instance
-    service.first_owner_joined(user.learning_partner)
+    service.first_owner_joined(user.learning_partner, user)
   end
 
   private
