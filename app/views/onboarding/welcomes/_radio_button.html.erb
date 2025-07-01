@@ -6,7 +6,7 @@
         value: language_value(language),
         width: "w-full",
         html_options: {
-          checked: index == 0,
+          checked: current_user.preferred_local_language.blank? ? index == 0 : current_user.preferred_local_language == language,
           data: {
             lang_target: "radio",
             action: "change->lang#languageSelected"
