@@ -23,15 +23,15 @@ RSpec.describe 'Request spec for Impersonations', type: :request do
       expect(REDIS_CLIENT.call('GET', "impersonated_support_user_#{support_user.id}")).to be_present
     end
 
-    it 'not able to impersonate the learning partner if already impersonating' do
+    it 'able to impersonate the learning partner if already impersonating' do
       expect do
         post impersonation_path, params: { id: learning_partner.id }
       end.to change(learning_partner.users.where(role: 'support'), :count).by(1)
 
       sign_in user
       post impersonation_path, params: { id: learning_partner.id }
-      expect(flash[:notice]).to eq(t('impersonation.already_impersonating'))
-      expect(response).to redirect_to(learning_partner_path(learning_partner))
+      expect(flash[:notice]).to eq(t('impersonation.logged_in_as_support_user'))
+      expect(response).to redirect_to(dashboards_path)
     end
 
     it 'Unauthorized when accessed by non-admin' do
@@ -54,8 +54,9 @@ RSpec.describe 'Request spec for Impersonations', type: :request do
       expect(REDIS_CLIENT.call('GET', "impersonated_support_user_#{@support_user.id}")).to be_present
 
       delete impersonation_path
+      follow_redirect!
 
-      expect(REDIS_CLIENT.call('GET', "impersonated_support_user_#{@support_user.id}")).to be_nil
+      expect(controller.current_user).to eq(user)
       expect(flash[:notice]).to eq(t('impersonation.stop_and_login'))
     end
 
