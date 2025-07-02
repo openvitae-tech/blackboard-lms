@@ -63,8 +63,7 @@ module Courses
     def filter_by_tags(tags, courses)
       return courses if tags.blank?
 
-      categories = Tag.where(tag_type: :category, name: tags).pluck(:id)
-      levels = Tag.where(tag_type: :level, name: tags).pluck(:id)
+      levels, categories = fetch_levels_and_categories_for(tags)
 
       if categories.present? && levels.present?
         courses.left_joins(:tags)
@@ -84,7 +83,11 @@ module Courses
     end
 
     def filter_by_term(user, term)
-      courses_scope = Course.where('title ILIKE ?', "%#{term}%").order(created_at: :desc)
+      courses_scope = if term.blank?
+                        Course.order(created_at: :desc)
+                      else
+                        Course.where('title ILIKE ?', "%#{term}%").order(created_at: :desc)
+                      end
 
       if user.is_admin?
         courses_scope
@@ -120,6 +123,15 @@ module Courses
       else
         all_courses.published
       end
+    end
+
+    def fetch_levels_and_categories_for(tags)
+      records = Tag.where(name: tags).pluck(:id, :tag_type)
+
+      categories = records.filter { |_id, tag_type| tag_type == 'category' }.map { |id, _tag_type| id }
+      levels = records.filter { |_id, tag_type| tag_type == 'level' }.map { |id, _tag_type| id }
+
+      [levels, categories]
     end
   end
 end

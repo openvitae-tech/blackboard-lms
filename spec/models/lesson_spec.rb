@@ -53,4 +53,22 @@ RSpec.describe Lesson, type: :model do
       expect(new_lesson.errors.full_messages.to_sentence).to include(t('lesson.must_have_local_content'))
     end
   end
+
+  describe 'Updates the course duration when duration is updated' do
+    it 'trigger after_save callback to update the course duration' do
+      course_module = create :course_module
+      course = course_module.course
+      old_duration = course.reload.duration
+      new_lesson = described_class.new(title: 'Body language', course_module:, duration: 10)
+      new_lesson.local_contents.push(build(:local_content))
+      new_lesson.save
+      expect(course.reload.duration - old_duration).to eq(10)
+
+      # updates the object
+      old_duration = course.duration
+      new_lesson.duration = new_lesson.duration + 20
+      new_lesson.save
+      expect(course.reload.duration - old_duration).to eq(20)
+    end
+  end
 end

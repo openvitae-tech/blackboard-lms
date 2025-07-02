@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_17_113346) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_02_101616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -75,6 +75,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_113346) do
     t.bigint "course_modules_in_order", default: [], array: true
     t.boolean "is_published", default: false
     t.integer "team_enrollments_count", default: 0
+    t.integer "duration", default: 0
   end
 
   create_table "courses_tags", force: :cascade do |t|

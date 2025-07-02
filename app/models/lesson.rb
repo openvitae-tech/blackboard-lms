@@ -14,6 +14,16 @@ class Lesson < ApplicationRecord
 
   accepts_nested_attributes_for :local_contents, allow_destroy: true
 
+  # whenever there is a change in duration attribute of the lesson
+  # we set the virtual flag `recompute_course_duration_flag` to true.
+  # After saving the lesson the duration of the course is recomputed and
+  # cached in the course model to avoid recomputing the same while listing the
+  # course
+  attr_accessor :recompute_course_duration_flag
+
+  before_save :set_recompute_course_duration_flag
+  after_save :update_course_duration
+
   private
 
   def unique_local_content_lang
@@ -28,5 +38,16 @@ class Lesson < ApplicationRecord
 
     errors.add(:base,
                I18n.t('lesson.must_have_local_content'))
+  end
+
+  def update_course_duration
+    return unless recompute_course_duration_flag
+
+    course_module.course.recalculate_course_duration!
+    self.recompute_course_duration_flag = false
+  end
+
+  def set_recompute_course_duration_flag
+    self.recompute_course_duration_flag = duration_changed?
   end
 end
