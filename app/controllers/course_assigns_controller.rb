@@ -6,7 +6,8 @@ class CourseAssignsController < ApplicationController
 
   def new
     @context = @team_assign ? 'team_assign' : 'user_assign'
-    search_context = SearchContext.new({ context: @context, team: @team, user: @user })
+    options = { team: @team, user: @user }.compact
+    search_context = SearchContext.new(context: @context, options:)
     service = Courses::FilterService.instance
     @courses = service.filter(current_user, search_context)
     @tags = Tag.load_tags

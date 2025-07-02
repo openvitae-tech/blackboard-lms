@@ -15,22 +15,22 @@ class SearchesController < ApplicationController
   end
 
   def build_search_context
+    options = {}
+
     case params[:context]
-    when 'team_assign' then @team = Team.find params[:team_id]
-    when 'user_assign' then @user = User.find params[:user_id]
-    else
-      @user = nil
-      @team = nil
+    when 'team_assign' then
+      @team = Team.find params[:team_id]
+      options[:team] = @team
+    when 'user_assign' then
+      @user = User.find params[:user_id]
+      options[:user] = @user
     end
 
     SearchContext.new(
-      {
-        context: params[:context],
-        team: @team,
-        user: @user,
-        term: params[:term],
-        tags: params[:tags]
-      }.compact
+      context: params[:context],
+      term: params[:term],
+      tags: params[:tags],
+      options:
     )
   end
 end
