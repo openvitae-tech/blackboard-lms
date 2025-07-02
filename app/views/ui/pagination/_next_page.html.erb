@@ -9,4 +9,6 @@
       <%= button(label: 'Next', type: "secondary", size: "md") %>
     <% end %>
   </div>
+  <% else %>
+    <%= button(label: 'Next', type: "secondary", size: "md", disabled: true) %>
 <% end %>

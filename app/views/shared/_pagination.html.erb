@@ -1,6 +1,0 @@
-<% if collection.prev_page || collection.next_page %>
-  <div data-controller="pagination" class="flex justify-center mt-4 space-x-2">
-    <%= render "shared/pagination/prev_page", collection: collection, path: path %>
-    <%= render "shared/pagination/next_page", collection: collection, path: path %>
-  </div>
-<% end %>

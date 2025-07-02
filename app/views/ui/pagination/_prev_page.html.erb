@@ -7,4 +7,6 @@
       } do %>
     <%= button(label: 'Previous', type: "secondary", size: "md") %>
   <% end %>
+  <% else %>
+    <%= button(label: 'Previous', type: "secondary", size: "md", disabled: true) %>
 <% end %>

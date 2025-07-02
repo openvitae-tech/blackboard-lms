@@ -23,7 +23,7 @@
       <%= render "teams/member_list_items", team: team, member: member %>
     <% end %>
     <div class="mt-4">
-      <%= render "shared/pagination", collection: members, path: member_list_path(team) %>
-   </div>
+      <%= paginator(members, path: member_list_path(team)) %>
+    </div>
   </div>
 </div>
