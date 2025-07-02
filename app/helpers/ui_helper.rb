@@ -168,4 +168,8 @@ module UiHelper
       }
     )
   end
+
+  def paginator(collection, path:)
+    render partial: 'ui/pagination/paginator', locals: { collection: collection, path: path }
+  end
 end

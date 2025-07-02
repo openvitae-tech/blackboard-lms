@@ -68,6 +68,15 @@ module TeamsHelper
     learning_partner.banner.variant(resize_to_limit: [320, nil])
   end
 
+  def member_list_path(team)
+    case controller.controller_name
+    when 'teams'
+      team_path(team)
+    when 'learning_partners'
+      learning_partner_path(team.learning_partner)
+    end
+  end
+
   private
 
   def resize_banner(banner, version)

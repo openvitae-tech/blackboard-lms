@@ -1,5 +1,4 @@
-
-<div class="h-full flex flex-col">
+<div id="team-member-list" class="h-full flex flex-col">
   <div id="teams-list" class="flex-shrink-0 md:py-4 md:px-6 md:border-b border-line-colour-light">
     <div class="hidden md:grid grid-cols-12 gap-4 text-left text-sm font-medium  w-full">
       <div class="col-span-4 flex justify-start">Name</div>
@@ -19,12 +18,12 @@
     </div>
   <% end %>
 
-  <div id="team-member-list" class="flex-1 overflow-y-auto p-2 md:divide-y md:divide-slate-grey-light">
+  <div class="flex-1 overflow-y-auto p-2 md:divide-y md:divide-slate-grey-light">
     <% members.each do |member| %>
       <%= render "teams/member_list_items", team: team, member: member %>
     <% end %>
-    <% if members.total_pages > 1 %>
-      <%= paginate members %>
-    <% end %>
+    <div class="mt-4">
+      <%= paginator(members, path: member_list_path(team)) %>
+    </div>
   </div>
 </div>

@@ -16,11 +16,10 @@ class InvitesController < ApplicationController
     service = UserManagementService.instance
     @team = Team.includes(learning_partner: :payment_plan).find(invite_params[:team_id])
     authorize @team, :create?, policy_class: InvitePolicy
-    partner = @team.learning_partner
-    authorize partner, :invite?
+    @partner = @team.learning_partner
+    authorize @partner, :invite?
 
     @bulk_invite = invite_params[:bulk_invite].present?
-
     status =
       if @bulk_invite
         # user object is required in the form when there is an error
@@ -31,8 +30,8 @@ class InvitesController < ApplicationController
         if valid_records.empty?
           @user.errors.add(:base, I18n.t('invite.invalid_csv'))
           :error
-        elsif (valid_records.length + partner.users_count) > partner.payment_plan.total_seats
-          @user.errors.add(:base, I18n.t('invite.exceeds_user_limit') % { limit: partner.payment_plan.total_seats })
+        elsif (valid_records.length + @partner.users_count) > @partner.payment_plan.total_seats
+          @user.errors.add(:base, I18n.t('invite.exceeds_user_limit') % { limit: @partner.payment_plan.total_seats })
           :error
         else
           service.bulk_invite(current_user, valid_records, :learner, @team)
@@ -44,6 +43,7 @@ class InvitesController < ApplicationController
       end
 
     if status == :ok
+      @partner.reload
       flash.now[:success] = @bulk_invite ? I18n.t('invite.bulk') : I18n.t('invite.single')
     else
       render 'new', status: :unprocessable_entity
