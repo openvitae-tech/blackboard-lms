@@ -36,10 +36,6 @@ class Course < ApplicationRecord
     enrollments.where(user:).find_each(&:destroy)
   end
 
-  def duration
-    course_modules.includes(:lessons).map(&:duration).reduce(&:+) || 0
-  end
-
   def lessons_count
     course_modules.map(&:lessons_count).reduce(:+) || 0
   end
@@ -90,6 +86,11 @@ class Course < ApplicationRecord
       course_module.lessons_count.positive?
     end.all?
     [rule_at_least_one_module, rule_at_least_one_lesson_per_module].all?
+  end
+
+  def recalculate_course_duration!
+    self.duration = course_modules.includes(:lessons).map(&:duration).reduce(&:+) || 0
+    save!
   end
 
   private

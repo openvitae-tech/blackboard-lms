@@ -130,6 +130,16 @@ RSpec.describe 'Request spec for Lessons', type: :request do
       end.to change(@course_module_two.lessons, :count).by(1)
     end
 
+    it 'set the course duration' do
+      course_duration = @course.duration
+      changed_duration = lesson_params(new_blob)[:lesson][:duration].to_i
+
+      expect do
+        post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
+             params: lesson_params(new_blob)
+      end.to change { @course.reload.duration - course_duration }.by(changed_duration)
+    end
+
     it 'does not allow creating lessons by non-admin' do
       sign_in learner
 
@@ -148,7 +158,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
   end
 
-  describe 'PUT /lessons/:id/edit' do
+  describe 'GET /lessons/:id/edit' do
     before do
       @lesson = create :lesson, course_module: @course_module_one
     end
