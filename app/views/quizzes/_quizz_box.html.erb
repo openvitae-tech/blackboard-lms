@@ -24,13 +24,12 @@
     <div class="flex gap-4 justify-between my-8">
       <% prev_link = prev_quiz_path(@course, @course_module, @quiz) %>
       <%  if prev_link.blank? %>
-        <%= link_to "javascript:void(0);", class: "flex items-center justify-between gap-1 rounded-sm hover:cursor-pointer disabled" do %>
-          <%= button(
-          label: "Previous",
-          icon_name: "chevron-left",
-          type: "secondary",
-        ) %>
-        <% end %>
+        <%= button(
+        label: "Previous",
+        icon_name: "chevron-left",
+        type: "secondary",
+        disabled: true
+      ) %>
       <% else %>
         <%= link_to prev_link, class: "flex items-center justify-between gap-1 rounded-sm hover:cursor-pointer" do %>
           <%= button(
@@ -42,14 +41,13 @@
       <% end %>
       <% next_link = next_quiz_path(@course, @course_module, @quiz) %>
       <%  if next_link.blank? %>
-        <%= link_to "javascript:void(0);", class: "flex items-center justify-between gap-1 rounded-sm hover:cursor-pointer disabled" do %>
-          <%= button(
-          label: "Next",
-          icon_name: "chevron-right",
-          type: "secondary",
-          icon_position: "right"
-        ) %>
-        <% end %>
+        <%= button(
+        label: "Next",
+        icon_name: "chevron-right",
+        type: "secondary",
+        icon_position: "right",
+        disabled: true
+      ) %>
       <% else %>
         <%= link_to next_link, class: "flex items-center justify-between gap-1 rounded-sm hover:cursor-pointer" do %>
           <%= button(
