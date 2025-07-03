@@ -13,37 +13,17 @@ class InvitesController < ApplicationController
   end
 
   def create
-    service = UserManagementService.instance
     @team = Team.includes(learning_partner: :payment_plan).find(invite_params[:team_id])
     authorize @team, :create?, policy_class: InvitePolicy
     @partner = @team.learning_partner
     authorize @partner, :invite?
 
     @bulk_invite = invite_params[:bulk_invite].present?
-    status =
-      if @bulk_invite
-        # user object is required in the form when there is an error
-        @user = User.new(team: @team)
-        # Bulk invite users as learners
-        valid_records = BulkInviteInputService.instance.process(invite_params[:bulk_invite])
-
-        if valid_records.empty?
-          @user.errors.add(:base, I18n.t('invite.invalid_csv'))
-          :error
-        elsif (valid_records.length + @partner.users_count) > @partner.payment_plan.total_seats
-          @user.errors.add(:base, I18n.t('invite.exceeds_user_limit') % { limit: @partner.payment_plan.total_seats })
-          :error
-        else
-          service.bulk_invite(current_user, valid_records, :learner, @team)
-          :ok
-        end
-      else
-        @user = service.invite(current_user, invite_params, @team)
-        @user.persisted? ? :ok : :error
-      end
+    status = @bulk_invite ? handle_bulk_invite : handle_single_invite
 
     if status == :ok
       @partner.reload
+      Teams::UpdateTotalMembersCount.instance.update_count(@team)
       flash.now[:success] = @bulk_invite ? I18n.t('invite.bulk') : I18n.t('invite.single')
     else
       render 'new', status: :unprocessable_entity
@@ -92,5 +72,32 @@ class InvitesController < ApplicationController
 
   def invite_admin_params
     params.require(:user).permit(:email)
+  end
+
+  def handle_bulk_invite
+    @user = User.new(team: @team)
+    valid_records = BulkInviteInputService.instance.process(invite_params[:bulk_invite])
+
+    if valid_records.empty?
+      @user.errors.add(:base, I18n.t('invite.invalid_csv'))
+      return :error
+    end
+
+    if exceeds_seat_limit?(valid_records.count)
+      @user.errors.add(:base, I18n.t('invite.exceeds_user_limit') % { limit: @partner.payment_plan.total_seats })
+      return :error
+    end
+
+    UserManagementService.instance.bulk_invite(current_user, valid_records, :learner, @team)
+    :ok
+  end
+
+  def exceeds_seat_limit?(new_user_count)
+    new_user_count + @partner.users_count > @partner.payment_plan.total_seats
+  end
+
+  def handle_single_invite
+    @user = UserManagementService.instance.invite(current_user, invite_params, @team)
+    @user.persisted? ? :ok : :error
   end
 end
