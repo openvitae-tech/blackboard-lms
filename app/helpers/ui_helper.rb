@@ -8,7 +8,7 @@ module UiHelper
 
     svg = Nokogiri::HTML::DocumentFragment.parse(file).at_css('svg')
     svg['class'] = css
-    content_tag(:span, svg.to_html.html_safe, class: "inline-flex justify-center items-center #{span_css}") # rubocop:disable Rails/OutputSafety
+    content_tag(:span, svg.to_html.html_safe, class: "inline-flex justify-center items-center #{span_css}".strip) # rubocop:disable Rails/OutputSafety
   end
 
   def button(label: nil, type: 'primary', size: 'md', icon_name: nil, icon_position: 'left', tooltip_text: '',

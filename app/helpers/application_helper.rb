@@ -112,10 +112,12 @@ module ApplicationHelper
   end
 
   def query_url(path, query)
+    return '' if path.blank?
+
     uri = URI.parse(path)
     query_params = Rack::Utils.parse_query(uri.query)
     query_params.reverse_merge!(query)
-    uri.query = query_params.to_query
+    uri.query = query_params.compact.to_query
     uri.to_s
   end
 end
