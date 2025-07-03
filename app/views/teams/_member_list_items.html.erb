@@ -1,5 +1,5 @@
-<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center py-4 md:px-4 shadow-[0px_0px_4px_0px_#33333329] md:shadow-none mt-2 md:mt-0">
-  <div class="col-span-1 flex flex-wrap items-center justify-between gap-2 border-b pb-2 pl-4 border-line-colour md:col-span-4 md:border-none md:pb-0 md:pl-0">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center py-4 md:px-4 shadow-[0px_0px_4px_0px_#33333329] md:shadow-none mt-2 md:mt-0">
+  <div class="col-span-4 flex flex-wrap items-center justify-between gap-2 border-b pb-2 pl-4 border-line-colour md:border-none md:pb-0 md:pl-0">
     <% link = policy(member).show? ? member_path(member) : "javascript:void(0);" %>
 
     <%= link_to link, class: "cursor-pointer" do %>
@@ -17,27 +17,23 @@
     <% end %>
   </div>
 
-  <div class="col-span-1 pl-4 text-xs md:col-span-2 md:pl-0 md:text-sm"><%= member.phone %></div>
+  <div class="col-span-3 pl-4 text-xs  md:pl-0 md:text-sm"><%= member.phone %></div>
 
-  <div class="col-span-1 px-4 text-xs md:col-span-3 md:px-0 md:text-sm">
-    <div class="grid grid-cols-2 justify-between gap-4 md:grid-cols-4">
-      <div class="col-span-1 text-xs md:col-span-2 md:text-sm">
-        <%= role_text(member.role) %>
-      </div>
-      <div class="col-span-1 flex flex-col items-end gap-2 text-xs md:col-span-2 md:items-start md:text-sm">
-        <% if member.active_learner? && policy(:course_assigns).new? %>
-          <%= link_to new_course_assign_path(user_id: member, source_path: team_path(team)) do %>
-            <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
-          <% end %>
-        <% end %>
+  <div class="col-span-2 px-4 text-xs  md:px-0 md:text-sm">
+     <%= role_text(member.role) %>
+  </div>
+  <div class="col-span-3 flex flex-col items-end gap-2 text-xs  md:items-center md:text-sm">
+    <% if member.active_learner? && policy(:course_assigns).new? %>
+      <%= link_to new_course_assign_path(user_id: member, source_path: team_path(team)) do %>
+        <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
+      <% end %>
+    <% end %>
 
-        <% if InvitePolicy.new(current_user, member).resend? %>
-          <%= link_to resend_invite_path(member, team_id: team.id), data: { turbo_method: "put" } do %>
-            <%= render 'shared/components/label_medium_success', label: 'Re-Invite', icon_name: 'icon-re-invite' %>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
+    <% if InvitePolicy.new(current_user, member).resend? %>
+      <%= link_to resend_invite_path(member, team_id: team.id), data: { turbo_method: "put" } do %>
+        <%= render 'shared/components/label_medium_success', label: 'Re-Invite', icon_name: 'icon-re-invite' %>
+      <% end %>
+    <% end %>
   </div>
 
 </div>
