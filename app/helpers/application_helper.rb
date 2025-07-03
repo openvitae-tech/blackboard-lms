@@ -110,4 +110,12 @@ module ApplicationHelper
 
     user.unconfirmed_email.present? ? "#{user.unconfirmed_email} (Unverified)" : 'NA'
   end
+
+  def query_url(path, query)
+    uri = URI.parse(path)
+    query_params = Rack::Utils.parse_query(uri.query)
+    query_params.reverse_merge!(query)
+    uri.query = query_params.to_query
+    uri.to_s
+  end
 end

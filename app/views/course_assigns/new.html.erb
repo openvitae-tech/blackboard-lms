@@ -4,12 +4,11 @@
 </div>
 
 
-<%= render "searches/form", context: @context, tags: @tags, user: @user, team: @team %>
+<%= render "searches/form", context: @search_context.context, tags: @tags, user: @search_context.user, team: @search_context.team %>
 
 <%= render "course_assigns/course_list_with_assign_form",
            courses: @courses,
-           team_assign: @team_assign,
-           user: @user,
-           team: @team,
+           search_context: @search_context,
            cancel_link: @back_link
 %>
+

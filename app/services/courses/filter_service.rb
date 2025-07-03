@@ -116,7 +116,9 @@ module Courses
     end
 
     def filter_scope_for(user)
-      all_courses = Course.includes(%i[banner_attachment tags]).order(created_at: :desc)
+      all_courses = Course.includes(%i[banner_attachment tags])
+                          .order(created_at: :desc)
+                          .limit(Course::PER_PAGE_LIMIT)
 
       if user.is_admin?
         all_courses

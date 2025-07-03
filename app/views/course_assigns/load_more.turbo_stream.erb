@@ -1,0 +1,14 @@
+<% @courses.each do |course| %>
+  <%= turbo_stream.append "course-list",
+                         partial: "course_assigns/course_list_item",
+                         locals: {
+                           course: course,
+                         } %>
+<% end %>
+
+<%= turbo_stream.replace "load-more",
+                        partial: "course_assigns/load_more",
+                        locals: {
+                          search_context: @search_context,
+                          courses: @courses,
+                        } %>

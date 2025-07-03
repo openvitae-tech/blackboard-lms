@@ -3,7 +3,7 @@
 class SearchContext
   include ActiveModel::API
 
-  # from where the search/filter action is initiated
+  # pass from where the SearchContext is initialized
   VALID_CONTEXTS = %i[home_page course_listing team_assign user_assign].freeze
 
   attr_accessor :term, :tags, :context, :team, :user
@@ -18,14 +18,14 @@ class SearchContext
     end
   end
 
-  def initialize(search_params)
-    @term = search_params.fetch(:term, '')
-    @tags = search_params.fetch(:tags, [])
-    @context = search_params[:context]
+  def initialize(term: '', tags: [], context: nil, options: {})
+    @term = term || ''
+    @tags = tags || []
+    @context = context
 
     case @context
-    when 'team_assign' then @team = search_params[:team]
-    when 'user_assign' then @user = search_params[:user]
+    when 'team_assign' then @team = options[:team]
+    when 'user_assign' then @user = options[:user]
     end
   end
 end
