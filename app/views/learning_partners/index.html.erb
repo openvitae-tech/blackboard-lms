@@ -21,6 +21,5 @@
     <% end %>
   </ul>
   <div class="mx-4 my-6 text-center">
-    <%= link_to_prev_page @learning_partners, 'Prev', class: 'nav_link' %>
-    <%= link_to_next_page @learning_partners, 'Next', class: 'nav_link' %>
+    <%= paginator(@learning_partners, path: learning_partners_path) %>
   </div>
