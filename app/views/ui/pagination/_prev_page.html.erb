@@ -1,5 +1,5 @@
 <% if collection.prev_page %>
-  <%= link_to "#{path}?page=#{collection.prev_page}",
+  <%= link_to query_url(path, {page: collection.prev_page}),
       data: {
         turbo_stream: true,
         pagination_target: "button",

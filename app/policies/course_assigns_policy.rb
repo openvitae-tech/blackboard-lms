@@ -15,4 +15,8 @@ class CourseAssignsPolicy
   def create?
     user.privileged_user?
   end
+
+  def load_more?
+    user.privileged_user?
+  end
 end

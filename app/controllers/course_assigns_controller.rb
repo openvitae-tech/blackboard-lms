@@ -4,12 +4,14 @@ class CourseAssignsController < ApplicationController
   before_action :authorize_actions
   before_action :set_user_or_team
 
+  include SearchContextHelper
+
   def new
-    @context = @team_assign ? 'team_assign' : 'user_assign'
+    context = @team_assign ? 'team_assign' : 'user_assign'
     options = { team: @team, user: @user }.compact
-    search_context = SearchContext.new(context: @context, options:)
+    @search_context = SearchContext.new(context: context, options:)
     service = Courses::FilterService.instance
-    @courses = service.filter(current_user, search_context)
+    @courses = service.filter(current_user, @search_context).page(params[:page]).per(Course::PER_PAGE_LIMIT)
     @tags = Tag.load_tags
   end
 
@@ -36,6 +38,12 @@ class CourseAssignsController < ApplicationController
     end
 
     flash.now[:success] = 'Courses assigned successfully'
+  end
+
+  def load_more
+    service = Courses::FilterService.instance
+    @search_context = build_search_context
+    @courses = service.filter(current_user, @search_context).page(params[:page]).per(Course::PER_PAGE_LIMIT)
   end
 
   private

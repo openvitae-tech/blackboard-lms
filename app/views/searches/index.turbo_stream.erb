@@ -6,9 +6,7 @@
                            partial: "course_assigns/course_list_with_assign_form",
                            locals: {
                              courses: @courses,
-                             team_assign: @search_context.team_assign?,
-                             user: @user,
-                             team: @team,
+                             search_context: @search_context,
                              cancel_link: @back_link
                            }
   %>

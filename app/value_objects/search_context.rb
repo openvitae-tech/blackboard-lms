@@ -19,8 +19,8 @@ class SearchContext
   end
 
   def initialize(term: '', tags: [], context: nil, options: {})
-    @term = term
-    @tags = tags
+    @term = term || ''
+    @tags = tags || []
     @context = context
 
     case @context
