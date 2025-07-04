@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     service = UserManagementService.instance
 
     if service.deactivate(current_user, @user)
-      Teams::UpdateTotalMembersCount.instance.update_count(@user.team)
+      Teams::UpdateTotalMembersCountService.instance.update_count(@user.team)
       flash.now[:success] = I18n.t('user.deactivate')
     else
       flash.now[:error] = I18n.t('user.deactivate_failed')
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     service = UserManagementService.instance
 
     if service.activate(current_user, @user)
-      Teams::UpdateTotalMembersCount.instance.update_count(@user.team)
+      Teams::UpdateTotalMembersCountService.instance.update_count(@user.team)
       flash.now[:success] = I18n.t('user.activate')
     else
       flash.now[:error] = I18n.t('user.activate_failed')

@@ -21,9 +21,10 @@ class InvitesController < ApplicationController
     @bulk_invite = invite_params[:bulk_invite].present?
     status = @bulk_invite ? handle_bulk_invite : handle_single_invite
 
+    Teams::UpdateTotalMembersCountService.instance.update_count(@team)
+
     if status == :ok
       @partner.reload
-      Teams::UpdateTotalMembersCount.instance.update_count(@team)
       flash.now[:success] = @bulk_invite ? I18n.t('invite.bulk') : I18n.t('invite.single')
     else
       render 'new', status: :unprocessable_entity
