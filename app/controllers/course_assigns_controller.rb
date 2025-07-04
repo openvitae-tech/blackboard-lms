@@ -11,7 +11,7 @@ class CourseAssignsController < ApplicationController
     options = { team: @team, user: @user }.compact
     @search_context = SearchContext.new(context: context, options:)
     service = Courses::FilterService.instance
-    @courses = service.filter(current_user, @search_context).page(params[:page]).per(Course::PER_PAGE_LIMIT)
+    @courses = service.filter(current_user, @search_context).records.page(params[:page]).per(Course::PER_PAGE_LIMIT)
     @tags = Tag.load_tags
   end
 

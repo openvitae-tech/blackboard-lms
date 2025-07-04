@@ -3,27 +3,34 @@ module SearchContextHelper
 
   private
 
-  def build_search_context
+  def build_search_context(context: nil)
     options = {}
 
-    case params[:context]
+    context = context || search_params[:context]
+
+    case context
     when 'team_assign' then
-      team = Team.find params[:team_id]
+      team = Team.find search_params[:team_id]
       options[:team] = team
     when 'user_assign' then
-      user = User.find params[:user_id]
+      user = User.find search_params[:user_id]
       options[:user] = user
     end
 
     SearchContext.new(
-      context: params[:context],
-      term: params[:term],
-      tags: params[:tags],
+      context: context,
+      term: search_params[:term],
+      tags: search_params[:tags],
+      type: search_params[:type],
       options:
     )
   end
 
   def search_params
-    params.require(:search).permit(:context, :team_id, :user_id, :term, :tags)
+    if params[:search].present?
+      params.require(:search).permit(:context, :team_id, :user_id, :term, :tags, :type)
+    else
+      params.permit(:context, :team_id, :user_id, :term, :tags, :type)
+    end
   end
 end

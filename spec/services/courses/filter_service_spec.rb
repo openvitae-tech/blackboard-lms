@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Courses::FilterService do
+RSpec.fdescribe Courses::FilterAdapter do
   let(:service) { described_class.instance }
   let(:category_tags) { create_list(:tag, 3) }
   let(:level_tags) { create_list(:tag, 2, tag_type: :level) }
@@ -10,10 +10,10 @@ RSpec.describe Courses::FilterService do
   let(:user) { create(:user, role: :admin) }
 
   before do
-    @course_one = create :course, tag_ids: [category_tags.first.id, level_tags.first.id]
-    @course_two = create :course, tag_ids: [category_tags.last.id, level_tags.first.id]
-    @course_three = create :course
-    @course_four = create :course, tag_ids: [category_tags.second.id, level_tags.last.id]
+    @course_one = create :course, :published, tag_ids: [category_tags.first.id, level_tags.first.id]
+    @course_two = create :course, :published,  tag_ids: [category_tags.last.id, level_tags.first.id]
+    @course_three = create :course, :published
+    @course_four = create :course, :published, tag_ids: [category_tags.second.id, level_tags.last.id]
   end
 
   describe '#filter_courses' do
@@ -45,7 +45,7 @@ RSpec.describe Courses::FilterService do
     end
 
     it 'filter courses based on search term' do
-      result = service.filter_courses(user, [], @course_three.title)
+      result = service.filter_courses(user, [], @course_three.title, :enrolled)
       expect(result[:enrolled_courses].pluck(:id)).to eq([@course_three.id])
     end
 

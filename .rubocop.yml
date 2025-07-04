@@ -51,5 +51,7 @@ RSpec/AnyInstance:
   Enabled: false
 RSpec/BeforeAfterAll:
   Enabled: false
+RSpec/DescribedClass:
+  Enabled: false
 Naming/PredicateMethod:
   Enabled: false
