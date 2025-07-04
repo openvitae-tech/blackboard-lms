@@ -3,6 +3,8 @@
 # Invites Controller is used to invite new  members by the manager or owners.
 # This is not meant for inviting other admins.
 class InvitesController < ApplicationController
+  include CommonsHelper
+
   def new
     authorize :invite
     @team = Team.find(params[:team_id])
@@ -85,7 +87,7 @@ class InvitesController < ApplicationController
     end
 
     if exceeds_seat_limit?(valid_records.count)
-      @user.errors.add(:base, I18n.t('invite.exceeds_user_limit') % { limit: @partner.payment_plan.total_seats })
+      @user.errors.add(:base, I18n.t('invite.exceeds_user_limit') % { limit: activate_users_count(@partner) })
       return :error
     end
 
