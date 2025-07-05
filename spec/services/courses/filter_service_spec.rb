@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.fdescribe Courses::FilterAdapter do
+RSpec.describe Courses::FilterAdapter do
   let(:service) { described_class.instance }
   let(:category_tags) { create_list(:tag, 3) }
   let(:level_tags) { create_list(:tag, 2, tag_type: :level) }
@@ -11,7 +11,7 @@ RSpec.fdescribe Courses::FilterAdapter do
 
   before do
     @course_one = create :course, :published, tag_ids: [category_tags.first.id, level_tags.first.id]
-    @course_two = create :course, :published,  tag_ids: [category_tags.last.id, level_tags.first.id]
+    @course_two = create :course, :published, tag_ids: [category_tags.last.id, level_tags.first.id]
     @course_three = create :course, :published
     @course_four = create :course, :published, tag_ids: [category_tags.second.id, level_tags.last.id]
   end

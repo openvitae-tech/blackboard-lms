@@ -16,7 +16,7 @@ class SearchContext
   UNENROLLED = :unenrolled
   VALID_TYPES = [ANY, ENROLLED, UNENROLLED].freeze
 
-  attr_accessor :term, :tags, :context, :team, :user, :type
+  attr_reader :term, :tags, :context, :team, :user, :type
 
   validates :context,
             inclusion: { in: VALID_CONTEXTS,
@@ -31,17 +31,17 @@ class SearchContext
   end
 
   def initialize(context:, term: '', tags: [], type: nil, options: {})
-    self.term = sanitize_parameter(term, '')
-    self.tags = sanitize_parameter(tags, [])
-    self.context = sanitize_parameter(context)&.to_sym
-    self.type = sanitize_parameter(type, ANY).to_sym
+    @term = sanitize_parameter(term, '')
+    @tags = sanitize_parameter(tags, [])
+    @context = sanitize_parameter(context)&.to_sym
+    @type = sanitize_parameter(type, ANY).to_sym
 
     case context
     when TEAM_ASSIGN
-      self.team = options[:team]
+      @team = options[:team]
       raise Errors::IllegalSearchContext, "Team can't be blank in context `team_assign`" if team.nil?
     when USER_ASSIGN
-      self.user = options[:user]
+      @user = options[:user]
       raise Errors::IllegalSearchContext, "User can't be blank in context `user_assign`" if user.nil?
     end
 
@@ -69,7 +69,7 @@ class SearchContext
       param.strip
     elsif param.instance_of?(Array)
       param.compact!
-      param.map(&:strip).compact
+      param.map(&:strip).filter { |t| !t.empty? }
     else
       param
     end
