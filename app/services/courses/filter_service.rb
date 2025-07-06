@@ -7,10 +7,13 @@ module Courses
     def initialize(user, search_context)
       @user = user
       @search_context = search_context
+      @result = nil
       raise Errors::IllegalSearchContext, 'Search context is blank' if user.blank? || search_context.blank?
     end
 
     def filter
+      return @result if @result.present?
+
       course_scope = filter_scope_for(user, search_context)
       course_scope = filter_by_matching_term(course_scope, search_context)
       course_scope = filter_by_tags(search_context.tags, course_scope)
@@ -23,7 +26,7 @@ module Courses
                        course_scope
                      end
 
-      SearchResult.new(course_scope, search_context)
+      @result = SearchResult.new(course_scope, search_context)
     end
 
     private
@@ -34,16 +37,21 @@ module Courses
       levels, categories = fetch_levels_and_categories_for(tags)
 
       if categories.present? && levels.present?
-        courses.left_joins(:tags)
-               .where(tags: { id: categories })
-               .where(id: Course.left_joins(:tags)
-                                .where(tags: { id: levels })
-                                .select(:id))
+        having_category_tags = Course.joins(:tags).where(tags: { id: categories }).select(:id)
+        having_level_tags = Course.joins(:tags).where(tags: { id: levels }).select(:id)
+        courses.where(id: having_level_tags)
+               .where(id: having_category_tags)
+        # Almost the same but pluck produces duplicate in the above query
+        # courses.left_joins(:tags)
+        #        .where(tags: { id: categories })
+        #        .where(id: Course.left_joins(:tags)
+        #                         .where(tags: { id: levels })
+        #                         .select(:id))
       elsif categories.present?
-        courses.left_joins(:tags)
+        courses.joins(:tags)
                .where(tags: { id: categories })
       elsif levels.present?
-        courses.left_joins(:tags)
+        courses.joins(:tags)
                .where(tags: { id: levels })
       else
         courses

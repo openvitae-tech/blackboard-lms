@@ -18,7 +18,6 @@ module Courses
         }
       elsif search_context.search_all_courses?
         enrolled_search_context = search_context_with_type(search_context, SearchContext::ENROLLED)
-
         enrolled = FilterService.new(user, enrolled_search_context).filter
         unenrolled_search_context = search_context_with_type(search_context, SearchContext::UNENROLLED)
         unenrolled = FilterService.new(user, unenrolled_search_context).filter
