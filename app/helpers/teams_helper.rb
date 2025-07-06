@@ -46,6 +46,9 @@ module TeamsHelper
 
   def team_banner(team, version)
     if team.banner.attached?
+      # HACK: for local testing with production dump data
+      return STATIC_ASSETS[:banner_mobile] if Rails.env.local? && team.banner.blob.service_name.start_with?('s3')
+
       resize_banner(team.banner, version)
     else
       version == 'mobile' ? STATIC_ASSETS[:banner_mobile] : STATIC_ASSETS[:banner_desktop]
@@ -54,6 +57,10 @@ module TeamsHelper
 
   def partner_logo(learning_partner, version)
     return STATIC_ASSETS[:logo] unless learning_partner.logo.attached?
+    # HACK: for local testing with production dump data
+    if Rails.env.local? && learning_partner.logo.blob.service_name.start_with?('s3')
+      return STATIC_ASSETS[:banner_mobile]
+    end
 
     if version == :small
       learning_partner.logo.variant(resize_to_limit: [80, nil])

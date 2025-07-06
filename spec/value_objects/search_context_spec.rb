@@ -131,6 +131,17 @@ RSpec.describe SearchContext do
       expect(ctx.tags).to eq(['tag'])
     end
 
+    it 'removes the duplicate the tags' do
+      ctx = SearchContext.new(
+        context: SearchContext::HOME_PAGE,
+        term: 'My search term',
+        tags: %w[tag1 tag2 tag1],
+        type: SearchContext::ANY
+      )
+
+      expect(ctx.tags).to eq(%w[tag1 tag2])
+    end
+
     it 'sanitizes the term' do
       ctx = SearchContext.new(
         context: SearchContext::HOME_PAGE,

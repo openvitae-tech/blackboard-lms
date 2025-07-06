@@ -49,7 +49,7 @@ RSpec.describe Courses::FilterService do
       @unpublished = create :course, :unpublished, tag_ids: [level_tags[0].id, category_tags[0].id]
       @published1 = create :course, :published, tag_ids: [level_tags[0].id, category_tags[0].id]
       @published2 = create :course, :published, tag_ids: [level_tags[1].id, category_tags[1].id]
-      @published3 = create :course, :published, tag_ids: [level_tags[2].id, category_tags[2].id]
+      @published3 = create :course, :published, tag_ids: [level_tags[2].id, category_tags[1].id, category_tags[2].id]
     end
 
     describe 'by admin user' do
@@ -119,8 +119,8 @@ RSpec.describe Courses::FilterService do
       it 'courses of all selected categories will be returned' do
         service = Courses::FilterService.new(user, search_context)
         results = service.filter
-        expect(results.records.count).to eq(2)
-        expect(results.records).to eq([@published2, @published1])
+        expect(results.records.count).to eq(3)
+        expect(results.records).to eq([@published3, @published2, @published1])
       end
     end
 
@@ -163,15 +163,82 @@ RSpec.describe Courses::FilterService do
         expect(results.records).to eq([@published2, @published1])
       end
     end
+
+    describe 'for multiple categories, multiple levels and term' do
+      let(:user) { create(:user, role: :manager) }
+
+      let(:search_context) do
+        SearchContext.new(
+          context: SearchContext::COURSE_LISTING,
+          term: @published2.title,
+          tags: [category_tags[0].name,
+                 category_tags[1].name,
+                 category_tags[2].name,
+                 level_tags[0].name,
+                 level_tags[1].name]
+        )
+      end
+
+      it 'select all courses with having any matching combination of categories and tags' do
+        service = Courses::FilterService.new(user, search_context)
+        results = service.filter
+        expect(results.records.count).to eq(1)
+        expect(results.records).to eq([@published2])
+      end
+    end
   end
 
-  describe 'filters for context team_assing' do
-    it 'filters out already assigned courses' do
+  describe 'filters for context team_assign' do
+    before do
+      @course1 = create :course, :published
+      @course2 = create :course, :published
+      @team = create :team
+      @manager = create :user, :learner, team: @team
+      @learner = create :user, :learner, team: @team
+      @course1.enroll_team!(@team, @manager)
+    end
+
+    let(:search_context) do
+      SearchContext.new(
+        context: SearchContext::TEAM_ASSIGN,
+        options: {
+          team: @team
+        }
+      )
+    end
+
+    it 'filters out already assigned/enrolled courses' do
+      service = Courses::FilterService.new(@manager, search_context)
+      results = service.filter
+      expect(results.records.count).to eq(1)
+      expect(results.records).to eq([@course2])
     end
   end
 
   describe 'filters for context user_assign' do
-    it 'filters out already assigned courses' do
+    before do
+      @course1 = create :course, :published
+      @course2 = create :course, :published
+      @team = create :team
+      @manager = create :user, :learner, team: @team
+      @learner = create :user, :learner, team: @team
+      @course1.enroll!(@learner, @manager)
+    end
+
+    let(:search_context) do
+      SearchContext.new(
+        context: SearchContext::USER_ASSIGN,
+        options: {
+          user: @learner
+        }
+      )
+    end
+
+    it 'filters out already assigned/enrolled courses' do
+      service = Courses::FilterService.new(@manager, search_context)
+      results = service.filter
+      expect(results.records.count).to eq(1)
+      expect(results.records).to eq([@course2])
     end
   end
 end

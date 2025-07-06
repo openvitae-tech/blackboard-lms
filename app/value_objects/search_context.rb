@@ -69,7 +69,7 @@ class SearchContext
       param.strip
     elsif param.instance_of?(Array)
       param.compact!
-      param.map(&:strip).filter { |t| !t.empty? }
+      param.map(&:strip).filter { |t| !t.empty? }.uniq
     else
       param
     end
