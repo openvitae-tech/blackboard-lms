@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Courses::FilterService do
@@ -9,12 +11,12 @@ RSpec.describe Courses::FilterService do
       @unpublished = create :course, :unpublished, title: title
     end
 
-    let(:search_context) {
+    let(:search_context) do
       SearchContext.new(
         context: SearchContext::COURSE_LISTING,
         term: 'best'
       )
-    }
+    end
 
     describe 'by admin user' do
       let(:admin) { create(:user, role: :admin) }
@@ -40,7 +42,6 @@ RSpec.describe Courses::FilterService do
   end
 
   describe 'filters courses using tags' do
-
     let(:level_tags) { create_list(:tag, 3, tag_type: :level) }
     let(:category_tags) { create_list(:tag, 3) }
 
@@ -54,12 +55,12 @@ RSpec.describe Courses::FilterService do
     describe 'by admin user' do
       let(:admin) { create(:user, role: :admin) }
 
-      let(:search_context) {
+      let(:search_context) do
         SearchContext.new(
           context: SearchContext::COURSE_LISTING,
           tags: [level_tags[0].name, category_tags[0].name]
         )
-      }
+      end
 
       it 'filters the courses using tags and includes unpublished courses' do
         service = Courses::FilterService.new(admin, search_context)
@@ -72,12 +73,12 @@ RSpec.describe Courses::FilterService do
     describe 'by non admin user' do
       let(:user) { create(:user, role: :manager) }
 
-      let(:search_context) {
+      let(:search_context) do
         SearchContext.new(
           context: SearchContext::COURSE_LISTING,
           tags: [level_tags[0].name, category_tags[0].name]
         )
-      }
+      end
 
       it 'filters the courses using tags' do
         service = Courses::FilterService.new(user, search_context)
@@ -90,12 +91,12 @@ RSpec.describe Courses::FilterService do
     describe 'with multiple level tags' do
       let(:user) { create(:user, role: :manager) }
 
-      let(:search_context) {
+      let(:search_context) do
         SearchContext.new(
           context: SearchContext::COURSE_LISTING,
           tags: [level_tags[0].name, level_tags[1].name]
         )
-      }
+      end
 
       it 'courses of all selected levels will be returned' do
         service = Courses::FilterService.new(user, search_context)
@@ -108,12 +109,12 @@ RSpec.describe Courses::FilterService do
     describe 'with multiple category tags' do
       let(:user) { create(:user, role: :manager) }
 
-      let(:search_context) {
+      let(:search_context) do
         SearchContext.new(
           context: SearchContext::COURSE_LISTING,
           tags: [category_tags[0].name, category_tags[1].name]
         )
-      }
+      end
 
       it 'courses of all selected categories will be returned' do
         service = Courses::FilterService.new(user, search_context)
@@ -126,12 +127,12 @@ RSpec.describe Courses::FilterService do
     describe 'with multiple category tags and single level' do
       let(:user) { create(:user, role: :manager) }
 
-      let(:search_context) {
+      let(:search_context) do
         SearchContext.new(
           context: SearchContext::COURSE_LISTING,
           tags: [category_tags[0].name, category_tags[1].name, level_tags[0].name]
         )
-      }
+      end
 
       it 'courses matching both categories and level will be returned' do
         service = Courses::FilterService.new(user, search_context)
@@ -144,7 +145,7 @@ RSpec.describe Courses::FilterService do
     describe 'for both multiple categories and multiple levels' do
       let(:user) { create(:user, role: :manager) }
 
-      let(:search_context) {
+      let(:search_context) do
         SearchContext.new(
           context: SearchContext::COURSE_LISTING,
           tags: [category_tags[0].name,
@@ -153,7 +154,7 @@ RSpec.describe Courses::FilterService do
                  level_tags[0].name,
                  level_tags[1].name]
         )
-      }
+      end
 
       it 'select all courses with having any matching combination of categories and tags' do
         service = Courses::FilterService.new(user, search_context)
@@ -161,20 +162,16 @@ RSpec.describe Courses::FilterService do
         expect(results.records.count).to eq(2)
         expect(results.records).to eq([@published2, @published1])
       end
-
     end
-
   end
 
   describe 'filters for context team_assing' do
     it 'filters out already assigned courses' do
-
     end
   end
 
   describe 'filters for context user_assign' do
     it 'filters out already assigned courses' do
-
     end
   end
 end
