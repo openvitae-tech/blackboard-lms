@@ -74,4 +74,5 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.assets.debug = true
   config.action_mailer.asset_host = "http://localhost:3000"
+  # config.action_controller.action_on_unpermitted_parameters = :raise
 end

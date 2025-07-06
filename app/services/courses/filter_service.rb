@@ -2,19 +2,15 @@
 
 module Courses
   class FilterService
-    include Singleton
+    attr_reader :user, :search_context
 
-    # def filter_courses(user, tags, search_term = '', type = '')
-    #   courses = filter_by_term(user, search_term)
-    #
-    #   if user.is_admin?
-    #     admin_courses(tags, courses)
-    #   else
-    #     non_admin_courses(tags, courses, type)
-    #   end
-    # end
+    def initialize(user, search_context)
+      @user = user
+      @search_context = search_context
+      raise Errors::IllegalSearchContext, 'Search context is blank' if user.blank? || search_context.blank?
+    end
 
-    def filter(user, search_context)
+    def filter
       course_scope = filter_scope_for(user, search_context)
       course_scope = filter_by_matching_term(course_scope, search_context)
       course_scope = filter_by_tags(search_context.tags, course_scope)
@@ -31,38 +27,6 @@ module Courses
     end
 
     private
-
-    # def admin_courses(tags, courses)
-    #   filtered_courses = filter_by_tags(tags, courses)
-    #   {
-    #     available_courses: filtered_courses.includes(:banner_attachment, :tags).limit(Course::PER_PAGE_LIMIT),
-    #     available_courses_count: filtered_courses.length
-    #   }
-    # end
-
-    # def non_admin_courses(tags, courses, type)
-    #   filtered_available = filter_by_tags(tags, courses[:current_user_available_courses])
-    #   filtered_enrolled = filter_by_tags(tags, courses[:current_user_enrolled_courses])
-    #   available_excluding_enrolled = filtered_available.where.not(id: filtered_enrolled.pluck(:id))
-    #   {
-    #     enrolled_courses: (
-    #       if type == 'all'
-    #         []
-    #       else
-    #         filtered_enrolled.includes(:banner_attachment,
-    #                                    :tags).limit(Course::ENROLLED_COURSES_LIMIT)
-    #       end),
-    #     available_courses: (
-    #       if type == 'enrolled'
-    #         []
-    #       else
-    #         available_excluding_enrolled.includes(:banner_attachment,
-    #                                               :tags).limit(Course::PER_PAGE_LIMIT)
-    #       end),
-    #     enrolled_courses_count: (type == 'all' ? 0 : filtered_enrolled.size),
-    #     available_courses_count: (type == 'enrolled' ? 0 : available_excluding_enrolled.size)
-    #   }
-    # end
 
     def filter_by_tags(tags, courses)
       return courses if tags.blank?
@@ -85,23 +49,6 @@ module Courses
         courses
       end
     end
-
-    # def filter_by_term(user, term)
-    #   courses_scope = if term.blank?
-    #                     Course.order(created_at: :desc)
-    #                   else
-    #                     Course.where('title ILIKE ?', "%#{term}%").order(created_at: :desc)
-    #                   end
-    #
-    #   if user.is_admin?
-    #     courses_scope
-    #   else
-    #     {
-    #       current_user_enrolled_courses: user.courses.merge(courses_scope),
-    #       current_user_available_courses: courses_scope.published
-    #     }
-    #   end
-    # end
 
     def filter_by_matching_term(scope, search_context)
       return scope if search_context.term.blank?
@@ -130,14 +77,11 @@ module Courses
                 Course.all
               end
 
-      scope = scope.includes(%i[banner_attachment tags])
-                   .order(created_at: :desc)
-                   .limit(Course::PER_PAGE_LIMIT)
-      if user.is_admin?
-        scope
-      else
-        scope.published
-      end
+      scope = scope.published unless user.is_admin?
+
+      scope.includes(%i[banner_attachment tags])
+           .order(created_at: :desc)
+           .limit(Course::PER_PAGE_LIMIT)
     end
 
     def fetch_levels_and_categories_for(tags)

@@ -7,11 +7,10 @@ class CourseAssignsController < ApplicationController
   include SearchContextHelper
 
   def new
-    context = @team_assign ? 'team_assign' : 'user_assign'
-    options = { team: @team, user: @user }.compact
-    @search_context = SearchContext.new(context: context, options:)
-    service = Courses::FilterService.instance
-    @courses = service.filter(current_user, @search_context).records.page(params[:page]).per(Course::PER_PAGE_LIMIT)
+    context = @team_assign ? SearchContext::TEAM_ASSIGN : SearchContext::USER_ASSIGN
+    @search_context = build_search_context(context:, resource: @team || @user)
+    service = Courses::FilterService.new(current_user, @search_context)
+    @courses = service.filter.records.page(params[:page]).per(Course::PER_PAGE_LIMIT)
     @tags = Tag.load_tags
   end
 
@@ -41,9 +40,9 @@ class CourseAssignsController < ApplicationController
   end
 
   def load_more
-    service = Courses::FilterService.instance
-    @search_context = build_search_context
-    @courses = service.filter(current_user, @search_context).page(params[:page]).per(Course::PER_PAGE_LIMIT)
+    @search_context = build_search_context(resource: @user || @team)
+    service = Courses::FilterService.new(current_user, @search_context)
+    @courses = service.filter.records.page(params[:page]).per(Course::PER_PAGE_LIMIT)
   end
 
   private

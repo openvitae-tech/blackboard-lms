@@ -3,18 +3,16 @@ module SearchContextHelper
 
   private
 
-  def build_search_context(context: nil)
+  def build_search_context(context: nil, resource: nil)
     options = {}
 
-    context = context || search_params[:context]
+    context = (context || search_params[:context]).to_sym
 
     case context
-    when 'team_assign' then
-      team = Team.find search_params[:team_id]
-      options[:team] = team
-    when 'user_assign' then
-      user = User.find search_params[:user_id]
-      options[:user] = user
+    when SearchContext::TEAM_ASSIGN then
+      options[:team] = resource || Team.find(search_params[:team_id])
+    when SearchContext::USER_ASSIGN then
+      options[:user] = resource || Team.find(search_params[:user_id])
     end
 
     SearchContext.new(
@@ -28,9 +26,9 @@ module SearchContextHelper
 
   def search_params
     if params[:search].present?
-      params.require(:search).permit(:context, :team_id, :user_id, :term, :tags, :type)
+      params.require(:search).permit(:context, :team_id, :user_id, :term, :type, :page, tags: [])
     else
-      params.permit(:context, :team_id, :user_id, :term, :tags, :type)
+      params.permit(:context, :team_id, :user_id, :term, :type, :page, tags: [])
     end
   end
 end

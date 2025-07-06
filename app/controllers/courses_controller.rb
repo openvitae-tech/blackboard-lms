@@ -10,9 +10,7 @@ class CoursesController < ApplicationController
   def index
     authorize :course
     @search_context = build_search_context(context: :course_listing)
-    service = Courses::FilterService.instance
-    # result = service.filter_courses(current_user, params[:tags], params[:term], params[:type])
-    # result = service.filter(current_user, @search_context)
+
     result = Courses::FilterAdapter.instance.filter_courses(current_user, params[:tags], params[:term], params[:type])
 
     @available_courses = result[:available_courses]

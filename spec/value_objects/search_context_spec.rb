@@ -4,14 +4,14 @@ require 'rails_helper'
 
 RSpec.describe SearchContext do
   describe 'A valid course listing search context' do
-    let(:ctx) {
+    let(:ctx) do
       SearchContext.new(
         context: SearchContext::COURSE_LISTING,
         term: 'My search term',
         tags: %w[beginner beverages],
         type: SearchContext::ANY
       )
-    }
+    end
 
     it 'Create a new search context for course search' do
       expect(ctx).to be_valid
@@ -45,7 +45,7 @@ RSpec.describe SearchContext do
     end
   end
 
-  describe  'TEAM_ASSIGN search context' do
+  describe 'TEAM_ASSIGN search context' do
     it 'initializes a team assign search context' do
       expect(
         SearchContext.new(
@@ -53,18 +53,20 @@ RSpec.describe SearchContext do
           term: 'My search term',
           tags: %w[beginner beverages],
           type: SearchContext::ANY,
-          options: { team: Team.new })
-        ).to be_valid
+          options: { team: Team.new }
+        )
+      ).to be_valid
     end
 
     it 'trows error when creating a TEAM_ASSIGN search context without a team value' do
-      expect {
+      expect do
         SearchContext.new(
           context: SearchContext::TEAM_ASSIGN,
           term: 'My search term',
           tags: %w[beginner beverages],
-          type: SearchContext::ANY)
-      }.to raise_error(Errors::IllegalSearchContext)
+          type: SearchContext::ANY
+        )
+      end.to raise_error(Errors::IllegalSearchContext)
     end
   end
 
@@ -76,40 +78,44 @@ RSpec.describe SearchContext do
           term: 'My search term',
           tags: %w[beginner beverages],
           type: SearchContext::ANY,
-          options: { team: User.new })
+          options: { team: User.new }
+        )
       ).to be_valid
     end
 
     it 'trows error when creating a USER_ASSIGN search context without a User value' do
-      expect {
+      expect do
         SearchContext.new(
           context: SearchContext::USER_ASSIGN,
           term: 'My search term',
           tags: %w[beginner beverages],
-          type: SearchContext::ANY)
-      }.to raise_error(Errors::IllegalSearchContext)
+          type: SearchContext::ANY
+        )
+      end.to raise_error(Errors::IllegalSearchContext)
     end
   end
 
   describe 'Incorrect search context' do
     it 'trows error when creating incorrect search context incorrectly' do
-      expect {
+      expect do
         SearchContext.new(
           context: :random,
           term: 'My search term',
           tags: %w[beginner beverages],
-          type: SearchContext::ANY)
-      }.to raise_error(Errors::IllegalSearchContext)
+          type: SearchContext::ANY
+        )
+      end.to raise_error(Errors::IllegalSearchContext)
     end
 
     it 'trows error when creating search context with incorrect type' do
-      expect {
+      expect do
         SearchContext.new(
           context: SearchContext::HOME_PAGE,
           term: 'My search term',
           tags: %w[beginner beverages],
-          type: :random)
-      }.to raise_error(Errors::IllegalSearchContext)
+          type: :random
+        )
+      end.to raise_error(Errors::IllegalSearchContext)
     end
   end
 
@@ -119,7 +125,8 @@ RSpec.describe SearchContext do
         context: SearchContext::HOME_PAGE,
         term: 'My search term',
         tags: [nil, '', '  tag '],
-        type: SearchContext::ANY)
+        type: SearchContext::ANY
+      )
 
       expect(ctx.tags).to eq(['tag'])
     end
@@ -129,7 +136,8 @@ RSpec.describe SearchContext do
         context: SearchContext::HOME_PAGE,
         term: ' My search term ',
         tags: [],
-        type: SearchContext::ANY)
+        type: SearchContext::ANY
+      )
 
       expect(ctx.term).to eq('My search term')
     end
@@ -139,7 +147,8 @@ RSpec.describe SearchContext do
         context: SearchContext::HOME_PAGE,
         term: nil,
         tags: [],
-        type: SearchContext::ANY)
+        type: SearchContext::ANY
+      )
 
       expect(ctx.term).to eq('')
     end
@@ -149,7 +158,8 @@ RSpec.describe SearchContext do
         context: SearchContext::HOME_PAGE,
         term: nil,
         tags: nil,
-        type: SearchContext::ANY)
+        type: SearchContext::ANY
+      )
 
       expect(ctx.tags).to eq([])
     end
