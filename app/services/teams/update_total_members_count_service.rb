@@ -8,7 +8,7 @@ module Teams
       return unless team
 
       total = team.members.size + team.sub_teams.sum(&:total_members_count)
-      team.update!(total_members_count: total) unless total == team.total_members_count
+      team.update!(total_members_count: total)
 
       update_count(team.parent_team)
     end

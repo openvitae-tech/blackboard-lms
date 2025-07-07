@@ -96,7 +96,7 @@ class InvitesController < ApplicationController
   end
 
   def exceeds_seat_limit?(new_user_count)
-    new_user_count + @partner.users_count > @partner.payment_plan.total_seats
+    new_user_count + @partner.active_users_count > @partner.payment_plan.total_seats
   end
 
   def handle_single_invite

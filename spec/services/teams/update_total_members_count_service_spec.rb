@@ -21,13 +21,7 @@ RSpec.describe Teams::UpdateTotalMembersCountService do
 
       expect(sub_team_two.reload.total_members_count).to eq(3)
       expect(sub_team_one.reload.total_members_count).to eq(5)
-    end
-
-    it 'does not perform update if total_members_count is already correct' do
-      subject.update_count(sub_team_two)
-      expect do
-        subject.update_count(sub_team_two)
-      end.not_to(change(sub_team_one, :total_members_count))
+      expect(parent_team.reload.total_members_count).to eq(5)
     end
   end
 end
