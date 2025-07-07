@@ -12,6 +12,8 @@ module CoursesHelper
   # @param version [Symbol] Values are :vertical or :horizontal
   def course_banner(course, version)
     return STATIC_ASSETS[:course_banner] unless course.banner.attached?
+    # HACK: for local testing with production dump data
+    return STATIC_ASSETS[:course_banner] if Rails.env.local? && course.banner.blob.service_name.start_with?('s3')
 
     if version == :vertical
       course.banner&.variant(resize_to_fill: [320, nil])
