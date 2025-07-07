@@ -10,36 +10,18 @@ module Courses
 
       if user.is_admin?
         search_context = search_context_with_type(search_context, :all)
-
-        all = FilterService.new(user, search_context).filter
-        {
-          available_courses: all.records,
-          available_courses_count: all.count
-        }
+        search_all(user, search_context)
       elsif search_context.search_all_courses?
         enrolled_search_context = search_context_with_type(search_context, SearchContext::ENROLLED)
-        enrolled = FilterService.new(user, enrolled_search_context).filter
+        enrolled = search_enrolled(user, enrolled_search_context)
         unenrolled_search_context = search_context_with_type(search_context, SearchContext::UNENROLLED)
-        unenrolled = FilterService.new(user, unenrolled_search_context).filter
+        unenrolled = search_unenrolled(user, unenrolled_search_context)
 
-        {
-          enrolled_courses: enrolled.records,
-          enrolled_courses_count: enrolled.count,
-          available_courses: unenrolled.records,
-          available_courses_count: unenrolled.count
-        }
+        enrolled.merge(unenrolled)
       elsif search_context.search_enrolled_courses?
-        enrolled = FilterService.new(user, search_context).filter
-        {
-          enrolled_courses: enrolled.records,
-          enrolled_courses_count: enrolled.count
-        }
+        search_enrolled(user, search_context)
       elsif search_context.search_unenrolled_courses?
-        unenrolled = FilterService.new(user, search_context).filter
-        {
-          available_courses: unenrolled.records,
-          available_courses_count: unenrolled.count
-        }
+        search_unenrolled(user, search_context)
       end
     end
 
@@ -52,6 +34,31 @@ module Courses
         tags: ctx.tags,
         type:
       )
+    end
+
+    def search_enrolled(user, ctx)
+      enrolled = FilterService.new(user, ctx).filter
+
+      {
+        enrolled_courses: enrolled.records,
+        enrolled_courses_count: enrolled.count
+      }
+    end
+
+    def search_unenrolled(user, ctx)
+      unenrolled = FilterService.new(user, ctx).filter
+      {
+        available_courses: unenrolled.records,
+        available_courses_count: unenrolled.count
+      }
+    end
+
+    def search_all(user, ctx)
+      all = FilterService.new(user, ctx).filter
+      {
+        available_courses: all.records,
+        available_courses_count: all.count
+      }
     end
   end
 end
