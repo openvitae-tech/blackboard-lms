@@ -1,9 +1,9 @@
 <div class="my-4 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-  <h1 class="heading">Team Members</h1>
+  <h1 class="heading">Team Members (<%= team.members.count %>)</h1>
   <div class="flex flex-col md:flex-row justify-end gap-6 w-full md:w-auto">
     <div class="flex justify-between gap-6 w-full md:w-auto">
       <% if policy(:course_assigns).new? %>
-        <%= link_to new_course_assign_path(team_id: @team.id, source_path: team_path(@team)) do %>
+        <%= link_to new_course_assign_path(team_id: team.id, source_path: team_path(team)) do %>
           <%= button(
           label: "Assign course",
           icon_name: "assign-user",
@@ -11,7 +11,7 @@
         ) %>
         <% end %>
       <% end %>
-      <%= render "commons/invite_user", learning_partner: @learning_partner, team: @team %>
+      <%= render "commons/invite_user", learning_partner: learning_partner, team: team %>
     </div>
   </div>
 </div>
