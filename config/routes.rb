@@ -136,7 +136,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  resources :users, only: :show, as: 'members', path: 'member' do
+  resources :users, only: %i[show destroy], as: 'members', path: 'member' do
     member do
       get :deactivate
       post :confirm_deactivate

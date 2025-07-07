@@ -45,6 +45,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    authorize @user
+    @user.destroy
+    Teams::UpdateTotalMembersCountService.instance.update_count(@user.team)
+    redirect_to @user.team, notice: I18n.t('user.deleted') and return
+  end
+
   private
 
     def set_user
