@@ -155,6 +155,7 @@ en:
     deactivate: "User deactivated"
     deactivate_failed: "User deactivate failed"
     deactivated_account: "Your account is deactivated, please contact your team manager."
+    deleted: "User deleted"
   page_not_found: "The page you're looking for is missing."
   learning_partner:
     activate: "Activate"

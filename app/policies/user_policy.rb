@@ -31,4 +31,8 @@ class UserPolicy
   def confirm_activate?
     activate?
   end
+
+  def destroy?
+    user.manager_of?(other_user) && (other_user.unverified? || other_user.verified?)
+  end
 end

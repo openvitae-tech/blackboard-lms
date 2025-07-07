@@ -3,29 +3,34 @@
 module UserState
   extend ActiveSupport::Concern
 
-  USER_STATES = %w[unverified verified active in-active].freeze
+  UNVERIFIED = 'unverified'
+  VERIFIED = 'verified'
+  ACTIVE = 'active'
+  INACTIVE = 'in-active'
+
+  USER_STATES = [UNVERIFIED, VERIFIED, ACTIVE, INACTIVE].freeze
 
   included do
     def unverified?
-      state == 'unverified'
+      state == UNVERIFIED
     end
 
     def verified?
-      state == 'verified'
+      state == VERIFIED
     end
 
     def active?
-      state == 'active'
+      state == ACTIVE
     end
 
     def deactivated?
-      state == 'in-active'
+      state == INACTIVE
     end
 
     def verify!
       raise Errors::IllegalUserState, "User state #{state} can't switch to verify state" unless unverified?
 
-      self.state = 'verified'
+      self.state = VERIFIED
       save
     end
 
@@ -34,14 +39,14 @@ module UserState
         raise Errors::IllegalUserState, "User state #{state} can't switch to active state"
       end
 
-      self.state = 'active'
+      self.state = ACTIVE
       save
     end
 
     def deactivate
       raise Errors::IllegalUserState, "User state #{state} can't switch to deactivate state" unless active?
 
-      self.state = 'in-active'
+      self.state = INACTIVE
       save
     end
   end
