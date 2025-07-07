@@ -52,6 +52,7 @@ RSpec.describe 'Request spec for user invites' do
       expect do
         post '/invites', params:
       end.to change(User, :count).by(1)
+      expect(team.reload.total_members_count).to eq(1)
     end
   end
 
@@ -74,6 +75,7 @@ RSpec.describe 'Request spec for user invites' do
       expect do
         post '/invites', params:
       end.to change(User, :count).by(1)
+      expect(team.reload.total_members_count).to eq(2)
     end
   end
 
@@ -87,6 +89,7 @@ RSpec.describe 'Request spec for user invites' do
       expect do
         post invites_path, params: create_invite_params
       end.to change(User, :count).by(1)
+      expect(team.reload.total_members_count).to eq(1)
     end
 
     it 'Returns unauthorized if payment plan not present' do
@@ -115,6 +118,7 @@ RSpec.describe 'Request spec for user invites' do
       expect do
         post '/invites', params:
       end.to change(User, :count).by(3)
+      expect(team.reload.total_members_count).to eq(4)
     end
 
     it 'Skip the duplicate numbers while inviting learners in bulk' do
@@ -129,6 +133,7 @@ RSpec.describe 'Request spec for user invites' do
       expect do
         post '/invites', params:
       end.to change(User, :count).by(1)
+      expect(team.reload.total_members_count).to eq(2)
     end
 
     it 'Does not creates invitation for invalid rows in the csv' do
@@ -142,6 +147,7 @@ RSpec.describe 'Request spec for user invites' do
       expect do
         post '/invites', params:
       end.not_to change(User, :count)
+      expect(team.reload.total_members_count).to eq(1)
     end
   end
 
