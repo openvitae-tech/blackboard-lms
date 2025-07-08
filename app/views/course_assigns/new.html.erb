@@ -4,7 +4,7 @@
 </div>
 
 
-<%= render "searches/form", context: @search_context.context, tags: @tags, user: @search_context.user, team: @search_context.team %>
+<%= render "searches/form", context: @search_context, tags: @tags, user: @search_context.user, team: @search_context.team %>
 
 <%= render "course_assigns/course_list_with_assign_form",
            courses: @courses,

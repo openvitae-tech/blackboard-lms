@@ -4,11 +4,14 @@ class CoursesController < ApplicationController
   before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
   before_action :set_tags, only: %i[new create edit update]
 
+  include SearchContextHelper
+
   # GET /courses or /courses.json
   def index
     authorize :course
-    service = Courses::FilterService.instance
-    result = service.filter_courses(current_user, params[:tags], params[:term], params[:type])
+    @search_context = build_search_context(context: :course_listing)
+
+    result = Courses::FilterAdapter.instance.filter_courses(current_user, params[:tags], params[:term], params[:type])
 
     @available_courses = result[:available_courses]
     @available_courses_count = result[:available_courses_count]

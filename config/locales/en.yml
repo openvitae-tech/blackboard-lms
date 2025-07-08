@@ -31,7 +31,8 @@ en:
   must_exist: "%{entity} must exist"
   cant_blank: "%{field} can't be blank"
   already_taken: "%{field} has already been taken"
-  invalid_search: "%{value} is not a valid search context"
+  invalid_search_context: "%{value} is not a valid search context"
+  invalid_search_type: "%{value} is not a valid search type"
   resource:
     created: "The %{resource_name} is successfully created."
     updated: "The %{resource_name} is successfully updated."

@@ -7,4 +7,6 @@ module Errors
   class InvalidNotificationType < StandardError; end
   class IllegalUserState < StandardError; end
   class IllegalPartnerState < StandardError; end
+
+  class IllegalSearchContext < StandardError; end
 end

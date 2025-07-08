@@ -2,12 +2,12 @@
   <%= form_with url: search_path, method: :post, data: { action: "submit->searches#formSubmit", searches_target: "form" }, class: "w-full" do |form| %>
     <%= render 'searches/filters', tags: tags, form: form %>
 
-    <%= form.hidden_field :context, value: context %>
+    <%= form.hidden_field :context, value: context.context.to_s %>
 
-    <% if context == "team_assign" %>
-      <%= form.hidden_field :team_id, value: team.id %>
-    <% elsif context == "user_assign" %>
-      <%= form.hidden_field :user_id, value: user.id %>
+    <% if context.team_assign? %>
+      <%= form.hidden_field :team_id, value: context.team.id %>
+    <% elsif context.user_assign? %>
+      <%= form.hidden_field :user_id, value: context.user.id %>
     <% end %>
 
     <div class="relative rounded-md border border-line-colour-light w-full">
