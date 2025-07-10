@@ -16,7 +16,7 @@ class ReportPolicy
     user.privileged_user?
   end
 
-  def download?
+  def show?
     user.privileged_user?
   end
 end

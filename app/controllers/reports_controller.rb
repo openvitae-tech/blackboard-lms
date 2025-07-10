@@ -18,6 +18,7 @@ class ReportsController < ApplicationController
     @report.report_type = Report::TEAM_REPORT
 
     if @report.save
+      GenerateReportJob.perform_async(@report.id)
       flash.now[:success] = I18n.t('reports.available_soon')
     else
       render :new
