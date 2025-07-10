@@ -172,4 +172,18 @@ module UiHelper
   def paginator(collection, path:)
     render partial: 'ui/pagination/paginator', locals: { collection: collection, path: path }
   end
+
+  # form component date_select_component
+  # @param min minimum date
+  # @param maximum date
+  def date_select_component(form:, field_name:, min: nil, max: nil, placeholder: 'YYYY-MM-DD')
+    render partial: 'ui/inputs/date_select_component', locals: { form:, field_name:, min:, max:, placeholder: }
+  end
+
+  # modal box component
+  # @param title - modal title
+  def modal_component(title:, &)
+    block_content = capture(&) if block_given?
+    render partial: 'ui/modals/modal_component', locals: { title:, body: block_content }
+  end
 end

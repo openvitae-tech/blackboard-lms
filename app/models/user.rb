@@ -59,6 +59,12 @@ class User < ApplicationRecord
 
   belongs_to :team, optional: true
 
+  has_many :reports,
+           class_name: 'Report',
+           foreign_key: :generated_by,
+           inverse_of: :generator,
+           dependent: :nullify
+
   def set_temp_password
     temp_password = SecureRandom.alphanumeric(8)
     self.password = self.password_confirmation = temp_password

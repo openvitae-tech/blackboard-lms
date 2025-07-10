@@ -16,6 +16,7 @@ class Team < ApplicationRecord
 
   has_many :team_enrollments, dependent: :destroy
   has_many :courses, through: :team_enrollments
+  has_many :reports, dependent: :nullify
 
   DEPARTMENTS = [
     'Front Office',
