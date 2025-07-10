@@ -8,7 +8,7 @@ class Report < ApplicationRecord
   validates :name, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
-  validates :report_type, inclusion: { in: [TEAM_REPORT], message: 'Invalid report type' }
+  validates :report_type, inclusion: { in: [TEAM_REPORT], message: I18n.t('reports.invalid_report_type') }
 
   validate :start_date_before_end_date
 
