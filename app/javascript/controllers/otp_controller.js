@@ -11,12 +11,15 @@ export default class extends Controller {
       input.addEventListener('input', e => {
         e.target.value = e.target.value.replace(/\D/g, '').trim();
       });
+      input.addEventListener("paste", this.handlePaste.bind(this));
     });
   }
 
   updateHiddenOtp() {
     const otpValues = this.inputTargets.map((input) => input.value).join("");
-    this.hiddenOtpTarget.value = otpValues;
+    if (this.hasHiddenOtpTarget) {
+      this.hiddenOtpTarget.value = otpValues;
+    }
   }
 
   inputTargetConnected(input) {
@@ -41,46 +44,57 @@ export default class extends Controller {
       if (event.key === "Backspace") {
         if (input.value === "") {
           const previousInput = this.previousInput(input);
-          if (previousInput) {
-            previousInput.focus();
-            this.updateHiddenOtp();
-          }
+          if (previousInput) previousInput.focus();
         } else {
           input.value = "";
-          this.updateHiddenOtp();
         }
+        this.updateHiddenOtp();
       }
 
       if (event.key === "ArrowLeft") {
         const previousInput = this.previousInput(input);
-        if (previousInput) {
-          previousInput.focus();
-        }
+        if (previousInput) previousInput.focus();
       }
 
       if (event.key === "ArrowRight") {
         const nextInput = this.nextInput(input);
-        if (nextInput) {
-          nextInput.focus();
-        }
+        if (nextInput) nextInput.focus();
       }
     }
 
     this.updateButtonState();
   }
 
+  handlePaste(event) {
+    event.preventDefault();
+
+    const pastedData = event.clipboardData.getData("text").replace(/\D/g, "");
+    const digits = pastedData.slice(0, this.inputTargets.length).split("");
+
+    digits.forEach((digit, index) => {
+      const input = this.inputTargets[index];
+      if (input) input.value = digit;
+    });
+
+    this.updateHiddenOtp();
+    this.updateButtonState();
+
+    const nextEmpty = this.inputTargets.find((input) => input.value === "");
+    if (nextEmpty) nextEmpty.focus();
+  }
+
   updateButtonState() {
-    const allFilled = this.inputTargets.every(
-      (input) => input.value.length === 1
-    );
-    if (allFilled) {
-      this.submitButtonTarget.classList.remove("btn-default");
-      this.submitButtonTarget.classList.add("btn-primary");
-      this.submitButtonTarget.removeAttribute("disabled");
-    } else {
-      this.submitButtonTarget.classList.remove("btn-primary");
-      this.submitButtonTarget.classList.add("btn-default");
-      this.submitButtonTarget.setAttribute("disabled", "true");
+    const allFilled = this.inputTargets.every((input) => input.value.length === 1);
+    if (this.hasSubmitButtonTarget) {
+      if (allFilled) {
+        this.submitButtonTarget.classList.remove("btn-default");
+        this.submitButtonTarget.classList.add("btn-primary");
+        this.submitButtonTarget.removeAttribute("disabled");
+      } else {
+        this.submitButtonTarget.classList.remove("btn-primary");
+        this.submitButtonTarget.classList.add("btn-default");
+        this.submitButtonTarget.setAttribute("disabled", "true");
+      }
     }
   }
 
