@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :reports, only: %i[new create show]
+
   match 'search', to: 'searches#index', via: %i[get post]
 
   namespace :onboarding do
