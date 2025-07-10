@@ -1,0 +1,22 @@
+<div id="user-team-dropdown" data-team-change-target="dropdown" class="flex flex-col gap-4">
+  <% if local_assigns[:selected_team].present? %>
+    <%= render 'shared/components/bread_crumbs', links: (
+      local_assigns[:selected_team].ancestors.reverse.drop(1).map { |team| [team.name] }
+    ) %>
+  <% end %>
+  <%= input_dropdown(
+        field_name: "user[team_id]",
+        label: "Available teams",
+        width: "w-full",
+        options: local_assigns[:teams].pluck(:name, :id),
+        html_options: {
+          data: {
+            action: "change->team-change#updateSelect",
+            team_change_target: "dropdown"
+          }
+        }
+  ) %>
+  <% if local_assigns[:selected_team].present? %>
+    <%= hidden_field_tag "user[team_id]", local_assigns[:selected_team].id %>
+  <% end %>
+</div>
