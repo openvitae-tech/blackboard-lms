@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_03_141005) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_10_113705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -192,6 +192,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_141005) do
     t.index ["course_module_id"], name: "index_quizzes_on_course_module_id"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "team_id"
+    t.bigint "generated_by"
+    t.string "report_type"
+    t.index ["generated_by"], name: "index_reports_on_generated_by"
+    t.index ["team_id"], name: "index_reports_on_team_id"
+  end
+
   create_table "scorms", force: :cascade do |t|
     t.string "token", null: false
     t.bigint "learning_partner_id", null: false
@@ -289,6 +302,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_141005) do
   add_foreign_key "quiz_answers", "enrollments"
   add_foreign_key "quiz_answers", "quizzes"
   add_foreign_key "quizzes", "course_modules"
+  add_foreign_key "reports", "teams"
+  add_foreign_key "reports", "users", column: "generated_by"
   add_foreign_key "scorms", "learning_partners"
   add_foreign_key "team_enrollments", "courses"
   add_foreign_key "team_enrollments", "teams"

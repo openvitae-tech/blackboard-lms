@@ -15,6 +15,12 @@
   <li>
     <%= input_radio(label: "Radio Option", option:"A.English") %>
   </li>
+
+  <li>
+    <%= form_with do |form| %>
+      <%= date_select_component(form:, field_name: :start_date) %>
+    <% end %>
+  </li>
 </ul>
 <h3>Form with fields</h3>
 <%= form_with model: User.new, url: courses_path, method: :post do |form| %>
@@ -42,5 +48,5 @@
 
     </li>
   </ul>
-  <%= form.submit "Submit", class: "btn-primary" %>
+  <%= form.submit "Submit", disabled: true, class: "btn-primary" %>
 <% end %>
