@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   def change_team
     authorize @user
     sub_teams = current_user.team.sub_teams
-    @teams = sub_teams.any? ? [current_user.team] + sub_teams : sub_teams
+    @teams = sub_teams.any? ? [current_user.team] + sub_teams : []
   end
 
 
