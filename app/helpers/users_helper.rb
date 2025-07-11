@@ -37,4 +37,13 @@ module UsersHelper
   def user_avatar(user)
     user_name(user)[0]&.upcase
   end
+
+  def filtered_breadcrumb_links(selected_team)
+    accessible_ids = current_user.team.team_hierarchy_ids
+
+    selected_team.ancestors
+                 .reverse
+                 .select { |team| accessible_ids.include?(team.id) }
+                 .map { |team| [team.name] }
+  end
 end

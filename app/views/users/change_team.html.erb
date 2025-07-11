@@ -1,0 +1,14 @@
+<%= render "shared/components/modal", modalTitle: "Change team" do %>
+  <%= form_with(url: confirm_change_team_member_path(@user), method: :patch, scope: :user, class: "flex flex-col gap-6 p-6") do |form| %>
+    <%= render 'shared/components/form_errors', resource: @user %>
+    <div data-controller="team-change">
+      <%= render "users/team_dropdown", form: form, teams: @teams, user: @user %>
+    </div>
+    <div class="flex flex-col gap-6 justify-between heading">
+      <% if @teams.any? %>
+        <%= form.button "Save", class: "bg-primary text-white p-4 rounded" %>
+      <% end %>
+      <%= form.button "Cancel", data: { action: "click->modals#closeModal" } %>
+    </div>
+  <% end %>
+<% end %>

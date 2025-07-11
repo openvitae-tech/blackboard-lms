@@ -76,4 +76,8 @@ class Team < ApplicationRecord
   def within_hierarchy?(user)
     user.team == self || ancestors.include?(user.team)
   end
+
+  def team_hierarchy_ids
+    [id] + sub_teams.flat_map(&:team_hierarchy_ids)
+  end
 end

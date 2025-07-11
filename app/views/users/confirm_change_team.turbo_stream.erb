@@ -1,0 +1,11 @@
+<%= turbo_stream.replace "team-user-info-fragment", partial: "users/team_user_info", locals: { user: @user } %>
+<%= turbo_stream.replace "member-breadcrumbs" do %>
+  <div id="member-breadcrumbs" >
+    <%= render 'shared/components/bread_crumbs', links: (
+      team_list(current_user.team, @user.team).map { |team| [team.name, team_path(team)] }) %>
+  </div>
+<% end %>
+<%= turbo_stream.update "flash", partial: "shared/components/flash" %>
+<%= turbo_stream.replace "modal" do %>
+  <%= turbo_frame_tag "modal" %>
+<% end %>

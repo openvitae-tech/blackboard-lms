@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :teams, except: %i[index destroy] do
     member do
       get :all_users
+      get :sub_teams
     end
   end
 
@@ -142,6 +143,8 @@ Rails.application.routes.draw do
       post :confirm_deactivate
       get :activate
       post :confirm_activate
+      get :change_team
+      patch :confirm_change_team
     end
   end
 
