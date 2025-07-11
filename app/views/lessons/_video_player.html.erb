@@ -2,7 +2,7 @@
   <div class="absolute inset-0 flex justify-center items-center bg-white" data-vimeo-target="vimeoLoader">
     <%= render "shared/components/spinner" %>
   </div>
-  <%= video_iframe.gsub('<iframe', '<iframe data-vimeo-target="vimeoPlayer"').html_safe %>
+  <%= video_iframe.gsub('<iframe', '<iframe data-vimeo-target="vimeoPlayer" data-fullscreen-once="true"').html_safe %>
 <% elsif Rails.env.development? %>
   <%= video_tag rails_blob_path(local_content.video), controls: true %>
 <% else %>

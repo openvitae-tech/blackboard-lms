@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["vimeoLoader", "vimeoPlayer", "completeButton"];
+  static targets = ["vimeoLoader", "vimeoPlayer", "completeButton","completionOverlay"];
 
   connect() {
     // return if the vimeo player is not present, for example in local
@@ -38,8 +38,16 @@ export default class extends Controller {
 
   async handlePlayVideo(event) {
     self.startTime = new Date();
+  
+    const iframe = this.vimeoPlayerTarget;
+    const shouldFullscreen = iframe.dataset.fullscreenOnce === "true";
+  
+    if (!document.fullscreenElement && shouldFullscreen) {
+      this.requestFullscreen(iframe);
+      iframe.dataset.fullscreenOnce = "false";
+    }
   }
-
+  
   async handlePauseVideo(event) {
     this.updateTimeSpent();
   }
@@ -47,8 +55,25 @@ export default class extends Controller {
   async handleEndVideo(event) {
     this.updateTimeSpent();
     this.enableCompleteButton();
+    if (document.fullscreenElement === this.vimeoPlayerTarget) {
+      await document.exitFullscreen();
+    }
+  
+    if (this.hasCompletionOverlayTarget) {
+        this.completionOverlayTarget.classList.remove("hidden");
+    }
   }
 
+  requestFullscreen(element) {
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  }
+  
   updateTimeSpent() {
     const duration = self.startTime ? new Date() - self.startTime : 0;
     self.timeSpent = self.timeSpent + duration;
@@ -88,4 +113,32 @@ export default class extends Controller {
   hideLoader() {
     this.vimeoLoaderTarget.classList.add("hidden");
   }
+  rewatch(event) {
+    event.preventDefault();
+  
+    if (this.hasCompletionOverlayTarget) {
+      this.completionOverlayTarget.classList.add("hidden");
+    }
+  
+    const resetAndPlay = async () => {
+      try {
+        await this.player.setCurrentTime(0);
+        await this.player.play();
+      } catch (_) {
+      }
+    };
+  
+    const iframe = this.vimeoPlayerTarget;
+    const fullscreenPromise =
+      iframe.requestFullscreen?.() ||
+      iframe.webkitRequestFullscreen?.() ||
+      iframe.msRequestFullscreen?.();
+  
+    if (fullscreenPromise instanceof Promise) {
+      fullscreenPromise.finally(resetAndPlay);
+    } else {
+      resetAndPlay();
+    }
+  }
+  
 }
