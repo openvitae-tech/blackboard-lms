@@ -19,7 +19,7 @@ RSpec.describe 'Request spec for Users' do
       expect(response.status).to be(200)
 
       expect(response).to render_template(:change_team)
-      expect(assigns(:teams).pluck(:id)).to eq([sub_team.id])
+      expect(assigns(:teams).pluck(:id)).to eq([parent_team.id, sub_team.id])
     end
 
     it 'Unauthorized when change_team is accessed by learner' do

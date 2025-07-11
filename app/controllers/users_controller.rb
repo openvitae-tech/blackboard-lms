@@ -54,8 +54,10 @@ class UsersController < ApplicationController
 
   def change_team
     authorize @user
-    @teams = current_user.team.sub_teams
+    sub_teams = current_user.team.sub_teams
+    @teams = sub_teams.any? ? [current_user.team] + sub_teams : sub_teams
   end
+
 
   def confirm_change_team
     authorize @user, :change_team?
@@ -88,7 +90,10 @@ class UsersController < ApplicationController
     end
 
     def update_team_member_counts(prev_team)
-      Teams::UpdateTotalMembersCountService.instance.update_count(@user.team)
-      Teams::UpdateTotalMembersCountService.instance.update_count(prev_team)
+      new_team = @user.team
+      if prev_team != new_team
+        Teams::UpdateTotalMembersCountService.instance.update_count(prev_team)
+      end
+      Teams::UpdateTotalMembersCountService.instance.update_count(new_team)
     end
 end
