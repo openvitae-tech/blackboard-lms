@@ -44,8 +44,22 @@ RSpec.describe UserPolicy do
       expect(described_class.new(new_manager, @manager)).to be_change_team
     end
 
-    it 'manager can change team of any learner' do
+    it 'manager can change team of any learner in his team' do
       expect(described_class.new(@manager, @learner)).to be_change_team
+    end
+
+    it 'manager can change team of any learner in his sub team' do
+      new_sub_team = create(:team, parent_team: sub_team, learning_partner:)
+      new_learner = create(:user, :learner, team: new_sub_team, learning_partner:)
+
+      expect(described_class.new(@manager, new_learner)).to be_change_team
+    end
+
+    it 'return false when manager trying to change team of any learner in his parent teams' do
+      new_sub_team = create(:team, parent_team: sub_team, learning_partner:)
+      new_manager = create(:user, :manager, team: new_sub_team, learning_partner:)
+
+      expect(described_class.new(new_manager, @learner)).not_to be_change_team
     end
 
     it 'owner can change team of any learner/manager' do
@@ -60,9 +74,29 @@ RSpec.describe UserPolicy do
       expect(described_class.new(support_user, @learner)).to be_change_team
     end
 
-    it 'returns false if user but not manager of that user' do
+    it 'returns false when manager tries to change the learner team outside of his organization' do
       new_manager = create(:user, :manager)
       expect(described_class.new(new_manager, @learner)).not_to be_change_team
+    end
+
+    it 'returns false when owner tries to change the learner team outside of his organization' do
+      new_owner = create(:user, :manager)
+      expect(described_class.new(new_owner, @learner)).not_to be_change_team
+    end
+
+    it 'returns false when owner tries to change the manager team outside of his organization' do
+      new_owner = create(:user, :manager)
+      expect(described_class.new(new_owner, @manager)).not_to be_change_team
+    end
+
+    it 'returns false when support user tries to change the learner team outside of his organization' do
+      new_support_user = create(:user, role: 'support')
+      expect(described_class.new(new_support_user, @learner)).not_to be_change_team
+    end
+
+    it 'returns false when support user tries to change the manager team outside of his organization' do
+      new_support_user = create(:user, role: 'support')
+      expect(described_class.new(new_support_user, @manager)).not_to be_change_team
     end
   end
 end

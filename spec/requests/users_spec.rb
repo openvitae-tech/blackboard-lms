@@ -38,9 +38,16 @@ RSpec.describe 'Request spec for Users' do
         patch confirm_change_team_member_path(@learner), params: { user: { team_id: new_team.id } }
       end.to change { @learner.reload.team }.to(new_team)
 
+      expect(flash.now[:success]).to eq('Team changed successfully')
+    end
+
+    it 'updating user team should update the team total_members_count' do
+      new_team = create(:team, parent_team:, learning_partner:)
+
+      patch confirm_change_team_member_path(@learner), params: { user: { team_id: new_team.id } }
+
       expect(new_team.reload.total_members_count).to eq(1)
       expect(sub_team.reload.total_members_count).to eq(0)
-      expect(flash.now[:success]).to eq('Team changed successfully')
     end
 
     it 'return when team not selected' do
