@@ -1,5 +1,5 @@
 <div class="flex flex-col md:basis-3/5" data-controller="vimeo">
-  <%= render "video_frame", local_content: @local_content, video_iframe: @video_iframe %>
+  <%= render "video_frame", local_content: @local_content, video_iframe: @video_iframe, course: @course, course_module: @course_module, lesson: @lesson, enrollment: @enrollment %>
   <div class="flex flex-col md:flex-row gap-6 md:justify-between pt-4 pb-6 md:pt-6 md:pb-12">
     <% if lesson.local_contents.size > 1 %>
       <div class="flex justify-start">
@@ -46,7 +46,7 @@
                           vimeo_target: "completeButton",
                           turbo_method: :post
                         } do %>
-            <%= button(label: t("lesson.complete_and_continue"),size: "lg", icon_name: "chevron-double-right", icon_position: "right", tooltip_text: Rails.env.production? && "Complete the lesson to continue.") %>
+            <%= button(label: t("lesson.complete_and_continue"),size: "lg", icon_name: "chevron-double-right", icon_position: "right", tooltip_text:  "Complete the lesson to continue.") %>
           <% end %>
         <% end %>
       </div>

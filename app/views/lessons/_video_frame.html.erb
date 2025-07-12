@@ -8,6 +8,8 @@
         <% end %>
       </div>
     <% else %>
+      <%= render "lessons/video_overlay", course: course, course_module: course_module, lesson: lesson, enrollment: enrollment %>
+
       <%= render "lessons/video_player", video_iframe: video_iframe, local_content: %>
     <% end %>
   <% else %>
