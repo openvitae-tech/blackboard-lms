@@ -115,10 +115,13 @@ export default class extends Controller {
   }
   rewatch(event) {
     event.preventDefault();
+    const iframe = this.vimeoPlayerTarget;
   
     if (this.hasCompletionOverlayTarget) {
       this.completionOverlayTarget.classList.add("hidden");
     }
+    
+    iframe.dataset.fullscreenOnce = "false";
   
     const resetAndPlay = async () => {
       try {
@@ -128,17 +131,8 @@ export default class extends Controller {
       }
     };
   
-    const iframe = this.vimeoPlayerTarget;
-    const fullscreenPromise =
-      iframe.requestFullscreen?.() ||
-      iframe.webkitRequestFullscreen?.() ||
-      iframe.msRequestFullscreen?.();
-  
-    if (fullscreenPromise instanceof Promise) {
-      fullscreenPromise.finally(resetAndPlay);
-    } else {
-      resetAndPlay();
-    }
+    resetAndPlay();
   }
+  
   
 }
