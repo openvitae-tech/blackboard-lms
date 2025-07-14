@@ -57,6 +57,17 @@
           <% end %>
         </ul>
       </details>
+      <% if module_completed?(enrollment, course_module)%>
+        <%= link_to redo_quiz_course_module_path(@course, @course_module), data: { turbo_method: :delete },class: "px-2" do %>
+          <%= button(
+          size: "lg",
+          label: "Retry quiz",
+          icon_name: "arrow-uturn-right",
+          type: "secondary",
+          icon_position: "right"
+        ) %>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 </div>
