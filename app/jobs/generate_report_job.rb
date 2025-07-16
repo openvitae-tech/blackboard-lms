@@ -4,6 +4,7 @@ class GenerateReportJob < BaseJob
   def perform(report_id)
     with_tracing "report-#{report_id}" do
       @report = Report.find report_id
+      TeamReportService.new(@report).generate
       notify_user
     end
   end
@@ -15,7 +16,8 @@ class GenerateReportJob < BaseJob
       @report.generator,
       'Download report',
       'Your report is ready to download',
-      link: Rails.application.routes.url_helpers.report_path(@report)
+      link: Rails.application.routes.url_helpers.report_url(@report,
+                                                            host: Rails.application.credentials.dig(:app, :base_url))
     )
   end
 end
