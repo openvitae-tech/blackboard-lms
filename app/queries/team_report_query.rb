@@ -10,7 +10,8 @@ class TeamReportQuery < AppQuery
     run_query do
       query = Event.where(
         name: event_names,
-        partner_id: @partner_id
+        partner_id: @partner_id,
+        user_id: @user_ids
       ).order(:id)
 
       query = query.where(created_at: @duration) if @duration.present?

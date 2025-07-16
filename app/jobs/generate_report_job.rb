@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class GenerateReportJob < BaseJob
+  sidekiq_options retry: false
+
   def perform(report_id)
     with_tracing "report-#{report_id}" do
       @report = Report.find report_id
-      TeamReportService.new(@report).generate
+      Reporting::TeamReportService.new(@report).generate
       notify_user
     end
   end

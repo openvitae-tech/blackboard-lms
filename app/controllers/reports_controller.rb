@@ -27,6 +27,7 @@ class ReportsController < ApplicationController
 
   def show
     authorize :report
+    @report = Report.find(params[:id])
   end
 
   def create_reports_params
