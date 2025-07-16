@@ -52,9 +52,48 @@ class UsersController < ApplicationController
     redirect_to @user.team, notice: I18n.t('user.deleted') and return
   end
 
+  def change_team
+    authorize @user
+    sub_teams = current_user.team.sub_teams
+    @teams = sub_teams.any? ? [current_user.team] + sub_teams : []
+  end
+
+
+  def confirm_change_team
+    authorize @user, :change_team?
+
+    team_id = change_team_params[:team_id]
+    if change_team_params[:team_id].blank?
+      handle_missing_team_id and return
+    end
+
+    prev_team = @user.team
+    @user.update!(team_id: team_id)
+    update_team_member_counts(prev_team)
+    flash.now[:success] = "Team changed successfully"
+  end
+
   private
 
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def change_team_params
+      params.require(:user).permit(:team_id)
+    end
+
+    def handle_missing_team_id
+      @user.errors.add(:team_id, "must be selected")
+      @teams = current_user.team.sub_teams
+      render :change_team, status: :unprocessable_entity
+    end
+
+    def update_team_member_counts(prev_team)
+      new_team = @user.team
+      if prev_team != new_team
+        Teams::UpdateTotalMembersCountService.instance.update_count(prev_team)
+      end
+      Teams::UpdateTotalMembersCountService.instance.update_count(new_team)
     end
 end

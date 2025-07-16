@@ -5,16 +5,18 @@
     </label>
   <% end %>
 
+  <% merged_html_options = (html_options || {}).merge(
+    class: "px-4 py-3 rounded border border-line-colour w-full text-letter-color-light text-base focus:border-primary focus:ring-0 #{width}"
+  ) %>
+
   <% if form.present? %>
     <%= form.select field_name,
         options_for_select(options, value),
         {},
-        class: "px-4 py-3 rounded border border-line-colour w-full text-letter-color-light text-base focus:border-primary focus:ring-0 #{width}" %>
+        merged_html_options %>
   <% else %>
-    <select class="px-4 py-3 rounded border border-line-colour w-full text-letter-color-light text-base focus:border-primary focus:ring-0 <%= width %>" placeholder="<%= placeholder %>">
-      <% options.each do |name, id| %>
-        <option value="<%= id %>" <%= 'selected' if id.to_s == value.to_s %>><%= name %></option>
-      <% end %>
-    </select>
+   <%= select_tag field_name,
+        options_for_select([["Select an option", ""]]+options, value),
+        merged_html_options %>
   <% end %>
 </div>

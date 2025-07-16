@@ -156,4 +156,12 @@ RSpec.describe 'Request spec for feature teams' do
       expect(response).to redirect_to(error_401_path)
     end
   end
+
+  describe 'GET /sub_teams' do
+    it 'returns all sub teams' do
+      sub_team = create(:team, parent_team: @parent_team, learning_partner: @parent_team.learning_partner)
+      get sub_teams_team_path(@parent_team.id)
+      expect(assigns(:teams).pluck(:id)).to eq([sub_team.id])
+    end
+  end
 end

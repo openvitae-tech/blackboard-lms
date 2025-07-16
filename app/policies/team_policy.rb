@@ -32,6 +32,10 @@ class TeamPolicy
     false
   end
 
+  def sub_teams?
+    user.privileged_user?
+  end
+
   private
 
   def user_included_in_subteam?

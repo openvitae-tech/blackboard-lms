@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TeamsController < ApplicationController
-  before_action :set_team, only: %i[show edit update]
+  before_action :set_team, only: %i[show edit update sub_teams]
   before_action :set_parent_team, only: :create
 
   def new
@@ -19,7 +19,7 @@ class TeamsController < ApplicationController
     @team = Team.find_by(id: params[:id])
     @members = @team.all_members
   end
-  
+
   def create
     authorize @parent_team
 
@@ -47,6 +47,12 @@ class TeamsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def sub_teams
+    authorize @team
+
+    @teams = @team.sub_teams
   end
 
   private
