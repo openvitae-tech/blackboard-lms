@@ -1,8 +1,4 @@
 <div id="user-team-dropdown" data-team-change-target="dropdown" class="flex flex-col gap-4">
-  <% if local_assigns[:selected_team].present? %>
-    <%= render 'shared/components/bread_crumbs',
-          links: filtered_breadcrumb_links(local_assigns[:selected_team]) %>
-  <% end %>
   <%= input_dropdown(
         field_name: "user[team_id]",
         label: "Available teams",
@@ -17,5 +13,9 @@
   ) %>
   <% if local_assigns[:selected_team].present? %>
     <%= hidden_field_tag "user[team_id]", local_assigns[:selected_team].id %>
+  <% end %>
+  <% if local_assigns[:selected_team].present? %>
+    <%= render 'shared/components/bread_crumbs',
+          links: filtered_breadcrumb_links(local_assigns[:selected_team]) %>
   <% end %>
 </div>
