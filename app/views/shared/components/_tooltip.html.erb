@@ -1,7 +1,7 @@
 <% tooltip_position ||= "bottom" %>
 <div class="relative group inline-block">
   <%= yield %>
-  <span class="tooltip" data-tooltip-target="<%= tooltip_position %>">
+  <span class="tooltip tooltip-<%= tooltip_position %>">
     <%= tooltip_text %>
   </span>
 </div>
