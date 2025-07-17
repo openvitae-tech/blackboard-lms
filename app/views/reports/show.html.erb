@@ -1,1 +1,3 @@
-<%= link_to @report.name, rails_blob_path(@report.document, disposition: 'attachment') %>
+
+<div class="title-large ">Download your report</div>
+<%= link_text_component @report.name, rails_blob_path(@report.document, disposition: 'attachment') %>
