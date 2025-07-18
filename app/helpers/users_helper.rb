@@ -38,12 +38,15 @@ module UsersHelper
     user_name(user)[0]&.upcase
   end
 
+  def current_team_with_hierarchy
+    @current_team_with_hierarchy ||= Team.includes(sub_teams: :sub_teams).find(current_user.team.id)
+  end
+
   def filtered_breadcrumb_links(selected_team)
-    accessible_ids = current_user.team.team_hierarchy_ids
+    accessible_ids = current_team_with_hierarchy.team_hierarchy_ids
 
     selected_team.ancestors
                  .reverse
-                 .select { |team| accessible_ids.include?(team.id) }
-                 .map { |team| [team.name] }
+                 .filter_map { |team| [team.name] if accessible_ids.include?(team.id) }
   end
 end
