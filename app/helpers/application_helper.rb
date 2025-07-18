@@ -121,8 +121,8 @@ module ApplicationHelper
     uri.to_s
   end
 
-  def months_ago(n)
-    (Time.zone.today - n.months).strftime('%Y-%m-%d')
+  def months_ago(num_of_months)
+    (Time.zone.today - num_of_months.months).strftime('%Y-%m-%d')
   end
 
   def today

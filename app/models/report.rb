@@ -25,4 +25,14 @@ class Report < ApplicationRecord
 
     errors.add(:start_date, 'Start date must be less than end date')
   end
+
+  def duration
+    return default_duration if start_date.blank? || end_date.blank?
+
+    start_date..end_date
+  end
+
+  def default_duration
+    1.month.ago..Time.zone.today
+  end
 end
