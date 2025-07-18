@@ -51,7 +51,7 @@ module Reporting
         end
       end
 
-      @report.document.attach(io: StringIO.new(csv_data), filename: @report.name, content_type: 'text/csv')
+      @report.document.attach(io: StringIO.new(csv_data), filename: "#{@report.name}.csv", content_type: 'text/csv')
     end
 
     def process_events(events)

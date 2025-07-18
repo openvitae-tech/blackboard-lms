@@ -16,6 +16,10 @@ class PaymentPlanPolicy
     user.is_admin? && record.payment_plan.blank?
   end
 
+  def show?
+    user.is_admin? || user.is_owner? || user.is_support?
+  end
+
   def edit?
     user.is_admin?
   end
