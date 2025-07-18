@@ -28,7 +28,7 @@ module Reporting
 
     def initialize(report)
       @report = report
-      @sub_teams = []
+      @all_sub_teams = []
       @all_users = []
     end
 
@@ -142,16 +142,17 @@ module Reporting
       return @all_users unless @all_users.empty?
 
       @all_users = User.where(
-        id: all_sub_teams.map(&:id),
+        team_id: all_sub_teams.map(&:id),
         role: [User::MANAGER, User::LEARNER, User::OWNER],
-        state: [User::ACTIVE]
+        state: User::ACTIVE
       )
     end
 
     def all_sub_teams
-      return @sub_teams unless @sub_teams.empty?
+      return @all_sub_teams unless @all_sub_teams.empty?
 
       sub_teams(@team)
+      @all_sub_teams
     end
 
     attr_reader :courses
@@ -161,7 +162,8 @@ module Reporting
     end
 
     def sub_teams(team)
-      @sub_teams.append(team)
+      @all_sub_teams.append(team)
+
       team.sub_teams.each do |sub_team|
         sub_teams(sub_team)
       end
