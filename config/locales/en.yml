@@ -204,3 +204,6 @@ en:
     explore_courses: "Explore tailored courses, connect with experts and achieve your career goals."
     setup_account: "Let's set up your account."
     confirm_details: "Confirm your details to get started"
+  reports:
+    available_soon: 'Your report will be available soon, you can download it by clicking the notification.'
+    invalid_report_type: 'Invalid report type %{value}'

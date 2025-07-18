@@ -120,4 +120,12 @@ module ApplicationHelper
     uri.query = query_params.compact.to_query
     uri.to_s
   end
+
+  def months_ago(num_of_months)
+    (Time.zone.today - num_of_months.months).strftime('%Y-%m-%d')
+  end
+
+  def today
+    Time.zone.today.strftime('%Y-%m-%d')
+  end
 end

@@ -1,0 +1,24 @@
+<%= modal_component(title: 'Generate Report') do %>
+  <%= form_with(scope: :report, url: reports_path, method: :post, class: "flex flex-col gap-6 p-6") do |form| %>
+
+    <%= render "shared/components/form_errors", resource: @report %>
+
+    <%= form.hidden_field :team_id, value: @team.id %>
+
+    <div class="flex flex-col gap-4">
+      Choose date range
+      <div class="flex flex-col">
+        <%= date_select_component(form: form, field_name: :start_date, min: months_ago(6), max: today) %>
+      </div>
+
+      <div class="flex flex-col">
+        <%= date_select_component(form: form, field_name: :end_date, min: months_ago(6), max: today) %>
+      </div>
+
+      <div class="flex flex-col justify-between">
+        <%= form.button "Generate Report", class: "bg-primary text-white px-4 py-2 rounded" %>
+        <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -13,15 +13,21 @@ class User < ApplicationRecord
 
   TEST_OTP = 1212
 
-  USER_ROLE_MAPPING = {
-    admin: 'Admin',
-    owner: 'Owner',
-    manager: 'Manager',
-    learner: 'Learner',
-    support: 'Support'
-  }.freeze
+  ADMIN = 'admin'
+  OWNER = 'owner'
+  MANAGER = 'manager'
+  LEARNER = 'learner'
+  SUPPORT = 'support'
 
-  USER_ROLES = USER_ROLE_MAPPING.keys.map(&:to_s)
+  USER_ROLE_MAPPING = {
+    ADMIN => 'Admin',
+    OWNER => 'Owner',
+    MANAGER => 'Manager',
+    LEARNER => 'Learner',
+    SUPPORT => 'Support'
+  }.symbolize_keys.freeze
+
+  USER_ROLES = [ADMIN, OWNER, MANAGER, LEARNER, SUPPORT].freeze
   GENDERS = ['Male', 'Female', 'Other', 'Prefer not to say'].freeze
 
   # add dynamic methods using meta programming for checking the current role
@@ -58,6 +64,12 @@ class User < ApplicationRecord
   has_many :courses, through: :enrollments
 
   belongs_to :team, optional: true
+
+  has_many :reports,
+           class_name: 'Report',
+           foreign_key: :generated_by,
+           inverse_of: :generator,
+           dependent: :nullify
 
   def set_temp_password
     temp_password = SecureRandom.alphanumeric(8)

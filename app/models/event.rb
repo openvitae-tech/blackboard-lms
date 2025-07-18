@@ -1,28 +1,47 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
-  VALID_EVENTS = %w[
-    onboarding_initiated
-    first_user_joined
-    user_invited
-    user_joined
-    user_login
-    user_logout
-    course_assigned
-    course_enrolled
-    course_started
-    course_completed
-    learning_time_spent
-    course_viewed
-    lesson_viewed
-    user_activated
-    user_deactivated
-    active_user_count
-    payment_plan_modified
-    email_verified
+  ONBOARDING_INITIATED = 'onboarding_initiated'
+  FIRST_USER_JOINED = 'first_user_joined'
+  USER_INVITED = 'user_invited'
+  USER_JOINED = 'user_joined'
+  USER_LOGIN = 'user_login'
+  USER_LOGOUT = 'user_logout'
+  COURSE_ASSIGNED = 'course_assigned'
+  COURSE_ENROLLED = 'course_enrolled'
+  COURSE_STARTED = 'course_started'
+  COURSE_COMPLETED = 'course_completed'
+  LEARNING_TIME_SPENT = 'learning_time_spent'
+  COURSE_VIEWED = 'course_viewed'
+  LESSON_VIEWED = 'lesson_viewed'
+  USER_ACTIVATED = 'user_activated'
+  USER_DEACTIVATED = 'user_deactivated'
+  ACTIVE_USER_COUNT = 'active_user_count'
+  PAYMENT_PLAN_MODIFIED = 'payment_plan_modified'
+  EMAIL_VERIFIED = 'email_verified'
+
+  VALID_EVENTS = [
+    ONBOARDING_INITIATED,
+    FIRST_USER_JOINED,
+    USER_INVITED,
+    USER_JOINED,
+    USER_LOGIN,
+    USER_LOGOUT,
+    COURSE_ASSIGNED,
+    COURSE_ENROLLED,
+    COURSE_STARTED,
+    COURSE_COMPLETED,
+    LEARNING_TIME_SPENT,
+    COURSE_VIEWED,
+    LESSON_VIEWED,
+    USER_ACTIVATED,
+    USER_DEACTIVATED,
+    ACTIVE_USER_COUNT,
+    PAYMENT_PLAN_MODIFIED,
+    EMAIL_VERIFIED
   ].freeze
 
-  OnboardingInitiated = Struct.new(:partner_id, :partner_name,  keyword_init: true)
+  OnboardingInitiated = Struct.new(:partner_id, :partner_name, keyword_init: true)
   FirstUserJoined = Struct.new(:partner_id, :team_id, :user_id, :partner_name, :phone, keyword_init: true)
   # user invited by owner or manager not by admin
   UserInvited = Struct.new(:partner_id, :team_id, :user_id, :invite_phone, keyword_init: true)
