@@ -30,10 +30,10 @@ module Reporting
       @report = report
       @all_sub_teams = []
       @all_users = []
+      @team = @report.team
     end
 
     def generate
-      @team = @report.team
       user_ids = all_users.map(&:id)
       partner_id = @team.learning_partner_id
       events = TeamReportQuery.new(partner_id, nil, user_ids).call
