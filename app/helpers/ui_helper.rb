@@ -187,7 +187,12 @@ module UiHelper
     render partial: 'ui/modals/modal_component', locals: { title:, body: block_content }
   end
 
-  def link_text_component(text, link)
-    render partial: 'ui/typography/linked_text_component', locals: { text:, link: }
+  def link_text_component(text, link, html_options = {}, type: :primary)
+    render partial: 'ui/typography/linked_text_component', locals: {
+      text:,
+      link:,
+      html_options:,
+      type:
+    }
   end
 end

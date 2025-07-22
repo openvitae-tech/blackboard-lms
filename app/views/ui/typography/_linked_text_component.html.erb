@@ -1,1 +1,5 @@
-<%= link_to text, link, class: 'cursor-pointer text-primary text-xs font-normal md:text-sm text-purple hover:font-medium' %>
+<% base_class = 'cursor-pointer text-xs font-normal md:text-sm hover:font-medium' %>
+<% color_class = type.to_sym == :danger ? 'text-danger' : 'text-purple' %>
+<% final_class = "#{base_class} #{color_class}" %>
+
+<%= link_to text, link, html_options.merge(class: final_class) %>
