@@ -125,6 +125,6 @@ gem 'rails-html-sanitizer', '1.6.1'
 gem 'scorm-package', '~> 0.1.2', require: 'scorm_package'
 
 gem 'net-imap', '0.5.7'
-gem 'nokogiri', '1.18.8'
+gem 'nokogiri', '1.18.9'
 gem 'rack', '>= 3.1.11'
 gem 'rubyzip'
