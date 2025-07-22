@@ -1,5 +1,16 @@
-<% base_class = 'cursor-pointer text-xs font-normal md:text-sm hover:font-medium' %>
-<% color_class = type.to_sym == :danger ? 'text-danger' : 'text-purple' %>
+<% base_class = 'text-xs font-normal md:text-sm' %>
+
+<% color_class =
+  case type.to_sym
+  when :danger
+    'cursor-pointer text-danger hover:font-medium'
+  when :primary
+    'cursor-pointer text-purple hover:font-medium'
+  else
+    'cursor-pointer hover:font-medium hover:text-primary'
+  end
+%>
+
 <% final_class = "#{base_class} #{color_class}" %>
 
 <%= link_to text, link, html_options.merge(class: final_class) %>
