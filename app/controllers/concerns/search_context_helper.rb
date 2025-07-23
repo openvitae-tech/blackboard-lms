@@ -12,7 +12,7 @@ module SearchContextHelper
     when SearchContext::TEAM_ASSIGN then
       options[:team] = resource || Team.find(search_params[:team_id])
     when SearchContext::USER_ASSIGN then
-      options[:user] = resource || Team.find(search_params[:user_id])
+      options[:user] = resource || User.find(search_params[:user_id])
     end
 
     SearchContext.new(
