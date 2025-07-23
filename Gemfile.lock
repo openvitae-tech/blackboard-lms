@@ -448,7 +448,7 @@ GEM
       railties (>= 7.0.0)
     tailwindcss-rails (2.6.5-x86_64-linux)
       railties (>= 7.0.0)
-    thor (1.3.2)
+    thor (1.4.0)
     timeout (0.4.3)
     turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
