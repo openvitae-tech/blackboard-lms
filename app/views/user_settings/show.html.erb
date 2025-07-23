@@ -23,12 +23,14 @@
   <div class="p-6 border-b border-line-colour-light">
     <h1 class="text-semibold">Change password</h1>
     <div class="mt-2">
-     <%= link_text_component 'Change your password', change_password_user_settings_path, { data: { turbo_frame: 'modal' } }, type:"primary" %>
+     <%= link_text_component 'Change your password', change_password_user_settings_path, { data: { turbo_frame: 'modal' } } %>
     </div>
   </div>
 
   <div class="p-6">
-    <%= link_text_component 'Logout', destroy_user_session_path, { method: :delete, data: { turbo_method: :delete } }, type: "danger" %>
+    <%= button_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete } do %>
+      <span class="text-danger hover:font-medium">Logout</span>
+    <% end %>
   </div>
 
 </div>
