@@ -1,0 +1,50 @@
+import { Controller } from "@hotwired/stimulus";
+import Logger from "utils/logger";
+
+export default class extends Controller {
+
+    static targets = ["courseCarousalBody"]
+
+    connect() {
+        this.target_id = this.courseCarousalBodyTarget.id;
+        this.page = 1;
+        this.headers = {
+            Accept: "text/vnd.turbo-stream.html",
+            'X_Target_Id' : this.target_id
+        };
+    }
+
+    loadPrevPage() {
+        this.decrementPage()
+        this.loadPage(this.pageUrl())
+    }
+
+    loadNextPage() {
+        this.incrementPage()
+        this.loadPage(this.pageUrl())
+    }
+
+    loadPage(url) {
+        fetch(url, {
+            method: "GET",
+            headers: this.headers,
+        })
+            .then((response) => response.text())
+            .then((html) => Turbo.renderStreamMessage(html))
+            .catch((error) => Logger.error(error));
+    }
+
+    decrementPage() {
+        if (this.page > 1) {
+            this.page = this.page - 1;
+        }
+    }
+
+    incrementPage() {
+        this.page = this.page + 1;
+    }
+
+    pageUrl() {
+        return `/searches/list?page=${this.page}&context=course_listing`;
+    }
+}

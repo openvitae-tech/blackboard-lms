@@ -128,4 +128,8 @@ module ApplicationHelper
   def today
     Time.zone.today.strftime('%Y-%m-%d')
   end
+
+  def dom_key(prefix = 'key')
+    "#{prefix}-#{SecureRandom.hex(6)}"
+  end
 end
