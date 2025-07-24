@@ -1,5 +1,5 @@
 <div class="flex" data-course-carousal-component-target="courseCarousalBody" id="<%= dom_key("course-carousal") %>">
-  <div class="flex-none flex items-center hover:text-primary hover:cursor-pointer" data-action="click->course-carousal-component#loadPrevPage">
+  <div aria-disabled="<%= courses.prev_page.blank? %>" class="flex-none flex items-center hover:text-primary hover:cursor-pointer" data-action="click->course-carousal-component#loadPrevPage">
     <%= icon("chevron-left", css: "icon-large") %>
   </div>
   <div class="grow flex flex-nowrap overflow-y-auto">
@@ -9,7 +9,7 @@
       <% end %>
     <% end %>
   </div>
-  <div class="flex-none flex items-center hover:text-primary hover:cursor-pointer" data-action="click->course-carousal-component#loadNextPage">
+  <div aria-disabled="<%= courses.next_page.blank? %>" class="flex-none flex items-center hover:text-primary hover:cursor-pointer" data-action="click->course-carousal-component#loadNextPage">
     <%= icon("chevron-right", css: "icon-large") %>
   </div>
 </div>

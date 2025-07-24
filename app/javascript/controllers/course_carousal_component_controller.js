@@ -15,12 +15,18 @@ export default class extends Controller {
         };
     }
 
-    loadPrevPage() {
+    loadPrevPage(event) {
+        const disabled = event.currentTarget.getAttribute("aria-disabled");
+        if (disabled === "true") return;
+
         this.decrementPage()
         this.loadPage(this.pageUrl())
     }
 
-    loadNextPage() {
+    loadNextPage(event) {
+        const disabled = event.currentTarget.getAttribute("aria-disabled");
+        if (disabled === "true") return;
+
         this.incrementPage()
         this.loadPage(this.pageUrl())
     }
