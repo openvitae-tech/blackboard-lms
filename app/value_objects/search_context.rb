@@ -60,6 +60,23 @@ class SearchContext
     type == ANY
   end
 
+  def to_course_path
+    "#{Rails.application.routes.url_helpers.courses_path}?#{to_query_str}"
+  end
+
+  def to_search_path
+    "#{Rails.application.routes.url_helpers.search_path}?#{to_query_str}"
+  end
+
+  def to_query_str
+    {
+      term: @term,
+      tags: @tags,
+      context: @context,
+      type: @type
+    }.filter { |_k,v| !v.empty? }.to_query
+  end
+
   private
 
   def sanitize_parameter(param, default = nil)

@@ -3,11 +3,12 @@ import Logger from "utils/logger";
 
 export default class extends Controller {
 
-    static targets = ["courseCarousalBody"]
+    static targets = ["loadPath", "courseCarousalBody"]
 
     connect() {
         this.target_id = this.courseCarousalBodyTarget.id;
         this.page = 1;
+        this.queryUrl = new URL(this.loadPathTarget.href);
         this.headers = {
             Accept: "text/vnd.turbo-stream.html",
             'X_Target_Id' : this.target_id
@@ -45,6 +46,7 @@ export default class extends Controller {
     }
 
     pageUrl() {
-        return `/searches/list?page=${this.page}&context=course_listing`;
+        this.queryUrl.searchParams.set('page', this.page)
+        return `/searches/list${this.queryUrl.search}`;
     }
 }
