@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :reports, only: %i[new create show]
 
   match 'search', to: 'searches#index', via: %i[get post]
+  get 'searches/list', to: 'searches#list'
 
   namespace :onboarding do
     resource :welcome, only: %i[new update] do

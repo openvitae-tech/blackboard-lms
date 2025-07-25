@@ -1,0 +1,8 @@
+<div class="w-full" data-controller="course-carousal-component">
+  <div class="my-4">
+    <span class="font-['Poppins'] text-xl font-semibold"><%= title %></span>&nbsp<span class="text-letter-color-light">(<%= pluralize(count, 'course') %>)</span>
+    <%= link_to 'View more', load_path, class: 'text-xs text-primary hover:cursor-pointer underline', data: { course_carousal_component_target: 'loadPath' } %>
+  </div>
+
+  <%= course_carousal_body_component(courses:) %>
+</div>
