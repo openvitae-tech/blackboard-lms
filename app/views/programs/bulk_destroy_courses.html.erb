@@ -1,0 +1,18 @@
+<%= modal_component(title: 'Delete program courses?') do %>
+  <%= form_with(url: confirm_bulk_destroy_courses_program_path(@program), method: :delete, class: "flex flex-col gap-6") do |form| %>
+    <div class="p-2">
+      <div class="pl-4 pt-2">
+        <p class="text-sm text-gray-700">
+          You are permanently deleting <strong><%= pluralize(@course_ids.length, "course") %></strong>. This action can't be undone.
+        </p>
+        <% Array(params[:course_ids]).each do |id| %>
+          <%= hidden_field_tag "course_ids[]", id %>
+        <% end %>
+      </div>
+    </div>
+    <div class="flex justify-end gap-4 border-t border-line-colour-light p-4">
+      <%= form.button "Cancel", class: "px-4 py-2 rounded text-sm", data: { action: "click->modals#closeModal" } %>
+      <%= form.button "Delete", class: "bg-danger text-white px-4 py-2 rounded text-sm" %>
+    </div>
+  <% end %>
+<% end %>

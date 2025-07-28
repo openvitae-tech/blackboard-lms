@@ -1,0 +1,10 @@
+<div class="my-4 mx-auto w-full text-left">
+  <%= render 'shared/components/back_button', back_link: programs_path %>
+  <div class="box">
+    <h1 class="heading page-heading-medium">Create program</h1>
+  </div>
+  <%= form_with(url: programs_path, method: :post) do |form| %>
+    <%= render "shared/components/form_errors", resource: @program %>
+    <%= render "assign_course", courses: @courses, search_context: @search_context, form: %>
+  <% end %>
+</div>

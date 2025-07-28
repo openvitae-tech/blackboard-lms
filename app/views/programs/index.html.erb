@@ -1,0 +1,12 @@
+<div class="flex justify-between items-center mb-4">
+  <h1 class="heading page-heading-medium pt-2"><%= t("programs.label") %></h1>
+  <%= link_to new_program_path, class: "nav-link" do %>
+    <%= button(label: 'Add program', icon_name: "plus") %>
+  <% end %>
+</div>
+<h3 class="text-sm mb-4 font-bold"><%= pluralize(@programs.size, 'program') %></h3>
+<div class="mt-6 flex flex-wrap gap-2">
+  <% @programs.each do |program| %>
+    <%= render "program", program: program %>
+  <% end %>
+</div>

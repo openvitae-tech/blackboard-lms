@@ -1,0 +1,41 @@
+<div class="rounded-2xl w-1/3 border border-gray-200">
+  <div class="p-4 flex flex-col justify-between h-full">
+    <div class="flex justify-between items-start gap-2">
+      <%= link_to program_path(program), class: "hover:cursor-pointer" do %>
+        <p class="overflow-hidden text-ellipsis heading heading-semibold text-primary min-h-[3rem]">
+          <%= program.name %>
+        </p>
+      <% end %>
+      <%= render 'shared/components/more_action', icon_class: 'bg-white icon-base', label_hover: "bg-secondary" do %>
+        <div class="min-w-[10rem] bg-white flex flex-col">
+          <%= link_to edit_program_path(program) do %>
+            <div class="hover:bg-primary-light-50 px-3 py-2 w-full">
+              <span class="text-secondary text-sm font-medium "><%= t("button.edit") %></span>
+            </div>
+          <% end %>
+          <div class="hover:bg-primary-light-50 px-3 py-2 w-full">
+            <%= link_to alert_modal_path(
+              title: t("alert.title", resource_name: "Program"),
+              description: t("alert.description", label: program.name, resource_name: "program"),
+              action_path: program_path(program),
+              method: :delete,
+            ), data: { turbo_frame: "modal" }, class: "block w-full" do %>
+              <span class="text-sm font-medium text-danger w-full inline-block"><%= t("button.delete") %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="flex mt-3 justify-between items-center">
+      <div class="flex items-center gap-2">
+        <span class="icon icon-lessons h-3.5 w-3.5 bg-primary"></span>
+        <span class="text-xs font-medium"><%= pluralize(program.courses_count, 'course')%></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="icon icon-clock h-3.5 w-3.5 bg-primary"></span>
+        <span class="text-xs font-medium"><%= pluralize(program.users_count, 'user')%></span>
+      </div>
+    </div>
+
+  </div>
+</div>

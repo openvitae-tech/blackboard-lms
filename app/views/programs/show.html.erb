@@ -1,0 +1,7 @@
+<div data-controller="programs">
+  <%= render "shared/components/bread_crumbs", links: [["Programs", programs_path], [@program.name, nil]] %>
+  <h1 class="heading pt-2 page-heading-medium mb-4">Courses</h1>
+  <div id="program-courses">
+    <%= render "course_list", program: @program, courses: @courses %>
+  </div>
+</div>

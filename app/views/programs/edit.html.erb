@@ -1,0 +1,11 @@
+<div class="my-4 mx-auto w-full text-left">
+  <%= render 'shared/components/back_button', back_link: program_path(@program) %>
+
+  <div class="box">
+    <h1 class="heading page-heading-medium">Edit program</h1>
+  </div>
+  <%= form_with(url: program_path(@program), method: :put, model: @program) do |form| %>
+    <%= render "shared/components/form_errors", resource: @program %>
+    <%= render "assign_course", courses: @unassigned_courses, search_context: @search_context, form:  %>
+  <% end %>
+</div>
