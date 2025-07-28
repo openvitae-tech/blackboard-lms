@@ -8,9 +8,11 @@
       <div class="text-sm font-medium">
         <%= t("learning_partner.payment_plan.seats_available")%>: <span class="text-sm font-normal"><%= activate_users_count(learning_partner) %> / <%= payment_plan.total_seats %></span>
       </div>
-      <div class="text-sm font-medium">
-       <%= t("learning_partner.payment_plan.per_seat_cost")%>: ₹<span class="text-sm font-normal"><%= payment_plan.per_seat_cost %></span>
-      </div>
+      <% if policy(learning_partner.payment_plan).show? %>
+        <div class="text-sm font-medium">
+         <%= t("learning_partner.payment_plan.per_seat_cost")%>: ₹<span class="text-sm font-normal"><%= payment_plan.per_seat_cost %></span>
+        </div>
+      <% end %>
     </div>
   <% end %>
 </div>
