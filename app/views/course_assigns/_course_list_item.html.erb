@@ -1,3 +1,4 @@
 <li id="<%= dom_id(course, "unassigned") %>" class="w-full">
-  <%= render 'course_assigns/course_card', course: course %>
+  <% show_duration = true if show_duration.nil? %>
+  <%= render 'course_assigns/course_card', course: course, show_duration: %>
 </li>

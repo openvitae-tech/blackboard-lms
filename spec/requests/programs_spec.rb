@@ -132,8 +132,7 @@ RSpec.describe 'Request spec for Programs' do
       expect do
         delete program_path(program)
       end.to change(Program, :count).by(-1)
-      expect(flash[:notice]).to eq(I18n.t('resource.deleted', resource_name: 'Program'))
-      expect(response).to redirect_to(programs_path)
+      expect(flash[:success]).to eq(I18n.t('resource.deleted', resource_name: 'Program'))
     end
 
     it 'unauthorized for non-privileged user' do
@@ -145,7 +144,24 @@ RSpec.describe 'Request spec for Programs' do
     end
   end
 
-  describe 'DELETE /programs/:id/confirm_bulk_destroy_courses' do
+  describe 'DELETE /programs/:id/confirm_destroy' do
+    it 'renders confirmation view of delete program' do
+      get confirm_destroy_program_path(program)
+
+      expect(response.status).to be(200)
+      expect(response).to render_template(:confirm_destroy)
+    end
+
+    it 'unauthorized for non-privileged user' do
+      sign_in learner
+
+      get confirm_destroy_program_path(program)
+      expect(response).to redirect_to(error_401_path)
+      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+    end
+  end
+
+  describe 'DELETE /programs/:id/bulk_destroy_courses' do
     before do
       @course2 = create(:course)
       program.update(courses: [course, @course2])
@@ -153,7 +169,7 @@ RSpec.describe 'Request spec for Programs' do
 
     it 'deletes selected courses from a program' do
       expect do
-        delete confirm_bulk_destroy_courses_program_path(program), params: { course_ids: [@course2.id] }
+        delete bulk_destroy_courses_program_path(program), params: { course_ids: [@course2.id] }
       end.to change(program.program_courses, :count).by(-1)
       expect(flash[:success]).to eq(I18n.t('resource.deleted', resource_name: 'Courses'))
     end
@@ -161,28 +177,28 @@ RSpec.describe 'Request spec for Programs' do
     it 'unauthorized for non-privileged user' do
       sign_in learner
 
-      delete confirm_bulk_destroy_courses_program_path(program), params: { course_ids: [@course2.id] }
+      delete bulk_destroy_courses_program_path(program), params: { course_ids: [@course2.id] }
       expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
 
-  describe 'GET /programs/:id/bulk_destroy_courses' do
+  describe 'GET /programs/:id/confirm_bulk_destroy_courses' do
     before do
       @course2 = create(:course)
       program.update(courses: [course, @course2])
     end
 
     it 'renders confirmation view for bulk destroy' do
-      get bulk_destroy_courses_program_path(program), params: { course_ids: [@course2.id] }
+      get confirm_bulk_destroy_courses_program_path(program), params: { course_ids: [@course2.id] }
       expect(response.status).to be(200)
-      expect(response).to render_template(:bulk_destroy_courses)
+      expect(response).to render_template(:confirm_bulk_destroy_courses)
     end
 
     it 'unauthorized for non-privileged user' do
       sign_in learner
 
-      get bulk_destroy_courses_program_path(program), params: { course_ids: [@course2.id] }
+      get confirm_bulk_destroy_courses_program_path(program), params: { course_ids: [@course2.id] }
       expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end

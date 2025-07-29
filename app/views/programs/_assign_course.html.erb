@@ -7,7 +7,7 @@
   <% else %>
     <ul id="course-list" class="w-full overflow-y-auto p-1 flex flex-col gap-4 h-[700px]">
       <% courses.each do |course| %>
-        <%= render "course_assigns/course_list_item", course: course %>
+        <%= render "course_assigns/course_list_item", course: course, show_duration: false %>
       <% end %>
     </ul>
     <%= render "course_assigns/load_more", search_context: search_context, courses: courses %>

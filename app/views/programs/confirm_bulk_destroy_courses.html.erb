@@ -1,5 +1,5 @@
 <%= modal_component(title: 'Delete program courses?') do %>
-  <%= form_with(url: confirm_bulk_destroy_courses_program_path(@program), method: :delete, class: "flex flex-col gap-6") do |form| %>
+  <%= form_with(url: bulk_destroy_courses_program_path(@program), method: :delete, class: "flex flex-col gap-6") do |form| %>
     <div class="p-2">
       <div class="pl-4 pt-2">
         <p class="text-sm text-gray-700">

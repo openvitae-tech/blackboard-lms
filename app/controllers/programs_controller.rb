@@ -52,13 +52,23 @@ class ProgramsController < ApplicationController
     end
   end
 
+  def confirm_destroy
+    authorize @program
+  end
+
   def destroy
     authorize @program
     @program.destroy!
-    redirect_to programs_path, notice: t("resource.deleted", resource_name: "Program")
+    flash[:success] = t("resource.deleted", resource_name: "Program")
+    flash.discard
   end
 
   def confirm_bulk_destroy_courses
+    authorize @program
+    @course_ids = params[:course_ids]
+  end
+
+  def bulk_destroy_courses
     authorize @program
     course_ids = params[:course_ids].reject(&:blank?)
 
@@ -69,11 +79,6 @@ class ProgramsController < ApplicationController
       flash[:alert] = t("resource.not_found", resource_name: "Courses")
     end
     flash.discard
-  end
-
-  def bulk_destroy_courses
-    authorize @program
-    @course_ids = params[:course_ids]
   end
 
   private

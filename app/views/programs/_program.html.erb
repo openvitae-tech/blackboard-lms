@@ -1,4 +1,4 @@
-<div class="rounded-2xl w-1/3 border border-gray-200">
+<div class="rounded-2xl w-full sm:w-[48%] lg:w-[32%] border border-gray-200">
   <div class="p-4 flex flex-col justify-between h-full">
     <div class="flex justify-between items-start gap-2">
       <%= link_to program_path(program), class: "hover:cursor-pointer" do %>
@@ -10,19 +10,14 @@
         <div class="min-w-[10rem] bg-white flex flex-col">
           <%= link_to edit_program_path(program) do %>
             <div class="hover:bg-primary-light-50 px-3 py-2 w-full">
-              <span class="text-secondary text-sm font-medium "><%= t("button.edit") %></span>
+              <span class="text-secondary text-sm font-medium"><%= t("button.edit") %></span>
             </div>
           <% end %>
-          <div class="hover:bg-primary-light-50 px-3 py-2 w-full">
-            <%= link_to alert_modal_path(
-              title: t("alert.title", resource_name: "Program"),
-              description: t("alert.description", label: program.name, resource_name: "program"),
-              action_path: program_path(program),
-              method: :delete,
-            ), data: { turbo_frame: "modal" }, class: "block w-full" do %>
-              <span class="text-sm font-medium text-danger w-full inline-block"><%= t("button.delete") %></span>
-            <% end %>
-          </div>
+          <%= link_to confirm_destroy_program_path(program), data: { turbo_frame: "modal" } do %>
+            <div class="hover:bg-primary-light-50 px-3 py-2 w-full">
+              <span class="text-danger text-sm font-medium"><%= t("button.delete") %></span>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>

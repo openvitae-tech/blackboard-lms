@@ -36,6 +36,10 @@ class ProgramPolicy
     user.privileged_user?
   end
 
+  def confirm_destroy?
+    user.privileged_user?
+  end
+
   def confirm_bulk_destroy_courses?
     user.privileged_user?
   end

@@ -122,8 +122,9 @@ Rails.application.routes.draw do
 
   resources :programs, only: %i[new index show create edit update destroy] do
     member do
-      get :bulk_destroy_courses
-      delete :confirm_bulk_destroy_courses
+      delete :bulk_destroy_courses
+      get :confirm_bulk_destroy_courses
+      get :confirm_destroy
     end
   end
 

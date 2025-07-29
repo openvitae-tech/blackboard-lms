@@ -13,7 +13,7 @@
           html_options: {
             data: {
               action: "click->programs#bulkDelete",
-              url: bulk_destroy_courses_program_path(program)
+              url: confirm_bulk_destroy_courses_program_path(program)
             }})
       %>
     </div>
@@ -21,7 +21,7 @@
 </div>
 
 <% if courses.any? %>
-  <div class="flex flex-wrap gap-4 mt-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-6">
     <% courses.each do |course| %>
       <div class="relative">
         <%= check_box_tag 'course_ids[]',
@@ -36,7 +36,7 @@
         %>
         <div class="relative">
           <%= link_to course_path(course) do %>
-            <%= render 'courses/course_card_with_top_image', course: course %>
+            <%= course_card_component(course: course) %>
           <% end %>
         </div>
       </div>
