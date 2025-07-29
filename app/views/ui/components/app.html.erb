@@ -1,0 +1,27 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+
+<%= heading_component(text: 'App components', size: 'lg') %>
+
+<ul class="my-6 flex flex-col gap-2">
+  <li>
+    <div>
+      <%= course_carousal_component(
+            courses: @food_production_courses.page(1).per(4),
+            title: "Food Production",
+            count: @food_production_courses.count,
+            load_path: @food_production_ctx.to_course_path) %>
+    </div>
+  </li>
+
+  <li>
+    <div>
+      <%= course_carousal_component(
+            courses: @house_keeping_courses.page(1).per(4),
+            title: "Housekeeping",
+            count: @house_keeping_courses.count,
+            load_path: @house_keeping_ctx.to_course_path) %>
+    </div>
+  </li>
+</ul>
