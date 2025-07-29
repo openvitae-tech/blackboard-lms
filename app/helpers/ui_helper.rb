@@ -187,4 +187,16 @@ module UiHelper
     block_content = capture(&) if block_given?
     render partial: 'ui/modals/modal_component', locals: { title:, body: block_content }
   end
+
+  def course_carousal_component(courses:, title:, count:, load_path:)
+    render partial: 'ui/app/course_carousal/course_carousal_component', locals: { courses:, title:, count:, load_path: }
+  end
+
+  def course_carousal_body_component(courses:)
+    render partial: 'ui/app/course_carousal/course_carousal_body_component', locals: { courses: }
+  end
+
+  def course_card_component(course:, enrollment: nil)
+    render partial: 'ui/app/course_carousal/course_card_component', locals: { course:, enrollment: }
+  end
 end
