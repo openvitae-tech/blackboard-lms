@@ -32,6 +32,14 @@ class ProgramPolicy
     user.privileged_user?
   end
 
+  def add_courses?
+    user.privileged_user?
+  end
+
+  def update_courses?
+    user.privileged_user?
+  end
+
   def destroy?
     user.privileged_user?
   end

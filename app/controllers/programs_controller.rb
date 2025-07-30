@@ -6,11 +6,9 @@ class ProgramsController < ApplicationController
   before_action :set_learning_partner
   before_action :set_program, except: %i[new index create]
 
-
   def new
     authorize :program
     @program = @learning_partner.programs.new
-    load_filtered_courses
   end
 
   def index
@@ -18,37 +16,51 @@ class ProgramsController < ApplicationController
     @programs = @learning_partner.programs
   end
 
-  def create
-    authorize :program
-    @program = @learning_partner.programs.new(name: params[:name], courses: selected_courses.includes(:tags, :banner_attachment))
-
-    if @program.save
-      redirect_to programs_path, notice: t("resource.created", resource_name: "Program")
-    else
-      load_filtered_courses
-      render :new, status: :unprocessable_entity
-    end
-  end
-
   def show
     authorize @program
     @courses = @program.courses.includes(:tags, :banner_attachment)
   end
 
+  def create
+    authorize :program
+    @program = @learning_partner.programs.new(program_params)
+
+    if @program.save
+      flash[:success] = t("resource.created", resource_name: "Program")
+    else
+      render :new, status: :unprocessable_entity
+    end
+    flash.discard
+  end
+
   def edit
     authorize @program
-    load_unassigned_courses
   end
 
   def update
     authorize @program
+    if @program.update(program_params)
+      flash[:success] = t("resource.updated", resource_name: "Program")
+    else
+      render :edit, status: :unprocessable_entity
+    end
+    flash.discard
+  end
+
+  def add_courses
+    authorize @program
+    load_unassigned_courses
+  end
+
+  def update_courses
+    authorize @program
     merged_courses = @program.courses | selected_courses
 
-    if @program.update(name: params[:program][:name], courses: merged_courses)
+    if @program.update(courses: merged_courses)
       redirect_to program_path(@program), notice: t("resource.updated", resource_name: "Program")
     else
       load_unassigned_courses
-      render :edit, status: :unprocessable_entity
+      render :add_courses, status: :unprocessable_entity
     end
   end
 
@@ -91,16 +103,16 @@ class ProgramsController < ApplicationController
     @program = @learning_partner.programs.find(params[:id])
   end
 
+  def program_params
+    params.require(:program).permit(:name)
+  end
+
   def selected_courses
     Course.where(id: params[:course_ids])
   end
 
-  def load_filtered_courses
-    @courses = filter_courses.page(params[:page]).per(Course::PER_PAGE_LIMIT)
-  end
-
   def load_unassigned_courses
-    @unassigned_courses = filter_courses.where.not(id: @program.course_ids)
+    @courses = filter_courses.where.not(id: @program.course_ids)
                                         .page(params[:page])
                                         .per(Course::PER_PAGE_LIMIT)
   end

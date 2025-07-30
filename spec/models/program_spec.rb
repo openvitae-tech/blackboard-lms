@@ -18,14 +18,6 @@ RSpec.describe Program, type: :model do
     end
   end
 
-  describe '#must_have_at_least_one_course' do
-    it 'is not valid without at least one course' do
-      program.courses = []
-      expect(program).not_to be_valid
-      expect(program.errors.full_messages.to_sentence).to eq('Atleast one course should be selected')
-    end
-  end
-
   describe 'when adding associated records' do
     it 'increments courses_count when a course is added' do
       new_course = create(:course)

@@ -37,7 +37,7 @@ RSpec.describe 'Request spec for Programs' do
     it 'renders new template for privileged user' do
       get new_program_path
 
-      expect(response).to have_http_status(:ok)
+      expect(response.status).to be(200)
       expect(response).to render_template(:new)
     end
 
@@ -51,27 +51,23 @@ RSpec.describe 'Request spec for Programs' do
   end
 
   describe 'POST /programs' do
-    before do
-      @new_course = create :course
-    end
-
     it 'creates a new program' do
       expect do
-        post programs_path, params: { name: 'My Program', course_ids: [@new_course.id] }
+        post programs_path, params: { program: { name: 'My Program' } }
       end.to change(learning_partner.programs, :count).by(1)
-      expect(response).to redirect_to(programs_path)
+      expect(flash[:success]).to eq(I18n.t('resource.created', resource_name: 'Program'))
     end
 
     it 'unauthorized for non-privileged user' do
       sign_in learner
 
-      post programs_path, params: { name: 'My Program', course_ids: [@new_course.id] }
+      post programs_path, params: { program: { name: 'My Program' } }
       expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
 
     it 'renders new template when validation fails' do
-      post programs_path, params: { name: '', course_ids: [] }
+      post programs_path, params: { program: { name: '' } }
       expect(response.status).to eq(422)
       expect(response).to render_template(:new)
     end
@@ -98,7 +94,7 @@ RSpec.describe 'Request spec for Programs' do
     it 'renders edit page' do
       get edit_program_path(program)
 
-      expect(response).to have_http_status(:ok)
+      expect(response.status).to be(200)
       expect(response).to render_template(:edit)
     end
 
@@ -112,18 +108,51 @@ RSpec.describe 'Request spec for Programs' do
   end
 
   describe 'PATCH /programs/:id' do
-    before do
-      @course2 = create(:course)
-    end
-
     it 'updates a program' do
       patch program_path(program), params: {
-        program: { name: 'Updated Name' },
-        course_ids: [@course2.id]
+        program: { name: 'Updated Name' }
       }
       expect(program.reload.name).to eq('Updated Name')
-      expect(program.courses.pluck(:id)).to eq([course.id, @course2.id].sort)
+      expect(flash[:success]).to eq(I18n.t('resource.updated', resource_name: 'Program'))
+    end
+  end
+
+  describe 'PATCH /programs/:id/add_courses' do
+    it 'renders add courses page' do
+      get add_courses_program_path(program)
+
+      expect(response.status).to be(200)
+      expect(response).to render_template(:add_courses)
+    end
+
+    it 'unauthorized for non-privileged user' do
+      sign_in learner
+
+      get add_courses_program_path(program)
+      expect(response).to redirect_to(error_401_path)
+      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+    end
+  end
+
+  describe 'PATCH /programs/:id/update_courses' do
+    before do
+      @new_course = create :course
+    end
+
+    it 'add courses to program' do
+      put update_courses_program_path(program), params: { course_ids: [@new_course.id] }
+
+      program.reload
+      expect(program.courses.pluck(:id)).to eq([course.id, @new_course.id].sort)
       expect(response).to redirect_to(program_path(program))
+    end
+
+    it 'unauthorized for non-privileged user' do
+      sign_in learner
+
+      put update_courses_program_path(program), params: { course_ids: [@new_course.id] }
+      expect(response).to redirect_to(error_401_path)
+      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
 

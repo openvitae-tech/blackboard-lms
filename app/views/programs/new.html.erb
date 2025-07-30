@@ -1,10 +1,14 @@
-<div class="my-4 mx-auto w-full text-left">
-  <%= render 'shared/components/back_button', back_link: programs_path %>
-  <div class="box">
-    <h1 class="heading page-heading-medium">Create program</h1>
-  </div>
-  <%= form_with(url: programs_path, method: :post) do |form| %>
-    <%= render "shared/components/form_errors", resource: @program %>
-    <%= render "assign_course", courses: @courses, search_context: @search_context, form: %>
+<%= modal_component(title: 'Create program') do %>
+  <%= form_with(url: programs_path, method: :post, modal: @program, scope: :program) do |form| %>
+    <div class="p-4 mb-4">
+      <div class="pl-4 pt-2">
+        <%= render "shared/components/form_errors", resource: @program %>
+        <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter the program name", type: "text", width:"w-full") %>
+      </div>
+    </div>
+    <div class="flex justify-end gap-4 border-t border-line-colour-light p-4">
+      <%= form.button "Cancel", class: "px-4 py-2 rounded text-sm", data: { action: "click->modals#closeModal" } %>
+      <%= form.button "Save", class: "bg-primary text-white px-4 py-2 rounded text-sm" %>
+    </div>
   <% end %>
-</div>
+<% end %>

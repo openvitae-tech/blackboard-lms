@@ -1,6 +1,6 @@
 <div class="flex justify-between items-center mb-4">
-  <h1 class="heading page-heading-medium pt-2"><%= t("programs.label") %></h1>
-  <%= link_to new_program_path, class: "nav-link" do %>
+  <%= heading_component(text: t("programs.label")) %>
+  <%= link_to new_program_path, data: { turbo_frame: "modal" }, class: "nav-link" do %>
     <%= button(label: 'Add program', icon_name: "plus") %>
   <% end %>
 </div>

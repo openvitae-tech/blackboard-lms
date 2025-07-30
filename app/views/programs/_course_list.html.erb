@@ -1,7 +1,14 @@
+<div class="flex justify-between items-center mb-4 pt-2">
+  <%= heading_component(text: "Courses") %>
+  <% if !@program.courses.blank? %>
+    <%= link_to add_courses_program_path(@program) do %>
+      <%= button(label: 'Add courses', icon_name: "plus") %>
+    <% end %>
+  <% end %>
+</div>
 <h3 class="text-sm mb-4 font-bold" data-programs-target="coursesCount">
   <%= pluralize(program.courses_count, 'course') %>
 </h3>
-
 <div data-programs-target="deleteButton" class="hidden">
   <div class="flex items-center mb-4">
     <h3 class="text-sm font-bold">
@@ -45,7 +52,7 @@
 <% else %>
   <div class="flex flex-col items-center justify-center">
     <p class="text-gray-500 mb-4">No courses present</p>
-    <%= link_to edit_program_path(program) do %>
+    <%= link_to add_courses_program_path(program) do %>
       <%= button(label: 'Add courses', icon_name: "plus") %>
     <% end %>
   </div>
