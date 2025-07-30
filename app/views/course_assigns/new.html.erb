@@ -3,12 +3,4 @@
   <h1 class="heading page-heading-medium pl-0">Assign course</h1>
 </div>
 
-
-<%= render "searches/form", context: @search_context, tags: @tags, user: @search_context.user, team: @search_context.team %>
-
-<%= render "course_assigns/course_list_with_assign_form",
-           courses: @courses,
-           search_context: @search_context,
-           cancel_link: @back_link
-%>
-
+<%= course_select_component(search_context: @search_context, courses: @courses, tags: @tags, cancel_link: @back_link, show_duration: true) %>

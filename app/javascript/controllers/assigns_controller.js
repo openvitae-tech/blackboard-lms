@@ -9,12 +9,14 @@ export default class extends Controller {
   ];
 
   toggle(event) {
-    this.dateSelectorTarget.disabled = !this.dateSelectorTarget.disabled;
+    if (this.hasDateSelectorTarget) {
+      this.dateSelectorTarget.disabled = !this.dateSelectorTarget.disabled;
 
-    if (!this.dateSelectorTarget.disabled) {
-      this.durationContainerTarget.classList.remove("invisible", "opacity-0");
-    } else {
-      this.durationContainerTarget.classList.add("invisible", "opacity-0");
+      if (!this.dateSelectorTarget.disabled) {
+        this.durationContainerTarget.classList.remove("invisible", "opacity-0");
+      } else {
+        this.durationContainerTarget.classList.add("invisible", "opacity-0");
+      }
     }
   }
 

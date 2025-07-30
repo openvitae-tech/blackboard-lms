@@ -198,4 +198,26 @@ module UiHelper
   def course_card_component(course:, enrollment: nil)
     render partial: 'ui/app/course_carousal/course_card_component', locals: { course:, enrollment: }
   end
+
+  def course_select_component(search_context:, courses: [], tags: [], cancel_link: nil, show_duration: true)
+    render partial: 'ui/app/course_select/course_select_component',
+           locals: { search_context:, courses:, tags:, cancel_link:, show_duration: }
+  end
+
+  def _course_select_search_component(search_context:, tags:)
+    render partial: 'ui/app/course_select/search_component', locals: { search_context:, tags: }
+  end
+
+  def _course_select_sidebar_component(form:, tags:)
+    render partial: 'ui/app/course_select/sidebar_component', locals: { form:, tags: }
+  end
+
+  def _course_select_list_component(search_context:, courses:, cancel_link:, show_duration:)
+    render partial: 'ui/app/course_select/list_component',
+           locals: { search_context:, courses:, cancel_link:, show_duration: }
+  end
+
+  def _course_select_list_item_component(course:, show_duration:)
+    render partial: 'ui/app/course_select/list_item_component', locals: { course:, show_duration: }
+  end
 end
