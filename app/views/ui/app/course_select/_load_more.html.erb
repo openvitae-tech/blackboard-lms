@@ -1,0 +1,13 @@
+<div class="mt-4" id="load-more">
+  <% if courses.next_page.nil? %>
+    <%= button(label: 'Load more', type: 'secondary', disabled: true) %>
+  <% elsif search_context.team_assign? %>
+    <%= link_to load_more_searches_path(context: search_context.context, team_id: search_context.team.id, page: courses.next_page), data: { turbo_stream: true } do %>
+      <%= button(label: 'Load more', type: 'secondary') %>
+    <% end %>
+  <% else %>
+    <%= link_to load_more_searches_path(context: search_context.context, user_id: search_context.user.id, page: courses.next_page), data: { turbo_stream: true } do %>
+      <%= button(label: 'Load more', type: 'secondary') %>
+    <% end %>
+  <% end %>
+</div>

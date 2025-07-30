@@ -1,5 +1,5 @@
 <div data-controller="searches" class="w-full mb-4">
-  <%= form_with url: search_path, method: :post, data: { action: "submit->searches#formSubmit", searches_target: "form" }, class: "w-full" do |form| %>
+  <%= form_with url: searches_path, method: :post, data: { action: "submit->searches#formSubmit", searches_target: "form" }, class: "w-full" do |form| %>
     <%= render 'searches/filters', tags: tags, form: form %>
 
     <%= form.hidden_field :context, value: context.context.to_s %>

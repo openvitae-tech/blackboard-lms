@@ -1,0 +1,9 @@
+<%= turbo_stream.append "course-list" do %>
+  <% @courses.each do |course| %>
+    <%= _course_select_list_item_component(course:) %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "load-more" do %>
+  <%= _course_select_load_more(search_context: @search_context, courses: @courses) %>
+<% end %>

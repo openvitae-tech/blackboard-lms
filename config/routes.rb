@@ -3,8 +3,13 @@
 Rails.application.routes.draw do
   resources :reports, only: %i[new create show]
 
-  match 'search', to: 'searches#index', via: %i[get post]
-  get 'searches/list', to: 'searches#list'
+  resources :searches, only: [:index] do
+    collection do
+      match '/', to: 'searches#index', via: %i[get post], as: ''
+      get :list
+      get :load_more
+    end
+  end
 
   namespace :onboarding do
     resource :welcome, only: %i[new update] do

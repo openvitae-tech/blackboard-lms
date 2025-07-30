@@ -1,4 +1,19 @@
-<div data-controller="course-select-component">
+<div data-controller="course-select-component" data-show-duration="<%= show_duration %>">
   <%= _course_select_search_component(search_context:, tags:) %>
-  <%= _course_select_list_component(search_context:, courses:, cancel_link:, show_duration:) %>
+  <%= form_with url: course_assigns_path, method: :post do |form| %>
+    <% if search_context.team_assign? %>
+      <%= form.hidden_field :team_id, value: search_context.team.id %>
+    <% else %>
+      <%= form.hidden_field :user_id, value: search_context.user.id %>
+    <% end %>
+
+    <div id="course-select-list">
+        <%= _course_select_list_component(search_context:, courses:) %>
+    </div>
+
+    <div id="footer" class="sticky right-8 bottom-0 -mb-8 flex w-full flex-col items-center justify-end gap-4 bg-white py-6 text-sm md:flex-row">
+      <%= form.button 'Assign Course', class: 'bg-primary text-white px-4 py-2 rounded w-full md:w-auto md:order-2' %>
+      <%= link_to 'Cancel', cancel_link, class: 'w-full md:w-auto text-center md:text-left md:order-1' %>
+    </div>
+<% end %>
 </div>

@@ -1,5 +1,5 @@
 <div data-controller="searches" class="w-full mb-4">
-  <%= form_with url: search_path, method: :post, data: { action: "submit->searches#formSubmit", searches_target: "form" }, class: "w-full" do |form| %>
+  <%= form_with url: searches_path, method: :post, data: { action: "submit->searches#formSubmit", searches_target: "form" }, class: "w-full" do |form| %>
     <%= _course_select_sidebar_component(tags: tags, form: form) %>
 
     <%= form.hidden_field :context, value: search_context.context.to_s %>

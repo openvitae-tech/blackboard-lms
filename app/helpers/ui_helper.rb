@@ -199,7 +199,7 @@ module UiHelper
     render partial: 'ui/app/course_carousal/course_card_component', locals: { course:, enrollment: }
   end
 
-  def course_select_component(search_context:, courses: [], tags: [], cancel_link: nil, show_duration: true)
+  def course_select_component(search_context:, courses: [], tags: [], cancel_link: nil, show_duration: false)
     render partial: 'ui/app/course_select/course_select_component',
            locals: { search_context:, courses:, tags:, cancel_link:, show_duration: }
   end
@@ -212,12 +212,16 @@ module UiHelper
     render partial: 'ui/app/course_select/sidebar_component', locals: { form:, tags: }
   end
 
-  def _course_select_list_component(search_context:, courses:, cancel_link:, show_duration:)
+  def _course_select_list_component(search_context:, courses:)
     render partial: 'ui/app/course_select/list_component',
-           locals: { search_context:, courses:, cancel_link:, show_duration: }
+           locals: { search_context:, courses: }
   end
 
-  def _course_select_list_item_component(course:, show_duration:)
-    render partial: 'ui/app/course_select/list_item_component', locals: { course:, show_duration: }
+  def _course_select_list_item_component(course:)
+    render partial: 'ui/app/course_select/list_item_component', locals: { course: }
+  end
+
+  def _course_select_load_more(search_context:, courses:)
+    render partial: 'ui/app/course_select/load_more', locals: { search_context:, courses: }
   end
 end
