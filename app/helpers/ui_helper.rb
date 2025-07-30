@@ -199,9 +199,10 @@ module UiHelper
     render partial: 'ui/app/course_carousal/course_card_component', locals: { course:, enrollment: }
   end
 
-  def course_select_component(search_context:, courses: [], tags: [], cancel_link: nil, show_duration: false)
+  def course_select_component(search_context:, submit_path:, courses: [], tags: [], cancel_link: nil,
+                              show_duration: false)
     render partial: 'ui/app/course_select/course_select_component',
-           locals: { search_context:, courses:, tags:, cancel_link:, show_duration: }
+           locals: { search_context:, courses:, tags:, cancel_link:, show_duration:, submit_path: }
   end
 
   def _course_select_search_component(search_context:, tags:)

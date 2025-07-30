@@ -3,4 +3,11 @@
   <h1 class="heading page-heading-medium pl-0">Assign course</h1>
 </div>
 
-<%= course_select_component(search_context: @search_context, courses: @courses, tags: @tags, cancel_link: @back_link, show_duration: true) %>
+<%= course_select_component(
+      search_context: @search_context,
+      courses: @courses,
+      tags: @tags,
+      cancel_link: @back_link,
+      show_duration: true,
+      submit_path: course_assigns_path
+    ) %>
