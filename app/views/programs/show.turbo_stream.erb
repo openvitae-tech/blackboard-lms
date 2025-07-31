@@ -1,0 +1,3 @@
+<%= turbo_stream.update "program-courses" do %>
+  <%= render "course_list", program: @program, courses: @courses %>
+<% end %>

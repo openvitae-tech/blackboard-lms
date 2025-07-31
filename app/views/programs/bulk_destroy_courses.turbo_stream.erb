@@ -2,6 +2,3 @@
 <%= turbo_stream.replace "modal" do %>
   <%= turbo_frame_tag "modal" %>
 <% end %>
-<%= turbo_stream.update "program-courses" do %>
-  <%= render "course_list", program: @program, courses: @program.courses %>
-<% end %>

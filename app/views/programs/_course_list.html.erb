@@ -1,7 +1,7 @@
 <div class="flex justify-between items-center mb-4 pt-2">
   <%= heading_component(text: "Courses") %>
-  <% if !@program.courses.blank? %>
-    <%= link_to add_courses_program_path(@program) do %>
+  <% if !courses.blank? %>
+    <%= link_to add_courses_program_path(program) do %>
       <%= button(label: 'Add courses', icon_name: "plus") %>
     <% end %>
   <% end %>
@@ -20,7 +20,7 @@
           html_options: {
             data: {
               action: "click->programs#bulkDelete",
-              url: confirm_bulk_destroy_courses_program_path(program)
+              url: confirm_bulk_destroy_courses_program_path(program, page: params[:page])
             }})
       %>
     </div>
@@ -57,3 +57,4 @@
     <% end %>
   </div>
 <% end %>
+<%= paginate courses %>

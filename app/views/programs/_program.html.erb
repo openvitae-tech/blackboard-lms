@@ -1,4 +1,4 @@
-<div class="rounded-2xl w-full sm:w-[48%] lg:w-[32%] border border-gray-200">
+<div class="rounded-2xl border border-gray-200 h-full">
   <div class="p-4 flex flex-col justify-between h-full">
     <div class="flex justify-between items-start gap-2">
       <%= link_to program_path(program), class: "hover:cursor-pointer" do %>
@@ -24,13 +24,12 @@
     <div class="flex mt-3 justify-between items-center">
       <div class="flex items-center gap-2">
         <span class="icon icon-lessons h-3.5 w-3.5 bg-primary"></span>
-        <span class="text-xs font-medium"><%= pluralize(program.courses_count, 'course')%></span>
+        <span class="text-xs font-medium"><%= pluralize(program.courses_count, 'course') %></span>
       </div>
       <div class="flex items-center gap-2">
         <span class="icon icon-clock h-3.5 w-3.5 bg-primary"></span>
-        <span class="text-xs font-medium"><%= pluralize(program.users_count, 'user')%></span>
+        <span class="text-xs font-medium"><%= pluralize(program.users_count, 'user') %></span>
       </div>
     </div>
-
-  </div>
+    </div>
 </div>

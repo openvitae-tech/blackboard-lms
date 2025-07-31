@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Program < ApplicationRecord
+  DEFAULT_PER_PAGE_SIZE = 10
+
   validates :name, presence: true
 
   has_many :program_courses, dependent: :destroy

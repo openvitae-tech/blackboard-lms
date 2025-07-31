@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ProgramsController < ApplicationController
+  include PaginationHelper
   include SearchContextHelper
 
   before_action :set_learning_partner
@@ -18,7 +19,7 @@ class ProgramsController < ApplicationController
 
   def show
     authorize @program
-    @courses = @program.courses.includes(:tags, :banner_attachment)
+    @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
   end
 
   def create
@@ -91,6 +92,11 @@ class ProgramsController < ApplicationController
       flash[:alert] = t("resource.not_found", resource_name: "Courses")
     end
     flash.discard
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.redirect_to(program_path(@program, page: get_current_page(record: @program.courses, page: params[:page])))
+      end
+    end
   end
 
   private
