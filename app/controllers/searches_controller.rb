@@ -6,6 +6,11 @@ class SearchesController < ApplicationController
     @courses = load_courses.page(params[:page]).per(Course::PER_PAGE_LIMIT)
   end
 
+  def load_more
+    @courses = load_courses.page(params[:page]).per(Course::PER_PAGE_LIMIT)
+  end
+
+
   def list
     @courses = load_courses.page(params[:page]).per(4)
     @target_id = request.headers['X-Target-Id']

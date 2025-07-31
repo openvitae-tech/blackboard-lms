@@ -1,0 +1,41 @@
+<div class="md:w-80 w-full bg-white box-shadow-medium fixed right-0 top-0 h-screen hidden z-50" data-searches-target="filters">
+  <div class="flex flex-row items-center justify-between border-b-2 border-line-colour mb-4 p-4">
+    <h2 class="text-lg font-semibold">Filter by</h2>
+    <span class="icon icon-close icon-base cursor-pointer bg-black" data-action="click->searches#closeFilter"></span>
+  </div>
+  <div class="h-full flex flex-col justify-between">
+    <div class="overflow-y-auto max-h-[calc(100vh-220px)] pb-4">
+      <div class="flex flex-col gap-2 p-4 border-b-2 border-line-colour">
+        <div class="flex justify-between">
+          <h3 class="text-xs font-medium text-primary mb-2">Levels</h3>
+          <span class="text-xs cursor-pointer mb-2" data-action="click->searches#clearFilters">Clear filter</span>
+        </div>
+        <ul class="flex flex-col gap-4">
+          <% tags.level.each do |tag| %>
+            <li class="mb-2 flex items-center">
+              <%= form.check_box :tags, { multiple: true, class: 'mr-2 h-3 w-3 tags-checkbox', id: dom_id(tag, 'check'), data: { searches_target: 'checkbox' } }, tag.name, nil %>
+              <label for="<%= dom_id(tag, 'check') %>" class="text-sm"><%= tag.name %></label>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="flex flex-col gap-2 p-4">
+        <div class="pt-2">
+          <h3 class="text-xs font-medium text-primary mb-2">Category</h3>
+        </div>
+        <ul class="flex flex-col gap-4">
+          <% tags.category.each do |tag| %>
+            <li class="mb-2 flex items-center">
+              <%= form.check_box :tags, { multiple: true, class: 'mr-2 h-3 w-3 tags-checkbox', id: dom_id(tag, 'check'), data: { searches_target: 'checkbox' } }, tag.name, nil %>
+              <label for="<%= dom_id(tag, 'check') %>" class="text-sm"><%= tag.name %></label>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-4 p-4 text-sm justify-center fixed bottom-0 md:w-80 w-full bg-white items-center border-t-2 border-line-colour">
+    <%= form.submit 'Apply Filters', class: 'btn-primary w-full' %>
+  </div>
+</div>

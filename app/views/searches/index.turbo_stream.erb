@@ -3,13 +3,7 @@
 } %>
 
 <% if @search_context.team_assign? || @search_context.user_assign? %>
-  <%= turbo_stream.replace "course-list-with-assign-form",
-                           partial: "course_assigns/course_list_with_assign_form",
-                           locals: {
-                             courses: @courses,
-                             search_context: @search_context,
-                             cancel_link: @back_link
-                           }
-  %>
-<% else %>
+  <%= turbo_stream.update "course-select-list" do %>
+    <%= _course_select_list_component(search_context: @search_context, courses: @courses) %>
+  <% end %>
 <% end %>

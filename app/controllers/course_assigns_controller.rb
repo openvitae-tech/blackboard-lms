@@ -39,12 +39,6 @@ class CourseAssignsController < ApplicationController
     flash.now[:success] = 'Courses assigned successfully'
   end
 
-  def load_more
-    @search_context = build_search_context(resource: @user || @team)
-    service = Courses::FilterService.new(current_user, @search_context)
-    @courses = service.filter.records.page(params[:page]).per(Course::PER_PAGE_LIMIT)
-  end
-
   private
 
   def authorize_actions
