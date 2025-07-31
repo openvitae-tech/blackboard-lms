@@ -65,7 +65,7 @@ class SearchContext
   end
 
   def to_search_path
-    "#{Rails.application.routes.url_helpers.search_path}?#{to_query_str}"
+    "#{Rails.application.routes.url_helpers.searches_path}?#{to_query_str}"
   end
 
   def to_query_str
