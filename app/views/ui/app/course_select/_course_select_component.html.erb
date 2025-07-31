@@ -1,4 +1,4 @@
-<div id="course-select-component" data-controller="course-select-component" data-show-duration="<%= show_duration %>">
+<div id="course-select-component" data-controller="course-select" data-show-duration="<%= show_duration %>">
   <%= _course_select_search_component(search_context:, tags:) %>
   <%= form_with url: submit_path, method: :post do |form| %>
     <% if search_context.team_assign? %>

@@ -8,10 +8,10 @@ export default class extends Controller {
         "datePicker"
     ];
 
-    static outlets = ["course-select-component"]; // controller to which we want to connect to
+    static outlets = ["course-select"]; // controller to which we want to connect to
 
     connect() {
-        this.showDuration = this.courseSelectComponentOutlet.showDuration;
+        this.showDuration = this.courseSelectOutlet.showDuration;
     }
 
     toggleDurationSelect(event) {

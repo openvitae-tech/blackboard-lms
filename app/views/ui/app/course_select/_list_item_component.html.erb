@@ -1,4 +1,4 @@
-<li id="<%= dom_id(course, "unassigned") %>" class="w-full" data-controller="course-select-item-component" data-course-select-item-component-course-select-component-outlet='#course-select-component'>
+<li id="<%= dom_id(course, "unassigned") %>" class="w-full" data-controller="course-select-item" data-course-select-item-course-select-outlet='#course-select-component'>
   <div class="relative flex w-full flex-col rounded p-6 box-shadow-medium md:flex-row">
     <div class="absolute top-1 left-1 z-10 flex flex-wrap justify-start gap-2 heading">
       <% course.tags.each do |tag| %>
@@ -19,7 +19,7 @@
                           false, # checked?
                           id: dom_id(course, "course_ids"),
                           class: 'absolute -top-32 md:top-0 right-0 w-6 h-6 border-2 rounded border-secondary checked:bg-secondary checked:border-secondary checked:focus:bg-secondary focus:ring-0',
-                          data: { action: 'course-select-item-component#toggleDurationSelect' } %>
+                          data: { action: 'course-select-item#toggleDurationSelect' } %>
 
         <div class="flex flex-col gap-4">
           <p class="overflow-hidden text-ellipsis text-primary heading heading-semibold">
@@ -59,24 +59,24 @@
           </div>
         </div>
 
-        <div class="invisible absolute -top-24 -right-4 flex flex-col items-end gap-2 opacity-0 md:top-0 md:right-12 md:flex-row md:items-center" data-course-select-item-component-target="durationContainer">
+        <div class="invisible absolute -top-24 -right-4 flex flex-col items-end gap-2 opacity-0 md:top-0 md:right-12 md:flex-row md:items-center" data-course-select-item-target="durationContainer">
           <label for="duration" class="text-sm font-medium heading md:text-base">Assign Duration:</label>
           <div class="flex flex-row items-center">
             <%= date_field_tag :date, nil,
                                id: "datePicker",
                                class: "invisible p-0 w-[2px]",
                                data: {
-                                 action: "change->course-select-item-component#datePicked",
-                                 course_select_item_component_target: "datePicker"
+                                 action: "change->course-select-item#datePicked",
+                                 course_select_item_target: "datePicker"
                                } %>
 
             <%= select_tag 'duration[]', options_for_select(options_for_duration),
                            id: 'duration',
                            disabled: true,
                            class: 'border border-line-colour-light box-shadow-small rounded focus:ring-0 p-0 px-2 h-6 w-28 text-sm',
-                           data: { course_select_item_component_target: 'dateSelector', duration: 'duration' } %>
+                           data: { course_select_item_target: 'dateSelector', duration: 'duration' } %>
             <div class="relative flex items-center pl-2">
-              <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->course-select-item-component#openDatePicker"></span>
+              <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->course-select-item#openDatePicker"></span>
             </div>
           </div>
         </div>
