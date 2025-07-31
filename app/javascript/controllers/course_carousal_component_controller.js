@@ -2,57 +2,69 @@ import { Controller } from "@hotwired/stimulus";
 import Logger from "utils/logger";
 
 export default class extends Controller {
+    
+    static targets = ["courseCarousalBody", "cardComponent", "prevArrow", "nextArrow"];
 
-    static targets = ["loadPath", "courseCarousalBody"]
+  connect() {
+    this.currentPage = 0;
+    this.setCardsPerPage();
+    this.updateVisibleCards();
 
-    connect() {
-        this.target_id = this.courseCarousalBodyTarget.id;
-        this.page = 1;
-        this.queryUrl = new URL(this.loadPathTarget.href);
-        this.headers = {
-            Accept: "text/vnd.turbo-stream.html",
-            'X_Target_Id' : this.target_id
-        };
+    window.addEventListener("resize", () => {
+      const prev = this.cardsPerPage;
+      this.setCardsPerPage();
+      if (this.cardsPerPage !== prev) {
+        this.currentPage = 0;
+        this.updateVisibleCards();
+      }
+    });
+  }
+
+  setCardsPerPage() {
+    const width = window.innerWidth;
+    if (width < 640) {
+      this.cardsPerPage = 1; 
+    } else if (width < 1024) {
+      this.cardsPerPage = 2; 
+    } else {
+      this.cardsPerPage = 4; 
     }
+  }
 
-    loadPrevPage(event) {
-        const disabled = event.currentTarget.getAttribute("aria-disabled");
-        if (disabled === "true") return;
+  updateVisibleCards() {
+    const start = this.currentPage * this.cardsPerPage;
+    const end = start + this.cardsPerPage;
 
-        this.decrementPage()
-        this.loadPage(this.pageUrl())
+    this. cardComponentTargets.forEach((card, index) => {
+      card.classList.toggle("hidden", index < start || index >= end);
+    });
+
+    this.updateArrowVisibility();
+  }
+
+  updateArrowVisibility() {
+    if (this.hasPrevArrowTarget) {
+      this.prevArrowTarget.classList.toggle("invisible", this.currentPage === 0);
     }
-
-    loadNextPage(event) {
-        const disabled = event.currentTarget.getAttribute("aria-disabled");
-        if (disabled === "true") return;
-
-        this.incrementPage()
-        this.loadPage(this.pageUrl())
+  
+    if (this.hasNextArrowTarget) {
+      const totalPages = Math.ceil(this.cardComponentTargets.length / this.cardsPerPage);
+      this.nextArrowTarget.classList.toggle("invisible", this.currentPage >= totalPages - 1);
     }
-
-    loadPage(url) {
-        fetch(url, {
-            method: "GET",
-            headers: this.headers,
-        })
-            .then((response) => response.text())
-            .then((html) => Turbo.renderStreamMessage(html))
-            .catch((error) => Logger.error(error));
+  }
+  
+ 
+  loadNextPage() {
+    if ((this.currentPage + 1) * this.cardsPerPage < this. cardComponentTargets.length) {
+      this.currentPage++;
+      this.updateVisibleCards();
     }
+  }
 
-    decrementPage() {
-        if (this.page > 1) {
-            this.page = this.page - 1;
-        }
+  loadPrevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.updateVisibleCards();
     }
-
-    incrementPage() {
-        this.page = this.page + 1;
-    }
-
-    pageUrl() {
-        this.queryUrl.searchParams.set('page', this.page)
-        return `/searches/list${this.queryUrl.search}`;
-    }
+  }
 }

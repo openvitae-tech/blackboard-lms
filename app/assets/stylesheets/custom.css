@@ -62,3 +62,15 @@ input:-webkit-autofill {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.no-scrollbar {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;     
+  -webkit-overflow-scrolling: touch; 
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+
