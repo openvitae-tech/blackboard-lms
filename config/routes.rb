@@ -52,11 +52,8 @@ Rails.application.routes.draw do
       get :mark_as_read
     end
   end
-  resources :course_assigns, param: :user_id, only: %i[new create] do
-    collection do
-      get :load_more
-    end
-  end
+
+  resources :course_assigns, param: :user_id, only: %i[new create]
 
   resource :user_settings, only: %i[show edit update] do
     collection do
