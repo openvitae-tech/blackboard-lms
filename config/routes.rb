@@ -128,7 +128,7 @@ Rails.application.routes.draw do
       get :confirm_bulk_destroy_courses
       get :confirm_destroy
       get :add_courses
-      put :create_courses
+      post :create_courses
     end
   end
 

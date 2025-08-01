@@ -140,7 +140,7 @@ RSpec.describe 'Request spec for Programs' do
     end
 
     it 'add courses to program' do
-      put create_courses_program_path(program), params: { course_ids: [@new_course.id] }
+      post create_courses_program_path(program), params: { course_ids: [@new_course.id] }
 
       program.reload
       expect(program.courses.pluck(:id)).to eq([course.id, @new_course.id].sort)
@@ -149,7 +149,7 @@ RSpec.describe 'Request spec for Programs' do
     it 'unauthorized for non-privileged user' do
       sign_in learner
 
-      put create_courses_program_path(program), params: { course_ids: [@new_course.id] }
+      post create_courses_program_path(program), params: { course_ids: [@new_course.id] }
       expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
