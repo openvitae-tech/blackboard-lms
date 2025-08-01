@@ -1,0 +1,14 @@
+<%= modal_component(title: 'Edit program') do %>
+  <%= form_with(url: program_path(@program), method: :put, model: @program) do |form| %>
+    <div class="p-4 mb-4">
+      <div class="pl-4 pt-2">
+        <%= render "shared/components/form_errors", resource: @program %>
+        <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter the program name", type: "text", width:"w-full") %>
+      </div>
+    </div>
+    <div class="flex justify-end gap-4 border-t border-line-colour-light p-4">
+      <%= form.button "Cancel", class: "px-4 py-2 rounded text-sm", data: { action: "click->modals#closeModal" } %>
+      <%= form.button "Save", class: "bg-primary text-white px-4 py-2 rounded text-sm" %>
+    </div>
+  <% end %>
+<% end %>

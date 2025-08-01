@@ -7,6 +7,7 @@ class LearningPartner < ApplicationRecord
   has_many :users, dependent: :destroy
   has_one :scorm, dependent: :destroy
   has_one :payment_plan, dependent: :destroy
+  has_many :programs, dependent: :destroy
 
   validates :name, presence: true, length: { in: 2..255 }
   validates :active_users_count, presence: true
