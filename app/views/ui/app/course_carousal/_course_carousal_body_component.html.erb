@@ -9,7 +9,8 @@
       data-course-carousal-target="courseCarousalBody">
     <% courses.each do |course| %>
       <%= link_to course_path(course) do %>
-        <div data-course-carousal-target="cardComponent" class="mx-1">
+        <div class="mx-1 transform transition-transform duration-500 scale-100"
+            data-course-carousal-target="cardComponent">
           <%= course_card_component(course: course) %>
         </div>
       <% end %>

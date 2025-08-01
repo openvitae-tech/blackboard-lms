@@ -34,11 +34,26 @@ export default class extends Controller {
   updateVisibleCards() {
     const start = this.currentWindowPosition * this.cardsPerWindow;
     const end = start + this.cardsPerWindow;
-
     this.cardComponentTargets.forEach((card, index) => {
-      card.classList.toggle("hidden", index < start || index >= end);
+      const shouldShow = index >= start && index < end;
+  
+      if (shouldShow) {
+        card.classList.remove("hidden");
+  
+        card.classList.remove("scale-100", "scale-95", "scale-90", "scale-75");
+        card.classList.add("transform", "transition-transform", "duration-500", "ease-out", "scale-90");
+  
+        void card.offsetWidth;
+  
+        requestAnimationFrame(() => {
+          card.classList.remove("scale-90");
+          card.classList.add("scale-100");
+        });
+      } else {
+        card.classList.add("hidden");
+      }
     });
-
+  
     this.updateArrowVisibility();
   }
 
