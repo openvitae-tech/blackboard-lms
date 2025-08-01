@@ -54,20 +54,18 @@ class ProgramsController < ApplicationController
     load_unassigned_courses
   end
 
-  def update_courses
+  def create_courses
     authorize @program
-    merged_courses = @program.courses | selected_courses
 
-    if @program.update(courses: merged_courses)
-      respond_to do |format|
-        format.turbo_stream do
-          flash[:success] = t("resource.updated", resource_name: "Program")
-          render turbo_stream: turbo_stream.redirect_to(program_path(@program))
-        end
+    selected_courses.each do |course|
+      @program.program_courses.create!(course: course)
+    end
+
+    respond_to do |format|
+      format.turbo_stream do
+        flash[:success] = t("resource.updated", resource_name: "Program")
+        render turbo_stream: turbo_stream.redirect_to(program_path(@program))
       end
-    else
-      load_unassigned_courses
-      render :add_courses, status: :unprocessable_entity
     end
   end
 

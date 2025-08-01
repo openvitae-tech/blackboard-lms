@@ -3,5 +3,5 @@
   <div class="box">
     <%= heading_component(text: "Add courses") %>
   </div>
-  <%= render "assign_course", courses: @courses, search_context: @search_context, program: @program, tags: @tags %>
+  <%= course_select_component(search_context: @search_context, submit_path: create_courses_program_path(@program), courses: @courses, tags: @tags, method: :put) %>
 </div>

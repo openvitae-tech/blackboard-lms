@@ -36,7 +36,7 @@ class ProgramPolicy
     user.privileged_user?
   end
 
-  def update_courses?
+  def create_courses?
     user.privileged_user?
   end
 
