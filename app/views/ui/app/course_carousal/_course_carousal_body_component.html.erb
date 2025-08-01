@@ -5,7 +5,7 @@
     <%= icon("chevron-left", css: "icon-medium") %>
   </div>
 
-  <div class="mx-5 flex flex-row flex-nowrap justify-between overflow-y-auto no-scrollbar scroll-smooth"
+  <div class="mx-5 flex flex-row flex-nowrap justify-between overflow-y-auto scroll-smooth"
       data-course-carousal-component-target="courseCarousalBody">
     <% courses.each do |course| %>
       <%= link_to course_path(course) do %>
