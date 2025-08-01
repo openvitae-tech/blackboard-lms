@@ -1,15 +1,15 @@
 <div class="relative flex w-full" id="<%= dom_key("course-carousal") %>">  
   <div class="absolute -left-3 z-50 flex h-full items-center hover:text-primary hover:cursor-pointer"
-      data-course-carousal-component-target="prevArrow"
-      data-action="click->course-carousal-component#loadPrevPage">
+      data-course-carousal-target="prevArrow"
+      data-action="click->course-carousal#shiftWindowLeft">
     <%= icon("chevron-left", css: "icon-medium") %>
   </div>
 
   <div class="mx-5 flex flex-row flex-nowrap justify-between overflow-y-auto scroll-smooth"
-      data-course-carousal-component-target="courseCarousalBody">
+      data-course-carousal-target="courseCarousalBody">
     <% courses.each do |course| %>
       <%= link_to course_path(course) do %>
-        <div data-course-carousal-component-target="cardComponent" class="mx-1">
+        <div data-course-carousal-target="cardComponent" class="mx-1">
           <%= course_card_component(course: course) %>
         </div>
       <% end %>
@@ -17,8 +17,8 @@
   </div>
 
   <div class="absolute -right-3 z-50 flex h-full items-center hover:text-primary hover:cursor-pointer"
-      data-course-carousal-component-target="nextArrow"
-      data-action="click->course-carousal-component#loadNextPage">
+      data-course-carousal-target="nextArrow"
+      data-action="click->course-carousal#shiftWindowRight">
     <%= icon("chevron-right", css: "icon-medium") %>
   </div>
 </div>
