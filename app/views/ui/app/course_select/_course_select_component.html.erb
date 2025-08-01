@@ -1,14 +1,14 @@
 <div id="course-select-component" data-controller="course-select" data-show-duration="<%= show_duration %>">
   <%= _course_select_search_component(search_context:, tags:) %>
-  <%= form_with url: submit_path, method: :post do |form| %>
+  <%= form_with url: submit_path, method: method do |form| %>
     <% if search_context.team_assign? %>
       <%= form.hidden_field :team_id, value: search_context.team.id %>
-    <% else %>
+    <% elsif search_context.user_assign? %>
       <%= form.hidden_field :user_id, value: search_context.user.id %>
     <% end %>
 
     <div id="course-select-list">
-        <%= _course_select_list_component(search_context:, courses:) %>
+      <%= _course_select_list_component(search_context:, courses:) %>
     </div>
 
     <div id="footer" class="sticky right-8 bottom-0 -mb-8 flex w-full flex-col items-center justify-end gap-4 bg-white py-6 text-sm md:flex-row">

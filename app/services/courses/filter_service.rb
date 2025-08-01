@@ -22,6 +22,8 @@ module Courses
                        filter_out_team_enrolled_courses(course_scope, search_context)
                      elsif search_context.user_assign?
                        filter_out_user_enrolled_courses(course_scope, search_context)
+                     elsif search_context.program?
+                       filter_out_program_courses(course_scope, search_context)
                      else
                        course_scope
                      end
@@ -99,6 +101,10 @@ module Courses
       levels = records.filter { |_id, tag_type| tag_type == 'level' }.map { |id, _tag_type| id }
 
       [levels, categories]
+    end
+
+    def filter_out_program_courses(scope, search_context)
+      scope.where.not(id: search_context.program.course_ids)
     end
   end
 end

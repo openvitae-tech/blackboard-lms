@@ -3,8 +3,5 @@
   <div class="box">
     <%= heading_component(text: "Add courses") %>
   </div>
-  <%= form_with(url: update_courses_program_path(@program), method: :put, model: @program) do |form| %>
-    <%= render "shared/components/form_errors", resource: @program %>
-    <%= render "assign_course", courses: @courses, search_context: @search_context, form:  %>
-  <% end %>
+  <%= render "assign_course", courses: @courses, search_context: @search_context, program: @program, tags: @tags %>
 </div>

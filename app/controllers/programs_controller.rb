@@ -50,6 +50,7 @@ class ProgramsController < ApplicationController
 
   def add_courses
     authorize @program
+     @tags = Tag.load_tags
     load_unassigned_courses
   end
 
@@ -58,7 +59,12 @@ class ProgramsController < ApplicationController
     merged_courses = @program.courses | selected_courses
 
     if @program.update(courses: merged_courses)
-      redirect_to program_path(@program), notice: t("resource.updated", resource_name: "Program")
+      respond_to do |format|
+        format.turbo_stream do
+          flash[:success] = t("resource.updated", resource_name: "Program")
+          render turbo_stream: turbo_stream.redirect_to(program_path(@program))
+        end
+      end
     else
       load_unassigned_courses
       render :add_courses, status: :unprocessable_entity
@@ -118,13 +124,11 @@ class ProgramsController < ApplicationController
   end
 
   def load_unassigned_courses
-    @courses = filter_courses.where.not(id: @program.course_ids)
-                                        .page(params[:page])
-                                        .per(Course::PER_PAGE_LIMIT)
+    @courses = filter_courses.page(params[:page]).per(Course::PER_PAGE_LIMIT)
   end
 
   def filter_courses
-    @search_context = build_search_context(context: SearchContext::COURSE_LISTING)
+    @search_context = build_search_context(context: SearchContext::PROGRAM, resource: @program)
     Courses::FilterService.new(current_user, @search_context).filter.records
   end
 end

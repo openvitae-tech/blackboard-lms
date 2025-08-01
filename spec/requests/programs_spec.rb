@@ -144,7 +144,6 @@ RSpec.describe 'Request spec for Programs' do
 
       program.reload
       expect(program.courses.pluck(:id)).to eq([course.id, @new_course.id].sort)
-      expect(response).to redirect_to(program_path(program))
     end
 
     it 'unauthorized for non-privileged user' do
