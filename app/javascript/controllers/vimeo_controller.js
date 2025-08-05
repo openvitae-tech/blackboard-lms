@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["vimeoLoader", "vimeoPlayer", "completeButton", "completionOverlay"];
+  static targets = ["vimeoLoader", "vimeoPlayer","completeButtonForm", "completeButton", "completionOverlay"];
 
   connect() {
     // return if the vimeo player is not present, for example in local
@@ -93,17 +93,23 @@ export default class extends Controller {
   }
   enableCompleteButton() {
     if (this.hasCompleteButtonTarget) {
-      this.completeButtonTarget.classList.remove("disabled");
+      this.completeButtonFormTarget.classList.remove("disabled");
+      this.completeButtonTarget.classList.remove("bg-secondary", "hover:bg-secondary-light");
+      this.completeButtonTarget.classList.add("bg-primary", "hover:bg-primary-light");
+  
       const tooltip = this.completeButtonTarget.querySelector(".tooltip");
-      tooltip.classList.add("hidden");
+      if (tooltip) tooltip.classList.add("hidden");
     }
   }
 
   disableCompleteButton() {
     if (this.hasCompleteButtonTarget) {
-      this.completeButtonTarget.classList.add("disabled");
+      this.completeButtonFormTarget.classList.add("disabled");
+      this.completeButtonTarget.classList.remove("bg-primary", "hover:bg-primary-light");
+      this.completeButtonTarget.classList.add("bg-secondary", "hover:bg-secondary-light");
+ 
       const tooltip = this.completeButtonTarget.querySelector(".tooltip");
-      tooltip.classList.remove("hidden");
+      if (tooltip) tooltip.classList.remove("hidden");
     }
   }
 
