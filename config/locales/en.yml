@@ -37,6 +37,7 @@ en:
     created: "The %{resource_name} is successfully created."
     updated: "The %{resource_name} is successfully updated."
     deleted: "The %{resource_name} is successfully deleted."
+    not_found: "The %{resource_name} is not found."
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
   button:
@@ -145,6 +146,8 @@ en:
   settings:
     label: "Settings"
     description: "Create and manage tags"
+  programs:
+    label: "Programs"
   tags:
     label: "Tags"
   user:
@@ -205,5 +208,5 @@ en:
     setup_account: "Let's set up your account."
     confirm_details: "Confirm your details to get started"
   reports:
-    available_soon: 'Your report will be available soon, you can download it by clicking the notification.'
-    invalid_report_type: 'Invalid report type %{value}'
+    available_soon: "Your report will be available soon, you can download it by clicking the notification."
+    invalid_report_type: "Invalid report type %{value}"

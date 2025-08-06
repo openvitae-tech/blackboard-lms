@@ -241,4 +241,30 @@ RSpec.describe Courses::FilterService do
       expect(results.records).to eq([@course2])
     end
   end
+
+  describe 'filter for context program' do
+    before do
+      @learning_partner = create :learning_partner
+      @manager = create :user, :learner, team: @team
+
+      @course1 = create :course, :published
+      @course2 = create :course, :published
+      @program = create :program, courses: [@course1], learning_partner: @learning_partner
+    end
+
+    let(:search_context) do
+      SearchContext.new(
+        context: SearchContext::PROGRAM,
+        options: {
+          program: @program
+        }
+      )
+    end
+
+    it 'filter out courses not assigned to the program' do
+      service = Courses::FilterService.new(@manager, search_context)
+      results = service.filter
+      expect(results.records.pluck(:id)).to eq([@course2.id])
+    end
+  end
 end

@@ -1,0 +1,60 @@
+<div class="flex justify-between items-center mb-4 pt-2">
+  <%= heading_component(text: "Courses") %>
+  <% if !courses.blank? %>
+    <%= link_to add_courses_program_path(program) do %>
+      <%= button(label: 'Add courses', icon_name: "plus") %>
+    <% end %>
+  <% end %>
+</div>
+<h3 class="text-sm mb-4 font-bold" data-programs-target="coursesCount">
+  <%= pluralize(program.courses_count, 'course') %>
+</h3>
+<div data-programs-target="deleteButton" class="hidden">
+  <div class="flex items-center mb-4">
+    <h3 class="text-sm font-bold">
+      <span data-programs-target="selectedCoursesCount"></span> selected of
+      <%= pluralize(program.courses_count, 'course') %>
+    </h3>
+    <div class="pl-2 cursor-pointer">
+      <%= button(label: "Delete", size: "sm", type: "danger",
+          html_options: {
+            data: {
+              action: "click->programs#bulkDelete",
+              url: confirm_bulk_destroy_courses_program_path(program, page: params[:page])
+            }})
+      %>
+    </div>
+  </div>
+</div>
+
+<% if courses.any? %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-6">
+    <% courses.each do |course| %>
+      <div class="relative">
+        <%= check_box_tag 'course_ids[]',
+            course.id,
+            false,
+            id: dom_id(course, "course_ids"),
+            class: 'absolute top-2 right-2 w-5 h-5 z-50 border-2 rounded checked:bg-primary checked:border-primary focus:ring-0',
+            data: {
+              programs_target: "courseCheckbox",
+              action: "programs#toggleDeleteButton"
+            }
+        %>
+        <div class="relative">
+          <%= link_to course_path(course) do %>
+            <%= course_card_component(course: course) %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="flex flex-col items-center justify-center">
+    <p class="text-gray-500 mb-4">No courses present</p>
+    <%= link_to add_courses_program_path(program) do %>
+      <%= button(label: 'Add courses', icon_name: "plus") %>
+    <% end %>
+  </div>
+<% end %>
+<%= paginate courses %>

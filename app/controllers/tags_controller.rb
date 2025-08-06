@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TagsController < ApplicationController
+  include PaginationHelper
+
   before_action :set_tag, only: [:edit, :update, :destroy]
 
   def new
@@ -46,7 +48,8 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.redirect_to(tags_path(page: get_current_page(params[:page])))
+        render turbo_stream:
+            turbo_stream.redirect_to(tags_path(page: get_current_page(record: Tag, page: params[:page], per_page_count: Tag::DEFAULT_PER_PAGE_SIZE)))
       end
     end
   end
@@ -63,18 +66,5 @@ class TagsController < ApplicationController
 
   def set_tag
     @tag = Tag.find(params[:id])
-  end
-
-  def get_current_page(page)
-    current_page = page.to_i
-    current_page = 1 if current_page.zero?
-
-    tags = Tag.page(current_page).per(Tag::DEFAULT_PER_PAGE_SIZE)
-    if tags.empty? && current_page > 1
-      new_page = current_page - 1
-    else
-      new_page = current_page
-    end
-    new_page
   end
 end
