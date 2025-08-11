@@ -20,6 +20,7 @@ export default class extends Controller {
     if (this.hasHiddenOtpTarget) {
       this.hiddenOtpTarget.value = otpValues;
     }
+    this.updateButtonState();
   }
 
   inputTargetConnected(input) {
@@ -77,7 +78,6 @@ export default class extends Controller {
     });
 
     this.updateHiddenOtp();
-    this.updateButtonState();
 
     const nextEmpty = this.inputTargets.find((input) => input.value === "");
     if (nextEmpty) nextEmpty.focus();
