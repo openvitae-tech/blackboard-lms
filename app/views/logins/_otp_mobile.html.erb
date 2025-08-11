@@ -19,7 +19,7 @@
         <div class="input-group">
           <label for="" class="label-text">Verification code (OTP)</label>
           <div id="otp" class="mt-4 flex gap-4 justify-between">
-            <%= input_otp(form: form, count: 4, input_options: { data: { otp_target: "input", action: "input->otp#handleInputOrKeyDown" } }) %>
+            <%= input_otp(form: form, input_options: { data: { otp_target: "input", action: "input keydown change->otp#handleInputOrKeyDown" } }) %>
 
           </div>
         </div>
