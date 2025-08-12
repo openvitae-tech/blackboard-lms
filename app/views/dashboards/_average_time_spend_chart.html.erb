@@ -7,15 +7,15 @@
 
   <div class="w-full max-w-4xl bg-white py-6">
     <%= column_chart [
-                       { name: "Time spent in minutes", data: dashboard.time_spent_series }
-                     ], height: "200px", colors: ["#0075A4"], stacked: true, max: 60,
-                     library: {
-                       plugins: {
-                         legend: { display: false }
-                       },
-                       scales: {
-                         yAxes: [{ ticks: { beginAtZero: true, max: 100 } }]
-                       }
-                     } %>
+      { name: "Time spent in minutes", data: dashboard.time_spent_series }
+      ], height: "200px", colors: ["#0075A4"], stacked: true,
+      library: {
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { min: 0, max: 120, ticks: { stepSize: 30 } }
+        }
+      } %>
   </div>
 </div>
