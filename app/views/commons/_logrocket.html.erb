@@ -1,0 +1,10 @@
+<script src="https://cdn.lgrckt-in.com/LogRocket.min.js" crossorigin="anonymous"></script>
+<script>window.LogRocket && window.LogRocket.init("<%= Rails.application.credentials.dig(:logrocket, :token) %>");
+  <% if current_user %>
+    window.LogRocket.identify("<%= current_user.id %>", {
+      name: "<%= j current_user.name %>",
+      email: "<%= j current_user.email %>",
+      role: "<%= j current_user.role %>"
+    });
+  <% end %>
+</script>
