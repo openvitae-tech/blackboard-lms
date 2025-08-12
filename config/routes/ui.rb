@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     get :tables, to: 'tables#index'
     get :notification_bars, to: 'notification_bars#index'
     get :app_components, to: 'components#app'
+    get :course_creating, to: 'course_creating#index'
   end
 end
