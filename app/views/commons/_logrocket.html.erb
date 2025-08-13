@@ -2,7 +2,6 @@
 <script>window.LogRocket && window.LogRocket.init("<%= Rails.application.credentials.dig(:logrocket, :token) %>");
   <% if current_user %>
     window.LogRocket.identify("<%= current_user.id %>", {
-      name: "<%= j current_user.name %>",
       role: "<%= j current_user.role %>"
     });
   <% end %>
