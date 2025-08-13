@@ -1,8 +1,16 @@
-<script src="https://cdn.lgrckt-in.com/LogRocket.min.js" crossorigin="anonymous"></script>
-<script>window.LogRocket && window.LogRocket.init("<%= Rails.application.credentials.dig(:logrocket, :token) %>");
-  <% if current_user %>
-    window.LogRocket.identify("<%= current_user.id %>", {
-      role: "<%= j current_user.role %>"
-    });
-  <% end %>
+<script>
+  const logRocketScript = document.createElement('script');
+  logRocketScript.src = "https://cdn.lgrckt-in.com/LogRocket.min.js";
+  logRocketScript.crossOrigin = "anonymous";
+  logRocketScript.onload = function() {
+    if (window.LogRocket) {
+      window.LogRocket.init("<%= Rails.application.credentials.dig(:logrocket, :token) %>");
+      <% if current_user %>
+        window.LogRocket.identify("<%= current_user.id %>", {
+          role: "<%= j current_user.role %>"
+        });
+      <% end %>
+    }
+  };
+  document.head.appendChild(logRocketScript);
 </script>
