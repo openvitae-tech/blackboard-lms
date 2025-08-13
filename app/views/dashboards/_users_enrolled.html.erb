@@ -5,17 +5,17 @@
             <h3 class="heading heading-semibold">Number of courses enrolled per day</h3>
          </div>
       </div>
-      <div class="w-full max-w-4xl bg-white py-6">                
+      <div class="w-full max-w-4xl bg-white py-6">
          <%= column_chart [
             { name: "Users Enrolled", data: dashboard.course_enrolled_series }
-            ], height: "200px", colors: ["#0075A4"],stacked: true, max: 100,
+            ], height: "200px", colors: ["#0075A4"], stacked: true,
             library: {
                plugins: {
-                  legend: { display: false } 
-                },
-            scales: {
-               yAxes: [{ ticks: { beginAtZero: true, max: 100 } }]
-            }
+                  legend: { display: false }
+               },
+               scales: {
+                  y: { min: 0, max: 100, ticks: { beginAtZero: true } }
+               }
             } %>
       </div>
    </div>
