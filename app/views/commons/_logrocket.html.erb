@@ -3,8 +3,6 @@
   <% if current_user %>
     window.LogRocket.identify("<%= current_user.id %>", {
       name: "<%= j current_user.name %>",
-      email: "<%= EncryptionService.encrypt(current_user.email) %>",
-      phone: "<%= EncryptionService.encrypt(current_user.phone) %>",
       role: "<%= j current_user.role %>"
     });
   <% end %>
