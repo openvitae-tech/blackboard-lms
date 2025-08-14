@@ -6,20 +6,9 @@
   </div>
 
   <div class="w-full max-w-4xl bg-white py-6">
-    <% 
-      data = dashboard.time_spent_series || {}
-
-      if data.present?
-        max_value = data.values.max || 0
-        scaling_factor = max_value > 120 ? 120.0 / max_value : 1
-        scaled_data = data.transform_values { |v| (v * scaling_factor).round(2) }
-      else
-        scaled_data = {}
-      end
-    %>
 
     <%= column_chart [
-      { name: "Time spent in minutes", data: scaled_data }
+      { name: "Time spent in minutes", data: dashboard.scaled_time_spent_series  }
       ], height: "200px", colors: ["#0075A4"], stacked: true,
       library: {
         plugins: {

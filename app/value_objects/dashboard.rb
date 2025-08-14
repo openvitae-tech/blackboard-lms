@@ -31,6 +31,15 @@ class Dashboard
     data
   end
 
+  def scaled_time_spent_series(max_limit: 120)
+    raw_series = time_spent_series || {}
+    return {} if raw_series.blank?
+
+    max_value = raw_series.values.max || 0
+    scaling_factor = max_value > max_limit ? max_limit.to_f / max_value : 1
+    raw_series.transform_values { |v| (v * scaling_factor).round(2) }
+  end
+
   def total_time_spent_metric
     events = time_spent_query.call
     events = filter_by_teams(events)
