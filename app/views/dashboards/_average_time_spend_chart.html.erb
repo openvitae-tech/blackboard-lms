@@ -8,7 +8,7 @@
   <div class="w-full max-w-4xl bg-white py-6">
 
     <%= column_chart [
-      { name: "Time spent in minutes", data: scale_time_spent_series(dashboard.time_spent_series)  }
+      { name: "Time spent in minutes", data: scale_series(dashboard.time_spent_series, 120)  }
       ], height: "200px", colors: ["#0075A4"], stacked: true,
       library: {
         plugins: {

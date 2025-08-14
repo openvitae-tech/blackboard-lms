@@ -12,11 +12,11 @@ module DashboardsHelper
     Dashboard::VALID_DURATIONS[duration.to_sym] || Dashboard::VALID_DURATIONS[:last_7_days].to_s
   end
 
-  def scale_time_spent_series(series)
+  def scale_series(series, max_limit)
     return {} if series.blank?
 
     max_value = series.values.max || 0
-    scale_factor = max_value > 120 ? 120.0 / max_value : 1
+    scale_factor = max_value > max_limit ? max_limit.to_f / max_value : 1
     series.transform_values { |v| (v * scale_factor).round }
   end
 end

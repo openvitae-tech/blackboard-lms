@@ -7,7 +7,7 @@
       </div>
       <div class="w-full max-w-4xl bg-white py-6">
          <%= line_chart [
-            { name: "Total Views", data: dashboard.lesson_views_series }
+            { name: "Total Views", data: scale_series(dashboard.lesson_views_series,100) }
             ], height: "200px", colors: ["#0075A4"], library: {
                plugins: {
                   legend: { display: false } 
