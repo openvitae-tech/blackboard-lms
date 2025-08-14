@@ -60,8 +60,12 @@ class Dashboard
   def total_course_time_metric
     events = time_spent_query.call
     events = filter_by_teams(events)
-    course_ids = events.map(&:data).pluck('course_id').uniq
-    Course.where(id: course_ids).map(&:duration).sum
+    durations = Course.pluck(:id, :duration).to_h
+
+    events.group_by(&:user_id).sum do |_, user_events|
+      user_course_ids = user_events.map(&:data).pluck('course_id').uniq
+      user_course_ids.sum { |id| durations[id] }
+    end
   end
 
   def completion_percent_metric
