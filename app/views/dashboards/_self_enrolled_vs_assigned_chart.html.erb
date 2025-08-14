@@ -9,7 +9,7 @@
                   <span class="text-xs font-medium">Course Started</span>
                </div>
                <div class="flex items-center space-x-2">
-                  <span class="bg-primary icon-tiny"></span>
+                  <span class="bg-[#00B48D] icon-tiny"></span>
                   <span class="text-xs font-medium">Course Completed</span>
                </div>
             </div>
@@ -17,8 +17,8 @@
       </div>
       <div class="w-full max-w-4xl bg-white py-6">
          <%= column_chart [
-            { name: "Course Started", data: dashboard.course_started_series },
-            { name: "Course Completed", data: dashboard.course_completed_series }
+            { name: "Course Started", data: scale_series(dashboard.course_started_series, 100) },
+            { name: "Course Completed", data: scale_series(dashboard.course_completed_series, 100) }
             ], colors: ["#0075A4", "#00B48D"],
             height: "200px", library: {
                plugins: {
