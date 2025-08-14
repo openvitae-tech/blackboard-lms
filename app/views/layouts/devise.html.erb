@@ -10,13 +10,13 @@
   <% if Rails.env.production? %>
     <meta name="google-analytics-id" content="<%= Rails.application.credentials.dig(:google, :ga_id) %>">
     <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.credentials.dig(:google, :ga_id) %>"></script>
+    <%= render "commons/logrocket" %>
   <% end %>
-
   <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
-  
+
   <link rel="icon" type="image/png" sizes="32x32" href="/instruo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
