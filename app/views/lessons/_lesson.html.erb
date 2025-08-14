@@ -43,10 +43,20 @@
                           time_spent: 0
                         },
                         data: {
-                          vimeo_target: "completeButton",
+                          vimeo_target: "completeButtonForm",
                           turbo_method: :post
                         } do %>
-            <%= button(label: t("lesson.complete_and_continue"),size: "lg", icon_name: "chevron-double-right", icon_position: "right", tooltip_text:  "Complete the lesson to continue.") %>
+              <%= button(
+                    label: t("lesson.complete_and_continue"),
+                    size: "lg",
+                    icon_name: "chevron-double-right",
+                    icon_position: "right",
+                    tooltip_text: "Complete the lesson to continue.",
+                    html_options: {
+                      data: { vimeo_target: "completeButton" } 
+                    }
+                  ) %>
+
           <% end %>
         <% end %>
       </div>
