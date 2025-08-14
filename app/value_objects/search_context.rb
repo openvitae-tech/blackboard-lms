@@ -6,9 +6,10 @@ class SearchContext
   # Search contexts, ie, from where the search is initiated
   HOME_PAGE = :home_page
   COURSE_LISTING = :course_listing
+  PROGRAM = :program
   TEAM_ASSIGN = :team_assign
   USER_ASSIGN = :user_assign
-  VALID_CONTEXTS = [HOME_PAGE, COURSE_LISTING, TEAM_ASSIGN, USER_ASSIGN].freeze
+  VALID_CONTEXTS = [HOME_PAGE, COURSE_LISTING, TEAM_ASSIGN, USER_ASSIGN, PROGRAM].freeze
 
   # Search scopes
   ANY = :all
@@ -16,7 +17,7 @@ class SearchContext
   UNENROLLED = :unenrolled
   VALID_TYPES = [ANY, ENROLLED, UNENROLLED].freeze
 
-  attr_reader :term, :tags, :context, :team, :user, :type
+  attr_reader :term, :tags, :context, :team, :user, :type, :program
 
   validates :context,
             inclusion: { in: VALID_CONTEXTS,
@@ -30,7 +31,7 @@ class SearchContext
     end
   end
 
-  def initialize(context:, term: '', tags: [], type: nil, options: {})
+  def initialize(context:, term: '', tags: [], type: nil, options: {}) # rubocop:disable Metrics/CyclomaticComplexity
     @term = sanitize_parameter(term, '')
     @tags = sanitize_parameter(tags, [])
     @context = sanitize_parameter(context)&.to_sym
@@ -43,6 +44,9 @@ class SearchContext
     when USER_ASSIGN
       @user = options[:user]
       raise Errors::IllegalSearchContext, "User can't be blank in context `user_assign`" if user.nil?
+    when PROGRAM
+      @program = options[:program]
+      raise Errors::IllegalSearchContext, "Program can't be blank in context `program`" if program.nil?
     end
 
     raise Errors::IllegalSearchContext, errors.full_messages.join('\n') unless valid?
