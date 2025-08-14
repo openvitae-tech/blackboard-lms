@@ -1,7 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["vimeoLoader", "vimeoPlayer","completeButtonForm", "completeButton", "completionOverlay"];
+  static targets = [
+    "vimeoLoader",
+    "vimeoPlayer",
+    "completeButtonForm",
+    "completeButton",
+    "completionOverlay"
+  ];
 
   connect() {
     // return if the vimeo player is not present, for example in local
