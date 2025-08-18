@@ -1,9 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["input", "submitButton", "hiddenOtp"];
+  static targets = ["input", "submitButton", "hiddenOtp", "container"];
 
   connect() {
+    if (this.hasContainerTarget) {
+      this.containerTarget.classList.remove("border", "border-danger");
+    }
+
     if (this.inputTargets.length > 0) {
       this.inputTargets[0].focus();
     }
