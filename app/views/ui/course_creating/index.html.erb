@@ -1,12 +1,16 @@
 <div data-controller="course-editor" class="flex h-screen">
   <div class="w-1/5 bg-gray-100 p-4 flex flex-col gap-2">
-    <% ["course", "module", "lesson", "quiz", "assessment", "summary"].each do |tool| %>
+    <% ["course", "assessment", "summary"].each do |tool| %>
       <button data-action="click->course-editor#addTool"
               data-tool="<%= tool %>"
               class="btn-primary capitalize">
         <%= tool.capitalize %>
       </button>
     <% end %>
+    <div data-course-editor-target="jsonOutput" class="mt-4 p-2 overflow-auto">
+      
+    </div>
+
   </div>
 
   <div class="flex flex-col w-full gap-2">
@@ -16,10 +20,16 @@
     </div>
 
     <template data-course-editor-target="template">
-      <div class="border p-4 rounded-lg shadow bg-white relative mb-4" data-content-id="">
-        <label class="block font-semibold mb-1">Create New {{type}}</label>
+      <div class="border p-4 rounded-lg shadow bg-white relative mb-4 mt-4" data-content-id="">
+        <div class="flex justify-between mb-1">
+            <label class="block font-semibold ">Create New {{type}}</label>
 
-        <div class="relative" data-type="{{type}}">
+            <button class="w-6 h-6 text-white bg-danger rounded-full flex items-center justify-center text-sm"
+                    aria-label="Delete">✕</button>
+          </div>
+
+        <div class="relative" data-type="{{type}}" data-level="{{level}}">
+          
           <div data-title-field>
             <input 
               type="text" 
@@ -51,11 +61,18 @@
                                  html_options: { required: true }, width: "w-full") %>
             </div>
           </div>
-
-          <div class="flex justify-end mt-4">
-            <button class="w-6 h-6 text-white bg-danger rounded-full flex items-center justify-center text-sm"
-                    aria-label="Delete">✕</button>
+          <div data-child-tools>
+            <% ["module", "lesson","quiz"].each do |tool| %>
+              <button data-action="click->course-editor#addTool"
+                      data-tool="<%= tool %>"
+                      class="btn-primary btn-sm hidden">
+                <%= tool.capitalize %>
+              </button>
+            <% end %>
           </div>
+
+
+          
         </div>
       </div>
     </template>
@@ -64,6 +81,7 @@
       <button class="btn-primary w-full" data-action="click->course-editor#createCourse">
         Create Course
       </button>
+
     </div>
   </div>
 </div>

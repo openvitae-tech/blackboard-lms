@@ -63,5 +63,6 @@ input:-webkit-autofill {
   100% { transform: rotate(360deg); }
 }
 
-
-
+[data-level="1"] { margin-left: 20px; }
+[data-level="2"] { margin-left: 40px; }
+[data-level="3"] { margin-left: 60px; }
