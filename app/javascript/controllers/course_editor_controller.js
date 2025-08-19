@@ -26,7 +26,6 @@ class Lesson {
     this.title = title;
     this.file = null;
     this.quiz = null;
-   
   }
 }
 
@@ -55,7 +54,7 @@ class Summary {
 }
 
 export default class extends Controller {
-  static targets = ["content", "template"];
+  static targets = ["content", "template", "childTools", "jsonOutput"];
 
   connect() {
     this.course = null;
@@ -81,23 +80,34 @@ export default class extends Controller {
       item = this.course;
     }
 
-    const parentModule = this.course.modules.at(-1);
-    const parentLesson = parentModule?.lessons?.at(-1);
+    let parentModule = this.course.modules.at(-1);
+    let parentLesson = parentModule?.lessons?.at(-1);
 
     if (tool === "module") {
       item = new Module();
-      this.course.modules.push(item);
+      this.course.modules.push(item);   
     } else if (tool === "lesson") {
+      const moduleElement = event.currentTarget.closest("[data-level='1']"); 
+      const moduleId = moduleElement?.dataset.itemId;
+    
+       parentModule = this.course.modules.find(m => m.id == moduleId);
+       parentLesson = parentModule?.lessons?.at(-1);
+    
       if (!parentModule) {
-        alert("Please add a Module before adding a Lesson.");
+        alert("Parent Module not found.");
         return;
       }
       const dropdown = event.currentTarget.closest(".flex").querySelector("select[name='lesson']");
       const selected = dropdown?.value || "";
       item = new Lesson(selected);
       parentModule.lessons.push(item);
-      
     } else if (tool === "quiz") {
+      const moduleElement = event.currentTarget.closest("[data-level='1']"); 
+      const moduleId = moduleElement?.dataset.itemId;
+    
+       parentModule = this.course.modules.find(m => m.id == moduleId);
+       parentLesson = parentModule?.lessons?.at(-1);
+
       if (!parentLesson) {
         alert("Please add a Lesson before adding a Quiz.");
         return;
@@ -114,7 +124,7 @@ export default class extends Controller {
       const dropdown = event.currentTarget.closest(".flex").querySelector("select[name='assessment']");
       const selected = dropdown?.value ? [dropdown.value] : [];
       item = new Assessment(selected);
-      parentLesson.assessment = item;
+      this.course.assessment = item;
     } else if (tool === "summary") {
       if (!parentLesson) {
         alert("Please add a Lesson before adding a Summary.");
@@ -123,7 +133,7 @@ export default class extends Controller {
       const dropdown = event.currentTarget.closest(".flex").querySelector("select[name='lesson']");
       const selected = dropdown?.value || "";
       item = new Summary(selected);
-      parentLesson.summary = item;
+      this.course.summary = item;
     }
 
     html = rawTemplate
@@ -135,6 +145,30 @@ export default class extends Controller {
     contentBlock = wrapper.firstElementChild;
     contentBlock.dataset.type = tool;
     contentBlock.dataset.itemId = item.id;
+    
+    let level = 0; 
+    if (tool === "module") level = 1;
+    else if (["lesson", "assessment", "summary"].includes(tool)) level = 2;
+    else if (tool === "quiz") level = 3;
+    
+    contentBlock.dataset.level = String(level);
+    contentBlock.style.marginLeft = `${level * 20}px`;
+    
+
+    const childTools = contentBlock.querySelector("[data-child-tools]");
+      if (childTools) {
+        const buttons = childTools.querySelectorAll("button");
+        buttons.forEach(btn => {
+          const btnTool = btn.dataset.tool;
+          if ((tool === "course" && btnTool === "module") ||
+              (tool === "module" && btnTool === "lesson") || (tool === "module" && btnTool === "quiz")) {
+            btn.classList.remove("hidden");
+          } else {
+            btn.classList.add("hidden");
+          }
+        });
+      }
+
 
     const titleField = contentBlock.querySelector("[data-title-field]");
     const input = contentBlock.querySelector("input");
@@ -201,7 +235,7 @@ export default class extends Controller {
         });
       }
     }
-
+    
     const deleteBtn = contentBlock.querySelector("button[aria-label='Delete']");
     deleteBtn.addEventListener("click", () => {
       const type = contentBlock.dataset.type;
@@ -244,7 +278,17 @@ export default class extends Controller {
       }
     });
 
-    this.contentTarget.appendChild(contentBlock);
+    if (tool === "lesson" || tool === "quiz") {
+      const moduleElement = event.currentTarget.closest("[data-level='1']");
+      if (moduleElement) {
+        moduleElement.appendChild(contentBlock);
+      } else {
+        this.contentTarget.appendChild(contentBlock);
+      }
+    } else {
+      this.contentTarget.appendChild(contentBlock);
+    }
+    
   }
 
   createCourse() {
@@ -252,7 +296,12 @@ export default class extends Controller {
       alert("No course created yet.");
       return;
     }
+  
     this.finalCourseJson = JSON.stringify(this.course, null, 2);
-    alert("Course structure JSON logged to console.");
+  
+    if (this.hasJsonOutputTarget) {
+      this.jsonOutputTarget.innerHTML = `<pre>${this.finalCourseJson}</pre>`;
+    } 
   }
+  
 }
