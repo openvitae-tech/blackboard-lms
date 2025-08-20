@@ -62,13 +62,14 @@
     <%= render "shared/components/flash" %>
     <%= turbo_frame_tag "modal" %>
 
-    <script type="module">
-      document.addEventListener("DOMContentLoaded", () => {
-        const jsWarning = document.getElementById("js-warning")
-        if (jsWarning) {
-          jsWarning.style.display = "none"
-        }
-      })
+    <script>
+      function hideJsWarning() {
+        const jsWarning = document.getElementById("js-warning");
+        if (jsWarning) jsWarning.style.display = "none";
+      }
+
+      document.addEventListener("DOMContentLoaded", hideJsWarning);
+      document.addEventListener("turbo:load", hideJsWarning);
     </script>
   </body>
 </html>
