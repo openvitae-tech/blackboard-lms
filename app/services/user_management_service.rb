@@ -29,8 +29,11 @@ class UserManagementService
   end
 
   def bulk_invite(invited_by_user, records, role, team)
+    supported_country = team.learning_partner.supported_countries.first
+    country_code = AVAILABLE_COUNTRIES[supported_country.to_sym][:code]
+
     records.each do |name, phone|
-      invite(invited_by_user, { name:, phone:, role: }, team)
+      invite(invited_by_user, { name:, country_code:, phone:, role: }, team)
     end
   end
 

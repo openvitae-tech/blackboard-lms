@@ -79,7 +79,9 @@ class InvitesController < ApplicationController
 
   def handle_bulk_invite
     @user = User.new(team: @team)
-    valid_records = BulkInviteInputService.instance.process(invite_params[:bulk_invite])
+    country = @team.learning_partner.supported_countries.first
+    country_iso = AVAILABLE_COUNTRIES[country.to_sym][:iso]
+    valid_records = BulkInviteInputService.instance.process(invite_params[:bulk_invite], country_iso)
 
     if valid_records.empty?
       @user.errors.add(:base, I18n.t('invite.invalid_csv'))
