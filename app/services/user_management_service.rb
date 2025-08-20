@@ -10,6 +10,7 @@ class UserManagementService
       name: params[:name],
       phone: params[:phone],
       role: params[:role],
+      country_code: params[:country_code],
       team:,
       learning_partner_id: team.learning_partner_id
     )
@@ -61,8 +62,9 @@ class UserManagementService
     if Rails.env.local?
       Rails.logger.info "Hello, please click here to activate your Instruo account #{login_url}"
     else
+      parameters = { 'var1' => login_url }
       CommunicationChannels::SendSmsJob.perform_async(
-        Rails.application.credentials.dig(:fast2sms, :template, :welcome), user.phone, login_url
+        ChannelMessageTemplates.new.welcome_template[:sms], user.phone, user.country_code, parameters
       )
     end
   end

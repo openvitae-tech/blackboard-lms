@@ -49,4 +49,10 @@ module UsersHelper
                  .reverse
                  .filter_map { |team| [team.name] if accessible_ids.include?(team.id) }
   end
+
+  def country_codes_list(supported_countries)
+    supported_countries.map do |country|
+      AVAILABLE_COUNTRIES[country.to_sym][:code]
+    end.compact
+  end
 end

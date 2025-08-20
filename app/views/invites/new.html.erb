@@ -4,7 +4,8 @@
     <%= form.hidden_field :team_id %>
 
     <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter your name",type: "text",width:"w-full") %>
-    <%= input_mobile(form:, field_name: :phone,label: "Mobile number", placeholder: "10 digit mobile number", html_options: { required: false }) %>
+    <%= input_dropdown(form:, field_name: :country_code, label: "Country code", options: country_codes_list(@team.learning_partner.supported_countries), width: "w-full") %>
+    <%= input_mobile(form:, field_name: :phone,label: "Mobile number", placeholder: "Enter your mobile number", html_options: { required: false }) %>
     <%= input_dropdown(form:, field_name: :role, label: "Category", options:user_role_mapping_for_partner(current_user, @team),width:"w-full") %>
 
     <!-- admin cannot bulk import users, admin invites users to the top level team.

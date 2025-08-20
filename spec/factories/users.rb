@@ -9,6 +9,7 @@ FactoryBot.define do
     confirmed_at { Time.zone.now }
     # numbers starting with 11 will be considered as test numbers
     phone { "11#{Faker::Number.number(digits: 8)}" }
+    country_code { AVAILABLE_COUNTRIES[:india][:code] }
     state { 'active' }
 
     transient do
