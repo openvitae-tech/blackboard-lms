@@ -16,18 +16,10 @@
       <%= render "shared/components/form_errors", resource: current_user %>
 
       <%= hidden_field_tag :step, "set_name_and_email" %>
-
+      
       <%= input_field(form:form, field_name: :name, label: "Name", placeholder: "Name",type: "text", width:"w-full") %>
       <%= input_field(form:form, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email", width:"w-full", html_options: { required: true }) %>
-      <% if current_user.phone.present? %>
-        <label class="text-letter-color-light text-sm md:text-base leading-tight">
-          Mobile number
-        </label>
-        <div class="flex flex-row gap-2">
-          <%= input_field(form: form, field_name: :country_code, html_options: { readonly: true }, width: "w-24") %>
-          <%= input_mobile(form: form, field_name: :phone, placeholder: "Mobile number", html_options: { readonly: true }) %>
-        </div>
-      <% end %>
+      <%= input_mobile(form: form, field_name: :phone,label: "Mobile number", placeholder: "Mobile number", html_options: { readonly: true }) %>
       <div class="absolute bottom-6 left-0 w-full flex justify-center px-4">
         <%= form.submit "Next", class: "btn-primary" %>
       </div>

@@ -21,11 +21,7 @@
       </div>
       <div>
         <div class="text-sm font-normal text-letter-color-light">Phone</div>
-        <% if user.phone.present? %>
-          <div class="mt-2 text-medium"><%= user.country_code %><%= user.phone %></div>
-        <% else %>
-          <div class="mt-2 text-medium">-</div>
-        <% end %>
+        <div class="mt-2 text-medium"><%= user.phone %></div>
       </div>
     </div>
   </div>

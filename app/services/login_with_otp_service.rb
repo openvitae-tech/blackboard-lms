@@ -8,9 +8,9 @@ class LoginWithOtpService
 
     return unless Rails.env.production?
 
-    parameters = { sms_variables_values: { 'var1' => password_decrypter(user.otp) } }
+    parameters = { sms_variables_values: password_decrypter(user.otp) }
     service = UserChannelNotifierService.instance
-    service.notify_user(user, ChannelMessageTemplates.new.otp_template, parameters)
+    service.notify_user(user, ChannelMessageTemplates.new.sms_otp_template, parameters)
   end
 
   def valid_otp?(user, otp)

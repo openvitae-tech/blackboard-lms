@@ -11,7 +11,7 @@ RSpec.describe CommunicationChannels::SendSmsJob do
     it 'ensures the job is enqueued' do
       Sidekiq::Testing.fake! do
         expect do
-          described_class.perform_async('12345', '123456789', '+91', 'test_value')
+          described_class.perform_async('12345', '123456789', 'test_value')
         end.to change(described_class.jobs, :size).by(1)
       end
     end
