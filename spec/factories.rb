@@ -3,7 +3,6 @@
 FactoryBot.define do
   factory :learning_partner do
     name { Faker::Restaurant.name }
-    supported_countries { [AVAILABLE_COUNTRIES[:india][:value]] }
     content { Faker::Restaurant.description }
     logo { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }
     banner { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }

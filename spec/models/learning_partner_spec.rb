@@ -33,15 +33,6 @@ RSpec.describe LearningPartner, type: :model do
     end
   end
 
-  describe '#supported_countries' do
-    it 'is not valid without supported_countries' do
-      learning_partner.supported_countries = []
-      expect(learning_partner).not_to be_valid
-      expect(learning_partner.errors.full_messages.to_sentence).to include(t('cant_blank',
-                                                                             field: 'Supported countries'))
-    end
-  end
-
   describe '#parent_team' do
     before do
       @child_team_one = create :team, learning_partner:, parent_team: @parent_team
@@ -130,25 +121,6 @@ RSpec.describe LearningPartner, type: :model do
     it 'raises error if trying to deactivate an already inactive partner' do
       learning_partner.update(state: 'in-active')
       expect { learning_partner.deactivate }.to raise_error(Errors::IllegalPartnerState)
-    end
-  end
-
-  describe '#supported_countries_must_be_valid' do
-    it 'returns an error if unsupported country is provided' do
-      learning_partner.supported_countries = ['invalid_country']
-      expect(learning_partner).not_to be_valid
-      expect(learning_partner.errors.full_messages.to_sentence)
-        .to eq('Supported countries contains invalid counties: invalid_country')
-    end
-  end
-
-  describe '#only_one_supported_country' do
-    it 'returns an error if more than one supported country is provided' do
-      learning_partner.supported_countries = %w[india usa]
-
-      expect(learning_partner).not_to be_valid
-      expect(learning_partner.errors.full_messages.to_sentence)
-        .to include('Supported countries can only have one country')
     end
   end
 end
