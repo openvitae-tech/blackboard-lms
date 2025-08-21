@@ -20,7 +20,7 @@ class UserChannelNotifierService
                                                                   user.phone, parameters)
     when 'sms'
       CommunicationChannels::SendSmsJob.perform_async(
-        template[:sms].as_json, user.phone, user.country_code, parameters[:sms_variables_values]
+        template[:sms], user.phone, parameters[:sms_variables_values]
       )
     end
   end

@@ -22,7 +22,7 @@ RSpec.describe UserChannelNotifierService do
 
     it 'enqueues the sms job' do
       new_user = create :user, :learner
-      parameters = { sms_variables_values: { 'var1' => 'test value' } }
+      parameters = { sms_variables_values: 'test value' }
       Sidekiq::Testing.fake! do
         expect do
           subject.notify_user(new_user, ChannelMessageTemplates.new.course_assigned_template, parameters)

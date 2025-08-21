@@ -159,8 +159,7 @@ RSpec.describe 'Request spec for user invites' do
         name: Faker::Name.name,
         phone: Faker::Number.number(digits: 10),
         role: 'learner',
-        team_id: team.id,
-        country_code: '+91'
+        team_id: team.id
       }
     }
   end
