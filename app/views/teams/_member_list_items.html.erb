@@ -16,9 +16,11 @@
       </div>
     <% end %>
   </div>
-
-  <div class="col-span-3 pl-4 text-xs  md:pl-0 md:text-sm"><%= member.phone %></div>
-
+  <% if member.phone.present? %>
+    <div class="col-span-3 pl-4 text-xs  md:pl-0 md:text-sm"><%= member.country_code %><%= member.phone %></div>
+  <% else %>
+      <div class="col-span-3 pl-4 text-xs  md:pl-0 md:text-sm">-</div>
+  <% end %>
   <div class="col-span-2 px-4 text-xs  md:px-0 md:text-sm">
      <%= role_text(member.role) %>
   </div>

@@ -126,5 +126,6 @@ gem 'scorm-package', '~> 0.1.2', require: 'scorm_package'
 
 gem 'net-imap', '0.5.7'
 gem 'nokogiri', '1.18.9'
+gem 'phonelib'
 gem 'rack', '>= 3.1.11'
 gem 'rubyzip'

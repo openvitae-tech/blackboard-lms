@@ -46,7 +46,7 @@ class User < ApplicationRecord
   validates :role,
             inclusion: { in: USER_ROLES,
                          message: I18n.t('user.invalid_role') }
-  validates :phone, numericality: true, length: { minimum: 10, maximum: 10 }, allow_nil: true, uniqueness: true
+  validates :phone, numericality: true, allow_nil: true, uniqueness: true
   validates :state, inclusion: { in: USER_STATES, message: I18n.t('user.invalid_state') }
 
   validate :dob_within_valid_age_range
@@ -54,6 +54,8 @@ class User < ApplicationRecord
   validates :gender,
             inclusion: { in: GENDERS,
                          message: I18n.t('user.invalid_gender') }, allow_blank: true
+
+  validate :validate_phone_number
 
   belongs_to :learning_partner, optional: true, counter_cache: true
 
@@ -189,5 +191,18 @@ class User < ApplicationRecord
   def communication_channels_are_valid
     invalid = communication_channels - COMMUNICATION_CHANNELS
     errors.add(:communication_channels, "contains invalid channels: #{invalid.join(', ')}") if invalid.any?
+  end
+
+  def validate_phone_number
+    return if phone.blank?
+
+    case country_code
+    when AVAILABLE_COUNTRIES[:india][:code]
+      errors.add(:phone, 'must be a valid Indian number') unless phone.match?(/\A\d{10}\z/)
+    when AVAILABLE_COUNTRIES[:uae][:code]
+      errors.add(:phone, 'must be a valid UAE number') unless phone.match?(/\A\d{9}\z/)
+    else
+      errors.add(:base, 'Unsupported country')
+    end
   end
 end

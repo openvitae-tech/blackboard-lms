@@ -38,6 +38,7 @@ class DevelopmentSeed
         password_confirmation: 'password',
         learning_partner: partner,
         team:,
+        country_code: AVAILABLE_COUNTRIES[:india][:code],
         state: 'active'
       )
 
@@ -49,6 +50,7 @@ class DevelopmentSeed
     partner = LearningPartner.create!(
       name:,
       content: about,
+      supported_countries: [AVAILABLE_COUNTRIES[:india][:value]],
       logo: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:hotel_logo]}")),
       banner: File.open(Rails.root.join("app/assets/images/#{STATIC_ASSETS[:team_banner]}"))
     )
