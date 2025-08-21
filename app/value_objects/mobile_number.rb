@@ -17,6 +17,8 @@ class MobileNumber
       errors.add(:value, 'is not a valid Indian number') unless value.match?(/\A\d{10}\z/)
     when AVAILABLE_COUNTRIES[:uae][:code]
       errors.add(:value, 'is not a valid UAE number') unless value.match?(/\A\d{9}\z/)
+    else
+      errors.add(:base, 'Unsupported country')
     end
   end
 end
