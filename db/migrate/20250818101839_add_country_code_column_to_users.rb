@@ -3,6 +3,6 @@ class AddCountryCodeColumnToUsers < ActiveRecord::Migration[8.0]
     add_column :users, :country_code, :string
 
     User.reset_column_information
-    User.where.not(phone: nil).update_all(country_code: AVAILABLE_COUNTRIES[:india][:code])
+    User.where.not(phone: nil).update_all(country_code: "+91")
   end
 end
