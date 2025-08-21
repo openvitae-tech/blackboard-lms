@@ -92,13 +92,14 @@ module UiHelper
   end
 
   def input_checkbox(form: nil, field_name: nil, label: nil, width: 'w-56',
-                     value: nil)
+                     value: nil, allow_multiple: false)
     render partial: 'ui/inputs/checkbox_field', locals: {
       form:,
       field_name:,
       label:,
       width:,
-      value:
+      value:,
+      allow_multiple:
     }
   end
 

@@ -80,7 +80,8 @@ RSpec.describe 'Request spec for LearningPartner' do
       params = {
         learning_partner: {
           name: partner.name,
-          content: 'a' * 5000
+          content: 'a' * 5000,
+          supported_countries: partner.supported_countries
         }
       }
       post('/learning_partners', params:)
@@ -134,7 +135,8 @@ RSpec.describe 'Request spec for LearningPartner' do
           name: partner.name,
           content: partner.about,
           logo: image_file,
-          banner: image_file
+          banner: image_file,
+          supported_countries: partner.supported_countries
         }
       }
 
@@ -152,7 +154,8 @@ RSpec.describe 'Request spec for LearningPartner' do
           name: partner.name,
           content: partner.about,
           logo: image_file,
-          banner: image_file
+          banner: image_file,
+          supported_countries: partner.supported_countries
         }
       }
 
@@ -168,7 +171,8 @@ RSpec.describe 'Request spec for LearningPartner' do
       params = {
         learning_partner: {
           name: partner.name,
-          content: partner.about
+          content: partner.about,
+          supported_countries: partner.supported_countries
         }
       }
 

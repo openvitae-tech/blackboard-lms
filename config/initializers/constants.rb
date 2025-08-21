@@ -18,3 +18,18 @@ STATIC_ASSETS = {
 }.freeze
 
 FLAG_LOGIN_WITH_OTP = true
+
+AVAILABLE_COUNTRIES = {
+  india: {
+    label: 'India',
+    value: 'india',
+    code: '+91',
+    iso: 'IN'
+  },
+  uae: {
+    label: 'UAE',
+    value: 'uae',
+    code: '+971',
+    iso: 'AE'
+  }
+}.with_indifferent_access.freeze
