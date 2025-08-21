@@ -141,4 +141,14 @@ RSpec.describe LearningPartner, type: :model do
         .to eq('Supported countries contains invalid counties: invalid_country')
     end
   end
+
+  describe '#only_one_supported_country' do
+    it 'returns an error if more than one supported country is provided' do
+      learning_partner.supported_countries = %w[india usa]
+
+      expect(learning_partner).not_to be_valid
+      expect(learning_partner.errors.full_messages.to_sentence)
+        .to include('Supported countries can only have one country')
+    end
+  end
 end

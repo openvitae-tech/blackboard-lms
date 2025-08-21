@@ -16,6 +16,7 @@ class LearningPartner < ApplicationRecord
   validate :acceptable_logo
   validate :acceptable_banner
   validate :supported_countries_must_be_valid
+  validate :only_one_supported_country
 
   has_one_attached :logo
   has_one_attached :banner
@@ -44,5 +45,13 @@ class LearningPartner < ApplicationRecord
     return unless invalid.any?
 
     errors.add(:supported_countries, "contains invalid counties: #{invalid.join(', ')}")
+  end
+
+  def only_one_supported_country
+    return if supported_countries.blank?
+
+    return unless supported_countries.size > 1
+
+    errors.add(:supported_countries, 'can only have one country')
   end
 end

@@ -201,6 +201,8 @@ class User < ApplicationRecord
       errors.add(:phone, 'must be a valid Indian number') unless phone.match?(/\A\d{10}\z/)
     when AVAILABLE_COUNTRIES[:uae][:code]
       errors.add(:phone, 'must be a valid UAE number') unless phone.match?(/\A\d{9}\z/)
+    else
+      errors.add(:base, 'Unsupported country')
     end
   end
 end

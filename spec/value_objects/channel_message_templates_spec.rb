@@ -11,8 +11,8 @@ RSpec.describe ChannelMessageTemplates do
       msg91_template = Rails.application.credentials.dig(:msg91, :template, :course_assigned)
       expect(subject.course_assigned_template).to eq({
                                                        sms: {
-                                                         'fast2_sms' => fast2_sms_template,
-                                                         'msg91' => msg91_template
+                                                         fast2_sms: fast2_sms_template,
+                                                         msg91: msg91_template
                                                        },
                                                        whatsapp: 'course_assigned'
                                                      })
@@ -26,8 +26,8 @@ RSpec.describe ChannelMessageTemplates do
 
       expect(subject.course_enrolled_template).to eq({
                                                        sms: {
-                                                         'fast2_sms' => fast2_sms_template,
-                                                         'msg91' => msg91_template
+                                                         fast2_sms: fast2_sms_template,
+                                                         msg91: msg91_template
                                                        },
                                                        whatsapp: 'course_enrolled'
                                                      })
@@ -41,8 +41,8 @@ RSpec.describe ChannelMessageTemplates do
 
       expect(subject.welcome_template).to eq({
                                                sms: {
-                                                 'fast2_sms' => fast2_sms_template,
-                                                 'msg91' => msg91_template
+                                                 fast2_sms: fast2_sms_template,
+                                                 msg91: msg91_template
                                                },
                                                whatsapp: 'welcome'
                                              })
@@ -56,8 +56,8 @@ RSpec.describe ChannelMessageTemplates do
 
       expect(subject.otp_template).to eq({
                                            sms: {
-                                             'fast2_sms' => fast2_sms_template,
-                                             'msg91' => msg91_template
+                                             fast2_sms: fast2_sms_template,
+                                             msg91: msg91_template
                                            }
                                          })
     end

@@ -157,6 +157,13 @@ RSpec.describe User, type: :model do
       expect(user).not_to be_valid
       expect(user.errors.full_messages.to_sentence).to eq('Phone must be a valid UAE number')
     end
+
+    it 'raise error fir unsupported country' do
+      user = build :user, :learner, country_code: '+999', phone: '1234567890'
+
+      expect(user).not_to be_valid
+      expect(user.errors.full_messages.to_sentence).to eq('Unsupported country')
+    end
   end
 
   private

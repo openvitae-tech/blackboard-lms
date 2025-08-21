@@ -4,8 +4,8 @@ ChannelMessageTemplates = Data.define do
   def course_assigned_template
     {
       sms: {
-        'fast2_sms' => Rails.application.credentials.dig(:fast2sms, :template, :course_assigned),
-        'msg91' => Rails.application.credentials.dig(:msg91, :template, :course_assigned)
+        fast2_sms: Rails.application.credentials.dig(:fast2sms, :template, :course_assigned),
+        msg91: Rails.application.credentials.dig(:msg91, :template, :course_assigned)
       },
       whatsapp: 'course_assigned'
     }
@@ -14,8 +14,8 @@ ChannelMessageTemplates = Data.define do
   def course_enrolled_template
     {
       sms: {
-        'fast2_sms' => Rails.application.credentials.dig(:fast2sms, :template, :course_enrolled),
-        'msg91' => Rails.application.credentials.dig(:msg91, :template, :course_enrolled)
+        fast2_sms: Rails.application.credentials.dig(:fast2sms, :template, :course_enrolled),
+        msg91: Rails.application.credentials.dig(:msg91, :template, :course_enrolled)
       },
       whatsapp: 'course_enrolled'
     }
@@ -24,8 +24,8 @@ ChannelMessageTemplates = Data.define do
   def otp_template
     {
       sms: {
-        'fast2_sms' => Rails.application.credentials.dig(:fast2sms, :template, :otp),
-        'msg91' => Rails.application.credentials.dig(:msg91, :template, :otp)
+        fast2_sms: Rails.application.credentials.dig(:fast2sms, :template, :otp),
+        msg91: Rails.application.credentials.dig(:msg91, :template, :otp)
       }
     }
   end
@@ -33,8 +33,8 @@ ChannelMessageTemplates = Data.define do
   def welcome_template
     {
       sms: {
-        'fast2_sms' => Rails.application.credentials.dig(:fast2sms, :template, :welcome),
-        'msg91' => Rails.application.credentials.dig(:msg91, :template, :welcome)
+        fast2_sms: Rails.application.credentials.dig(:fast2sms, :template, :welcome),
+        msg91: Rails.application.credentials.dig(:msg91, :template, :welcome)
       },
       whatsapp: 'welcome'
     }
