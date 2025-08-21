@@ -68,8 +68,8 @@
         if (jsWarning) jsWarning.style.display = "none";
       }
 
-      document.addEventListener("DOMContentLoaded", hideJsWarning);
-      document.addEventListener("turbo:load", hideJsWarning);
+      ["DOMContentLoaded", "turbo:load", "turbo:render", "turbo:before-render", "turbo:before-cache"]
+        .forEach(event => document.addEventListener(event, hideJsWarning));
     </script>
   </body>
 </html>
