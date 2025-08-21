@@ -45,7 +45,7 @@ class LoginsController < ApplicationController
   private
 
   def login_params
-    params.require(:login).permit(:mobile_number, :country_code, :otp)
+    params.require(:login).permit(:mobile_number, :otp)
   end
 
   def build_user_session(user)
@@ -53,7 +53,7 @@ class LoginsController < ApplicationController
   end
 
   def user_exists?
-    @mobile_number = MobileNumber.new(value: login_params[:mobile_number], country_code: login_params[:country_code])
-    @user_exists = @mobile_number.valid? && User.exists?(phone: @mobile_number.value, country_code: @mobile_number.country_code)
+    @mobile_number = MobileNumber.new(value: login_params[:mobile_number])
+    @user_exists = @mobile_number.valid? && User.exists?(phone: @mobile_number.value)
   end
 end

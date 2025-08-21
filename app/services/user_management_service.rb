@@ -10,7 +10,6 @@ class UserManagementService
       name: params[:name],
       phone: params[:phone],
       role: params[:role],
-      country_code: params[:country_code],
       team:,
       learning_partner_id: team.learning_partner_id
     )
@@ -29,11 +28,8 @@ class UserManagementService
   end
 
   def bulk_invite(invited_by_user, records, role, team)
-    supported_country = team.learning_partner.supported_countries.first
-    country_code = AVAILABLE_COUNTRIES[supported_country.to_sym][:code]
-
     records.each do |name, phone|
-      invite(invited_by_user, { name:, country_code:, phone:, role: }, team)
+      invite(invited_by_user, { name:, phone:, role: }, team)
     end
   end
 
@@ -65,11 +61,8 @@ class UserManagementService
     if Rails.env.local?
       Rails.logger.info "Hello, please click here to activate your Instruo account #{login_url}"
     else
-      parameters = { 'var1' => login_url }
-      sms_welcome_template = ChannelMessageTemplates.new.welcome_template[:sms]
-
       CommunicationChannels::SendSmsJob.perform_async(
-        sms_welcome_template.as_json, user.phone, user.country_code, parameters
+        Rails.application.credentials.dig(:fast2sms, :template, :welcome), user.phone, login_url
       )
     end
   end
