@@ -2,7 +2,7 @@
 
 module CommunicationChannels
   module Sms
-    class MessagingChannel < CommunicationChannels::MessagingChannelBase
+    class Msg91MessagingChannel < CommunicationChannels::MessagingChannelBase
       def send_message(mobile_number, variables_values, template_id)
         return if template_id.blank?
 
@@ -13,39 +13,46 @@ module CommunicationChannels
         log_general_error(mobile_number)
       end
 
+      def get_template_id(template)
+        template['msg91']
+      end
+
       private
 
       def dispatch_sms_request(mobile_number, variables_values, template_id)
-        url = URI.parse(Rails.application.credentials.dig(:fast2sms, :url))
+        url = URI.parse(Rails.application.credentials.dig(:msg91, :url))
         request = build_request_url(url, mobile_number, variables_values, template_id)
         Net::HTTP.start(url.hostname, url.port, use_ssl: true, read_timeout: 1) { |http| http.request(request) }
       end
 
       def build_request_url(url, mobile_number, variables_values, template_id)
         request = Net::HTTP::Post.new(url)
-        request['authorization'] = Rails.application.credentials.dig(:fast2sms, :auth_key)
+        request['authkey'] = Rails.application.credentials.dig(:msg91, :auth_key)
+        request['accept'] = 'application/json'
         request['Content-Type'] = 'application/json'
 
-        request.set_form_data({
-                                'route' => 'dlt',
-                                'sender_id' => Rails.application.credentials.dig(:fast2sms, :sender_id),
-                                'message' => template_id,
-                                'variables_values' => variables_values,
-                                'numbers' => mobile_number
-                              })
+        request.body = {
+          'template_id' => template_id,
+          'recipients' => [
+            {
+              'mobiles' => mobile_number
+            }
+          ],
+          **variables_values
+        }.to_json
 
         request
       end
 
       def log_error_to_sentry(response)
-        Sentry.capture_message('Failed to send OTP via SMS', level: :error, extra: {
+        Sentry.capture_message('Failed to send SMS', level: :error, extra: {
                                  status: response.code,
                                  body: response.body
                                })
       end
 
       def log_general_error(mobile_number)
-        Sentry.capture_message('An error occurred while sending OTP', level: :warning, extra: {
+        Sentry.capture_message('An error occurred while sending SMS', level: :warning, extra: {
                                  mobile_number:
                                })
       end
