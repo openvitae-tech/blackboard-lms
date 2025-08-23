@@ -57,3 +57,5 @@ package.json
 .vscode
 .DS_STORE
 .vscode
+
+/config/credentials/staging.key
