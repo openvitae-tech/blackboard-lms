@@ -78,12 +78,14 @@
     </div>
   </div>
   <%= render "commons/payment_plan_details", learning_partner: @learning_partner, payment_plan: @learning_partner.payment_plan, users_count: @learning_partner.users_count  %>
-  <div class="my-8">
-    <h3 class="text-sm font-medium">About</h3>
-    <div class="my-4 p-6 box-shadow-medium">
-      <%= text_with_paragraph(@learning_partner.about)%>
+  <% if @learning_partner.about? %>
+    <div class="my-8">
+      <h3 class="text-sm font-medium">About</h3>
+      <div class="my-4 p-6 box-shadow-medium">
+        <%= text_with_paragraph(@learning_partner.about)%>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
 
 <div class="max-h-[520px] overflow-hidden p-1 mt-5 md:shadow rounded">
