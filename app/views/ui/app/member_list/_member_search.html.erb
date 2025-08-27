@@ -1,9 +1,12 @@
 <div>
   <%= form_with url: user_searches_path, method: :post do |form| %>
     <%= form.hidden_field :team_id, value: team.id %>
+    <%= form.hidden_field :all_members, value: all_members %>
     <div class="flex gap-1">
       <%= input_field form:, field_name: :term, placeholder: 'Search members' %>
-      <%= button icon_name: 'magnifying-glass', type: 'secondary' %>
+      <%= button_to do %>
+        <%= button icon_name: 'magnifying-glass', type: 'secondary' %>
+      <% end %>
     </div>
   <% end %>
 </div>
