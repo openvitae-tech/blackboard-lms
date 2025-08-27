@@ -15,8 +15,9 @@ class UserSearchesController < ApplicationController
     @team = Team.find(search_params[:team_id])
     @all_members = search_params[:all_members]
     @term = search_params[:term]
+    per_page = @all_members ? 10 : 5
     @users = Users::FilterService.new(@team, term: @term, all_members: @all_members)
-                                 .filter.includes([:team]).page(params[:page]).per(5)
+                                 .filter.includes([:team]).page(params[:page]).per(per_page)
   end
 
   def search_params
