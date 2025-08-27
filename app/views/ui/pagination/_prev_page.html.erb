@@ -1,12 +1,7 @@
 <% if collection.prev_page %>
-  <%= link_to query_url(path, {page: collection.prev_page}),
-      data: {
-        turbo_stream: true,
-        pagination_target: "button",
-        action: "pagination#setPageParam"
-      } do %>
+  <%= link_to query_url(path, {page: collection.prev_page}), data: { turbo_stream: true } do %>
     <%= button(label: 'Previous', type: "secondary", size: "md") %>
   <% end %>
-  <% else %>
-    <%= button(label: 'Previous', type: "secondary", size: "md", disabled: true) %>
+<% else %>
+  <%= button(label: 'Previous', type: "secondary", size: "md", disabled: true) %>
 <% end %>
