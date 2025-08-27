@@ -227,4 +227,18 @@ module UiHelper
   def _course_select_load_more(search_context:, courses:)
     render partial: 'ui/app/course_select/load_more', locals: { search_context:, courses: }
   end
+
+  # member_list_component start
+  def member_list_component(team:, members:)
+    render partial: 'ui/app/member_list/member_list', locals: { team:, members: }
+  end
+
+  def _member_list_member_search_component(team:)
+    render partial: 'ui/app/member_list/member_search', locals: { team: }
+  end
+
+  def _member_list_members_component(team:, members:)
+    render partial: 'ui/app/member_list/members', locals: { team:, members: }
+  end
+  # member_list_component end
 end

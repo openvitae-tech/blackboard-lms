@@ -5,10 +5,6 @@
   <%= render "commons/payment_plan_details", learning_partner: @learning_partner, payment_plan: @learning_partner.payment_plan, users_count: @learning_partner.users_count  %>
 </div>
 
-
-<div class="max-h-[520px] overflow-hidden p-1 mt-5 md:shadow rounded">
-  <%= render 'teams/member_list', team: @team, members: @members.page(params[:page]).per(5) %>
-</div>
-
+<%= member_list_component(team: @team, members: @members.page(params[:page]).per(5)) %>
 
 <%= render 'teams/sub_teams', team: @team, sub_teams: @team.sub_teams.includes(:banner_attachment) %>
