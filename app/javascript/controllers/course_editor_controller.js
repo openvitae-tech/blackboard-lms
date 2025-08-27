@@ -1,307 +1,418 @@
-import { Controller } from "@hotwired/stimulus";
-
-class Course {
-  constructor(title = "") {
-    this.title = title;
-    this.modules = [];
-    this.assessment = [];
-    this.summary = [];
-
-  }
-}
-
-class Module {
-  constructor(title = "") {
-    this.type="module";
-    this.id = Date.now() + Math.random();
-    this.title = title;
-    this.lessons = [];
-  }
-}
-
-class Lesson {
-  constructor(title = "") {
-    this.type="lesson";
-    this.id = Date.now() + Math.random();
-    this.title = title;
-    this.file = null;
-    this.quiz = null;
-  }
-}
-
-class Quiz {
-  constructor(questions = []) {
-    this.type="quiz";
-    this.id = Date.now() + Math.random();
-    this.questions = questions;
-  }
-}
-
-class Assessment {
-  constructor(questions = []) {
-    this.type="assesment";
-    this.id = Date.now() + Math.random();
-    this.questions = questions;
-  }
-}
-
-class Summary {
-  constructor(title = "") {
-    this.type="summary";
-    this.id = Date.now() + Math.random();
-    this.title = title;
-  }
-}
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["content", "template", "childTools", "jsonOutput"];
+  static targets = [
+    "content", 
+    "courseTemplate", 
+    "moduleTemplate", 
+    "lessonTemplate", 
+    "quizTemplate",
+    "assessmentTemplate",
+    "moduleContainer",
+    "assessmentContainer",
+    "summaryTemplate",
+    "jsonOutput",
+    "courseTitle"
+  ]
 
   connect() {
-    this.course = null;
+    this.moduleCounter = 0
+    this.assessmentCounter = 0
+    this.summaryCounter = 0
+    this.lessonCounter = 0
+    this.quizCounter = 0
+  
+    try {
+      const raw = this.jsonOutputTarget?.value?.trim()
+      this.courseData = raw
+        ? JSON.parse(raw)
+        : { title: "", modules: [], assessment: {}, summary: {} }
+    } catch (e) {
+      console.error("Invalid initial JSON, using empty course.", e)
+      this.courseData = { title: "", modules: [], assessment: {}, summary: {} }
+    }
+  
+    this.renderUIFromJSON()
+  }
+  
+
+  showTemplate() {
+    const templateTarget = `courseTemplateTarget`
+    
+    if (this[templateTarget]) {
+      const template = this[templateTarget]
+      const clone = template.content.cloneNode(true)
+      this.contentTarget.innerHTML = ""
+      this.contentTarget.appendChild(clone)
+      
+      const titleInput = this.contentTarget.querySelector('[data-course-editor-target="courseTitle"]')
+      if (titleInput) titleInput.focus()
+      this.updateAvailability()
+      // this.updateJSON()
+    } else {
+      alert(`Template for ${tool} not found`)
+    }
   }
 
-  addTool(event) {
-    const tool = event.currentTarget.dataset.tool;
-    const rawTemplate = this.templateTarget.innerHTML;
-    const wrapper = document.createElement("div");
-    let contentBlock, html, item;
+  renderUIFromJSON() {
+    this.showTemplate()
+  
+    const moduleContainer = this.contentTarget.querySelector('[data-course-editor-target="moduleContainer"]')
+    if (moduleContainer) moduleContainer.innerHTML = ''
+  
+    const assessmentContainer = this.contentTarget.querySelector('[data-course-editor-target="assessmentContainer"]')
+    if (assessmentContainer) assessmentContainer.innerHTML = ''
 
-    if (!this.course && tool !== "course") {
-      alert("Please create a Course first.");
-      return;
+     const summaryContainer = this.contentTarget.querySelector('[data-course-editor-target="summaryContainer"]')
+    if (summaryContainer) summaryContainer.innerHTML = ''
+  
+    const titleInput = this.contentTarget.querySelector('[data-course-editor-target="courseTitle"]')
+    if (titleInput) titleInput.value = this.courseData.title || ""
+  
+    this.courseData.modules.forEach(moduleData => this.addModuleFromData(moduleData))
+  
+    if (this.courseData.assessment && Object.keys(this.courseData.assessment).length > 0) {
+      this.addAssessmentFromData(this.courseData.assessment)
     }
+  
+    if (this.courseData.summary && Object.keys(this.courseData.summary).length > 0) {
+      this.addSummaryFromData(this.courseData.summary)
+    }  
 
-    if (tool === "course") {
-      if (this.course) {
-        alert("Course is already created.");
-        return;
-      }
-      this.course = new Course();
-      item = this.course;
-    }
+  
+    this.updateJSON()
+    this.updateAvailability()
+  }
+  
 
-    let parentModule = this.course.modules.at(-1);
-    let parentLesson = parentModule?.lessons?.at(-1);
-
-    if (tool === "module") {
-      item = new Module();
-      this.course.modules.push(item);   
-    } else if (tool === "lesson") {
-      const moduleElement = event.currentTarget.closest("[data-level='1']"); 
-      const moduleId = moduleElement?.dataset.itemId;
+  addModuleFromData(moduleData) {
+    const moduleContainer = this.contentTarget.querySelector('[data-course-editor-target="moduleContainer"]')
+    if (!moduleContainer) return
     
-       parentModule = this.course.modules.find(m => m.id == moduleId);
-       parentLesson = parentModule?.lessons?.at(-1);
+    const template = this.moduleTemplateTarget
+    const clone = template.content.cloneNode(true)
+    const moduleDiv = clone.querySelector('[data-module-id]')
+    moduleDiv.dataset.moduleId = moduleData.id
     
-      if (!parentModule) {
-        alert("Parent Module not found.");
-        return;
-      }
-      const dropdown = event.currentTarget.closest(".flex").querySelector("select[name='lesson']");
-      const selected = dropdown?.value || "";
-      item = new Lesson(selected);
-      parentModule.lessons.push(item);
-    } else if (tool === "quiz") {
-      const moduleElement = event.currentTarget.closest("[data-level='1']"); 
-      const moduleId = moduleElement?.dataset.itemId;
-    
-       parentModule = this.course.modules.find(m => m.id == moduleId);
-       parentLesson = parentModule?.lessons?.at(-1);
-
-      if (!parentLesson) {
-        alert("Please add a Lesson before adding a Quiz.");
-        return;
-      }
-      const dropdown = event.currentTarget.closest(".flex").querySelector("select[name='question']");
-      const selected = dropdown?.value ? [dropdown.value] : [];
-      item = new Quiz(selected);
-      parentLesson.quiz = item;
-    } else if (tool === "assessment") {
-      if (!parentLesson) {
-        alert("Please add a Lesson before adding an Assessment.");
-        return;
-      }
-      const dropdown = event.currentTarget.closest(".flex").querySelector("select[name='assessment']");
-      const selected = dropdown?.value ? [dropdown.value] : [];
-      item = new Assessment(selected);
-      this.course.assessment = item;
-    } else if (tool === "summary") {
-      if (!parentLesson) {
-        alert("Please add a Lesson before adding a Summary.");
-        return;
-      }
-      const dropdown = event.currentTarget.closest(".flex").querySelector("select[name='lesson']");
-      const selected = dropdown?.value || "";
-      item = new Summary(selected);
-      this.course.summary = item;
-    }
-
-    html = rawTemplate
-      .replace(/{{type}}/g, tool)
-      .replace(/{{title}}/g, item.title || "")
-      .replace(/{{questions}}/g, item.questions || []);
-
-    wrapper.innerHTML = html.trim();
-    contentBlock = wrapper.firstElementChild;
-    contentBlock.dataset.type = tool;
-    contentBlock.dataset.itemId = item.id;
-    
-    let level = 0; 
-    if (tool === "module") level = 1;
-    else if (["lesson", "assessment", "summary"].includes(tool)) level = 2;
-    else if (tool === "quiz") level = 3;
-    
-    contentBlock.dataset.level = String(level);
-    contentBlock.style.marginLeft = `${level * 20}px`;
-    
-
-    const childTools = contentBlock.querySelector("[data-child-tools]");
-      if (childTools) {
-        const buttons = childTools.querySelectorAll("button");
-        buttons.forEach(btn => {
-          const btnTool = btn.dataset.tool;
-          if ((tool === "course" && btnTool === "module") ||
-              (tool === "module" && btnTool === "lesson") || (tool === "module" && btnTool === "quiz")) {
-            btn.classList.remove("hidden");
-          } else {
-            btn.classList.add("hidden");
-          }
-        });
-      }
-
-
-    const titleField = contentBlock.querySelector("[data-title-field]");
-    const input = contentBlock.querySelector("input");
-    
-    if (["course", "module", "lesson"].includes(tool)) {
-      titleField.style.display = "block";
-    
-      if (input) {
-        input.addEventListener("input", (e) => {
-          const value = e.target.value;
-          if (tool === "course") {
-            this.course.title = value;
-          } else if (tool === "module") {
-            const mod = this.course.modules.find(m => m.id == contentBlock.dataset.itemId);
-            if (mod) mod.title = value;
-          } else if (tool === "lesson") {
-            const lesson = parentModule?.lessons?.find(l => l.id == contentBlock.dataset.itemId);
-            if (lesson) lesson.title = value;
-          }
-        });
-      }
-    } else {
-      titleField.style.display = "none";
-    }
-
-    const dropdowns = contentBlock.querySelectorAll("[data-dropdown]");
-    dropdowns.forEach(dropdown => {
-      dropdown.classList.toggle("hidden", dropdown.dataset.type !== tool);
-    });
-
-    if (tool === "lesson") {
-      const lesson = parentModule.lessons.find(l => l.id == item.id);
-      const dropdown = contentBlock.querySelector("select[name='lesson']");
-      if (dropdown && lesson) {
-        dropdown.addEventListener("change", (e) => {
-          lesson.file = e.target.value;
-        });
-      }
-    }
-
-    if (tool === "quiz") {
-      const dropdown = contentBlock.querySelector("select[name='question']");
-      if (dropdown && parentLesson?.quiz) {
-        dropdown.addEventListener("change", (e) => {
-          parentLesson.quiz.questions = [e.target.value];
-        });
-      }
-    }
-
-    if (tool === "assessment") {
-      const dropdown = contentBlock.querySelector("select[name='assessment']");
-      if (dropdown && parentLesson?.assessment) {
-        dropdown.addEventListener("change", (e) => {
-          parentLesson.assessment.questions = [e.target.value];
-        });
-      }
-    }
-
-    if (tool === "summary") {
-      const dropdown = contentBlock.querySelector("select[name='lesson']");
-      if (dropdown && parentLesson?.summary) {
-        dropdown.addEventListener("change", (e) => {
-          parentLesson.summary.title = e.target.value;
-        });
-      }
+    const titleInput = moduleDiv.querySelector('[data-target="moduleTitle"]')
+    if (titleInput && moduleData.title) {
+      titleInput.value = moduleData.title
     }
     
-    const deleteBtn = contentBlock.querySelector("button[aria-label='Delete']");
-    deleteBtn.addEventListener("click", () => {
-      const type = contentBlock.dataset.type;
-      const id = contentBlock.dataset.itemId;
+    moduleContainer.appendChild(clone)
+    
+    moduleData.lessons?.forEach(lessonData => {
+      this.addLessonFromData(moduleDiv, lessonData)
+    })
+    
+    moduleData.quizzes?.forEach(quizData => {
+      this.addQuizFromData(moduleDiv, quizData)
+    })
+  }
+  addAssessmentFromData(assessmentData) {
+    const template = this.assessmentTemplateTarget
+    const clone = template.content.cloneNode(true)
+    const assessmentDiv = clone.querySelector('[data-assessment-id]')
+    assessmentDiv.dataset.assessmentId = assessmentData.id || `assessment_1`
+  
+    const titleInput = assessmentDiv.querySelector('[data-target="assessmentTitle"]')
+    const questionSelect = assessmentDiv.querySelector('[data-target="assessmentQuestion"]')
+  
+    if (titleInput && assessmentData.title) {
+      titleInput.value = assessmentData.title
+    }
+    if (questionSelect && assessmentData.question) {
+      questionSelect.value = assessmentData.question
+    }
+  
+    const assessmentContainer = this.contentTarget.querySelector('[data-course-editor-target="assessmentContainer"]')
+    if (assessmentContainer) {
+      assessmentContainer.appendChild(clone)
+    }
+  }
+  
 
-      if (type === "module") {
-        const index = this.course.modules.findIndex(m => m.id == id);
-        if (index !== -1 && this.course.modules[index].lessons.length === 0) {
-          this.course.modules.splice(index, 1);
-          contentBlock.remove();
-        } else {
-          alert("Cannot delete Module that contains Lessons.");
-        }
-        return;
-      }
+  addSummaryFromData(summaryData) {
+    const template = this.summaryTemplateTarget
+    const clone = template.content.cloneNode(true)
+    const summaryDiv = clone.querySelector('[data-summary-id]')
+    summaryDiv.dataset.summaryId = summaryData.id || `summary_1`
+  
+    const noteSelect = summaryDiv.querySelector('[data-target="summaryNote"]')
+  
+    if (noteSelect && summaryData.note) {
+      noteSelect.value = summaryData.note
+    }
+  
+    const summaryContainer = this.contentTarget.querySelector('[data-course-editor-target="summaryContainer"]')
+    if (summaryContainer) {
+      summaryContainer.appendChild(clone)
+    }
+  }
+  
+  
+  addLessonFromData(moduleDiv, lessonData) {
+    const template = this.lessonTemplateTarget
+    const clone = template.content.cloneNode(true)
+    const lessonDiv = clone.querySelector('[data-lesson-id]')
+    lessonDiv.dataset.lessonId = lessonData.id
+    
+    const titleInput = lessonDiv.querySelector('[data-target="lessonTitle"]')
+    const videoSelect = lessonDiv.querySelector('[data-target="lessonVideo"]')
+    
+    if (titleInput && lessonData.title) {
+      titleInput.value = lessonData.title
+    }
+    if (videoSelect && lessonData.video) {
+      videoSelect.value = lessonData.video
+    }
+    
+    moduleDiv.querySelector('[data-target="lessonContainer"]').appendChild(clone)
+  }
 
-      if (type === "lesson") {
-        for (const module of this.course.modules) {
-          const index = module.lessons.findIndex(l => l.id == id);
-          if (index !== -1 && !module.lessons[index].quiz && !module.lessons[index].assessment && !module.lessons[index].summary) {
-            module.lessons.splice(index, 1);
-            contentBlock.remove();
-            return;
-          }
-        }
-        alert("Cannot delete Lesson with Quiz/Assessment/Summary.");
-        return;
-      }
+  addQuizFromData(moduleDiv, quizData) {
+    const template = this.quizTemplateTarget
+    const clone = template.content.cloneNode(true)
+    const quizDiv = clone.querySelector('[data-quiz-id]')
+    quizDiv.dataset.quizId = quizData.id
+    
+    const questionSelect = quizDiv.querySelector('[data-target="quizQuestion"]')
+    if (questionSelect && quizData.question) {
+      questionSelect.value = quizData.question
+    }
+    
+    moduleDiv.querySelector('[data-target="lessonContainer"]').appendChild(clone)
+  }
 
-      if (["quiz", "assessment", "summary"].includes(type)) {
-        for (const module of this.course.modules) {
-          for (const lesson of module.lessons) {
-            if (lesson[type] && lesson[type].id == id) {
-              lesson[type] = null;
-              contentBlock.remove();
-              return;
-            }
-          }
-        }
-      }
-    });
+  hasLessonAnywhere() {
+    return this.courseData.modules.some(m => (m.lessons?.length || 0) > 0)
+  }
 
-    if (tool === "lesson" || tool === "quiz") {
-      const moduleElement = event.currentTarget.closest("[data-level='1']");
-      if (moduleElement) {
-        moduleElement.appendChild(contentBlock);
+  updateAvailability() {
+    const hasLesson = this.hasLessonAnywhere()
+    const assessBtn = this.contentTarget.querySelector('[data-course-editor-target="addAssessmentBtn"]')
+    const summaryBtn = this.contentTarget.querySelector('[data-course-editor-target="addSummaryBtn"]')
+
+    ;[assessBtn, summaryBtn].forEach(btn => {
+      if (!btn) return
+      if (hasLesson) {
+        btn.removeAttribute("disabled")
+        btn.classList.remove("opacity-50", "cursor-not-allowed")
       } else {
-        this.contentTarget.appendChild(contentBlock);
+        btn.setAttribute("disabled", "disabled")
+        btn.classList.add("opacity-50", "cursor-not-allowed")
       }
-    } else {
-      this.contentTarget.appendChild(contentBlock);
-    }
-    
+    })
   }
 
-  createCourse() {
-    if (!this.course) {
-      alert("No course created yet.");
-      return;
+  addModule() {
+    this.moduleCounter++
+    const moduleId = `module_${this.moduleCounter}`
+
+    if (!Array.isArray(this.courseData.modules)) {
+      this.courseData.modules = []
+    }
+    
+    this.courseData.modules.push({
+      id: moduleId,
+      title: "",
+      lessons: [],
+      quizzes: []
+    })
+    
+    this.renderUIFromJSON()
+  }
+  addAssessment() {
+    if (!this.courseData.assessment || typeof this.courseData.assessment !== "object") {
+      this.courseData.assessment = {}
+    }
+
+    this.courseData.assessment = {
+      id: "assessment_1",
+      title: "",
+      question: ""
+    }
+    this.renderUIFromJSON()
+  }
+  
+  addSummary() {
+    if (!this.courseData.summary || typeof this.courseData.summary !== "object") {
+      this.courseData.summary = {}
+    }
+
+    this.courseData.summary = {
+      id: "summary_1",
+      note: ""
+    }
+    this.renderUIFromJSON()
+  }
+  
+  addLesson(event) {
+    const moduleDiv = event.target.closest('[data-module-id]')
+    const moduleId = moduleDiv.dataset.moduleId
+    
+    this.lessonCounter++
+    const lessonId = `lesson_${this.lessonCounter}`
+    
+    const module = this.courseData.modules.find(m => m.id === moduleId)
+
+    if (!Array.isArray(module.lessons)) {
+      module.lessons = []
+    }
+
+    if (module) {
+      module.lessons.push({
+        id: lessonId,
+        title: "",
+        video: ""
+      })
+    }
+    
+    this.renderUIFromJSON()
+  }
+
+  addQuiz(event) {
+    const moduleDiv = event.target.closest('[data-module-id]')
+    const moduleId = moduleDiv.dataset.moduleId
+    const module = this.courseData.modules.find(m => m.id === moduleId)
+    if (!module || module.lessons.length === 0) {
+      alert("Add at least one lesson to this module before adding a quiz.")
+      return
+    }
+
+    this.quizCounter++
+    const quizId = `quiz_${this.quizCounter}`
+
+    if (!Array.isArray(module.quizzes)) {
+      module.quizzes = []
+    }
+    
+    module.quizzes.push({
+      id: quizId,
+      question: ""
+    })
+    
+    this.renderUIFromJSON()
+  }
+
+  removeModule(event) {
+    const moduleDiv = event.target.closest('[data-module-id]')
+    const moduleId = moduleDiv.dataset.moduleId
+    
+    this.courseData.modules = this.courseData.modules.filter(m => m.id !== moduleId)
+    
+    this.renderUIFromJSON()
+  }
+
+  removeAssessment(event) {
+    this.courseData.assessment = {}
+    this.renderUIFromJSON()
+  }
+  
+  removeSummary(event) {
+    this.courseData.summary = {}
+    this.renderUIFromJSON()
+  }
+  
+
+  removeLesson(event) {
+    const lessonDiv = event.target.closest('[data-lesson-id]')
+    const lessonId = lessonDiv.dataset.lessonId
+    const moduleDiv = event.target.closest('[data-module-id]')
+    const moduleId = moduleDiv.dataset.moduleId
+    
+    const module = this.courseData.modules.find(m => m.id === moduleId)
+    if (module) {
+      module.lessons = module.lessons.filter(l => l.id !== lessonId)
+    }
+    
+    this.renderUIFromJSON()
+  }
+
+  removeQuiz(event) {
+    const quizDiv = event.target.closest('[data-quiz-id]')
+    const quizId = quizDiv.dataset.quizId
+    const moduleDiv = event.target.closest('[data-module-id]')
+    const moduleId = moduleDiv.dataset.moduleId
+    
+    const module = this.courseData.modules.find(m => m.id === moduleId)
+    if (module) {
+      module.quizzes = module.quizzes.filter(q => q.id !== quizId)
+    }
+    
+    this.renderUIFromJSON()
+  }
+
+  saveCourse() {
+    const titleInput = this.contentTarget.querySelector('[data-course-editor-target="courseTitle"]')
+    if (titleInput) this.courseData.title = titleInput.value
+    
+    const moduleElements = this.element.querySelectorAll('[data-module-id]')
+    moduleElements.forEach(moduleEl => {
+      const moduleId = moduleEl.dataset.moduleId
+      const module = this.courseData.modules.find(m => m.id === moduleId)
+      if (!module) return
+
+      const titleInput = moduleEl.querySelector('[data-target="moduleTitle"]')
+      if (titleInput) module.title = titleInput.value
+      
+      const lessonElements = moduleEl.querySelectorAll('[data-lesson-id]')
+      lessonElements.forEach(lessonEl => {
+        const lessonId = lessonEl.dataset.lessonId
+        const lesson = module.lessons.find(l => l.id === lessonId)
+        if (!lesson) return
+        const titleInput = lessonEl.querySelector('[data-target="lessonTitle"]')
+        const videoSelect = lessonEl.querySelector('[data-target="lessonVideo"]')
+        if (titleInput) lesson.title = titleInput.value
+        if (videoSelect) lesson.video = videoSelect.value
+      })
+
+      const quizElements = moduleEl.querySelectorAll('[data-quiz-id]')
+      quizElements.forEach(quizEl => {
+        const quizId = quizEl.dataset.quizId
+        const quiz = module.quizzes.find(q => q.id === quizId)
+        if (!quiz) return
+        const select = quizEl.querySelector('[data-target="quizQuestion"]')
+        if (select) quiz.question = select.value
+      })
+    })
+    const assessEl = this.element.querySelector('[data-assessment-id]')
+    if (assessEl) {
+      const titleInput = assessEl.querySelector('[data-target="assessmentTitle"]')
+      const questionSelect = assessEl.querySelector('[data-target="assessmentQuestion"]')
+  
+      this.courseData.assessment.title = titleInput ? titleInput.value : ""
+      this.courseData.assessment.question = questionSelect ? questionSelect.value : ""
     }
   
-    this.finalCourseJson = JSON.stringify(this.course, null, 2);
+    const summaryEl = this.element.querySelector('[data-summary-id]')
+    if (summaryEl) {
+      const noteSelect = summaryEl.querySelector('[data-target="summaryNote"]')
+      this.courseData.summary.note = noteSelect ? noteSelect.value : ""
+    }
+    
+    this.updateJSON()
+    
+    alert('Course saved successfully!')    
+  }
+
+  editCourse() {
+    try {
+      const raw = this.jsonOutputTarget.value.trim()
+      this.courseData = JSON.parse(raw)
+      this.renderUIFromJSON()
+    } catch (e) {
+      alert("Invalid JSON format. Please fix before applying.")
+    }
+  }
   
-    if (this.hasJsonOutputTarget) {
-      this.jsonOutputTarget.innerHTML = `<pre>${this.finalCourseJson}</pre>`;
-    } 
+
+  updateJSON() {
+    const jsonOutput = this.jsonOutputTarget
+    if (jsonOutput) {
+      this.jsonOutputTarget.value = JSON.stringify(this.courseData, null, 2)
+
+    }
   }
   
 }
