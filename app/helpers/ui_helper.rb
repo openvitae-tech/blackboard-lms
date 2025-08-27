@@ -237,7 +237,7 @@ module UiHelper
     render partial: 'ui/app/member_list/member_search', locals: { team:, all_members: }
   end
 
-  def _member_list_members_component(team:, members:, all_members:, term:)
+  def member_list_members_component(team:, members:, all_members: false, term: '')
     render partial: 'ui/app/member_list/members', locals: { team:, members:, all_members:, term: }
   end
   # member_list_component end

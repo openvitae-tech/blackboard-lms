@@ -4,7 +4,7 @@
     <%= form.hidden_field :all_members, value: all_members %>
     <div class="flex gap-1">
       <%= input_field form:, field_name: :term, placeholder: 'Search members' %>
-      <%= button_to do %>
+      <%= button_tag do %>
         <%= button icon_name: 'magnifying-glass', type: 'secondary' %>
       <% end %>
     </div>

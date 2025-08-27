@@ -13,6 +13,7 @@ module Users
 
     def filter
       scope = @all_members ? @team.all_members : @team.members
+      scope = scope.order(id: :desc)
       filter_by_matching_term(scope)
     end
 

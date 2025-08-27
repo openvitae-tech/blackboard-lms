@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   TEST_OTP = 1212
 
+  PER_PAGE_LIMIT = 5
+
   ADMIN = 'admin'
   OWNER = 'owner'
   MANAGER = 'manager'

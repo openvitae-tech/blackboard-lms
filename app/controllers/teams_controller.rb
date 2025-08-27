@@ -12,12 +12,12 @@ class TeamsController < ApplicationController
   def show
     authorize @team
     @learning_partner = current_user.learning_partner
-    @members = @team.members
+    @members = Users::FilterService.new(@team).filter.page.per(User::PER_PAGE_LIMIT)
   end
 
   def all_users
     @team = Team.find_by(id: params[:id])
-    @members = Users::FilterService.new(@team, all_members: true).filter
+    @members = Users::FilterService.new(@team, all_members: true).filter.page.per(10)
   end
 
   def create
