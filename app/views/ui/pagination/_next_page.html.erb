@@ -1,14 +1,7 @@
 <% if collection.next_page %>
-  <div data-controller="pagination">
-    <%= link_to query_url(path, {page: collection.next_page}),
-        data: {
-          turbo_stream: true,
-          pagination_target: "button",
-          action: "pagination#setPageParam"
-        } do %>
-      <%= button(label: 'Next', type: "secondary", size: "md") %>
-    <% end %>
-  </div>
-  <% else %>
-    <%= button(label: 'Next', type: "secondary", size: "md", disabled: true) %>
+  <%= link_to query_url(path, {page: collection.next_page}), data: { turbo_stream: true } do %>
+    <%= button(label: 'Next', type: "secondary", size: "md") %>
+  <% end %>
+<% else %>
+  <%= button(label: 'Next', type: "secondary", size: "md", disabled: true) %>
 <% end %>
