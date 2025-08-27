@@ -2,15 +2,17 @@
 
 module Users
   class FilterService
-    attr_accessor :team_id, :term
+    attr_accessor :team, :term
 
-    def initialize(search_params)
-      @team_id = search_params[:team_id]
-      @term = search_params[:term]
+    def initialize(team, term: '', all_members: false)
+      # all_members = true include deactivated members in results
+      @all_members = all_members
+      @team = team
+      @term = term
     end
 
     def filter
-      scope = User.where(team_id: @team_id) if @team_id.present?
+      scope = @all_members ? @team.all_members : @team.members
       filter_by_matching_term(scope)
     end
 
