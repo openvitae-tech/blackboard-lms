@@ -87,5 +87,5 @@
 </div>
 
 <div class="max-h-[520px] overflow-hidden p-1 mt-5 md:shadow rounded">
-  <%= render 'teams/member_list', team: @learning_partner.parent_team, members: @learning_partner.parent_team.members.page(params[:page]).per(5) %>
+  <%= member_list_component(team: @learning_partner.parent_team, members: @learning_partner.parent_team.members.page(params[:page]).per(5)) %>
 </div>
