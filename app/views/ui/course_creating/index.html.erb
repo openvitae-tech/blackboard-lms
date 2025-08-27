@@ -1,87 +1,31 @@
 <div data-controller="course-editor" class="flex h-screen">
+  <!-- Sidebar -->
   <div class="w-1/5 bg-gray-100 p-4 flex flex-col gap-2">
-    <% ["course", "assessment", "summary"].each do |tool| %>
-      <button data-action="click->course-editor#addTool"
-              data-tool="<%= tool %>"
-              class="btn-primary capitalize">
-        <%= tool.capitalize %>
-      </button>
-    <% end %>
-    <div data-course-editor-target="jsonOutput" class="mt-4 p-2 overflow-auto">
-      
-    </div>
-
+    
+    
+    <textarea data-course-editor-target="jsonOutput" class="mt-4 p-2 overflow-auto bg-white rounded h-[500px]">
+    </textarea>
+    <button 
+      data-action="click->course-editor#editCourse" 
+      class="btn-primary">
+      Edit course
+    </button>
   </div>
 
-  <div class="flex flex-col w-full gap-2">
+  <div class="flex flex-col w-4/5">
     <div class="p-6" data-course-editor-target="content">
-      <h1 class="text-2xl font-bold mb-4">New Course</h1>
-
+      <h1 class="text-2xl font-bold mb-4">New course</h1>
     </div>
 
-    <template data-course-editor-target="template">
-      <div class="border p-4 rounded-lg shadow bg-white relative mb-4 mt-4" data-content-id="">
-        <div class="flex justify-between mb-1">
-            <label class="block font-semibold ">Create New {{type}}</label>
 
-            <button class="w-6 h-6 text-white bg-danger rounded-full flex items-center justify-center text-sm"
-                    aria-label="Delete">✕</button>
-          </div>
-
-        <div class="relative" data-type="{{type}}" data-level="{{level}}">
-          
-          <div data-title-field>
-            <input 
-              type="text" 
-              class="w-full border border-gray-300 rounded px-3 py-2 mb-3" 
-              placeholder="Enter {{type}} title"
-              value="{{title}}"
-            />
-          </div>
-
-          <div data-dropdowns>
-            <div data-dropdown data-type="lesson" class="hidden">
-              <%= input_dropdown(field_name: "lesson", label: "Select Lesson",
-                                 options: ['Lesson1', 'Lesson2'], placeholder: "Choose a lesson video",
-                                 html_options: { required: true }, width: "w-full") %>
-            </div>
-            <div data-dropdown data-type="quiz" class="hidden">
-              <%= input_dropdown(field_name: "question", label: "Select Quiz Question",
-                                 options: ['question1', 'question2'], placeholder: "Choose a question",
-                                 html_options: { required: true }, width: "w-full") %>
-            </div>
-            <div data-dropdown data-type="assessment" class="hidden">
-              <%= input_dropdown(field_name: "assessment", label: "Select Assessment question",
-                                 options: ['question1', 'question2'], placeholder: "Choose an assessment question",
-                                 html_options: { required: true }, width: "w-full") %>
-            </div>
-            <div data-dropdown data-type="summary" class="hidden">
-              <%= input_dropdown(field_name: "summary", label: "Select summary",
-                                 options: ['summary1', 'summary2'], placeholder: "Choose an summary",
-                                 html_options: { required: true }, width: "w-full") %>
-            </div>
-          </div>
-          <div data-child-tools>
-            <% ["module", "lesson","quiz"].each do |tool| %>
-              <button data-action="click->course-editor#addTool"
-                      data-tool="<%= tool %>"
-                      class="btn-primary btn-sm hidden">
-                <%= tool.capitalize %>
-              </button>
-            <% end %>
-          </div>
+    <%= render "ui/course_creating/templates/course" %>
+    <%= render "ui/course_creating/templates/modules" %>
+    <%= render "ui/course_creating/templates/lessons" %>
+    <%= render "ui/course_creating/templates/quiz" %>
+    <%= render "ui/course_creating/templates/assessment" %>
+    <%= render "ui/course_creating/templates/summary" %>
 
 
-          
-        </div>
-      </div>
-    </template>
-
-    <div class="p-4">
-      <button class="btn-primary w-full" data-action="click->course-editor#createCourse">
-        Create Course
-      </button>
-
-    </div>
+    
   </div>
 </div>

@@ -1,0 +1,23 @@
+<template data-course-editor-target="summaryTemplate">
+      <div class="border rounded p-3 bg-blue-50" data-summary-id="">
+        <div class="flex justify-between items-start mb-2">
+          <div class="flex-1">
+            <label class="block text-xs font-medium mb-1">Summary</label>
+                <%= input_dropdown(
+                    field_name: "summary",
+                    label: "Select Summary",
+                    options: ['summary_1', 'summary_2'], 
+                    placeholder: "Choose a summary",
+                    html_options: { required: true, "data-target": "summaryNote" }, 
+                    width: "w-full"
+                ) %>
+
+          </div>
+          <button 
+            data-action="click->course-editor#removeSummary" 
+            class="ml-2 w-5 h-5 text-white bg-danger rounded-full flex items-center justify-center text-xs hover:bg-red-600">
+            ✕
+          </button>
+        </div>
+      </div>
+    </template>

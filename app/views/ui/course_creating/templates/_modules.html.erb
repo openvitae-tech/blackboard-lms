@@ -1,0 +1,36 @@
+<template data-course-editor-target="moduleTemplate">
+      <div class="border rounded-lg p-4 bg-gray-50" data-module-id="">
+        <div class="flex justify-between items-start mb-3">
+          <div class="flex-1">
+            <label class="block text-sm font-medium mb-1">Module Title</label>
+            <input 
+              type="text" 
+              data-target="moduleTitle"
+              class="w-full border border-gray-300 rounded px-3 py-2 text-sm" 
+              placeholder="Enter module title">
+          </div>
+          <button 
+            data-action="click->course-editor#removeModule" 
+            class="ml-2 w-6 h-6 text-white bg-danger rounded-full flex items-center justify-center text-sm hover:bg-red-600" 
+            aria-label="Delete Module">
+            ✕
+          </button>
+        </div>
+
+        <div class="flex gap-2 mb-3">
+          <button 
+            data-action="click->course-editor#addLesson" 
+            class="btn-sm btn-primary">
+            Add Lesson
+          </button>
+          <button 
+            data-action="click->course-editor#addQuiz" 
+            class="btn-sm btn-primary">
+            Add Quiz
+          </button>
+        </div>
+
+        <div data-target="lessonContainer" class="space-y-3 ml-4">
+        </div>
+      </div>
+    </template>

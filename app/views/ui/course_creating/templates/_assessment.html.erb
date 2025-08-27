@@ -1,0 +1,27 @@
+<template data-course-editor-target="assessmentTemplate">
+      <div class="border rounded-lg p-4 bg-gray-50" data-assessment-id="">
+        <div class="flex justify-between items-start mb-3 mt-3">
+          <div class="flex-1">
+            <label class="block text-sm font-medium mb-1">Assessment Title</label>
+            <input 
+              type="text" 
+              data-target="assessmentTitle"
+              class="w-full border border-gray-300 rounded px-2 py-1 text-sm" 
+              placeholder="Enter assessment title">
+          </div>
+          <button 
+            data-action="click->course-editor#removeAssesssment" 
+            class="ml-2 w-5 h-5 text-white bg-danger rounded-full flex items-center justify-center text-xs hover:bg-red-600">
+            ✕
+          </button>
+        </div>
+
+        <div class="mb-2">
+          <label class="block text-xs font-medium mb-1">Select Assessment Video</label>
+            <%= input_dropdown(field_name: "assessment", label: "Select Assessment Question",
+                        options: ['question1', 'question2'], placeholder: "Choose an assessment question",
+                        html_options: { required: true, "data-target": "assessmentQuestion" }, width: "w-full") %>
+
+        </div>
+      </div>
+    </template>

@@ -1,0 +1,32 @@
+<template data-course-editor-target="lessonTemplate">
+      <div class="border rounded p-3 bg-white" data-lesson-id="">
+        <div class="flex justify-between items-start mb-2">
+          <div class="flex-1">
+            <label class="block text-xs font-medium mb-1">Lesson Title</label>
+            <input 
+              type="text" 
+              data-target="lessonTitle"
+              class="w-full border border-gray-300 rounded px-2 py-1 text-sm" 
+              placeholder="Enter lesson title">
+          </div>
+          <button 
+            data-action="click->course-editor#removeLesson" 
+            class="ml-2 w-5 h-5 text-white bg-danger rounded-full flex items-center justify-center text-xs hover:bg-red-600">
+            ✕
+          </button>
+        </div>
+
+        <div class="mb-2">
+          <label class="block text-xs font-medium mb-1">Select Lesson Video</label>
+            <%= input_dropdown(
+                field_name: "lesson", 
+                label: "Select Lesson",
+                options: ['video_1', 'video_2'], 
+                placeholder: "Choose a lesson video",
+                html_options: { required: true, "data-target": "lessonVideo" }, 
+                width: "w-full"
+            ) %>
+
+        </div>
+      </div>
+    </template>
