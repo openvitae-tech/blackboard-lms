@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :user_searches, only: %i[create]
   resources :reports, only: %i[new create show]
 
   resources :searches, only: [:index] do
