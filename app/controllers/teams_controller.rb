@@ -17,7 +17,7 @@ class TeamsController < ApplicationController
 
   def all_users
     @team = Team.find_by(id: params[:id])
-    @members = @team.all_members
+    @members = Users::FilterService.new(@team, all_members: true).filter
   end
 
   def create
