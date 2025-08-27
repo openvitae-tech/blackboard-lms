@@ -21,7 +21,7 @@ module Users
     def filter_by_matching_term(scope)
       return scope if term.blank?
 
-      scope.where('name ILIKE ?', "%#{term}%")
+      scope.where('name ILIKE ?', "#{term}%")
     end
   end
 end
