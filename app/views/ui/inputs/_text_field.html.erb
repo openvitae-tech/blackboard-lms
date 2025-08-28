@@ -12,6 +12,7 @@
 
   <% field_options = html_options.merge(placeholder: placeholder) %>
   <% field_options[:value] = value if value.present? %>
+  <% field_options[:rows] = rows if is_text_area && rows.present? %>
 
   <div class="bg-white justify-between items-center flex rounded border border-line-colour">
     <% if left_icon.present? %>

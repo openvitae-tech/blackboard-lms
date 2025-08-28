@@ -5,6 +5,7 @@ class LearningPartner < ApplicationRecord
   include PartnerState
 
   has_many :users, dependent: :destroy
+  has_many :certificate_templates, dependent: :destroy
   has_one :scorm, dependent: :destroy
   has_one :payment_plan, dependent: :destroy
 

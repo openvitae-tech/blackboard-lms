@@ -120,6 +120,11 @@ Rails.application.routes.draw do
     end
 
     resource :payment_plan, only: %i[new create edit update]
+    resources :certificate_templates, only: %i[new index create update destroy] do
+      member do
+        get :confirm_destroy
+      end
+    end
   end
 
   resources :dashboards, only: :index

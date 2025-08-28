@@ -1,0 +1,15 @@
+<%= modal_component(title: 'Delete certificate template?') do %>
+  <%= form_with(url: learning_partner_certificate_template_path(@learning_partner, @certificate_template), method: :delete, class: "flex flex-col gap-6") do |form| %>
+    <div class="p-2">
+      <div class="pl-4 pt-2">
+        <p class="body-extra-small-regular">
+          <%= t("alert.description", label: @certificate_template.name, resource_name: "certificate template").html_safe %>
+        </p>
+      </div>
+    </div>
+    <div class="flex justify-end gap-4 border-t border-line-colour-light p-4">
+      <%= form.button "Cancel", class: "px-4 py-2 rounded body-extra-small-regular", data: { action: "click->modals#closeModal" } %>
+      <%= form.button "Delete", class: "bg-danger text-white px-4 py-2 rounded body-extra-small-regular" %>
+    </div>
+  <% end %>
+<% end %>
