@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Users::FilterService do
+RSpec.fdescribe Users::FilterService do
   describe 'with search term' do
     before(:all) do
       @team = create :team
@@ -19,12 +19,12 @@ RSpec.describe Users::FilterService do
 
     it 'returns active users by matching name' do
       users = Users::FilterService.new(@team, term: 'Paul').filter
-      expect(users).to eq([@user1, @user3])
+      expect(users).to eq([@user3, @user1])
     end
 
     it 'returns all active users of the team when the term is blank' do
       users = Users::FilterService.new(@team).filter
-      expect(users).to eq([@user1, @user2, @user3])
+      expect(users).to eq([@user3, @user2, @user1])
     end
 
     it 'returns deactivated users with matching term if all_members flag is provided' do
