@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.fdescribe Users::FilterService do
+RSpec.describe Users::FilterService do
   describe 'with search term' do
     before(:all) do
       @team = create :team
