@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProgramsController < ApplicationController
-  include PaginationHelper
+  include PaginationConcern
   include SearchContextHelper
 
   before_action :set_learning_partner
