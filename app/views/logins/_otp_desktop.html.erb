@@ -7,21 +7,22 @@
         <div class="rounded-lg p-8 box-shadow-large">
           <h1 class="my-8 heading page-heading">OTP</h1>
           <%= form_with url: login_path, scope: :login, method: :post, data: { controller: "otp", action: "input->otp#updateHiddenOtp" } do |form| %>
-            <div class="flex flex-col gap-8">
+            <div class="flex flex-col gap-8 border border-danger p-4" data-otp-target="container">
               <div class="input-group">
                 <label for="" class="label-text">Please enter the verification code sent to</label>
                 <div class="flex justify-between">
-                  <label for="number" class="label-text text-primary">+91 <%= @mobile_number.value %></label>
+                  <label for="number" class="label-text text-primary"><%= @mobile_number.country_code %> <%= @mobile_number.value %></label>
                   <%= link_to new_login_path(old_mobile_number: @mobile_number.value), class: "h-6 w-6 items-center rounded-full p-1.5 box-shadow-small" do %>
                     <%= image_tag "pencil.svg", alt: "", class: "h-3 w-3" %>
                     <%= form.hidden_field :mobile_number, value: @mobile_number.value %>
+                    <%= form.hidden_field :country_code, value: @mobile_number.country_code %>
                   <% end %>
                 </div>
               </div>
               <div class="input-group">
                 <label for="otp" class="label-text">Verification code (OTP)</label>
                 <div id="otp" class="mt-6 flex justify-between gap-6">
-                  <%= input_otp(form: form, input_options: { data: { otp_target: "input", action: "input->otp#handleInputOrKeyDown" } }) %>
+                  <%= input_otp(form: form, input_options: { data: { otp_target: "input", action: "input keydown change->otp#handleInputOrKeyDown" } }) %>
                 </div>
                 <a href="#" class="float-right pt-6 link-text text-danger">Resend OTP</a>
               </div>

@@ -7,9 +7,13 @@ RSpec.describe ChannelMessageTemplates do
 
   describe '#course_assigned_template' do
     it 'returns the correct SMS and WhatsApp templates' do
-      expected_sms = Rails.application.credentials.dig(:fast2sms, :template, :course_assigned)
+      fast2_sms_template = Rails.application.credentials.dig(:fast2sms, :template, :course_assigned)
+      msg91_template = Rails.application.credentials.dig(:msg91, :template, :course_assigned)
       expect(subject.course_assigned_template).to eq({
-                                                       sms: expected_sms,
+                                                       sms: {
+                                                         fast2_sms: fast2_sms_template,
+                                                         msg91: msg91_template
+                                                       },
                                                        whatsapp: 'course_assigned'
                                                      })
     end
@@ -17,20 +21,45 @@ RSpec.describe ChannelMessageTemplates do
 
   describe '#course_enrolled_template' do
     it 'returns the correct SMS and WhatsApp templates' do
-      expected_sms = Rails.application.credentials.dig(:fast2sms, :template, :course_enrolled)
+      fast2_sms_template = Rails.application.credentials.dig(:fast2sms, :template, :course_enrolled)
+      msg91_template = Rails.application.credentials.dig(:msg91, :template, :course_enrolled)
+
       expect(subject.course_enrolled_template).to eq({
-                                                       sms: expected_sms,
+                                                       sms: {
+                                                         fast2_sms: fast2_sms_template,
+                                                         msg91: msg91_template
+                                                       },
                                                        whatsapp: 'course_enrolled'
                                                      })
     end
   end
 
+  describe '#welcome_template' do
+    it 'returns the correct SMS and WhatsApp templates' do
+      fast2_sms_template = Rails.application.credentials.dig(:fast2sms, :template, :welcome)
+      msg91_template = Rails.application.credentials.dig(:msg91, :template, :welcome)
+
+      expect(subject.welcome_template).to eq({
+                                               sms: {
+                                                 fast2_sms: fast2_sms_template,
+                                                 msg91: msg91_template
+                                               },
+                                               whatsapp: 'welcome'
+                                             })
+    end
+  end
+
   describe '#sms_otp_template' do
     it 'returns the SMS otp template' do
-      expected_sms = Rails.application.credentials.dig(:fast2sms, :template, :otp)
-      expect(subject.sms_otp_template).to eq({
-                                               sms: expected_sms
-                                             })
+      fast2_sms_template = Rails.application.credentials.dig(:fast2sms, :template, :otp)
+      msg91_template = Rails.application.credentials.dig(:msg91, :template, :otp)
+
+      expect(subject.otp_template).to eq({
+                                           sms: {
+                                             fast2_sms: fast2_sms_template,
+                                             msg91: msg91_template
+                                           }
+                                         })
     end
   end
 

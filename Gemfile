@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '3.3.0'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '8.0.0.1'
+gem 'rails', '8.0.2.1'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -126,5 +126,6 @@ gem 'scorm-package', '~> 0.1.2', require: 'scorm_package'
 
 gem 'net-imap', '0.5.7'
 gem 'nokogiri', '1.18.9'
+gem 'phonelib'
 gem 'rack', '>= 3.1.11'
 gem 'rubyzip'

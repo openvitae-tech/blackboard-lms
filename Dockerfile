@@ -7,11 +7,17 @@ FROM ruby:$RUBY_VERSION-bookworm as base
 # Rails app lives here
 WORKDIR /deploy
 
+ARG RAILS_ENV
+ARG PORT=3000
+ARG RAILS_MASTER_KEY
+
 # Set environment
-ENV RAILS_ENV="docker" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development:test"
+ENV RAILS_ENV=${RAILS_ENV}
+ENV PORT=${PORT}
+ENV BUNDLE_DEPLOYMENT="1"
+ENV BUNDLE_PATH="/usr/local/bundle"
+ENV BUNDLE_WITHOUT="development:test"
+ENV RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -65,6 +71,6 @@ COPY --from=build /deploy /deploy
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/deploy/bin/docker-entrypoint"]
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-CMD ["./bin/rails", "server"]
+# Start the server by default, this can be overwritten at runtime use 3000 in local
+EXPOSE ${PORT}
+CMD ["sh", "-c", "./bin/rails server -p $PORT"]

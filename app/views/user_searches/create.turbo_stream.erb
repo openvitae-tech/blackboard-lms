@@ -1,0 +1,3 @@
+<%= turbo_stream.update "team-member-list" do %>
+  <%= member_list_members_component(team: @team, members: @users, all_members: @all_members, term: @term) %>
+<% end %>

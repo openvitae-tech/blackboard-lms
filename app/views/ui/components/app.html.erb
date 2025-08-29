@@ -8,7 +8,7 @@
   <li>
     <div>
       <%= course_carousal_component(
-            courses: @food_production_courses.page(1).per(4),
+            courses: @food_production_courses,
             title: "Food Production",
             count: @food_production_courses.count,
             load_path: @food_production_ctx.to_course_path) %>
@@ -18,7 +18,7 @@
   <li>
     <div>
       <%= course_carousal_component(
-            courses: @house_keeping_courses.page(1).per(4),
+            courses: @house_keeping_courses,
             title: "Housekeeping",
             count: @house_keeping_courses.count,
             load_path: @house_keeping_ctx.to_course_path) %>

@@ -1,9 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["input", "submitButton", "hiddenOtp"];
+  static targets = ["input", "submitButton", "hiddenOtp", "container"];
 
   connect() {
+    if (this.hasContainerTarget) {
+      this.containerTarget.classList.remove("border", "border-danger");
+    }
+
     if (this.inputTargets.length > 0) {
       this.inputTargets[0].focus();
     }
@@ -20,6 +24,7 @@ export default class extends Controller {
     if (this.hasHiddenOtpTarget) {
       this.hiddenOtpTarget.value = otpValues;
     }
+    this.updateButtonState();
   }
 
   inputTargetConnected(input) {
@@ -77,7 +82,6 @@ export default class extends Controller {
     });
 
     this.updateHiddenOtp();
-    this.updateButtonState();
 
     const nextEmpty = this.inputTargets.find((input) => input.value === "");
     if (nextEmpty) nextEmpty.focus();

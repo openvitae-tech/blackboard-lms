@@ -2,10 +2,27 @@
   <%= form_with(model: learning_partner) do |form| %>
     <%= render "shared/components/form_errors", resource: learning_partner %>
     <div class="my-8 text-sm">
-      <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter Name",type: "text",width:"w-full") %>     
+      <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter Name",type: "text",width:"w-full") %>
     </div>
     <div>
-      <%= input_field(form:, field_name: :content,label: "About", placeholder: "Enter about",type: "text_area", width:"w-full") %>
+      <%= input_field(form:, field_name: :about, label: "About", placeholder: "Enter about",type: "text_area", width:"w-full") %>
+    </div>
+    <div class="my-8">
+      <label class="text-letter-color-light text-sm md:text-base leading-tight">
+        Select supported countries
+      </label>
+      <% AVAILABLE_COUNTRIES.each do |_, country| %>
+        <div class="mt-3">
+          <%= input_radio(
+                field_name: "learning_partner[supported_countries][]",
+                option: country[:label],
+                value: country[:value],
+                html_options: {
+                  checked: learning_partner&.supported_countries.first == country[:value]
+                }
+              ) %>
+        </div>
+      <% end %>
     </div>
     <div class="my-8 text-sm">
       <div class="flex justify-between text-letter-color-light">

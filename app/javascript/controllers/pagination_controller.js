@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus";
+import {Controller} from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["button"];
@@ -6,7 +6,6 @@ export default class extends Controller {
   setPageParam() {
     const nextUrl = this.buttonTarget.getAttribute("href");
     if (!nextUrl) return;
-
-    window.history.replaceState({}, "", nextUrl);
+      window.history.replaceState({}, "", nextUrl);
   }
 }

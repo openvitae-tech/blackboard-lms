@@ -143,6 +143,29 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#validate_phone_number' do
+    it 'raise error if phone number is invalid indian number' do
+      user_one.phone = '12345678'
+      expect(user_one).not_to be_valid
+      expect(user_one.errors.full_messages.to_sentence).to eq('Phone must be a valid Indian number')
+    end
+
+    it 'raise error if phone number is invalid UAE number' do
+      user = create :user, :learner, country_code: '+971', phone: '501234567'
+
+      user.phone = '5012345672'
+      expect(user).not_to be_valid
+      expect(user.errors.full_messages.to_sentence).to eq('Phone must be a valid UAE number')
+    end
+
+    it 'raise error fir unsupported country' do
+      user = build :user, :learner, country_code: '+999', phone: '1234567890'
+
+      expect(user).not_to be_valid
+      expect(user.errors.full_messages.to_sentence).to eq('Unsupported country')
+    end
+  end
+
   private
 
   def password_verifier

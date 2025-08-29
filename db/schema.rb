@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_18_112742) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_22_122835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -128,6 +128,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_18_112742) do
     t.boolean "first_owner_joined", default: false
     t.integer "users_count", default: 0
     t.integer "active_users_count", default: 0, null: false
+    t.text "supported_countries", default: [], null: false, array: true
   end
 
   create_table "lessons", force: :cascade do |t|
@@ -312,6 +313,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_18_112742) do
     t.string "phone_confirmation_token"
     t.datetime "phone_confirmation_sent_at"
     t.datetime "phone_confirmed_at"
+    t.string "country_code"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["learning_partner_id"], name: "index_users_on_learning_partner_id"

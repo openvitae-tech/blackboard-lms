@@ -25,6 +25,8 @@ class InvitesController < ApplicationController
 
     Teams::UpdateTotalMembersCountService.instance.update_count(@team)
 
+    @members = Users::FilterService.new(@team).filter.page.per(User::PER_PAGE_LIMIT)
+
     if status == :ok
       @partner.reload
       flash.now[:success] = @bulk_invite ? I18n.t('invite.bulk') : I18n.t('invite.single')
@@ -70,7 +72,7 @@ class InvitesController < ApplicationController
   private
 
   def invite_params
-    params.require(:user).permit(:name, :phone, :role, :team_id, :bulk_invite)
+    params.require(:user).permit(:name, :phone, :role, :team_id, :country_code, :bulk_invite)
   end
 
   def invite_admin_params
@@ -79,7 +81,9 @@ class InvitesController < ApplicationController
 
   def handle_bulk_invite
     @user = User.new(team: @team)
-    valid_records = BulkInviteInputService.instance.process(invite_params[:bulk_invite])
+    country = @team.learning_partner.supported_countries.first
+    country_iso = AVAILABLE_COUNTRIES[country.to_sym][:iso]
+    valid_records = BulkInviteInputService.instance.process(invite_params[:bulk_invite], country_iso)
 
     if valid_records.empty?
       @user.errors.add(:base, I18n.t('invite.invalid_csv'))

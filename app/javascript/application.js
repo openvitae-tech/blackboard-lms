@@ -9,3 +9,6 @@ import "chartkick";
 import "Chart.bundle";
 
 import "channels";
+
+import "utils/js_warning"
+

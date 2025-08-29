@@ -16,6 +16,7 @@
     <% if Rails.env.production? %>
       <meta name="google-analytics-id" content="<%= Rails.application.credentials.dig(:google, :ga_id) %>">
       <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.credentials.dig(:google, :ga_id) %>"></script>
+      <%= render "commons/logrocket" %>
     <% end %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -25,6 +26,15 @@
     <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>
   <body>
+    <div id="js-warning">
+      <%= notification_bar(
+            text: "JS is not loaded!",
+            text_color: "text-letter-color",
+            icon_color: "bg-letter-color",
+            bg_color: "bg-danger"
+          ) %>
+    </div>
+
     <div class="flex flex-col min-h-screen">
       <div class="sticky top-0 left-0 w-full z-50 flex flex-col">
         <div class="w-full">
@@ -51,5 +61,6 @@
     </div>
     <%= render "shared/components/flash" %>
     <%= turbo_frame_tag "modal" %>
+
   </body>
 </html>

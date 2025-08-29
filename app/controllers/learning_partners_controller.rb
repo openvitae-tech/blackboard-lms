@@ -13,6 +13,10 @@ class LearningPartnersController < ApplicationController
   def show
     authorize :learning_partner
     @metrics = PartnerMetrics.new(@learning_partner)
+    @members = Users::FilterService.new(@learning_partner.parent_team)
+                                   .filter
+                                   .page(params[:page])
+                                   .per(User::PER_PAGE_LIMIT)
   end
 
   # GET /learning_partners/new
@@ -101,7 +105,7 @@ class LearningPartnersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def learning_partner_params
-    params.require(:learning_partner).permit(:name, :about, :logo, :banner, :max_user_count)
+    params.require(:learning_partner).permit(:name, :about, :logo, :banner, :max_user_count, supported_countries: [])
   end
 
   def authorize_admin!
