@@ -171,8 +171,8 @@ module UiHelper
     )
   end
 
-  def paginator(collection, path:)
-    render partial: 'ui/pagination/paginator', locals: { collection: collection, path: path }
+  def paginator_component(collection, path:)
+    render partial: 'ui/paginator/paginator_component', locals: { collection: collection, path: path }
   end
 
   # form component date_select_component
@@ -227,4 +227,18 @@ module UiHelper
   def _course_select_load_more(search_context:, courses:)
     render partial: 'ui/app/course_select/load_more', locals: { search_context:, courses: }
   end
+
+  # member_list_component start
+  def member_list_component(team:, members:, all_members: false, term: '')
+    render partial: 'ui/app/member_list/member_list', locals: { team:, members:, all_members:, term: }
+  end
+
+  def _member_list_member_search_component(team:, all_members:)
+    render partial: 'ui/app/member_list/member_search', locals: { team:, all_members: }
+  end
+
+  def member_list_members_component(team:, members:, all_members: false, term: '')
+    render partial: 'ui/app/member_list/members', locals: { team:, members:, all_members:, term: }
+  end
+  # member_list_component end
 end
