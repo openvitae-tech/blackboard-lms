@@ -1,26 +1,32 @@
-<%= render 'shared/components/more_action', icon_class: 'bg-white icon-medium', label_hover: "bg-secondary hover:opacity-80" do %>
-  <div class="min-w-[10rem] pt-2 pb-2 flex flex-col">
-    <%= link_to edit_learning_partner_path(learning_partner), class: 'px-4 py-2 hover:bg-primary-light-50' do%>
-      <span class="text-secondary text-sm font-medium"><%= t("button.edit") %></span>
-    <% end %>
-    <% if policy(learning_partner).activate? %>
-      <%= link_to activate_learning_partner_path(learning_partner), class: 'px-4 py-2 hover:bg-primary-light-50', data: { turbo_method: :put, turbo_confirm: "Are you sure want to activate this partner?" } do %>
-        <span class="text-secondary text-sm font-medium"><%= t("learning_partner.activate") %></span>
-      <% end %>
-    <% end %>
-    <%= link_to edit_learning_partner_payment_plan_path(learning_partner), class: 'px-4 hover:bg-primary-light-50', data: { turbo_frame: "modal" } do %>
-      <span class="text-secondary text-sm font-medium"><%= t("learning_partner.payment_plan.modify") %></span>
-    <% end %>
-    <%= link_to learning_partner_certificate_templates_path(learning_partner.id), class: 'px-4 py-2 hover:bg-primary-light-50' do %>
-        <span class="text-secondary text-sm font-medium">Certificate templates</span>
-    <% end %>
-    <% if policy(learning_partner).deactivate? %>
-      <%= button_to impersonation_path(id: learning_partner.id), class: 'px-4 py-2 hover:bg-primary-light-50 flex w-full' , method: :post do %>
-        <span class="text-secondary text-sm font-medium"><%= t("impersonation.impersonate") %></span>
-      <% end %>
-      <%= link_to deactivate_learning_partner_path(learning_partner), class: 'px-4 py-2 hover:bg-primary-light-50', data: { turbo_method: :put, turbo_confirm: "Are you sure want to de-activate this partner?" } do %>
-        <span class="text-sm font-medium text-danger"><%= t("learning_partner.block") %></span>
-      <% end %>
-    <% end %>
-  </div>
-<% end %>
+<% menu_items = [
+  UiHelper::MenuItem.new(label: t("button.edit"), url: edit_learning_partner_path(learning_partner), type: :link),
+  (policy(learning_partner).activate? ? 
+    UiHelper::MenuItem.new(
+      label: t("learning_partner.activate"),
+      url: activate_learning_partner_path(learning_partner),
+      type: :link,
+      options: { data: { turbo_method: :put, turbo_confirm: "Are you sure want to activate this partner?" } }
+    ) : nil),
+  UiHelper::MenuItem.new(
+    label: t("learning_partner.payment_plan.modify"),
+    url: edit_learning_partner_payment_plan_path(learning_partner),
+    type: :link,
+    options: { data: { turbo_frame: "modal" } }
+  ),
+  (policy(learning_partner).deactivate? ? 
+    UiHelper::MenuItem.new(
+      label: t("impersonation.impersonate"),
+      url: impersonation_path(id: learning_partner.id),
+      type: :button
+    ) : nil),
+  (policy(learning_partner).deactivate? ? 
+    UiHelper::MenuItem.new(
+      label: t("learning_partner.block"),
+      url: deactivate_learning_partner_path(learning_partner),
+      type: :link,
+      extra_classes: "text-danger",
+      options: { data: { turbo_method: :put, turbo_confirm: "Are you sure want to de-activate this partner?" } }
+    ) : nil)
+].compact %>
+
+<%= menu_component(menu_items, icon_class: "bg-white icon-medium", label_hover: "bg-secondary hover:opacity-80") %>
