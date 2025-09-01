@@ -1,5 +1,6 @@
 <% button_content = capture do %>
   <% disabled_class = disabled ? 'opacity-50 cursor-not-allowed' : '' %>
+
   <% if size == "xl" %>
     <%= tag.div(**html_options, class: "inline-flex h-14 items-center justify-center gap-2 rounded-sm px-6 text-white py-3.5 bg-primary hover:bg-primary-light  #{disabled_class}") do %>
       <% content = content_tag(:div, label, class: "text-white text-xl font-semibold font-['Poppins'] leading-7") if label.present? %>
@@ -26,4 +27,5 @@
     <% end %>
   <% end %>
 <% end %>
-<%= local_assigns[:tooltip_text].present? ? render('shared/components/tooltip', tooltip_position: , tooltip_text: ) { button_content } : button_content %>
+
+<%= tooltip_text.present? ? render('shared/components/tooltip', tooltip_position:, tooltip_text:) { button_content } : button_content %>

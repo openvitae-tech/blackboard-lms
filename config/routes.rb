@@ -123,6 +123,16 @@ Rails.application.routes.draw do
     resource :payment_plan, only: %i[new create edit update]
   end
 
+  resources :programs, only: %i[new index show create edit update destroy] do
+    member do
+      delete :bulk_destroy_courses
+      get :confirm_bulk_destroy_courses
+      get :confirm_destroy
+      get :add_courses
+      post :create_courses
+    end
+  end
+
   resources :dashboards, only: :index
   resources :settings, only: :index
 

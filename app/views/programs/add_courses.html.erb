@@ -1,0 +1,7 @@
+<div class="my-4 mx-auto w-full text-left">
+  <%= render 'shared/components/back_button', back_link: program_path(@program) %>
+  <div class="box">
+    <%= heading_component(text: "Add courses") %>
+  </div>
+  <%= course_select_component(search_context: @search_context, submit_path: create_courses_program_path(@program), courses: @courses, tags: @tags) %>
+</div>

@@ -13,6 +13,8 @@ module SearchContextHelper
       options[:team] = resource || Team.find(search_params[:team_id])
     when SearchContext::USER_ASSIGN then
       options[:user] = resource || User.find(search_params[:user_id])
+    when SearchContext::PROGRAM then
+      options[:program] = resource || Program.find(search_params[:program_id])
     end
 
     SearchContext.new(
@@ -26,9 +28,9 @@ module SearchContextHelper
 
   def search_params
     if params[:search].present?
-      params.require(:search).permit(:context, :team_id, :user_id, :term, :type, :page, tags: [])
+      params.require(:search).permit(:context, :team_id, :user_id, :term, :type, :page, :program_id, tags: [])
     else
-      params.permit(:context, :team_id, :user_id, :term, :type, :page, tags: [])
+      params.permit(:context, :team_id, :user_id, :term, :type, :page, :program_id, tags: [])
     end
   end
 end

@@ -8,6 +8,8 @@
       <%= form.hidden_field :team_id, value: search_context.team.id %>
     <% elsif search_context.user_assign? %>
       <%= form.hidden_field :user_id, value: search_context.user.id %>
+    <% elsif search_context.program?  %>
+      <%= form.hidden_field :program_id, value: search_context.program.id %>
     <% end %>
 
     <div class="relative rounded-md border border-line-colour-light w-full">

@@ -2,8 +2,6 @@
   tags: @search_context.tags
 } %>
 
-<% if @search_context.team_assign? || @search_context.user_assign? %>
-  <%= turbo_stream.update "course-select-list" do %>
-    <%= _course_select_list_component(search_context: @search_context, courses: @courses) %>
-  <% end %>
+<%= turbo_stream.update "course-select-list" do %>
+  <%= _course_select_list_component(search_context: @search_context, courses: @courses) %>
 <% end %>
