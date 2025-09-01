@@ -176,6 +176,36 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_26_073748) do
     t.index ["learning_partner_id"], name: "index_payment_plans_on_learning_partner_id"
   end
 
+  create_table "program_courses", force: :cascade do |t|
+    t.bigint "program_id", null: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_program_courses_on_course_id"
+    t.index ["program_id", "course_id"], name: "index_program_courses_on_program_id_and_course_id", unique: true
+    t.index ["program_id"], name: "index_program_courses_on_program_id"
+  end
+
+  create_table "program_users", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "program_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["program_id"], name: "index_program_users_on_program_id"
+    t.index ["user_id", "program_id"], name: "index_program_users_on_user_id_and_program_id", unique: true
+    t.index ["user_id"], name: "index_program_users_on_user_id"
+  end
+
+  create_table "programs", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "courses_count", default: 0, null: false
+    t.integer "users_count", default: 0, null: false
+    t.bigint "learning_partner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learning_partner_id"], name: "index_programs_on_learning_partner_id"
+  end
+
   create_table "quiz_answers", force: :cascade do |t|
     t.string "status"
     t.bigint "quiz_id", null: false
@@ -312,6 +342,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_26_073748) do
   add_foreign_key "lessons", "course_modules"
   add_foreign_key "local_contents", "lessons"
   add_foreign_key "payment_plans", "learning_partners"
+  add_foreign_key "program_courses", "courses"
+  add_foreign_key "program_courses", "programs"
+  add_foreign_key "program_users", "programs"
+  add_foreign_key "program_users", "users"
+  add_foreign_key "programs", "learning_partners"
   add_foreign_key "quiz_answers", "enrollments"
   add_foreign_key "quiz_answers", "quizzes"
   add_foreign_key "quizzes", "course_modules"

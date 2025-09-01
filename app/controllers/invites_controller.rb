@@ -25,6 +25,8 @@ class InvitesController < ApplicationController
 
     Teams::UpdateTotalMembersCountService.instance.update_count(@team)
 
+    @members = Users::FilterService.new(@team).filter.page.per(User::PER_PAGE_LIMIT)
+
     if status == :ok
       @partner.reload
       flash.now[:success] = @bulk_invite ? I18n.t('invite.bulk') : I18n.t('invite.single')

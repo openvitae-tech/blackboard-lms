@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :user_searches, only: %i[index create]
   resources :reports, only: %i[new create show]
 
   resources :searches, only: [:index] do
@@ -124,6 +125,16 @@ Rails.application.routes.draw do
       member do
         get :confirm_destroy
       end
+    end
+  end
+
+  resources :programs, only: %i[new index show create edit update destroy] do
+    member do
+      delete :bulk_destroy_courses
+      get :confirm_bulk_destroy_courses
+      get :confirm_destroy
+      get :add_courses
+      post :create_courses
     end
   end
 

@@ -1,0 +1,65 @@
+<div id="team-member-list" class="h-full flex flex-col">
+  <div id="teams-list" class="flex-shrink-0 md:py-4 md:px-6 md:border-b border-line-colour-light">
+    <div class="hidden md:grid grid-cols-12 gap-6 text-left text-sm font-medium  w-full">
+      <div class="col-span-4 flex justify-start">Name</div>
+      <div class="col-span-3 flex justify-start">Phone</div>
+      <div class="col-span-2 flex justify-start">Role</div>
+      <div class="col-span-3 flex justify-center">Actions</div>
+    </div>
+  </div>
+
+  <% if members.empty? %>
+    <div class="text-center text-sm mt-6">
+      No users available.
+    </div>
+  <% else %>
+    <div class="flex-1 overflow-y-auto p-2 md:divide-y md:divide-slate-grey-light">
+      <% members.each do |member| %>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center py-4 md:px-4 shadow-[0px_0px_4px_0px_#33333329] md:shadow-none mt-2 md:mt-0">
+          <div class="col-span-4 flex flex-wrap items-center justify-between gap-2 border-b pb-2 pl-4 border-line-colour md:border-none md:pb-0 md:pl-0">
+            <% link = policy(member).show? ? member_path(member) : "javascript:void(0);" %>
+
+            <%= link_to link, class: "cursor-pointer" do %>
+              <div class="flex items-center gap-2">
+          <span class="inline-block flex-shrink-0 text-xs icon-medium hover:pointer md:icon-large md:text-sm">
+            <%= render 'shared/components/profile_pic', letter: letter_avatar(member) %>
+          </span>
+                <span class="ml-2 text-ellipsis text-sm font-medium"><%= member.name %></span>
+              </div>
+            <% end %>
+            <% if member.active? %>
+              <div class="mt-1 flex flex-1 justify-end pe-6 md:mt-0">
+                <%= render 'shared/components/label_small_success', label: 'Active', icon_name: 'icon-complete' %>
+              </div>
+            <% end %>
+          </div>
+          <% if member.phone.present? %>
+            <div class="col-span-3 pl-4 text-xs  md:pl-0 md:text-sm"><%= member.country_code %><%= member.phone %></div>
+          <% else %>
+            <div class="col-span-3 pl-4 text-xs  md:pl-0 md:text-sm">-</div>
+          <% end %>
+          <div class="col-span-2 px-4 text-xs  md:px-0 md:text-sm">
+            <%= role_text(member.role) %>
+          </div>
+          <div class="col-span-3 flex flex-col items-end gap-2 text-xs  md:items-center md:text-sm">
+            <% if member.active_learner? && policy(:course_assigns).new? %>
+              <%= link_to new_course_assign_path(user_id: member, source_path: team_path(team)) do %>
+                <%= render 'shared/components/label_medium_notice', label: 'Assign course', icon_name: 'icon-assign-user' %>
+              <% end %>
+            <% end %>
+
+            <% if InvitePolicy.new(current_user, member).resend? %>
+              <%= link_to resend_invite_path(member, team_id: team.id), data: { turbo_method: "put" } do %>
+                <%= render 'shared/components/label_medium_success', label: 'Re-Invite', icon_name: 'icon-re-invite' %>
+              <% end %>
+            <% end %>
+          </div>
+
+        </div>
+      <% end %>
+      <div class="mt-4">
+        <%= paginator_component(members, path: user_searches_path(team_id: team.id, all_members:, term:)) %>
+      </div>
+    </div>
+  <% end %>
+</div>

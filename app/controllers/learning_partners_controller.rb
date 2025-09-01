@@ -13,6 +13,10 @@ class LearningPartnersController < ApplicationController
   def show
     authorize :learning_partner
     @metrics = PartnerMetrics.new(@learning_partner)
+    @members = Users::FilterService.new(@learning_partner.parent_team)
+                                   .filter
+                                   .page(params[:page])
+                                   .per(User::PER_PAGE_LIMIT)
   end
 
   # GET /learning_partners/new
