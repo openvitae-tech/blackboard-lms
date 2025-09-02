@@ -41,4 +41,12 @@ class ChannelMessageTemplates
       whatsapp: 'welcome'
     }
   end
+
+  def b2c_user_verify_template
+    {
+      sms: {
+        fast2_sms: Rails.application.credentials.dig(:fast2sms, :template, :b2c_verify)
+      }
+    }
+  end
 end
