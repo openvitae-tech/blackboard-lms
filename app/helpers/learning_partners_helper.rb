@@ -15,7 +15,7 @@ module LearningPartnersHelper
 
   def edit_partner_item(learning_partner)
     MenuComponentHelper::MenuItem.new(
-      label: t("button.edit"),
+      label: t('button.edit'),
       url: edit_learning_partner_path(learning_partner),
       type: :link
     )
@@ -23,13 +23,13 @@ module LearningPartnersHelper
 
   def activate_partner_item(learning_partner)
     MenuComponentHelper::MenuItem.new(
-      label: t("learning_partner.activate"),
+      label: t('learning_partner.activate'),
       url: activate_learning_partner_path(learning_partner),
       type: :link,
       options: {
         data: {
           turbo_method: :put,
-          turbo_confirm: "Are you sure want to activate this partner?"
+          turbo_confirm: 'Are you sure want to activate this partner?'
         }
       },
       visible: policy(learning_partner).activate?
@@ -38,16 +38,16 @@ module LearningPartnersHelper
 
   def payment_plan_item(learning_partner)
     MenuComponentHelper::MenuItem.new(
-      label: t("learning_partner.payment_plan.modify"),
+      label: t('learning_partner.payment_plan.modify'),
       url: edit_learning_partner_payment_plan_path(learning_partner),
       type: :link,
-      options: { data: { turbo_frame: "modal" } }
+      options: { data: { turbo_frame: 'modal' } }
     )
   end
 
   def impersonate_partner_item(learning_partner)
     MenuComponentHelper::MenuItem.new(
-      label: t("impersonation.impersonate"),
+      label: t('impersonation.impersonate'),
       url: impersonation_path(id: learning_partner.id),
       type: :button,
       visible: policy(learning_partner).deactivate?
@@ -56,14 +56,14 @@ module LearningPartnersHelper
 
   def deactivate_partner_item(learning_partner)
     MenuComponentHelper::MenuItem.new(
-      label: t("learning_partner.block"),
+      label: t('learning_partner.block'),
       url: deactivate_learning_partner_path(learning_partner),
       type: :link,
-      extra_classes: "text-danger",
+      extra_classes: 'text-danger',
       options: {
         data: {
           turbo_method: :put,
-          turbo_confirm: "Are you sure want to de-activate this partner?"
+          turbo_confirm: 'Are you sure want to de-activate this partner?'
         }
       },
       visible: policy(learning_partner).deactivate?
