@@ -66,7 +66,7 @@ class UserManagementService
       Rails.logger.info "Hello, please click here to activate your Instruo account #{login_url}"
     else
       parameters = { 'var1' => login_url }
-      sms_welcome_template = ChannelMessageTemplates.new.welcome_template[:sms]
+      sms_welcome_template = ChannelMessageTemplates.instance.welcome_template[:sms]
 
       CommunicationChannels::SendSmsJob.perform_async(
         sms_welcome_template.as_json, user.phone, user.country_code, parameters

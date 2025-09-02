@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-ChannelMessageTemplates = Data.define do
+class ChannelMessageTemplates
+  include Singleton
+
   def course_assigned_template
     {
       sms: {
