@@ -6,39 +6,12 @@
 
         <div class="flex space-x-3 items-start flex-shrink-0">
           <%= render 'users/user_state', user: user %>
-          <% menu_items = [
-            (UiHelper::MenuItem.new(
-              label: "Deactivate",
-              url: deactivate_member_path(user),
-              type: :link,
-              options: { data: { turbo_frame: "modal" } }
-            ) if policy(user).deactivate?),
 
-            (UiHelper::MenuItem.new(
-              label: "Activate",
-              url: activate_member_path(user),
-              type: :link,
-              options: { data: { turbo_frame: "modal" } }
-            ) if policy(user).activate?),
-
-            (UiHelper::MenuItem.new(
-              label: "Delete",
-              url: member_path,
-              type: :link,
-              extra_classes: "text-danger",
-              options: { data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" } }
-            ) if policy(user).destroy?),
-
-            (UiHelper::MenuItem.new(
-              label: "Change team",
-              url: change_team_member_path,
-              type: :link,
-              options: { data: { turbo_frame: "modal" } }
-            ) if policy(user).change_team?)
-          ].compact %>
-
-          <%= menu_component(menu_items, icon_class: "member-more", label_hover: "hover:bg-line-colour") %>
-
+          <%= menu_component(
+            member_menu_items(user),
+            icon_class: "member-more",
+            label_hover: "hover:bg-line-colour"
+          ) %>
 
         </div>
       </div>
