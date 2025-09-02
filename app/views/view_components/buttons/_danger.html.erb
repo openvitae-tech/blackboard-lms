@@ -1,19 +1,19 @@
 <% button_content = capture do %>
   <% disabled_class = disabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : '' %>
   <% if size == "xl" %>
-    <%= tag.div(**html_options, class: "inline-flex h-14 items-center justify-center gap-2 rounded-sm border bg-white px-6 py-3.5 border-danger text-danger hover:border-primary hover:text-primary #{disabled_class}") do %>
+    <%= tag.div(**html_options, class: "inline-flex h-14 items-center justify-center gap-2 rounded-lg border bg-white px-6 py-3 border-danger text-danger hover:border-primary hover:text-primary #{disabled_class}") do %>
       <% content = content_tag(:div, label, class: "text-xl font-semibold font-['Poppins'] leading-7") if label.present? %>
       <% icon = icon(icon_name || "adjustments-vertical", css: "icon-base") if icon_name.present? %>
       <%= label_with_icon(icon, content, icon_position) %>
     <% end %>
   <% elsif size == "lg" %>
-    <%= tag.div(**html_options, class: "inline-flex h-10 items-center justify-center gap-2 rounded-sm border bg-white px-6 py-2 border-danger text-danger hover:border-primary hover:text-primary #{disabled_class}") do %>
+    <%= tag.div(**html_options, class: "inline-flex h-10 items-center justify-center gap-2 rounded-md border bg-white px-4 py-2 border-danger text-danger hover:border-primary hover:text-primary #{disabled_class}") do %>
       <% content = content_tag(:div, label, class: "text-base font-medium font-['Poppins'] leading-normal") if label.present? %>
       <% icon = icon(icon_name || "adjustments-vertical", css: "icon-small") if icon_name.present? %>
       <%= label_with_icon(icon, content, icon_position) %>
     <% end %>
   <% elsif size == "md" %>
-    <%= tag.div(**html_options, class: "inline-flex h-9 items-center justify-center gap-2 rounded-sm border bg-white px-4 py-2 border-danger text-danger hover:border-primary hover:text-primary #{disabled_class}") do %>
+    <%= tag.div(**html_options, class: "inline-flex h-9 items-center justify-center gap-2 rounded-md border bg-white px-4 py-2 border-danger text-danger hover:border-primary hover:text-primary #{disabled_class}") do %>
       <% content = content_tag(:div, label, class: "text-sm font-medium font-['Poppins'] leading-tight") if label.present? %>
       <% icon = icon(icon_name || "adjustments-vertical", css: "icon-small") if icon_name.present? %>
       <%= label_with_icon(icon, content, icon_position) %>
