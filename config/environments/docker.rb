@@ -68,8 +68,8 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   config.cache_store = :redis_cache_store, {
-    url: ENV.fetch("REDIS_URL") { Rails.application.credentials.dig(:redis, :url) },
-    namespace: "app:cache",
+    url: ENV.fetch('REDIS_URL') { Rails.application.credentials.dig(:redis, :url) },
+    namespace: 'app:cache',
     timeout: 5
   }
 
