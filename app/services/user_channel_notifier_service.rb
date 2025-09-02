@@ -29,8 +29,6 @@ class UserChannelNotifierService
       notify_via_whatsapp(template, user.phone, parameters)
     when 'sms'
       notify_via_sms(template, user.country_code, user.phone, parameters)
-    else
-      # type code here
     end
   end
 end

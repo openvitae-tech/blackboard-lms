@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Api::V1::OtpsController, type: :request do
+RSpec.describe 'Api::V1::OtpsController', type: :request do
   let(:phone) { '9999999999' }
   let(:name) { 'Deepak' }
   let(:auth_token) { Rails.application.credentials[:api_token] }
