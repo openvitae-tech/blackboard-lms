@@ -26,7 +26,7 @@ class UserChannelNotifierService
   def dispatch_job(template, user, channel, parameters)
     case channel
     when 'whatsapp'
-      notify_via_whatsapp(template, phone, parameters)
+      notify_via_whatsapp(template, user.phone, parameters)
     when 'sms'
       notify_via_sms(template, user.country_code, user.phone, parameters)
     else

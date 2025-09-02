@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :otps, only: [:create] do
+      resources :otps, only: [] do
         collection do
           get :generate
           get :verify
