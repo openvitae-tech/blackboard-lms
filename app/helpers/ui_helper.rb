@@ -242,16 +242,5 @@ module UiHelper
   end
   # member_list_component end
 
-  MenuItem = Struct.new(:label, :url, :type, :options, :extra_classes, keyword_init: true)
-
-  def menu_component(menu_items, icon_class: '', label_hover: '', html_options: {})
-    render(
-      'ui/inputs/menu_component',
-      menu_items:,
-      icon_class:,
-      label_hover:,
-      html_options:
-    )
-  end
   
 end
