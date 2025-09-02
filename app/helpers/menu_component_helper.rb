@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MenuComponentHelper
   MenuItem = Struct.new(
     :label,
@@ -9,7 +11,7 @@ module MenuComponentHelper
     keyword_init: true
   ) do
     def visible?
-      visible != false 
+      visible != false
     end
   end
 

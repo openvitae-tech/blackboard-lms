@@ -91,31 +91,30 @@ module TeamsHelper
   def team_menu_items(team)
     [
       MenuComponentHelper::MenuItem.new(
-        label: "Team dashboard",
+        label: 'Team dashboard',
         url: dashboard_path(team_id: team),
         type: :link,
         visible: policy(:dashboard).index?
       ),
       MenuComponentHelper::MenuItem.new(
-        label: "Edit",
+        label: 'Edit',
         url: edit_team_path(team),
         type: :link,
-        options: { data: { turbo_frame: "modal" } },
+        options: { data: { turbo_frame: 'modal' } },
         visible: policy(team).edit?
       ),
       MenuComponentHelper::MenuItem.new(
-        label: "View all users",
+        label: 'View all users',
         url: all_users_team_path(team),
         type: :link
       ),
       MenuComponentHelper::MenuItem.new(
-        label: "Generate Report",
+        label: 'Generate Report',
         url: new_report_path(team_id: team.id),
         type: :link,
-        options: { data: { turbo_frame: "modal" } },
+        options: { data: { turbo_frame: 'modal' } },
         visible: policy(:report).new?
       )
     ]
   end
-  
 end

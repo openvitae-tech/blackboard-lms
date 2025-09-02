@@ -241,6 +241,4 @@ module UiHelper
     render partial: 'ui/app/member_list/members', locals: { team:, members:, all_members:, term: }
   end
   # member_list_component end
-
-  
 end
