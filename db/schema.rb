@@ -53,9 +53,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_02_092230) do
   end
 
   create_table "contacts", force: :cascade do |t|
-    t.string "phone"
-    t.string "country_code"
-    t.string "name"
+    t.string "phone", null: false
+    t.string "country_code", null: false
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
