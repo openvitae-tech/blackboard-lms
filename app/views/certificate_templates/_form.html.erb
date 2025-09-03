@@ -1,4 +1,4 @@
-<%= form_with model: certificate_template, url: learning_partner_certificate_templates_path(learning_partner), method: :post, data: { controller: "certificate-preview" } do |form| %>
+<%= form_with model: certificate_template, url: learning_partner_certificate_templates_path(learning_partner), data: { controller: "certificate-preview" } do |form| %>
   <%= render "shared/components/form_errors", resource: certificate_template %>
   <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter certificate name", type: "text", width: "w-full") %>
   <div class="mt-6">

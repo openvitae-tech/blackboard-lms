@@ -5,7 +5,7 @@ class CertificateTemplatePolicy
 
   def initialize(user, record)
     @user = user
-    @certificate_template = record
+    @record = record
   end
 
   def new?

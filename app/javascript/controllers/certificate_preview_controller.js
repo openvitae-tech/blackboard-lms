@@ -15,7 +15,7 @@ export default class extends Controller {
 
     const iframe = document.createElement("iframe");
     iframe.className = "w-full h-64 rounded";
-    iframe.setAttribute("sandbox", "allow-same-origin allow-scripts");
+    iframe.setAttribute("sandbox", "");
     iframe.srcdoc = html;
 
     this.previewAreaTarget.appendChild(iframe);
