@@ -14,7 +14,7 @@ module MenuComponentHelper
   def menu_component(menu_items:, icon_class: '', label_hover: '', html_options: {})
     render(
       'ui/inputs/menu_component',
-      menu_items: menu_items.select { |item| item.visible != false },
+      menu_items: menu_items.reject { |item| item.visible == false },
       icon_class:,
       label_hover:,
       html_options:
