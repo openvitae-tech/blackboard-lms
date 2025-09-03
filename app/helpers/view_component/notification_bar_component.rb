@@ -5,7 +5,7 @@ module ViewComponent
     def notification_bar(text: nil, text_color: 'text-letter-color', bg_color: 'bg-white',
                          icon_color: 'bg-letter-color')
       ApplicationController.renderer.render(
-        partial: 'view_components/notification_bars/notification_bar',
+        partial: 'view_components/notification_bar/notification_bar',
         locals: {
           text:,
           text_color:,

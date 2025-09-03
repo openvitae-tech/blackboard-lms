@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module UiHelper
+  include ViewComponent::TypographyComponent
   include ViewComponent::IconComponent
   include ViewComponent::ButtonComponent
   include ViewComponent::InputComponent
