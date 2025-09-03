@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_26_073748) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_03_082215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -60,6 +60,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_26_073748) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["learning_partner_id"], name: "index_certificate_templates_on_learning_partner_id"
+  end
+
+  create_table "course_certificates", force: :cascade do |t|
+    t.datetime "issued_at", null: false
+    t.string "file_hash", null: false
+    t.string "certificate_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "certificate_template_id", null: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certificate_id"], name: "index_course_certificates_on_certificate_id", unique: true
+    t.index ["certificate_template_id"], name: "index_course_certificates_on_certificate_template_id"
+    t.index ["course_id"], name: "index_course_certificates_on_course_id"
+    t.index ["file_hash"], name: "index_course_certificates_on_file_hash", unique: true
+    t.index ["user_id", "course_id"], name: "index_course_certificates_on_user_id_and_course_id", unique: true
+    t.index ["user_id"], name: "index_course_certificates_on_user_id"
   end
 
   create_table "course_modules", force: :cascade do |t|
@@ -335,6 +352,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_26_073748) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "certificate_templates", "learning_partners"
+  add_foreign_key "course_certificates", "certificate_templates"
+  add_foreign_key "course_certificates", "courses"
+  add_foreign_key "course_certificates", "users"
   add_foreign_key "course_modules", "courses"
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"

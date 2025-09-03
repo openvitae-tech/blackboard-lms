@@ -61,7 +61,7 @@ RSpec.describe 'Request spec for Certificate templates', type: :request do
     it 'unauthorized for non-admin user' do
       sign_in learner
 
-      get learning_partner_certificate_templates_path(learning_partner), params: certificate_template_params
+      post learning_partner_certificate_templates_path(learning_partner), params: certificate_template_params
       expect(response).to redirect_to(error_401_path)
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end

@@ -10,6 +10,8 @@ class CertificateTemplate < ApplicationRecord
   validate :only_one_active_template, if: :active?
   validate :must_have_exact_template_variables
 
+  has_many :course_certificates, dependent: nil
+
   belongs_to :learning_partner
 
   private

@@ -162,6 +162,8 @@ GEM
       activesupport (>= 6.1)
     groupdate (6.4.0)
       activesupport (>= 6.1)
+    grover (1.2.3)
+      nokogiri (~> 1)
     guard (2.18.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -507,6 +509,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   groupdate
+  grover
   guard-rspec
   image_processing (~> 1.2)
   importmap-rails
