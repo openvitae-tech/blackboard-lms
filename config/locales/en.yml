@@ -210,3 +210,5 @@ en:
   reports:
     available_soon: "Your report will be available soon, you can download it by clicking the notification."
     invalid_report_type: "Invalid report type %{value}"
+  record:
+    empty: "There are no %{resource} to show."

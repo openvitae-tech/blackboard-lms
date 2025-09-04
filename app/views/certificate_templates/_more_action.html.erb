@@ -1,0 +1,28 @@
+<%= render 'shared/components/more_action',
+           icon_class: 'bg-white icon-base',
+           label_hover: "bg-secondary hover:opacity-80" do %>
+  <div class="min-w-[10rem] pt-2 pb-2">
+    <% if template.active? %>
+      <%= button_to learning_partner_certificate_template_path(learning_partner, template),
+                    method: :patch,
+                    params: { certificate_template: { active: false } },
+                    class: "px-4 py-2 hover:bg-primary-light-50 flex w-full" do %>
+        <span class="title-small">Deactivate</span>
+      <% end %>
+    <% elsif !certificate_templates.where(active: true).exists? %>
+      <%= button_to learning_partner_certificate_template_path(learning_partner, template),
+                    method: :patch,
+                    params: { certificate_template: { active: true } },
+                    class: "px-4 py-2 hover:bg-primary-light-50 flex w-full" do %>
+        <span class="title-small">Activate</span>
+      <% end %>
+    <% end %>
+    <% if !template.active? %>
+      <%= link_to confirm_destroy_learning_partner_certificate_template_path(learning_partner, template),
+                  data: { turbo_frame: "modal" },
+                  class: "px-4 py-2 hover:bg-primary-light-50 flex w-full" do %>
+        <span class="title-small">Delete</span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

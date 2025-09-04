@@ -1,0 +1,7 @@
+<%= turbo_stream.update "flash", partial: "shared/components/flash" %>
+<%= turbo_stream.replace "modal" do %>
+  <%= turbo_frame_tag "modal" %>
+<% end %>
+<%= turbo_stream.update "templates-list" do %>
+  <%= render partial: "list", locals: { certificate_templates: @learning_partner.certificate_templates, learning_partner: @learning_partner } %>
+<% end %>
