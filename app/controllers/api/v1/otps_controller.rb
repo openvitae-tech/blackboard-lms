@@ -5,8 +5,11 @@ module Api
     class OtpsController < ApiController
       def generate
         service = Auth::OtpService.new(generate_auth_params[:phone], name: generate_auth_params[:name])
-        service.generate_otp
-        render json: { success: true }, status: :ok
+        if service.generate_otp
+          render json: { success: true }, status: :ok
+        else
+          render json: { success: false }, status: :bad_request
+        end
       end
 
       def verify

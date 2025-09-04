@@ -43,7 +43,7 @@ RSpec.describe Auth::OtpService, type: :service do
       end
 
       it 'does not send another otp' do
-        expect(service.generate_otp).to be_nil
+        expect(service.generate_otp).to be_falsey
         cached = JSON.parse(Rails.cache.read(cache_key))
 
         expect(cached['attempts']).to eq(2) # unchanged

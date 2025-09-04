@@ -23,11 +23,15 @@ module Auth
         @data = { otp: otp, name: @name, attempts: 1 }.with_indifferent_access
         Rails.cache.write(cache_key, @data.to_json, expires_in: 5.minutes)
         send_otp(otp)
+        true
       elsif @data[:attempts] < 2
         # resend old otp
         @data[:attempts] += 1
         Rails.cache.write(cache_key, @data.to_json, expires_in: 5.minutes)
         send_otp(@data[:otp])
+        true
+      else
+        false
       end
     end
 
