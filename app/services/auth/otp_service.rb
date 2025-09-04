@@ -27,7 +27,7 @@ module Auth
         # resend old otp
         @data[:attempts] += 1
         Rails.cache.write(cache_key, @data.to_json, expires_in: 5.minutes)
-        send_otp(otp)
+        send_otp(@data[:otp])
       end
     end
 
