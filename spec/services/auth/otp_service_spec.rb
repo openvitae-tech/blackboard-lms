@@ -60,14 +60,14 @@ RSpec.describe Auth::OtpService, type: :service do
       it 'creates a contact and returns truthy' do
         expect do
           service.verify_otp('1234')
-        end.to change(Contact, :count).by(1)
+        end.to change(ContactLead, :count).by(1)
       end
     end
 
     context 'with incorrect otp' do
       it 'returns false and does not create contact' do
         expect(service.verify_otp('9999')).to be(false)
-        expect(Contact.count).to eq(0)
+        expect(ContactLead.count).to eq(0)
       end
     end
   end

@@ -7,6 +7,10 @@ RSpec.describe 'Api::V1::OtpsController', type: :request do
   let(:name) { 'Deepak' }
   let(:auth_token) { Rails.application.credentials[:api_token] }
 
+  before do
+    Rails.cache.clear
+  end
+
   describe 'GET /api/v1/otps/generate' do
     it 'sends unauthorized response if auth_token is missing' do
       get '/api/v1/otps/generate', params: { phone: phone, name: name }
@@ -14,15 +18,10 @@ RSpec.describe 'Api::V1::OtpsController', type: :request do
     end
 
     it 'calls OtpService and returns otp in response' do
-      service = instance_double(Auth::OtpService)
-      allow(Auth::OtpService).to receive(:new).with(phone).and_return(service)
-      allow(service).to receive(:generate_otp).and_return('1234')
-
       get '/api/v1/otps/generate', params: { phone: phone, name: name, auth_token: }
 
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body).to eq({ 'otp' => '1234' })
-      expect(service).to have_received(:generate_otp).once
+      expect(response.parsed_body).to eq({ 'success' => true })
     end
   end
 
@@ -34,15 +33,11 @@ RSpec.describe 'Api::V1::OtpsController', type: :request do
       end
 
       it 'returns success true with 200' do
-        service = instance_double(Auth::OtpService)
-        allow(Auth::OtpService).to receive(:new).with(phone).and_return(service)
-        allow(service).to receive(:verify_otp).with('1234').and_return(true)
-
-        get '/api/v1/otps/verify', params: { phone: phone, otp: '1234', auth_token: }
+        Auth::OtpService.new(phone, name:).generate_otp
+        get '/api/v1/otps/verify', params: { phone: phone, otp: '1212', auth_token: }
 
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).to eq({ 'success' => true })
-        expect(service).to have_received(:verify_otp).with('1234')
       end
     end
 
@@ -53,15 +48,11 @@ RSpec.describe 'Api::V1::OtpsController', type: :request do
       end
 
       it 'returns success false with 400' do
-        service = instance_double(Auth::OtpService)
-        allow(Auth::OtpService).to receive(:new).with(phone).and_return(service)
-        allow(service).to receive(:verify_otp).with('0000').and_return(false)
-
+        Auth::OtpService.new(phone, name:).generate_otp
         get '/api/v1/otps/verify', params: { phone: phone, otp: '0000', auth_token: }
 
         expect(response).to have_http_status(:bad_request)
         expect(response.parsed_body).to eq({ 'success' => false })
-        expect(service).to have_received(:verify_otp).with('0000')
       end
     end
   end

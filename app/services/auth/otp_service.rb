@@ -33,7 +33,7 @@ module Auth
 
     def verify_otp(otp)
       read_previous_otp_data
-      return false unless @data[:otp] == otp.to_s
+      return false unless @data[:otp].to_s == otp.to_s
 
       write_contact!
     end
@@ -64,7 +64,7 @@ module Auth
     end
 
     def write_contact!
-      Contact.create!(name: @name, phone: @phone, country_code: AVAILABLE_COUNTRIES[:india][:code])
+      ContactLead.create!(name: @name, phone: @phone, country_code: AVAILABLE_COUNTRIES[:india][:code])
     end
   end
 end

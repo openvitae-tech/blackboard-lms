@@ -1,6 +1,6 @@
-class CreateContacts < ActiveRecord::Migration[8.0]
+class CreateContactLeads < ActiveRecord::Migration[8.0]
   def change
-    create_table :contacts do |t|
+    create_table :contact_leads do |t|
       t.string :phone, null: false
       t.string :country_code, null: false
       t.string :name, null: false
