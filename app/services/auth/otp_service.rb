@@ -39,6 +39,7 @@ module Auth
       read_previous_otp_data
       return false unless @data[:otp].to_s == otp.to_s
 
+      Rails.cache.delete(cache_key)
       write_contact!
     end
 
