@@ -15,7 +15,7 @@ RSpec.describe UserChannelNotifierService do
     it 'enqueues the WhatsApp message job' do
       Sidekiq::Testing.fake! do
         expect do
-          subject.notify_user(user, ChannelMessageTemplates.new.course_assigned_template)
+          subject.notify_user(user, ChannelMessageTemplates.instance.course_assigned_template)
         end.to change(CommunicationChannels::SendWhatsappMessageJob.jobs, :size).by(1)
       end
     end
@@ -25,7 +25,7 @@ RSpec.describe UserChannelNotifierService do
       parameters = { sms_variables_values: { 'var1' => 'test value' } }
       Sidekiq::Testing.fake! do
         expect do
-          subject.notify_user(new_user, ChannelMessageTemplates.new.course_assigned_template, parameters)
+          subject.notify_user(new_user, ChannelMessageTemplates.instance.course_assigned_template, parameters)
         end.to change(CommunicationChannels::SendSmsJob.jobs, :size).by(1)
       end
     end
