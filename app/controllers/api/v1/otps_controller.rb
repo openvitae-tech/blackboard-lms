@@ -13,7 +13,7 @@ module Api
       end
 
       def verify
-        service = Auth::OtpService.new(params[:phone])
+        service = Auth::OtpService.new(verify_auth_params[:phone])
 
         if service.verify_otp(verify_auth_params[:otp])
           render json: { success: true }, status: :ok
