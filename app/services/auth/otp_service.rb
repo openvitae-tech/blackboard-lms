@@ -57,7 +57,7 @@ module Auth
       return unless Rails.env.production?
 
       template = ChannelMessageTemplates.instance.b2c_user_verify_template
-      parameters = { sms_variables_values: { 'var1' => otp } }
+      parameters = { sms_variables_values: { 'var1' => otp.to_s } }
       # Verify only indian numbers
       UserChannelNotifierService.instance.notify_via_sms(template, AVAILABLE_COUNTRIES[:india][:code], @phone,
                                                          parameters)
