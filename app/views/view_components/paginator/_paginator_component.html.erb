@@ -1,0 +1,6 @@
+<% if collection.prev_page || collection.next_page %>
+  <div class="flex justify-center mt-4 space-x-2">
+    <%= render "view_components/paginator/prev_page", collection: collection, path: path %>
+    <%= render "view_components/paginator/next_page", collection: collection, path: path %>
+  </div>
+<% end %>
