@@ -4,7 +4,7 @@ module ViewComponent
   module TableComponent
     def label_with_icon(icon, label_tag, position)
       ordered = position == 'left' ? [icon, label_tag] : [label_tag, icon]
-      ordered.compact.join.html_safe # rubocop:disable Rails/OutputSafety
+      safe_join(ordered.compact)
     end
 
     def table_cell_name(row_data, avatar: false)
