@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-class Api::ApiController < ApplicationController
-  layout false
-
-  skip_before_action :authenticate_user!
+class Api::ApiController < ActionController::API
   # this can be commented during development or local testing
   before_action :verify_auth_token!
   before_action :set_api_version
