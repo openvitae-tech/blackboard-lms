@@ -47,6 +47,9 @@
       <%= input_checkbox(form:, field_name: :remember_me, label: "Remember me") %>
 
     </li>
+    <li>
+      <%= input_dropdown(form:, field_name: :category_id, label: "Category", options: ["Option 1", "Option 2", "Option 3"]) %>
+    </li>
   </ul>
   <%= form.submit "Submit", disabled: true, class: "btn-primary" %>
 <% end %>

@@ -58,7 +58,7 @@
         </div>
       <% end %>
       <div class="mt-4">
-        <%= paginator_component(members, path: user_searches_path(team_id: team.id, all_members:, term:)) %>
+        <%= paginator_component(collection: members, path: user_searches_path(team_id: team.id, all_members:, term:)) %>
       </div>
     </div>
   <% end %>

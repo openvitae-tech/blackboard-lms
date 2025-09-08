@@ -1,12 +1,12 @@
 <div class="flex flex-col gap-4 <%= width %>">
   <% if label.present? %>
-    <label class="text-letter-color-light text-sm md:text-base leading-tight">
+    <label class="text-letter-color-light text-sm md:text-base h-9 leading-tight">
       <%= label %>
     </label>
   <% end %>
 
   <% merged_html_options = (html_options || {}).merge(
-    class: "px-4 py-3 rounded border border-line-colour w-full text-letter-color-light text-base focus:border-primary focus:ring-0 #{width}"
+    class: "px-4 py-2 rounded border border-line-colour w-full text-letter-color-light text-sm h-9 focus:border-primary focus:ring-0 #{width}"
   ) %>
 
   <% if form.present? %>
