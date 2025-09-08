@@ -1,26 +1,37 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-  <% certificate_templates.each do |template| %>
-    <div class="relative bg-white rounded-lg shadow flex flex-col min-h-48 max-w-xs mx-auto w-full mt-4">
-      <% if template.active? %>
-        <div class="absolute top-2 left-2 bg-theme-highlight text-white text-xs px-2 py-1 rounded z-20">
-          Active
+<% if certificate_templates.present? %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <% certificate_templates.each do |template| %>
+      <div class="relative bg-white rounded-lg shadow flex flex-col min-h-48 max-w-xs mx-auto w-full mt-4">
+        <% if template.active? %>
+          <div class="absolute top-2 left-2 bg-theme-highlight text-white text-xs px-2 py-1 rounded z-20">
+            Active
+          </div>
+        <% end %>
+        <div class="absolute top-1 right-2 z-20">
+          <%= render "more_action", learning_partner: learning_partner, template: template, certificate_templates: certificate_templates %>
         </div>
-      <% end %>
-      <div class="absolute top-1 right-2 z-20">
-        <%= render "more_action", learning_partner: learning_partner, template:, certificate_templates: certificate_templates %>
-      </div>
-      <div class="flex-1 flex items-center justify-center p-2">
-        <div class="w-full h-48 border-0 rounded relative bg-gray-50">
-          <iframe
-            srcdoc="<%= template.html_content %>"
-            class="absolute top-0 left-0 w-[200%] h-[200%] scale-[0.5] origin-top-left border-0 z-10"
-            sandbox
-          ></iframe>
+        <div class="flex-1 flex items-center justify-center p-2">
+          <div class="w-full h-48 border-0 rounded relative bg-gray-50">
+            <iframe
+              srcdoc="<%= template.html_content %>"
+              class="absolute top-0 left-0 w-[200%] h-[200%] scale-[0.5] origin-top-left border-0 z-10"
+              sandbox
+            ></iframe>
+          </div>
+        </div>
+        <div class="border-t">
+          <h2 class="body-extra-small-medium p-2 flex justify-center"><%= template.name %></h2>
         </div>
       </div>
-      <div class="border-t">
-        <h2 class="body-extra-small-medium p-2 flex justify-center"><%= template.name %></h2>
-      </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="flex flex-col items-center justify-center min-h-[70vh]">
+    <h2 class="text-semibold pb-4">
+      <%= t("record.empty", resource: t("certificate_templates.index.title", default: "Certificate templates")) %>
+    </h2>
+    <%= link_to new_learning_partner_certificate_template_path(learning_partner) do %>
+      <%= button(label: t("certificate_templates.index.add", default: "Add certificate template"), icon_name: "plus") %>
+    <% end %>
+  </div>
+<% end %>
