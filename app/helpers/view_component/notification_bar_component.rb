@@ -8,7 +8,6 @@ module ViewComponent
       bg_color: 'bg-white',
       icon_color: 'bg-letter-color'
     )
-
       render(
         partial: 'view_components/notification_bar/notification_bar',
         locals: {
