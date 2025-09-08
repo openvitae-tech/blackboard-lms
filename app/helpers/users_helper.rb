@@ -66,7 +66,7 @@ module UsersHelper
   private
 
   def deactivate_item(user)
-    MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponentHelper::MenuItem.new(
       label: 'Deactivate',
       url: deactivate_member_path(user),
       type: :link,
@@ -76,7 +76,7 @@ module UsersHelper
   end
 
   def activate_item(user)
-    MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponentHelper::MenuItem.new(
       label: 'Activate',
       url: activate_member_path(user),
       type: :link,
@@ -86,7 +86,7 @@ module UsersHelper
   end
 
   def delete_item(user)
-    MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponentHelper::MenuItem.new(
       label: 'Delete',
       url: member_path,
       type: :link,
@@ -97,7 +97,7 @@ module UsersHelper
   end
 
   def change_team_item(user)
-    MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponentHelper::MenuItem.new(
       label: 'Change team',
       url: change_team_member_path,
       type: :link,
