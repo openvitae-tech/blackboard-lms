@@ -5,8 +5,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :otps, only: [] do
         collection do
-          get :generate
-          get :verify
+          post :generate
+          post :verify
         end
       end
     end
