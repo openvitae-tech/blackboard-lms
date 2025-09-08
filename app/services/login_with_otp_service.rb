@@ -10,7 +10,7 @@ class LoginWithOtpService
 
     parameters = { sms_variables_values: { 'var1' => password_decrypter(user.otp) } }
     service = UserChannelNotifierService.instance
-    service.notify_user(user, ChannelMessageTemplates.new.otp_template, parameters)
+    service.notify_user(user, ChannelMessageTemplates.instance.otp_template, parameters)
   end
 
   def valid_otp?(user, otp)

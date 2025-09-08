@@ -193,5 +193,6 @@ Rails.application.routes.draw do
 
   draw :ui
   draw :sidekiq_web
+  draw :v1_api
   draw :catch_all
 end

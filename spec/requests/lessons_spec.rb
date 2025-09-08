@@ -194,7 +194,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
 
       @lesson.reload
       local_contents_langs = @lesson.local_contents.pluck(:lang)
-      expect(local_contents_langs).to eq(%w[english hindi])
+      expect(local_contents_langs.sort).to eq(%w[english hindi])
       expect(@lesson.title).to eq(@lesson_title)
     end
 

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ChannelMessageTemplates do
-  subject { described_class.new }
+  subject { described_class.instance }
 
   describe '#course_assigned_template' do
     it 'returns the correct SMS and WhatsApp templates' do
