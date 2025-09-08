@@ -6,7 +6,7 @@
   <% end %>
   <div class="bg-white justify-between items-center flex rounded border border-line-colour">
     <% if flag.present? %>
-      <div class="flex items-center justify-center border-r h-9 w-16 border-line-colour focus-within:border-primary">
+      <div class="flex items-center justify-center border-r h-[52px] w-[96px] border-line-colour focus-within:border-primary">
         <%= image_tag flag, alt: "IN", class: "h-8 w-8 rounded-full flag-box-shadow" %>
       </div>
     <% end %>
@@ -23,7 +23,7 @@
           pattern: "[0-9]{10}",
           value: value,
           title: "Enter exactly 10 digits",
-          class: "w-full text-letter-color-light text-base px-4 py-2 h-9 border-none rounded focus:ring-0 focus:outline-none",
+          class: "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:ring-0 focus:outline-none",
           required: true,
           data: merged_data
         }.merge(html_options_without_data) %>

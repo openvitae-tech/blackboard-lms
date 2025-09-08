@@ -1,11 +1,12 @@
 <div class="flex flex-col gap-4 <%= width %> ">
   <% if label.present? %>
-    <label class="text-letter-color-light text-sm md:text-base h-9 leading-tight">
+    <label class="text-letter-color-light text-sm md:text-base leading-tight">
       <%= label %>
     </label>
   <% end %>
 
-  <% input_classes = "w-full text-letter-color-light h-9 text-base px-4 py-2 border-none rounded" %>
+  <% input_classes = "w-full text-letter-color-light text-base px-4 py-3 border-none rounded" %>
+  <% input_classes += " #{height}" if height.present? %>
   <% input_classes += (left_icon.present? || right_icon.present?) ? " focus:ring-0 focus:outline-none" : " focus:border focus:border-primary" %>
   <% html_options[:class] = [input_classes, html_options[:class]].compact.join(" ") %>
   <% is_text_area = type == "text_area" %>
