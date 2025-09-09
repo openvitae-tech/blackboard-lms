@@ -9,15 +9,6 @@
 <div class="mt-2">
   <%= heading_component(text: 'Certificate templates', size: 'md') %>
 </div>
-<% if @certificate_templates.present? %>
-  <div class="mt-4" id="templates-list">
-    <%= render "list", learning_partner: @learning_partner, certificate_templates: @certificate_templates %>
-  </div>
-<% else %>
-  <div class="flex flex-col items-center justify-center min-h-[70vh]">
-    <h2 class="text-semibold pb-4"><%= t("record.empty", resource: "Certificate templates") %></h2>
-    <%= link_to new_learning_partner_certificate_template_path(@learning_partner) do %>
-      <%= button(label: 'Add certificate template', icon_name: "plus" ) %>
-    <% end %>
-  </div>
-<% end %>
+<div class="mt-4" id="templates-list">
+  <%= render "list", learning_partner: @learning_partner, certificate_templates: @certificate_templates %>
+</div>

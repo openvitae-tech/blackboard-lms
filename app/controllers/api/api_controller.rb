@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-class Api::ApiController < ApplicationController
-  layout false
-
-  skip_before_action :authenticate_user!
+class Api::ApiController < ActionController::API
+  API_TOKEN = Rails.application.credentials.dig(:api_token)
   # this can be commented during development or local testing
   before_action :verify_auth_token!
   before_action :set_api_version
@@ -15,7 +13,7 @@ class Api::ApiController < ApplicationController
   end
 
   def verify_auth_token!
-    if params[:auth_token] != Rails.application.credentials.dig(:api_token)
+    if API_TOKEN.blank? || (params[:auth_token] != API_TOKEN)
       render json: {}, status: :unauthorized
     end
   end
