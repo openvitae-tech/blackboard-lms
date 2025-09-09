@@ -29,7 +29,7 @@ module LearningPartnersHelper
       options: {
         data: {
           turbo_method: :put,
-          turbo_confirm: 'Are you sure want to activate this partner?'
+          turbo_confirm: t('confirmations.learning_partner.activate')
         }
       },
       visible: policy(learning_partner).activate?
@@ -63,7 +63,7 @@ module LearningPartnersHelper
       options: {
         data: {
           turbo_method: :put,
-          turbo_confirm: 'Are you sure want to de-activate this partner?'
+          turbo_confirm: t('confirmations.learning_partner.deactivate')
         }
       },
       visible: policy(learning_partner).deactivate?
