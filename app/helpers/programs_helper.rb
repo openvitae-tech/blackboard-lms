@@ -4,13 +4,13 @@ module ProgramsHelper
   def program_menu_items(program)
     [
       ViewComponent::MenuComponentHelper::MenuItem.new(
-        label: I18n.t('button.edit'),
+        label: t('button.edit'),
         url: edit_program_path(program),
         type: :link,
         options: { data: { turbo_frame: 'modal' } }
       ),
       ViewComponent::MenuComponentHelper::MenuItem.new(
-        label: I18n.t('button.delete'),
+        label: t('button.delete'),
         url: confirm_destroy_program_path(program),
         type: :link,
         extra_classes: 'text-danger',

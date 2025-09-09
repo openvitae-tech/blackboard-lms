@@ -8,14 +8,13 @@ module ViewComponent
       :type,
       :options,
       :extra_classes,
-      :visible,
       keyword_init: true
     )
 
     def menu_component(menu_items:, icon_class: '', label_hover: '', html_options: {})
       render(
         'view_components/menu_component/menu_component',
-        menu_items: menu_items.reject { |item| item.visible == false },
+        menu_items: menu_items,
         icon_class:,
         label_hover:,
         html_options:

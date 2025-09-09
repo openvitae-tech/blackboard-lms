@@ -22,6 +22,8 @@ module LearningPartnersHelper
   end
 
   def activate_partner_item(learning_partner)
+    return unless policy(learning_partner).activate?
+
     ViewComponent::MenuComponentHelper::MenuItem.new(
       label: t('learning_partner.activate'),
       url: activate_learning_partner_path(learning_partner),
@@ -31,8 +33,7 @@ module LearningPartnersHelper
           turbo_method: :put,
           turbo_confirm: t('confirmations.learning_partner.activate')
         }
-      },
-      visible: policy(learning_partner).activate?
+      }
     )
   end
 
@@ -46,15 +47,18 @@ module LearningPartnersHelper
   end
 
   def impersonate_partner_item(learning_partner)
+    return unless policy(learning_partner).deactivate?
+
     ViewComponent::MenuComponentHelper::MenuItem.new(
       label: t('impersonation.impersonate'),
       url: impersonation_path(id: learning_partner.id),
-      type: :button,
-      visible: policy(learning_partner).deactivate?
+      type: :button
     )
   end
 
   def deactivate_partner_item(learning_partner)
+    return unless policy(learning_partner).deactivate?
+
     ViewComponent::MenuComponentHelper::MenuItem.new(
       label: t('learning_partner.block'),
       url: deactivate_learning_partner_path(learning_partner),
@@ -65,8 +69,7 @@ module LearningPartnersHelper
           turbo_method: :put,
           turbo_confirm: t('confirmations.learning_partner.deactivate')
         }
-      },
-      visible: policy(learning_partner).deactivate?
+      }
     )
   end
 end
