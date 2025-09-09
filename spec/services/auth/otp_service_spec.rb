@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Auth::OtpService, type: :service do
   let(:phone) { MobileNumber.new(value: '9999999999', country_code: AVAILABLE_COUNTRIES[:india][:code]) }
-  let(:cache_key) { "otp:#{phone}" }
+  let(:cache_key) { "otp:#{phone.value}" }
   let(:service) { described_class.new(phone, name: 'Deepak') }
 
   before do
