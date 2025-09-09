@@ -109,6 +109,24 @@ module ViewComponent
       end
     end
 
+    def input_text_area(form: nil, field_name: nil, label: nil,
+                        placeholder: nil, width: 'w-56', height: nil,
+                        value: nil, rows: '5', html_options: {})
+      html_options[:data] ||= {}
+
+      render partial: 'view_components/inputs/text_area', locals: {
+        form: form,
+        field_name: field_name,
+        label: label,
+        placeholder: placeholder,
+        width: width,
+        height: height,
+        value: value,
+        rows: rows,
+        html_options: html_options
+      }
+    end
+
     # form component date_select_component
     # @param min minimum date
     # @param maximum date

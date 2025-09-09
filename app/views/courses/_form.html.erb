@@ -20,7 +20,7 @@
       <%= input_dropdown(form:, field_name: :level_id, label: "Level", options: @levels.pluck(:name, :id), value: @level&.id) %>
     </div>
     <div class="my-8 text-sm">
-      <%= input_field(form:, field_name: :description,label: "Description", placeholder: "Enter description",type: "text_area", width:"w-full") %>
+      <%= input_text_area( form:, field_name: :description, label: "Description", placeholder: "Enter description", width: "w-full" ) %>
     </div>
     <div class="my-8 flex items-center gap-6 text-sm">
       <div class="my-8">

@@ -4,7 +4,7 @@
     <%= render "shared/components/form_errors", resource: quiz %>
     <div class="border border-line-colour-light p-8 rounded">
       <div class="mb-8 text-sm">
-        <%= input_field(form:, field_name: :question,label: "Description", placeholder: "Enter your question here...",type: "text_area", width:"w-full", rows:"2") %>
+        <%= input_text_area( form:, field_name: :question, label: "Description", placeholder: "Enter your question here...", rows: 2, width: "w-full" ) %>
       </div>      
       <div class="mb-4">
         <%= form.label "Answer options", class:"text-base font-medium" %>

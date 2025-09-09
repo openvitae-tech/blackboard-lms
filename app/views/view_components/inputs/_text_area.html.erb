@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-4 <%= width %>">
+  <% if label.present? %>
+    <label class="text-letter-color-light text-sm md:text-base leading-tight">
+      <%= label %>
+    </label>
+  <% end %>
+
+  <% text_area_classes = "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:border focus:border-primary" %>
+  <% text_area_classes += " #{height}" if height.present? %>
+  <% html_options[:class] = [text_area_classes, html_options[:class]].compact.join(" ") %>
+
+  <% field_options = html_options.merge(placeholder: placeholder) %>
+  <% field_options[:rows] = rows if rows.present? %>
+  <% field_options[:value] = value if value.present? %>
+
+  <div class="bg-white rounded border border-line-colour">
+    <% if form.present? %>
+      <%= form.text_area field_name, field_options %>
+    <% else %>
+      <textarea placeholder="<%= placeholder %>" rows="<%= rows %>" class="<%= html_options[:class] %>"><%= value %></textarea>
+    <% end %>
+  </div>
+</div>
