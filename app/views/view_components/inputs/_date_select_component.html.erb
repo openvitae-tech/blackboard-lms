@@ -1,5 +1,5 @@
-<div class="relative flex flex-col gap-3" data-controller="date-picker">
-  <%= form.label local_assigns[:field_name], local_assigns[:label], class: "text-sm font-medium" %>
+<div class="relative flex flex-col gap-4" data-controller="date-picker">
+  <%= form.label local_assigns[:field_name], local_assigns[:label], class: "text-letter-color-light text-sm md:text-base leading-tight" %>
   <div class="relative flex w-full flex-row items-center">
     <!--    <input type="date" id="datePicker" class="invisible p-0 w-[2px]" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker" min="<%#= local_assigns[:min] %>" max="<%#= local_assigns[:max] %>"/>-->
     <%= date_field_tag(
