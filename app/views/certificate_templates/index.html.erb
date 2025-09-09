@@ -1,0 +1,14 @@
+<div class="flex gap-4 justify-between">
+  <%= render 'shared/components/bread_crumbs', links: [["Learning partner", learning_partner_path(@learning_partner)], ["Certificate templates", nil]] %>
+  <% if @certificate_templates.present? %>
+    <%= link_to new_learning_partner_certificate_template_path(@learning_partner) do %>
+      <%= button(label: 'Add certificate template', icon_name: "plus" ) %>
+    <% end %>
+  <% end %>
+</div>
+<div class="mt-2">
+  <%= heading_component(text: 'Certificate templates', size: 'md') %>
+</div>
+<div class="mt-4" id="templates-list">
+  <%= render "list", learning_partner: @learning_partner, certificate_templates: @certificate_templates %>
+</div>
