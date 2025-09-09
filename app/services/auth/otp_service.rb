@@ -11,10 +11,12 @@ module Auth
     end
 
     def cache_key
-      "otp:#{@phone}"
+      "otp:#{@phone.value}"
     end
 
     def generate_otp
+      return false unless @phone.valid?
+
       read_previous_otp_data
 
       if @data.empty?
@@ -36,6 +38,8 @@ module Auth
     end
 
     def verify_otp(otp)
+      return false unless @phone.valid?
+
       read_previous_otp_data
       return false unless @data[:otp].to_s == otp.to_s
 
@@ -64,12 +68,16 @@ module Auth
       template = ChannelMessageTemplates.instance.b2c_user_verify_template
       parameters = { sms_variables_values: { 'var1' => otp.to_s } }
       # Verify only indian numbers
-      UserChannelNotifierService.instance.notify_via_sms(template, AVAILABLE_COUNTRIES[:india][:code], @phone,
-                                                         parameters)
+      UserChannelNotifierService.instance.notify_via_sms(
+        template,
+        AVAILABLE_COUNTRIES[:india][:code],
+        @phone.value,
+        parameters
+      )
     end
 
     def write_contact!
-      ContactLead.create!(name: @name, phone: @phone, country_code: AVAILABLE_COUNTRIES[:india][:code])
+      ContactLead.create!(name: @name, phone: @phone.value, country_code: @phone.country_code)
     end
   end
 end

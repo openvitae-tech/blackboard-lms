@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         collection do
           post :generate
           post :verify
+          post :generate_or_verify # special case
         end
       end
     end

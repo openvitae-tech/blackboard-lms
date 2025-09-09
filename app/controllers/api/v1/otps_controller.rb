@@ -3,8 +3,15 @@
 module Api
   module V1
     class OtpsController < ApiController
+      before_action :set_phone_number
+
+      # special case added for compatibility with framer
+      def generate_or_verify
+        params[:otp].present? ? verify : generate
+      end
+
       def generate
-        service = Auth::OtpService.new(generate_auth_params[:phone], name: generate_auth_params[:name])
+        service = Auth::OtpService.new(@phone, name: generate_auth_params[:name])
         if service.generate_otp
           render json: { success: true }, status: :ok
         else
@@ -13,7 +20,7 @@ module Api
       end
 
       def verify
-        service = Auth::OtpService.new(verify_auth_params[:phone])
+        service = Auth::OtpService.new(@phone)
 
         if service.verify_otp(verify_auth_params[:otp])
           render json: { success: true }, status: :ok
@@ -30,6 +37,10 @@ module Api
 
       def verify_auth_params
         params.permit(:phone, :otp)
+      end
+
+      def set_phone_number
+        @phone = MobileNumber.new(value: generate_auth_params[:phone], country_code: AVAILABLE_COUNTRIES[:india][:code])
       end
     end
   end
