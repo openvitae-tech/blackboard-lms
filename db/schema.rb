@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_02_092230) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_03_082215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_02_092230) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "certificate_templates", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "html_content", null: false
+    t.boolean "active", default: false, null: false
+    t.bigint "learning_partner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learning_partner_id"], name: "index_certificate_templates_on_learning_partner_id"
   end
 
   create_table "contact_leads", force: :cascade do |t|
@@ -349,13 +359,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_02_092230) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-<<<<<<< HEAD
   add_foreign_key "certificate_templates", "learning_partners"
   add_foreign_key "course_certificates", "certificate_templates"
   add_foreign_key "course_certificates", "courses"
   add_foreign_key "course_certificates", "users"
-=======
->>>>>>> main
   add_foreign_key "course_modules", "courses"
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"

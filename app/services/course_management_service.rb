@@ -93,6 +93,11 @@ class CourseManagementService
       format(I18n.t('notifications.course.completed.message'), title: course_module.course.title),
       link: course_path(course_module.course)
     )
+
+    return if user.learning_partner.active_certificate_template.blank?
+
+    GenerateCourseCertificateJob.perform_async(course_module.course.id, user.id,
+                                               user.learning_partner.active_certificate_template.id)
   end
 
   def set_lesson_attributes(_course_module, lesson)
