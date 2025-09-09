@@ -1,0 +1,8 @@
+<%= render "shared/components/back_button", back_link: learning_partner_certificate_templates_path(@learning_partner)  %>
+<div class="mt-6">
+  <%= heading_component(text: 'Create certificate template', size: 'md') %>
+</div>
+
+<div class="md:max-w-3xl mt-6">
+    <%= render "form", learning_partner: @learning_partner, certificate_template: @certificate_template %>
+</div>
