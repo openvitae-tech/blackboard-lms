@@ -67,9 +67,9 @@ bin/dev
 ## Testing
 Make sure you have setup the test environment as mentioned in the earlier section
 ```
-$ rspec
-$ rspec -f d                 # view test descriptions
-$ rspec -f d --tag focus     # view test descriptions and run only focussed sections, usefull for debugging
+$ bundle exec rspec
+$ bundle exec rspec -f d                 # view test descriptions
+$ bundle exec rspec -f d --tag focus     # view test descriptions and run only focussed sections, usefull for debugging
 ```
 Note: prefix `bundle exec` if you are unable to run it using `rspec`
 
