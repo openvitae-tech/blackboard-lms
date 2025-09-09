@@ -6,7 +6,7 @@ module Courses
 
     def generate(course, user, certificate_template)
       existing_certificate = user.course_certificates.find_by(course: course)
-      return existing_certificate if existing_certificate.present?
+      return if existing_certificate.present?
 
       issued_at = Time.zone.today
       certificate_id = SecureRandom.uuid
