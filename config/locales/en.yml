@@ -240,4 +240,5 @@ en:
       activate: "Are you sure you want to activate this partner?"
       deactivate: "Are you sure want to de-activate this partner?"
     user:
-      delete: "Are you sure want to delete?"
+      delete: "Are you sure you want to delete?"
+
