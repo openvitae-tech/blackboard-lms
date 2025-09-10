@@ -68,7 +68,7 @@ class User < ApplicationRecord
   has_many :courses, through: :enrollments
   has_many :program_users, dependent: :destroy
   has_many :programs, through: :program_users
-  has_many :course_certificates, dependent: nil
+  has_many :course_certificates, dependent: :nullify
 
   belongs_to :team, optional: true
 
