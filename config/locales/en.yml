@@ -106,7 +106,11 @@ en:
     incorrect_phone: "Incorrect mobile number"
     incorrect_mobile_or_otp: "Incorrect mobile number or otp"
   invite:
+    placeholder_name: "Enter invitee name"
+    placeholder_phone: "Enter invitee mobile number"
+    modal_title: "Invite new user"
     invite_user: "Invite user"
+    download_csv: "Download sample csv file"
     max_user_count: "Reached maximum user count."
     bulk: "An invitation will be sent to each of the users in the input file"
     single: "Invitation sent to user."
