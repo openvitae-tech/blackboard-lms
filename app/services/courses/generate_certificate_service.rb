@@ -34,7 +34,7 @@ module Courses
     def render_html(certificate_template, data_map)
       certificate_template.html_content.gsub(/%\{(\w+)\}/) do
         key = Regexp.last_match(1).to_sym
-        data_map[key]
+        data_map.fetch(key) { "%{#{key}}" }
       end
     end
 
