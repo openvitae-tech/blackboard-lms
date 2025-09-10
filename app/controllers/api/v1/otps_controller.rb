@@ -7,7 +7,7 @@ module Api
 
       # special case added for compatibility with framer
       def generate_or_verify
-        params[:otp].present? ? verify : generate
+        (params[:otp].present? && params[:otp].is_a?(String)) ? verify : generate
       end
 
       def generate
