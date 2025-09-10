@@ -2,16 +2,14 @@
   <%= render "shared/components/form_errors", resource: certificate_template %>
   <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter certificate name", type: "text", width: "w-full") %>
   <div class="mt-6">
-    <%= input_field(
-          form: form,
+    <%= input_textarea_component(
+          form: ,
           field_name: :html_content,
           label: (
             "Html template<br>" \
             "<span class='body-extra-small-regular text-gray-500'>• Allowed variables: #{CertificateTemplate::ALLOWED_VARIABLES.map { |var| "%{#{var}}" }.join(', ')}</span>"
           ).html_safe,
           placeholder: "Enter html template",
-          type: "text_area",
-          width: "w-full",
           html_options: {
             data: {
               action: "input->certificate-preview#render",

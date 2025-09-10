@@ -1,23 +1,29 @@
-<div class="flex flex-col gap-4 <%= width %>">
+<div class="flex flex-col gap-4">
   <% if label.present? %>
     <label class="text-letter-color-light text-sm md:text-base leading-tight">
       <%= label %>
     </label>
   <% end %>
 
-  <% text_area_classes = "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:border focus:border-primary" %>
-  <% text_area_classes += " #{height}" if height.present? %>
-  <% html_options[:class] = [text_area_classes, html_options[:class]].compact.join(" ") %>
-
-  <% field_options = html_options.merge(placeholder: placeholder) %>
-  <% field_options[:rows] = rows if rows.present? %>
-  <% field_options[:value] = value if value.present? %>
-
-  <div class="bg-white rounded border border-line-colour">
+  <div class="bg-white rounded border border-line-colour flex items-center">
     <% if form.present? %>
-      <%= form.text_area field_name, field_options %>
+      <%= form.text_area field_name,
+        html_options.merge(
+          placeholder: placeholder,
+          rows: rows,
+          class: "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:border focus:border-primary"
+        ) do %>
+        <%= value %>
+      <% end %>
     <% else %>
-      <textarea placeholder="<%= placeholder %>" rows="<%= rows %>" class="<%= html_options[:class] %>"><%= value %></textarea>
+      <%= text_area_tag field_name,
+        value,
+        html_options.merge(
+          placeholder: placeholder,
+          rows: rows,
+          class: "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:border focus:border-primary"
+        )
+      %>
     <% end %>
   </div>
 </div>
