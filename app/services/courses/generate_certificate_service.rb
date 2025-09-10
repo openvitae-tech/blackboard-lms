@@ -12,7 +12,8 @@ module Courses
       certificate_id = SecureRandom.uuid
 
       pdf_file = generate_pdf(course, user, issued_at, certificate_template, certificate_id)
-      filename = "certificate-#{course.title}-#{user.name}.pdf"
+
+      filename = "certificate_#{sanitize_name(course.title)}_#{sanitize_name(user.name)}.pdf"
 
       certificate = user.course_certificates.new(
         course: course,
@@ -37,12 +38,11 @@ module Courses
       end
     end
 
-    def build_data_map(course, user, issued_at, certificate_id)
+    def build_data_map(course, user, issued_at)
       {
         CandidateName: user.name,
         CourseName: course.title,
-        IssueDate: issued_at,
-        CertificateId: certificate_id
+        IssueDate: issued_at.strftime('%d %B %Y')
       }
     end
 
@@ -64,15 +64,23 @@ module Courses
     end
 
     def generate_pdf(course, user, issued_at, certificate_template, certificate_id)
-      data_map = build_data_map(course, user, issued_at, certificate_id)
+      data_map = build_data_map(course, user, issued_at)
       html = render_html(certificate_template, data_map)
 
-      Grover.new(
+      pdf_data = Grover.new(
         html,
         emulate_media: 'screen',
         full_page: true,
         print_background: true
       ).to_pdf
+
+      pdf = CombinePDF.parse(pdf_data)
+      pdf.info[:certificate_id] = certificate_id
+      pdf.to_pdf
+    end
+
+    def sanitize_name(name)
+      name.strip.downcase.gsub(/\s+/, '_')
     end
   end
 end

@@ -6,7 +6,7 @@ class CreateCourseCertificates < ActiveRecord::Migration[8.0]
       t.string :certificate_id, null: false
 
       t.references :user, null: false, foreign_key: true
-      t.references :certificate_template, null: false, foreign_key: true
+      t.references :certificate_template, null: true, foreign_key: { on_delete: :nullify }
       t.references :course, null: false, foreign_key: true
       t.timestamps
     end

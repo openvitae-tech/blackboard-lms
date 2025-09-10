@@ -134,7 +134,7 @@ RSpec.describe 'Request spec for Certificate templates', type: :request do
     {
       certificate_template: {
         name: 'New Template',
-        html_content: '<div>Certificate for %{CandidateName} completing %{CourseName} on %{IssueDate}. Certificate ID: %{CertificateId}</div>' # rubocop:disable Style/FormatStringToken,Layout/LineLength
+        html_content: '<div>Certificate for %{CandidateName} completing %{CourseName} on %{IssueDate}.</div>' # rubocop:disable Style/FormatStringToken
       }
     }
   end

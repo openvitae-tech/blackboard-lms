@@ -9,7 +9,6 @@ FactoryBot.define do
       <<~HTML
         <div>
           Certificate for %{CandidateName} completing %{CourseName} on %{IssueDate}.
-          Certificate ID: %{CertificateId}
         </div>
       HTML
     end

@@ -9,5 +9,5 @@ class CourseCertificate < ApplicationRecord
 
   belongs_to :course
   belongs_to :user
-  belongs_to :certificate_template
+  belongs_to :certificate_template, optional: true
 end

@@ -75,7 +75,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_133618) do
     t.string "file_hash", null: false
     t.string "certificate_id", null: false
     t.bigint "user_id", null: false
-    t.bigint "certificate_template_id", null: false
+    t.bigint "certificate_template_id"
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -360,7 +360,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_133618) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "certificate_templates", "learning_partners"
-  add_foreign_key "course_certificates", "certificate_templates"
+  add_foreign_key "course_certificates", "certificate_templates", on_delete: :nullify
   add_foreign_key "course_certificates", "courses"
   add_foreign_key "course_certificates", "users"
   add_foreign_key "course_modules", "courses"

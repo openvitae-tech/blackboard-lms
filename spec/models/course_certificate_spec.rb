@@ -49,16 +49,6 @@ RSpec.describe CourseCertificate, type: :model do
     end
   end
 
-  describe '#certificate_template_id' do
-    it 'is not valid without user' do
-      course_certificate.certificate_template = nil
-
-      expect(course_certificate).not_to be_valid
-      expect(course_certificate.errors.full_messages.to_sentence).to eq(t('must_exist',
-                                                                          entity: 'Certificate template'))
-    end
-  end
-
   describe '#course_id' do
     it 'is not valid without user' do
       course_certificate.course = nil

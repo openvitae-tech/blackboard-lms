@@ -48,7 +48,7 @@ RSpec.describe CertificateTemplate, type: :model do
 
       expect(new_template).not_to be_valid
       expect(new_template.errors.full_messages.to_sentence).to eq(
-        'Html content is missing required variables: CourseName, CertificateId'
+        'Html content is missing required variables: CourseName'
       )
     end
   end
