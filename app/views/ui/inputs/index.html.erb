@@ -1,55 +1,57 @@
-<div class="my-6">
-  <%= render "shared/components/back_button", back_link: ui_components_path %>
-</div>
-<div class="heading heading-medium">Inputs</div>
-<ul class="my-6 flex flex-col gap-4">
-  <li>
-    <%= input_field(label: "Text Input", placeholder: "Enter text") %>
-  </li>
-  <li>
-    <%= input_field(label: "Text Input", placeholder: "Search here",left_icon: "magnifying-glass",) %>
-  </li>
-  <li>
-    <%= input_field(label: "Select an Option", type: "dropdown_field", options: ["Option 1", "Option 2", "Option 3"]) %>
-  </li>
-  <li>
-    <%= input_radio(label: "Radio Option", option:"A.English") %>
-  </li>
-
-  <li>
-    <%= form_with do |form| %>
-      <%= date_select_component(form:, field_name: :start_date) %>
-    <% end %>
-  </li>
-</ul>
-<h3>Form with fields</h3>
-<%= form_with model: User.new, url: courses_path, method: :post do |form| %>
+<div class="w-1/2 px-6">
+  <div class="my-6">
+    <%= render "shared/components/back_button", back_link: ui_components_path %>
+  </div>
+  <div class="heading heading-medium">Inputs</div>
   <ul class="my-6 flex flex-col gap-4">
-    <li>
-      <%= input_field(form:,label: "Text Input", placeholder: "Enter text") %>
-    </li>
-    <li class="">
-      <%= input_field(form:, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email") %>
-    </li>
-    <li class="">
-      <%= input_field(form:, field_name: :password, label: "Password", placeholder: "Enter password", type: "password") %>
-    </li>
-    <li class="">
-      <%= input_field(form:, field_name: :number, label: "Number", placeholder: "Enter number", type: "number") %>
-    </li>
-    <li>
-      <%= input_field(form:, label: "Select an Option", type: "dropdown_field", options: ["Option 1", "Option 2", "Option 3"]) %>
-    </li>
-    <li>
-      <%= input_radio(form:, label: "Radio Option", option:"A.English") %>
-    </li>
-    <li>
-      <%= input_checkbox(form:, field_name: :remember_me, label: "Remember me") %>
+    <li class="flex justify-between">
+      <%= input_field(label: "Text Input", placeholder: "Enter text") %>
+      <%= input_field(label: "Text Input with icon", placeholder: "Search here",left_icon: "magnifying-glass",) %>
 
     </li>
-    <li>
-      <%= input_dropdown(form:, field_name: :category_id, label: "Category", options: ["Option 1", "Option 2", "Option 3"]) %>
+    
+    <li class="flex justify-between">
+      <%= input_dropdown(label: "Category", options: ["Option 1", "Option 2", "Option 3"]) %>  
     </li>
+    <li class="flex flex-col">
+      <label class="text-letter-color-light text-sm md:text-base leading-tight">Radio Button</label>
+      <%= input_radio(label: "Radio Option", option:"A.English") %>
+    </li>
+
+    
   </ul>
-  <%= form.submit "Submit", disabled: true, class: "btn-primary" %>
-<% end %>
+  <h2>Form with fields</h2>
+  <%= form_with model: User.new, url: courses_path, method: :post do |form| %>
+    <ul class="my-6 flex flex-col gap-4">
+      <li class="flex justify-between">
+        <%= input_field(form:,label: "Text Input", placeholder: "Enter text") %>
+        <%= input_field(form:, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email") %>
+
+      </li>
+      <li class="flex justify-between">
+        <%= input_field(form:, field_name: :password, label: "Password", placeholder: "Enter password", type: "password") %>
+        <%= input_field(form:, field_name: :number, label: "Number", placeholder: "Enter number", type: "number") %>
+      </li>
+      <li class="flex flex-col">
+        <label class="text-letter-color-light text-sm md:text-base leading-tight">Radio Button</label>
+        <%= input_radio(form:, label: "Radio Option", option:"A.English") %>
+      </li>
+      <li class="flex flex-col gap-4">
+        <label class="text-letter-color-light text-sm md:text-base leading-tight">Check box</label>
+        <%= input_checkbox(form:, field_name: :remember_me, label: "Remember me") %>
+
+      </li>
+      <li class="flex justify-between">
+        <%= input_dropdown(form:, field_name: :category_id, label: "Category", options: ["Option 1", "Option 2", "Option 3"]) %>
+        <div class="w-56">
+          <%= form_with do |form| %>
+            <%= date_select_component(form:, field_name: :start_date) %>
+          <% end %>
+        </div>
+      </li>
+    </ul>
+    <div class="flex items-center justify-center">
+        <%= form.submit "Submit", disabled: true, class: "btn-primary" %>
+    </div>
+  <% end %>
+</div>
