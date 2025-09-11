@@ -1,14 +1,11 @@
 <%= form_with model: certificate_template, url: learning_partner_certificate_templates_path(learning_partner), data: { controller: "certificate-preview" } do |form| %>
   <%= render "shared/components/form_errors", resource: certificate_template %>
   <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter certificate name", type: "text", width: "w-full") %>
-  <div class="mt-6">
+  <div class="mt-6 flex flex-col">
     <%= input_textarea_component(
           form: form,
           field_name: :html_content,
-          label: (
-            "Html template<br>" \
-            "<span class='body-extra-small-regular text-gray-500'>• Allowed variables: #{CertificateTemplate::ALLOWED_VARIABLES.map { |var| "%{#{var}}" }.join(', ')}</span>"
-          ).html_safe,
+          label:  "Html template",
           placeholder: "Enter html template",
           html_options: {
             data: {
@@ -17,6 +14,7 @@
             }
           }
     )%>
+    <span class='body-extra-small-regular text-letter-color-light my-2'>• Allowed variables: #{CertificateTemplate::ALLOWED_VARIABLES.map { |var| "%{#{var}}" }.join(', ')}</span>
   </div>
 
   <div class="mt-6">
