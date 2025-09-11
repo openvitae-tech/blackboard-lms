@@ -9,17 +9,16 @@ module Courses
       return if existing_certificate.present?
 
       issued_at = Time.zone.today
-      certificate_id = SecureRandom.uuid
+      certificate_uuid = SecureRandom.uuid
 
-      pdf_file = generate_pdf(course, user, issued_at, certificate_template, certificate_id)
+      pdf_file = generate_pdf(course, user, issued_at, certificate_template, certificate_uuid)
 
       filename = "certificate_#{sanitize_name(course.title)}_#{sanitize_name(user.name)}.pdf"
 
       certificate = user.course_certificates.new(
         course: course,
-        certificate_template: certificate_template,
         issued_at: issued_at,
-        certificate_id:
+        certificate_uuid:
       )
 
       attach_file(certificate, pdf_file, filename)
@@ -63,7 +62,7 @@ module Courses
       )
     end
 
-    def generate_pdf(course, user, issued_at, certificate_template, certificate_id)
+    def generate_pdf(course, user, issued_at, certificate_template, certificate_uuid)
       data_map = build_data_map(course, user, issued_at)
       html = render_html(certificate_template, data_map)
 
@@ -75,7 +74,7 @@ module Courses
       ).to_pdf
 
       pdf = CombinePDF.parse(pdf_data)
-      pdf.info[:certificate_id] = certificate_id
+      pdf.info[:certificate_uuid] = certificate_uuid
       pdf.to_pdf
     end
 

@@ -34,7 +34,6 @@ RSpec.describe Courses::GenerateCertificateService do
 
       expect(certificate.course).to eq(course)
       expect(certificate.user).to eq(learner)
-      expect(certificate.certificate_template).to eq(certificate_template)
     end
 
     it 'sets file_hash correctly' do
@@ -53,11 +52,11 @@ RSpec.describe Courses::GenerateCertificateService do
         .to eq("certificate_#{sanitize_name(course.title)}_#{sanitize_name(learner.name)}.pdf")
     end
 
-    it 'sets certificate_id in the PDF info' do
+    it 'sets certificate_uuid in the PDF info' do
       subject.generate(course, learner, certificate_template)
 
       certificate = learner.course_certificates.find_by!(course:)
-      expect(@pdf_info[:certificate_id]).to eq(certificate.certificate_id)
+      expect(@pdf_info[:certificate_uuid]).to eq(certificate.certificate_uuid)
     end
   end
 

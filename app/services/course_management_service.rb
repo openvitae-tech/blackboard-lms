@@ -85,19 +85,7 @@ class CourseManagementService
     return unless course_completed?(enrollment)
 
     enrollment.complete_course!
-    EVENT_LOGGER.publish_course_completed(user, enrollment.course_id)
-    UserMailer.course_completed(user, course_module.course).deliver_later
-    NotificationService.notify(
-      user,
-      I18n.t('notifications.course.completed.title'),
-      format(I18n.t('notifications.course.completed.message'), title: course_module.course.title),
-      link: course_path(course_module.course)
-    )
-
-    return if user.learning_partner.active_certificate_template.blank?
-
-    GenerateCourseCertificateJob.perform_async(course_module.course.id, user.id,
-                                               user.learning_partner.active_certificate_template.id)
+    run_course_completed_hook(user, enrollment, course_module)
   end
 
   def set_lesson_attributes(_course_module, lesson)
@@ -221,5 +209,21 @@ class CourseManagementService
     index = ordering.find_index(record.id)
 
     ordering[index], ordering[index + 1] = ordering[index + 1], ordering[index] if ordering[index + 1].present?
+  end
+
+  def run_course_completed_hook(user, enrollment, course_module)
+    EVENT_LOGGER.publish_course_completed(user, enrollment.course_id)
+    UserMailer.course_completed(user, course_module.course).deliver_later
+    NotificationService.notify(
+      user,
+      I18n.t('notifications.course.completed.title'),
+      format(I18n.t('notifications.course.completed.message'), title: course_module.course.title),
+      link: course_path(course_module.course)
+    )
+
+    return if user.learning_partner.active_certificate_template.blank?
+
+    GenerateCourseCertificateJob.perform_async(course_module.course.id, user.id,
+                                               user.learning_partner.active_certificate_template.id)
   end
 end

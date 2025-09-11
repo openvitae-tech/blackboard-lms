@@ -3,10 +3,9 @@
 FactoryBot.define do
   factory :course_certificate do
     issued_at { Time.zone.today }
-    certificate_id { SecureRandom.uuid }
+    certificate_uuid { SecureRandom.uuid }
     user
     course
-    certificate_template
 
     after(:build) do |certificate|
       fixture_path = Rails.root.join('spec/fixtures/files/sample_course_certificate.pdf')

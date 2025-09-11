@@ -7,7 +7,7 @@ RSpec.describe CourseCertificate, type: :model do
   let(:learning_partner) { create(:learning_partner) }
   let(:course) { create :course }
   let(:certificate_template) { create(:certificate_template, learning_partner:) }
-  let(:course_certificate) { create(:course_certificate, course:, user: learner, certificate_template:) }
+  let(:course_certificate) { create(:course_certificate, course:, user: learner) }
 
   describe '#issued_at' do
     it 'is not valid without issued_at' do
@@ -29,13 +29,13 @@ RSpec.describe CourseCertificate, type: :model do
     end
   end
 
-  describe '#certificate_id' do
-    it 'is not valid without certificate_id' do
-      course_certificate.certificate_id = ''
+  describe '#certificate_uuid' do
+    it 'is not valid without certificate_uuid' do
+      course_certificate.certificate_uuid = ''
 
       expect(course_certificate).not_to be_valid
       expect(course_certificate.errors.full_messages.to_sentence).to eq(t('cant_blank',
-                                                                          field: 'Certificate'))
+                                                                          field: 'Certificate uuid'))
     end
   end
 
