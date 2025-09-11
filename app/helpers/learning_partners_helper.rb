@@ -6,6 +6,7 @@ module LearningPartnersHelper
       edit_partner_item(learning_partner),
       activate_partner_item(learning_partner),
       payment_plan_item(learning_partner),
+      certificate_templates_item(learning_partner),
       impersonate_partner_item(learning_partner),
       deactivate_partner_item(learning_partner)
     ].compact
@@ -43,6 +44,14 @@ module LearningPartnersHelper
       url: edit_learning_partner_payment_plan_path(learning_partner),
       type: :link,
       options: { data: { turbo_frame: 'modal' } }
+    )
+  end
+
+  def certificate_templates_item(learning_partner)
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: t('learning_partner.certificate_templates', default: 'Certificate templates'),
+      url: learning_partner_certificate_templates_path(learning_partner.id),
+      type: :link
     )
   end
 
