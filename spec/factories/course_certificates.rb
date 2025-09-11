@@ -17,7 +17,7 @@ FactoryBot.define do
       )
 
       file_contents = File.read(fixture_path)
-      certificate.file_hash = Digest::SHA256.hexdigest(file_contents)
+      certificate.file_hash = Digest::SHA256.hexdigest("#{file_contents}-#{SecureRandom.uuid}")
     end
   end
 end

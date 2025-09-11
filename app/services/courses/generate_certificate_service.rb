@@ -3,6 +3,7 @@
 module Courses
   class GenerateCertificateService
     include Singleton
+    include Rails.application.routes.url_helpers
 
     def generate(course, user, certificate_template)
       existing_certificate = user.course_certificates.find_by(course: course)
@@ -58,7 +59,7 @@ module Courses
         user,
         I18n.t('notifications.course.certificate.title'),
         format(I18n.t('notifications.course.certificate.message'), title: course.title),
-        link: ''
+        link: profile_path
       )
     end
 

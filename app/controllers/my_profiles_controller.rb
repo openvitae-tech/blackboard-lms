@@ -4,7 +4,7 @@ class MyProfilesController < ApplicationController
   before_action :set_course_certificates, only: :show
 
   def show
-    render
+    authorize :my_profile
   end
 
   private
