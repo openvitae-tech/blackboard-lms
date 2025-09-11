@@ -14,7 +14,7 @@
             }
           }
     )%>
-    <span class='body-extra-small-regular text-letter-color-light my-2'>• Allowed variables: #{CertificateTemplate::ALLOWED_VARIABLES.map { |var| "%{#{var}}" }.join(', ')}</span>
+    <span class='body-extra-small-regular text-letter-color-light my-2'>• Allowed variables: <%= CertificateTemplate::ALLOWED_VARIABLES.map { |var| "%{#{var}}" }.join(', ') %></span>
   </div>
 
   <div class="mt-6">
