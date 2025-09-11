@@ -75,6 +75,15 @@ module TeamsHelper
     learning_partner.banner.variant(resize_to_limit: [320, nil])
   end
 
+  def team_menu_items(team)
+    [
+      team_dashboard_item(team),
+      edit_team_item(team),
+      all_users_item(team),
+      generate_report_item(team)
+    ].compact
+  end
+
   private
 
   def resize_banner(banner, version)
@@ -86,15 +95,6 @@ module TeamsHelper
     else
       banner
     end
-  end
-
-  def team_menu_items(team)
-    [
-      team_dashboard_item(team),
-      edit_team_item(team),
-      all_users_item(team),
-      generate_report_item(team)
-    ].compact
   end
 
   def team_dashboard_item(team)
