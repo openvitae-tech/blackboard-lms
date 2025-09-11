@@ -215,3 +215,5 @@ en:
     invalid_report_type: "Invalid report type %{value}"
   record:
     empty: "There are no %{resource} to show."
+  common:
+    my_profile: "My Profile"

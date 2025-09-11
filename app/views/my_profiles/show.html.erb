@@ -1,0 +1,20 @@
+<div class="mt-2">
+  <%= heading_component(text: t("common.my_profile"), size: 'md') %>
+</div>
+<div class="mt-8">
+  <%= heading_component(text: "My Certificates", size: 'sm') %>
+</div>
+<div class="mt-2">
+  <div class="mx-auto mt-6 rounded-lg border border-secondary divide-y divide-secondary border-opacity-40 divide-opacity-40">
+    <% @course_certificates.each do |course_certificate| %>
+      <div class="flex items-center justify-between px-4 py-3">
+        <h2 class="body-extra-small-regular p-2"><%= course_certificate.course.title %></h2>
+        <div class="flex gap-2">
+          <%= link_to rails_blob_path(course_certificate.file, disposition: "attachment") do %>
+            <%= button(label: t("button.download"), type: "secondary", icon_name: "arrow-down-tray", icon_position: "right") %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
