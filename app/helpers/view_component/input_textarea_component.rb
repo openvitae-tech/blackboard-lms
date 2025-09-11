@@ -2,16 +2,24 @@
 
 module ViewComponent
   module InputTextareaComponent
-    def input_textarea_component(form: nil, field_name: nil, label: nil,
-                                 placeholder: nil, value: nil, rows: 5, html_options: {})
-      render partial: 'view_components/inputs/text_area', locals: {
-        form:,
-        field_name:,
-        label:,
-        placeholder:,
-        value:,
-        rows:,
-        html_options:
+    def input_textarea_component(
+      form:,
+      field_name:,
+      label:,
+      placeholder:,
+      rows: 5,
+      html_options: {}
+    )
+      html_options = html_options.merge(
+        placeholder: placeholder,
+        rows: rows
+      )
+
+      render partial: 'view_components/inputs/textarea', locals: {
+        form: form,
+        field_name: field_name,
+        label: label,
+        html_options: html_options
       }
     end
   end

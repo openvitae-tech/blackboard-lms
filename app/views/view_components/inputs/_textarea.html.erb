@@ -7,14 +7,10 @@
     <% end %>
   <% end %>
 
-
   <div class="bg-white rounded border border-line-colour flex items-center">
     <% if form.present? %>
       <%= form.text_area field_name,
         html_options.merge(
-          placeholder: placeholder,
-          rows: rows,
-          value: value.presence || form.object&.public_send(field_name),
           class: "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:border focus:border-primary"
         )
       %>
@@ -22,8 +18,6 @@
       <%= text_area_tag field_name,
         value,
         html_options.merge(
-          placeholder: placeholder,
-          rows: rows,
           class: "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:border focus:border-primary"
         )
       %>
