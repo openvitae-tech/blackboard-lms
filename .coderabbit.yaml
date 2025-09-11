@@ -5,6 +5,8 @@ reviews:
   estimate_code_review_effort: false
   related_prs: false
   related_issues: false
+  review_status: false
+  collapse_walkthrough: true
   poem: false
   suggested_reviewers: false
   assess_linked_issues: false
