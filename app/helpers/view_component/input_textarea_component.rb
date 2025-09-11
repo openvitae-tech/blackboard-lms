@@ -7,6 +7,7 @@ module ViewComponent
       field_name:,
       label:,
       placeholder:,
+      value: nil,
       rows: 5,
       html_options: {}
     )
@@ -19,6 +20,7 @@ module ViewComponent
         form: form,
         field_name: field_name,
         label: label,
+        value: value,
         html_options: html_options
       }
     end
