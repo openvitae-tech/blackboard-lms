@@ -1,0 +1,15 @@
+reviews:
+  high_level_summary: false
+  sequence_diagrams: false
+  changed_files_summary: false
+  estimate_code_review_effort: false
+  related_prs: false
+  related_issues: false
+  poem: false
+  suggested_reviewers: false
+  assess_linked_issues: false
+  auto_review:
+    auto_incremental_review: false
+  finishing_touches:
+    docstrings:
+      enabled: false
