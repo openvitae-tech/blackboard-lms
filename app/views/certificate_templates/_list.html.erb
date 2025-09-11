@@ -8,7 +8,11 @@
           </div>
         <% end %>
         <div class="absolute top-1 right-2 z-20">
-          <%= render "more_action", learning_partner: learning_partner, template: template, certificate_templates: certificate_templates %>
+          <%= menu_component(
+              menu_items: certificate_template_menu_items(learning_partner, template),
+              icon_class: "bg-white icon-base",
+              label_hover: "bg-secondary hover:opacity-80"
+          ) %>
         </div>
         <div class="flex-1 flex items-center justify-center p-2">
           <div class="w-full h-52 border-0 rounded bg-gray-50 overflow-hidden relative">
