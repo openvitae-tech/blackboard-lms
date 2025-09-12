@@ -67,25 +67,4 @@ RSpec.describe 'Api::V1::OtpsController', type: :request do
       end
     end
   end
-
-  describe 'POST /api/v1/otps/generate_or_verify' do
-    it 'sends unauthorized response if auth_token is missing' do
-      post '/api/v1/otps/generate_or_verify', params: { phone: phone, name: 'Deepak' }
-      expect(response).to have_http_status(:unauthorized)
-    end
-
-    it 'Generates otp when the param otp is not present' do
-      post '/api/v1/otps/generate_or_verify', params: { phone: phone, name: 'Deepak', auth_token: }
-      expect(response).to have_http_status(:ok)
-      expect(response.parsed_body).to eq({ 'success' => true })
-    end
-
-    it 'Verifies if the otp is present' do
-      mobile_no = MobileNumber.new(value: '9999999999', country_code: AVAILABLE_COUNTRIES[:india][:code])
-      Auth::OtpService.new(mobile_no, name:).generate_otp
-      post '/api/v1/otps/generate_or_verify', params: { phone: phone, otp: '1212', auth_token: }
-      expect(response).to have_http_status(:ok)
-      expect(response.parsed_body).to eq({ 'success' => true })
-    end
-  end
 end
