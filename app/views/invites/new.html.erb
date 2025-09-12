@@ -13,21 +13,21 @@
     <!-- admin cannot bulk import users, admin invites users to the top level team.
     Inviting in bulk can be done by managers or owners of the company -->
     <% if current_user.privileged_user? %>
-      <div class="flex items-center my-4">
+      <div class="my-4 flex items-center">
         <div class="flex-grow border-t border-line-colour"></div>
-        <span class="px-2 text-sm ">Or invite multiple learners to the team</span>
+        <span class="px-2 text-sm">Or invite multiple learners to the team</span>
         <div class="flex-grow border-t border-line-colour"></div>
       </div>
       <div>
         <%= link_to I18n.t("invite.download_csv"), download_invites_path, class: "nav-link", target: "_blank" %>
       </div>
-      <div class="flex flex-col gap-4 items-start justify-center w-full">
+      <div class="flex w-full flex-col items-start justify-center gap-4">
         <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:bulk_invite, class: "hidden", data: { forms_target: "fileInput" }) %>
       </div>
     <% end %>
-    <div class="flex flex-col gap-6 justify-between heading">
+    <div class="flex flex-col justify-between gap-6 heading">
       <%= form.button I18n.t("invite.invite_user"), class: "bg-primary text-white p-4 rounded" %>
-      <%= link_to 'Cancel', 'javascript:void(0);', class: 'text-center', data: { action: "click->modals#closeModal" } %>
+      <%= link_to I18n.t('button.cancel'), 'javascript:void(0);', class: 'text-center', data: { action: "click->modals#closeModal" } %>
     </div>
   <% end %>
 <% end %>
