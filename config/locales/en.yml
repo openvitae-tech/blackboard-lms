@@ -150,6 +150,15 @@ en:
     label: "Programs"
   tags:
     label: "Tags"
+  certificate_templates:
+    label: "Certificate templates"
+    certificate_template:
+      add: "Add certificate template"
+  my_profile:
+    label: "My Profile"
+    my_certificates:
+      label: "My Certificates"
+      certificates: "certificates"
   user:
     invalid_role: "%{value} is not a valid user role"
     invalid_state: "%{value} is not a valid user state"
@@ -162,6 +171,7 @@ en:
     deleted: "User deleted"
   page_not_found: "The page you're looking for is missing."
   learning_partner:
+    label: "Learning partner"
     activate: "Activate"
     block: "Block"
     payment_plan:
