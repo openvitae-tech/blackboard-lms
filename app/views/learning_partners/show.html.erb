@@ -7,11 +7,7 @@
       <% end %>
     <% end %>
     <%= render "commons/invite_user", learning_partner: @learning_partner, team: @learning_partner.parent_team %>
-    <%= menu_component(
-      menu_items: learning_partner_menu_items(@learning_partner),
-      icon_class: "bg-white icon-medium",
-      label_hover: "bg-secondary hover:opacity-80"
-    ) %>
+    <%= menu_component(menu_items: learning_partner_menu_items(@learning_partner), icon_class: "icon-medium" ) %>
   </div>
 </div>
 <div class="w-full mt-8">
