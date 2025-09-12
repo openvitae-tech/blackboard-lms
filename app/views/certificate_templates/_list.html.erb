@@ -28,10 +28,10 @@
 <% else %>
   <div class="flex flex-col items-center justify-center min-h-[70vh]">
     <h2 class="text-semibold pb-4">
-      <%= t("record.empty", resource: t("certificate_templates.index.title", default: "Certificate templates")) %>
+      <%= t("record.empty", resource: t("certificate_templates.label")) %>
     </h2>
     <%= link_to new_learning_partner_certificate_template_path(learning_partner) do %>
-      <%= button(label: t("certificate_templates.index.add", default: "Add certificate template"), icon_name: "plus") %>
+      <%= button(label: t("certificate_templates.certificate_template.add"), icon_name: "plus") %>
     <% end %>
   </div>
 <% end %>
