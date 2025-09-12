@@ -4,8 +4,8 @@
     <%= render "shared/components/form_errors", resource: quiz %>
     <div class="border border-line-colour-light p-8 rounded">
       <div class="mb-8 text-sm">
-        <%= input_field(form:, field_name: :question,label: "Description", placeholder: "Enter your question here...",type: "text_area", width:"w-full", rows:"2") %>
-      </div>      
+        <%= input_textarea_component(form:, field_name: :question, label: "Question", placeholder: "Enter your question here...", rows:"2") %>
+      </div>
       <div class="mb-4">
         <%= form.label "Answer options", class:"text-base font-medium" %>
       </div>
@@ -23,7 +23,7 @@
                 id: "opt-a",
               }
           ) %>
-            
+          
           </li>
           <li class="flex justify-between items-center w-full gap-2">
             <span class="text-letter-color-light text-sm">B.</span>
@@ -64,10 +64,10 @@
               }
           ) %>
           </li>
-        </ul> 
+        </ul>
       </div>
     </div>
-    
+
     <div class="my-8 text-sm flex gap-6 items-center">
       <div class="my-8">
         <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
