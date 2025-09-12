@@ -5,11 +5,6 @@ module Api
     class OtpsController < ApiController
       before_action :set_phone_number
 
-      # special case added for compatibility with framer
-      def generate_or_verify
-        (params[:otp].present? && params[:otp].is_a?(String)) ? verify : generate
-      end
-
       def generate
         service = Auth::OtpService.new(@phone, name: generate_auth_params[:name])
         if service.generate_otp
