@@ -10,6 +10,6 @@ class MyProfilesController < ApplicationController
   private
 
   def set_course_certificates
-    @course_certificates = current_user.course_certificates.with_attached_file.includes(:course)
+    @course_certificates = current_user.course_certificates.includes([:course, :file_attachment])
   end
 end

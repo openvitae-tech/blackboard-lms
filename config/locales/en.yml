@@ -171,6 +171,7 @@ en:
     deleted: "User deleted"
   page_not_found: "The page you're looking for is missing."
   learning_partner:
+    label: "Learning partner"
     activate: "Activate"
     block: "Block"
     payment_plan:
