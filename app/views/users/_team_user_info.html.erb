@@ -7,11 +7,7 @@
         <div class="flex space-x-3 items-start flex-shrink-0">
           <%= render 'users/user_state', user: user %>
 
-          <%= menu_component(
-            menu_items: member_menu_items(user),
-            icon_class: "member-more",
-            label_hover: "hover:bg-line-colour"
-          ) %>
+          <%= menu_component(menu_items: member_menu_items(user)) %>
         </div>
       </div>
 
