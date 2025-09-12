@@ -15,9 +15,9 @@
             <div class="md:flex md:items-center md:gap-4">
               <% if enrollment.present? && enrollment.module_progress(course_module) > 0 %>
                 <div class="bg-primary-light-50 h-1 w-[252px] rounded-full">
-                  <div class="bg-slate-grey-text h-1 rounded-full" style="width: <% enrollment.module_progress(course_module) %>%"></div>
+                  <div class="bg-slate-grey-50 h-1 rounded-full" style="width: <% enrollment.module_progress(course_module) %>%"></div>
                 </div>
-                <span class="text-slate-grey-text label-small"><%= enrollment.module_progress(course_module) %>%</span>
+                <span class="text-slate-grey-50 label-small"><%= enrollment.module_progress(course_module) %>%</span>
               <% else %>
                 <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
               <% end %>

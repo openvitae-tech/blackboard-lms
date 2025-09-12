@@ -100,7 +100,7 @@ export default class extends Controller {
   enableCompleteButton() {
     if (this.hasCompleteButtonTarget) {
       this.completeButtonFormTarget.classList.remove("disabled");
-      this.completeButtonTarget.classList.remove("bg-slate-grey-text", "hover:bg-slate-grey-light");
+      this.completeButtonTarget.classList.remove("bg-slate-grey-50", "hover:bg-slate-grey-light");
       this.completeButtonTarget.classList.add("bg-primary", "hover:bg-primary-light");
   
       const tooltip = this.completeButtonTarget.querySelector(".tooltip");
@@ -112,7 +112,7 @@ export default class extends Controller {
     if (this.hasCompleteButtonTarget) {
       this.completeButtonFormTarget.classList.add("disabled");
       this.completeButtonTarget.classList.remove("bg-primary", "hover:bg-primary-light");
-      this.completeButtonTarget.classList.add("bg-slate-grey-text", "hover:bg-slate-grey-light");
+      this.completeButtonTarget.classList.add("bg-slate-grey-50", "hover:bg-slate-grey-light");
  
       const tooltip = this.completeButtonTarget.querySelector(".tooltip");
       if (tooltip) tooltip.classList.remove("hidden");

@@ -6,11 +6,11 @@
           <%= program.name %>
         </p>
       <% end %>
-      <%= render 'shared/components/more_action', icon_class: 'bg-white icon-base', label_hover: "bg-slate-grey-text" do %>
+      <%= render 'shared/components/more_action', icon_class: 'bg-white icon-base', label_hover: "bg-slate-grey-50" do %>
         <div class="min-w-[10rem] bg-white flex flex-col">
           <%= link_to edit_program_path(program), data: { turbo_frame: "modal" } do %>
             <div class="hover:bg-primary-light-50 px-3 py-2 w-full">
-              <span class="text-slate-grey-text text-sm font-medium"><%= t("button.edit") %></span>
+              <span class="text-slate-grey-50 text-sm font-medium"><%= t("button.edit") %></span>
             </div>
           <% end %>
           <%= link_to confirm_destroy_program_path(program), data: { turbo_frame: "modal" } do %>
