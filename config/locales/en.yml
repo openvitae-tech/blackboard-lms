@@ -49,6 +49,7 @@ en:
     download: "Download"
     generate: "Generate"
     update: "Update"
+    share: "Share"
   alert:
     title: "Delete %{resource_name}?"
     description: "You are permanently deleting the <b>%{label}</b> %{resource_name}. This action can't be undone."
