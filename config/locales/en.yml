@@ -40,6 +40,9 @@ en:
     not_found: "The %{resource_name} is not found."
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
+  labels:
+    category: "Category"
+    name: "Name"
   button:
     edit: "Edit"
     delete: "Delete"
@@ -118,6 +121,7 @@ en:
     invite_sent: "Invitation sent to %{phone}"
     invalid_user: "Failed to invite user, are you sure that this user exists ?"
     exceeds_user_limit: "Can't add more than %{limit} users in your current plan."
+    invite_multiple_learners: "Or invite multiple learners to the team"
   local_content:
     video_not_found: "Video for %{lang} must exists"
     lang_exists: "%{lang} already exists"
