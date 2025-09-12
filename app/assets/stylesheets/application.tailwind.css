@@ -38,7 +38,7 @@ body {
   }
 
   .input-text-otp {
-    @apply h-14 rounded text-center text-xl font-semibold border-line-colour min-w-[70px] text-secondary focus:border-primary focus:ring-0;
+    @apply h-14 rounded text-center text-xl font-semibold border-line-colour min-w-[70px] text-slate-grey-50 focus:border-primary focus:ring-0;
   }
 
   .label-text {
@@ -101,18 +101,18 @@ body {
   }
 
   .btn-secondary-outline {
-    @apply rounded border px-4 text-center py-3.5 min-w-40 gap-2 border-line-colour text-secondary heading;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 gap-2 border-line-colour text-slate-grey-50 heading;
   }
 
   .btn-simple {
-    @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour text-secondary font-poppins;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-line-colour text-slate-grey-50 font-poppins;
     &:hover {
       @apply cursor-pointer opacity-95;
     }
   }
 
   .btn-secondary {
-    @apply rounded border px-4 text-center py-3.5 min-w-40 border-secondary bg-secondary text-white;
+    @apply rounded border px-4 text-center py-3.5 min-w-40 border-slate-grey-tex bg-slate-grey-50 text-white;
     &:hover {
       @apply cursor-pointer opacity-95;
     }
@@ -237,7 +237,7 @@ body {
   @apply text-xs font-normal md:text-sm font-poppins;
 
   &:hover {
-    @apply cursor-pointer text-secondary underline;
+    @apply cursor-pointer text-slate-grey-50 underline;
   }
 }
 
@@ -277,7 +277,7 @@ li.highlighted {
 
 input.tags-checkbox:checked,
 input.tags-checkbox:checked:focus {
-  @apply bg-secondary;
+  @apply bg-slate-grey-50;
 }
 
 input.tags-checkbox:focus,
@@ -294,7 +294,7 @@ input.tags-checkbox:checked:focus {
 }
 
 .teams-more-hover {
-  @apply bg-black hover:bg-secondary hover:opacity-80;
+  @apply bg-black hover:bg-slate-grey-50 hover:opacity-80;
 }
 
 .heading-extra-large {
