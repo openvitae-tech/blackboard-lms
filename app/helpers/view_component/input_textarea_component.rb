@@ -17,11 +17,11 @@ module ViewComponent
       )
 
       render partial: 'view_components/inputs/textarea', locals: {
-        form: form,
-        field_name: field_name,
-        label: label,
-        value: value,
-        html_options: html_options
+        form:,
+        field_name:,
+        label:,
+        value:,
+        html_options:
       }
     end
   end
