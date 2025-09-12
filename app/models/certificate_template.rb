@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CertificateTemplate < ApplicationRecord
-  ALLOWED_VARIABLES = %w[CandidateName CourseName IssueDate CertificateId].freeze
+  ALLOWED_VARIABLES = %w[CandidateName CourseName IssueDate].freeze
 
   validates :name, presence: true
   validates :html_content, presence: true

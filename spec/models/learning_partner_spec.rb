@@ -151,4 +151,14 @@ RSpec.describe LearningPartner, type: :model do
         .to include('Supported countries can only have one country')
     end
   end
+
+  describe '#active_certificate_template' do
+    before do
+      @certificate_template = create(:certificate_template, learning_partner:, active: true)
+    end
+
+    it 'return active certificate template' do
+      expect(learning_partner.active_certificate_template).to eq(@certificate_template)
+    end
+  end
 end

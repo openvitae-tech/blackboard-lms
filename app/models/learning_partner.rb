@@ -36,6 +36,10 @@ class LearningPartner < ApplicationRecord
     save!
   end
 
+  def active_certificate_template
+    certificate_templates.find_by!(active: true)
+  end
+
   private
 
   def supported_countries_must_be_valid

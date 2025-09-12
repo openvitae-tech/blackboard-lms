@@ -181,6 +181,9 @@ en:
       per_user_amount: "Per user amount (₹)"
   notifications:
     course:
+      certificate:
+        title: "Course certificate generated"
+        message: "Certificate for the course %{title} has been generated"
       enrolled:
         title: "Course enrolled"
         message: "You are enrolled for a new course %{title}"
