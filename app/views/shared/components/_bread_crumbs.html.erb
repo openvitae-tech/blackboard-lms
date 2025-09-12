@@ -1,5 +1,5 @@
 <div class="mt-4 mb-4 heading">
-  <ol class="flex items-start space-x-2 text-secondary text-xs">
+  <ol class="flex items-start space-x-2 text-slate-grey-text text-xs">
     <% if local_assigns[:title].present? %>
       <li class="flex items-center space-x-1">
         <span class="flex items-center">
@@ -26,7 +26,7 @@
           <% if link.present? %>
             <%= link_to title, link, class: 'hover:pointer hover:underline hover:text-primary whitespace-nowrap' %>
           <% else %>
-            <span class="text-secondary"><%= title %></span>
+            <span class="text-slate-grey-text"><%= title %></span>
           <% end %>
         </span>
       </li>

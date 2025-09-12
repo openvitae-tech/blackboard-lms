@@ -14,20 +14,20 @@
       <%= render 'shared/components/more_action', icon_class: 'teams-more', label_hover: "teams-more-hover" do %>
         <% if policy(:dashboard).index? %>
           <%= link_to dashboard_path(team_id: team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2' do %>
-            <span class="text-secondary text-xs font-medium">Team dashboard</span>
+            <span class="text-slate-grey-text text-xs font-medium">Team dashboard</span>
           <% end %>
         <% end %>
         <% if policy(team).edit? %>
           <%= link_to edit_team_path(team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2', data: { turbo_frame: "modal" } do %>
-            <span class="text-secondary text-xs font-medium">Edit</span>
+            <span class="text-slate-grey-text text-xs font-medium">Edit</span>
           <% end %>
         <% end %>
         <%= link_to all_users_team_path(team), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2' do %>
-          <span class="text-secondary text-xs font-medium">View all users</span>
+          <span class="text-slate-grey-text text-xs font-medium">View all users</span>
         <% end %>
         <% if policy(:report).new? %>
           <%= link_to new_report_path(team_id: team.id), class: 'text-xs cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left whitespace-nowrap break-words flex gap-2', data: { turbo_frame: "modal" } do %>
-            <span class="text-secondary text-xs font-medium">Generate Report</span>
+            <span class="text-slate-grey-text text-xs font-medium">Generate Report</span>
           <% end %>
         <% end %>
       <% end %>
