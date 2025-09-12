@@ -1,33 +1,33 @@
-<%= render "shared/components/modal", modalTitle: I18n.t('invite.modal_title') do %>
+<%= render "shared/components/modal", modalTitle: t('invite.modal_title') do %>
   <%= form_with(url: invites_path, method: :post, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
     <%= render "shared/components/form_errors", resource: @user %>
     <%= form.hidden_field :team_id %>
 
-    <%= input_field(form:, field_name: :name, label: "Name", placeholder: I18n.t('invite.placeholder_name'), type: "text", width: "w-full") %>
+    <%= input_field(form:, field_name: :name, label: t("labels.name"), placeholder: t('invite.placeholder_name'), type: "text", width: "w-full") %>
     <div class="flex flex-row gap-2">
       <%= input_field(form:, field_name: :country_code, value: get_country_code(@team.learning_partner.supported_countries), width: "w-24", html_options: { readonly: true }) %>
-      <%= input_mobile(form:, field_name: :phone, placeholder: I18n.t('invite.placeholder_phone'), html_options: { required: false }) %>
+      <%= input_mobile(form:, field_name: :phone, placeholder: t('invite.placeholder_phone'), html_options: { required: false }) %>
     </div>
-    <%= input_dropdown(form:, field_name: :role, label: "Category", options: user_role_mapping_for_partner(current_user, @team), width: "w-full") %>
+    <%= input_dropdown(form:, field_name: :role, label: t("labels.category"), options: user_role_mapping_for_partner(current_user, @team), width: "w-full") %>
 
     <!-- admin cannot bulk import users, admin invites users to the top level team.
     Inviting in bulk can be done by managers or owners of the company -->
     <% if current_user.privileged_user? %>
       <div class="my-4 flex items-center">
         <div class="flex-grow border-t border-line-colour"></div>
-        <span class="px-2 text-sm">Or invite multiple learners to the team</span>
+        <span class="px-2 text-sm"><%= t("invite.invite_multiple_learners") %></span>
         <div class="flex-grow border-t border-line-colour"></div>
       </div>
       <div>
-        <%= link_to I18n.t("invite.download_csv"), download_invites_path, class: "nav-link", target: "_blank" %>
+        <%= link_to t("invite.download_csv"), download_invites_path, class: "nav-link", target: "_blank" %>
       </div>
       <div class="flex w-full flex-col items-start justify-center gap-4">
         <%= render 'shared/components/file_select', hidden_file_field: form.file_field(:bulk_invite, class: "hidden", data: { forms_target: "fileInput" }) %>
       </div>
     <% end %>
     <div class="flex flex-col justify-between gap-6 heading">
-      <%= form.button I18n.t("invite.invite_user"), class: "bg-primary text-white p-4 rounded" %>
-      <%= link_to I18n.t('button.cancel'), 'javascript:void(0);', class: 'text-center', data: { action: "click->modals#closeModal" } %>
+      <%= form.button t("invite.invite_user"), class: "bg-primary text-white p-4 rounded" %>
+      <%= link_to t('button.cancel'), 'javascript:void(0);', class: 'text-center', data: { action: "click->modals#closeModal" } %>
     </div>
   <% end %>
 <% end %>
