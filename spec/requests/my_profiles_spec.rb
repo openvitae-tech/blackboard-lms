@@ -35,4 +35,13 @@ RSpec.describe 'Request spec for MyProfiles', type: :request do
       expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
     end
   end
+
+  describe 'GET /share_certificate' do
+    it 'allow access to sharing course certificate' do
+      get share_certificate_profile_path, params: { certificate_id: @course_certificate_one.id }
+
+      expect(response.status).to be(200)
+      expect(response).to render_template(:share_certificate)
+    end
+  end
 end

@@ -13,7 +13,7 @@ RSpec.describe Courses::GenerateCertificateService do
   before do
     @fake_pdf = "%PDF-1.4\n1 0 obj\n<<>>\nendobj\ntrailer\n<<>>\n%%EOF"
 
-    grover_double = instance_double(Grover, to_pdf: @fake_pdf)
+    grover_double = instance_double(Grover, to_pdf: @fake_pdf, to_jpeg: 'fake_jpeg_data')
     allow(Grover).to receive(:new).and_return(grover_double)
 
     @pdf_info = {}
@@ -50,6 +50,15 @@ RSpec.describe Courses::GenerateCertificateService do
       expect(certificate.file).to be_attached
       expect(certificate.file.filename.to_s)
         .to eq("certificate_#{sanitize_name(course.title)}_#{sanitize_name(learner.name)}.pdf")
+    end
+
+    it 'attaches a certificate thumbnail' do
+      subject.generate(course, learner, certificate_template)
+      certificate = learner.course_certificates.find_by!(course:)
+
+      expect(certificate.certificate_thumbnail).to be_attached
+      expect(certificate.certificate_thumbnail.filename.to_s)
+        .to eq("certificate_#{sanitize_name(course.title)}_#{sanitize_name(learner.name)}.jpeg")
     end
 
     it 'sets certificate_uuid in the PDF info' do

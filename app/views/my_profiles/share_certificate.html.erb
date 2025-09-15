@@ -1,0 +1,6 @@
+<%= render "shared/components/modal", modalTitle: "Certificate" do %>
+  <%= image_tag @course_certificate.certificate_thumbnail, alt: "Course certificate" %>
+  <div class="flex justify-center p-6">
+    <%= link_to 'Share on LinkedIn', linkedin_share_url(@course_certificate.certificate_uuid), class: 'body-extra-small-medium w-full hover:cursor-pointer btn-primary', target: "_blank" %>
+  </div>
+<% end %>

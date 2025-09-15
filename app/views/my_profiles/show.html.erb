@@ -13,7 +13,7 @@
           <%= link_to rails_blob_path(course_certificate.file, disposition: "attachment") do %>
             <%= button(label: t("button.download"), type: "secondary", icon_name: "arrow-down-tray", icon_position: "right") %>
           <% end %>
-          <%= link_to "" do %>
+          <%= link_to share_certificate_profile_path(certificate_id: course_certificate.id), data: { turbo_frame: "modal" } do %>
             <%= button(label: t("button.share"), type: "primary", icon_name: "arrow-down-tray", icon_position: "right") %>
           <% end %>
         </div>

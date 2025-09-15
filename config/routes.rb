@@ -65,7 +65,14 @@ Rails.application.routes.draw do
 
   resources :events, only: :index
   resources :tags, except: :show
-  resource :profile, only: :show, controller: 'my_profiles'
+  resource :profile, only: :show, controller: 'my_profiles' do
+    collection do
+      get :share_certificate
+    end
+  end
+
+  resources :certificates, only: :show
+
   resource :alert_modal, only: :show, controller: 'commons/alert_modal'
 
   resources :courses do
