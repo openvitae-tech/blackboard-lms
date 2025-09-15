@@ -1,0 +1,26 @@
+<div class="flex flex-col gap-4">
+  <% if label.present? %>
+    <% if form.present? %>
+      <%= form.label field_name, label, class: "text-letter-color-light text-sm md:text-base leading-tight" %>
+    <% else %>
+      <%= label_tag field_name, label, class: "text-letter-color-light text-sm md:text-base leading-tight" %>
+    <% end %>
+  <% end %>
+
+  <div class="bg-white rounded border border-line-colour flex items-center">
+    <% if form.present? %>
+      <%= form.text_area field_name,
+        html_options.merge(
+          class: "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:border focus:border-primary"
+        )
+      %>
+    <% else %>
+      <%= text_area_tag field_name,
+        value,
+        html_options.merge(
+          class: "w-full text-letter-color-light text-base px-4 py-3 border-none rounded focus:border focus:border-primary"
+        )
+      %>
+    <% end %>
+  </div>
+</div>
