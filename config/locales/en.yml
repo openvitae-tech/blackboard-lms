@@ -40,6 +40,9 @@ en:
     not_found: "The %{resource_name} is not found."
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
+  labels:
+    category: "Category"
+    name: "Name"
   button:
     edit: "Edit"
     delete: "Delete"
@@ -106,7 +109,11 @@ en:
     incorrect_phone: "Incorrect mobile number"
     incorrect_mobile_or_otp: "Incorrect mobile number or otp"
   invite:
+    placeholder_name: "Enter invitee name"
+    placeholder_phone: "Enter invitee mobile number"
+    modal_title: "Invite new user"
     invite_user: "Invite user"
+    download_csv: "Download sample csv file"
     max_user_count: "Reached maximum user count."
     bulk: "An invitation will be sent to each of the users in the input file"
     single: "Invitation sent to user."
@@ -114,6 +121,7 @@ en:
     invite_sent: "Invitation sent to %{phone}"
     invalid_user: "Failed to invite user, are you sure that this user exists ?"
     exceeds_user_limit: "Can't add more than %{limit} users in your current plan."
+    invite_multiple_learners: "Or invite multiple learners to the team"
   local_content:
     video_not_found: "Video for %{lang} must exists"
     lang_exists: "%{lang} already exists"
