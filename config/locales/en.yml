@@ -168,6 +168,7 @@ en:
     my_certificates:
       label: "My Certificates"
       certificates: "certificates"
+      share_on_linkedin: "Share on LinkedIn"
   user:
     invalid_role: "%{value} is not a valid user role"
     invalid_state: "%{value} is not a valid user state"
