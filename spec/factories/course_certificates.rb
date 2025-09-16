@@ -19,7 +19,7 @@ FactoryBot.define do
 
       certificate.certificate_thumbnail.attach(
         io: thumbnail_path.open,
-        filename: "certificate-#{certificate.course.title}-#{certificate.user.name}.pdf",
+        filename: "certificate-#{certificate.course.title}-#{certificate.user.name}.jpeg",
         content_type: 'image/jpeg'
       )
 
