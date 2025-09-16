@@ -68,3 +68,7 @@ production:
   <<: *default_settings
   app_name: '<%= Rails.application.credentials.dig(:org_name) %> (Production)'
 
+staging:
+  <<: *default_settings
+  app_name: '<%= Rails.application.credentials.dig(:org_name) %> (Staging)'
+
