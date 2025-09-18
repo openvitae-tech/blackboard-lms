@@ -85,3 +85,6 @@ docker:
 
 production:
   <<: *default
+
+staging:
+  <<: *default
