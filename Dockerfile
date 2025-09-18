@@ -34,10 +34,13 @@ RUN bundle exec bootsnap precompile --gemfile
 
 # The following steps are no longer needed with importmap
 # COPY package.json package-lock.json ./
-# RUN npm install
 
 # Copy application code
 COPY . .
+
+ENV HUSKY=0
+RUN npm install
+
 #
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
@@ -49,9 +52,17 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Final stage for app image
 FROM base
 # Install packages needed for deployment
+RUN apt-get update && apt-get install -y curl gnupg && \
+    curl -fsSL https://deb.nodesource.com/setup_22.19.0 | bash - && \
+    apt-get install -y nodejs
+
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips  && \
+    apt-get install --no-install-recommends -y curl libvips chromium && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV GROVER_NO_SANDBOX=true
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
