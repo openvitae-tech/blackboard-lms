@@ -15,4 +15,4 @@ jobs:
         run: |
           # Replace with your actual API endpoint and data
           API_ENDPOINT="${{ secrets.STAGING_BUILD_WEBHOOK }}&cause=merge&merged_by=${{ github.actor }}&ref=${{ github.ref }}&sha=${{ github.sha }}"
-          curl $API_ENDPOINT
+          curl -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_USER_PASSWORD }}" "$API_ENDPOINT"
