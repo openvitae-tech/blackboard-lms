@@ -34,24 +34,53 @@ RUN bundle exec bootsnap precompile --gemfile
 
 # The following steps are no longer needed with importmap
 # COPY package.json package-lock.json ./
-# RUN npm install
 
 # Copy application code
 COPY . .
-#
+
+# Skip Husky installation
+ENV HUSKY=0
+# Skip Chromium download
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+# Install Node.js dependencies
+RUN npm install
+
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 #
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-#
-#
-# Final stage for app image
+
+
+# ------------------------------
+# Node fetch stage – pulls official Node ARM64 binary
+# ------------------------------
+
+FROM debian:bookworm-slim AS node-fetch
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl ca-certificates xz-utils && \
+    curl -fsSLO https://nodejs.org/dist/v22.19.0/node-v22.19.0-linux-arm64.tar.xz && \
+    tar -xJf node-v22.19.0-linux-arm64.tar.xz -C /usr/local --strip-components=1 && \
+    rm node-v22.19.0-linux-arm64.tar.xz && \
+    rm -rf /var/lib/apt/lists/*
+
+# -------------------------------------------------------------------
+# # Final stage for app image
+# -------------------------------------------------------------------
+
 FROM base
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips  && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+    apt-get install --no-install-recommends -y libvips chromium && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy Node from node-fetch stage
+COPY --from=node-fetch /usr/local /usr/local
+
+# Set environment variables for Puppeteer/Grover to use system Chromium
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+#Run Grover in no-sandbox mode
+ENV GROVER_NO_SANDBOX=true
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle

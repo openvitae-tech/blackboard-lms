@@ -1,0 +1,16 @@
+{
+  "name": "blackboard-lms",
+  "devDependencies": {
+    "husky": "^9.1.6"
+  },
+  "engines": {
+    "node": "22.19.0"
+  },
+  "scripts": {
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "flowbite": "^3.1.2",
+    "puppeteer": "^24.18.0"
+  }
+}
