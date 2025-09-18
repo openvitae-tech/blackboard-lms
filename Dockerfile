@@ -39,6 +39,7 @@ RUN bundle exec bootsnap precompile --gemfile
 COPY . .
 
 ENV HUSKY=0
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 RUN npm install
 
 #
@@ -52,16 +53,16 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Final stage for app image
 FROM base
 # Install packages needed for deployment
-RUN apt-get update && apt-get install -y curl gnupg && \
-    curl -fsSL https://deb.nodesource.com/setup_22.19.0 | bash - && \
-    apt-get install -y nodejs
-
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips chromium && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+    apt-get install --no-install-recommends -y \
+      curl libvips chromium ca-certificates xz-utils && \
+    curl -fsSLO https://nodejs.org/dist/v22.19.0/node-v22.19.0-linux-arm64.tar.xz && \
+    tar -xJf node-v22.19.0-linux-arm64.tar.xz -C /usr/local --strip-components=1 && \
+    rm node-v22.19.0-linux-arm64.tar.xz && \
+    apt-get purge -y --auto-remove curl xz-utils && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV GROVER_NO_SANDBOX=true
 
 # Copy built artifacts: gems, application
