@@ -56,3 +56,5 @@ docker-build
 .vscode
 .DS_STORE
 .vscode
+
+/config/credentials/staging.key
