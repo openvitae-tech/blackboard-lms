@@ -38,8 +38,11 @@ RUN bundle exec bootsnap precompile --gemfile
 # Copy application code
 COPY . .
 
+# Skip Husky installation
 ENV HUSKY=0
+# Skip Chromium download
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+# Install Node.js dependencies
 RUN npm install
 
 # Precompile bootsnap code for faster boot times
@@ -52,6 +55,7 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # ------------------------------
 # Node fetch stage – pulls official Node ARM64 binary
 # ------------------------------
+
 FROM debian:bookworm-slim AS node-fetch
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl ca-certificates xz-utils && \
@@ -60,7 +64,10 @@ RUN apt-get update -qq && \
     rm node-v22.19.0-linux-arm64.tar.xz && \
     rm -rf /var/lib/apt/lists/*
 
-# Final stage for app image
+# -------------------------------------------------------------------
+# # Final stage for app image
+# -------------------------------------------------------------------
+
 FROM base
 # Install packages needed for deployment
 RUN apt-get update -qq && \
@@ -70,7 +77,9 @@ RUN apt-get update -qq && \
 # Copy Node from node-fetch stage
 COPY --from=node-fetch /usr/local /usr/local
 
+# Set environment variables for Puppeteer/Grover to use system Chromium
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+#Run Grover in no-sandbox mode
 ENV GROVER_NO_SANDBOX=true
 
 # Copy built artifacts: gems, application
