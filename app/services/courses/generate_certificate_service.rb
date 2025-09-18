@@ -76,7 +76,8 @@ module Courses
         html,
         emulate_media: 'screen',
         full_page: false,
-        print_background: true
+        print_background: true,
+        landscape: true
       )
     end
 
