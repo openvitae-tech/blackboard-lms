@@ -33,6 +33,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/*.key
+/config/database.yml
 /config/*.enc
 /config/credentials/*.enc
 

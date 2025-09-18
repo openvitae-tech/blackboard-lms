@@ -7,7 +7,5 @@ docker:
   <<: *default
 production:
   <<: *default
-staging:
-  <<: *default
 :queues:
   - default
