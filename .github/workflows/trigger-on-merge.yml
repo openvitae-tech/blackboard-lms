@@ -1,0 +1,23 @@
+name: Trigger staging deployment on merging to main
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main # Specify the target branch
+
+jobs:
+  call_api:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make API Call
+        run: |
+          # Replace with your actual API endpoint and data
+          API_ENDPOINT="${{ secrets.STAGING_BUILD_WEBHOOK }}"
+          PAYLOAD='{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "merged_by": "${{ github.actor }}"}'
+          
+          curl -X POST \
+               -H "Content-Type: application/json" \
+               -d "$PAYLOAD" \
+               "$API_ENDPOINT"
