@@ -5,7 +5,17 @@ development:
 test:
   adapter: test
 
+docker:
+  adapter: redis
+  url: <%= Rails.application.credentials.dig(:redis, :url) %>
+  channel_prefix: blackboard_production
+
 production:
+  adapter: redis
+  url: <%= Rails.application.credentials.dig(:redis, :url) %>
+  channel_prefix: blackboard_production
+
+staging:
   adapter: redis
   url: <%= Rails.application.credentials.dig(:redis, :url) %>
   channel_prefix: blackboard_production
