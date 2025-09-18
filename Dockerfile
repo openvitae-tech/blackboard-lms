@@ -42,25 +42,33 @@ ENV HUSKY=0
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 RUN npm install
 
-#
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 #
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-#
-#
+
+
+# ------------------------------
+# Node fetch stage – pulls official Node ARM64 binary
+# ------------------------------
+FROM debian:bookworm-slim AS node-fetch
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl ca-certificates xz-utils && \
+    curl -fsSLO https://nodejs.org/dist/v22.19.0/node-v22.19.0-linux-arm64.tar.xz && \
+    tar -xJf node-v22.19.0-linux-arm64.tar.xz -C /usr/local --strip-components=1 && \
+    rm node-v22.19.0-linux-arm64.tar.xz && \
+    rm -rf /var/lib/apt/lists/*
+
 # Final stage for app image
 FROM base
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y \
-      curl libvips chromium ca-certificates xz-utils && \
-    curl -fsSLO https://nodejs.org/dist/v22.19.0/node-v22.19.0-linux-arm64.tar.xz && \
-    tar -xJf node-v22.19.0-linux-arm64.tar.xz -C /usr/local --strip-components=1 && \
-    rm node-v22.19.0-linux-arm64.tar.xz && \
-    apt-get purge -y --auto-remove curl xz-utils && \
-    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+    apt-get install --no-install-recommends -y libvips chromium && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy Node from node-fetch stage
+COPY --from=node-fetch /usr/local /usr/local
 
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 ENV GROVER_NO_SANDBOX=true
