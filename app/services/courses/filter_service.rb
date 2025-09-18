@@ -91,7 +91,6 @@ module Courses
 
       scope.includes(%i[banner_attachment tags])
            .order(created_at: :desc)
-           .limit(Course::PER_PAGE_LIMIT)
     end
 
     def fetch_levels_and_categories_for(tags)
