@@ -29,4 +29,4 @@ s3_public_assets_store:
   bucket: <%= Rails.application.credentials.dig(:storage, :aws, :default_bucket) %>
   upload:
     public: true
-    key: <%= Rails.env %>
+    prefix: <%= Rails.env %>
