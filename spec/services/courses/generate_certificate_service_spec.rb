@@ -46,19 +46,23 @@ RSpec.describe Courses::GenerateCertificateService do
     it 'attaches a pdf file' do
       subject.generate(course, learner, certificate_template)
       certificate = learner.course_certificates.find_by!(course:)
+      expected_filename = "certificate_#{certificate.certificate_uuid}_" \
+                          "#{sanitize_name(course.title)}_" \
+                          "#{sanitize_name(learner.name)}.pdf"
 
       expect(certificate.file).to be_attached
-      expect(certificate.file.filename.to_s)
-        .to eq("certificate_#{sanitize_name(course.title)}_#{sanitize_name(learner.name)}.pdf")
+      expect(certificate.file.filename.to_s).to eq(expected_filename)
     end
 
     it 'attaches a certificate thumbnail' do
       subject.generate(course, learner, certificate_template)
       certificate = learner.course_certificates.find_by!(course:)
+      expected_filename = "certificate_#{certificate.certificate_uuid}_" \
+                          "#{sanitize_name(course.title)}_" \
+                          "#{sanitize_name(learner.name)}.jpeg"
 
       expect(certificate.certificate_thumbnail).to be_attached
-      expect(certificate.certificate_thumbnail.filename.to_s)
-        .to eq("certificate_#{sanitize_name(course.title)}_#{sanitize_name(learner.name)}.jpeg")
+      expect(certificate.certificate_thumbnail.filename.to_s).to eq(expected_filename)
     end
 
     it 'sets certificate_uuid in the PDF info' do
