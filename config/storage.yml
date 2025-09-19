@@ -27,6 +27,4 @@ s3_public_assets_store:
   secret_access_key: <%= Rails.application.credentials.dig(:storage, :aws, :secret_access_key) %>
   region: <%= Rails.application.credentials.dig(:storage, :aws, :region) %>
   bucket: <%= Rails.application.credentials.dig(:storage, :aws, :default_bucket) %>
-  upload:
-    public: true
-    prefix: <%= Rails.env %>
+  public: true
