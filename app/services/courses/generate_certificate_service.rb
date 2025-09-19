@@ -47,7 +47,8 @@ module Courses
       certificate.certificate_thumbnail.attach(
         io: StringIO.new(jpeg_file),
         filename: filename,
-        content_type: 'image/jpeg'
+        content_type: 'image/jpeg',
+        service_name: upload_service
       )
     end
 
@@ -90,14 +91,22 @@ module Courses
 
     def build_data_map(course, user, issued_at)
       {
-        CandidateName: user.name,
-        CourseName: course.title,
+        CandidateName: user.name.titleize,
+        CourseName: course.title.titleize,
         IssueDate: issued_at.strftime('%d %B %Y')
       }
     end
 
     def sanitize_name(name)
       name.strip.downcase.gsub(/\s+/, '_')
+    end
+
+    def upload_service
+      if %w[production staging].include?(Rails.env)
+        :s3_public_assets_store
+      else
+        :local
+      end
     end
   end
 end
