@@ -28,4 +28,3 @@ s3_public_assets_store:
   region: <%= Rails.application.credentials.dig(:storage, :aws, :region) %>
   bucket: <%= Rails.application.credentials.dig(:storage, :aws, :default_bucket) %>
   public: true
-  prefix: <%= Rails.env %>

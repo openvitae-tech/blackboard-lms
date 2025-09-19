@@ -14,8 +14,10 @@ module Courses
 
       pdf_file = generate_pdf(course, user, issued_at, certificate_template, certificate_uuid)
 
-      filename = "certificate_#{sanitize_name(course.title)}_#{sanitize_name(user.name)}.pdf"
-      thumbnail_filename = "certificate_#{sanitize_name(course.title)}_#{sanitize_name(user.name)}.jpeg"
+      filename = "certificate_#{certificate_uuid}_#{sanitize_name(course.title)}_#{sanitize_name(user.name)}.pdf"
+      thumbnail_filename = "certificate_#{certificate_uuid}_" \
+                           "#{sanitize_name(course.title)}_" \
+                           "#{sanitize_name(user.name)}.jpeg"
 
       certificate = user.course_certificates.new(
         course: course,
@@ -48,7 +50,8 @@ module Courses
         io: StringIO.new(jpeg_file),
         filename: filename,
         content_type: 'image/jpeg',
-        service_name: upload_service
+        service_name: upload_service,
+        key: "public/#{Rails.env}/certs/#{filename}"
       )
     end
 
