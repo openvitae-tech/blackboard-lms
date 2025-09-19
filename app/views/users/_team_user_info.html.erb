@@ -6,20 +6,8 @@
 
         <div class="flex space-x-3 items-start flex-shrink-0">
           <%= render 'users/user_state', user: user %>
-          <%= render 'shared/components/more_action', icon_class: 'member-more', label_hover: "hover:bg-line-colour" do %>
-            <% if policy(user).deactivate? %>
-              <%= link_to 'Deactivate', deactivate_member_path(user), class: 'block text-xs whitespace-nowrap cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left', data: { turbo_frame: "modal" } %>
-            <% end %>
-            <% if policy(user).activate? %>
-              <%= link_to 'Activate', activate_member_path(user), class: 'block text-xs whitespace-nowrap cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left', data: { turbo_frame: "modal" } %>
-            <% end %>
-            <% if policy(user).destroy? %>
-              <%= link_to 'Delete', member_path, method: :delete, class: 'block text-xs whitespace-nowrap cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left', data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?" } %>
-            <% end %>
-            <% if policy(user).change_team? %>
-              <%= link_to 'Change team', change_team_member_path, class: 'block text-xs whitespace-nowrap cursor-pointer px-4 py-2 hover:bg-primary-light-50 w-full text-left', data: { turbo_frame: "modal" } %>
-            <% end %>
-          <% end %>
+
+          <%= menu_component(menu_items: member_menu_items(user)) %>
         </div>
       </div>
 
