@@ -75,7 +75,7 @@ module Courses
       Grover.new(
         html,
         emulate_media: 'screen',
-        full_page: false,
+        full_page: true,
         print_background: true,
         landscape: true
       )
