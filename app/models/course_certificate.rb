@@ -6,7 +6,7 @@ class CourseCertificate < ApplicationRecord
   validates :file_hash, presence: true, uniqueness: true
 
   has_one_attached :file
-  has_one_attached :certificate_thumbnail
+  has_one_attached :certificate_thumbnail, service: :s3_public_assets_store
 
   belongs_to :course
   belongs_to :user

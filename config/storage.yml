@@ -8,11 +8,11 @@ local:
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 s3_assets_store:
- service: S3
- access_key_id: <%= Rails.application.credentials.dig(:storage, :aws, :access_key_id) %>
- secret_access_key: <%= Rails.application.credentials.dig(:storage, :aws, :secret_access_key) %>
- region: <%= Rails.application.credentials.dig(:storage, :aws, :region) %>
- bucket: <%= Rails.application.credentials.dig(:storage, :aws, :default_bucket) %>
+  service: S3
+  access_key_id: <%= Rails.application.credentials.dig(:storage, :aws, :access_key_id) %>
+  secret_access_key: <%= Rails.application.credentials.dig(:storage, :aws, :secret_access_key) %>
+  region: <%= Rails.application.credentials.dig(:storage, :aws, :region) %>
+  bucket: <%= Rails.application.credentials.dig(:storage, :aws, :default_bucket) %>
 
 s3_video_store:
   service: S3
@@ -20,3 +20,13 @@ s3_video_store:
   secret_access_key: <%= Rails.application.credentials.dig(:storage, :aws, :secret_access_key) %>
   region: <%= Rails.application.credentials.dig(:storage, :aws, :region) %>
   bucket: <%= Rails.application.credentials.dig(:storage, :aws, :video_store_bucket) %>
+
+s3_public_assets_store:
+  service: S3
+  access_key_id: <%= Rails.application.credentials.dig(:storage, :aws, :access_key_id) %>
+  secret_access_key: <%= Rails.application.credentials.dig(:storage, :aws, :secret_access_key) %>
+  region: <%= Rails.application.credentials.dig(:storage, :aws, :region) %>
+  bucket: <%= Rails.application.credentials.dig(:storage, :aws, :default_bucket) %>
+  upload:
+    public: true
+    key: <%= Rails.env %>
