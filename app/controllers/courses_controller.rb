@@ -21,7 +21,7 @@ class CoursesController < ApplicationController
     end
     @tags = Tag.load_tags
     @type = permitted_type(params[:type])
-    apply_pagination if @type.present?
+    apply_pagination
   end
 
   # GET /courses/1 or /courses/1.json
@@ -168,6 +168,12 @@ class CoursesController < ApplicationController
   end
 
   def apply_pagination
+    if @type.nil?
+      @available_courses = @available_courses.page(filter_params[:page])
+      @enrolled_courses = @enrolled_courses.page(filter_params[:page]) if !current_user.is_admin?
+      return
+    end
+
     if @type == "all"
       @available_courses = @available_courses.page(filter_params[:page])
     else
