@@ -14,7 +14,7 @@ export default class extends Controller {
     this.previewAreaTarget.innerHTML = "";
 
     const iframe = document.createElement("iframe");
-    iframe.className = "w-full h-64 rounded";
+    iframe.className = "w-[200%] h-[200%] scale-[0.5] origin-top-left";
     iframe.setAttribute("sandbox", "");
     iframe.srcdoc = html;
 
