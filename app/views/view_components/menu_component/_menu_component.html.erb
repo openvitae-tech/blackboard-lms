@@ -1,10 +1,7 @@
-<% label_hover ||= '' %>
-<% icon_class  ||= '' %>
-
 <div class="relative mt-1" data-controller="more-action">
   <button type="button" class="flex items-center cursor-pointer rounded-full bg-line-colour hover:bg-white"
-         data-action="click->more-action#toggleDropdown">
-    <span class="icon icon-more-vertical icon-small bg-letter-color <%= icon_class %>"></span>
+          data-action="click->more-action#toggleDropdown">
+    <%= icon("ellipsis-vertical", css: "#{icon_class.presence || 'h-4 w-4'} rounded-full") %>
   </button>
 
   <div class="absolute right-0 bg-white rounded box-shadow-medium hidden mt-3 z-50 text-secondary whitespace-nowrap"
@@ -12,25 +9,7 @@
        <%= tag.attributes(html_options) %>>
     <div class="pt-2 pb-2 flex flex-col">
       <% menu_items.each do |item| %>
-        <% case item.type %>
-        <% when :link %>
-          <% if item.url.present? %>
-            <%= link_to item.url,
-              { class: "px-4 py-2 hover:bg-primary-light-50 text-sm font-medium #{item.extra_classes} whitespace-nowrap" }.merge(item.options || {}) do %>
-              <%= item.label %>
-            <% end %>
-          <% else %>
-            <span class="px-4 py-2 text-sm font-medium cursor-not-allowed text-line-colour-light whitespace-nowrap"><%= item.label %></span>
-          <% end %>
-        <% when :button %>
-          <%= button_to item.url,
-            item.options.reverse_merge(
-              method: :post,
-              class: "px-4 py-2 hover:bg-primary-light-50 flex w-full #{item.extra_classes}"
-            ) do %>
-            <span class="text-sm font-medium"><%= item.label %></span>
-          <% end %>
-        <% end %>
+        <%= render "view_components/menu_component/menu_item_#{item.type}", item: item %>
       <% end %>
     </div>
   </div>

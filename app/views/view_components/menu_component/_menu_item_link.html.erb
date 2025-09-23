@@ -1,0 +1,10 @@
+<% if item.url.present? %>
+  <%= link_to item.url,
+    { class: "px-4 py-2 hover:bg-primary-light-50 text-sm font-medium #{item.extra_classes} whitespace-nowrap" }.merge(item.options || {}) do %>
+    <%= item.label %>
+  <% end %>
+<% else %>
+  <span class="px-4 py-2 text-sm font-medium cursor-not-allowed text-line-colour-light whitespace-nowrap">
+    <%= item.label %>
+  </span>
+<% end %>
