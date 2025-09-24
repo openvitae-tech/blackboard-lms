@@ -50,10 +50,10 @@ module Courses
         #                         .where(tags: { id: levels })
         #                         .select(:id))
       elsif categories.present?
-        courses.joins(:tags)
+        courses.left_joins(:tags)
                .where(tags: { id: categories })
       elsif levels.present?
-        courses.joins(:tags)
+        courses.left_joins(:tags)
                .where(tags: { id: levels })
       else
         courses
