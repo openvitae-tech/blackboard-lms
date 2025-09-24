@@ -11,10 +11,10 @@
           <%= render "more_action", learning_partner: learning_partner, template: template, certificate_templates: certificate_templates %>
         </div>
         <div class="flex-1 flex items-center justify-center p-2">
-          <div class="w-full h-48 border-0 rounded relative bg-gray-50">
+          <div class="w-full h-52 border-0 rounded bg-gray-50 overflow-hidden relative">
             <iframe
               srcdoc="<%= template.html_content %>"
-              class="absolute top-0 left-0 w-[200%] h-[200%] scale-[0.5] origin-top-left border-0 z-10"
+              class="top-0 left-0 w-[400%] h-[400%] border-0 z-10 scale-[0.25] origin-top-left"
               sandbox
             ></iframe>
           </div>
