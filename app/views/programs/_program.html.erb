@@ -6,20 +6,8 @@
           <%= program.name %>
         </p>
       <% end %>
-      <%= render 'shared/components/more_action', icon_class: 'bg-white icon-base', label_hover: "bg-secondary" do %>
-        <div class="min-w-[10rem] bg-white flex flex-col">
-          <%= link_to edit_program_path(program), data: { turbo_frame: "modal" } do %>
-            <div class="hover:bg-primary-light-50 px-3 py-2 w-full">
-              <span class="text-secondary text-sm font-medium"><%= t("button.edit") %></span>
-            </div>
-          <% end %>
-          <%= link_to confirm_destroy_program_path(program), data: { turbo_frame: "modal" } do %>
-            <div class="hover:bg-primary-light-50 px-3 py-2 w-full">
-              <span class="text-danger text-sm font-medium"><%= t("button.delete") %></span>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+
+      <%= menu_component(menu_items: program_menu_items(program)) %>
     </div>
     <div class="flex mt-3 justify-between items-center">
       <div class="flex items-center gap-2">

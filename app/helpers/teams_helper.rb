@@ -75,6 +75,15 @@ module TeamsHelper
     learning_partner.banner.variant(resize_to_limit: [320, nil])
   end
 
+  def team_menu_items(team)
+    [
+      team_dashboard_item(team),
+      edit_team_item(team),
+      all_users_item(team),
+      generate_report_item(team)
+    ].compact
+  end
+
   private
 
   def resize_banner(banner, version)
@@ -86,5 +95,45 @@ module TeamsHelper
     else
       banner
     end
+  end
+
+  def team_dashboard_item(team)
+    return unless policy(:dashboard).index?
+
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: 'Team dashboard',
+      url: dashboard_path(team_id: team),
+      type: :link
+    )
+  end
+
+  def edit_team_item(team)
+    return unless policy(team).edit?
+
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: 'Edit',
+      url: edit_team_path(team),
+      type: :link,
+      options: { data: { turbo_frame: 'modal' } }
+    )
+  end
+
+  def all_users_item(team)
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: 'View all users',
+      url: all_users_team_path(team),
+      type: :link
+    )
+  end
+
+  def generate_report_item(team)
+    return unless policy(:report).new?
+
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: 'Generate Report',
+      url: new_report_path(team_id: team.id),
+      type: :link,
+      options: { data: { turbo_frame: 'modal' } }
+    )
   end
 end

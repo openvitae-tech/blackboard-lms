@@ -235,3 +235,10 @@ en:
     invalid_report_type: "Invalid report type %{value}"
   record:
     empty: "There are no %{resource} to show."
+  confirmations:
+    learning_partner:
+      activate: "Are you sure you want to activate this partner?"
+      deactivate: "Are you sure want to de-activate this partner?"
+    user:
+      delete: "Are you sure you want to delete?"
+
