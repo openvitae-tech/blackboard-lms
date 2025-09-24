@@ -14,7 +14,7 @@
             <span class=""><%= course_module.title %></span>
             <div class="md:flex md:items-center md:gap-4">
               <% if enrollment.present? && enrollment.module_progress(course_module) > 0 %>
-                <div class="bg-primary-light-50 h-1 w-[252px] rounded-full">
+                <div class="bg-primary-light-100 h-1 w-[252px] rounded-full">
                   <div class="bg-slate-grey-50 h-1 rounded-full" style="width: <%= enrollment.module_progress(course_module) %>%"></div>
                 </div>
                 <span class="text-slate-grey-50 label-small"><%= enrollment.module_progress(course_module) %>%</span>
