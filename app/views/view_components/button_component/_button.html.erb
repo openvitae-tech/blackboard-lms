@@ -1,0 +1,34 @@
+<% button_content = capture do %>
+  <% other_classess = [
+    "#{color_mapping[:border]} hover:#{color_mapping[:border_hover]}",
+    "#{color_mapping[:bg]} hover:#{color_mapping[:bg_hover]}",
+    "#{color_mapping[:text]} hover:#{color_mapping[:text_hover]}"
+  ] %>
+
+  <% other_classess.append('disabled-button') if disabled %>
+
+  <% if size == "sm" %>
+    <%= tag.div(**html_options,
+                class: (["inline-flex border h-6 items-center justify-center gap-2 rounded-sm px-3 py-1"] + other_classess).join(' '))  do %>
+      <% content = content_tag(:div, label, class: "text-xs font-medium font-['Poppins'] leading-4") %>
+      <% icon = icon(icon_name, css: "h-4 w-4") if icon_name.present? %>
+      <%= label_with_icon(icon, content, icon_position) %>
+    <% end %>
+  <% elsif size == "md" %>
+    <%= tag.div(**html_options,
+                class: (["inline-flex border h-9 items-center justify-center gap-2 rounded-md px-4 py-2"] + other_classess).join(' ')) do %>
+      <% content = content_tag(:div, label, class: "text-xm font-medium font-['Poppins'] leading-5") %>
+      <% icon = icon(icon_name, css: "h-5 w-5") if icon_name.present? %>
+      <%= label_with_icon(icon, content, icon_position) %>
+    <% end %>
+  <% elsif size == "lg" %>
+    <%= tag.div(**html_options,
+                class: (["inline-flex border h-10 items-center justify-center gap-2 rounded-md px-4 py-2"] + other_classess).join(' ')) do %>
+      <% content = content_tag(:div, label, class: "text-base font-medium font-['Poppins'] leading-6") %>
+      <% icon = icon(icon_name, css: "h-6 w-6") if icon_name.present? %>
+      <%= label_with_icon(icon, content, icon_position) %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= tooltip_text.present? ? render('shared/components/tooltip', tooltip_position:, tooltip_text:) { button_content } : button_content %>
