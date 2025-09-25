@@ -35,7 +35,6 @@ module.exports = {
       "primary-light":"#0057FA",
       "primary-light-50":"#F5F8FF",
       "primary-light-100":"#D9E3F5",
-      "purple":"#3456DA",
       "secondary":"#A9D500",
       "secondary-dark":"#87AA00",
       "secondary-light":"#F9FFE0",
