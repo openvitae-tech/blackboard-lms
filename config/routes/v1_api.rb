@@ -9,6 +9,11 @@ Rails.application.routes.draw do
           post :verify
         end
       end
+      resource :one_timer_task, only: [] do
+        collection do
+          get :run_tasks
+        end
+      end
     end
   end
 end
