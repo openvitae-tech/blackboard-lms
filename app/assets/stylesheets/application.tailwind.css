@@ -1,3 +1,5 @@
+@import "buttons.tailwind.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -365,8 +367,3 @@ input.tags-checkbox:checked:focus {
   @apply bg-black text-white p-4 overflow-x-auto;
 }
 
-@layer utilities {
-  .disabled-button {
-    @apply !pointer-events-none !cursor-not-allowed;
-  }
-}

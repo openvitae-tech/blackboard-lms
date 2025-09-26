@@ -10,6 +10,50 @@ module ViewComponent
       TOOLTIP_POSITIONS = %w[top left bottom right].freeze
       DISABLED_CLASS = %w[opacity-50 cursor-not-allowed].freeze
 
+      BUTTON_SIZE_MAPPING = {
+        sm: 'btn-sm',
+        md: 'btn-md',
+        lg: 'btn-lg'
+      }.freeze
+
+      BUTTON_COLOUR_SCHEME_MAPPING = {
+        solid: {
+          primary: 'btn-solid-primary',
+          secondary: 'btn-solid-secondary',
+          danger: 'btn-solid-danger'
+        },
+        outline: {
+          primary: 'btn-outline-primary',
+          secondary: 'btn-outline-secondary',
+          danger: 'btn-outline-danger'
+        }
+      }.freeze
+
+      BUTTON_DISABLED_MAPPING = {
+        solid: {
+          primary: 'btn-solid-primary-disabled',
+          secondary: 'btn-solid-secondary-disabled',
+          danger: 'btn-solid-danger-disabled'
+        },
+        outline: {
+          primary: 'btn-outline-primary-disabled',
+          secondary: 'btn-outline-secondary-disabled',
+          danger: 'btn-outline-danger-disabled'
+        }
+      }.freeze
+
+      ICON_STYLES_MAPPING = {
+        sm: 'btn-icon-sm',
+        md: 'btn-icon-md',
+        lg: 'btn-icon-lg'
+      }.freeze
+
+      BUTTON_TEXT_STYLE_MAPPING = {
+        sm: 'btn-text-sm',
+        md: 'btn-text-md',
+        lg: 'btn-text-lg'
+      }.freeze
+
       attr_accessor :label, :type, :colorscheme, :size, :icon_name, :icon_position, :tooltip_text, :tooltip_position,
                     :disabled, :html_options, :color_mapping
 
@@ -30,123 +74,42 @@ module ViewComponent
         raise "Incorrect button size: #{size}" unless BUTTON_SIZES.include? size
         raise "Incorrect color scheme: #{colorscheme}" unless COLOR_SCHEMES.include? colorscheme
         raise "Incorrect icon_position: #{icon_position}" unless ICON_POSITIONS.include? icon_position
-        raise "Incorrect tooltip_position: #{tooltip_position}" unless TOOLTIP_POSITIONS.include? icon_position
+        raise "Incorrect tooltip_position: #{tooltip_position}" unless TOOLTIP_POSITIONS.include? tooltip_position
 
         self.color_mapping = color_scheme_mapping
       end
 
       def base_styles
-        styles = ['inline-flex w-full border items-center justify-center gap-2']
-        styles.append('disabled-button') if disabled
+        styles = ['btn-base']
+        styles.append('btn-disabled') if disabled
         styles.join(' ')
       end
 
       def color_styles
-        [
-          color_mapping[:border], "hover:#{color_mapping[:border_hover]}",
-          color_mapping[:bg], "hover:#{color_mapping[:bg_hover]}",
-          color_mapping[:text], "hover:#{color_mapping[:text_hover]}"
-        ].join(' ')
+        color_mapping
       end
 
       def sizing_styles
-        case size
-        when 'sm'
-          'h-6 md:h-9 rounded-sm md:rounded-md px-3 md:px-4 py-1 md:py-2'
-        when 'md'
-          'h-9 md:h-10 rounded-md px-4 py-2'
-        when 'lg'
-          'h-10 md:h-14 gap-2 rounded-md md:rounded-lg px-4 md:px-6 py-2 md:py-3'
-        else
-          ''
-        end
+        BUTTON_SIZE_MAPPING[size.to_sym]
       end
 
       def text_styles
-        styles = case size
-                 when 'sm'
-                   'text-xs md:text-sm font-medium leading-4 md:leading-5'
-                 when 'md'
-                   'text-sm md:text-base font-medium leading-5 md:leading-6'
-                 when 'lg'
-                   'text-base md:text-xl font-medium md:font-semibold leading-6 md:leading-7'
-                 else
-                   ''
-                 end
-
-        "#{styles} font-['Poppins']"
+        style = BUTTON_TEXT_STYLE_MAPPING[size.to_sym]
+        ['btn-text-base', style].join(' ')
       end
 
       def icon_styles
-        case size
-        when 'sm'
-          'h-4 md:h-5 w-4 md:w-5'
-        when 'md'
-          'h-5 w-5 md:h-6 md:w-6'
-        when 'lg'
-          'h-6 w-6 md:h-7 md:w-7'
-        else
-          ''
-        end
+        ICON_STYLES_MAPPING[size.to_sym]
       end
 
       private
 
       def color_scheme_mapping
-        {
-          solid: {
-            primary: {
-              bg: disabled ? 'bg-primary-light-50' : 'bg-primary',
-              bg_hover: 'bg-primary-light',
-              border: disabled ? 'border-disabled-color' : 'border-primary',
-              border_hover: 'border-primary-light',
-              text: disabled ? 'text-disabled-color' : 'text-white-light',
-              text_hover: 'text-white'
-            },
-            secondary: {
-              bg: disabled ? 'bg-secondary-light' : 'bg-secondary',
-              bg_hover: 'bg-secondary-dark',
-              border: disabled ? 'border-disabled-color' : 'border-secondary',
-              border_hover: 'border-secondary-dark',
-              text: disabled ? 'text-disabled-color' : 'text-white',
-              text_hover: 'text-white'
-            },
-            danger: {
-              bg: disabled ? 'bg-danger-light' : 'bg-danger-dark',
-              bg_hover: 'bg-danger',
-              border: disabled ? 'border-disabled-color' : 'border-danger-dark',
-              border_hover: 'border-danger',
-              text: disabled ? 'text-disabled-color' : 'text-white-light',
-              text_hover: 'text-white'
-            }
-          },
-          outline: {
-            primary: {
-              bg: 'bg-white',
-              bg_hover: 'bg-white',
-              border: disabled ? 'border-disabled-color' : 'border-primary',
-              border_hover: 'border-primary-light',
-              text: disabled ? 'text-disabled-color' : 'text-primary',
-              text_hover: 'text-primary-light'
-            },
-            secondary: {
-              bg: 'bg-white',
-              bg_hover: 'bg-white',
-              border: disabled ? 'border-disabled-color' : 'border-secondary',
-              border_hover: 'border-secondary-dark',
-              text: disabled ? 'text-disabled-color' : 'text-secondary',
-              text_hover: 'text-secondary-dark'
-            },
-            danger: {
-              bg: 'bg-white',
-              bg_hover: 'bg-white',
-              border: disabled ? 'border-disabled-color' : 'border-danger-dark',
-              border_hover: 'border-danger',
-              text: disabled ? 'text-disabled-color' : 'text-danger-dark',
-              text_hover: 'text-danger'
-            }
-          }
-        }[type.to_sym][colorscheme.to_sym]
+        if disabled
+          ['btn-disabled', BUTTON_DISABLED_MAPPING[type.to_sym][colorscheme.to_sym]]
+        else
+          BUTTON_COLOUR_SCHEME_MAPPING[type.to_sym][colorscheme.to_sym]
+        end
       end
     end
 
@@ -195,7 +158,16 @@ module ViewComponent
       html_options: {}
     )
       button = ButtonComponent.new(
-        label:, type:, size:, colorscheme:, icon_name:, icon_position:, tooltip_text:, tooltip_position:, disabled:, html_options:
+        label:,
+        type:,
+        size:,
+        colorscheme:,
+        icon_name:,
+        icon_position:,
+        tooltip_text:,
+        tooltip_position:,
+        disabled:,
+        html_options:
       )
 
       render(
