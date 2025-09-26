@@ -35,14 +35,15 @@ module.exports = {
       "primary-light":"#0057FA",
       "primary-light-50":"#F5F8FF",
       "primary-light-100":"#D9E3F5",
-      "purple":"#3456DA",
-      "secondary":"#808285",
+      "secondary":"#A9D500",
+      "secondary-dark":"#87AA00",
+      "secondary-light":"#F9FFE0",
       "slate-grey":"#2D3339",
       "slate-grey-50":"#808285",
       "slate-grey-light":"#D1D3D4",
       "theme-highlight":"#A9D500",
       "white":"#FFFFFF",
-      "white-light":"#FAFAFA"
+      "white-light":"#FDFDFD"
 
     },
     dropShadow: {
