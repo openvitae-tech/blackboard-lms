@@ -44,7 +44,7 @@ module.exports = {
       "slate-grey-light":"#D1D3D4",
       "theme-highlight":"#A9D500",
       "white":"#FFFFFF",
-      "white-light":"#FAFAFA"
+      "white-light":"#FDFDFD"
 
     },
     dropShadow: {
