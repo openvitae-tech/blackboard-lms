@@ -2,7 +2,7 @@
 
 module ViewComponent
   module ButtonComponent
-    class Button
+    class ButtonComponent
       BUTTON_TYPES = %w[solid outline].freeze
       BUTTON_SIZES = %w[sm md lg].freeze
       COLOR_SCHEMES = %w[primary secondary danger].freeze
@@ -33,6 +33,61 @@ module ViewComponent
         raise "Incorrect tooltip_position: #{tooltip_position}" unless TOOLTIP_POSITIONS.include? icon_position
 
         self.color_mapping = button_color_scheme_mapping
+      end
+
+      def base_styles
+        styles = ['inline-flex w-full border items-center justify-center gap-2']
+        styles.append('disabled-button') if disabled
+        styles.join(' ')
+      end
+
+      def color_styles
+        [
+          color_mapping[:border], "hover:#{color_mapping[:border_hover]}",
+          color_mapping[:bg], "hover:#{color_mapping[:bg_hover]}",
+          color_mapping[:text], "hover:#{color_mapping[:text_hover]}"
+        ].join(' ')
+      end
+
+      def sizing_styles
+        case size
+        when 'sm'
+          'h-6 md:h-9 rounded-sm md:rounded-md px-3 md:px-4 py-1 md:py-2'
+        when 'md'
+          'h-9 md:h-10 rounded-md px-4 py-2'
+        when 'lg'
+          'h-10 md:h-14 gap-2 rounded-md md:rounded-lg px-4 md:px-6 py-2 md:py-3'
+        else
+          ''
+        end
+      end
+
+      def text_styles
+        styles = case size
+                 when 'sm'
+                   'text-xs md:text-sm font-medium leading-4 md:leading-5'
+                 when 'md'
+                   'text-sm md:text-base font-medium leading-5 md:leading-6'
+                 when 'lg'
+                   'text-base md:text-xl font-medium md:font-semibold leading-6 md:leading-7'
+                 else
+                   ''
+                 end
+
+        "#{styles} font-['Poppins']"
+      end
+
+      def icon_styles
+        case size
+        when 'sm'
+          'h-4 md:h-5 w-4 md:w-5'
+        when 'md'
+          'h-5 w-5 md:h-6 md:w-6'
+        when 'lg'
+          'h-6 w-6 md:h-7 md:w-7'
+        else
+          ''
+        end
       end
 
       private
@@ -139,7 +194,7 @@ module ViewComponent
       disabled: false,
       html_options: {}
     )
-      button = Button.new(
+      button = ButtonComponent.new(
         label:, type:, size:, colorscheme:, icon_name:, icon_position:, tooltip_text:, tooltip_position:, disabled:, html_options:
       )
 

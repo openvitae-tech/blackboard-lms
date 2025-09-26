@@ -1,35 +1,12 @@
 <% button_content = capture do %>
-  <% base_styles = ["inline-flex w-full border items-center justify-center gap-2"] %>
-
-  <% base_styles.append('disabled-button') if button.disabled %>
-
-  <% color_styles = [
-    "#{button.color_mapping[:border]} hover:#{button.color_mapping[:border_hover]}",
-    "#{button.color_mapping[:bg]} hover:#{button.color_mapping[:bg_hover]}",
-    "#{button.color_mapping[:text]} hover:#{button.color_mapping[:text_hover]}"
-  ] %>
-
-  <% if button.size == "sm" %>
-    <%= tag.div(**button.html_options,
-                class: (base_styles + color_styles + ["h-6 md:h-9 rounded-sm md:rounded-md px-3 md:px-4 py-1 md:py-2"]).join(' '))  do %>
-      <% content = content_tag(:div, button.label, class: "text-xs md:text-sm font-medium font-['Poppins'] leading-4 md:leading-5") %>
-      <% icon = icon(button.icon_name, css: "h-4 md:h-5 w-4 md:w-5") if button.icon_name.present? %>
-      <%= label_with_icon(icon, content, button.icon_position) %>
-    <% end %>
-  <% elsif button.size == "md" %>
-    <%= tag.div(**button.html_options,
-                class: (base_styles + color_styles + ["h-9 md:h-10 rounded-md px-4 py-2"]).join(' ')) do %>
-      <% content = content_tag(:div, button.label, class: "text-sm md:text-base font-medium font-['Poppins'] leading-5 md:leading-6") %>
-      <% icon = icon(button.icon_name, css: "h-5 w-5 md:h-6 md:w-6") if button.icon_name.present? %>
-      <%= label_with_icon(icon, content, button.icon_position) %>
-    <% end %>
-  <% elsif button.size == "lg" %>
-    <%= tag.div(**button.html_options,
-                class: (base_styles + color_styles + ["h-10 md:h-14 gap-2 rounded-md md:rounded-lg px-4 md:px-6 py-2 md:py-3"]).join(' ')) do %>
-      <% content = content_tag(:div, button.label, class: "text-base md:text-xl font-medium md:font-semibold font-['Poppins'] leading-6 md:leading-7") %>
-      <% icon = icon(button.icon_name, css: "h-6 w-6 md:h-7 md:w-7") if button.icon_name.present? %>
-      <%= label_with_icon(icon, content, button.icon_position) %>
-    <% end %>
+  <%= tag.div(**button.html_options,
+              class: [
+                button.base_styles,
+                button.color_styles,
+                button.sizing_styles].join(' ')) do %>
+    <% content = content_tag(:div, button.label, class: button.text_styles) %>
+    <% icon = icon(button.icon_name, css: button.icon_styles) if button.icon_name.present? %>
+    <%= label_with_icon(icon, content, button.icon_position) %>
   <% end %>
 <% end %>
 
