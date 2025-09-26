@@ -32,7 +32,7 @@ module ViewComponent
         raise "Incorrect icon_position: #{icon_position}" unless ICON_POSITIONS.include? icon_position
         raise "Incorrect tooltip_position: #{tooltip_position}" unless TOOLTIP_POSITIONS.include? icon_position
 
-        self.color_mapping = button_color_scheme_mapping
+        self.color_mapping = color_scheme_mapping
       end
 
       def base_styles
@@ -92,7 +92,7 @@ module ViewComponent
 
       private
 
-      def button_color_scheme_mapping
+      def color_scheme_mapping
         {
           solid: {
             primary: {
