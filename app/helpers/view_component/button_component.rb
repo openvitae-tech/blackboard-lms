@@ -2,7 +2,6 @@
 
 module ViewComponent
   module ButtonComponent
-
     class Button
       BUTTON_TYPES = %w[solid outline].freeze
       BUTTON_SIZES = %w[sm md lg].freeze
@@ -14,7 +13,8 @@ module ViewComponent
       attr_accessor :label, :type, :colorscheme, :size, :icon_name, :icon_position, :tooltip_text, :tooltip_position,
                     :disabled, :html_options, :color_mapping
 
-      def initialize(label:, type:, colorscheme:, size:, icon_name:, icon_position:, tooltip_text:, tooltip_position:, disabled:, html_options:)
+      def initialize(label:, type:, colorscheme:, size:, icon_name:, icon_position:, tooltip_text:, tooltip_position:,
+                     disabled:, html_options:)
         self.label = label
         self.type = type
         self.size = size
@@ -36,6 +36,7 @@ module ViewComponent
       end
 
       private
+
       def button_color_scheme_mapping
         {
           solid: {
@@ -93,6 +94,7 @@ module ViewComponent
         }[type.to_sym][colorscheme.to_sym]
       end
     end
+
     def label_with_icon(icon, label_tag, position)
       ordered = position == 'left' ? [icon, label_tag] : [label_tag, icon]
       safe_join(ordered.compact)
@@ -137,7 +139,6 @@ module ViewComponent
       disabled: false,
       html_options: {}
     )
-
       button = Button.new(
         label:, type:, size:, colorscheme:, icon_name:, icon_position:, tooltip_text:, tooltip_position:, disabled:, html_options:
       )
