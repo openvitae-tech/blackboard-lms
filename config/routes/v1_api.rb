@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       end
       resource :one_timer_task, only: [] do
         collection do
-          get :run_tasks
+          post :run_tasks
         end
       end
     end

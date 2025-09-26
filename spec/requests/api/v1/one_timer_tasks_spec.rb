@@ -18,7 +18,7 @@ RSpec.describe 'Api::V1::OneTimerTasksController', type: :request do
     it 'invokes the rake task and writes to cache' do
       allow(Rails.cache).to receive(:write)
 
-      get run_tasks_api_v1_one_timer_task_path, params: { auth_token: }
+      post run_tasks_api_v1_one_timer_task_path, params: { auth_token: }
 
       expect(response).to have_http_status(:ok)
       json = response.parsed_body
@@ -31,7 +31,7 @@ RSpec.describe 'Api::V1::OneTimerTasksController', type: :request do
         )
       )
       expect(Rails.cache).to have_received(:write)
-        .with(task, task.to_json, expires_in: 1.hour)
+        .with(task, task, expires_in: 1.hour)
     end
 
     context 'when the task has already been run recently' do
@@ -41,7 +41,7 @@ RSpec.describe 'Api::V1::OneTimerTasksController', type: :request do
       end
 
       it 'skips execution and returns skipped status' do
-        get run_tasks_api_v1_one_timer_task_path, params: { auth_token: }
+        post run_tasks_api_v1_one_timer_task_path, params: { auth_token: }
 
         expect(response).to have_http_status(:ok)
 

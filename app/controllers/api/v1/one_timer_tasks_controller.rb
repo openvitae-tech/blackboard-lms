@@ -28,7 +28,7 @@ module Api
 
       def invoke_rake_task(task)
         Rake::Task["one_timer:#{task}"].invoke
-        Rails.cache.write(task, task.to_json, expires_in: 1.hour)
+        Rails.cache.write(task, task, expires_in: 1.hour)
       end
     end
   end
