@@ -27,7 +27,6 @@ module.exports = {
       "gold-light":"#FFF3DB",
       "letter-color":"#404041",
       "letter-color-light":"#8B8B8D",
-      "light-green-50":"#F9FFE0",
       "line-colour":"#E6E6E6",
       "line-colour-light":"#EDEDED",
       "primary":"#0041B9",
@@ -41,7 +40,6 @@ module.exports = {
       "slate-grey":"#2D3339",
       "slate-grey-50":"#808285",
       "slate-grey-light":"#D1D3D4",
-      "theme-highlight":"#A9D500",
       "white":"#FFFFFF",
       "white-light":"#FDFDFD"
 
