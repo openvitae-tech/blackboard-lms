@@ -9,6 +9,7 @@ module ViewComponent
 
       svg = Nokogiri::HTML::DocumentFragment.parse(file).at_css('svg')
       svg['class'] = css
+      svg['stroke-width'] = '1.0'
       content_tag(:span, svg.to_html.html_safe, class: "inline-flex justify-center items-center #{span_css}".strip) # rubocop:disable Rails/OutputSafety
     end
   end
