@@ -1,34 +1,36 @@
 <% button_content = capture do %>
-  <% other_classess = [
-    "#{color_mapping[:border]} hover:#{color_mapping[:border_hover]}",
-    "#{color_mapping[:bg]} hover:#{color_mapping[:bg_hover]}",
-    "#{color_mapping[:text]} hover:#{color_mapping[:text_hover]}"
+  <% base_styles = ["inline-flex w-full border items-center justify-center gap-2"] %>
+
+  <% base_styles.append('disabled-button') if button.disabled %>
+
+  <% color_styles = [
+    "#{button.color_mapping[:border]} hover:#{button.color_mapping[:border_hover]}",
+    "#{button.color_mapping[:bg]} hover:#{button.color_mapping[:bg_hover]}",
+    "#{button.color_mapping[:text]} hover:#{button.color_mapping[:text_hover]}"
   ] %>
 
-  <% other_classess.append('disabled-button') if disabled %>
-
-  <% if size == "sm" %>
-    <%= tag.div(**html_options,
-                class: (["inline-flex border h-6 items-center justify-center gap-2 rounded-sm px-3 py-1"] + other_classess).join(' '))  do %>
-      <% content = content_tag(:div, label, class: "text-xs font-medium font-['Poppins'] leading-4") %>
-      <% icon = icon(icon_name, css: "h-4 w-4") if icon_name.present? %>
-      <%= label_with_icon(icon, content, icon_position) %>
+  <% if button.size == "sm" %>
+    <%= tag.div(**button.html_options,
+                class: (base_styles + color_styles + ["h-6 md:h-9 rounded-sm md:rounded-md px-3 md:px-4 py-1 md:py-2"]).join(' '))  do %>
+      <% content = content_tag(:div, button.label, class: "text-xs md:text-sm font-medium font-['Poppins'] leading-4 md:leading-5") %>
+      <% icon = icon(button.icon_name, css: "h-4 md:h-5 w-4 md:w-5") if button.icon_name.present? %>
+      <%= label_with_icon(icon, content, button.icon_position) %>
     <% end %>
-  <% elsif size == "md" %>
-    <%= tag.div(**html_options,
-                class: (["inline-flex border h-9 items-center justify-center gap-2 rounded-md px-4 py-2"] + other_classess).join(' ')) do %>
-      <% content = content_tag(:div, label, class: "text-xm font-medium font-['Poppins'] leading-5") %>
-      <% icon = icon(icon_name, css: "h-5 w-5") if icon_name.present? %>
-      <%= label_with_icon(icon, content, icon_position) %>
+  <% elsif button.size == "md" %>
+    <%= tag.div(**button.html_options,
+                class: (base_styles + color_styles + ["h-9 md:h-10 rounded-md px-4 py-2"]).join(' ')) do %>
+      <% content = content_tag(:div, button.label, class: "text-sm md:text-base font-medium font-['Poppins'] leading-5 md:leading-6") %>
+      <% icon = icon(button.icon_name, css: "h-5 w-5 md:h-6 md:w-6") if button.icon_name.present? %>
+      <%= label_with_icon(icon, content, button.icon_position) %>
     <% end %>
-  <% elsif size == "lg" %>
-    <%= tag.div(**html_options,
-                class: (["inline-flex border h-10 items-center justify-center gap-2 rounded-md px-4 py-2"] + other_classess).join(' ')) do %>
-      <% content = content_tag(:div, label, class: "text-base font-medium font-['Poppins'] leading-6") %>
-      <% icon = icon(icon_name, css: "h-6 w-6") if icon_name.present? %>
-      <%= label_with_icon(icon, content, icon_position) %>
+  <% elsif button.size == "lg" %>
+    <%= tag.div(**button.html_options,
+                class: (base_styles + color_styles + ["h-10 md:h-14 gap-2 rounded-md md:rounded-lg px-4 md:px-6 py-2 md:py-3"]).join(' ')) do %>
+      <% content = content_tag(:div, button.label, class: "text-base md:text-xl font-medium md:font-semibold font-['Poppins'] leading-6 md:leading-7") %>
+      <% icon = icon(button.icon_name, css: "h-6 w-6 md:h-7 md:w-7") if button.icon_name.present? %>
+      <%= label_with_icon(icon, content, button.icon_position) %>
     <% end %>
   <% end %>
 <% end %>
 
-<%= tooltip_text.present? ? render('shared/components/tooltip', tooltip_position:, tooltip_text:) { button_content } : button_content %>
+<%= button.tooltip_text.present? ? render('shared/components/tooltip', tooltip_position: button.tooltip_position, tooltip_text: button.tooltip_text) { button_content } : button_content %>
