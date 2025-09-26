@@ -3,7 +3,7 @@
     <div class="absolute top-0 right-0 z-10 flex flex-wrap justify-start gap-2 heading">
       <% course.tags.each do |tag| %>
         <% if tag.tag_type == "level" %>
-          <span class="px-2 py-1 text-xs font-medium bg-theme-highlight text-white">
+          <span class="px-2 py-1 text-xs font-medium bg-secondary text-white">
             <%= tag.name %>
           </span>
         <% end %>
