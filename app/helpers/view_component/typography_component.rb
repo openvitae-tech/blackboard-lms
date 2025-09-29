@@ -23,6 +23,10 @@ module ViewComponent
       size == 'base' ? css : "#{css}-#{size}"
     end
 
+    def merge_class(options, class_names)
+      options.merge(class: [*class_names, options[:class]].compact.join(' '))
+    end
+
     def link_text_component(text, link, html_options = {})
       render partial: 'view_components/typography/linked_text_component', locals: {
         text:,
@@ -45,21 +49,21 @@ module ViewComponent
     def h1_component(text: '', html_options: {})
       render partial: 'view_components/typography/h1_component', locals: {
         text:,
-        html_options: html_options.merge(class: 'heading-3xl')
+        html_options: merge_class(html_options, ['heading-3xl'])
       }
     end
 
     def h2_component(text: '', html_options: {})
       render partial: 'view_components/typography/h2_component', locals: {
         text:,
-        html_options: html_options.merge(class: 'heading-2xl')
+        html_options: merge_class(html_options, ['heading-2xl'])
       }
     end
 
     def h3_component(text: '', html_options: {})
       render partial: 'view_components/typography/h3_component', locals: {
         text:,
-        html_options: html_options.merge(class: 'heading-xl')
+        html_options: merge_class(html_options, ['heading-xl'])
       }
     end
 
@@ -78,7 +82,7 @@ module ViewComponent
       render partial: 'view_components/typography/text_component', locals: {
         text:,
         tag:,
-        html_options: html_options.merge(class: css_classes.join(' '))
+        html_options: merge_class(html_options, css_classes)
       }
     end
 
@@ -92,7 +96,7 @@ module ViewComponent
       render partial: 'view_components/typography/link_component', locals: {
         text:,
         url:,
-        html_options: html_options.merge(class: 'text-base-normal', target: target)
+        html_options: merge_class(html_options, ['text-base-normal']).merge(target: target)
       }
     end
   end
