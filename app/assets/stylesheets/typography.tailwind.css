@@ -40,7 +40,7 @@
 
 /* Primary Text Typography Styles */
 .text-lg-bold {
-  @apply primary-text-lg;
+  @apply primary-text-lg font-bold;
 }
 
 .text-lg-medium {
