@@ -13,7 +13,6 @@ module ViewComponent
     TEXT_SIZES = %w[sm base lg].freeze
     TEXT_WEIGHTS = %w[normal medium bold].freeze
     TEXT_TYPES = %w[primary secondary].freeze
-    LINK_TARGETS = %w[_self _blank _parent _top framename].freeze
 
     def font_weight(weight)
       weight.present? ? "font-#{weight}" : 'font-normal'
@@ -89,7 +88,6 @@ module ViewComponent
     # @param html_options - additional html options
     def link_component(text:, url: '#', target: '_self', html_options: {})
       raise 'BlankValue - text cannot be blank' if text.blank?
-      raise 'InvalidValue - incorrect target value' unless LINK_TARGETS.include?(target)
 
       render partial: 'view_components/typography/link_component', locals: {
         text:,
