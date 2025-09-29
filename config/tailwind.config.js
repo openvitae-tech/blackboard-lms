@@ -8,6 +8,14 @@ module.exports = {
     "./app/views/**/*.{erb,haml,html,slim}",
     // "./node_modules/flowbite/**/*.js",
   ],
+  safelist: [
+    "primary-text-lg",
+    "primary-text",
+    "primary-text-sm",
+    "secondary-text-lg",
+    "secondary-text",
+    "secondary-text-sm",
+  ],
   theme: {
     extend: {
       fontFamily: {
