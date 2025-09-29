@@ -1,3 +1,5 @@
+@import "buttons.tailwind.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -360,3 +362,8 @@ input.tags-checkbox:checked:focus {
 .body-extra-small-regular {
   @apply text-sm font-normal;
 }
+
+.code {
+  @apply bg-black text-white p-4 overflow-x-auto;
+}
+
