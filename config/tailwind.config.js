@@ -13,7 +13,6 @@ module.exports = {
       fontFamily: {
         poppins: ['Poppins'],
         roboto: ['Roboto'],
-
       },
     },
     colors: {
@@ -25,10 +24,10 @@ module.exports = {
       "disabled-color":"#C5C5C5",
       "gold":"#FFC857",
       "gold-light":"#FFF3DB",
-      "letter-color":"#404041",
-      "letter-color-light":"#8B8B8D",
+      "letter-color":"#333333",
+      "letter-color-light":"#666666",
       "line-colour":"#E6E6E6",
-      "line-colour-light":"#EDEDED",
+      "line-colour-light":"#F2F2F2",
       "primary":"#0041B9",
       "primary-dark":"#001D53",
       "primary-light":"#0057FA",
@@ -42,10 +41,9 @@ module.exports = {
       "slate-grey-light":"#D1D3D4",
       "white":"#FFFFFF",
       "white-light":"#FDFDFD"
-
     },
     dropShadow: {
-      small: "0px 2px 6px 0px #1018280F", 
+      small: "0px 2px 6px 0px #1018280F",
     },
   },
   plugins: [
