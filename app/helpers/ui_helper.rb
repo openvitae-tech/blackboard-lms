@@ -14,4 +14,6 @@ module UiHelper
   include ViewComponent::NotificationBarComponent
   include ViewComponent::PaginatorComponent
   include ViewComponent::InputTextareaComponent
+  include ViewComponent::TextareaComponent
+
 end
