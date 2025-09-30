@@ -19,9 +19,11 @@ class CertificateTemplatesController < ApplicationController
 
     service = CreateCertificateTemplateService.instance
     @certificate_template = service.generate(@learning_partner, certificate_template_params)
-
-    if @certificate_template.save
-      redirect_to learning_partner_certificate_templates_path(@learning_partner), notice: t("resource.created", resource_name: "Certificate Template")
+    if @certificate_template.errors.any?
+      render :new, status: :unprocessable_entity
+    elsif @certificate_template.save
+      redirect_to learning_partner_certificate_templates_path(@learning_partner),
+                notice: t("resource.created", resource_name: "Certificate Template")
     else
       render :new, status: :unprocessable_entity
     end

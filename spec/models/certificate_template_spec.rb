@@ -52,4 +52,29 @@ RSpec.describe CertificateTemplate, type: :model do
       )
     end
   end
+
+  describe '#validate_assets' do
+    it 'is valid when asset format is valid and under 5MB' do
+      certificate_template.assets.attach(
+        io: StringIO.new('fake png data'),
+        filename: 'image.png',
+        content_type: 'image/png'
+      )
+      allow(certificate_template.assets.first.blob).to receive(:byte_size).and_return(1.megabyte)
+
+      expect(certificate_template).to be_valid
+    end
+
+    it 'is not valid when asset is a PDF' do
+      certificate_template.assets.attach(
+        io: StringIO.new('fake pdf data'),
+        filename: 'doc.pdf',
+        content_type: 'application/pdf'
+      )
+      allow(certificate_template.assets.first.blob).to receive(:byte_size).and_return(1.megabyte)
+
+      expect(certificate_template).not_to be_valid
+      expect(certificate_template.errors[:assets]).to include('must be a PNG, JPEG or webp')
+    end
+  end
 end

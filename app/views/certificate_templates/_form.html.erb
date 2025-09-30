@@ -13,6 +13,7 @@
         <div class="relative mt-2">
           <%= form.file_field :template_zip,
             accept: '.zip',
+            required: true,
             class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer",
             data: { action: "change->certificate-template#changeFileLabel" } %>
           <div class="bg-white border border-dashed border-primary-light rounded-md p-4 text-center flex items-center justify-center">

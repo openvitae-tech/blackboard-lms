@@ -9,8 +9,12 @@ class CreateCertificateTemplateService
 
     return template if template.name.blank? || params[:template_zip].blank?
 
-    html, assets_map = extract_from_zip(params[:template_zip], template)
-    template.html_content = replace_asset_path(html, assets_map)
+    begin
+      html, assets_map = extract_from_zip(params[:template_zip], template)
+      template.html_content = replace_asset_path(html, assets_map)
+    rescue StandardError
+      template.errors.add(:base, 'Template could not be processed.')
+    end
     template
   end
 
@@ -40,8 +44,7 @@ class CreateCertificateTemplateService
   end
 
   def normalize_path(entry_name)
-    parts = entry_name.split('/')
-    parts.size > 1 ? parts[1..].join('/') : parts.first
+    entry_name.sub(%r{^[^/]+/}, '')
   end
 
   def skip_entry?(entry)
