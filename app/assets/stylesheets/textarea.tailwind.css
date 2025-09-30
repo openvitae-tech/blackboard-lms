@@ -1,0 +1,51 @@
+.textarea-component-container {
+  @apply flex flex-col gap-1;
+}
+
+.textarea-component-base {
+  @apply w-full text-letter-color-light text-base border rounded focus:border-[2px] focus:border-primary;
+}
+
+.textarea-component-label {
+  @apply text-letter-color-light md:text-base leading-tight;
+}
+
+.textarea-component-label-md {
+  @apply text-xs;
+}
+
+.textarea-component-label-lg {
+  @apply text-xs md:text-sm;
+}
+
+.textarea-component-wrapper {
+  @apply bg-white flex items-center;
+}
+
+.textarea-component-md {
+  @apply min-h-[60px] py-1 md:px-3 md:py-2 md:min-h-[100px] text-letter-color-light text-sm md:text-base rounded-[4px] border border-slate-grey-50;
+}
+
+.textarea-component-lg {
+  @apply min-h-[100px] py-1 md:px-3 md:py-2 md:min-h-[150px] text-letter-color-light text-base rounded-[8px] border border-slate-grey-50;
+}
+
+.textarea-support-text {
+  @apply w-52 px-3 flex justify-start items-start text-slate-grey-50 text-xs;
+}
+
+.textarea-support-text-md {
+  @apply text-xs;
+}
+
+.textarea-support-text-lg {
+  @apply text-xs md:text-sm;
+}
+
+.text-danger {
+  @apply text-red-500;
+}
+
+.border-danger {
+  @apply border-red-500;
+}

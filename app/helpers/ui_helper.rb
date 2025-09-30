@@ -15,4 +15,5 @@ module UiHelper
   include ViewComponent::PaginatorComponent
   include ViewComponent::InputTextareaComponent
   include ViewComponent::DocSectionComponent
+  include ViewComponent::TextareaComponent
 end
