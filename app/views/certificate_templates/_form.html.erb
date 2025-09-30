@@ -3,12 +3,12 @@
   <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter certificate name", type: "text", width: "w-full") %>
   <div class="mt-6 flex flex-col">
     <label class="text-letter-color-light text-sm md:text-base leading-tight">
-      Upload template zip
+      <%= t("certificate_templates.certificate_template.upload_zip") %>
     </label>
     <div class="text-sm flex flex-row items-center gap-4 justify-between mt-3">
       <div class="w-full">
         <div class="flex justify-between">
-          <label data-certificate-template-target="fileLabel" class="text-sm">No file chosen</label>
+          <label data-certificate-template-target="fileLabel" class="text-sm"><%= t("certificate_templates.certificate_template.no_file_chosen") %></label>
         </div>
         <div class="relative mt-2">
           <%= form.file_field :template_zip,
@@ -17,7 +17,7 @@
             data: { action: "change->certificate-template#changeFileLabel" } %>
           <div class="bg-white border border-dashed border-primary-light rounded-md p-4 text-center flex items-center justify-center">
             <span class="icon icon-upload bg-primary icon-small"></span>
-            <span class="file-label text-primary">Choose File</span>
+            <span class="file-label text-primary"><%= t("certificate_templates.certificate_template.choose_file") %></span>
           </div>
         </div>
       </div>
