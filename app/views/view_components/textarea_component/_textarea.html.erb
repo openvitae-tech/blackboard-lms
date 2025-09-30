@@ -1,0 +1,48 @@
+<div class="textarea-component-container">
+  <% if form.present? %>
+    <%= form.label field_name, label,
+          class: [
+            "textarea-component-label",
+            "textarea-component-label-#{size}",
+            ("text-danger" if error)
+          ].compact.join(" ") %>
+  <% else %>
+    <%= label_tag field_name, label,
+          class: [
+            "textarea-component-label",
+            "textarea-component-label-#{size}",
+            ("text-danger placeholder-red-500 !important" if error)
+          ].compact.join(" ") %>
+  <% end %>
+
+  <div class="textarea-component-wrapper">
+    <% if form.present? %>
+      <%= form.text_area field_name,
+            **html_options,
+            placeholder: placeholder,
+            rows: rows,
+            class: [
+              "textarea-component-base",
+              "textarea-component-#{size}",
+              ("text-danger placeholder-red-500 !important" if error),
+            ].compact.join(" ") %>
+    <% else %>
+      <%= text_area_tag field_name,
+            value,
+            **html_options,
+            placeholder: placeholder,
+            rows: rows,
+            class: [
+              "textarea-component-base",
+              "textarea-component-#{size}",
+              ("text-danger" if error),
+            ].compact.join(" ") %>
+    <% end %>
+  </div>
+
+  <% if support_text.present? %>
+    <div class="textarea-support-text textarea-support-text-<%= size %> <%= 'text-danger' if error %>">
+      <%= support_text %>
+    </div>
+  <% end %>
+</div>
