@@ -1,29 +1,29 @@
-<%= form_with model: certificate_template, url: learning_partner_certificate_templates_path(learning_partner), data: { controller: "certificate-preview" } do |form| %>
+<%= form_with model: certificate_template, url: learning_partner_certificate_templates_path(learning_partner), data: { controller: "certificate-template" } do |form| %>
   <%= render "shared/components/form_errors", resource: certificate_template %>
   <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter certificate name", type: "text", width: "w-full") %>
   <div class="mt-6 flex flex-col">
-    <%= input_textarea_component(
-          form: form,
-          field_name: :html_content,
-          label:  "Html template",
-          placeholder: "Enter html template",
-          html_options: {
-            data: {
-              action: "input->certificate-preview#render",
-              certificate_preview_target: "htmlInput"
-            }
-          }
-    )%>
+    <label class="text-letter-color-light text-sm md:text-base leading-tight">
+      Upload template zip
+    </label>
+    <div class="text-sm flex flex-row items-center gap-4 justify-between mt-3">
+      <div class="w-full">
+        <div class="flex justify-between">
+          <label data-certificate-template-target="fileLabel" class="text-sm">No file chosen</label>
+        </div>
+        <div class="relative mt-2">
+          <%= form.file_field :template_zip,
+            accept: '.zip',
+            class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer",
+            data: { action: "change->certificate-template#changeFileLabel" } %>
+          <div class="bg-white border border-dashed border-primary-light rounded-md p-4 text-center flex items-center justify-center">
+            <span class="icon icon-upload bg-primary icon-small"></span>
+            <span class="file-label text-primary">Choose File</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <span class='body-extra-small-regular text-letter-color-light my-2'>• Allowed variables: <%= CertificateTemplate::ALLOWED_VARIABLES.map { |var| "%{#{var}}" }.join(', ') %></span>
   </div>
-
-  <div class="mt-6">
-    <h3 class="subtitle-medium text-letter-color-light">Template preview</h3>
-    <div class="border p-2 mt-2 rounded bg-gray-50 h-[425px]"
-        data-certificate-preview-target="previewArea">
-    </div>
-  </div>
-
   <div class="my-8 flex items-center gap-4 text-sm">
     <div class="mx-4 my-8">
       <%= link_to "Cancel", learning_partner_certificate_templates_path(learning_partner), class: "nav-link" %>

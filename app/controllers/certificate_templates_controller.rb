@@ -16,7 +16,10 @@ class CertificateTemplatesController < ApplicationController
 
   def create
     authorize :certificate_template
-    @certificate_template = @learning_partner.certificate_templates.new(certificate_template_params)
+
+    service = CreateCertificateTemplateService.instance
+    @certificate_template = service.generate(@learning_partner, certificate_template_params)
+
     if @certificate_template.save
       redirect_to learning_partner_certificate_templates_path(@learning_partner), notice: t("resource.created", resource_name: "Certificate Template")
     else
@@ -52,7 +55,7 @@ class CertificateTemplatesController < ApplicationController
   end
 
   def certificate_template_params
-    params.require(:certificate_template).permit(:name, :html_content, :active)
+    params.require(:certificate_template).permit(:name, :html_content, :active, :template_zip)
   end
 
   def set_certificate_template

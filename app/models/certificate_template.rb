@@ -11,6 +11,7 @@ class CertificateTemplate < ApplicationRecord
   validate :must_have_exact_template_variables
 
   belongs_to :learning_partner
+  has_many_attached :assets
 
   private
 
