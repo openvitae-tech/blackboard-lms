@@ -1,0 +1,93 @@
+/* Typography Styles */
+
+@layer components {
+  .primary-text {
+    @apply font-poppins text-sm;
+  }
+
+  .primary-text-lg {
+    @apply font-poppins text-sm md:text-base;
+  }
+
+  .primary-text-sm {
+    @apply font-poppins text-xs;
+  }
+  .secondary-text {
+    @apply font-roboto text-sm;
+  }
+
+  .secondary-text-lg {
+    @apply font-roboto text-sm md:text-base;
+  }
+
+  .secondary-text-sm {
+    @apply font-roboto text-xs;
+  }
+}
+
+/* Heading Typography Styles */
+.heading-3xl {
+  @apply font-poppins text-2xl md:text-3xl font-semibold;
+}
+
+.heading-2xl {
+  @apply font-poppins text-xl md:text-2xl font-semibold;
+}
+
+.heading-xl {
+  @apply font-poppins text-lg md:text-xl font-semibold;
+}
+
+/* Primary Text Typography Styles */
+.text-lg-bold {
+  @apply primary-text-lg font-bold;
+}
+
+.text-lg-medium {
+  @apply primary-text-lg font-medium;
+}
+
+.text-lg-normal {
+  @apply primary-text-lg font-normal;
+}
+
+.text-base-bold {
+  @apply primary-text font-bold;
+}
+
+.text-base-medium {
+  @apply primary-text font-medium;
+}
+
+.text-base-normal {
+  @apply primary-text font-normal;
+}
+
+.text-sm-medium {
+  @apply primary-text-sm font-medium;
+}
+
+.text-sm-normal {
+  @apply primary-text-sm font-normal;
+}
+
+/* Secondary Text Typography Styles */
+.text-lg-normal-secondary {
+  @apply secondary-text-lg font-normal;
+}
+
+.text-medium-secondary {
+  @apply secondary-text font-medium;
+}
+
+.text-normal-secondary {
+  @apply secondary-text font-normal;
+}
+
+.text-sm-medium-secondary {
+  @apply secondary-text-sm font-medium;
+}
+
+.text-sm-normal-secondary {
+  @apply secondary-text-sm font-normal;
+}

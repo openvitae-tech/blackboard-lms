@@ -1,0 +1,231 @@
+<div class="heading heading-medium pb-6">Typography (New)</div>
+<table class="w-full border-collapse border border-line-colour-light rounded mb-6">
+  <thead>
+    <tr>
+      <th class="border border-line-colour-light px-2 md:px-4 py-2 text-left text-sm md:text-base">Typography<br>(CSS Class)</th>
+      <th class="border border-line-colour-light px-2 md:px-4 py-2 text-left text-sm md:text-base">Font Properties <br>(font-size/line height(font-weight))</th>
+      <th class="border border-line-colour-light px-2 md:px-4 py-2 text-center text-sm md:text-base">Usage</th>
+      <th class="border border-line-colour-light px-2 md:px-4 py-2 text-left text-sm md:text-base">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="bg-slate-grey-light font-bold">
+      <td colspan="4" class="px-2 md:px-4 py-2 text-sm md:text-base">Heading</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">heading_3XL<br>(heading-3xl)</td>
+      <td class="px-2 md:px-4 py-2 heading-3xl">30/36 (semibold)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          h1_component(text: 'New Design')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= h1_component(text: 'New Design') %></td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">heading_2XL<br>(heading-2xl)</td>
+      <td class="px-2 md:px-4 py-2 heading-2xl">24/32 (semibold)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          h2_component(text: 'New Design')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= h2_component(text: 'New Design') %></td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">heading_XL<br>(heading-xl)</td>
+      <td class="px-2 md:px-4 py-2 heading-xl">20/28 (semibold)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          h3_component(text: 'New Design')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= h3_component(text: 'New Design') %></td>
+    </tr>
+
+    <tr class="bg-slate-grey-light font-bold">
+      <td colspan="4" class="px-2 md:px-4 py-2 text-sm md:text-base">Primary Text (Poppins)</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_large_B<br>(text-lg-bold)</td>
+      <td class="px-2 md:px-4 py-2 text-lg-bold">16/24 (Bold)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         size: 'lg',
+                         weight: 'bold')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', size: 'lg', weight: 'bold') %></td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_large_M<br>(text-lg-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-lg-medium">16/24 (Medium)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         size: 'lg',
+                         weight: 'medium')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', size: 'lg', weight: 'medium') %></td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_large_R<br>(text-lg-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-lg-normal">16/24 (Regular)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         size: 'lg')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', size: 'lg') %></td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_B<br>(text-base-bold)</td>
+      <td class="px-2 md:px-4 py-2 text-base-bold">14/20 (Bold)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         weight: 'bold')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', weight: 'bold') %></td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_M<br>(text-base-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-base-medium">14/20 (Medium)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         weight: 'medium')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', weight: 'medium') %></td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_R<br>(text-base-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-base-normal">14/20 (Regular)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design') %></td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_small_M<br>(text-sm-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-sm-medium">12/16 (Medium)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         size: 'sm',
+                         weight: 'medium')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', size: 'sm', weight: 'medium') %></td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_small_R<br>(text-sm-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-sm-normal">12/16 (Regular)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         size: 'sm')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', size: 'sm') %></td>
+    </tr>
+
+    <tr class="bg-slate-grey-light font-bold">
+      <td colspan="4" class="px-2 md:px-4 py-2 text-sm md:text-base">Secondary Text (Roboto)</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_large_R<br>(text-lg-normal-secondary)</td>
+      <td class="px-2 md:px-4 py-2 text-lg-normal-secondary">16/24 (Regular)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         size: 'lg',
+                         type: 'secondary')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2">
+        <%= text_component(text: 'New Design', size: 'lg', type: 'secondary') %>
+      </td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_M<br>(text-medium-secondary)</td>
+      <td class="px-2 md:px-4 py-2 text-medium-secondary">14/20 (Medium)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         weight: 'medium',
+                         type: 'secondary')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2">
+        <%= text_component(text: 'New Design', weight: 'medium', type: 'secondary') %>
+      </td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_R<br>(text-normal-secondary)</td>
+      <td class="px-2 md:px-4 py-2 text-normal-secondary">14/20 (Regular)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         type: 'secondary')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2">
+        <%= text_component(text: 'New Design', type: 'secondary') %>
+      </td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_small_M<br>(text-sm-medium-secondary)</td>
+      <td class="px-2 md:px-4 py-2 text-sm-medium-secondary">12/16 (Medium)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         size: 'sm',
+                         weight: 'medium',
+                         type: 'secondary')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2">
+        <%= text_component(text: 'New Design', size: 'sm', weight: 'medium', type: 'secondary') %>
+      </td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_small_R<br>(text-sm-normal-secondary)</td>
+      <td class="px-2 md:px-4 py-2 text-sm-normal-secondary">12/16 (Regular)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          text_component(text: 'New Design',
+                         size: 'sm',
+                         type: 'secondary')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2">
+        <%= text_component(text: 'New Design', size: 'sm', type: 'secondary') %>
+      </td>
+    </tr>
+    <tr class="bg-slate-grey-light font-bold">
+      <td colspan="4" class="px-2 md:px-4 py-2 text-sm md:text-base">Link (Poppins)</td>
+    </tr>
+    <tr class="border border-line-colour-light">
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_R<br>(text-base-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-base-normal">14/20 (Regular)</td>
+      <td class="px-2 md:px-4 py-2">
+        <pre><code>
+          link_component(text: 'New Link',
+                         url: 'https://app.instruo.co',
+                         target: '_blank')
+        </code></pre>
+      </td>
+      <td class="px-2 md:px-4 py-2">
+        <%= link_component(text: 'New Link', url: 'https://app.instruo.co', target: '_blank') %>
+      </td>
+    </tr>
+  </tbody>
+</table>

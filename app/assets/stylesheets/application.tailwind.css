@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "directives.tailwind.css";
+@import "buttons.tailwind.css";
+@import "typography.tailwind.css";
 
 @layer base {
   input[type="number"]::-webkit-outer-spin-button,
@@ -360,3 +360,8 @@ input.tags-checkbox:checked:focus {
 .body-extra-small-regular {
   @apply text-sm font-normal;
 }
+
+.code {
+  @apply bg-black text-white p-4 overflow-x-auto;
+}
+

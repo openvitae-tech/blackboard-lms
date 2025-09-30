@@ -2,11 +2,6 @@
 
 module ViewComponent
   module TableComponent
-    def label_with_icon(icon, label_tag, position)
-      ordered = position == 'left' ? [icon, label_tag] : [label_tag, icon]
-      safe_join(ordered.compact)
-    end
-
     def table_cell_name(row_data, avatar: false)
       { partial: 'shared/components/table_cell_name', locals: { row_data:, avatar: } }
     end

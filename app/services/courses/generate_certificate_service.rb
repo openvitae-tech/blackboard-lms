@@ -81,7 +81,8 @@ module Courses
         emulate_media: 'screen',
         full_page: true,
         print_background: true,
-        landscape: true
+        landscape: true,
+        timeout: 60_000
       )
     end
 
