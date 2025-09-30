@@ -166,6 +166,7 @@ en:
       upload_zip: "Upload template zip"
       no_file_chosen: "No file chosen"
       choose_file: "Choose File"
+      enter_certificate_name: "Enter certificate name"
   my_profile:
     label: "My Profile"
     my_certificates:

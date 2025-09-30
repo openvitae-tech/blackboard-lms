@@ -1,6 +1,6 @@
 <%= form_with model: certificate_template, url: learning_partner_certificate_templates_path(learning_partner), data: { controller: "certificate-template" } do |form| %>
   <%= render "shared/components/form_errors", resource: certificate_template %>
-  <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter certificate name", type: "text", width: "w-full") %>
+  <%= input_field(form:, field_name: :name, label: "Name", placeholder: t("certificate_templates.certificate_template.enter_certificate_name"), type: "text", width: "w-full") %>
   <div class="mt-6 flex flex-col">
     <label class="text-letter-color-light text-sm md:text-base leading-tight">
       <%= t("certificate_templates.certificate_template.upload_zip") %>
@@ -26,7 +26,7 @@
   </div>
   <div class="my-8 flex items-center gap-4 text-sm">
     <div class="mx-4 my-8">
-      <%= link_to "Cancel", learning_partner_certificate_templates_path(learning_partner), class: "nav-link" %>
+      <%= link_to t("button.cancel"), learning_partner_certificate_templates_path(learning_partner), class: "nav-link" %>
     </div>
     <%= form.submit submit_label_for(certificate_template), class: "btn-primary" %>
   </div>
