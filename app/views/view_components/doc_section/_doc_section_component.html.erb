@@ -1,12 +1,6 @@
-<section class="my-6">
-  <div class="heading heading-medium my-2"><%= heading %></div>
+<section class="my-6 border rounded-lg border-line-colour px-2 py-4">
+  <div class="heading heading-medium my-2"><%= title %></div>
   <div class="flex gap-4">
-    <%= yield demo %>
-  </div>
-  <div>
-    <p>Usage</p>
-    <br/>
-    <pre class="code">
-    </pre>
+    <%= block %>
   </div>
 </section>
