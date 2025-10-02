@@ -7,18 +7,27 @@
 
   <% input_div = content_tag :div, class: input.input_div_style do %>
     <% if input.form.present? %>
-      <% case type %>
-  <% when "password" %>
-        <%= input.form.password_field input.name, input.html_options %>
+      <% input_tag = case input.type %>
+      <% when "password" %>
+        <% input.form.password_field input.name, input.html_options %>
       <% when "email" %>
-        <%= input.form.email_field input.name, input.html_options %>
+        <% input.form.email_field input.name, input.html_options %>
       <% when "number" %>
-        <%= input.form.number_field input.name, input.html_options %>
+        <% input.form.number_field input.name, input.html_options %>
       <% else %>
-        <%= input.form.text_field input.name, input.html_options %>
+        <% input.form.text_field input.name, input.html_options %>
       <% end %>
     <% else %>
-      <% input_tag = text_field_tag input.name, input.value, input.html_options %>
+      <% input_tag = case input.type %>
+  <% when "password" %>
+        <% password_field_tag input.name, input.value, input.html_options %>
+      <% when "email" %>
+        <% email_field_tag input.name, input.value, input.html_options %>
+      <% when "number" %>
+        <% number_field_tag input.name, input.value, input.html_options %>
+      <% else %>
+        <% text_field_tag input.name, input.value, input.html_options %>
+      <% end %>
     <% end %>
 
     <%= input_with_icon(icon_tag, input_tag, input.icon_position) %>

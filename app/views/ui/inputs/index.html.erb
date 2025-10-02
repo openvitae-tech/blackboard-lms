@@ -22,6 +22,24 @@
   </li>
 
   <li>
+    <%= doc_section_component(title: "Email input") do %>
+      <%= input_text_component(name: 'email', label: "Email", type: 'email', placeholder: "Enter your email", subtext: 'Example: deepak@example.com') %>
+    <% end %>
+  </li>
+
+  <li>
+    <%= doc_section_component(title: "Numeric input") do %>
+      <%= input_text_component(name: 'age', label: "Age", type: 'number', placeholder: "Enter your age") %>
+    <% end %>
+  </li>
+
+  <li>
+    <%= doc_section_component(title: "Password input") do %>
+      <%= input_text_component(name: 'password', label: "Password", type: 'password', placeholder: "Enter your password") %>
+    <% end %>
+  </li>
+
+  <li>
     <%= doc_section_component(title: "Text input large") do %>
       <%= input_text_component(name: 'name2', label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', size: 'lg') %>
     <% end %>
