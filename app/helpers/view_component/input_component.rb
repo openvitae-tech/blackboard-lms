@@ -143,14 +143,15 @@ module ViewComponent
         lg: 'input-text-subtext-lg'
       }.freeze
 
-      attr_accessor :form, :name, :label, :value, :subtext, :error, :icon_name, :icon_position, :disabled, :size,
+      attr_accessor :form, :name, :label, :type, :value, :subtext, :error, :icon_name, :icon_position, :disabled, :size,
                     :html_options
 
-      def initialize(form:, name:, label:, placeholder:, value:, subtext:, error:, icon_name:, icon_position:,
+      def initialize(form:, name:, label:, type:, placeholder:, value:, subtext:, error:, icon_name:, icon_position:,
                      disabled:, size:, html_options:)
         self.form = form
         self.name = name
         self.label = label
+        self.type = type
         self.value = value
         self.subtext = error || subtext # Prioritise error over subtext
         self.error = error
@@ -261,6 +262,7 @@ module ViewComponent
       form: nil,
       name: nil,
       label: nil,
+      type: 'text',
       placeholder: 'Placeholder',
       value: '',
       subtext: nil,
@@ -272,7 +274,7 @@ module ViewComponent
       html_options: {}
     )
       input = InputTextComponent.new(
-        form:, name:, label:, placeholder:, value:, subtext:, error:, icon_name:, icon_position:, disabled:, size:,
+        form:, name:, label:, type:, placeholder:, value:, subtext:, error:, icon_name:, icon_position:, disabled:, size:,
         html_options:
       )
 
