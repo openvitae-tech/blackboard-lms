@@ -9,6 +9,13 @@
   </li>
 
   <li>
+    <%= doc_section_component(title: "Text input without label and subtext") do %>
+      <%= input_text_component(name: 'name1', placeholder: "Enter your name") %>
+    <% end %>
+  </li>
+
+
+  <li>
     <%= doc_section_component(title: "Text input") do %>
       <%= input_text_component(name: 'name1', label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar') %>
     <% end %>

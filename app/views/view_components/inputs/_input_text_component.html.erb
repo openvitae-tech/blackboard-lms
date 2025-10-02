@@ -1,20 +1,14 @@
 <div class="flex w-full flex-col gap-1">
-  <% if input.label.present? %>
-    <label for="<%= input.name %>" class="<%= input.label_style %>">
-      <%= input.label %>
-    </label>
-  <% end %>
-
   <% if input.icon_name.present? %>
     <% icon_tag = content_tag(:div, class: input.icon_style) do %>
       <%= icon(input.icon_name, css: input.icon_size) %>
     <% end %>
   <% end %>
 
-  <div class="<%= input.input_div_style %>">
+  <% input_div = content_tag :div, class: input.input_div_style do %>
     <% if input.form.present? %>
       <% case type %>
-    <% when "password" %>
+  <% when "password" %>
         <%= input.form.password_field input.name, input.html_options %>
       <% when "email" %>
         <%= input.form.email_field input.name, input.html_options %>
@@ -28,7 +22,16 @@
     <% end %>
 
     <%= input_with_icon(icon_tag, input_tag, input.icon_position) %>
-  </div>
+  <% end %>
+
+  <% if input.label.present? %>
+    <label>
+      <span class="<%= input.label_style %>"><%= input.label %></span>
+      <%= input_div %>
+    </label>
+  <% else %>
+    <%= input_div %>
+  <% end %>
 
   <% if input.subtext.present? %>
     <span class="<%= input.subtext_style %>">
