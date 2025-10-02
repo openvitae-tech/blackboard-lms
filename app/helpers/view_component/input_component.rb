@@ -274,8 +274,8 @@ module ViewComponent
       html_options: {}
     )
       input = InputTextComponent.new(
-        form:, name:, label:, type:, placeholder:, value:, subtext:, error:, icon_name:, icon_position:, disabled:, size:,
-        html_options:
+        form:, name:, label:, type:, placeholder:, value:, subtext:, error:, icon_name:, icon_position:, disabled:,
+        size:, html_options:
       )
 
       render partial: 'view_components/inputs/input_text_component',
