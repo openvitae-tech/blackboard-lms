@@ -257,10 +257,24 @@ module ViewComponent
       safe_join(ordered.compact)
     end
 
-    def input_text_component(form: nil, name: nil, label: nil, placeholder: 'Placeholder', value: '', subtext: nil,
-                             error: nil, icon_name: nil, icon_position: 'right', disabled: false, size: 'md', html_options: {})
-      input = InputTextComponent.new(form:, name:, label:, placeholder:, value:, subtext:, error:, icon_name:,
-                                     icon_position:, disabled:, size:, html_options:)
+    def input_text_component(
+      form: nil,
+      name: nil,
+      label: nil,
+      placeholder: 'Placeholder',
+      value: '',
+      subtext: nil,
+      error: nil,
+      icon_name: nil,
+      icon_position: 'right',
+      disabled: false,
+      size: 'md',
+      html_options: {}
+    )
+      input = InputTextComponent.new(
+        form:, name:, label:, placeholder:, value:, subtext:, error:, icon_name:, icon_position:, disabled:, size:,
+        html_options:
+      )
 
       render partial: 'view_components/inputs/input_text_component',
              locals: { input: }
