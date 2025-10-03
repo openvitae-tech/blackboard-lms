@@ -43,9 +43,9 @@
 }
 
 .text-danger {
-  @apply text-red-500;
+  @apply text-danger;
 }
 
 .border-danger {
-  @apply border-red-500;
+  @apply border-danger;
 }
