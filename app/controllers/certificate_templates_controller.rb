@@ -11,7 +11,7 @@ class CertificateTemplatesController < ApplicationController
 
   def index
     authorize :certificate_template
-    @certificate_templates = @learning_partner.certificate_templates
+    @certificate_templates = @learning_partner.certificate_templates.includes([:html_file_attachment])
   end
 
   def create
@@ -57,7 +57,7 @@ class CertificateTemplatesController < ApplicationController
   end
 
   def certificate_template_params
-    params.require(:certificate_template).permit(:name, :html_content, :active, :template_zip)
+    params.require(:certificate_template).permit(:name, :active, :template_zip)
   end
 
   def set_certificate_template

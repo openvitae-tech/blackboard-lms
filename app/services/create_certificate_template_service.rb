@@ -11,9 +11,11 @@ class CreateCertificateTemplateService
 
     begin
       html, assets_map = extract_from_zip(params[:template_zip], template)
-      template.html_content = replace_asset_path(html, assets_map)
-    rescue StandardError
-      template.errors.add(:base, 'Template could not be processed.')
+      validate_required_variables!(html)
+      modified_html = replace_asset_path(html, assets_map)
+      attach_html_file(template, modified_html)
+    rescue StandardError => e
+      template.errors.add(:base, e.message.presence || 'Template could not be processed.')
     end
     template
   end
@@ -58,31 +60,37 @@ class CreateCertificateTemplateService
     updated_file_name = "#{SecureRandom.base36}_#{file_name}"
     ActiveStorage::Blob.create_and_upload!(
       io: StringIO.new(entry.get_input_stream.read),
-      filename: File.basename(updated_file_name),
-      service_name: upload_service,
-      key: "public/#{Rails.env}/assets/#{updated_file_name}"
+      filename: File.basename(updated_file_name)
     )
   end
 
   def replace_asset_path(html, assets_map)
     assets_map.each do |filename, blob|
       replacement =
-        if Rails.env.local?
-          "data:#{blob.content_type};base64,#{Base64.strict_encode64(blob.download)}"
-        else
-          blob.url
-        end
+        "data:#{blob.content_type};base64,#{Base64.strict_encode64(blob.download)}"
 
       html.gsub!(%r{(\./)?#{Regexp.escape(filename)}}, replacement)
     end
     html
   end
 
-  def upload_service
-    if %w[production staging].include?(Rails.env)
-      :s3_public_assets_store
-    else
-      :local
+  def attach_html_file(template, html)
+    template.html_file.attach(
+      io: StringIO.new(html),
+      filename: 'index.html',
+      content_type: 'text/html'
+    )
+  end
+
+  def validate_required_variables!(html)
+    found = html.to_s.scan(/%\{([^}]+)\}/).flatten.uniq
+    missing = CertificateTemplate::ALLOWED_VARIABLES - found
+    extra = found - CertificateTemplate::ALLOWED_VARIABLES
+
+    if missing.any?
+      raise StandardError, "HTML template is missing required variables: #{missing.join(', ')}"
+    elsif extra.any?
+      raise StandardError, "HTML template contains invalid variables: #{extra.join(', ')}"
     end
   end
 end
