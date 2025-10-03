@@ -1,3 +1,12 @@
+@layer components {
+  .error-text {
+    @apply text-danger;
+  }
+  .error-border {
+    @apply border-danger border-[2px];
+  }
+}
+
 .textarea-component-container {
   @apply flex flex-col gap-1;
 }
@@ -23,11 +32,11 @@
 }
 
 .textarea-component-md {
-  @apply min-h-[60px] py-1 md:px-3 md:py-2 md:min-h-[100px] text-letter-color-light text-sm md:text-base rounded-[4px] border border-slate-grey-50;
+  @apply px-4 py-2 text-letter-color-light text-sm md:text-base rounded-[4px] border border-slate-grey-50;
 }
 
 .textarea-component-lg {
-  @apply min-h-[100px] py-1 md:px-3 md:py-2 md:min-h-[150px] text-letter-color-light text-base rounded-[8px] border border-slate-grey-50;
+  @apply px-4 py-2 text-letter-color-light text-base rounded-[8px] border border-slate-grey-50;
 }
 
 .textarea-support-text {
@@ -42,10 +51,3 @@
   @apply text-xs md:text-sm;
 }
 
-.text-danger {
-  @apply text-danger;
-}
-
-.border-danger {
-  @apply border-danger;
-}
