@@ -10,19 +10,6 @@ module ViewComponent
       'xl' => 'text-3xl font-semibold'
     }.freeze
 
-    TEXT_SIZES = %w[sm base lg].freeze
-    TEXT_WEIGHTS = %w[normal medium bold].freeze
-    TEXT_TYPES = %w[primary secondary].freeze
-
-    def font_weight(weight)
-      weight.present? ? "font-#{weight}" : 'font-normal'
-    end
-
-    def text_css_class(size, type)
-      css = "#{type}-text"
-      size == 'base' ? css : "#{css}-#{size}"
-    end
-
     def merge_class(options, class_names)
       options.merge(class: [*class_names, options[:class]].compact.join(' '))
     end
@@ -68,21 +55,13 @@ module ViewComponent
     end
 
     # @param text - text to be displayed
-    # @param size -  sm, base, lg
-    # @param weight - normal, medium, bold
-    # @param type - primary, secondary
     # @param tag - span, p, div
-    # @param html_options - additional html options
-    def text_component(text: '', size: 'base', weight: 'normal', type: 'primary', tag: 'span', html_options: {})
-      raise 'IncorrectValue - incorrect size value' unless TEXT_SIZES.include?(size)
-      raise 'IncorrectValue - incorrect weight value' unless TEXT_WEIGHTS.include?(weight)
-      raise 'IncorrectValue - incorrect type value' unless TEXT_TYPES.include?(type)
-
-      css_classes = [text_css_class(size, type), font_weight(weight)]
+    # @param html_options - additional html options including css classes
+    def text_component(text: '', tag: 'span', html_options: {})
       render partial: 'view_components/typography/text_component', locals: {
         text:,
         tag:,
-        html_options: merge_class(html_options, css_classes)
+        html_options:
       }
     end
 
@@ -96,7 +75,7 @@ module ViewComponent
       render partial: 'view_components/typography/link_component', locals: {
         text:,
         url:,
-        html_options: merge_class(html_options, ['text-base-normal']).merge(target: target)
+        html_options: merge_class(html_options, ['general-text-base-normal']).merge(target: target)
       }
     end
   end
