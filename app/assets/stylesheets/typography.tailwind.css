@@ -1,93 +1,70 @@
 /* Typography Styles */
 
 @layer components {
-  .primary-text {
-    @apply font-poppins text-sm;
+  /* Heading Typography Styles */
+  .heading-3xl {
+    @apply font-poppins text-2xl md:text-3xl font-semibold;
   }
 
-  .primary-text-lg {
-    @apply font-poppins text-sm md:text-base;
+  .heading-2xl {
+    @apply font-poppins text-xl md:text-2xl font-semibold;
   }
 
-  .primary-text-sm {
-    @apply font-poppins text-xs;
-  }
-  .secondary-text {
-    @apply font-roboto text-sm;
+  .heading-xl {
+    @apply font-poppins text-lg md:text-xl font-semibold;
   }
 
-  .secondary-text-lg {
-    @apply font-roboto text-sm md:text-base;
+  /* Primary Text Typography Styles */
+  .main-text-lg-bold {
+    @apply font-poppins text-base font-medium md:font-semibold;
   }
 
-  .secondary-text-sm {
-    @apply font-roboto text-xs;
+  .main-text-lg-medium {
+    @apply font-poppins text-sm md:text-base font-medium;
   }
-}
 
-/* Heading Typography Styles */
-.heading-3xl {
-  @apply font-poppins text-2xl md:text-3xl font-semibold;
-}
+  .main-text-lg-normal {
+    @apply font-poppins text-sm md:text-base font-normal;
+  }
 
-.heading-2xl {
-  @apply font-poppins text-xl md:text-2xl font-semibold;
-}
+  .main-text-base-bold {
+    @apply font-poppins text-sm font-semibold;
+  }
 
-.heading-xl {
-  @apply font-poppins text-lg md:text-xl font-semibold;
-}
+  .main-text-base-medium {
+    @apply font-poppins text-sm font-medium;
+  }
 
-/* Primary Text Typography Styles */
-.text-lg-bold {
-  @apply primary-text-lg font-bold;
-}
+  .main-text-base-normal {
+    @apply font-poppins text-sm font-normal;
+  }
 
-.text-lg-medium {
-  @apply primary-text-lg font-medium;
-}
+  .main-text-sm-medium {
+    @apply font-poppins text-sm font-medium;
+  }
 
-.text-lg-normal {
-  @apply primary-text-lg font-normal;
-}
+  .main-text-sm-normal {
+    @apply font-poppins text-sm font-normal;
+  }
 
-.text-base-bold {
-  @apply primary-text font-bold;
-}
+  /* Secondary Text Typography Styles */
+  .general-text-lg-normal {
+    @apply font-roboto text-sm md:text-base font-normal;
+  }
 
-.text-base-medium {
-  @apply primary-text font-medium;
-}
+  .general-text-base-medium {
+    @apply font-roboto text-sm font-medium;
+  }
 
-.text-base-normal {
-  @apply primary-text font-normal;
-}
+  .general-text-base-normal {
+    @apply font-roboto text-xs md:text-sm font-normal;
+  }
 
-.text-sm-medium {
-  @apply primary-text-sm font-medium;
-}
+  .general-text-sm-medium {
+    @apply font-roboto text-xs font-medium;
+  }
 
-.text-sm-normal {
-  @apply primary-text-sm font-normal;
-}
-
-/* Secondary Text Typography Styles */
-.text-lg-normal-secondary {
-  @apply secondary-text-lg font-normal;
-}
-
-.text-medium-secondary {
-  @apply secondary-text font-medium;
-}
-
-.text-normal-secondary {
-  @apply secondary-text font-normal;
-}
-
-.text-sm-medium-secondary {
-  @apply secondary-text-sm font-medium;
-}
-
-.text-sm-normal-secondary {
-  @apply secondary-text-sm font-normal;
+  .general-text-sm-normal {
+    @apply font-roboto text-xs font-normal;
+  }
 }
