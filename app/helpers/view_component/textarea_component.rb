@@ -7,8 +7,8 @@ module ViewComponent
     def textarea_component(
       form: nil,
       field_name:,
-      label:, 
-      placeholder:, 
+      label:,
+      placeholder:,
       value: nil,
       rows: 5,
       size: 'md',
