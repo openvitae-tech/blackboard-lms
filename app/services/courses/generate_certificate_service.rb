@@ -74,7 +74,8 @@ module Courses
 
     def build_html_file(course, user, issued_at, certificate_template)
       data_map = build_data_map(course, user, issued_at)
-      html = render_html(certificate_template, data_map)
+      raw_html = certificate_template.html_file.download
+      html = render_html(raw_html, data_map)
 
       Grover.new(
         html,
@@ -86,8 +87,8 @@ module Courses
       )
     end
 
-    def render_html(certificate_template, data_map)
-      certificate_template.html_content.gsub(/%\{(\w+)\}/) do
+    def render_html(raw_html, data_map)
+      raw_html.gsub(/%\{(\w+)\}/) do
         key = Regexp.last_match(1).to_sym
         data_map.fetch(key) { "%{#{key}}" }
       end

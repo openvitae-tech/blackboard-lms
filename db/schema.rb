@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_09_133618) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_03_080322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -54,7 +54,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_133618) do
 
   create_table "certificate_templates", force: :cascade do |t|
     t.string "name", null: false
-    t.text "html_content", null: false
     t.boolean "active", default: false, null: false
     t.bigint "learning_partner_id", null: false
     t.datetime "created_at", null: false

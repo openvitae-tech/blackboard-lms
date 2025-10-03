@@ -134,7 +134,9 @@ RSpec.describe 'Request spec for Certificate templates', type: :request do
     {
       certificate_template: {
         name: 'New Template',
-        html_content: '<div>Certificate for %{CandidateName} completing %{CourseName} on %{IssueDate}.</div>' # rubocop:disable Style/FormatStringToken
+        template_zip: Rack::Test::UploadedFile.new(
+          Rails.root.join('spec/fixtures/files/certificate_template.zip')
+        )
       }
     }
   end
