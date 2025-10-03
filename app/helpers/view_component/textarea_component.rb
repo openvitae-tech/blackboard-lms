@@ -5,10 +5,10 @@ module ViewComponent
     TEXTAREA_SIZES = %w[md lg].freeze
 
     def textarea_component(
-      form: nil,
       field_name:,
       label:,
       placeholder:,
+      form: nil,
       value: nil,
       rows: 5,
       size: 'md',
