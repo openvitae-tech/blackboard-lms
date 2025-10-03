@@ -30,10 +30,12 @@ RSpec.describe CertificateTemplate, type: :model do
 
   describe '#validate_html_file' do
     it 'is not valid without html_file' do
-      certificate_template.html_file = nil
+      certificate_template = build(:certificate_template)
+      certificate_template.html_file.detach
 
       expect(certificate_template).not_to be_valid
-      expect(certificate_template.errors.full_messages.to_sentence).to eq('Html file is required')
+      expect(certificate_template.errors.full_messages.to_sentence)
+        .to eq('Html file is required')
     end
   end
 
