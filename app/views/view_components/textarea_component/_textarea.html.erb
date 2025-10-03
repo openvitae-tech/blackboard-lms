@@ -4,14 +4,14 @@
           class: [
             "textarea-component-label",
             "textarea-component-label-#{size}",
-            ("text-danger" if error)
+            ("error-text" if error)
           ].compact.join(" ") %>
   <% else %>
     <%= label_tag field_name, label,
           class: [
             "textarea-component-label",
             "textarea-component-label-#{size}",
-            ("text-danger placeholder-red-500 !important" if error)
+            ("error-text placeholder-danger" if error)
           ].compact.join(" ") %>
   <% end %>
 
@@ -24,7 +24,7 @@
             class: [
               "textarea-component-base",
               "textarea-component-#{size}",
-              ("text-danger placeholder-red-500 !important" if error),
+              ("error-text error-border placeholder-danger" if error),
             ].compact.join(" ") %>
     <% else %>
       <%= text_area_tag field_name,
@@ -35,13 +35,13 @@
             class: [
               "textarea-component-base",
               "textarea-component-#{size}",
-              ("text-danger" if error),
+              ("error-text error-border" if error),
             ].compact.join(" ") %>
     <% end %>
   </div>
 
   <% if support_text.present? %>
-    <div class="textarea-support-text textarea-support-text-<%= size %> <%= 'text-danger' if error %>">
+    <div class="textarea-support-text textarea-support-text-<%= size %> <%= 'error-text' if error %>">
       <%= support_text %>
     </div>
   <% end %>
