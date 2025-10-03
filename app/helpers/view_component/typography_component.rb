@@ -61,7 +61,7 @@ module ViewComponent
       render partial: 'view_components/typography/text_component', locals: {
         text:,
         tag:,
-        html_options:
+        html_options: merge_class(html_options, ['general-text-base-normal'])
       }
     end
 
@@ -72,10 +72,11 @@ module ViewComponent
     def link_component(text:, url: '#', target: '_self', html_options: {})
       raise 'BlankValue - text cannot be blank' if text.blank?
 
+      link_css = ['general-text-base-normal', 'underline', 'text-primary', 'hover:text-primary-light']
       render partial: 'view_components/typography/link_component', locals: {
         text:,
         url:,
-        html_options: merge_class(html_options, ['general-text-base-normal']).merge(target: target)
+        html_options: merge_class(html_options, link_css).merge(target: target)
       }
     end
   end
