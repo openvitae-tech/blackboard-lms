@@ -1,6 +1,11 @@
 @import "directives.tailwind.css";
 @import "buttons.tailwind.css";
 @import "typography.tailwind.css";
+@import "textarea.tailwind.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   input[type="number"]::-webkit-outer-spin-button,
