@@ -23,7 +23,8 @@ module ViewComponent
       attr_accessor :form, :field_name, :label, :placeholder, :value,
                     :rows, :size, :html_options, :support_text, :error, :disabled
 
-      def initialize(form:, field_name:, label:, placeholder:, value:, rows:, size:, html_options:, support_text:, error:, disabled:)
+      def initialize(form:, field_name:, label:, placeholder:, value:, rows:, size:, html_options:, support_text:,
+                     error:, disabled:)
         @form = form
         @field_name = field_name
         @label = label
@@ -41,7 +42,6 @@ module ViewComponent
         html_options[:disabled] = true if disabled
         html_options[:rows] ||= rows
       end
-
 
       def textarea_style
         base = ['textarea-component-base']
@@ -99,7 +99,6 @@ module ViewComponent
         base.join(' ')
       end
     end
-
 
     def textarea_component(
       field_name:,
