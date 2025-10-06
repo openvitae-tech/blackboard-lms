@@ -115,10 +115,7 @@ module ViewComponent
     )
       raise "Incorrect textarea size: #{size}" unless TEXTAREA_SIZES.include?(size)
 
-      errors = form&.object&.errors
-      form_error = errors&.[](field_name)&.first
-      final_error_message = error.presence || form_error
-      has_error = final_error_message.present?
+      final_error_message, has_error = resolve_error(form, field_name, error)
 
       textarea = Textarea.new(
         form: form,
@@ -135,6 +132,15 @@ module ViewComponent
       )
 
       render partial: 'view_components/textarea_component/textarea', locals: { textarea: textarea }
+    end
+
+    private
+
+    def resolve_error(form, field_name, explicit_error)
+      errors = form&.object&.errors
+      form_error = errors&.[](field_name)&.first
+      final_error_message = explicit_error.presence || form_error
+      [final_error_message, final_error_message.present?]
     end
   end
 end
