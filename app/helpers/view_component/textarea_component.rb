@@ -17,7 +17,8 @@ module ViewComponent
     )
       raise "Incorrect textarea size: #{size}" unless TEXTAREA_SIZES.include?(size)
 
-      error_message = form&.object&.errors&.[](field_name)&.first
+      errors = form&.object&.errors
+      error_message = errors&.[](field_name)&.first
 
       render partial: 'view_components/textarea_component/textarea', locals: {
         form:,
