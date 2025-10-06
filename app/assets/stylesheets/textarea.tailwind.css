@@ -1,6 +1,6 @@
 @layer components {
   .error-text {
-    @apply text-danger;
+    @apply text-danger-dark;
   }
   .error-border {
     @apply border-danger border-[2px];
@@ -12,19 +12,7 @@
 }
 
 .textarea-component-base {
-  @apply w-full text-letter-color-light text-base border rounded focus:border-[2px] focus:border-primary;
-}
-
-.textarea-component-label {
-  @apply text-letter-color-light md:text-base leading-tight;
-}
-
-.textarea-component-label-md {
-  @apply text-xs;
-}
-
-.textarea-component-label-lg {
-  @apply text-xs md:text-sm;
+  @apply w-full border border-slate-grey-50 focus:border-[2px] focus:border-primary;
 }
 
 .textarea-component-wrapper {
@@ -32,22 +20,14 @@
 }
 
 .textarea-component-md {
-  @apply px-3 py-2  text-letter-color-light text-sm md:text-base rounded-[4px] border border-slate-grey-50;
+  @apply px-3 py-2 rounded-[4px] ;
 }
 
 .textarea-component-lg {
-  @apply px-4 py-2 md:p-4 text-letter-color-light text-base rounded-[8px] border border-slate-grey-50;
+  @apply px-4 py-2 md:p-4 text-base md:text-lg rounded-[8px];
 }
 
 .textarea-support-text {
-  @apply w-52 px-3 flex justify-start items-start text-slate-grey-50 text-xs;
-}
-
-.textarea-support-text-md {
-  @apply text-xs;
-}
-
-.textarea-support-text-lg {
-  @apply text-xs md:text-sm;
+  @apply px-3 flex justify-start items-start;
 }
 

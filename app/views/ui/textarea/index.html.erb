@@ -1,26 +1,74 @@
 <div class="my-6">
-  <%= render "shared/components/back_button", back_link: "#" %>
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
 </div>
 
-<div class="heading heading-medium">Textarea Component Demo</div>
+<%= h3_component(text: 'Textarea Component Demo') %>
 
-<ul class="my-6 flex flex-col gap-4">
-  <li>
+<ul class="w-1/2 my-6 flex flex-col gap-4">
+  <li class="my-6 flex flex-col gap-4">
+    <%= text_component(text: 'Medium Textarea',
+                         html_options: { class: 'main-text-lg-medium' }) %>
+
     <%= textarea_component(
           field_name: :description,
           label: "Description",
           placeholder: "Enter description",
-          size: "md",
+          support_text: "Supporting Description here"
+        ) %>
+  </li>
+  <li class="my-6 flex flex-col gap-4">
+    <%= text_component(text: 'Large Textarea',
+                         html_options: { class: 'main-text-lg-medium' }) %>
+
+    <%= textarea_component(
+          field_name: :description,
+          label: "Description",
+          placeholder: "Enter description",
+          size: "lg",
+          support_text: "Supporting Description here"
+        ) %>
+  </li>
+  <li class="my-6 flex flex-col gap-4">
+    <%= text_component(text: 'Textarea with error state',
+                         html_options: { class: 'main-text-lg-medium' }) %>
+    <%= textarea_component(
+          field_name: :description,
+          label: "Description",
+          placeholder: "Enter description",
+          error: "Description should be in not less than 36 characters",
+          support_text: "Supporting Description here"
+        ) %>
+  </li>
+  <li class="my-6 flex flex-col gap-4">
+    <%= text_component(text: 'Textarea with disabled state',
+                         html_options: { class: 'main-text-lg-medium' }) %>
+    <%= textarea_component(
+          field_name: :description,
+          label: "Description",
+          placeholder: "Enter description",
+          disabled: true,
           support_text: "Supporting Description here"
         ) %>
   </li>
 </ul>
-
-<h3 class="mt-8 mb-4 text-lg font-semibold">Form Example</h3>
+<%= h3_component(text: 'Form Example') %>
 
 <%= form_with  url: "#", method: :post do |form| %>
-  <ul class="my-6 flex flex-col gap-4">
-    <li>
+  <ul class="w-1/2 my-6 flex flex-col gap-4">
+    <li class="my-6 flex flex-col gap-4">
+      <%= text_component(text: 'Medium Textarea',
+                         html_options: { class: 'main-text-lg-medium' }) %>
+      <%= textarea_component(
+            form: form,
+            field_name: :description,
+            label: "Description",
+            placeholder: "Enter description",
+            support_text: "Supporting Description here"
+          ) %>
+    </li>
+    <li class="my-6 flex flex-col gap-4">
+      <%= text_component(text: 'Large Textarea',
+                         html_options: { class: 'main-text-lg-medium' }) %>
       <%= textarea_component(
             form: form,
             field_name: :description,
@@ -30,7 +78,29 @@
             support_text: "Supporting Description here"
           ) %>
     </li>
+    <li class="my-6 flex flex-col gap-4">
+      <%= text_component(text: 'Textarea with error state',
+                         html_options: { class: 'main-text-lg-medium' }) %>
+      <%= textarea_component(
+            form: form,
+            field_name: :description,
+            label: "Description",
+            placeholder: "Enter description",
+            error: "Description should be in not less than 36 characters",
+            support_text: "Supporting Description here"
+          ) %>
+    </li>
+    <li class="my-6 flex flex-col gap-4">
+      <%= text_component(text: 'Textarea with disable state',
+                         html_options: { class: 'main-text-lg-medium' }) %>
+      <%= textarea_component(
+            form: form,
+            field_name: :description,
+            label: "Description",
+            placeholder: "Enter description",
+            disabled: true,
+            support_text: "Supporting Description here"
+          ) %>
+    </li>
   </ul>
-
-  <%= form.submit "Submit", class: "btn-primary" %>
 <% end %>
