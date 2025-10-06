@@ -1,48 +1,30 @@
 <div class="textarea-component-container">
-  <% if form.present? %>
-    <%= form.label field_name, label,
-          class: [
-            "textarea-component-label",
-            "textarea-component-label-#{size}",
-            ("error-text" if error)
-          ].compact.join(" ") %>
+  <% if textarea.form.present? %>
+    <%= textarea.form.label textarea.field_name, textarea.label, class: textarea.label_style %>
   <% else %>
-    <%= label_tag field_name, label,
-          class: [
-            "textarea-component-label",
-            "textarea-component-label-#{size}",
-            ("error-text placeholder-danger" if error)
-          ].compact.join(" ") %>
+    <%= label_tag textarea.field_name, textarea.label, class: textarea.label_style %>
   <% end %>
 
   <div class="textarea-component-wrapper">
-    <% if form.present? %>
-      <%= form.text_area field_name,
-            **html_options,
-            placeholder: placeholder,
-            rows: rows,
-            class: [
-              "textarea-component-base",
-              "textarea-component-#{size}",
-              ("error-text error-border placeholder-danger" if error),
-            ].compact.join(" ") %>
+    <% if textarea.form.present? %>
+      <%= textarea.form.text_area textarea.field_name,
+            **textarea.html_options,
+            placeholder: textarea.placeholder,
+            rows: textarea.rows,
+            class: textarea.textarea_style %>
     <% else %>
-      <%= text_area_tag field_name,
-            value,
-            **html_options,
-            placeholder: placeholder,
-            rows: rows,
-            class: [
-              "textarea-component-base",
-              "textarea-component-#{size}",
-              ("error-text error-border" if error),
-            ].compact.join(" ") %>
+      <%= text_area_tag textarea.field_name,
+            textarea.value,
+            **textarea.html_options,
+            placeholder: textarea.placeholder,
+            rows: textarea.rows,
+            class: textarea.textarea_style %>
     <% end %>
   </div>
 
-  <% if support_text.present? %>
-    <div class="textarea-support-text textarea-support-text-<%= size %> <%= 'error-text' if error %>">
-      <%= support_text %>
+  <% if textarea.support_text.present? %>
+    <div class="<%= textarea.support_text_style %>">
+      <%= textarea.support_text %>
     </div>
   <% end %>
 </div>
