@@ -16,6 +16,7 @@
       <td class="px-2 md:px-4 py-2">
         <pre><code>
           h1_component(text: 'New Design')
+          content_tag(:h1, "New Design", class: "heading-3xl")
         </code></pre>
       </td>
       <td class="px-2 md:px-4 py-2"><%= h1_component(text: 'New Design') %></td>
@@ -25,6 +26,7 @@
       <td class="px-2 md:px-4 py-2">
         <pre><code>
           h2_component(text: 'New Design')
+          content_tag(:h2, "New Design", class: "heading-2xl")
         </code></pre>
       </td>
       <td class="px-2 md:px-4 py-2"><%= h2_component(text: 'New Design') %></td>
@@ -34,6 +36,7 @@
       <td class="px-2 md:px-4 py-2">
         <pre><code>
           h3_component(text: 'New Design')
+          content_tag(:h3, "New Design", class: "heading-xl")
         </code></pre>
       </td>
       <td class="px-2 md:px-4 py-2"><%= h3_component(text: 'New Design') %></td>
@@ -43,164 +46,197 @@
       <td colspan="3" class="px-2 md:px-4 py-2 text-sm md:text-base">Main Text (Poppins)</td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_large_B<br>(main-text-lg-bold)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_large_B<br>(main-text-lg-bold)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'main-text-lg-bold' })
+          content_tag(:p, "New Design", class: "main-text-lg-bold")
         </code></pre>
       </td>
-      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', html_options: { class: 'main-text-lg-bold' }) %></td>
+      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-lg-bold") %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_large_M<br>(main-text-lg-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_large_M<br>(main-text-lg-medium)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'main-text-lg-medium' })
+          content_tag(:p, "New Design", class: "main-text-lg-medium")
         </code></pre>
       </td>
-      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', html_options: { class: 'main-text-lg-medium' }) %></td>
+      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-lg-medium") %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_large_N<br>(main-text-lg-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_large_N<br>(main-text-lg-normal)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'main-text-lg-normal' })
+          content_tag(:p, "New Design", class: "main-text-lg-normal")
         </code></pre>
       </td>
-      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', html_options: { class: 'main-text-lg-normal' }) %></td>
+      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-lg-normal") %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_B<br>(main-text-base-bold)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_B<br>(main-text-base-bold)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'main-text-base-bold' })
+          content_tag(:p, "New Design", class: "main-text-base-bold")
         </code></pre>
       </td>
       <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', html_options: { class: 'main-text-base-bold' }) %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_M<br>(main-text-base-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_M<br>(main-text-base-medium)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'main-text-base-medium' })
+          content_tag(:p, "New Design", class: "main-text-base-medium")
         </code></pre>
       </td>
-      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', html_options: { class: 'main-text-base-medium' }) %></td>
+      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-base-medium") %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_N<br>(main-text-base-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_N<br>(main-text-base-normal)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'main-text-base-normal' })
+          content_tag(:p, "New Design", class: "main-text-base-normal")
         </code></pre>
       </td>
-      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', html_options: { class: 'main-text-base-normal' }) %></td>
+      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-base-normal") %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_small_M<br>(main-text-sm-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_small_M<br>(main-text-sm-medium)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'main-text-sm-medium' })
+          content_tag(:p, "New Design", class: "main-text-sm-medium")
         </code></pre>
       </td>
-      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', html_options: { class: 'main-text-sm-medium' }) %></td>
+      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-sm-medium") %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_small_N<br>(main-text-sm-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_small_N<br>(main-text-sm-normal)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'main-text-sm-normal' })
+          content_tag(:p, "New Design", class: "main-text-sm-normal")
         </code></pre>
       </td>
-      <td class="px-2 md:px-4 py-2"><%= text_component(text: 'New Design', html_options: { class: 'main-text-sm-normal' }) %></td>
+      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-sm-normal") %></td>
     </tr>
 
     <tr class="bg-slate-grey-light font-bold">
       <td colspan="3" class="px-2 md:px-4 py-2 text-sm md:text-base">General Text (Roboto)</td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_large_N<br>(general-text-lg-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_large_N<br>(general-text-lg-normal)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'general-text-lg-normal' })
+          content_tag(:p, "New Design", class: "general-text-lg-normal")
         </code></pre>
       </td>
       <td class="px-2 md:px-4 py-2">
-        <%= text_component(text: 'New Design', html_options: { class: 'general-text-lg-normal' }) %>
+        <%= content_tag(:p, "New Design", class: "general-text-lg-normal") %>
       </td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_M<br>(general-text-base-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_M<br>(general-text-base-medium)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'general-text-base-medium' })
+          content_tag(:p, "New Design", class: "general-text-base-medium")
         </code></pre>
       </td>
       <td class="px-2 md:px-4 py-2">
-        <%= text_component(text: 'New Design', html_options: { class: 'general-text-base-medium' }) %>
+        <%= content_tag(:p, "New Design", class: "general-text-base-medium") %>
       </td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_N<br>(general-text-base-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_N<br>(general-text-base-normal)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'general-text-base-normal' })
+          content_tag(:p, "New Design", class: "general-text-base-normal")
         </code></pre>
       </td>
       <td class="px-2 md:px-4 py-2">
-        <%= text_component(text: 'New Design', html_options: { class: 'general-text-base-normal' }) %>
+        <%= content_tag(:p, "New Design", class: "general-text-base-normal") %>
       </td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_small_M<br>(general-text-sm-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_small_M<br>(general-text-sm-medium)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'general-text-sm-medium' })
+          content_tag(:p, "New Design", class: "general-text-sm-medium")
         </code></pre>
       </td>
       <td class="px-2 md:px-4 py-2">
-        <%= text_component(text: 'New Design', html_options: { class: 'general-text-sm-medium' }) %>
+        <%= content_tag(:p, "New Design", class: "general-text-sm-medium") %>
       </td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_small_N<br>(general-text-sm-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_small_N<br>(general-text-sm-normal)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          text_component(text: 'New Design',
-                         html_options: { class: 'general-text-sm-normal' })
+          content_tag(:p, "New Design", class: "general-text-sm-normal")
         </code></pre>
       </td>
       <td class="px-2 md:px-4 py-2">
-        <%= text_component(text: 'New Design',html_options: { class: 'general-text-sm-normal' }) %>
-      </td>
-    </tr>
-    <tr class="bg-slate-grey-light font-bold">
-      <td colspan="3" class="px-2 md:px-4 py-2 text-sm md:text-base">Link (Roboto)</td>
-    </tr>
-    <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">body_N<br>(general-text-base-normal)</td>
-      <td class="px-2 md:px-4 py-2">
-        <pre><code>
-          link_component(text: 'New Link',
-                         url: 'https://app.instruo.co',
-                         target: '_blank')
-        </code></pre>
-      </td>
-      <td class="px-2 md:px-4 py-2">
-        <%= link_component(text: 'New Link', url: 'https://app.instruo.co', target: '_blank') %>
+        <%= content_tag(:p, "New Design", class: "general-text-sm-normal") %>
       </td>
     </tr>
   </tbody>
 </table>
+
+<section class="my-6">
+  <div class="heading heading-medium my-2">CSS class naming convention</div>
+  <p class="general-text-base-normal mb-2">Text typography css classes follow the following naming convention</p>
+  <div>
+    <p class="general-text-base-normal">[<b>type</b>]-text-[<b>size</b>]-[<b>weight</b>]</p>
+    <p class="general-text-base-normal"><b>type</b> can be <b>main</b> for Poppins and <b>general</b> for Roboto</p>
+    <p class="general-text-base-normal"><b>size</b> can be <b>sm, base, lg</b></p>
+    <p class="general-text-base-normal"><b>weight</b> can be <b>normal, medium, bold</b></p>
+  </div>
+</section>
+
+<section class="my-6">
+  <div class="heading heading-medium my-2">Heading Components</div>
+  <div>
+    <%= h1_component(text: "New Design") %>
+    <%= h2_component(text: "New Design") %>
+    <%= h3_component(text: "New Design") %>
+  </div>
+  <div class="mt-4">
+    <p class="main-text-lg-bold">Usage</p>
+    <p class="general-text-base-normal">Heading Components can be used for any level of headings in font family Poppins. Css class can also be used as defined above to achieve the same.</p>
+    <pre class="code mt-4">
+      h1_component(text: "New Design")
+      h2_component(text: "New Design")
+      h3_component(text: "New Design")
+    </pre>
+  </div>
+</section>
+
+<section class="my-6">
+  <div class="heading heading-medium my-2">Text Component</div>
+  <div>
+    <%= text_component(text: "New Design") %>
+  </div>
+  <div class="mt-4">
+    <p class="main-text-lg-bold">Usage</p>
+    <p class="general-text-base-normal">Text component renders text as per typography text_N in general font family Roboto</p>
+    <pre class="code mt-4">
+      text_component(text: "New Design")
+    </pre>
+  </div>
+</section>
+
+<section class="my-6">
+  <div class="heading heading-medium my-2">Link Component</div>
+  <div>
+  <%= link_component(text: 'New Link',
+                     url: 'https://app.instruo.co',
+                     target: '_blank') %>
+  </div>
+  <div class="mt-4">
+    <p class="main-text-lg-bold">Usage</p>
+    <p class="general-text-base-normal">Link component renders link as per typography text_N in font family Roboto</p>
+    <pre class="code mt-4">
+      link_component(text: 'New Link',
+                     url: 'https://app.instruo.co',
+                     target: '_blank')
+
+    </pre>
+  </div>
+</section>
