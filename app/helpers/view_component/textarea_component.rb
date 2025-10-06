@@ -25,22 +25,22 @@ module ViewComponent
 
       def initialize(form:, field_name:, label:, placeholder:, value:, rows:, size:, html_options:, support_text:,
                      error:, disabled:)
-        @form = form
-        @field_name = field_name
-        @label = label
-        @placeholder = placeholder
-        @value = value
-        @rows = rows
-        @size = size
-        @html_options = html_options
-        @support_text = support_text
-        @error = error
-        @disabled = disabled
+        self.form = form
+        self.field_name = field_name
+        self.label = label
+        self.placeholder = placeholder
+        self.value = value
+        self.rows = rows
+        self.size = size
+        self.html_options = html_options
+        self.support_text = support_text
+        self.error = error
+        self.disabled = disabled
 
-        html_options[:placeholder] = placeholder
-        html_options[:class] = textarea_style
-        html_options[:disabled] = true if disabled
-        html_options[:rows] ||= rows
+        self.html_options[:placeholder] = placeholder
+        self.html_options[:class] = textarea_style
+        self.html_options[:disabled] = true if disabled
+        self.html_options[:rows] ||= rows
       end
 
       def textarea_style
