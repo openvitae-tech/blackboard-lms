@@ -16,16 +16,6 @@ RSpec.describe CertificateTemplate, type: :model do
     end
   end
 
-  describe '#html_content' do
-    it 'is not valid without html_content' do
-      certificate_template.html_content = ''
-
-      expect(certificate_template).not_to be_valid
-      expect(certificate_template.errors.full_messages.to_sentence).to include(t('cant_blank',
-                                                                                 field: 'Html content'))
-    end
-  end
-
   describe '#only_one_active_template' do
     it 'is invalid if another active template exists for the same learning partner' do
       certificate_template.update(active: true)
@@ -38,18 +28,39 @@ RSpec.describe CertificateTemplate, type: :model do
     end
   end
 
-  describe '#must_have_exact_template_variables' do
-    it 'raise error if required variables are missing' do
-      new_template = build(
-        :certificate_template,
-        learning_partner: learning_partner,
-        html_content: '<div>Certificate for %{CandidateName} on %{IssueDate}</div>' # rubocop:disable Style/FormatStringToken
-      )
+  describe '#validate_html_file' do
+    it 'is not valid without html_file' do
+      certificate_template = build(:certificate_template)
+      certificate_template.html_file.detach
 
-      expect(new_template).not_to be_valid
-      expect(new_template.errors.full_messages.to_sentence).to eq(
-        'Html content is missing required variables: CourseName'
+      expect(certificate_template).not_to be_valid
+      expect(certificate_template.errors.full_messages.to_sentence)
+        .to eq('Html file is required')
+    end
+  end
+
+  describe '#validate_assets' do
+    it 'is valid when asset format is valid and under 5MB' do
+      certificate_template.assets.attach(
+        io: StringIO.new('fake png data'),
+        filename: 'image.png',
+        content_type: 'image/png'
       )
+      allow(certificate_template.assets.first.blob).to receive(:byte_size).and_return(1.megabyte)
+
+      expect(certificate_template).to be_valid
+    end
+
+    it 'is not valid when asset is a PDF' do
+      certificate_template.assets.attach(
+        io: StringIO.new('fake pdf data'),
+        filename: 'doc.pdf',
+        content_type: 'application/pdf'
+      )
+      allow(certificate_template.assets.first.blob).to receive(:byte_size).and_return(1.megabyte)
+
+      expect(certificate_template).not_to be_valid
+      expect(certificate_template.errors[:assets]).to include('must be a PNG, JPEG or webp')
     end
   end
 end

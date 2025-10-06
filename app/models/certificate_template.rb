@@ -4,13 +4,15 @@ class CertificateTemplate < ApplicationRecord
   ALLOWED_VARIABLES = %w[CandidateName CourseName IssueDate].freeze
 
   validates :name, presence: true
-  validates :html_content, presence: true
   validates :active, inclusion: { in: [true, false] }
 
   validate :only_one_active_template, if: :active?
-  validate :must_have_exact_template_variables
+  validate :validate_html_file, on: :create
+  validate :validate_assets
 
   belongs_to :learning_partner
+  has_many_attached :assets
+  has_one_attached :html_file
 
   private
 
@@ -20,16 +22,21 @@ class CertificateTemplate < ApplicationRecord
     errors.add(:base, 'There can be only one active certificate template per learning partner')
   end
 
-  def must_have_exact_template_variables
-    found = html_content.to_s.scan(/%\{([^}]+)\}/).flatten.uniq
+  def validate_assets
+    return unless assets.attached?
 
-    missing = ALLOWED_VARIABLES - found
-    extra   = found - ALLOWED_VARIABLES
+    assets.each do |asset|
+      unless asset.content_type.in?(%w[image/png image/webp image/jpeg
+                                       image/jpg])
+        errors.add(:assets,
+                   'must be a PNG, JPEG or webp')
+      end
 
-    errors.add(:html_content, "is missing required variables: #{missing.join(', ')}") if missing.any?
+      errors.add(:assets, 'must be less than 5MB') if asset.byte_size > 5.megabytes
+    end
+  end
 
-    return unless extra.any?
-
-    errors.add(:html_content, "contains invalid variables: #{extra.join(', ')}")
+  def validate_html_file
+    errors.add(:html_file, 'is required') unless html_file.attached?
   end
 end

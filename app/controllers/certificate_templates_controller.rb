@@ -11,14 +11,19 @@ class CertificateTemplatesController < ApplicationController
 
   def index
     authorize :certificate_template
-    @certificate_templates = @learning_partner.certificate_templates
+    @certificate_templates = @learning_partner.certificate_templates.includes([:html_file_attachment])
   end
 
   def create
     authorize :certificate_template
-    @certificate_template = @learning_partner.certificate_templates.new(certificate_template_params)
-    if @certificate_template.save
-      redirect_to learning_partner_certificate_templates_path(@learning_partner), notice: t("resource.created", resource_name: "Certificate Template")
+
+    service = CreateCertificateTemplateService.instance
+    @certificate_template = service.generate(@learning_partner, certificate_template_params)
+    if @certificate_template.errors.any?
+      render :new, status: :unprocessable_entity
+    elsif @certificate_template.save
+      redirect_to learning_partner_certificate_templates_path(@learning_partner),
+                notice: t("resource.created", resource_name: "Certificate Template")
     else
       render :new, status: :unprocessable_entity
     end
@@ -52,7 +57,7 @@ class CertificateTemplatesController < ApplicationController
   end
 
   def certificate_template_params
-    params.require(:certificate_template).permit(:name, :html_content, :active)
+    params.require(:certificate_template).permit(:name, :active, :template_zip)
   end
 
   def set_certificate_template
