@@ -128,7 +128,7 @@ module ViewComponent
         lg: 'input-text-icon-lg'
       }.freeze
 
-      INPUT_DIV_STYLES = {
+      INPUT_WRAPPER_STYLES = {
         md: 'input-text-div-base-md',
         lg: 'input-text-div-base-lg'
       }.freeze
@@ -187,7 +187,7 @@ module ViewComponent
         html_options[:placeholder] = value
       end
 
-      def input_div_style
+      def input_wrapper_style
         base = ['input-text-div-base']
         color_style = if disabled
                         'border-disabled-color'
@@ -197,7 +197,7 @@ module ViewComponent
                         'border-slate-grey-50 focus-within:border-primary'
                       end
 
-        size_style = INPUT_DIV_STYLES[size.to_sym]
+        size_style = INPUT_WRAPPER_STYLES[size.to_sym]
         class_list(base, size_style, color_style)
       end
 
