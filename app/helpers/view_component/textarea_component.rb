@@ -30,7 +30,7 @@ module ViewComponent
         @label = label
         @placeholder = placeholder
         @value = value
-        @rows = 5
+        @rows = rows
         @size = size
         @html_options = html_options
         @support_text = support_text
