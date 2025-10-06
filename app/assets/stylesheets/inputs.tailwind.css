@@ -3,11 +3,11 @@
 }
 
 .input-text-md {
-    @apply font-normal text-sm md:text-base leading-5 md:leading-6;
+    @apply main-text-sm-normal;
 }
 
 .input-text-lg {
-    @apply font-medium text-base leading-6;
+    @apply main-text-lg-medium;
 }
 
 .input-text-icon-base {
@@ -35,17 +35,17 @@
 }
 
 .input-text-label-md {
-    @apply text-xs leading-4 font-normal px-1;
+    @apply px-1 general-text-sm-normal;
 }
 
 .input-text-label-lg {
-    @apply text-xs md:text-sm leading-4 md:leading-5 font-normal px-1;
+    @apply px-1 general-text-base-normal;
 }
 
 .input-text-subtext-md {
-    @apply text-xs leading-4 font-normal px-3;
+    @apply px-3 general-text-sm-normal;
 }
 
 .input-text-subtext-lg {
-    @apply text-xs md:text-sm leading-4 md:leading-5 font-normal px-3 md:px-4;
+    @apply px-3 md:px-4 general-text-base-normal;
 }
