@@ -16,35 +16,35 @@
 
   /* Primary Text Typography Styles */
   .main-text-lg-bold {
-    @apply font-poppins text-base font-medium md:font-semibold;
+    @apply font-poppins text-base md:text-lg font-semibold;
   }
 
   .main-text-lg-medium {
-    @apply font-poppins text-sm md:text-base font-medium;
+    @apply font-poppins text-base md:text-lg font-medium;
   }
 
   .main-text-lg-normal {
-    @apply font-poppins text-sm md:text-base font-normal;
+    @apply font-poppins text-base md:text-lg font-normal;
   }
 
   .main-text-base-bold {
-    @apply font-poppins text-sm font-semibold;
+    @apply font-poppins text-sm md:text-base font-semibold;
   }
 
   .main-text-base-medium {
-    @apply font-poppins text-sm font-medium;
+    @apply font-poppins text-sm md:text-base font-medium;
   }
 
   .main-text-base-normal {
-    @apply font-poppins text-sm font-normal;
+    @apply font-poppins text-sm md:text-base font-normal;
   }
 
   .main-text-sm-medium {
-    @apply font-poppins text-sm font-medium;
+    @apply font-poppins text-xs md:text-sm font-medium;
   }
 
   .main-text-sm-normal {
-    @apply font-poppins text-sm font-normal;
+    @apply font-poppins text-xs md:text-sm font-normal;
   }
 
   /* Secondary Text Typography Styles */
@@ -53,7 +53,7 @@
   }
 
   .general-text-base-medium {
-    @apply font-roboto text-sm font-medium;
+    @apply font-roboto text-xs md:text-sm font-medium;
   }
 
   .general-text-base-normal {
