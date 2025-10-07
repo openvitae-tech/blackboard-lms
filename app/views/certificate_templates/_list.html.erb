@@ -3,7 +3,7 @@
     <% certificate_templates.each do |template| %>
       <div class="relative bg-white rounded-lg shadow flex flex-col min-h-48 max-w-xs mx-auto w-full mt-4">
         <% if template.active? %>
-          <div class="absolute top-2 left-2 bg-theme-highlight text-white text-xs px-2 py-1 rounded z-20">
+          <div class="absolute top-2 left-2 bg-secondary text-white text-xs px-2 py-1 rounded z-20">
             Active
           </div>
         <% end %>
@@ -13,7 +13,7 @@
         <div class="flex-1 flex items-center justify-center p-2">
           <div class="w-full h-52 border-0 rounded bg-gray-50 overflow-hidden relative">
             <iframe
-              srcdoc="<%= template.html_content %>"
+              srcdoc="<%= template.html_file.download %>"
               class="top-0 left-0 w-[400%] h-[400%] border-0 z-10 scale-[0.25] origin-top-left"
               sandbox
             ></iframe>

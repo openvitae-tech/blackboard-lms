@@ -1,0 +1,13 @@
+<% button_content = capture do %>
+  <%= tag.div(**button.html_options,
+              class: [
+                button.base_styles,
+                button.color_styles,
+                button.sizing_styles].join(' ')) do %>
+    <% content = content_tag(:div, button.text, class: button.text_styles) %>
+    <% icon = icon(button.icon_name, css: button.icon_styles) if button.icon_name.present? %>
+    <%= label_with_icon(icon, content, button.icon_position) %>
+  <% end %>
+<% end %>
+
+<%= button.tooltip_text.present? ? render('shared/components/tooltip', tooltip_position: button.tooltip_position, tooltip_text: button.tooltip_text) { button_content } : button_content %>

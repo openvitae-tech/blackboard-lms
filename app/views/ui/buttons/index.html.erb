@@ -1,61 +1,171 @@
 <div class="my-6">
   <%= render "shared/components/back_button", back_link: ui_components_path %>
 </div>
-<div class="heading heading-medium">Buttons</div>
+
+<div class="heading heading-medium my-2">Type and Colorscheme</div>
+
+<p>In our design system the buttons are categorised into two <em>types</em> they are <em>solid</em> and <em>outline</em>
+</p>
+<p>Each type can have three color schemes named <em>primary</em>, <em>secondary</em> and <em>danger</em></p>
+<p>There are three valid sizes they are <em>sm</em> <em>md</em> and <em>lg</em>. The default size is <em>md</em></p>
+
 <section class="my-6">
-  <h2>Primary Button</h2>
-  <p>
+  <div class="heading heading-medium my-2">Solid buttons (Old)</div>
+  <div class="flex gap-4">
     <%= button(label: "Button", size: "sm") %>
     <%= button(label: "Button") %>
     <%= button(label: "Button", size: "lg") %>
     <%= button(label: "Button", size: "xl") %>
-  </p>
-</section>
-<section class="my-6">
-  <h2>Secondary Button</h2>
-  <p>
-    <%= button(label: "Button", size: "sm", type: "secondary") %>
-    <%= button(label: "Button", type: "secondary") %>
-    <%= button(label: "Button", size: "lg", type: "secondary") %>
-    <%= button(label: "Button", size: "xl", type: "secondary") %>
-  </p>
-</section>
-<section class="my-6">
-  <h2>Primary Button with icons</h2>
-  <div class="my-6">
-    <%= button(label: "Button", size: "sm", icon_name: "adjustments-vertical") %>
-    <%= button(label: "Button", icon_name: "adjustments-vertical") %>
-    <%= button(label: "Button", size: "lg", icon_name: "adjustments-vertical") %>
-    <%= button(label: "Button", size: "xl", icon_name: "adjustments-vertical") %>
-  </div>
-  <div class="my-6">
-    <%= button(label: "Button", size: "sm", icon_name: "adjustments-vertical", icon_position: "right") %>
-    <%= button(label: "Button", icon_name: "adjustments-vertical", icon_position: "right") %>
-    <%= button(label: "Button", size: "lg", icon_name: "adjustments-vertical", icon_position: "right") %>
-    <%= button(label: "Button", size: "xl", icon_name: "adjustments-vertical", icon_position: "right") %>
   </div>
 </section>
+
 <section class="my-6">
-  <h2>Secondary Button with icons</h2>
-  <div class="my-6">
-    <%= button(label: "Button", type: "secondary", size: "sm", icon_name: "adjustments-vertical") %>
-    <%= button(label: "Button", type: "secondary", icon_name: "adjustments-vertical") %>
-    <%= button(label: "Button", type: "secondary", size: "lg", icon_name: "adjustments-vertical") %>
-    <%= button(label: "Button", type: "secondary", size: "xl", icon_name: "adjustments-vertical") %>
+  <div class="heading heading-medium my-2">Solid buttons (New)</div>
+  <div class="flex gap-4">
+    <%= button_component(text: "Button", size: "sm") %>
+    <%= button_component(text: "Button") %>
+    <%= button_component(text: "Button", size: "lg") %>
   </div>
-  <div class="my-6">
-    <%= button(label: "Button", type: "secondary", size: "sm", icon_name: "adjustments-vertical", icon_position: "right") %>
-    <%= button(label: "Button", type: "secondary", icon_name: "adjustments-vertical", icon_position: "right") %>
-    <%= button(label: "Button", type: "secondary", size: "lg", icon_name: "adjustments-vertical", icon_position: "right") %>
-    <%= button(label: "Button", type: "secondary", size: "xl", icon_name: "adjustments-vertical", icon_position: "right") %>
+  <div class="heading heading-medium my-2">Solid buttons with other colorschemes (New)</div>
+  <div class="flex gap-4">
+    <%= button_component(text: "Secondary", size: "sm", colorscheme: "secondary") %>
+    <%= button_component(text: "Danger", colorscheme: "danger") %>
+    <%= button_component(text: "Primary", size: "lg") %>
+  </div>
+  <div>
+    <p>Usage</p>
+    <br/>
+    <pre class="code">
+      button_component(text: "Button")
+      button_component(text: "Secondary", size: "sm", colorscheme: 'secondary')
+      button_component(text: "Danger", colorscheme: 'danger')
+      button_component(text: "Primary", size: "lg")
+    </pre>
   </div>
 </section>
+
 <section class="my-6">
-  <h2>Tooltip</h2>
-  <div class="my-6">
-    <%= button(label: "Tooltip top", tooltip_text:'Tooltip on top', tooltip_position: "top" ) %>
-    <%= button(label: "Tooltip bottom", tooltip_text:'Tooltip on bottom', tooltip_position: "bottom" ) %>
-    <%= button(label: "Tooltip left", type: "secondary", icon_name: "adjustments-vertical", icon_position: "right", tooltip_text: "Tooltip on left", tooltip_position: "left") %>
-    <%= button(label: "Tooltip right", type: "secondary", icon_name: "adjustments-vertical", icon_position: "right", tooltip_text: "Tooltip on right", tooltip_position: "right") %>
+  <div class="heading heading-medium my-2">Disabled Solid Button (New)</div>
+  <div class="flex gap-4">
+    <%= button_component(text: "Button", size: "sm", disabled: true) %>
+    <%= button_component(text: "Button", disabled: true) %>
+    <%= button_component(text: "Button", size: "lg", disabled: true) %>
+  </div>
+
+  <div>
+    <p>Usage</p>
+    <br/>
+    <pre class="code">
+      button_component(label: "Button", size: "sm", disabled: true)
+      button_component(label: "Button", disabled: true)
+      button_component(label: "Button", size: "lg", disabled: true)
+    </pre>
+  </div>
+
+  <div class="heading heading-medium my-2">Disabled Solid Button with other colorschemes (New)</div>
+  <div class="flex gap-4">
+    <%= button_component(text: "Button", size: "sm", colorscheme: 'secondary', disabled: true) %>
+    <%= button_component(text: "Button", colorscheme: 'danger', disabled: true) %>
+  </div>
+
+  <div>
+    <p>Usage</p>
+    <br/>
+    <pre class="code">
+      button_component(text: "Button", size: "sm", colorscheme: 'secondary', disabled: true)
+      button_component(text: "Button", colorscheme: 'danger', disabled: true)
+    </pre>
+  </div>
+</section>
+
+<section class="my-6">
+  <div class="heading heading-medium my-2">Outline Buttons (Old)</div>
+  <h2>Left Icons</h2>
+  <div class="flex gap-4">
+    <%= button(label: "Button", type: "secondary", size: "sm", icon_name: "user-circle") %>
+    <%= button(label: "Button", type: "secondary", icon_name: "user-circle") %>
+    <%= button(label: "Button", type: "secondary", size: "lg", icon_name: "user-circle") %>
+    <%= button(label: "Button", type: "secondary", size: "xl", icon_name: "user-circle") %>
+  </div>
+  <h2>Right Icons</h2>
+  <div class="flex gap-4">
+    <%= button(label: "Button", type: "secondary", size: "sm", icon_name: "user-circle", icon_position: "right") %>
+    <%= button(label: "Button", type: "secondary", icon_name: "user-circle", icon_position: "right") %>
+    <%= button(label: "Button", type: "secondary", size: "lg", icon_name: "user-circle", icon_position: "right") %>
+    <%= button(label: "Button", type: "secondary", size: "xl", icon_name: "user-circle", icon_position: "right") %>
+  </div>
+
+  <div>
+    <p>Usage</p>
+    <br/>
+    <pre class="code">
+      button(label: "Button", type: "secondary", icon_name: "user-circle")
+      button(label: "Button", type: "secondary", icon_name: "user-circle", icon_position: "right")
+    </pre>
+  </div>
+</section>
+
+<section class="my-6">
+  <div class="heading heading-medium my-2">Outline Buttons (New)</div>
+  <div class="flex gap-4">
+    <%= button_component(type: 'outline', text: "Button", size: "sm", icon_name: "user-circle") %>
+    <%= button_component(type: 'outline', text: "Button", icon_name: "user-circle") %>
+    <%= button_component(type: 'outline', text: "Button", size: "lg", icon_name: "user-circle") %>
+  </div>
+  <div>
+    <p>Usage</p>
+    <br/>
+    <pre class="code">
+      button_component(type: 'outline', text: "Button", size: "sm", icon_name: "user-circle")
+      button_component(type: 'outline', text: "Button", icon_name: "user-circle")
+      button_component(type: 'outline', text: "Button", size: "lg", icon_name: "user-circle")
+    </pre>
+  </div>
+</section>
+
+<section class="my-6">
+  <div class="heading heading-medium my-2">Outline button with other colorschemes</div>
+  <div class="flex gap-4">
+    <%= button_component(type: 'outline', colorscheme: 'secondary', text: "Button", size: "sm", icon_name: "user-circle") %>
+    <%= button_component(type: 'outline', colorscheme: 'danger', text: "Button", icon_name: "user-circle") %>
+  </div>
+  <div>
+    <p>Usage</p>
+    <br/>
+    <pre class="code">
+      button_component(type: 'outline', colorscheme: 'secondary', text: "Button", size: "sm", icon_name: "user-circle")
+      button_component(type: 'outline', colorscheme: 'danger', text: "Button", icon_name: "user-circle")
+    </pre>
+  </div>
+
+</section>
+
+<section class="my-6">
+  <div class="heading heading-medium my-2">Disabled outline buttons</div>
+  <div class="flex gap-4">
+    <%= button_component(type: 'outline', colorscheme: 'secondary', text: "Button", size: "sm", icon_name: "user-circle", disabled: true) %>
+    <%= button_component(type: 'outline', colorscheme: 'secondary', text: "Button", icon_name: "user-circle", disabled: true) %>
+    <%= button_component(type: 'outline', colorscheme: 'danger', text: "Button", size: "lg", icon_name: "user-circle", disabled: true) %>
+  </div>
+</section>
+
+<section class="my-6">
+  <div class="heading heading-medium my-2">With Tooltip</div>
+  <div class="flex gap-4">
+    <%= button_component(text: "Tooltip top", tooltip_text: 'Tooltip on top', tooltip_position: "top") %>
+    <%= button_component(text: "Tooltip bottom", tooltip_text: 'Tooltip on bottom', tooltip_position: "bottom") %>
+    <%= button_component(text: "Tooltip left", type: "outline", icon_name: "user-circle", icon_position: "right", tooltip_text: "Tooltip on left", tooltip_position: "left") %>
+    <%= button_component(text: "Tooltip right", type: "outline", icon_name: "user-circle", icon_position: "right", tooltip_text: "Tooltip on right", tooltip_position: "right") %>
+  </div>
+
+  <div>
+    <p>Usage</p>
+    <br/>
+    <pre class="code">
+      button_component(text: "Tooltip top", tooltip_text:'Tooltip on top', tooltip_position: "top")
+      button_component(text: "Tooltip bottom", tooltip_text:'Tooltip on bottom', tooltip_position: "bottom")
+      button_component(text: "Tooltip left", type: "outline", icon_name: "user-circle", icon_position: "right", tooltip_text: "Tooltip on left", tooltip_position: "left")
+      button_component(text: "Tooltip right", type: "outline", icon_name: "user-circle", icon_position: "right", tooltip_text: "Tooltip on right", tooltip_position: "right")
+    </pre>
   </div>
 </section>

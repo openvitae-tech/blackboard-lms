@@ -1,0 +1,95 @@
+.btn-base {
+    @apply inline-flex w-full items-center justify-center gap-2 border;
+}
+
+.btn-disabled {
+    @apply !pointer-events-none !cursor-not-allowed;
+}
+
+.btn-solid-primary {
+    @apply bg-primary border-primary text-white-light hover:bg-primary-light hover:border-primary-light hover:text-white;
+}
+
+.btn-solid-primary-disabled {
+    @apply bg-primary-light-50 border-disabled-color text-disabled-color;
+}
+
+.btn-solid-secondary {
+    @apply bg-secondary hover:bg-secondary-dark border-secondary hover:border-secondary-dark text-white hover:text-white
+}
+
+.btn-solid-secondary-disabled {
+    @apply bg-secondary-light border-disabled-color text-disabled-color;
+}
+
+.btn-solid-danger {
+    @apply bg-danger-dark border-danger-dark text-white-light hover:bg-danger hover:border-danger hover:text-white;
+}
+
+.btn-solid-danger-disabled {
+    @apply bg-danger-light border-disabled-color text-disabled-color;
+}
+
+.btn-outline-primary {
+    @apply bg-white border-primary text-primary hover:border-primary-light hover:text-primary-light;
+}
+
+.btn-outline-primary-disabled {
+    @apply border-disabled-color text-disabled-color;
+}
+
+.btn-outline-secondary {
+    @apply bg-white border-secondary text-secondary hover:border-secondary-dark hover:text-secondary-dark;
+}
+
+.btn-outline-secondary-disabled {
+    @apply border-disabled-color text-disabled-color;
+}
+
+.btn-outline-danger {
+    @apply bg-white border-danger-dark text-danger-dark hover:border-danger hover:text-danger;
+}
+
+.btn-outline-danger-disabled {
+    @apply border-disabled-color text-disabled-color;
+}
+
+.btn-sm {
+    @apply h-6 rounded-sm px-3 py-1 md:h-9 md:rounded-md md:px-4 md:py-2;
+}
+
+.btn-md {
+    @apply h-9 rounded-md px-4 py-2 md:h-10;
+}
+
+.btn-lg {
+    @apply h-10 gap-2 rounded-md px-4 py-2 md:h-14 md:rounded-lg md:px-6 md:py-3;
+}
+
+.btn-text-base {
+    @apply font-['Poppins'];
+}
+
+.btn-text-sm {
+    @apply main-text-sm-medium;
+}
+
+.btn-text-md {
+    @apply main-text-base-medium;
+}
+
+.btn-text-lg {
+    @apply main-text-lg-semibold;
+}
+
+.btn-icon-sm {
+    @apply h-4 w-4 md:h-5 md:w-5;
+}
+
+.btn-icon-md {
+    @apply h-5 w-5 md:h-6 md:w-6;
+}
+
+.btn-icon-lg {
+    @apply h-6 w-6 md:h-7 md:w-7;
+}

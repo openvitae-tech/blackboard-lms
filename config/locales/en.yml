@@ -163,6 +163,10 @@ en:
     label: "Certificate templates"
     certificate_template:
       add: "Add certificate template"
+      upload_zip: "Upload template zip"
+      no_file_chosen: "No file chosen"
+      choose_file: "Choose File"
+      enter_certificate_name: "Enter certificate name"
   my_profile:
     label: "My Profile"
     my_certificates:
@@ -241,4 +245,3 @@ en:
       deactivate: "Are you sure want to de-activate this partner?"
     user:
       delete: "Are you sure you want to delete?"
-
