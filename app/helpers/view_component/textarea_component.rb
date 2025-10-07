@@ -60,7 +60,7 @@ module ViewComponent
       end
 
       def label_style
-        base = ['textarea-component-label']
+        base = []
         size_style = LABEL_STYLES[size.to_sym]
 
         color_style =

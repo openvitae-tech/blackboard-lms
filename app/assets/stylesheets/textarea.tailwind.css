@@ -12,7 +12,7 @@
 }
 
 .textarea-component-base {
-  @apply w-full border border-slate-grey-50 focus:border-[2px] focus:border-primary focus:text-letter-color-light;
+  @apply w-full border border-slate-grey-50 focus:border-[2px] focus:text-letter-color-light;
 }
 
 .textarea-component-wrapper {
@@ -20,7 +20,7 @@
 }
 
 .textarea-component-md {
-  @apply px-3 py-2 rounded-[4px] ;
+  @apply px-3 py-2 rounded-[4px];
 }
 
 .textarea-component-lg {
