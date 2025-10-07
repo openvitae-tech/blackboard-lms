@@ -1,9 +1,9 @@
 .input-text-base {
-    @apply w-full border-none px-0 py-0 focus:ring-0 outline-none font-['Poppins'];
+    @apply w-full border-none px-0 py-0 focus:ring-0 outline-none;
 }
 
 .input-text-md {
-    @apply main-text-sm-normal;
+    @apply main-text-base-normal;
 }
 
 .input-text-lg {
