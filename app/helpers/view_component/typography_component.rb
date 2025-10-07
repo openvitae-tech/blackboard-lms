@@ -72,7 +72,7 @@ module ViewComponent
     def link_component(text:, url: '#', target: '_self', html_options: {})
       raise 'BlankValue - text cannot be blank' if text.blank?
 
-      link_css = ['general-text-base-normal', 'underline', 'text-primary', 'hover:text-primary-light']
+      link_css = ['main-text-small-normal', 'underline', 'text-primary', 'hover:text-primary-light']
       render partial: 'view_components/typography/link_component', locals: {
         text:,
         url:,
