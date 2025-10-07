@@ -71,15 +71,15 @@
 }
 
 .btn-text-sm {
-    @apply text-xs font-medium leading-4 md:text-sm md:leading-5;
+    @apply main-text-sm-medium;
 }
 
 .btn-text-md {
-    @apply text-sm font-medium leading-5 md:text-base md:leading-6;
+    @apply main-text-base-medium;
 }
 
 .btn-text-lg {
-    @apply text-base font-medium leading-6 md:text-xl md:font-semibold md:leading-7;
+    @apply main-text-lg-semibold;
 }
 
 .btn-icon-sm {
