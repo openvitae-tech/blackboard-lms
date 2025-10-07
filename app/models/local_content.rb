@@ -41,6 +41,6 @@ class LocalContent < ApplicationRecord
   end
 
   def set_status_to_complete
-    self.status = 'complete' unless external_video_hosting?
+    self.status = 'complete' unless APP_CONFIG.external_video_hosting?
   end
 end

@@ -20,7 +20,7 @@ class DirectUploadsController < ActiveStorage::DirectUploadsController
   end
 
   def upload_blob_attributes
-    if external_video_hosting? && params[:service] == 'video'
+    if APP_CONFIG.external_video_hosting? && params[:service] == 'video'
       blob_args.merge(service_name: 's3_video_store')
     else
       blob_args

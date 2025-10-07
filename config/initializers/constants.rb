@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 require Rails.root.join('app/services/event_service.rb').to_path
+require Rails.root.join('app/services/app_config_service.rb').to_path
 
 EVENT_LOGGER = EventService.instance
+APP_CONFIG = AppConfigService.instance
 
 REDIS_CLIENT = RedisClient
                .config(url: Rails.application.credentials.dig(:redis, :url), reconnect_attempts: 2)

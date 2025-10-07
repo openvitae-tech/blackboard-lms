@@ -12,7 +12,7 @@
     <div class="flex items-center justify-center">
       <div class="w-4/6 flex flex-col gap-4">
         <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
-          <% if external_video_hosting? && vimeo_upload_timed_out?(builder.object) %>
+          <% if APP_CONFIG.external_video_hosting? && vimeo_upload_timed_out?(builder.object) %>
             <div class="absolute inset-0 flex justify-center items-center">
               <span class="text-center"><%= t("local_content.video_not_available") %></span>
             </div>

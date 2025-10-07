@@ -1,4 +1,4 @@
-<% if external_video_hosting? && video_iframe.present? && local_content.status == "complete" %>
+<% if APP_CONFIG.external_video_hosting? && video_iframe.present? && local_content.status == "complete" %>
   <div class="absolute inset-0 flex justify-center items-center bg-white" data-vimeo-target="vimeoLoader">
     <%= render "shared/components/spinner" %>
   </div>
