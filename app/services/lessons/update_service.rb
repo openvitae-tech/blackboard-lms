@@ -6,7 +6,7 @@ module Lessons
 
     def update_lesson!(lesson, lesson_params)
       lesson.update!(lesson_params)
-      upload_to_vimeo(lesson_params) if Rails.env.production?
+      upload_to_vimeo(lesson_params) if external_video_hosting?
     end
 
     private

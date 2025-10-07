@@ -1,0 +1,19 @@
+default: &default
+  external_video_hosting: false
+
+production:
+  <<: *default
+  external_video_hosting: true
+
+staging:
+  <<: *default
+  external_video_hosting: true
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+docker:
+  <<: *default

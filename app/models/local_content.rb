@@ -41,6 +41,6 @@ class LocalContent < ApplicationRecord
   end
 
   def set_status_to_complete
-    self.status = 'complete' if Rails.env.development?
+    self.status = 'complete' unless external_video_hosting?
   end
 end
