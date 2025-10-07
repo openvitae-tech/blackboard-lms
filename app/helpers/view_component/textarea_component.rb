@@ -139,7 +139,7 @@ module ViewComponent
     def resolve_error(form, field_name, explicit_error)
       errors = form&.object&.errors
       form_error = errors&.[](field_name)&.first
-      final_error_message = explicit_error.presence || form_error
+      final_error_message = form_error.presence || explicit_error 
       [final_error_message, final_error_message.present?]
     end
   end
