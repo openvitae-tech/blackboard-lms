@@ -1,8 +1,8 @@
-<div class="textarea-component-container">
+<div class="textarea-component-container group">
   <% if textarea.form.present? %>
-    <%= textarea.form.label textarea.field_name, textarea.label, class: textarea.label_style %>
+    <%= textarea.form.label textarea.field_name, textarea.label, class: "#{textarea.label_style} group-focus-within:text-primary" %>
   <% else %>
-    <%= label_tag textarea.field_name, textarea.label, class: textarea.label_style %>
+    <%= label_tag textarea.field_name, textarea.label, class: "#{textarea.label_style} group-focus-within:text-primary" %>
   <% end %>
 
   <div class="textarea-component-wrapper">
@@ -11,14 +11,14 @@
             **textarea.html_options,
             placeholder: textarea.placeholder,
             rows: textarea.rows,
-            class: textarea.textarea_style %>
+            class: "#{textarea.textarea_style} group-focus-within:border-primary" %>
     <% else %>
       <%= text_area_tag textarea.field_name,
             textarea.value,
             **textarea.html_options,
             placeholder: textarea.placeholder,
             rows: textarea.rows,
-            class: textarea.textarea_style %>
+            class: "#{textarea.textarea_style} group-focus-within:border-primary" %>
     <% end %>
   </div>
 
