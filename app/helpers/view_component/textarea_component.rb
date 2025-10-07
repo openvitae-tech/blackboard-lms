@@ -6,8 +6,8 @@ module ViewComponent
 
     class Textarea
       TEXTAREA_SIZE_STYLE = {
-        md: 'textarea-component-md main-text-lg-medium',
-        lg: 'textarea-component-lg'
+        md: 'textarea-component-md main-text-base-normal',
+        lg: 'textarea-component-lg main-text-lg-medium'
       }.freeze
 
       LABEL_STYLES = {
