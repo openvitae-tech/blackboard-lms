@@ -54,12 +54,12 @@ module ViewComponent
         lg: 'btn-text-lg'
       }.freeze
 
-      attr_accessor :label, :type, :colorscheme, :size, :icon_name, :icon_position, :tooltip_text, :tooltip_position,
+      attr_accessor :text, :type, :colorscheme, :size, :icon_name, :icon_position, :tooltip_text, :tooltip_position,
                     :disabled, :html_options, :color_mapping
 
-      def initialize(label:, type:, colorscheme:, size:, icon_name:, icon_position:, tooltip_text:, tooltip_position:,
+      def initialize(text:, type:, colorscheme:, size:, icon_name:, icon_position:, tooltip_text:, tooltip_position:,
                      disabled:, html_options:)
-        self.label = label
+        self.text = text
         self.type = type
         self.size = size
         self.colorscheme = colorscheme
@@ -146,7 +146,7 @@ module ViewComponent
     end
 
     def button_component(
-      label: 'Button',
+      text: 'Button',
       type: 'solid',
       size: 'md',
       colorscheme: 'primary',
@@ -158,7 +158,7 @@ module ViewComponent
       html_options: {}
     )
       button = ButtonComponent.new(
-        label:,
+        text:,
         type:,
         size:,
         colorscheme:,

@@ -4,7 +4,7 @@
                 button.base_styles,
                 button.color_styles,
                 button.sizing_styles].join(' ')) do %>
-    <% content = content_tag(:div, button.label, class: button.text_styles) %>
+    <% content = content_tag(:div, button.text, class: button.text_styles) %>
     <% icon = icon(button.icon_name, css: button.icon_styles) if button.icon_name.present? %>
     <%= label_with_icon(icon, content, button.icon_position) %>
   <% end %>
