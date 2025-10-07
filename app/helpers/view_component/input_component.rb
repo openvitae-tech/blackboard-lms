@@ -208,7 +208,7 @@ module ViewComponent
                       elsif error.present?
                         'text-danger-dark'
                       else
-                        'text-letter-color-light'
+                        'text-letter-color-light group-focus-within:text-primary'
                       end
 
         size_style = LABEL_STYLES[size.to_sym]
