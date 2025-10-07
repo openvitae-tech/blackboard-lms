@@ -3,7 +3,7 @@
     @apply text-danger-dark;
   }
   .error-border {
-    @apply border-danger border-[2px];
+    @apply border-danger border-2;
   }
 }
 
@@ -12,7 +12,7 @@
 }
 
 .textarea-component-base {
-  @apply w-full border border-slate-grey-50 focus:border-[2px] focus:border-primary focus:text-letter-color-light;
+  @apply w-full border focus:border-2 focus:border-primary focus:text-letter-color-light;
 }
 
 .textarea-component-wrapper {
@@ -20,14 +20,13 @@
 }
 
 .textarea-component-md {
-  @apply px-3 py-2 rounded-[4px];
+  @apply px-3 py-2 rounded;
 }
 
 .textarea-component-lg {
-  @apply px-4 py-2 md:p-4 text-base md:text-lg rounded-[8px];
+  @apply px-4 py-2 md:p-4 text-base md:text-lg rounded-lg;
 }
 
 .textarea-support-text {
   @apply px-3 flex justify-start items-start;
 }
-
