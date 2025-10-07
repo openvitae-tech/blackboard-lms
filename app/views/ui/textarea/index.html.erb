@@ -6,9 +6,8 @@
 
 <ul class="w-1/2 my-6 flex flex-col gap-4">
   <li class="my-6 flex flex-col gap-4">
-    <%= text_component(text: 'Medium Textarea',
-                         html_options: { class: 'main-text-lg-medium' }) %>
-
+    <span class="main-text-base-normal">Medium Textarea</span>
+    
     <%= textarea_component(
           field_name: :description,
           label: "Description",
@@ -17,8 +16,7 @@
         ) %>
   </li>
   <li class="my-6 flex flex-col gap-4">
-    <%= text_component(text: 'Large Textarea',
-                         html_options: { class: 'main-text-lg-medium' }) %>
+    <span class="main-text-base-normal">Large Textarea</span>
 
     <%= textarea_component(
           field_name: :description,
@@ -29,8 +27,8 @@
         ) %>
   </li>
   <li class="my-6 flex flex-col gap-4">
-    <%= text_component(text: 'Textarea with error state',
-                         html_options: { class: 'main-text-lg-medium' }) %>
+    <span class="main-text-base-normal">Textarea with error state</span>
+    
     <%= textarea_component(
           field_name: :description,
           label: "Description",
@@ -40,8 +38,8 @@
         ) %>
   </li>
   <li class="my-6 flex flex-col gap-4">
-    <%= text_component(text: 'Textarea with disabled state',
-                         html_options: { class: 'main-text-lg-medium' }) %>
+    <span class="main-text-base-normal">Textarea with disabled state</span>
+
     <%= textarea_component(
           field_name: :description,
           label: "Description",
@@ -56,8 +54,8 @@
 <%= form_with  url: "#", method: :post do |form| %>
   <ul class="w-1/2 my-6 flex flex-col gap-4">
     <li class="my-6 flex flex-col gap-4">
-      <%= text_component(text: 'Medium Textarea',
-                         html_options: { class: 'main-text-lg-medium' }) %>
+      <span class="main-text-base-normal">Medium Textarea</span>
+
       <%= textarea_component(
             form: form,
             field_name: :description,
@@ -67,8 +65,8 @@
           ) %>
     </li>
     <li class="my-6 flex flex-col gap-4">
-      <%= text_component(text: 'Large Textarea',
-                         html_options: { class: 'main-text-lg-medium' }) %>
+      <span class="main-text-base-normal">Large Textarea</span>
+
       <%= textarea_component(
             form: form,
             field_name: :description,
@@ -79,8 +77,8 @@
           ) %>
     </li>
     <li class="my-6 flex flex-col gap-4">
-      <%= text_component(text: 'Textarea with error state',
-                         html_options: { class: 'main-text-lg-medium' }) %>
+      <span class="main-text-base-normal">Textarea with error state</span>
+
       <%= textarea_component(
             form: form,
             field_name: :description,
@@ -91,8 +89,8 @@
           ) %>
     </li>
     <li class="my-6 flex flex-col gap-4">
-      <%= text_component(text: 'Textarea with disable state',
-                         html_options: { class: 'main-text-lg-medium' }) %>
+      <span class="main-text-base-normal">Textarea with disabled state</span>
+
       <%= textarea_component(
             form: form,
             field_name: :description,
