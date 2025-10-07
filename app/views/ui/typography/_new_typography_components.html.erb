@@ -46,13 +46,13 @@
       <td colspan="3" class="px-2 md:px-4 py-2 text-sm md:text-base">Main Text (Poppins)</td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_large_B<br>(main-text-lg-bold)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_large_SB<br>(main-text-lg-semibold)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          content_tag(:p, "New Design", class: "main-text-lg-bold")
+          content_tag(:p, "New Design", class: "main-text-lg-semibold")
         </code></pre>
       </td>
-      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-lg-bold") %></td>
+      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-lg-semibold") %></td>
     </tr>
     <tr class="border border-line-colour-light">
       <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_large_M<br>(main-text-lg-medium)</td>
@@ -73,16 +73,16 @@
       <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-lg-normal") %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_B<br>(main-text-base-bold)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_base_SB<br>(main-text-base-semibold)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
-          content_tag(:p, "New Design", class: "main-text-base-bold")
+          content_tag(:p, "New Design", class: "main-text-base-semibold")
         </code></pre>
       </td>
-      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-base-bold") %></td>
+      <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-base-semibold") %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_M<br>(main-text-base-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_base_M<br>(main-text-base-medium)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
           content_tag(:p, "New Design", class: "main-text-base-medium")
@@ -91,7 +91,7 @@
       <td class="px-2 md:px-4 py-2"><%= content_tag(:p, "New Design", class: "main-text-base-medium") %></td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_N<br>(main-text-base-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_base_N<br>(main-text-base-normal)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
           content_tag(:p, "New Design", class: "main-text-base-normal")
@@ -133,7 +133,7 @@
       </td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_M<br>(general-text-base-medium)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_base_M<br>(general-text-base-medium)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
           content_tag(:p, "New Design", class: "general-text-base-medium")
@@ -144,7 +144,7 @@
       </td>
     </tr>
     <tr class="border border-line-colour-light">
-      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_N<br>(general-text-base-normal)</td>
+      <td class="px-2 md:px-4 py-2 text-sm md:text-base">text_base_N<br>(general-text-base-normal)</td>
       <td class="px-2 md:px-4 py-2">
         <pre><code>
           content_tag(:p, "New Design", class: "general-text-base-normal")
@@ -186,7 +186,7 @@
     <p class="general-text-base-normal">[<b>type</b>]-text-[<b>size</b>]-[<b>weight</b>]</p>
     <p class="general-text-base-normal"><b>type</b> can be <b>main</b> for Poppins and <b>general</b> for Roboto</p>
     <p class="general-text-base-normal"><b>size</b> can be <b>sm, base, lg</b></p>
-    <p class="general-text-base-normal"><b>weight</b> can be <b>normal, medium, bold</b></p>
+    <p class="general-text-base-normal"><b>weight</b> can be <b>normal, medium, semibold</b></p>
   </div>
 </section>
 
@@ -198,7 +198,7 @@
     <%= h3_component(text: "New Design") %>
   </div>
   <div class="mt-4">
-    <p class="main-text-lg-bold">Usage</p>
+    <p class="main-text-lg-semibold">Usage</p>
     <p class="general-text-base-normal">Heading Components can be used for any level of headings in font family Poppins. Css class can also be used as defined above to achieve the same.</p>
     <pre class="code mt-4">
       h1_component(text: "New Design")
@@ -214,8 +214,8 @@
     <%= text_component(text: "New Design") %>
   </div>
   <div class="mt-4">
-    <p class="main-text-lg-bold">Usage</p>
-    <p class="general-text-base-normal">Text component renders text as per typography text_N in general font family Roboto</p>
+    <p class="main-text-lg-semibold">Usage</p>
+    <p class="general-text-base-normal">Text component renders text as per typography text_base_N in main font family Poppins</p>
     <pre class="code mt-4">
       text_component(text: "New Design")
     </pre>
@@ -230,7 +230,7 @@
                      target: '_blank') %>
   </div>
   <div class="mt-4">
-    <p class="main-text-lg-bold">Usage</p>
+    <p class="main-text-lg-semibold">Usage</p>
     <p class="general-text-base-normal">Link component renders link as per typography text_N in font family Roboto</p>
     <pre class="code mt-4">
       link_component(text: 'New Link',

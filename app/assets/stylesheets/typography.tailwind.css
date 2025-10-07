@@ -15,7 +15,7 @@
   }
 
   /* Primary Text Typography Styles */
-  .main-text-lg-bold {
+  .main-text-lg-semibold {
     @apply font-poppins text-base md:text-lg font-semibold;
   }
 
@@ -27,7 +27,7 @@
     @apply font-poppins text-base md:text-lg font-normal;
   }
 
-  .main-text-base-bold {
+  .main-text-base-semibold {
     @apply font-poppins text-sm md:text-base font-semibold;
   }
 
