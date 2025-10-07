@@ -53,7 +53,7 @@ module ViewComponent
           elsif error.present?
             'error-border error-text placeholder-danger-dark'
           else
-            'text-letter-color-light placeholder-letter-color-light'
+            'text-letter-color-light border-slate-grey-50 placeholder-letter-color-light'
           end
 
         class_list(base, size_style, color_style)
