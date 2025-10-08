@@ -1,19 +1,19 @@
 <div class="textarea-component-container group">
   <% if textarea.form.present? %>
-    <%= textarea.form.label textarea.field_name, textarea.label, class: textarea.label_style %>
+    <%= textarea.form.label textarea.name, textarea.label, class: textarea.label_style %>
   <% else %>
-    <%= label_tag textarea.field_name, textarea.label, class: textarea.label_style %>
+    <%= label_tag textarea.name, textarea.label, class: textarea.label_style %>
   <% end %>
 
   <div class="textarea-component-wrapper">
     <% if textarea.form.present? %>
-      <%= textarea.form.text_area textarea.field_name,
+      <%= textarea.form.text_area textarea.name,
             **textarea.html_options,
             placeholder: textarea.placeholder,
             rows: textarea.rows,
             class: "#{textarea.textarea_style} group" %>
     <% else %>
-      <%= text_area_tag textarea.field_name,
+      <%= text_area_tag textarea.name,
             textarea.value,
             **textarea.html_options,
             placeholder: textarea.placeholder,
