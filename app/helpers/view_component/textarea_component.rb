@@ -102,9 +102,9 @@ module ViewComponent
 
     def textarea_component(
       name:,
-      label:,
       placeholder:,
       form: nil,
+      label:nil,
       value: nil,
       rows: 5,
       size: 'md',
