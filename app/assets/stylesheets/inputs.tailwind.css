@@ -1,0 +1,51 @@
+.input-text-base {
+    @apply w-full border-none px-0 py-0 focus:ring-0 outline-none;
+}
+
+.input-text-md {
+    @apply main-text-base-normal;
+}
+
+.input-text-lg {
+    @apply main-text-lg-medium;
+}
+
+.input-text-icon-base {
+    @apply flex items-center;
+}
+
+.input-text-icon-md {
+    @apply h-4 md:h-5 w-4 md:w-5;
+}
+
+.input-text-icon-lg {
+    @apply h-5 w-5;
+}
+
+.input-text-div-base {
+    @apply w-full flex gap-1 border focus-within:border-2;
+}
+
+.input-text-div-base-md {
+    @apply rounded-sm px-3 py-2;
+}
+
+.input-text-div-base-lg {
+    @apply rounded-lg px-4 py-4;
+}
+
+.input-text-label-md {
+    @apply px-1 general-text-sm-normal;
+}
+
+.input-text-label-lg {
+    @apply px-1 general-text-base-normal;
+}
+
+.input-text-subtext-md {
+    @apply px-3 general-text-sm-normal;
+}
+
+.input-text-subtext-lg {
+    @apply px-3 md:px-4 general-text-base-normal;
+}
