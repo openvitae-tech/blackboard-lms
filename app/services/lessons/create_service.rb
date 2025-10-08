@@ -9,7 +9,7 @@ module Lessons
       service = CourseManagementService.instance
       service.update_lesson_ordering!(course_module, lesson, :create)
 
-      upload_to_vimeo(lesson) if Rails.env.production?
+      upload_to_vimeo(lesson) if APP_CONFIG.external_video_hosting?
       lesson
     end
 
