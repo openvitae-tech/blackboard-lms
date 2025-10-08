@@ -1,10 +1,13 @@
-@layer components {
-  .textarea-error-text {
-    @apply text-danger-dark;
-  }
-  .textarea-error-border {
-    @apply border-danger border-2;
-  }
+.textarea-active-state {
+  @apply text-letter-color-light border-slate-grey-50 placeholder-letter-color-light focus:border-primary;
+}
+
+.textarea-error-state {
+  @apply border-danger border-2 focus:border-danger focus:ring-0 text-danger-dark placeholder-danger-dark;
+}
+
+.textarea-disabled-state {
+  @apply border-disabled-color text-disabled-color placeholder-disabled-color
 }
 
 .textarea-component-container {
@@ -12,7 +15,7 @@
 }
 
 .textarea-component-base {
-  @apply w-full border focus:border-2 focus:border-primary focus:text-letter-color-light;
+  @apply w-full border focus:border-2 focus:text-letter-color-light;
 }
 
 .textarea-component-wrapper {
