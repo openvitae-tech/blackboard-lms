@@ -1,8 +1,8 @@
 @layer components {
-  .error-text {
+  .textarea-error-text {
     @apply text-danger-dark;
   }
-  .error-border {
+  .textarea-error-border {
     @apply border-danger border-2;
   }
 }

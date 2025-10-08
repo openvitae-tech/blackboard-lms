@@ -20,13 +20,13 @@ module ViewComponent
         lg: 'general-text-base-normal'
       }.freeze
 
-      attr_accessor :form, :field_name, :label, :placeholder, :value,
+      attr_accessor :form, :name, :label, :placeholder, :value,
                     :rows, :size, :html_options, :support_text, :error, :disabled
 
-      def initialize(form:, field_name:, label:, placeholder:, value:, rows:, size:, html_options:, support_text:,
+      def initialize(form:, name:, label:, placeholder:, value:, rows:, size:, html_options:, support_text:,
                      error:, disabled:)
         self.form = form
-        self.field_name = field_name
+        self.name = name
         self.label = label
         self.placeholder = placeholder
         self.value = value
@@ -51,7 +51,7 @@ module ViewComponent
           if disabled
             'border-disabled-color text-disabled-color placeholder-disabled-color'
           elsif error.present?
-            'error-border error-text placeholder-danger-dark'
+            'textarea-error-border textarea-error-text placeholder-danger-dark'
           else
             'text-letter-color-light border-slate-grey-50 placeholder-letter-color-light'
           end
@@ -101,7 +101,7 @@ module ViewComponent
     end
 
     def textarea_component(
-      field_name:,
+      name:,
       label:,
       placeholder:,
       form: nil,
@@ -115,11 +115,11 @@ module ViewComponent
     )
       raise "Incorrect textarea size: #{size}" unless TEXTAREA_SIZES.include?(size)
 
-      final_error_message, has_error = resolve_error(form, field_name, error)
+      final_error_message, has_error = resolve_error(form, name, error)
 
       textarea = Textarea.new(
         form: form,
-        field_name: field_name,
+        name: name,
         label: label,
         placeholder: placeholder,
         value: value,
@@ -131,14 +131,14 @@ module ViewComponent
         disabled: disabled
       )
 
-      render partial: 'view_components/textarea_component/textarea', locals: { textarea: textarea }
+      render partial: 'view_components/textarea_component/textarea', locals: { textarea: }
     end
 
     private
 
-    def resolve_error(form, field_name, explicit_error)
+    def resolve_error(form, name, explicit_error)
       errors = form&.object&.errors
-      form_error = errors&.[](field_name)&.first
+      form_error = errors&.[](name)&.first
       final_error_message = form_error.presence || explicit_error
       [final_error_message, final_error_message.present?]
     end

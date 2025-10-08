@@ -9,7 +9,7 @@
     <span class="main-text-base-normal">Medium Textarea</span>
     
     <%= textarea_component(
-          field_name: :description,
+          name: :description,
           label: "Description",
           placeholder: "Enter description",
           support_text: "Supporting Description here"
@@ -19,7 +19,7 @@
     <span class="main-text-base-normal">Large Textarea</span>
 
     <%= textarea_component(
-          field_name: :description,
+          name: :description,
           label: "Description",
           placeholder: "Enter description",
           size: "lg",
@@ -30,7 +30,7 @@
     <span class="main-text-base-normal">Textarea with error state</span>
     
     <%= textarea_component(
-          field_name: :description,
+          name: :description,
           label: "Description",
           placeholder: "Enter description",
           error: "Description should be in not less than 36 characters",
@@ -41,7 +41,7 @@
     <span class="main-text-base-normal">Textarea with disabled state</span>
 
     <%= textarea_component(
-          field_name: :description,
+          name: :description,
           label: "Description",
           placeholder: "Enter description",
           disabled: true,
@@ -58,7 +58,7 @@
 
       <%= textarea_component(
             form: form,
-            field_name: :description,
+            name: :description,
             label: "Description",
             placeholder: "Enter description",
             support_text: "Supporting Description here"
@@ -69,7 +69,7 @@
 
       <%= textarea_component(
             form: form,
-            field_name: :description,
+            name: :description,
             label: "Description",
             placeholder: "Enter description",
             size: "lg",
@@ -81,7 +81,7 @@
 
       <%= textarea_component(
             form: form,
-            field_name: :description,
+            name: :description,
             label: "Description",
             placeholder: "Enter description",
             error: "Description should be in not less than 36 characters",
@@ -93,7 +93,7 @@
 
       <%= textarea_component(
             form: form,
-            field_name: :description,
+            name: :description,
             label: "Description",
             placeholder: "Enter description",
             disabled: true,
