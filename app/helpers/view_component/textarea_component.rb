@@ -104,7 +104,7 @@ module ViewComponent
       name:,
       placeholder:,
       form: nil,
-      label:nil,
+      label: nil,
       value: nil,
       rows: 5,
       size: 'md',
