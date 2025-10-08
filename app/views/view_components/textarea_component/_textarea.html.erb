@@ -1,8 +1,10 @@
 <div class="textarea-component-container group">
-  <% if textarea.form.present? %>
-    <%= textarea.form.label textarea.name, textarea.label, class: textarea.label_style %>
-  <% else %>
-    <%= label_tag textarea.name, textarea.label, class: textarea.label_style %>
+  <% if textarea.label.present? %>
+    <% if textarea.form.present? %>
+      <%= textarea.form.label textarea.name, textarea.label, class: textarea.label_style %>
+    <% else %>
+      <%= label_tag textarea.name, textarea.label, class: textarea.label_style %>
+    <% end %>
   <% end %>
 
   <div class="textarea-component-wrapper">
