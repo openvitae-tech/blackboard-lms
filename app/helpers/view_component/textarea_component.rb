@@ -49,11 +49,11 @@ module ViewComponent
 
         color_style =
           if disabled
-            'border-disabled-color text-disabled-color placeholder-disabled-color'
+            'textarea-disabled-state'
           elsif error.present?
-            'textarea-error-border textarea-error-text placeholder-danger-dark'
+            'textarea-error-state'
           else
-            'text-letter-color-light border-slate-grey-50 placeholder-letter-color-light'
+            'textarea-active-state'
           end
 
         class_list(base, size_style, color_style)
