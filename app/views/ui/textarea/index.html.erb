@@ -84,41 +84,9 @@
 
 <div class="heading-xl underline underline-offset-4">Form with textarea</div>
 
-<%= form_with url: "#", method: :post do |form| %>
-  <ul class="my-6 flex flex-col gap-1">
-    <li>
-      <%= doc_section_component(title: "Textarea without label and subtext") do %>
-        <%= textarea_component(
-          form: form,
-          name: :description,
-          placeholder: "Enter description"
-        ) %>
-      <% end %>
-    </li>
-
-    <li>
-      <%= doc_section_component(title: "Textarea without subtext") do %>
-        <%= textarea_component(
-          form: form,
-          name: :description,
-          label: "Description",
-          placeholder: "Enter description"
-        ) %>
-      <% end %>
-    </li>
-
-    <li>
-      <%= doc_section_component(title: "Textarea without label") do %>
-        <%= textarea_component(
-          form: form,
-          name: :description,
-          placeholder: "Enter description",
-          support_text: "Supporting Description here"
-        ) %>
-      <% end %>
-    </li>
-
-    <li>
+<ul class="my-6 flex flex-col gap-1">
+  <li>
+    <%= form_with url: "#", method: :post do |form| %>
       <%= doc_section_component(title: "Medium Textarea") do %>
         <%= textarea_component(
           form: form,
@@ -128,22 +96,10 @@
           support_text: "Supporting Description here"
         ) %>
       <% end %>
-    </li>
-
-    <li>
-      <%= doc_section_component(title: "Large Textarea") do %>
-        <%= textarea_component(
-          form: form,
-          name: :description,
-          label: "Description",
-          placeholder: "Enter description",
-          size: "lg",
-          support_text: "Supporting Description here"
-        ) %>
-      <% end %>
-    </li>
-
-    <li>
+    <% end %>
+  </li>
+  <li>
+    <%= form_with url: "#", method: :post do |form| %>
       <%= doc_section_component(title: "Textarea with error state") do %>
         <%= textarea_component(
           form: form,
@@ -154,9 +110,10 @@
           support_text: "Supporting Description here"
         ) %>
       <% end %>
-    </li>
-
-    <li>
+    <% end %>
+  </li>
+  <li>
+    <%= form_with url: "#", method: :post do |form| %>
       <%= doc_section_component(title: "Textarea with disabled state") do %>
         <%= textarea_component(
           form: form,
@@ -167,6 +124,7 @@
           support_text: "Supporting Description here"
         ) %>
       <% end %>
-    </li>
-  </ul>
-<% end %>
+    <% end %>
+  </li>
+</ul>
+
