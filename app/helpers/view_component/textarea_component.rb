@@ -29,6 +29,8 @@ module ViewComponent
                      error:, disabled:, html_options:)
         raise "Incorrect textarea size: #{size}" unless TEXTAREA_SIZES.include?(size)
 
+        error_message = resolve_error(form, name, error)
+
         self.form = form
         self.name = name
         self.label = label
@@ -36,8 +38,8 @@ module ViewComponent
         self.value = value
         self.rows = rows
         self.size = size
-        self.support_text = (error.presence || support_text)
-        self.error = error
+        self.support_text = (error_message.presence || support_text)
+        self.error = error_message
         self.disabled = disabled
         self.html_options = html_options
 
@@ -110,8 +112,6 @@ module ViewComponent
       disabled: false,
       html_options: {}
     )
-      error_message = resolve_error(form, name, error)
-
       textarea = TextareaComponent.new(
         form: form,
         name: name,
@@ -121,7 +121,7 @@ module ViewComponent
         rows: rows,
         size: size,
         support_text: support_text,
-        error: error_message,
+        error: error,
         disabled: disabled,
         html_options: html_options
       )
