@@ -6,18 +6,18 @@ module ViewComponent
 
     class Textarea
       TEXTAREA_SIZE_STYLE = {
-        md: 'textarea-component-md main-text-base-normal',
+        md: 'textarea-component-md main-text-md-normal',
         lg: 'textarea-component-lg main-text-lg-medium'
       }.freeze
 
       LABEL_STYLES = {
         md: 'general-text-sm-normal',
-        lg: 'general-text-base-normal'
+        lg: 'general-text-md-normal'
       }.freeze
 
       SUPPORT_TEXT_STYLES = {
         md: 'general-text-sm-normal',
-        lg: 'general-text-base-normal'
+        lg: 'general-text-md-normal'
       }.freeze
 
       attr_accessor :form, :name, :label, :placeholder, :value,
