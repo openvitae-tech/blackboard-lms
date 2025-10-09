@@ -118,6 +118,8 @@ module ViewComponent
     end
 
     class InputTextComponent
+      include ViewComponent::ComponentHelper
+
       INPUT_SIZE_STYLE = {
         md: 'input-text-md',
         lg: 'input-text-lg'
@@ -244,13 +246,6 @@ module ViewComponent
         class_list(base, size_style, color_style)
       end
 
-      private
-
-      def class_list(base, size_style, color_style)
-        base.append(size_style)
-        base.append(color_style)
-        base.join(' ')
-      end
     end
 
     def input_with_icon(icon, input_tag, position)

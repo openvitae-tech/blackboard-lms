@@ -4,7 +4,9 @@ module ViewComponent
   module TextareaComponent
     TEXTAREA_SIZES = %w[md lg].freeze
 
-    class Textarea
+    class TextareaComponent
+      include ViewComponent::ComponentHelper
+
       TEXTAREA_SIZE_STYLE = {
         md: 'textarea-component-md main-text-md-normal',
         lg: 'textarea-component-lg main-text-lg-medium'
@@ -21,10 +23,10 @@ module ViewComponent
       }.freeze
 
       attr_accessor :form, :name, :label, :placeholder, :value,
-                    :rows, :size, :html_options, :support_text, :error, :disabled
+                    :rows, :size, :support_text, :error, :disabled, :html_options
 
-      def initialize(form:, name:, label:, placeholder:, value:, rows:, size:, html_options:, support_text:,
-                     error:, disabled:)
+      def initialize(form:, name:, label:, placeholder:, value:, rows:, size:, support_text:,
+                     error:, disabled:, html_options:)
         self.form = form
         self.name = name
         self.label = label
@@ -91,13 +93,6 @@ module ViewComponent
         class_list(base, size_style, color_style)
       end
 
-      private
-
-      def class_list(base, size_style, color_style)
-        base.append(size_style)
-        base.append(color_style)
-        base.join(' ')
-      end
     end
 
     def textarea_component(
@@ -117,7 +112,7 @@ module ViewComponent
 
       final_error_message, has_error = resolve_error(form, name, error)
 
-      textarea = Textarea.new(
+      textarea = TextareaComponent.new(
         form: form,
         name: name,
         label: label,
@@ -125,10 +120,10 @@ module ViewComponent
         value: value,
         rows: rows,
         size: size,
-        html_options: html_options,
         support_text: has_error ? final_error_message : support_text,
         error: has_error,
-        disabled: disabled
+        disabled: disabled,
+        html_options: html_options
       )
 
       render partial: 'view_components/textarea_component/textarea', locals: { textarea: }
