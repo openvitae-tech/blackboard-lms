@@ -27,6 +27,8 @@ module ViewComponent
 
       def initialize(form:, name:, label:, placeholder:, value:, rows:, size:, support_text:,
                      error:, disabled:, html_options:)
+        raise "Incorrect textarea size: #{size}" unless TEXTAREA_SIZES.include?(size)
+
         self.form = form
         self.name = name
         self.label = label
@@ -34,10 +36,10 @@ module ViewComponent
         self.value = value
         self.rows = rows
         self.size = size
-        self.html_options = html_options
-        self.support_text = support_text
+        self.support_text = (error.presence || support_text)
         self.error = error
         self.disabled = disabled
+        self.html_options = html_options
 
         self.html_options[:placeholder] = placeholder
         self.html_options[:class] = textarea_style
@@ -102,14 +104,12 @@ module ViewComponent
       value: nil,
       rows: 5,
       size: 'md',
-      html_options: {},
       support_text: nil,
       error: nil,
-      disabled: false
+      disabled: false,
+      html_options: {}
     )
-      raise "Incorrect textarea size: #{size}" unless TEXTAREA_SIZES.include?(size)
-
-      final_error_message, has_error = resolve_error(form, name, error)
+      error_message = resolve_error(form, name, error)
 
       textarea = TextareaComponent.new(
         form: form,
@@ -119,22 +119,13 @@ module ViewComponent
         value: value,
         rows: rows,
         size: size,
-        support_text: has_error ? final_error_message : support_text,
-        error: has_error,
+        support_text: support_text,
+        error: error_message,
         disabled: disabled,
         html_options: html_options
       )
 
       render partial: 'view_components/textarea_component/textarea', locals: { textarea: }
-    end
-
-    private
-
-    def resolve_error(form, name, explicit_error)
-      errors = form&.object&.errors
-      form_error = errors&.[](name)&.first
-      final_error_message = form_error.presence || explicit_error
-      [final_error_message, final_error_message.present?]
     end
   end
 end
