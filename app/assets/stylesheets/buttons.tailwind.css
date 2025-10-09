@@ -75,7 +75,7 @@
 }
 
 .btn-text-md {
-    @apply main-text-md-normal;
+    @apply main-text-md-medium;
 }
 
 .btn-text-lg {
