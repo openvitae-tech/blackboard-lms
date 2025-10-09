@@ -245,7 +245,6 @@ module ViewComponent
         size_style = SUBTEXT_SIZE[size.to_sym]
         class_list(base, size_style, color_style)
       end
-
     end
 
     def input_with_icon(icon, input_tag, position)

@@ -92,7 +92,6 @@ module ViewComponent
 
         class_list(base, size_style, color_style)
       end
-
     end
 
     def textarea_component(
