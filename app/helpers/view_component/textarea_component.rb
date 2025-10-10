@@ -112,17 +112,17 @@ module ViewComponent
       html_options: {}
     )
       textarea = TextareaComponent.new(
-        form: form,
-        name: name,
-        label: label,
-        placeholder: placeholder,
-        value: value,
-        rows: rows,
-        size: size,
-        support_text: support_text,
-        error: error,
-        disabled: disabled,
-        html_options: html_options
+        form:,
+        name:,
+        label:,
+        placeholder:,
+        value:,
+        rows:,
+        size:,
+        support_text:,
+        error:,
+        disabled:,
+        html_options:
       )
 
       render partial: 'view_components/textarea_component/textarea', locals: { textarea: }
