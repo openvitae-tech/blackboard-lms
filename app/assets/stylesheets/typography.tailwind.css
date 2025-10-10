@@ -27,15 +27,15 @@
     @apply font-poppins text-base md:text-lg font-normal;
   }
 
-  .main-text-base-semibold {
+  .main-text-md-semibold {
     @apply font-poppins text-sm md:text-base font-semibold;
   }
 
-  .main-text-base-medium {
+  .main-text-md-medium {
     @apply font-poppins text-sm md:text-base font-medium;
   }
 
-  .main-text-base-normal {
+  .main-text-md-normal {
     @apply font-poppins text-sm md:text-base font-normal;
   }
 
@@ -52,11 +52,11 @@
     @apply font-roboto text-sm md:text-base font-normal;
   }
 
-  .general-text-base-medium {
+  .general-text-md-medium {
     @apply font-roboto text-xs md:text-sm font-medium;
   }
 
-  .general-text-base-normal {
+  .general-text-md-normal {
     @apply font-roboto text-xs md:text-sm font-normal;
   }
 

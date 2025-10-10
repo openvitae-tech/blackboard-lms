@@ -3,7 +3,7 @@
 }
 
 .input-text-md {
-    @apply main-text-base-normal;
+    @apply main-text-md-normal;
 }
 
 .input-text-lg {
@@ -39,7 +39,7 @@
 }
 
 .input-text-label-lg {
-    @apply px-1 general-text-base-normal;
+    @apply px-1 general-text-md-normal;
 }
 
 .input-text-subtext-md {
@@ -47,5 +47,5 @@
 }
 
 .input-text-subtext-lg {
-    @apply px-3 md:px-4 general-text-base-normal;
+    @apply px-3 md:px-4 general-text-md-normal;
 }

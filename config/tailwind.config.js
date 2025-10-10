@@ -8,24 +8,6 @@ module.exports = {
     "./app/views/**/*.{erb,haml,html,slim}",
     // "./node_modules/flowbite/**/*.js",
   ],
-  safelist: [
-    "heading-3xl",
-    "heading-2xl",
-    "heading-xl",
-    "main-text-lg-bold",
-    "main-text-lg-medium",
-    "main-text-lg-normal",
-    "main-text-base-bold",
-    "main-text-base-medium",
-    "main-text-base-normal",
-    "main-text-sm-medium",
-    "main-text-sm-normal",
-    "general-text-lg-normal",
-    "general-text-base-medium",
-    "general-text-base-normal",
-    "general-text-sm-medium",
-    "general-text-sm-normal",
-  ],
   theme: {
     extend: {
       fontFamily: {
