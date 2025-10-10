@@ -1,0 +1,16 @@
+<div class="w-full flex flex-col gap-1">
+  <% if textarea.label.present? %>
+    <label class="group">
+      <span class="<%= textarea.label_style %> inline-block mb-1"><%= textarea.label %></span>
+      <%= render 'view_components/textarea_component/text_area_box', { textarea: } %>
+    </label>
+  <% else %>
+    <%= render 'view_components/textarea_component/text_area_box', { textarea: } %>
+  <% end %>
+
+  <% if textarea.support_text.present? %>
+    <span class="<%= textarea.support_text_style %>">
+      <%= textarea.support_text %>
+    </span>
+  <% end %>
+</div>
