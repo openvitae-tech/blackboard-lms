@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Integrations::Llm::Gemini do # rubocop:disable RSpec/SpecFilePathFormat
+RSpec.describe Integrations::Llm::Gemini do
   subject(:gemini) { described_class.instance }
 
   let(:prompt) { 'Explain Ruby meta-programming' }
