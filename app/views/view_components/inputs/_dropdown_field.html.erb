@@ -12,7 +12,7 @@
   <% if form.present? %>
     <%= form.select field_name,
         options_for_select(options, value),
-        {},
+        { include_blank: merged_html_options[:include_blank] },
         merged_html_options %>
   <% else %>
    <%= select_tag field_name,
