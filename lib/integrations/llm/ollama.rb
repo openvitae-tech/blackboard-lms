@@ -1,0 +1,28 @@
+# frozen_string_literal: true
+
+module Integrations
+  module Llm
+    class Ollama < Api
+      include Singleton
+
+      SUPPORTED_MODELS = %w[gemma3:latest].freeze
+      DEFAULT_MODEL = 'gemma3:latest'
+
+      def chat(prompt)
+        ask(prompt)
+      end
+
+      private
+
+      def ask(prompt, file_path: nil, response_type: :text)
+        service = RubyLLM.chat(model: model, provider: :ollama)
+
+        service = service.with_params(response_format: { type: 'json_object' }) if response_type == :json
+
+        response = service.ask prompt, with: file_path
+
+        response.content
+      end
+    end
+  end
+end
