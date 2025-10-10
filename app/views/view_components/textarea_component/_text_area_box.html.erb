@@ -1,0 +1,16 @@
+<div class="textarea-component-wrapper">
+  <% if textarea.form.present? %>
+    <%= textarea.form.text_area textarea.name,
+          **textarea.html_options,
+          placeholder: textarea.placeholder,
+          rows: textarea.rows,
+          class: textarea.textarea_style %>
+  <% else %>
+    <%= text_area_tag textarea.name,
+          textarea.value,
+          **textarea.html_options,
+          placeholder: textarea.placeholder,
+          rows: textarea.rows,
+          class: textarea.textarea_style %>
+  <% end %>
+</div>

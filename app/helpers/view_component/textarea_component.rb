@@ -43,7 +43,6 @@ module ViewComponent
         self.disabled = disabled
         self.html_options = html_options
 
-        self.html_options[:id] ||= "#{name}-#{SecureRandom.hex(4)}"
         self.html_options[:placeholder] = placeholder
         self.html_options[:rows] ||= rows
         self.html_options[:disabled] = true if disabled
