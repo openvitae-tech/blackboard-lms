@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         get :set_name_and_email
         get :set_dob_and_gender
         get :set_language
+        get :set_learning_program
         get :set_password
         put :update_password
         get :all_set
