@@ -1,130 +1,111 @@
 <div class="my-6">
   <%= render "shared/components/back_button", back_link: ui_components_path %>
 </div>
+<%= h3_component(text: "Textarea Component") %>
 
-<div class="heading-xl underline underline-offset-4">Textarea Component</div>
 
-<ul class="my-6 flex flex-col gap-1">
-  <li>
-    <%= doc_section_component(title: "Textarea without label and subtext") do %>
-      <%= textarea_component(
-        name: :description,
-        placeholder: "Enter description"
-      ) %>
-    <% end %>
-  </li>
+<%= doc_section_component(title: "Textarea without label and subtext") do %>
+  <%= textarea_component(
+    name: :description,
+    placeholder: "Enter description"
+  ) %>
+<% end %>
 
-  <li>
-    <%= doc_section_component(title: "Textarea without subtext") do %>
-      <%= textarea_component(
-        name: :description,
-        label: "Description",
-        placeholder: "Enter description"
-      ) %>
-    <% end %>
-  </li>
+<%= doc_section_component(title: "Textarea without subtext") do %>
+  <%= textarea_component(
+    name: :description,
+    label: "Description",
+    placeholder: "Enter description"
+  ) %>
+<% end %>
 
-  <li>
-    <%= doc_section_component(title: "Textarea without label") do %>
-      <%= textarea_component(
-        name: :description,
-        placeholder: "Enter description",
-        support_text: "Supporting Description here"
-      ) %>
-    <% end %>
-  </li>
+<%= doc_section_component(title: "Textarea without label") do %>
+  <%= textarea_component(
+    name: :description,
+    placeholder: "Enter description",
+    support_text: "Supporting Description here"
+  ) %>
+<% end %>
 
-  <li>
-    <%= doc_section_component(title: "Medium Textarea") do %>
-      <%= textarea_component(
-        name: :description,
-        label: "Description",
-        placeholder: "Enter description",
-        support_text: "Supporting Description here"
-      ) %>
-    <% end %>
-  </li>
+<%= doc_section_component(title: "Medium Textarea") do %>
+  <%= textarea_component(
+    name: :description,
+    label: "Description",
+    placeholder: "Enter description",
+    support_text: "Supporting Description here"
+  ) %>
+<% end %>
 
-  <li>
-    <%= doc_section_component(title: "Large Textarea") do %>
-      <%= textarea_component(
-        name: :description,
-        label: "Description",
-        placeholder: "Enter description",
-        size: "lg",
-        support_text: "Supporting Description here"
-      ) %>
-    <% end %>
-  </li>
+<%= doc_section_component(title: "Large Textarea") do %>
+  <%= textarea_component(
+    name: :description,
+    label: "Description",
+    placeholder: "Enter description",
+    size: "lg",
+    support_text: "Supporting Description here"
+  ) %>
+<% end %>
 
-  <li>
-    <%= doc_section_component(title: "Textarea with error state") do %>
-      <%= textarea_component(
-        name: :description,
-        label: "Description",
-        placeholder: "Enter description",
-        error: "Description should not be less than 36 characters",
-        support_text: "Supporting Description here"
-      ) %>
-    <% end %>
-  </li>
+<%= doc_section_component(title: "Textarea with error state") do %>
+  <%= textarea_component(
+    name: :description,
+    label: "Description",
+    placeholder: "Enter description",
+    error: "Description should not be less than 36 characters",
+    support_text: "Supporting Description here"
+  ) %>
+<% end %>
 
-  <li>
-    <%= doc_section_component(title: "Textarea with disabled state") do %>
-      <%= textarea_component(
-        name: :description,
-        label: "Description",
-        placeholder: "Enter description",
-        disabled: true,
-        support_text: "Supporting Description here"
-      ) %>
-    <% end %>
-  </li>
-</ul>
+<%= doc_section_component(title: "Textarea with disabled state") do %>
+  <%= textarea_component(
+    name: :description,
+    label: "Description",
+    placeholder: "Enter description",
+    disabled: true,
+    support_text: "Supporting Description here"
+  ) %>
+<% end %>
+  
 
-<div class="heading-xl underline underline-offset-4">Form with textarea</div>
+<%= h3_component(text: "Form with textarea") %>
 
-<ul class="my-6 flex flex-col gap-1">
-  <li>
-    <%= form_with url: "#", method: :post do |form| %>
-      <%= doc_section_component(title: "Medium Textarea") do %>
-        <%= textarea_component(
-          form: form,
-          name: :description,
-          label: "Description",
-          placeholder: "Enter description",
-          support_text: "Supporting Description here"
-        ) %>
-      <% end %>
-    <% end %>
-  </li>
-  <li>
-    <%= form_with url: "#", method: :post do |form| %>
-      <%= doc_section_component(title: "Textarea with error state") do %>
-        <%= textarea_component(
-          form: form,
-          name: :description,
-          label: "Description",
-          placeholder: "Enter description",
-          error: "Description should be in not less than 36 characters",
-          support_text: "Supporting Description here"
-        ) %>
-      <% end %>
-    <% end %>
-  </li>
-  <li>
-    <%= form_with url: "#", method: :post do |form| %>
-      <%= doc_section_component(title: "Textarea with disabled state") do %>
-        <%= textarea_component(
-          form: form,
-          name: :description,
-          label: "Description",
-          placeholder: "Enter description",
-          disabled: true,
-          support_text: "Supporting Description here"
-        ) %>
-      <% end %>
-    <% end %>
-  </li>
-</ul>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Medium Textarea") do %>
+    <%= textarea_component(
+      form: form,
+      name: :description,
+      label: "Description",
+      placeholder: "Enter description",
+      support_text: "Supporting Description here"
+    ) %>
+  <% end %>
+<% end %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Textarea with error state") do %>
+    <%= textarea_component(
+      form: form,
+      name: :description,
+      label: "Description",
+      placeholder: "Enter description",
+      error: "Description should be in not less than 36 characters",
+      support_text: "Supporting Description here"
+    ) %>
+  <% end %>
+<% end %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Textarea with disabled state") do %>
+    <%= textarea_component(
+      form: form,
+      name: :description,
+      label: "Description",
+      placeholder: "Enter description",
+      disabled: true,
+      support_text: "Supporting Description here"
+    ) %>
+  <% end %>
+<% end %>
+
 
