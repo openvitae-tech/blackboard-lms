@@ -1,19 +1,23 @@
 # frozen_string_literal: true
 
+require 'singleton'
+
 module Integrations
   module Llm
     class Api
-      attr_accessor :model
-
       include Singleton
 
-      SUPPORTED_LLMS = {
-        ollama: Integrations::Llm::Ollama,
-        gemini: Integrations::Llm::Gemini
-      }.freeze
+      attr_accessor :model
+
+      def self.supported_llms
+        {
+          ollama: Integrations::Llm::Ollama,
+          gemini: Integrations::Llm::Gemini
+        }
+      end
 
       def self.llm_instance(provider:, model: nil)
-        llm_class = SUPPORTED_LLMS.fetch(provider) do
+        llm_class = supported_llms.fetch(provider) do
           raise ArgumentError, "Unsupported LLM provider: #{provider}."
         end
 
