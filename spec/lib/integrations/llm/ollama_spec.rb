@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Integrations::Llm::Ollama do
-  subject(:ollama) { described_class.instance }
+  subject(:ollama) { described_class.new(described_class::DEFAULT_MODEL) }
 
   let(:prompt) { 'Explain Ruby meta-programming' }
 

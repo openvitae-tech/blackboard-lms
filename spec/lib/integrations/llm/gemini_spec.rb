@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Integrations::Llm::Gemini do
-  subject(:gemini) { described_class.instance }
+  subject(:gemini) { described_class.new(described_class::DEFAULT_MODEL) }
 
   let(:prompt) { 'Explain Ruby meta-programming' }
 

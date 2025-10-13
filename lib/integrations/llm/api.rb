@@ -1,14 +1,8 @@
 # frozen_string_literal: true
 
-require 'singleton'
-
 module Integrations
   module Llm
     class Api
-      include Singleton
-
-      attr_accessor :model
-
       def self.supported_llms
         {
           ollama: Integrations::Llm::Ollama,
@@ -21,16 +15,12 @@ module Integrations
           raise ArgumentError, "Unsupported LLM provider: #{provider}."
         end
 
-        model ||= llm_class::DEFAULT_MODEL
-
-        unless llm_class::SUPPORTED_MODELS.include?(model)
+        if model && llm_class::SUPPORTED_MODELS.exclude?(model)
           raise ArgumentError,
                 "Unsupported model '#{model}' for #{provider}. Allowed: #{llm_class::SUPPORTED_MODELS.join(', ')}"
         end
 
-        llm = llm_class.instance
-        llm.model = model
-        llm
+        llm_class.new(model)
       end
 
       def chat(prompt)

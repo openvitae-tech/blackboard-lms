@@ -3,10 +3,15 @@
 module Integrations
   module Llm
     class Ollama < Api
-      include Singleton
+      attr_accessor :model
 
       SUPPORTED_MODELS = %w[gemma3:latest].freeze
       DEFAULT_MODEL = 'gemma3:latest'
+
+      def initialize(model)
+        super()
+        @model = model || DEFAULT_MODEL
+      end
 
       def chat(prompt)
         ask(prompt)

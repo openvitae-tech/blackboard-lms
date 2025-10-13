@@ -3,10 +3,15 @@
 module Integrations
   module Llm
     class Gemini < Api
-      include Singleton
+      attr_accessor :model
 
       SUPPORTED_MODELS = %w[gemini-2.5-pro gemini-2.5-flash gemini-2.5-flash-lite].freeze
       DEFAULT_MODEL = 'gemini-2.5-flash'
+
+      def initialize(model)
+        super()
+        @model = model || DEFAULT_MODEL
+      end
 
       def chat(prompt)
         ask(prompt)
