@@ -22,6 +22,12 @@ module Integrations
         response = service.ask prompt, with: file_path
 
         response.content
+      rescue StandardError => e
+        log_error_to_sentry(e.message)
+      end
+
+      def log_error_to_sentry(msg)
+        Sentry.capture_message(msg, level: :error)
       end
     end
   end

@@ -45,8 +45,8 @@ RSpec.describe Integrations::Llm::Gemini do
 
     it 'raises error for unsupported provider' do
       expect do
-        Integrations::LLM::Api.llm_instance(provider: :unknown)
-      end.to raise_error(NameError, /uninitialized constant/)
+        Integrations::Llm::Api.llm_instance(provider: :unknown)
+      end.to raise_error(ArgumentError, /Unsupported LLM provider: unknown./)
     end
   end
 end
