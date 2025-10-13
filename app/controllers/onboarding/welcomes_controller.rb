@@ -17,25 +17,14 @@ class Onboarding::WelcomesController < ApplicationController
 
   def set_preferred_language
   end
-
-  def set_learning_program
-    @programs = current_user.learning_partner&.programs
-  end
   def set_password
   end
 
   def update
-    steps = %w[set_name_and_email set_dob_and_gender set_language set_learning_program set_password]
+    steps = %w[set_name_and_email set_dob_and_gender set_language set_password]
     step_index = steps.index(params[:step])
 
-    done = if params[:step] == 'set_learning_program'
-      assign_program_to_user(user_params[:program_id])
-      true
-    else
-      current_user.update(user_params)
-    end
-
-    if done
+    if current_user.update(user_params)
       redirect_to action: steps[step_index + 1].to_sym
     else
       render turbo_stream: turbo_stream.replace("onboarding-frame", partial: "onboarding/welcomes/#{steps[step_index]}")
@@ -72,20 +61,10 @@ class Onboarding::WelcomesController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :dob, :gender, :preferred_local_language, :program_id)
+    params.require(:user).permit(:name, :email, :dob, :gender, :preferred_local_language)
   end
 
   def password_params
     params.require(:user).permit(:password, :password_confirmation)
-  end
-
-  def assign_program_to_user(program_id)
-    return if program_id.blank?
-    program = Program.find(program_id)
-    service = CourseManagementService.instance
-
-    program.courses.each do |course|
-      service.enroll!(current_user, course)
-    end
   end
 end

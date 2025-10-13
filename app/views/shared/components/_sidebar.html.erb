@@ -46,7 +46,7 @@
             <% end %>
           </li>
         <% end %>
-        <% if current_user.privileged_user? %>
+        <% if current_user.privileged_user? && Rails.application.credentials.dig(:features, :show_programs) %>
           <li class="side-bar-item <%= sidebar_active('programs') %>">
             <%= link_to programs_path, class: "side-bar-item-inner" do %>
               <span class="icon icon-settings icon-small bg-letter-color"></span>
