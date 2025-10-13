@@ -21,9 +21,5 @@
     letter-spacing: 0.025em;
 }
 
-body {
-    color: #404041;
-}
-
 @import 'actiontext.css';
 
