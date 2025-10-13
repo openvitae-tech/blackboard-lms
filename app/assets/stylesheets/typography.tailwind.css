@@ -3,68 +3,68 @@
 @layer components {
   /* Heading Typography Styles */
   .heading-3xl {
-    @apply font-poppins text-2xl md:text-3xl font-semibold;
+    @apply font-poppins antialiased text-2xl md:text-3xl font-semibold;
   }
 
   .heading-2xl {
-    @apply font-poppins text-xl md:text-2xl font-semibold;
+    @apply font-poppins antialiased text-xl md:text-2xl font-semibold;
   }
 
   .heading-xl {
-    @apply font-poppins text-lg md:text-xl font-semibold;
+    @apply font-poppins antialiased text-lg md:text-xl font-semibold;
   }
 
   /* Primary Text Typography Styles */
   .main-text-lg-semibold {
-    @apply font-poppins text-base md:text-lg font-semibold;
+    @apply font-poppins antialiased text-base md:text-lg font-semibold;
   }
 
   .main-text-lg-medium {
-    @apply font-poppins text-base md:text-lg font-medium;
+    @apply font-poppins antialiased text-base md:text-lg font-medium;
   }
 
   .main-text-lg-normal {
-    @apply font-poppins text-base md:text-lg font-normal;
+    @apply font-poppins antialiased text-base md:text-lg font-normal;
   }
 
   .main-text-md-semibold {
-    @apply font-poppins text-sm md:text-base font-semibold;
+    @apply font-poppins antialiased text-sm md:text-base font-semibold;
   }
 
   .main-text-md-medium {
-    @apply font-poppins text-sm md:text-base font-medium;
+    @apply font-poppins antialiased text-sm md:text-base font-medium;
   }
 
   .main-text-md-normal {
-    @apply font-poppins text-sm md:text-base font-normal;
+    @apply font-poppins antialiased text-sm md:text-base font-normal;
   }
 
   .main-text-sm-medium {
-    @apply font-poppins text-xs md:text-sm font-medium;
+    @apply font-poppins antialiased text-xs md:text-sm font-medium;
   }
 
   .main-text-sm-normal {
-    @apply font-poppins text-xs md:text-sm font-normal;
+    @apply font-poppins antialiased text-xs md:text-sm font-normal;
   }
 
   /* Secondary Text Typography Styles */
   .general-text-lg-normal {
-    @apply font-roboto text-sm md:text-base font-normal;
+    @apply font-roboto antialiased text-sm md:text-base font-normal;
   }
 
   .general-text-md-medium {
-    @apply font-roboto text-xs md:text-sm font-medium;
+    @apply font-roboto antialiased text-xs md:text-sm font-medium;
   }
 
   .general-text-md-normal {
-    @apply font-roboto text-xs md:text-sm font-normal;
+    @apply font-roboto antialiased text-xs md:text-sm font-normal;
   }
 
   .general-text-sm-medium {
-    @apply font-roboto text-xs font-medium;
+    @apply font-roboto antialiased text-xs font-medium;
   }
 
   .general-text-sm-normal {
-    @apply font-roboto text-xs font-normal;
+    @apply font-roboto antialiased text-xs font-normal;
   }
 }
