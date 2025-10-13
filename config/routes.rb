@@ -146,8 +146,8 @@ Rails.application.routes.draw do
     end
 
     collection do
-      get :choose
-      post :choose_confirm
+      get :list
+      post :choose
     end
   end
 

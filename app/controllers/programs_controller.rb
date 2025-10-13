@@ -5,7 +5,7 @@ class ProgramsController < ApplicationController
   include SearchContextHelper
 
   before_action :set_learning_partner
-  before_action :set_program, except: %i[new index create choose choose_confirm]
+  before_action :set_program, except: %i[new index create list choose]
 
   def new
     authorize :program
@@ -103,16 +103,16 @@ class ProgramsController < ApplicationController
     end
   end
 
-  def choose
+  def list
     authorize :program
     @programs = @learning_partner.programs
     @program_options = @programs.map { |prog| [prog.name, prog.id] }
   end
 
-  def choose_confirm
+  def choose
     authorize :program
 
-    program = Program.find(params[:program_id])
+    program = @learning_partner.programs.find(params[:program_id])
     service = CourseManagementService.instance
 
     program.courses.each do |course|
