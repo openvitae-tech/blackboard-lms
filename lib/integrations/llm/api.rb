@@ -3,13 +3,15 @@
 module Integrations
   module Llm
     class Api
-      SUPPORTED_LLMS = {
-        ollama: Integrations::Llm::Ollama,
-        gemini: Integrations::Llm::Gemini
-      }.freeze
+      def self.supported_llms
+        {
+          ollama: Integrations::Llm::Ollama,
+          gemini: Integrations::Llm::Gemini
+        }
+      end
 
       def self.llm_instance(provider:, model: nil)
-        llm_class = SUPPORTED_LLMS.fetch(provider) do
+        llm_class = supported_llms.fetch(provider) do
           raise ArgumentError, "Unsupported LLM provider: #{provider}."
         end
 
