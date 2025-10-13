@@ -157,6 +157,7 @@ en:
     description: "Create and manage tags"
   programs:
     label: "Programs"
+    choose_success: 'Courses in the selected program assigned successfully.'
   tags:
     label: "Tags"
   certificate_templates:

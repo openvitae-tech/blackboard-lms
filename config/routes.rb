@@ -145,6 +145,11 @@ Rails.application.routes.draw do
       get :add_courses
       post :create_courses
     end
+
+    collection do
+      get :choose
+      post :choose_confirm
+    end
   end
 
   resources :dashboards, only: :index

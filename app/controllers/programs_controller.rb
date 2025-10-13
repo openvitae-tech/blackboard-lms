@@ -5,7 +5,7 @@ class ProgramsController < ApplicationController
   include SearchContextHelper
 
   before_action :set_learning_partner
-  before_action :set_program, except: %i[new index create]
+  before_action :set_program, except: %i[new index create choose choose_confirm]
 
   def new
     authorize :program
@@ -101,6 +101,25 @@ class ProgramsController < ApplicationController
         render turbo_stream: turbo_stream.redirect_to(program_path(@program, page: get_current_page(record: @program.courses, page: params[:page])))
       end
     end
+  end
+
+  def choose
+    authorize :program
+    @programs = @learning_partner.programs
+    @program_options = @programs.map { |prog| [prog.name, prog.id] }
+  end
+
+  def choose_confirm
+    authorize :program
+
+    program = Program.find(params[:program_id])
+    service = CourseManagementService.instance
+
+    program.courses.each do |course|
+      service.enroll!(current_user, course)
+    end
+
+    flash.now[:success] = I18n.t('programs.choose_success')
   end
 
   private

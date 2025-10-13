@@ -21,7 +21,14 @@
 <div class="rounded box-shadow-medium">
   <%= render 'user_settings/page_body', user: @user %>
   <div class="p-6 border-b border-line-colour-light">
-    <h1 class="text-semibold">Change password</h1>
+    <h1 class="text-semibold"> Other settings </h1>
+
+    <% if ProgramPolicy.new(current_user, :program).choose? %>
+      <div class="mt-2">
+        <%= link_text_component 'Choose learning program', choose_programs_path, { data: { turbo_frame: 'modal' } } %>
+      </div>
+    <% end %>
+
     <div class="mt-2">
      <%= link_text_component 'Change your password', change_password_user_settings_path, { data: { turbo_frame: 'modal' } } %>
     </div>
