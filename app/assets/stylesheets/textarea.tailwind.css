@@ -27,7 +27,7 @@
 }
 
 .textarea-component-lg {
-  @apply px-4 py-2 md:p-4 text-base md:text-lg rounded-lg;
+  @apply px-4 py-2 md:p-4 rounded-lg;
 }
 
 .textarea-support-text {
