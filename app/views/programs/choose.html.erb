@@ -1,7 +1,7 @@
 <%= modal_component(title: 'Choose learning program') do %>
   <%= form_with(url: choose_confirm_programs_path, method: :post, data: { turbo: true }, class: "flex flex-col gap-6 p-6") do |form| %>
     <div class="flex flex-col gap-4">
-      <%= input_dropdown(form: form, field_name: :program_id, label: "Choose learning program (optional)", options: @program_options, placeholder: "Please choose a gender", value: nil, html_options: { required: false, include_blank: true }, width: "w-full" ) %>
+      <%= input_dropdown(form: form, field_name: :program_id, label: "Choose learning program", options: @program_options, placeholder: "Please choose a learning program", value: nil, html_options: { required: true }, width: "w-full" ) %>
 
       <div class="text-sm my-2 text-letter-color-light">
         (Choose a learning program that suits your department.)
