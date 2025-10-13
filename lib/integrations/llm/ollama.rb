@@ -10,6 +10,8 @@ module Integrations
 
       def initialize(model)
         super()
+
+        validate_model(model)
         @model = model || DEFAULT_MODEL
       end
 
@@ -33,6 +35,13 @@ module Integrations
 
       def log_error_to_sentry(msg)
         Sentry.capture_message(msg, level: :error)
+      end
+
+      def validate_model(model)
+        return unless model && SUPPORTED_MODELS.exclude?(model)
+
+        raise ArgumentError,
+              "Unsupported model '#{model}' for ollama. Allowed: #{SUPPORTED_MODELS.join(', ')}"
       end
     end
   end
