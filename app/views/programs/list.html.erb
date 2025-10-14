@@ -1,0 +1,14 @@
+<%= modal_component(title: t('programs.choose_learning_program')) do %>
+  <%= form_with(url: choose_programs_path, method: :post, data: { turbo: true }, class: "flex flex-col gap-6 p-6") do |form| %>
+    <div class="flex flex-col gap-4">
+      <%= input_dropdown(form: form, field_name: :program_id, label: t('programs.choose_label'), options: @program_options, value: nil, html_options: { required: true }, width: "w-full" ) %>
+
+      <div class="text-sm my-2 text-letter-color-light"><%= t('programs.info_text') %></div>
+    </div>
+
+    <div class="flex flex-col justify-between">
+      <%= form.button t('button.choose'), class: "bg-primary text-white px-4 py-2 rounded" %>
+      <%= form.button t('button.cancel'), type: 'button', class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
+    </div>
+  <% end %>
+<% end %>

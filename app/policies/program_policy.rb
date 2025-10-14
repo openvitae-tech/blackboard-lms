@@ -55,4 +55,12 @@ class ProgramPolicy
   def bulk_destroy_courses?
     user.privileged_user?
   end
+
+  def list?
+    user.is_learner? && user.learning_partner.programs.exists?
+  end
+
+  def choose?
+    user.is_learner? && user.learning_partner.programs.exists?
+  end
 end
