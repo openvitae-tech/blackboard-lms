@@ -1,9 +1,9 @@
 .textarea-active-state {
-  @apply text-letter-color-light border-slate-grey-50 placeholder-disabled-color focus:border-primary;
+  @apply text-letter-color-light border-slate-grey-50 placeholder-disabled-color focus:ring-primary;
 }
 
 .textarea-error-state {
-  @apply border-danger focus:border-danger focus:ring-0 text-danger-dark placeholder-danger-dark;
+  @apply border-danger focus:border-danger focus:ring-danger text-danger-dark placeholder-danger-dark;
 }
 
 .textarea-disabled-state {
