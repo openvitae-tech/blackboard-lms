@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Integrations::Llm::Ollama do
-  subject(:ollama) { described_class.new(described_class::DEFAULT_MODEL) }
+RSpec.describe Integrations::Llm::Openai do
+  subject(:openai) { described_class.new(described_class::DEFAULT_MODEL) }
 
   let(:prompt) { 'Explain Ruby meta-programming' }
 
@@ -16,29 +16,30 @@ RSpec.describe Integrations::Llm::Ollama do
     )
 
     allow(RubyLLM).to receive(:chat).and_return(mock_service)
-    ollama.model = described_class::DEFAULT_MODEL
+    openai.model = described_class::DEFAULT_MODEL
   end
 
   describe 'constants' do
-    it 'defines supported models' do
-      expect(described_class::SUPPORTED_MODELS).to eq(%w[gemma3:latest])
+    it 'has supported models' do
+      expect(described_class::SUPPORTED_MODELS).to eq(%w[gpt-4.1-nano gpt-4.1-mini gpt-5-mini whisper-1])
     end
 
-    it 'defines a default model' do
-      expect(described_class::DEFAULT_MODEL).to eq('gemma3:latest')
+    it 'has a default model' do
+      expect(described_class::DEFAULT_MODEL).to eq('gpt-4.1-nano')
     end
   end
 
   describe '#chat' do
     it 'returns response' do
-      result = ollama.send(:ask, prompt)
+      result = openai.send(:ask, prompt)
       expect(result.data).to eq('Ruby meta-programming is powerful.')
     end
 
     it 'raises error for unsupported model' do
       expect do
-        Integrations::Llm::Api.llm_instance(provider: :ollama, model: 'invalid-model')
-      end.to raise_error(ArgumentError, /Unsupported model 'invalid-model' for ollama. Allowed: gemma3:latest/)
+        Integrations::Llm::Api.llm_instance(provider: :openai, model: 'invalid-model')
+      end.to raise_error(ArgumentError,
+                         /Unsupported model 'invalid-model' for openai. Allowed: gpt-4.1-nano, gpt-4.1-mini, gpt-5-mini, whisper-1/) # rubocop:disable Layout/LineLength
     end
 
     it 'raises error for unsupported provider' do

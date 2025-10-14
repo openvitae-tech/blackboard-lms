@@ -6,7 +6,8 @@ module Integrations
       def self.supported_llms
         {
           ollama: Integrations::Llm::Ollama,
-          gemini: Integrations::Llm::Gemini
+          gemini: Integrations::Llm::Gemini,
+          openai: Integrations::Llm::Openai
         }
       end
 

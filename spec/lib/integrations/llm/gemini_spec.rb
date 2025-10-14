@@ -33,7 +33,7 @@ RSpec.describe Integrations::Llm::Gemini do
   describe '#chat' do
     it 'returns response' do
       result = gemini.send(:ask, prompt)
-      expect(result).to eq('Ruby meta-programming is powerful.')
+      expect(result.data).to eq('Ruby meta-programming is powerful.')
     end
 
     it 'raises error for unsupported model' do

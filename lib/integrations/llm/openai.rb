@@ -2,11 +2,11 @@
 
 module Integrations
   module Llm
-    class Ollama < Api
+    class Openai < Api
       attr_accessor :model
 
-      SUPPORTED_MODELS = %w[gemma3:latest].freeze
-      DEFAULT_MODEL = 'gemma3:latest'
+      SUPPORTED_MODELS = %w[gpt-4.1-nano gpt-4.1-mini	gpt-5-mini whisper-1].freeze
+      DEFAULT_MODEL = 'gpt-4.1-nano'
 
       def initialize(model)
         super()
@@ -22,7 +22,7 @@ module Integrations
       private
 
       def ask(prompt, file_path: nil, response_type: :text)
-        service = RubyLLM.chat(model: model, provider: :ollama)
+        service = RubyLLM.chat(model: model, provider: :openai)
 
         service = service.with_params(response_format: { type: 'json_object' }) if response_type == :json
 
@@ -34,7 +34,7 @@ module Integrations
       rescue StandardError => e
         log_error_to_sentry(e.message)
 
-        ResponseObject.error(response.content)
+        ResponseObject.error(e.message)
       end
 
       def log_error_to_sentry(msg)
@@ -45,7 +45,7 @@ module Integrations
         return unless model && SUPPORTED_MODELS.exclude?(model)
 
         raise ArgumentError,
-              "Unsupported model '#{model}' for ollama. Allowed: #{SUPPORTED_MODELS.join(', ')}"
+              "Unsupported model '#{model}' for openai. Allowed: #{SUPPORTED_MODELS.join(', ')}"
       end
     end
   end
