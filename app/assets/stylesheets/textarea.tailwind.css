@@ -3,7 +3,7 @@
 }
 
 .textarea-error-state {
-  @apply border-danger focus:border-danger focus:ring-danger text-danger-dark placeholder-danger-dark;
+  @apply  text-danger-dark border-danger focus:border-danger focus:ring-danger placeholder-danger-dark;
 }
 
 .textarea-disabled-state {
@@ -15,7 +15,7 @@
 }
 
 .textarea-component-base {
-  @apply w-full border focus:text-letter-color-light;
+  @apply w-full border;
 }
 
 .textarea-component-wrapper {
