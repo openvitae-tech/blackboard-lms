@@ -53,6 +53,7 @@ en:
     generate: "Generate"
     update: "Update"
     share: "Share"
+    choose: "Choose"
   alert:
     title: "Delete %{resource_name}?"
     description: "You are permanently deleting the <b>%{label}</b> %{resource_name}. This action can't be undone."
@@ -149,6 +150,7 @@ en:
     updated: "Team updated successfully"
     banner_file_tip: "File size should be less than 1MB and use a good resolution image of minimum 1120 X 194px"
   user_settings:
+    other_settings: "Other settings"
     updated: "User settings updated successfully"
     password_updated: "Password updated successfully, you can login with your new password."
     password_change: "After changing the password you will be logged out and need to login with new password."
@@ -157,7 +159,10 @@ en:
     description: "Create and manage tags"
   programs:
     label: "Programs"
+    choose_learning_program: "Choose learning program"
     choose_success: 'Courses in the selected program assigned successfully.'
+    choose_label: "Please choose your learning program"
+    info_text: '(Choose a learning program that suits your department.)'
   tags:
     label: "Tags"
   certificate_templates:

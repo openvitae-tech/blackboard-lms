@@ -21,11 +21,11 @@
 <div class="rounded box-shadow-medium">
   <%= render 'user_settings/page_body', user: @user %>
   <div class="p-6 border-b border-line-colour-light">
-    <h1 class="text-semibold"> Other settings </h1>
+    <h1 class="text-semibold"> <%= t('user_settings.other_settings') %> </h1>
 
     <% if ProgramPolicy.new(current_user, :program).list? %>
       <div class="mt-2">
-        <%= link_text_component 'Choose learning program', list_programs_path, { data: { turbo_frame: 'modal' } } %>
+        <%= link_text_component t('programs.choose_learning_program'), list_programs_path, { data: { turbo_frame: 'modal' } } %>
       </div>
     <% end %>
 
