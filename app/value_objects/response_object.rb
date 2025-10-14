@@ -5,10 +5,6 @@ ResponseObject = Data.define(:status, :data) do
     status == :ok
   end
 
-  def error?
-    status == :error
-  end
-
   def self.ok(data)
     new(:ok, data)
   end
