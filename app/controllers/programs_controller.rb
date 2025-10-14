@@ -115,8 +115,13 @@ class ProgramsController < ApplicationController
     program = @learning_partner.programs.find(params[:program_id])
     service = CourseManagementService.instance
 
-    program.courses.each do |course|
-      service.enroll!(current_user, course)
+    begin
+      program.courses.each do |course|
+        service.enroll!(current_user, course)
+      end
+    rescue StandardError => e
+      Sentry.capture_message(e.message, level: :error)
+      flash.now[:alert] = "Failed to enroll in some courses: #{e.message}"
     end
 
     flash.now[:success] = I18n.t('programs.choose_success')
