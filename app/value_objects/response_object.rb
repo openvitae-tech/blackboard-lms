@@ -5,11 +5,11 @@ ResponseObject = Data.define(:status, :data) do
     status == :ok
   end
 
-  def self.ok(data)
+  def self.ok(data = nil)
     new(:ok, data)
   end
 
-  def self.error(data)
+  def self.error(data = nil)
     new(:error, data)
   end
 end
