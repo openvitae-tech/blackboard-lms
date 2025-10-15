@@ -1,0 +1,35 @@
+.textarea-active-state {
+  @apply text-letter-color-light border-slate-grey-50 placeholder-disabled-color focus:ring-primary;
+}
+
+.textarea-error-state {
+  @apply text-danger-dark border-danger focus:border-danger focus:ring-danger placeholder-danger-dark;
+}
+
+.textarea-disabled-state {
+  @apply border-disabled-color text-disabled-color placeholder-disabled-color
+}
+
+.textarea-component-container {
+  @apply w-full flex flex-col gap-1;
+}
+
+.textarea-component-base {
+  @apply w-full border;
+}
+
+.textarea-component-wrapper {
+  @apply bg-white flex items-center;
+}
+
+.textarea-component-md {
+  @apply px-3 py-2 rounded;
+}
+
+.textarea-component-lg {
+  @apply px-4 py-2 md:p-4 rounded-lg;
+}
+
+.textarea-support-text {
+  @apply px-3 flex justify-start items-start;
+}
