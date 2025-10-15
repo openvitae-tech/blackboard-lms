@@ -275,5 +275,15 @@ module ViewComponent
       render partial: 'view_components/inputs/input_text_component',
              locals: { input: }
     end
+
+    def input_radio_component(form: nil, name: nil, label: nil, checked: false, disabled: false, error: nil,
+                              html_options: {})
+      input = InputRadioComponent.new(
+        form:, name:, label:, checked:, disabled:, error:, html_options:
+      )
+
+      render partial: 'view_components/inputs/input_radio_component',
+             locals: { input: }
+    end
   end
 end

@@ -2,6 +2,29 @@
   <%= render "shared/components/back_button", back_link: ui_components_path %>
 </div>
 <div class="heading heading-medium">Inputs</div>
+
+<%= doc_section_component(title: "Radio button input") do %>
+  <form>
+    <%= input_radio_component(name: :gender, label: "Male", checked: true) %>
+    <%= input_radio_component(name: :gender, label: "Female" ) %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Radio button disabled") do %>
+  <form>
+    <%= input_radio_component(name: :gender, label: "Male", checked: true, disabled: true) %>
+    <%= input_radio_component(name: :gender, label: "Male", checked: false, disabled: true) %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Radio button error") do %>
+  <form>
+    <%= input_radio_component(name: :gender, label: "Veg", error: "True") %>
+    <%= input_radio_component(name: :gender, label: "Non-veg") %>
+  </form>
+<% end %>
+
+
 <ul class="my-6 flex flex-col gap-1">
   <li>
     <div class="heading heading-medium">Text input</div>
@@ -133,7 +156,6 @@
     </li>
     <li>
       <%= input_checkbox(form:, field_name: :remember_me, label: "Remember me") %>
-
     </li>
     <li>
       <%= input_dropdown(form:, field_name: :category_id, label: "Category", options: ["Option 1", "Option 2", "Option 3"]) %>
@@ -141,3 +163,4 @@
   </ul>
   <%= form.submit "Submit", disabled: true, class: "btn-primary" %>
 <% end %>
+

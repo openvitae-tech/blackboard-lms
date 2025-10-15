@@ -1,0 +1,13 @@
+<div class="group">
+  <label class="inline-block cursor-pointer <%= input.label_style %>">
+    <div class="flex gap-3 justify-center">
+      <div class="flex justify-center items-center">
+        <%= radio_button_tag(input.name, nil, value: input.value, **input.html_options) %>
+        <div class="w-5 h-5 flex justify-center items-center rounded-full border-2 <%= input.radio_circle_style %>">
+          <div class="w-3 h-3 inline-block rounded-full <%= input.radio_dot_style %>"></div>
+        </div>
+      </div>
+      <div class="main-text-lg-normal"><%= input.label %></div>
+    </div>
+  </label>
+</div>
