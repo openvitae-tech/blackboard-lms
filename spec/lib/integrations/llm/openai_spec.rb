@@ -1,0 +1,51 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe Integrations::Llm::Openai do
+  subject(:openai) { described_class.new(described_class::DEFAULT_MODEL) }
+
+  let(:prompt) { 'Explain Ruby meta-programming' }
+
+  before do
+    mock_response = double('RubyLLM::Response', content: 'Ruby meta-programming is powerful.') # rubocop:disable RSpec/VerifiedDoubles
+    mock_service = double( # rubocop:disable RSpec/VerifiedDoubles
+      'RubyLLM::Chat',
+      with_params: nil,
+      ask: mock_response
+    )
+
+    allow(RubyLLM).to receive(:chat).and_return(mock_service)
+    openai.model = described_class::DEFAULT_MODEL
+  end
+
+  describe 'constants' do
+    it 'has supported models' do
+      expect(described_class::SUPPORTED_MODELS).to eq(%w[gpt-4.1-nano gpt-4.1-mini gpt-5-mini whisper-1])
+    end
+
+    it 'has a default model' do
+      expect(described_class::DEFAULT_MODEL).to eq('gpt-4.1-nano')
+    end
+  end
+
+  describe '#chat' do
+    it 'returns response' do
+      result = openai.send(:ask, prompt)
+      expect(result.data).to eq('Ruby meta-programming is powerful.')
+    end
+
+    it 'raises error for unsupported model' do
+      expect do
+        Integrations::Llm::Api.llm_instance(provider: :openai, model: 'invalid-model')
+      end.to raise_error(ArgumentError,
+                         /Unsupported model 'invalid-model'. Allowed: gpt-4.1-nano, gpt-4.1-mini, gpt-5-mini, whisper-1/) # rubocop:disable Layout/LineLength
+    end
+
+    it 'raises error for unsupported provider' do
+      expect do
+        Integrations::Llm::Api.llm_instance(provider: :unknown)
+      end.to raise_error(ArgumentError, /Unsupported LLM provider: unknown./)
+    end
+  end
+end

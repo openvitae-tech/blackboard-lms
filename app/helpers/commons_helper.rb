@@ -11,4 +11,16 @@ module CommonsHelper
   def activate_users_count(learning_partner)
     learning_partner.payment_plan.total_seats - learning_partner.active_users_count
   end
+
+  def log_error_to_sentry(msg, response = nil)
+    extra = response ? { status: response.code, body: response.body } : {}
+    Sentry.capture_message(msg, level: :error, extra: extra)
+  end
+
+  def validate_llm_model(model, supported_models)
+    return unless model && supported_models.exclude?(model)
+
+    raise ArgumentError,
+          "Unsupported model '#{model}'. Allowed: #{supported_models.join(', ')}"
+  end
 end
