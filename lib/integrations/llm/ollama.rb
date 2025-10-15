@@ -3,6 +3,8 @@
 module Integrations
   module Llm
     class Ollama < Api
+      include CommonsHelper
+
       attr_accessor :model
 
       SUPPORTED_MODELS = %w[gemma3:latest].freeze
@@ -35,10 +37,6 @@ module Integrations
         log_error_to_sentry(e.message)
 
         ResponseObject.error(response.content)
-      end
-
-      def log_error_to_sentry(msg)
-        Sentry.capture_message(msg, level: :error)
       end
 
       def validate_model(model)

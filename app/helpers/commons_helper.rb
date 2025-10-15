@@ -11,4 +11,9 @@ module CommonsHelper
   def activate_users_count(learning_partner)
     learning_partner.payment_plan.total_seats - learning_partner.active_users_count
   end
+
+  def log_error_to_sentry(msg, response = nil)
+    extra = response ? { status: response.code, body: response.body } : {}
+    Sentry.capture_message(msg, level: :error, extra: extra)
+  end
 end

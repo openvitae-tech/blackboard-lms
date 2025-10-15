@@ -3,6 +3,8 @@
 module Integrations
   module Llm
     class Gemini < Api
+      include CommonsHelper
+
       attr_accessor :model
 
       SUPPORTED_MODELS = %w[gemini-2.5-pro gemini-2.5-flash gemini-2.5-flash-lite].freeze
@@ -35,10 +37,6 @@ module Integrations
         log_error_to_sentry(e.message)
 
         ResponseObject.error(e.message)
-      end
-
-      def log_error_to_sentry(msg)
-        Sentry.capture_message(msg, level: :error)
       end
 
       def validate_model(model)

@@ -3,6 +3,8 @@
 module Integrations
   module Llm
     class Openai < Api
+      include CommonsHelper
+
       attr_accessor :model
 
       SUPPORTED_MODELS = %w[gpt-4.1-nano gpt-4.1-mini	gpt-5-mini whisper-1].freeze
@@ -35,10 +37,6 @@ module Integrations
         log_error_to_sentry(e.message)
 
         ResponseObject.error(e.message)
-      end
-
-      def log_error_to_sentry(msg)
-        Sentry.capture_message(msg, level: :error)
       end
 
       def validate_model(model)
