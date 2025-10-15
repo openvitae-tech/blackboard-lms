@@ -38,7 +38,7 @@ RSpec.describe Integrations::Llm::Ollama do
     it 'raises error for unsupported model' do
       expect do
         Integrations::Llm::Api.llm_instance(provider: :ollama, model: 'invalid-model')
-      end.to raise_error(ArgumentError, /Unsupported model 'invalid-model' for ollama. Allowed: gemma3:latest/)
+      end.to raise_error(ArgumentError, /Unsupported model 'invalid-model'. Allowed: gemma3:latest/)
     end
 
     it 'raises error for unsupported provider' do

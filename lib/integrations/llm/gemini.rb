@@ -13,7 +13,7 @@ module Integrations
       def initialize(model)
         super()
 
-        validate_model(model)
+        validate_llm_model(model, SUPPORTED_MODELS)
         @model = model || DEFAULT_MODEL
       end
 
@@ -37,13 +37,6 @@ module Integrations
         log_error_to_sentry(e.message)
 
         ResponseObject.error(e.message)
-      end
-
-      def validate_model(model)
-        return unless model && SUPPORTED_MODELS.exclude?(model)
-
-        raise ArgumentError,
-              "Unsupported model '#{model}' for gemini. Allowed: #{SUPPORTED_MODELS.join(', ')}"
       end
     end
   end

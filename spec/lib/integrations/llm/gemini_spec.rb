@@ -40,7 +40,7 @@ RSpec.describe Integrations::Llm::Gemini do
       expect do
         Integrations::Llm::Api.llm_instance(provider: :gemini, model: 'invalid-model')
       end.to raise_error(ArgumentError,
-                         /Unsupported model 'invalid-model' for gemini. Allowed: gemini-2.5-pro, gemini-2.5-flash, gemini-2.5-flash-lite/) # rubocop:disable Layout/LineLength
+                         /Unsupported model 'invalid-model'. Allowed: gemini-2.5-pro, gemini-2.5-flash, gemini-2.5-flash-lite/) # rubocop:disable Layout/LineLength
     end
 
     it 'raises error for unsupported provider' do

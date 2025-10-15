@@ -39,7 +39,7 @@ RSpec.describe Integrations::Llm::Openai do
       expect do
         Integrations::Llm::Api.llm_instance(provider: :openai, model: 'invalid-model')
       end.to raise_error(ArgumentError,
-                         /Unsupported model 'invalid-model' for openai. Allowed: gpt-4.1-nano, gpt-4.1-mini, gpt-5-mini, whisper-1/) # rubocop:disable Layout/LineLength
+                         /Unsupported model 'invalid-model'. Allowed: gpt-4.1-nano, gpt-4.1-mini, gpt-5-mini, whisper-1/) # rubocop:disable Layout/LineLength
     end
 
     it 'raises error for unsupported provider' do

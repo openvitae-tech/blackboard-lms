@@ -16,4 +16,11 @@ module CommonsHelper
     extra = response ? { status: response.code, body: response.body } : {}
     Sentry.capture_message(msg, level: :error, extra: extra)
   end
+
+  def validate_llm_model(model, supported_models)
+    return unless model && supported_models.exclude?(model)
+
+    raise ArgumentError,
+          "Unsupported model '#{model}'. Allowed: #{supported_models.join(', ')}"
+  end
 end
