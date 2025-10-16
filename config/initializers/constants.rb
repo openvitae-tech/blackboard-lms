@@ -33,5 +33,11 @@ AVAILABLE_COUNTRIES = {
     value: 'uae',
     code: '+971',
     iso: 'AE'
+  },
+  philippines: {
+    label: 'Philippines',
+    value: 'philippines',
+    code: '+63',
+    iso: 'PH'
   }
 }.with_indifferent_access.freeze
