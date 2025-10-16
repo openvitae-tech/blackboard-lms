@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module UiHelper
+  def arrange_tags(left_tag, right_tag, position)
+    ordered = position == 'left' ? [left_tag, right_tag] : [right_tag, left_tag]
+    safe_join(ordered.compact)
+  end
+
   include ViewComponent::TypographyComponent
   include ViewComponent::IconComponent
   include ViewComponent::ButtonComponent

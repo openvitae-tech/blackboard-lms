@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module ViewComponent
+  # To be used only within a component class such as ButtonComponent
   module ComponentHelper
     def class_list(base, *styles)
       base.concat(styles.compact)
@@ -12,11 +13,6 @@ module ViewComponent
 
       errors = form&.object&.errors
       errors&.[](name)&.first
-    end
-
-    def arrange_tags(left_tag, right_tag, position)
-      ordered = position == 'left' ? [left_tag, right_tag] : [right_tag, left_tag]
-      safe_join(ordered.compact)
     end
   end
 end
