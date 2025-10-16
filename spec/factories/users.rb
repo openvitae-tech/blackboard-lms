@@ -7,8 +7,7 @@ FactoryBot.define do
     password { 'password' }
     password_confirmation { 'password' }
     confirmed_at { Time.zone.now }
-    # numbers starting with 11 will be considered as test numbers
-    phone { "11#{Faker::Number.number(digits: 8)}" }
+    phone { "#{rand(6..9)}#{rand.to_s[2..10]}" }
     country_code { AVAILABLE_COUNTRIES[:india][:code] }
     state { 'active' }
 

@@ -198,14 +198,17 @@ class User < ApplicationRecord
     errors.add(:communication_channels, "contains invalid channels: #{invalid.join(', ')}") if invalid.any?
   end
 
+  def valid_phone?(phone, country)
+    Phonelib.valid_for_country? phone, country
+  end
+
   def validate_phone_number
     return if phone.blank?
 
-    case country_code
-    when AVAILABLE_COUNTRIES[:india][:code]
-      errors.add(:phone, 'must be a valid Indian number') unless phone.match?(/\A\d{10}\z/)
-    when AVAILABLE_COUNTRIES[:uae][:code]
-      errors.add(:phone, 'must be a valid UAE number') unless phone.match?(/\A\d{9}\z/)
+    country = AVAILABLE_COUNTRIES.values.find { |country| country[:code] == country_code }
+
+    if country.present?
+      errors.add(:base, "Enter a valid phone number for #{country[:label]}") unless valid_phone?(phone, country[:iso])
     else
       errors.add(:base, 'Unsupported country')
     end
