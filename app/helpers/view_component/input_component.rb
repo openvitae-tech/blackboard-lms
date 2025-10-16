@@ -2,6 +2,7 @@
 
 module ViewComponent
   module InputComponent
+    include ViewComponent::ComponentHelper
     def input_field(form: nil, field_name: nil, label: nil,
                     placeholder: nil, width: 'w-56', height: nil, left_icon: nil, right_icon: nil, type: 'text',
                     options: [], value: nil, rows: '5', option: nil, html_options: {})
@@ -247,11 +248,6 @@ module ViewComponent
       end
     end
 
-    def input_with_icon(icon, input_tag, position)
-      ordered = position == 'left' ? [icon, input_tag] : [input_tag, icon]
-      safe_join(ordered.compact)
-    end
-
     def input_text_component(
       form: nil,
       name: nil,
@@ -273,6 +269,17 @@ module ViewComponent
       )
 
       render partial: 'view_components/inputs/input_text_component',
+             locals: { input: }
+    end
+
+    def input_radio_component(form: nil, name: nil, label: nil, value: nil, disabled: false, error: nil,
+                              label_position: 'right',
+                              html_options: {})
+      input = InputRadioComponent.new(
+        form:, name:, label:, value:, disabled:, error:, label_position:, html_options:
+      )
+
+      render partial: 'view_components/inputs/input_radio_component',
              locals: { input: }
     end
   end
