@@ -5,29 +5,26 @@ module CommunicationChannels
     def perform(template, mobile_number, country_code, variables_values)
       return if template.blank? || mobile_number.blank?
 
-      config = {
-        AVAILABLE_COUNTRIES[:india][:code] => {
-          channel: CommunicationChannels::Sms::Fast2SmsMessagingChannel,
-          recipient_format: ->(_, mobile_number) { mobile_number }
-        },
-        AVAILABLE_COUNTRIES[:uae][:code] => {
-          channel: CommunicationChannels::Sms::Msg91MessagingChannel,
-          recipient_format: ->(country_code, mobile_number) { "#{country_code}#{mobile_number}" }
-        },
-        AVAILABLE_COUNTRIES[:philippines][:code] => {
-          channel: CommunicationChannels::Sms::Msg91MessagingChannel,
-          recipient_format: ->(country_code, mobile_number) { "#{country_code}#{mobile_number}" }
-        }
-      }
+      country_config = AVAILABLE_COUNTRIES.values.find { |c| c[:code] == country_code }
+      return if country_config.blank?
 
-      country_config = config[country_code]
-      return unless country_config
+      sms_channel_class, recipient = load_channel_and_recipient(country_config[:sms_channel], mobile_number,
+                                                                country_code)
 
-      sms_channel = country_config[:channel].new
-      recipient = country_config[:recipient_format].call(country_code, mobile_number)
-
+      sms_channel = sms_channel_class.new
       template_id = sms_channel.get_template_id(template)
       sms_channel.send_message(recipient, variables_values, template_id)
+    end
+
+    private
+
+    def load_channel_and_recipient(channel, mobile_number, country_code)
+      case channel
+      when 'fast2sms'
+        [CommunicationChannels::Sms::Fast2SmsMessagingChannel, mobile_number]
+      when 'msg91'
+        [CommunicationChannels::Sms::Msg91MessagingChannel, "#{country_code}#{mobile_number}"]
+      end
     end
   end
 end

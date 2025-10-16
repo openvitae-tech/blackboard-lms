@@ -26,18 +26,21 @@ AVAILABLE_COUNTRIES = {
     label: 'India',
     value: 'india',
     code: '+91',
-    iso: 'IN'
+    iso: 'IN',
+    sms_channel: 'fast2sms'
   },
   uae: {
     label: 'UAE',
     value: 'uae',
     code: '+971',
-    iso: 'AE'
+    iso: 'AE',
+    sms_channel: 'msg91'
   },
   philippines: {
     label: 'Philippines',
     value: 'philippines',
     code: '+63',
-    iso: 'PH'
+    iso: 'PH',
+    sms_channel: 'msg91'
   }
 }.with_indifferent_access.freeze
