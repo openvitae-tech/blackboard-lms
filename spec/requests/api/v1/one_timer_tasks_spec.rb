@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::OneTimerTasksController', type: :request do
-  let(:task) { 'generate_certificate_for_completed_courses' }
+  let(:task) { :upload_from_s3_to_vimeo }
   let(:mock_rake_task) { instance_double(Rake::Task, invoke: true) }
   let(:auth_token) { Rails.application.credentials[:api_token] }
 
@@ -26,7 +26,7 @@ RSpec.describe 'Api::V1::OneTimerTasksController', type: :request do
       expect(json['message']).to eq('Tasks processed')
       expect(json['details']).to include(
         a_hash_including(
-          'task' => task,
+          'task' => task.to_s,
           'status' => 'Executed'
         )
       )
@@ -48,7 +48,7 @@ RSpec.describe 'Api::V1::OneTimerTasksController', type: :request do
         body = response.parsed_body
         details = body['details'].first
 
-        expect(details['task']).to eq(task)
+        expect(details['task']).to eq(task.to_s)
         expect(details['status']).to eq('Task has been (skipped) as it was recently executed')
         expect(mock_rake_task).not_to have_received(:invoke)
       end
