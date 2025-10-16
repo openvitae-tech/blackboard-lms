@@ -276,10 +276,11 @@ module ViewComponent
              locals: { input: }
     end
 
-    def input_radio_component(form: nil, name: nil, label: nil, checked: false, disabled: false, error: nil,
+    def input_radio_component(form: nil, name: nil, label: nil, value: nil, disabled: false, error: nil,
+                              label_position: 'right',
                               html_options: {})
       input = InputRadioComponent.new(
-        form:, name:, label:, checked:, disabled:, error:, html_options:
+        form:, name:, label:, value:, disabled:, error:, label_position:, html_options:
       )
 
       render partial: 'view_components/inputs/input_radio_component',

@@ -1,0 +1,43 @@
+<%= h2_component(text: "Radio buttons") %>
+
+<%= doc_section_component(title: "Radio button input (Old)") do %>
+  <form>
+    <%= input_radio(label: "E", option: "English") %>
+    <%= input_radio(label: "M", option: "Malayalam") %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Radio button input") do %>
+  <form>
+    <%= input_radio_component(name: :gender, label: "Male") %>
+    <%= input_radio_component(name: :gender, label: "Female" ) %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Radio button input with label on left") do %>
+  <form>
+    <%= input_radio_component(name: :gender, label: "Male", label_position: "left") %>
+    <%= input_radio_component(name: :gender, label: "Female", label_position: "left") %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Radio button disabled") do %>
+  <form>
+    <%= input_radio_component(name: :gender, label: "Male", disabled: true) %>
+    <%= input_radio_component(name: :gender, label: "Male", disabled: true) %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Radio button error") do %>
+  <form>
+    <%= input_radio_component(name: :gender, label: "Veg", error: "True", value: 'Veg') %>
+    <%= input_radio_component(name: :gender, label: "Non-veg", value: 'Non-Veg') %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Radio button error with form attribute") do %>
+  <%= form_with url: "/", method: "GET" do |f| %>
+    <%= input_radio_component(form: f, name: :choice, label: "Veg", value: 'Veg') %>
+    <%= input_radio_component(form: f, name: :choice, label: "Non-veg", value: 'Non') %>
+  <% end %>
+<% end %>

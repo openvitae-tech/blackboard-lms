@@ -1,121 +1,11 @@
 <div class="my-6">
   <%= render "shared/components/back_button", back_link: ui_components_path %>
 </div>
-<div class="heading heading-medium">Inputs</div>
 
-<%= doc_section_component(title: "Radio button input") do %>
-  <form>
-    <%= input_radio_component(name: :gender, label: "Male", checked: true) %>
-    <%= input_radio_component(name: :gender, label: "Female" ) %>
-  </form>
-<% end %>
+<%= render "ui/inputs/text_field" %>
+<%= render "ui/inputs/radio_button" %>
 
-<%= doc_section_component(title: "Radio button disabled") do %>
-  <form>
-    <%= input_radio_component(name: :gender, label: "Male", checked: true, disabled: true) %>
-    <%= input_radio_component(name: :gender, label: "Male", checked: false, disabled: true) %>
-  </form>
-<% end %>
-
-<%= doc_section_component(title: "Radio button error") do %>
-  <form>
-    <%= input_radio_component(name: :gender, label: "Veg", error: "True") %>
-    <%= input_radio_component(name: :gender, label: "Non-veg") %>
-  </form>
-<% end %>
-
-
-<ul class="my-6 flex flex-col gap-1">
-  <li>
-    <div class="heading heading-medium">Text input</div>
-    <%= input_field(label: "Text Input", placeholder: "Enter text") %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input without label and subtext") do %>
-      <%= input_text_component(name: 'name1', placeholder: "Enter your name") %>
-    <% end %>
-  </li>
-
-
-  <li>
-    <%= doc_section_component(title: "Text input") do %>
-      <%= input_text_component(name: 'name1', label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar') %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Email input") do %>
-      <%= input_text_component(name: 'email', label: "Email", type: 'email', placeholder: "Enter your email", subtext: 'Example: deepak@example.com') %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Numeric input") do %>
-      <%= input_text_component(name: 'age', label: "Age", type: 'number', placeholder: "Enter your age") %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Password input") do %>
-      <%= input_text_component(name: 'password', label: "Password", type: 'password', placeholder: "Enter your password") %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input large") do %>
-      <%= input_text_component(name: 'name2', label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', size: 'lg') %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input with right icon") do %>
-      <%= input_text_component(label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', icon_name: 'user-circle') %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input with right icon large") do %>
-      <%= input_text_component(label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', icon_name: 'user-circle', size: 'lg') %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input with left icon") do %>
-      <%= input_text_component(label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', icon_name: 'user-circle', icon_position: 'left') %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input with left icon large") do %>
-      <%= input_text_component(label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', icon_name: 'user-circle', icon_position: 'left', size: 'lg') %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input with error state") do %>
-      <%= input_text_component(label: "Name", placeholder: "Enter your name", value: 'Deepak Kumar', subtext: 'Example: Deepak Kumar', error: "Incorrect name", icon_name: 'user-circle') %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input with error state") do %>
-      <%= input_text_component(label: "Name", placeholder: "Enter your name", value: 'Deepak Kumar', subtext: 'Example: Deepak Kumar', error: "Incorrect name", icon_name: 'user-circle', size: 'lg') %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input with disabled state") do %>
-      <%= input_text_component(label: "Name", placeholder: "Enter your name", value: 'Deepak Kumar', subtext: 'Example: Deepak Kumar', error: "Incorrect name", icon_name: 'user-circle', disabled: true) %>
-    <% end %>
-  </li>
-
-  <li>
-    <%= doc_section_component(title: "Text input with disabled state") do %>
-      <%= input_text_component(label: "Name", placeholder: "Enter your name", value: 'Deepak Kumar', subtext: 'Example: Deepak Kumar', error: "Incorrect name", icon_name: 'user-circle', disabled: true, size: 'lg') %>
-    <% end %>
-  </li>
-
+<ul>
   <li>
     <div class="heading heading-medium">Text input with icon</div>
     <%= input_field(label: "Text Input", placeholder: "Search here", left_icon: "magnifying-glass",) %>
@@ -161,6 +51,5 @@
       <%= input_dropdown(form:, field_name: :category_id, label: "Category", options: ["Option 1", "Option 2", "Option 3"]) %>
     </li>
   </ul>
-  <%= form.submit "Submit", disabled: true, class: "btn-primary" %>
 <% end %>
 

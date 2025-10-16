@@ -5,13 +5,14 @@ module ViewComponent
     class InputRadioComponent
       include ViewComponent::ComponentHelper
 
-      attr_accessor :form, :name, :label, :value, :disabled, :error, :html_options
+      attr_accessor :form, :name, :label, :value, :disabled, :error, :label_position, :html_options
 
-      def initialize(form:, name:, label:, checked:, disabled:, error:, html_options:)
+      def initialize(form:, name:, label:, value:, disabled:, error:, label_position:, html_options:)
         self.form = form
         self.name = name
         self.label = label
-        self.value = checked ? '1' : '0'
+        self.label_position = label_position
+        self.value = value
         self.html_options = html_options
         self.disabled = disabled
         self.html_options[:disabled] = disabled
@@ -35,7 +36,7 @@ module ViewComponent
         elsif error
           'border-danger-dark group-hover:border-danger'
         else
-          'border-letter-color group-hover:border-primary-light peer-checked:border-primary-light'
+          'border-letter-color group-hover:border-primary-light peer-checked:border-primary'
         end
       end
 
