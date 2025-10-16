@@ -1,12 +1,52 @@
 <div class="my-6">
   <%= render "shared/components/back_button", back_link: ui_components_path %>
 </div>
-<div class="heading heading-medium">Dropdown</div>
+<%= h3_component(text: "Dropdown Component") %>
 
 <%= doc_section_component(title: "Dropdown medium size") do %>
-  <%= form_with url: "#", method: :post do |form| %>
+  <%= dropdown_component(
+      name: :category_id,
+      label: "Category",
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      support_text: "Please select a category"
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Dropdown large size") do %>
+  <%= dropdown_component(
+      name: :category_id,
+      label: "Category",
+      size: 'lg',
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      support_text: "Please select a category"
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Dropdown error") do %>
+  <%= dropdown_component(
+      name: :category_id,
+      label: "Category",
+      error:"some error",
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      support_text: "Please select a category"
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Dropdown disabled") do %>
+  <%= dropdown_component(
+      name: :category_id,
+      label: "Category",
+      disabled:true,
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      support_text: "Please select a category"
+    ) %>
+<% end %>
+
+<%= h3_component(text: "Form with Dropdown") %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Dropdown medium size") do %>
     <%= dropdown_component(
-        form: form,
         name: :category_id,
         label: "Category",
         options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
@@ -15,9 +55,8 @@
   <% end %>
 <% end %>
 
-<%= doc_section_component(title: "Dropdown large size") do %>
-  <%= form_with url: "#", method: :post do |form| %>
-
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Dropdown large size") do %>
     <%= dropdown_component(
         form: form,
         name: :category_id,
@@ -29,9 +68,8 @@
   <% end %>
 <% end %>
 
-<%= doc_section_component(title: "Dropdown error") do %>
-  <%= form_with url: "#", method: :post do |form| %>
-
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Dropdown error") do %>
    <%= dropdown_component(
         form: form,
         name: :category_id,
@@ -43,9 +81,8 @@
   <% end %>
 <% end %>
 
-<%= doc_section_component(title: "Dropdown disabled") do %>
-  <%= form_with url: "#", method: :post do |form| %>
-
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Dropdown disabled") do %>
    <%= dropdown_component(
         form: form,
         name: :category_id,
