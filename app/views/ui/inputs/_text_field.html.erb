@@ -1,0 +1,61 @@
+<%= h2_component(text: "Text input") %>
+
+<%= doc_section_component(title: "Old Text input") do %>
+  <%= input_field(label: "Text Input", placeholder: "Enter text") %>
+<% end %>
+
+<%= doc_section_component(title: "Text input without label and subtext") do %>
+  <%= input_text_component(name: 'name1', placeholder: "Enter your name") %>
+<% end %>
+
+<%= doc_section_component(title: "Text input") do %>
+  <%= input_text_component(name: 'name1', label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar') %>
+<% end %>
+
+<%= doc_section_component(title: "Email input") do %>
+  <%= input_text_component(name: 'email', label: "Email", type: 'email', placeholder: "Enter your email", subtext: 'Example: deepak@example.com') %>
+<% end %>
+
+<%= doc_section_component(title: "Numeric input") do %>
+  <%= input_text_component(name: 'age', label: "Age", type: 'number', placeholder: "Enter your age") %>
+<% end %>
+
+<%= doc_section_component(title: "Password input") do %>
+  <%= input_text_component(name: 'password', label: "Password", type: 'password', placeholder: "Enter your password") %>
+<% end %>
+
+<%= doc_section_component(title: "Text input large") do %>
+  <%= input_text_component(name: 'name2', label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', size: 'lg') %>
+<% end %>
+
+<%= doc_section_component(title: "Text input with right icon") do %>
+  <%= input_text_component(label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', icon_name: 'user-circle') %>
+<% end %>
+
+<%= doc_section_component(title: "Text input with right icon large") do %>
+  <%= input_text_component(label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', icon_name: 'user-circle', size: 'lg') %>
+<% end %>
+
+<%= doc_section_component(title: "Text input with left icon") do %>
+  <%= input_text_component(label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', icon_name: 'user-circle', icon_position: 'left') %>
+<% end %>
+
+<%= doc_section_component(title: "Text input with left icon large") do %>
+  <%= input_text_component(label: "Name", placeholder: "Enter your name", subtext: 'Example: Deepak Kumar', icon_name: 'user-circle', icon_position: 'left', size: 'lg') %>
+<% end %>
+
+<%= doc_section_component(title: "Text input with error state") do %>
+  <%= input_text_component(label: "Name", placeholder: "Enter your name", value: 'Deepak Kumar', subtext: 'Example: Deepak Kumar', error: "Incorrect name", icon_name: 'user-circle') %>
+<% end %>
+
+<%= doc_section_component(title: "Text input with error state") do %>
+  <%= input_text_component(label: "Name", placeholder: "Enter your name", value: 'Deepak Kumar', subtext: 'Example: Deepak Kumar', error: "Incorrect name", icon_name: 'user-circle', size: 'lg') %>
+<% end %>
+
+<%= doc_section_component(title: "Text input with disabled state") do %>
+  <%= input_text_component(label: "Name", placeholder: "Enter your name", value: 'Deepak Kumar', subtext: 'Example: Deepak Kumar', error: "Incorrect name", icon_name: 'user-circle', disabled: true) %>
+<% end %>
+
+<%= doc_section_component(title: "Text input with disabled state") do %>
+  <%= input_text_component(label: "Name", placeholder: "Enter your name", value: 'Deepak Kumar', subtext: 'Example: Deepak Kumar', error: "Incorrect name", icon_name: 'user-circle', disabled: true, size: 'lg') %>
+<% end %>
