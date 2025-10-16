@@ -13,5 +13,10 @@ module ViewComponent
       errors = form&.object&.errors
       errors&.[](name)&.first
     end
+
+    def arrange_tags(left_tag, right_tag, position)
+      ordered = position == 'left' ? [left_tag, right_tag] : [right_tag, left_tag]
+      safe_join(ordered.compact)
+    end
   end
 end

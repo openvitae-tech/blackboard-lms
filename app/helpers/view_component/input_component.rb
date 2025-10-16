@@ -2,6 +2,7 @@
 
 module ViewComponent
   module InputComponent
+    include ViewComponent::ComponentHelper
     def input_field(form: nil, field_name: nil, label: nil,
                     placeholder: nil, width: 'w-56', height: nil, left_icon: nil, right_icon: nil, type: 'text',
                     options: [], value: nil, rows: '5', option: nil, html_options: {})
@@ -245,11 +246,6 @@ module ViewComponent
         size_style = SUBTEXT_SIZE[size.to_sym]
         class_list(base, size_style, color_style)
       end
-    end
-
-    def input_with_icon(icon, input_tag, position)
-      ordered = position == 'left' ? [icon, input_tag] : [input_tag, icon]
-      safe_join(ordered.compact)
     end
 
     def input_text_component(
