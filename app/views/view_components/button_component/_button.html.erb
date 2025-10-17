@@ -6,7 +6,7 @@
                 button.sizing_styles].join(' ')) do %>
     <% content = content_tag(:div, button.text, class: button.text_styles) %>
     <% icon = icon(button.icon_name, css: button.icon_styles) if button.icon_name.present? %>
-    <%= label_with_icon(icon, content, button.icon_position) %>
+    <%= arrange_tags(icon, content, button.icon_position) %>
   <% end %>
 <% end %>
 
