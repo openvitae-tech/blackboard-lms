@@ -23,10 +23,10 @@ module ViewComponent
       }.freeze
 
       attr_accessor :form, :name, :label, :options, :value, :size,
-                    :support_text, :error, :disabled, :html_options, :placeholder
+                    :support_text, :error, :disabled, :html_options, :prompt
 
       def initialize(form:, name:, label:, options:, value:, size:, support_text:, error:, disabled:, html_options:,
-                     placeholder:)
+                     prompt:)
         raise "Incorrect dropdown size: #{size}" unless DROPDOWN_SIZES.include?(size)
 
         error_message = resolve_error(form, name, error)
@@ -41,18 +41,10 @@ module ViewComponent
         self.error = error_message
         self.disabled = disabled
         self.html_options = html_options
-        self.placeholder = placeholder
+        self.prompt = prompt
 
         self.html_options[:disabled] = true if disabled
         self.html_options[:class] = dropdown_style
-      end
-
-      def select_options
-        if placeholder.present?
-          [[placeholder, '']] + options
-        else
-          options
-        end
       end
 
       def dropdown_style
@@ -115,7 +107,7 @@ module ViewComponent
       error: nil,
       disabled: false,
       html_options: {},
-      placeholder: nil
+      prompt: nil
     )
       dropdown = DropdownComponent.new(
         form:,
@@ -128,7 +120,7 @@ module ViewComponent
         error:,
         disabled:,
         html_options:,
-        placeholder:
+        prompt:
       )
 
       render partial: 'view_components/dropdown_component/dropdown',
