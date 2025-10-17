@@ -31,7 +31,7 @@ RSpec.describe MobileNumber do
 
       it 'is not valid' do
         expect(subject).not_to be_valid
-        expect(subject.errors[:value].to_sentence).to eq('is not a valid Indian number')
+        expect(subject.errors.full_messages.to_sentence).to eq('Enter a valid phone number for India')
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe MobileNumber do
 
       it 'is not valid' do
         expect(subject).not_to be_valid
-        expect(subject.errors[:value].to_sentence).to eq('is not a valid Indian number')
+        expect(subject.errors.full_messages.to_sentence).to eq('Enter a valid phone number for India')
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe MobileNumber do
 
       it 'is not valid' do
         expect(subject).not_to be_valid
-        expect(subject.errors[:value].to_sentence).to eq('is not a valid UAE number')
+        expect(subject.errors.full_messages.to_sentence).to eq('Enter a valid phone number for UAE')
       end
     end
   end

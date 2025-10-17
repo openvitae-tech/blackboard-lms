@@ -11,12 +11,15 @@ class MobileNumber
 
   private
 
+  def valid_phone?(phone, country)
+    Phonelib.valid_for_country? phone, country
+  end
+
   def validate_phone_number
-    case country_code
-    when AVAILABLE_COUNTRIES[:india][:code]
-      errors.add(:value, 'is not a valid Indian number') unless value.match?(/\A\d{10}\z/)
-    when AVAILABLE_COUNTRIES[:uae][:code]
-      errors.add(:value, 'is not a valid UAE number') unless value.match?(/\A\d{9}\z/)
+    country = AVAILABLE_COUNTRIES.values.find { |country| country[:code] == country_code }
+
+    if country.present?
+      errors.add(:base, "Enter a valid phone number for #{country[:label]}") unless valid_phone?(value, country[:iso])
     else
       errors.add(:base, 'Unsupported country')
     end

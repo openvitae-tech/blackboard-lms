@@ -147,7 +147,7 @@ RSpec.describe User, type: :model do
     it 'raise error if phone number is invalid indian number' do
       user_one.phone = '12345678'
       expect(user_one).not_to be_valid
-      expect(user_one.errors.full_messages.to_sentence).to eq('Phone must be a valid Indian number')
+      expect(user_one.errors.full_messages.to_sentence).to eq('Enter a valid phone number for India')
     end
 
     it 'raise error if phone number is invalid UAE number' do
@@ -155,7 +155,15 @@ RSpec.describe User, type: :model do
 
       user.phone = '5012345672'
       expect(user).not_to be_valid
-      expect(user.errors.full_messages.to_sentence).to eq('Phone must be a valid UAE number')
+      expect(user.errors.full_messages.to_sentence).to eq('Enter a valid phone number for UAE')
+    end
+
+    it 'raise error if phone number is invalid Philippines number' do
+      user = create :user, :learner, country_code: '+63', phone: '9123456789'
+
+      user.phone = '1234567891'
+      expect(user).not_to be_valid
+      expect(user.errors.full_messages.to_sentence).to eq('Enter a valid phone number for Philippines')
     end
 
     it 'raise error fir unsupported country' do
