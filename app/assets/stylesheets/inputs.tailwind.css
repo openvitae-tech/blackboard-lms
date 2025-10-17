@@ -23,7 +23,7 @@
 }
 
 .input-text-div-base {
-    @apply w-full flex gap-1 border focus-within:border-2;
+    @apply w-full flex gap-1 border focus-within:ring-2 focus-within:border-0;
 }
 
 .input-text-div-base-md {
