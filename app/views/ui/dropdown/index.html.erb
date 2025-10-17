@@ -3,11 +3,37 @@
 </div>
 <%= h3_component(text: "Dropdown Component") %>
 
+<%= doc_section_component(title: "Dropdown without label") do %>
+  <%= dropdown_component(
+      name: :category_id,
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      placeholder: "Select Category",
+      support_text: "Please select a category"
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Dropdown without support text") do %>
+  <%= dropdown_component(
+      name: :category_id,
+      label: "Category",
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      placeholder: "Select Category"
+      ) %>
+<% end %>
+<%= doc_section_component(title: "Dropdown without label and support text") do %>
+  <%= dropdown_component(
+      name: :category_id,
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      placeholder: "Select Category"
+      ) %>
+<% end %>
+
 <%= doc_section_component(title: "Dropdown medium size") do %>
   <%= dropdown_component(
       name: :category_id,
       label: "Category",
       options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      placeholder: "Select Category",
       support_text: "Please select a category"
       ) %>
 <% end %>
@@ -50,6 +76,7 @@
         name: :category_id,
         label: "Category",
         options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+        placeholder: "Select Category",
         support_text: "Please select a category"
       ) %>
   <% end %>

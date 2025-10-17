@@ -1,10 +1,10 @@
 <% if dropdown.form.present? %>
   <%= dropdown.form.select dropdown.name,
-      options_for_select([["Select an option", ""]] + dropdown.options, dropdown.value),
+      options_for_select(dropdown.select_options, dropdown.value),
       {},
       dropdown.html_options %>
 <% else %>
   <%= select_tag dropdown.name,
-      options_for_select([["Select an option", ""]] + dropdown.options, dropdown.value),
+      options_for_select(dropdown.select_options, dropdown.value),
       dropdown.html_options %>
 <% end %>
