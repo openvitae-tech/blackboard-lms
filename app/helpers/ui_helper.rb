@@ -16,4 +16,5 @@ module UiHelper
   include ViewComponent::InputTextareaComponent
   include ViewComponent::DocSectionComponent
   include ViewComponent::TextareaComponent
+  include ViewComponent::DropdownComponent
 end
