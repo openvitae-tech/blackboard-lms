@@ -25,7 +25,8 @@ module ViewComponent
       attr_accessor :form, :name, :label, :options, :value, :size,
                     :support_text, :error, :disabled, :html_options, :placeholder
 
-      def initialize(form:, name:, label:, options:, value:, size:, support_text:, error:, disabled:, html_options:, placeholder:)
+      def initialize(form:, name:, label:, options:, value:, size:, support_text:, error:, disabled:, html_options:,
+                     placeholder:)
         raise "Incorrect dropdown size: #{size}" unless DROPDOWN_SIZES.include?(size)
 
         error_message = resolve_error(form, name, error)
@@ -47,13 +48,12 @@ module ViewComponent
       end
 
       def select_options
-         if placeholder.present?
-           [[placeholder, ""]] + options
-         else
-           options
-         end
+        if placeholder.present?
+          [[placeholder, '']] + options
+        else
+          options
+        end
       end
-
 
       def dropdown_style
         base = ['dropdown-component-base']
