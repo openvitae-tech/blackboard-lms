@@ -19,8 +19,8 @@ module ViewComponent
         lg: 'mobile-code-lg'
       }.freeze
 
-      attr_accessor :form, :code_name, :name, :label, :type, :code_value, :value, :subtext, :error, :icon_name, :icon_position, :disabled, :size,
-                    :square, :html_options
+      attr_accessor :form, :code_name, :name, :label, :type, :code_value, :value, :subtext, :error,
+                    :icon_name, :icon_position, :disabled, :size, :html_options
 
       def initialize(form:, name:, label:, type:, placeholder:, code_value:, value:, subtext:, error:, icon_name:, icon_position:,
                      disabled:, size:, html_options:)
@@ -39,9 +39,9 @@ module ViewComponent
         color_style = if disabled
                         'border-disabled-color'
                       elsif error.present?
-                        'border-danger focus-within:ring-danger-dark focus-within:ring-2 focus-within:border-0'
+                        'border-danger focus-within:ring-danger-dark'
                       elsif code_selectable?
-                        'border-slate-grey-50 focus-within:ring-primary focus-within:ring-2 focus-within:border-0'
+                        'border-slate-grey-50 focus-within:ring-primary'
                       else
                         'border-slate-grey-50'
                       end
@@ -69,8 +69,8 @@ module ViewComponent
       html_options: {}
     )
       input = InputMobileComponent.new(
-        form:, name:, label:, type: 'number', placeholder:, code_value: country_code, value:, subtext:, error:, icon_name:, icon_position:, disabled:,
-        size:, html_options:
+        form:, name:, label:, type: 'number', placeholder:, code_value: country_code, value:, subtext:, error:,
+        icon_name:, icon_position:, disabled:, size:, html_options:
       )
 
       render partial: 'view_components/inputs/input_mobile_component',
