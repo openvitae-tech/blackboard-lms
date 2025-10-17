@@ -195,9 +195,9 @@ module ViewComponent
         color_style = if disabled
                         'border-disabled-color'
                       elsif error.present?
-                        'border-danger focus-within:border-danger-dark'
+                        'border-danger focus-within:border-danger-dark focus-within:ring-danger-dark'
                       else
-                        'border-slate-grey-50 focus-within:border-primary'
+                        'border-slate-grey-50 focus-within:border-primary focus-within:ring-primary'
                       end
 
         size_style = INPUT_WRAPPER_STYLES[size.to_sym]
