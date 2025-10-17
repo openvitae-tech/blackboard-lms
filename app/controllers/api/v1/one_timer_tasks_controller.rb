@@ -5,7 +5,7 @@ module Api
     class OneTimerTasksController < ApiController
       before_action :load_rake_tasks
 
-      TASKS = ["generate_certificate_for_completed_courses"]
+      TASKS = [:upload_from_s3_to_vimeo]
 
       def run_tasks
         results = []
