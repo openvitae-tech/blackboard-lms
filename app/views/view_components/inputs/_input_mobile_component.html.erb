@@ -1,9 +1,9 @@
-<div class="w-full flex flex-col gap-1">
+<div class="w-full flex flex-col gap-1 group">
   <% if input.label.present? %>
-    <label class="group">
+    <%= label_tag input.name do %>
       <span class="<%= input.label_style %> inline-block mb-1"><%= input.label %></span>
       <%= render 'view_components/inputs/input_mobile/mobile_box', { input: } %>
-    </label>
+    <% end %>
   <% else %>
     <%= render 'view_components/inputs/input_mobile/mobile_box', { input: } %>
   <% end %>

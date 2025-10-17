@@ -34,16 +34,29 @@ module ViewComponent
         code_value.blank?
       end
 
+      def error_style
+        base = ['text-danger border-danger-dark',
+                'group-focus-within:ring-danger-dark group-focus-within:border-danger-dark']
+        base << 'group-focus-within:ring-1' unless code_selectable?
+        base.join(' ')
+      end
+
+      def normal_style
+        base = ['border-slate-grey-50 group-focus-within:border-primary']
+        base << 'group-focus-within:ring-primary' if code_selectable?
+        base.join(' ')
+      end
+
       def code_wrapper_style
         base = ['mobile-code-base']
         color_style = if disabled
                         'border-disabled-color'
                       elsif error.present?
-                        'border-danger focus-within:ring-danger-dark'
+                        error_style
                       elsif code_selectable?
-                        'border-slate-grey-50 focus-within:ring-primary'
+                        'border-slate-grey-50 group-focus:ring-primary group-focus:border-primary'
                       else
-                        'border-slate-grey-50'
+                        'border-slate-grey-50 group-focus-within:border-primary'
                       end
 
         size_style = INPUT_WRAPPER_STYLES[size.to_sym]

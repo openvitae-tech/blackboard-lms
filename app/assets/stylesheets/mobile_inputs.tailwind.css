@@ -7,5 +7,5 @@
 }
 
 .mobile-code-base {
-    @apply border focus:ring-0 focus-within:ring-2 focus-within:border-0;
+    @apply border focus-within:ring-2;
 }
