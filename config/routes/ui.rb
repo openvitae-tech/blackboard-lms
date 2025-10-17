@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get :buttons, to: 'buttons#index'
     get :icons, to: 'icons#index'
     get :inputs, to: 'inputs#index'
+    get :mobile_inputs, to: 'mobile_inputs#index'
     get :tables, to: 'tables#index'
     get :notification_bars, to: 'notification_bars#index'
     get :app_components, to: 'components#app'

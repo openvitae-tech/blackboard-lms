@@ -1,0 +1,75 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+<%= h1_component text: "Mobile Inputs" %>
+<%= text_component text: "Mobile input fields allow users to enter their mobile numbers." %>
+<%= text_component text: "When country_code is passed as paramter, it is rendered as read only text field, else available country codes can be selected via a select control" %>
+
+<%= doc_section_component(title: "Mobile input without label and subtext") do %>
+  <%= input_mobile_component(name: 'Mobile', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input large") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', size: 'lg', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with code select") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input large with code select") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', size: 'lg') %>
+<% end %>
+
+
+<%= doc_section_component(title: "Mobile input with right icon") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', icon_name: 'user-circle', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with right icon large") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', icon_name: 'user-circle', size: 'lg', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with left icon") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', icon_name: 'user-circle', icon_position: 'left', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with left icon large") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', icon_name: 'user-circle', icon_position: 'left', size: 'lg', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with error state") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with error state") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle', size: 'lg', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with error state with code select") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with error state with code select") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle', size: 'lg') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with disabled state") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle', disabled: true, country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with disabled state") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle', disabled: true, size: 'lg', country_code: '+91') %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with disabled state with code select") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle', disabled: true) %>
+<% end %>
+
+<%= doc_section_component(title: "Mobile input with disabled state with code select") do %>
+  <%= input_mobile_component(name: 'Mobile', label: "Phone", placeholder: "Enter your mobile", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle', disabled: true, size: 'lg') %>
+<% end %>
