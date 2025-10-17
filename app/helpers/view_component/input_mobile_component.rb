@@ -22,8 +22,8 @@ module ViewComponent
       attr_accessor :form, :code_name, :name, :label, :type, :code_value, :value, :subtext, :error,
                     :icon_name, :icon_position, :disabled, :size, :html_options
 
-      def initialize(form:, name:, label:, type:, placeholder:, code_value:, value:, subtext:, error:, icon_name:, icon_position:,
-                     disabled:, size:, html_options:)
+      def initialize(form:, name:, label:, type:, placeholder:, code_value:, value:, subtext:, error:,
+                     icon_name:, icon_position:, disabled:, size:, html_options:)
         super(form:, name:, label:, type:, placeholder:, value:, subtext:, error:, icon_name:, icon_position:,
               disabled:, size:, html_options:)
         self.code_value = code_value
