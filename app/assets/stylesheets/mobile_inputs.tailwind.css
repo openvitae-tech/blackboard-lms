@@ -1,0 +1,11 @@
+.mobile-code-md {
+    @apply main-text-md-normal;
+}
+
+.mobile-code-lg {
+    @apply main-text-lg-medium;
+}
+
+.mobile-code-base {
+    @apply border focus:ring-0 focus-within:ring-2 focus-within:border-0;
+}

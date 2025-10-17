@@ -1,0 +1,16 @@
+<div class="w-full flex flex-col gap-1">
+  <% if input.label.present? %>
+    <label class="group">
+      <span class="<%= input.label_style %> inline-block mb-1"><%= input.label %></span>
+      <%= render 'view_components/inputs/input_mobile/mobile_box', { input: } %>
+    </label>
+  <% else %>
+    <%= render 'view_components/inputs/input_mobile/mobile_box', { input: } %>
+  <% end %>
+
+  <% if input.subtext.present? %>
+    <span class="<%= input.subtext_style %>">
+      <%= input.subtext %>
+    </span>
+  <% end %>
+</div>
