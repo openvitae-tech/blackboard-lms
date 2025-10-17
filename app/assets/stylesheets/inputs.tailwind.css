@@ -27,7 +27,7 @@
 }
 
 .input-text-div-base-md {
-    @apply rounded-sm px-3 py-2;
+    @apply rounded-md px-3 py-2;
 }
 
 .input-text-div-base-lg {
