@@ -5,7 +5,7 @@
 <% end %>
 <%= content_tag :div, class: input.input_wrapper_style do %>
   <% if input.form.present? %>
-    <% input_tag = input.form.number_field input.name, input.html_options %>
+    <% input_tag = input.form.number_field input.name, input.html_options.merge(value: input.value) %>
   <% else %>
     <% input_tag = number_field_tag input.name, input.value, input.html_options %>
   <% end %>
