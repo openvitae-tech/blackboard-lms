@@ -3,6 +3,7 @@
 @import "typography.tailwind.css";
 @import "inputs.tailwind.css";
 @import "textarea.tailwind.css";
+@import "mobile_inputs.tailwind.css";
 @import "dropdown.tailwind.css";
 
 @layer base {

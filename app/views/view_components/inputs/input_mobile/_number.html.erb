@@ -1,0 +1,13 @@
+<% if input.icon_name.present? %>
+  <% icon_tag = content_tag(:div, class: input.icon_style) do %>
+    <%= icon(input.icon_name, css: input.icon_size) %>
+  <% end %>
+<% end %>
+<%= content_tag :div, class: input.input_wrapper_style do %>
+  <% if input.form.present? %>
+    <% input_tag = input.form.number_field input.name, input.html_options.merge(value: input.value) %>
+  <% else %>
+    <% input_tag = number_field_tag input.name, input.value, input.html_options %>
+  <% end %>
+  <%= arrange_tags(icon_tag, input_tag, input.icon_position) %>
+<% end %>
