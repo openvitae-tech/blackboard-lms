@@ -12,5 +12,6 @@ Rails.application.routes.draw do
     get :notification_bars, to: 'notification_bars#index'
     get :app_components, to: 'components#app'
     get :textarea, to: 'textarea#index'
+    get :dropdown, to: 'dropdown#index'
   end
 end
