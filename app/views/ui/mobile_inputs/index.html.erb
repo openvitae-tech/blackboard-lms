@@ -3,7 +3,7 @@
 </div>
 <%= h1_component text: "Mobile Inputs" %>
 <%= text_component text: "Mobile input fields allow users to enter their mobile numbers." %>
-<%= text_component text: "When country_code is passed as paramter, it is rendered as read only text field, else available country codes can be selected via a select control" %>
+<%= text_component text: "When country_code is passed as parameter, it is rendered as read only text field, else available country codes can be selected via a select control" %>
 
 <%= doc_section_component(title: "Mobile input without label and subtext") do %>
   <%= input_mobile_component(name: 'Mobile1', country_code: '+91') %>
@@ -54,7 +54,7 @@
   <%= input_mobile_component(name: 'Mobile12', label: "Phone", placeholder: "Enter your mobile", value: "988628", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle') %>
 <% end %>
 
-<%= doc_section_component(title: "Mobile input with error state with code select") do %>
+<%= doc_section_component(title: "Mobile input large with error state with code select") do %>
   <%= input_mobile_component(name: 'Mobile13', label: "Phone", placeholder: "Enter your mobile", value: "988628", subtext: '10 digits', error: "Incorrect mobile", icon_name: 'user-circle', size: 'lg') %>
 <% end %>
 
@@ -70,6 +70,6 @@
   <%= input_mobile_component(name: 'Mobile16', label: "Phone", placeholder: "Enter your mobile", value: "9886289703", subtext: '10 digits', icon_name: 'user-circle', disabled: true) %>
 <% end %>
 
-<%= doc_section_component(title: "Mobile input with disabled state with code select") do %>
+<%= doc_section_component(title: "Mobile input large with disabled state with code select") do %>
   <%= input_mobile_component(name: 'Mobile17', label: "Phone", placeholder: "Enter your mobile", value: "9886289703", subtext: '10 digits', icon_name: 'user-circle', disabled: true, size: 'lg') %>
 <% end %>
