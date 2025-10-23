@@ -24,7 +24,7 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential npm libpq-dev libvips pkg-config
+    apt-get install --no-install-recommends -y build-essential npm libpq-dev libvips pkg-config ffmpeg
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
