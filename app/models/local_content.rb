@@ -43,7 +43,7 @@ class LocalContent < ApplicationRecord
   end
 
   def attach_audio
-    ExtractAndSaveAudioJob.new.perform_async(id)
+    ExtractAndSaveAudioJob.perform_async(id)
   end
 
   def set_status_to_complete
