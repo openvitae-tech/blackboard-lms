@@ -9,7 +9,7 @@ class ExtractAndSaveAudioJob < BaseJob
       return if local_content_id.nil? || local_content.video.blank? || !local_content.video.attached?
 
       blob = local_content.video.blob
-      filename = File.basename(blob.filename.to_s, '.*') + ".mp3"
+      filename = "#{File.basename(blob.filename.to_s, '.*')}.mp3"
       blob.open do |file|
         service = FfmpegService.instance
         audio_io = service.extract_audio(file.path)

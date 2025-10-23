@@ -20,9 +20,7 @@ class FfmpegService
     Open3.popen3(*cmd) do |_stdin, stdout, stderr, wait|
       audio_io.write(stdout.read)
       status = wait.value
-      unless status.success?
-        raise "FFmpeg command failed with status #{status.exitstatus}: #{stderr.read}"
-      end
+      raise "FFmpeg command failed with status #{status.exitstatus}: #{stderr.read}" unless status.success?
     end
 
     audio_io.rewind
