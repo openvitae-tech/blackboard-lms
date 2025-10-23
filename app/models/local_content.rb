@@ -22,10 +22,12 @@ class LocalContent < ApplicationRecord
   belongs_to :lesson
 
   has_one_attached :video
+  has_one_attached :audio
 
   before_create :attach_blob_to_video
-
   before_create :set_status_to_complete
+  after_commit :attach_audio, on: :create
+
   validates :lang, presence: true
   validate :presence_of_blob_id
 
@@ -38,6 +40,10 @@ class LocalContent < ApplicationRecord
   def attach_blob_to_video
     blob = ActiveStorage::Blob.find(blob_id)
     video.attach(blob)
+  end
+
+  def attach_audio
+    ExtractAndSaveAudioJob.new.perform_async(id)
   end
 
   def set_status_to_complete
