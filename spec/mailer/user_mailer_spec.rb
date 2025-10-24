@@ -18,24 +18,6 @@ describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to include(manager.display_name)
     end
 
-    it 'cannot send course_completed email for support user' do
-      support_user = create(:user, role: :support)
-      course = create :course, :published
-
-      mail = described_class.course_completed(support_user, course)
-
-      expect(mail).not_to be_delivered
-    end
-
-    it 'cannot send course_deadline_reminder email for support user' do
-      support_user = create(:user, role: :support)
-      course = create :course, :published
-
-      mail = described_class.course_deadline_reminder(support_user, course, Time.zone.today + 3.days)
-
-      expect(mail).not_to be_delivered
-    end
-
     it 'renders email when course assigned to a user by support user' do
       support_user = create(:user, role: :support)
       learner = create(:user, :learner)
@@ -46,6 +28,28 @@ describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to include('New course assigned')
       expect(mail.body.encoded).to include(learner.display_name)
       expect(mail.body.encoded).to include(support_user.display_name)
+    end
+  end
+
+  describe '#course_completed' do
+    it 'cannot send email for support user' do
+      support_user = create(:user, role: :support)
+      course = create :course, :published
+
+      mail = described_class.course_completed(support_user, course)
+
+      expect(mail).not_to be_delivered
+    end
+  end
+
+  describe '#course_deadline_reminder' do
+    it 'cannot send course_deadline_reminder email for support user' do
+      support_user = create(:user, role: :support)
+      course = create :course, :published
+
+      mail = described_class.course_deadline_reminder(support_user, course, Time.zone.today + 3.days)
+
+      expect(mail).not_to be_delivered
     end
   end
 end
