@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UserMailer < ApplicationMailer
+  include CommonsHelper
+
   layout 'mailer'
 
   def course_assignment(user, assigned_by, course)
@@ -8,7 +10,7 @@ class UserMailer < ApplicationMailer
     @assigned_by = assigned_by
     @course = course
 
-    return if @user.email.blank?
+    return if @user.email.blank? || email_disabled_for?(@user)
 
     mail(
       to: @user.email,
@@ -21,7 +23,7 @@ class UserMailer < ApplicationMailer
     @course = course
     @deadline = deadline.to_fs(:short)
 
-    return if @user.email.blank?
+    return if @user.email.blank? || email_disabled_for?(@user)
 
     mail(
       to: @user.email,
@@ -33,7 +35,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @course = course
 
-    return if @user.email.blank?
+    return if @user.email.blank? || email_disabled_for?(@user)
 
     mail(
       to: @user.email,

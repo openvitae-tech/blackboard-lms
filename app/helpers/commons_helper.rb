@@ -23,4 +23,8 @@ module CommonsHelper
     raise ArgumentError,
           "Unsupported model '#{model}'. Allowed: #{supported_models.join(', ')}"
   end
+
+  def email_disabled_for?(user)
+    user.is_support?
+  end
 end
