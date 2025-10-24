@@ -31,7 +31,7 @@ describe UserMailer, type: :mailer do
       support_user = create(:user, role: :support)
       course = create :course, :published
 
-      mail = described_class.course_deadline_reminder(support_user, course, Date.today + 3.days)
+      mail = described_class.course_deadline_reminder(support_user, course, Time.zone.today + 3.days)
 
       expect(mail).not_to be_delivered
     end
