@@ -15,9 +15,7 @@ Rails.application.routes.draw do
     end
   end
 
-  if Rails.env.development?
+  authenticate :user, ->(user) { user.is_admin? } do
     mount Sidekiq::Web, at: '/sidekiq'
-  else
-    mount Sidekiq::Web, at: '/sidekiq', constraints: { method: 'GET' }
   end
 end
