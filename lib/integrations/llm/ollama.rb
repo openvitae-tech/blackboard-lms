@@ -32,11 +32,11 @@ module Integrations
 
         response.content
 
-        ResponseObject.ok(response.content)
+        Result.ok(response.content)
       rescue StandardError => e
         log_error_to_sentry(e.message)
 
-        ResponseObject.error(response.content)
+        Result.error(e.message)
       end
     end
   end
