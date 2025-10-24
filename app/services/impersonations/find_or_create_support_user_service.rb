@@ -9,7 +9,7 @@ module Impersonations
       return support_user if support_user.present?
 
       generated_password = password
-      support_user = User.create!(
+      support_user = User.new(
         name: "#{learning_partner.name} Support",
         role: 'support',
         email: support_email(learning_partner.name),
@@ -19,7 +19,9 @@ module Impersonations
         team_id: learning_partner.parent_team.id,
         state: 'active'
       )
-      support_user.confirm
+      support_user.skip_confirmation!
+      support_user.save!
+
       support_user
     end
 
