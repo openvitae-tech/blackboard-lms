@@ -1,0 +1,42 @@
+<%= h2_component(text: "Check box") %>
+
+<%= doc_section_component(title: "Checkbox (Old)") do %>
+  <% form_with do |form| %>
+    <%= input_checkbox(form:, field_name: :remember_me, label: "Remember me") %>
+  <% end %>
+<% end %>
+
+<%= doc_section_component(title: "Checkbox") do %>
+  <form>
+    <%= input_checkbox_component(name: :male, label: "Male") %>
+    <%= input_checkbox_component(name: :female, label: "Female" ) %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Checkbox button input with label on left") do %>
+  <form>
+    <%= input_checkbox_component(name: :male, label: "Male", label_position: "left") %>
+    <%= input_checkbox_component(name: :female, label: "Female", label_position: "left") %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Checkbox disabled") do %>
+  <form>
+    <%= input_checkbox_component(name: :male, label: "Male", disabled: true) %>
+    <%= input_checkbox_component(name: :female, label: "Male", disabled: true) %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Checkbox with error") do %>
+  <form>
+    <%= input_checkbox_component(name: :veg, label: "Veg", error: "True", value: 'Veg') %>
+    <%= input_checkbox_component(name: :non_veg, label: "Non-veg", value: 'Non-Veg') %>
+  </form>
+<% end %>
+
+<%= doc_section_component(title: "Checkbox with form attribute") do %>
+  <%= form_with do |f| %>
+    <%= input_checkbox_component(form: f, name: :veg, label: "Veg", value: 'Veg') %>
+    <%= input_checkbox_component(form: f, name: :non_veg, label: "Non-veg", value: 'Non') %>
+  <% end %>
+<% end %>
