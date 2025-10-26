@@ -1,0 +1,114 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+
+<%= h3_component(text: "File Selector Component") %>
+
+<%= doc_section_component(title: "File selector without label and subtext") do %>
+  <%= file_selector_component(
+    name: :company_logo,
+    type: "image"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "File selector without subtext") do %>
+  <%= file_selector_component(
+    name: :company_logo,
+    label: "Company Logo",
+    type: "image"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "File selector without label") do %>
+  <%= file_selector_component(
+    name: :company_logo,
+    type: "image",
+    support_text: "support text",
+    support_text_two: "support text 2"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "Image file selector") do %>
+  <%= file_selector_component(
+    name: :company_logo,
+    label: "Company Logo",
+    type: "image",
+    support_text: "support text",
+    support_text_two: "support text 2"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "Document file selector") do %>
+  <%= file_selector_component(
+    name: :company_logo,
+    label: "Company Logo",
+    type: "document",
+    support_text: "support text",
+    support_text_two: "support text 2"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "File selector with error state") do %>
+  <%= file_selector_component(
+    name: :company_logo,
+    label: "Company Logo",
+    type: "image",
+    support_text: "support text",
+    support_text_two: "support text 2",
+    error: "error"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "File selector with disabled state") do %>
+  <%= file_selector_component(
+    name: :company_logo,
+    label: "Company Logo",
+    type: "image",
+    support_text: "support text",
+    support_text_two: "support text 2",
+    disabled: true
+  ) %>
+<% end %>
+
+<%= h3_component(text: "Form with File Selector") %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "File selector in active state") do %>
+    <%= file_selector_component(
+      form: form,
+      name: :company_logo,
+      label: "Company Logo",
+      type: "image",
+      support_text: "support text",
+      support_text_two: "support text 2"
+    ) %>
+  <% end %>
+<% end %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "File selector with error state") do %>
+    <%= file_selector_component(
+      form: form,
+      name: :company_logo,
+      label: "Company Logo",
+      type: "image",
+      support_text: "support text",
+      support_text_two: "support text 2",
+      error: "error"
+    ) %>
+  <% end %>
+<% end %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "File selector with disabled state") do %>
+    <%= file_selector_component(
+      form: form,
+      name: :company_logo,
+      label: "Company Logo",
+      type: "image",
+      support_text: "support text",
+      support_text_two: "support text 2",
+      disabled: true
+    ) %>
+  <% end %>
+<% end %>

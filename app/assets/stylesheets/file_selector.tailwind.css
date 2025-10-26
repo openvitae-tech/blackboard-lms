@@ -1,0 +1,35 @@
+.file-selector-component-container {
+  @apply w-full flex flex-col gap-1;
+}
+
+.file-selector-component-base {
+  @apply w-full border h-28 md:h-40 p-3 md:p-4 bg-white transition-all flex justify-center rounded-lg md:rounded-xl border-dashed hover:bg-primary-light-50;
+}
+
+.file-selector-support-text {
+  @apply px-3 flex justify-between items-start;
+}
+
+.file-selector-upload-icon {
+  @apply h-7 w-7 md:h-7 md:w-7 text-white;
+}
+
+.file-selector-close-icon {
+  @apply h-4 w-4 md:w-5 md:h-5 fill-white icon-small text-letter-color opacity-50;
+}
+
+.file-selector-preview {
+  @apply relative rounded-md h-20 w-20 md:w-32 md:h-32 bg-cover border border-line-colour;
+}
+
+.file-selectore-preview-image {
+  @apply h-full w-full object-cover;
+}
+
+.file-selector-doc-preview {
+  @apply flex items-center justify-center h-full w-full;
+}
+
+.file-selector-preview-close {
+  @apply absolute top-2 right-1;
+}

@@ -1,0 +1,37 @@
+<div data-controller="file-selector" class="<%= file_selector.wrapper_style %>">
+   <div
+      class="flex w-full cursor-pointer justify-center items-center gap-4 "
+      data-action="click->file-selector#chooseFile">
+      <div class="flex flex-col items-center" data-file-selector-target="chooseFile">
+         <input type="file" class="hidden" data-file-selector-target="fileInput" accept="<%= file_selector.accepted_types %>"/>
+         <%= icon("document-arrow-up", css: file_selector.upload_icon_style) %>
+         <% if file_selector.error.present? %>
+         <p class="general-text-sm-normal text-danger-dark mt-1">
+            File format not supported
+         </p>
+         <% end %>
+         <p class="<%= file_selector.choose_file_style %>">Choose file</p>
+      </div>
+      <label
+         class="general-text-md-normal hidden text-center"
+         data-file-selector-target="selectedFileName"></label>
+   </div>
+
+   <% if file_selector.type == "image" %>
+   <div class="<%= file_selector.preview_style %> hidden" data-file-selector-target="previewContainer">
+      <img data-file-selector-target="preview" class="file-selectore-preview-image" alt="Preview" />
+      <button type="button" data-action="click->file-selector#resetInput" class="file-selector-preview-close">
+      <%= icon("x-circle", css: "file-selector-close-icon") %>
+      </button>
+   </div>
+   <% elsif file_selector.type == "document" %>
+   <div class="<%= file_selector.preview_style %> hidden" data-file-selector-target="previewContainer">
+      <div data-file-selector-target="iconPreview" class="file-selector-doc-preview">
+         <%= icon("document-text", css: "file-selector-upload-icon fill-primary" ) %>
+      </div>
+      <button type="button" data-action="click->file-selector#resetInput" class="file-selector-preview-close">
+      <%= icon("x-circle", css: "file-selector-close-icon") %>
+      </button>
+   </div>
+   <% end %>
+</div>

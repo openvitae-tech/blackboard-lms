@@ -23,4 +23,5 @@ module UiHelper
   include ViewComponent::DocSectionComponent
   include ViewComponent::TextareaComponent
   include ViewComponent::DropdownComponent
+  include ViewComponent::FileSelectorComponent
 end

@@ -17,5 +17,6 @@ Rails.application.routes.draw do
     get :app_components, to: 'components#app'
     get :textarea, to: 'textarea#index'
     get :dropdown, to: 'dropdown#index'
+    get :file_selector, to: 'file_selector#index'
   end
 end
