@@ -84,6 +84,8 @@ export default class extends Controller {
    }
 
    chooseFile(event) {
+    if (!this.chooseFileTarget.classList.contains("hidden")) {
       this.fileInputTarget.click();
+    }
    }
 }

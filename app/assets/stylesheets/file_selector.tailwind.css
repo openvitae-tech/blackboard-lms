@@ -6,6 +6,10 @@
   @apply w-full border h-28 md:h-40 p-3 md:p-4 bg-white transition-all flex justify-center rounded-lg md:rounded-xl border-dashed hover:bg-primary-light-50;
 }
 
+.file-selector-input-box {
+  @apply flex w-full cursor-pointer justify-center items-center gap-4;
+}
+
 .file-selector-support-text {
   @apply px-3 flex justify-between items-start;
 }

@@ -43,7 +43,7 @@ module ViewComponent
 
         color_style =
           if disabled
-            'textarea-disabled-state'
+            'textarea-disabled-state pointer-events-none cursor-not-allowed'
           elsif error.present?
             'border-danger'
           else
