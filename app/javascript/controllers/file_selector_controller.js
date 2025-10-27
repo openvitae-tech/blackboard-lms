@@ -10,6 +10,8 @@ export default class extends Controller {
       "preview",
       "previewContainer",
       "iconPreview",
+      "fileName",
+      "fileSize"
    ];
 
    connect() {
@@ -26,14 +28,11 @@ export default class extends Controller {
       this.selectedFileNameTarget.classList.remove("hidden");
 
       if (file) {
-         const fileName = file.name;
-         const fileSize = this.formatFileSize(file.size);
-         this.selectedFileNameTarget.innerHTML = `
-      <span class="block">${fileName}</span>
-      <span class="block">${fileSize}</span>
-    `;
+         this.fileNameTarget.textContent = file.name;
+         this.fileSizeTarget.textContent = this.formatFileSize(file.size);
       } else {
-         this.selectedFileNameTarget.innerText = "No file chosen";
+         this.fileNameTarget.textContent = "No file chosen";
+         this.fileSizeTarget.textContent = "";
       }
    }
 
@@ -63,18 +62,19 @@ export default class extends Controller {
 
    showError(message) {
       this.resetInput();
-      this.selectedFileNameTarget.innerText = message;
-      this.selectedFileNameTarget.style.color = "red";
+      this.fileNameTarget.innerText = message;
+      this.fileNameTarget.style.color = "red";
    }
 
    clearError() {
-      this.selectedFileNameTarget.innerText = "No file chosen";
-      this.selectedFileNameTarget.style.color = "";
+      this.fileNameTarget.textContent = "No file chosen";
+      this.fileNameTarget.style.color = "";
    }
 
    resetInput() {
       this.fileInputTarget.value = "";
-      this.selectedFileNameTarget.innerHTML = "";
+      this.fileNameTarget.textContent = "";
+      this.fileSizeTarget.textContent = "";
       this.selectedFileNameTarget.classList.add("hidden");
       this.previewContainerTarget.classList.add("hidden");
       if (this.hasPreviewTarget && this.previewTarget.src) {

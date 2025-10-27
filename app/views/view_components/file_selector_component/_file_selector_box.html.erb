@@ -14,13 +14,16 @@
          <p class="<%= file_selector.choose_file_style %>">Choose file</p>
       </div>
       <label
-         class="general-text-md-normal hidden text-center"
-         data-file-selector-target="selectedFileName"></label>
+        class="hidden flex flex-col items-center"
+        data-file-selector-target="selectedFileName">
+        <span data-file-selector-target="fileName" class="general-text-md-normal"></span>
+        <span data-file-selector-target="fileSize" class="general-text-sm-normal"></span>
+      </label>
    </div>
 
    <% if file_selector.type == "image" %>
    <div class="<%= file_selector.preview_style %> hidden" data-file-selector-target="previewContainer">
-      <img data-file-selector-target="preview" class="file-selectore-preview-image" alt="Preview" />
+      <img data-file-selector-target="preview" class="file-selector-preview-image" alt="Preview" />
       <button type="button" data-action="click->file-selector#resetInput" class="file-selector-preview-close">
       <%= icon("x-circle", css: "file-selector-close-icon") %>
       </button>

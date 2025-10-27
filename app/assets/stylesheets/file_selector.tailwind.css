@@ -26,7 +26,7 @@
   @apply relative rounded-md h-20 w-20 md:w-32 md:h-32 bg-cover border border-line-colour;
 }
 
-.file-selectore-preview-image {
+.file-selector-preview-image {
   @apply h-full w-full object-cover;
 }
 
