@@ -6,7 +6,7 @@ class ExtractAndSaveAudioJob < BaseJob
   def perform(local_content_id)
     with_tracing "local_content_id=#{local_content_id}" do
       local_content = LocalContent.find_by(id: local_content_id)
-      return if local_content_id.nil? || local_content.video.blank? || !local_content.video.attached?
+      return if local_content.nil? || local_content.video.blank? || !local_content.video.attached?
 
       local_content.video.blob.open do |file|
         service = FfmpegService.instance
