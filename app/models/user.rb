@@ -125,6 +125,8 @@ class User < ApplicationRecord
 
   # overridden methods for Devise specific actions
   def send_devise_notification(notification, *)
+    return false if is_support?
+
     devise_mailer.send(notification, self, *).deliver_later
   end
 
