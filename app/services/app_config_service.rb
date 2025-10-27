@@ -8,4 +8,8 @@ class AppConfigService
   def external_video_hosting?
     CONFIG[:external_video_hosting]
   end
+
+  def sidekiq_auth_enabled?
+    CONFIG[:sidekiq_auth_enabled]
+  end
 end
