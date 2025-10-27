@@ -18,8 +18,8 @@ module ViewComponent
       }.freeze
 
       SUPPORT_TEXT_STYLES = {
-        md: 'general-text-sm-normal px-3 md:px-4',
-        lg: 'general-text-md-normal px-3'
+        md: 'general-text-sm-normal px-3',
+        lg: 'general-text-md-normal px-3 md:px-4'
       }.freeze
 
       attr_accessor :form, :name, :label, :placeholder, :value,
