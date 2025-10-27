@@ -23,15 +23,19 @@ describe ExtractAndSaveAudioJob do
   describe '#perform' do
     context 'when local_content_id is nil' do
       it 'returns without doing anything' do
-        allow(LocalContent).to receive(:find_by).and_return(nil)
+        allow(LocalContent).to receive(:find_by).with(id: nil).and_return(nil)
+        expect(audio_attachment).not_to receive(:attach)
+        expect(local_content).not_to receive(:save!)
         job.perform(nil)
       end
     end
 
-    context 'when local_content_id is invalid' do
+    context 'when local_content_id do not exists' do
       it 'returns without doing anything' do
-        allow(LocalContent).to receive(:find_by).and_return(nil)
-        job.perform(nil)
+        allow(LocalContent).to receive(:find_by).with(id: 999).and_return(nil)
+        expect(audio_attachment).not_to receive(:attach)
+        expect(local_content).not_to receive(:save!)
+        job.perform(999)
       end
     end
 
