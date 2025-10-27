@@ -17,7 +17,6 @@ module ViewComponent
         self.disabled = disabled
         self.html_options[:disabled] = disabled
         self.html_options[:class] = 'hidden peer'
-        self.html_options[:multiple] = true
         self.error = resolve_error(form, name, error)
       end
 

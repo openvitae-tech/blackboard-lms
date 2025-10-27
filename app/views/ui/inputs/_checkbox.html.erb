@@ -15,7 +15,7 @@
 
 <%= doc_section_component(title: "Checkbox button input with label on left") do %>
   <form>
-    <%= input_checkbox_component(name: :male, label: "Male", label_position: "left") %>
+    <%= input_checkbox_component(name: :male, label: "Male", label_position: "left", value: 'male') %>
     <%= input_checkbox_component(name: :female, label: "Female", label_position: "left") %>
   </form>
 <% end %>
@@ -23,14 +23,14 @@
 <%= doc_section_component(title: "Checkbox disabled") do %>
   <form>
     <%= input_checkbox_component(name: :male, label: "Male", disabled: true) %>
-    <%= input_checkbox_component(name: :female, label: "Male", disabled: true) %>
+    <%= input_checkbox_component(name: :female, label: "Female", disabled: true) %>
   </form>
 <% end %>
 
 <%= doc_section_component(title: "Checkbox with error") do %>
   <form>
-    <%= input_checkbox_component(name: :veg, label: "Veg", error: "True", value: 'Veg') %>
-    <%= input_checkbox_component(name: :non_veg, label: "Non-veg", value: 'Non-Veg') %>
+    <%= input_checkbox_component(name: :veg, label: "Veg", error: "True", value: nil) %>
+    <%= input_checkbox_component(name: :non_veg, label: "Non-veg", value: nil) %>
   </form>
 <% end %>
 
