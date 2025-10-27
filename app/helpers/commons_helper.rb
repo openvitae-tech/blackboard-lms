@@ -25,6 +25,6 @@ module CommonsHelper
   end
 
   def email_disabled_for?(user)
-    user.is_support?
+    user.email.blank? || user.is_support?
   end
 end
