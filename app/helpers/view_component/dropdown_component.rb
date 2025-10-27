@@ -53,7 +53,7 @@ module ViewComponent
 
         color_style =
           if disabled
-            'text-disabled-color'
+            'text-disabled-color border-disabled-color'
           elsif error.present?
             'text-danger focus:text-danger-dark border-danger focus:border-danger focus:ring-danger'
           else
