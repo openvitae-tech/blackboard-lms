@@ -54,11 +54,15 @@ export default class extends Controller {
          reader.onload = () => {
             this.previewTarget.src = reader.result;
          };
+         reader.onerror = () => {
+            this.showError("Failed to load file preview");
+         };
          reader.readAsDataURL(file);
       } else {
          this.previewTarget.src = "";
       }
    }
+
 
    showError(message) {
       this.resetInput();
