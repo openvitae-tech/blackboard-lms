@@ -18,8 +18,8 @@ module ViewComponent
       }.freeze
 
       SUPPORT_TEXT_STYLES = {
-        md: 'general-text-sm-normal',
-        lg: 'general-text-md-normal'
+        md: 'general-text-sm-normal px-3 md:px-4',
+        lg: 'general-text-md-normal px-3'
       }.freeze
 
       attr_accessor :form, :name, :label, :placeholder, :value,
@@ -66,7 +66,7 @@ module ViewComponent
       end
 
       def label_style
-        base = []
+        base = ['textarea-label']
         size_style = LABEL_STYLES[size.to_sym]
 
         color_style =
