@@ -38,6 +38,16 @@
   ) %>
 <% end %>
 
+<%= doc_section_component(title: "Video file selector") do %>
+  <%= file_selector_component(
+    name: :company_logo,
+    label: "Company Logo",
+    type: "video",
+    support_text: "support text",
+    support_text_two: "support text 2"
+  ) %>
+<% end %>
+
 <%= doc_section_component(title: "Document file selector") do %>
   <%= file_selector_component(
     name: :company_logo,

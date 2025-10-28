@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module ViewComponent
-  module FileSelectorComponent
-    FILE_SELECTOR_TYPES = %w[image document].freeze
-
+  module InputComponent
     class FileSelectorComponent
       include ViewComponent::ComponentHelper
+
+      FILE_SELECTOR_TYPES = %w[image document video].freeze
 
       attr_accessor :form, :name, :label, :support_text,
                     :support_text_two, :error, :disabled, :html_options, :type
@@ -33,6 +33,8 @@ module ViewComponent
           'image/*'
         when 'document'
           '.csv,.pdf,.doc,.docx'
+        when 'video'
+          'video/*,.mp4,.mov,.avi,.mkv'
         else
           '*/*'
         end
@@ -54,7 +56,7 @@ module ViewComponent
       end
 
       def label_style
-        base = ['general-text-sm-normal']
+        base = ['general-text-sm-normal px-1']
 
         color_style =
           if disabled
@@ -116,32 +118,6 @@ module ViewComponent
 
         class_list(base, color_style)
       end
-    end
-
-    def file_selector_component(
-      type:,
-      form: nil,
-      name: nil,
-      label: nil,
-      support_text: nil,
-      support_text_two: nil,
-      error: nil,
-      disabled: false,
-      html_options: {}
-    )
-      file_selector = FileSelectorComponent.new(
-        form:,
-        name:,
-        label:,
-        support_text:,
-        support_text_two:,
-        error:,
-        disabled:,
-        html_options:,
-        type:
-      )
-
-      render partial: 'view_components/file_selector_component/file_selector', locals: { file_selector: }
     end
   end
 end

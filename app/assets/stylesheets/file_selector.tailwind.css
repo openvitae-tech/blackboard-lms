@@ -11,7 +11,7 @@
 }
 
 .file-selector-support-text {
-  @apply px-3 flex justify-between items-start;
+  @apply flex justify-between items-start px-2 md:px-3;
 }
 
 .file-selector-upload-icon {
