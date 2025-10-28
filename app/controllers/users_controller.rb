@@ -63,12 +63,12 @@ class UsersController < ApplicationController
     if user_role_mapping_for_partner(@user, @user.team).values.include?(new_role.to_sym)
       @user.role = new_role
       if @user.save
-        flash[:success] = "Role updated successfully."
+        flash.now[:success] = I18n.t('user.role_updated')
       else
-        flash[:error] = "Failed to update role."
+        flash.now[:error] = I18n.t('user.role_update_failed')
       end
     else
-      flash[:error] = "Invalid role."
+      flash.now[:error] = I18n.t('user.role_update_failed')
     end
   end
 
