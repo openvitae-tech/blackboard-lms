@@ -75,13 +75,13 @@ module ViewComponent
       end
 
       def input_wrapper_style
-        base = ['input-text-div-base']
+        base = ['input-text-div-base group']
         color_style = if disabled
                         'border-disabled-color'
                       elsif error.present?
-                        'border-danger focus-within:border-danger-dark'
+                        'border-danger focus-within:border-danger-dark ring-danger-dark'
                       else
-                        'border-slate-grey-50 focus-within:border-primary'
+                        'border-slate-grey-50 focus-within:border-primary ring-primary'
                       end
 
         size_style = INPUT_WRAPPER_STYLES[size.to_sym]
@@ -109,7 +109,7 @@ module ViewComponent
                       elsif error.present?
                         'text-danger-dark'
                       else
-                        'text-letter-color-light'
+                        'text-disabled-color group-focus-within:text-letter-color'
                       end
         class_list(base, '', color_style)
       end
