@@ -2,7 +2,6 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["dropdown"];
-  static values = { userId: String}
 
   updateSelect(event) {
     const selectedRole = event.target.value;

@@ -64,6 +64,8 @@ module UsersHelper
     ].compact
   end
 
+  private
+
   def change_role_item(user)
     return unless policy(user).change_role?
 
@@ -74,8 +76,6 @@ module UsersHelper
       options: { data: { turbo_frame: 'modal' } }
     )
   end
-
-  private
 
   def deactivate_item(user)
     return unless policy(user).deactivate?
