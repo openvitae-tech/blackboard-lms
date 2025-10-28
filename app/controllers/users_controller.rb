@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  include UsersHelper
   before_action :set_user
 
   def show
@@ -52,6 +53,30 @@ class UsersController < ApplicationController
     redirect_to @user.team, notice: I18n.t('user.deleted') and return
   end
 
+  def change_role
+    authorize @user
+  end
+
+  def confirm_change_role
+    authorize @user, :change_role?
+    new_role = change_role_params[:role]
+    if user_role_mapping_for_partner(@user, @user.team).values.include?(new_role.to_sym)
+      @user.role = new_role
+      if @user.save
+        flash[:success] = "Role updated successfully."
+      else
+        flash[:error] = "Failed to update role."
+      end
+    else
+      flash[:error] = "Invalid role."
+    end
+  end
+
+  def select_roles
+    authorize @user, :change_role?
+    @user.role = params[:selected]
+  end
+
   def change_team
     authorize @user
     sub_teams = current_user.team.sub_teams
@@ -81,6 +106,10 @@ class UsersController < ApplicationController
 
     def change_team_params
       params.require(:user).permit(:team_id)
+    end
+
+    def change_role_params
+      params.require(:user).permit(:role)
     end
 
     def handle_missing_team_id

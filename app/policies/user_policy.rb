@@ -45,6 +45,10 @@ class UserPolicy
     user.manager_of?(other_user)
   end
 
+  def change_role?
+    user.manager_of?(other_user) && user.id != other_user.id
+  end
+
   private
 
   def changing_own_team?

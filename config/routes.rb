@@ -179,6 +179,9 @@ Rails.application.routes.draw do
       post :confirm_activate
       get :change_team
       patch :confirm_change_team
+      get :change_role
+      patch :confirm_change_role
+      get :select_roles
     end
   end
 

@@ -1,0 +1,19 @@
+<div id="user-role-dropdown" data-role-change-target="dropdown" data-role-change-user-id="<%= @user.id %>" class="flex flex-col gap-4">
+  <%= input_dropdown(
+        field_name: "user[role]",
+        label: "Available roles",
+        width: "w-full",
+        options: user_role_mapping_for_partner(current_user, @user.team).to_a,
+        value: local_assigns[:selected_role] || @user.role,
+        html_options: {
+          data: {
+            action: "change->role-change#updateSelect",
+            role_change_target: "dropdown"
+          }
+        }
+
+  ) %>
+  <% if local_assigns[:selected_role].present? %>
+    <%= hidden_field_tag "user[role]", local_assigns[:selected_role] %>
+  <% end %>
+</div>
