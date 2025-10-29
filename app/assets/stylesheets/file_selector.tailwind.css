@@ -37,3 +37,7 @@
 .file-selector-preview-close {
   @apply absolute top-2 right-1;
 }
+
+.file-selctor-error-text {
+  @apply text-danger-dark mb-1 md:mb-2;
+}

@@ -19,7 +19,7 @@ module ViewComponent
         self.form = form
         self.name = name
         self.label = label
-        self.support_text = support_text
+        self.support_text = (error_message.presence || support_text)
         self.support_text_two = support_text_two
         self.error = error_message
         self.disabled = disabled

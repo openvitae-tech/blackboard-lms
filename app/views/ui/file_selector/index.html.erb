@@ -23,38 +23,38 @@
   <%= file_selector_component(
     name: :company_logo,
     type: "image",
-    support_text: "support text",
-    support_text_two: "support text 2"
+    support_text: "Max file size is 10MB",
+    support_text_two: "Supporting files are .jpg,.png,.jpeg"
   ) %>
 <% end %>
 
 <%= doc_section_component(title: "Image file selector") do %>
   <%= file_selector_component(
-    name: :company_logo,
-    label: "Company Logo",
+    name: :logo,
+    label: "Logo",
     type: "image",
-    support_text: "support text",
-    support_text_two: "support text 2"
+    support_text: "Max file size is 10MB",
+    support_text_two: "Supporting files are .jpg,.png,.jpeg"
   ) %>
 <% end %>
 
 <%= doc_section_component(title: "Video file selector") do %>
   <%= file_selector_component(
-    name: :company_logo,
-    label: "Company Logo",
+    name: :course_video,
+    label: "Course video",
     type: "video",
-    support_text: "support text",
-    support_text_two: "support text 2"
+    support_text: "Max file size is 10MB",
+    support_text_two: "Supporting files are .mp4,.mov,.avi,.mkv,.webm"
   ) %>
 <% end %>
 
 <%= doc_section_component(title: "Document file selector") do %>
   <%= file_selector_component(
-    name: :company_logo,
-    label: "Company Logo",
+    name: :employee_details,
+    label: "Employee details",
     type: "document",
-    support_text: "support text",
-    support_text_two: "support text 2"
+    support_text: "Max file size is 10MB",
+    support_text_two: "Supporting files are .pdf,.doc,.csv",
   ) %>
 <% end %>
 
@@ -63,9 +63,9 @@
     name: :company_logo,
     label: "Company Logo",
     type: "image",
-    support_text: "support text",
-    support_text_two: "support text 2",
-    error: "error"
+    support_text: "Max file size is 10MB",
+    support_text_two: "Supporting files are .jpg,.png,.jpeg",
+    error: "File format not supported"
   ) %>
 <% end %>
 
@@ -74,8 +74,8 @@
     name: :company_logo,
     label: "Company Logo",
     type: "image",
-    support_text: "support text",
-    support_text_two: "support text 2",
+    support_text: "Max file size is 10MB",
+    support_text_two: "Supporting files are .jpg,.png,.jpeg",
     disabled: true
   ) %>
 <% end %>
@@ -89,8 +89,8 @@
       name: :company_logo,
       label: "Company Logo",
       type: "image",
-      support_text: "support text",
-      support_text_two: "support text 2"
+      support_text: "Max file size is 10MB",
+      support_text_two: "Supporting files are .jpg,.png,.jpeg"
     ) %>
   <% end %>
 <% end %>
@@ -102,9 +102,9 @@
       name: :company_logo,
       label: "Company Logo",
       type: "image",
-      support_text: "support text",
-      support_text_two: "support text 2",
-      error: "error"
+      support_text: "Max file size is 10MB",
+      support_text_two: "Supporting files are .jpg,.png,.jpeg",
+      error: "File format not supported"
     ) %>
   <% end %>
 <% end %>
@@ -116,8 +116,8 @@
       name: :company_logo,
       label: "Company Logo",
       type: "image",
-      support_text: "support text",
-      support_text_two: "support text 2",
+      support_text: "Max file size is 10MB",
+      support_text_two: "Supporting files are .jpg,.png,.jpeg",
       disabled: true
     ) %>
   <% end %>
