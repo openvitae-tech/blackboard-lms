@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  include UsersHelper
   before_action :set_user
 
   def show
@@ -60,7 +59,7 @@ class UsersController < ApplicationController
   def confirm_change_role
     authorize @user, :change_role?
     new_role = change_role_params[:role]
-    if user_role_mapping_for_partner(@user, @user.team).values.include?(new_role.to_sym)
+    if current_user.selectable_roles(@user.team).include?(new_role)
       @user.role = new_role
       if @user.save
         flash.now[:success] = I18n.t('user.role_updated')
