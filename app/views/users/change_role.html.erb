@@ -8,7 +8,7 @@
     </div>
     <div class="flex flex-col gap-6 justify-between heading">
       <%= form.button "Save", class: "bg-primary text-white p-4 rounded" %>
-      <%= form.button "Cancel", data: { action: "click->modals#closeModal" } %>
+      <%= form.button "Cancel", type: "button", data: { action: "click->modals#closeModal" } %>
     </div>
   <% end %>
 <% end %>
