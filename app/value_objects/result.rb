@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
-ResponseObject = Data.define(:status, :data) do
+class Result < BaseResult
+  attr_reader :status, :data
+
+  def initialize(status, data)
+    super()
+    @status = status
+    @data = data
+  end
+
   def ok?
     status == :ok
   end

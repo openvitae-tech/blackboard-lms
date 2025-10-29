@@ -2,8 +2,15 @@
   <%= render "shared/components/back_button", back_link: ui_components_path %>
 </div>
 
-<%= render "ui/inputs/text_field" %>
-<%= render "ui/inputs/radio_button" %>
+<ul class="my-6 flex flex-col gap-2">
+  <li><%= link_component(text: 'Text field', url: ui_inputs_text_field_path) %></li>
+  <li><%= link_component(text: 'Radio button', url: ui_inputs_radio_button_path) %></li>
+  <li><%= link_component(text: 'Check box', url: ui_inputs_checkbox_path) %></li>
+</ul>
+
+<hr>
+
+<p class="my-2">Old code to be removed later</p>
 
 <ul>
   <li>

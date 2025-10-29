@@ -2,7 +2,7 @@
 
 module ViewComponent
   module InputComponent
-    class InputRadioComponent
+    class InputCheckboxComponent
       include ViewComponent::ComponentHelper
 
       attr_accessor :form, :name, :label, :value, :disabled, :error, :label_position, :html_options
@@ -16,7 +16,7 @@ module ViewComponent
         self.html_options = html_options
         self.disabled = disabled
         self.html_options[:disabled] = disabled
-        self.html_options[:class] = 'hidden'
+        self.html_options[:class] = 'hidden peer'
         self.error = resolve_error(form, name, error)
       end
 
@@ -30,7 +30,7 @@ module ViewComponent
         end
       end
 
-      def radio_circle_style
+      def box_style
         if disabled
           'border-disabled-color'
         elsif error
@@ -40,13 +40,13 @@ module ViewComponent
         end
       end
 
-      def radio_dot_style
+      def check_style
         if disabled
-          'bg-white'
+          'text-white'
         elsif error
-          'group-has-[input:checked]:bg-danger-dark'
+          'text-white group-has-[input:checked]:text-danger-dark'
         else
-          'group-has-[input:checked]:bg-primary'
+          'text-white group-has-[input:checked]:text-primary'
         end
       end
     end

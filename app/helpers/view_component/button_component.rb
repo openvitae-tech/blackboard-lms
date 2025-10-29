@@ -113,11 +113,6 @@ module ViewComponent
       end
     end
 
-    def label_with_icon(icon, label_tag, position)
-      ordered = position == 'left' ? [icon, label_tag] : [label_tag, icon]
-      safe_join(ordered.compact)
-    end
-
     def button(
       label: nil,
       type: 'primary',
