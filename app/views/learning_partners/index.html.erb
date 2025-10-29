@@ -1,8 +1,13 @@
-  <div class="flex justify-between items-center">
-    <h1 class="heading page-heading-medium mb-4">Partners List</h1>
-    <%= link_to new_learning_partner_path do %>
-      <%= button(label: 'Add Partner',icon_name: "plus") %>
-    <% end %>
+  <div class="flex flex-col gap-3 mt-4 md:mt-5 mb-5 md:mb-6">
+    <div class="flex justify-between items-center ">
+      <%= h3_component(text: "Partners List") %>
+      <%= link_to new_learning_partner_path, class: 'inline-block' do %>
+        <%= button_component(text: 'Add Partner', icon_name: "plus") %>
+      <% end %>
+    </div>
+    <div class="w-full md:w-[490px]">
+      <%= input_text_component(placeholder: 'Search partners', icon_name: 'magnifying-glass', disabled: true) %>
+    </div>
   </div>
   <ul class="w-full">
     <% @learning_partners.each do |learning_partner| %>
