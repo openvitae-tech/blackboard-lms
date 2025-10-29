@@ -16,7 +16,7 @@ module ViewComponent
         self.html_options = html_options
         self.disabled = disabled
         self.html_options[:disabled] = disabled
-        self.html_options[:class] = 'hidden peer'
+        self.html_options[:class] = 'hidden'
         self.error = resolve_error(form, name, error)
       end
 
@@ -24,9 +24,9 @@ module ViewComponent
         if disabled
           'text-disabled-color'
         elsif error
-          'text-danger-dark group-hover:text-danger'
+          'text-danger-dark'
         else
-          'text-letter-color group-hover:text-primary-light'
+          'text-letter-color group-has-[input:checked]:text-primary group-hover:text-primary-light'
         end
       end
 
@@ -34,9 +34,9 @@ module ViewComponent
         if disabled
           'border-disabled-color'
         elsif error
-          'border-danger-dark group-hover:border-danger'
+          'border-danger-dark'
         else
-          'border-letter-color group-hover:border-primary-light peer-checked:border-primary'
+          'border-slate-grey-50 group-hover:border-primary-light group-has-[input:checked]:border-primary'
         end
       end
 
