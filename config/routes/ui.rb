@@ -7,16 +7,15 @@ Rails.application.routes.draw do
     get :buttons, to: 'buttons#index'
     get :icons, to: 'icons#index'
     get :inputs, to: 'inputs#index'
-    get :inputs, to: 'inputs#index'
     get 'inputs/text_field', to: 'inputs#text_field'
     get 'inputs/radio_button', to: 'inputs#radio_button'
     get 'inputs/checkbox', to: 'inputs#checkbox'
+    get 'inputs/file_selector', to: 'inputs#file_selector'
     get :mobile_inputs, to: 'mobile_inputs#index'
     get :tables, to: 'tables#index'
     get :notification_bars, to: 'notification_bars#index'
     get :app_components, to: 'components#app'
     get :textarea, to: 'textarea#index'
     get :dropdown, to: 'dropdown#index'
-    get :file_selector, to: 'file_selector#index'
   end
 end
