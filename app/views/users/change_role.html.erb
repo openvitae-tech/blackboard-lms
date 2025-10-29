@@ -1,7 +1,7 @@
 <h1>Change Role for <%= @user.name %></h1>
 
 <%= render "shared/components/modal", modalTitle: "Change role" do %>
-  <%= form_with(url: confirm_change_role_member_path(@user), method: :patch, local: true, class: "flex flex-col gap-6 p-6") do |form| %>
+  <%= form_with(url: confirm_change_role_member_path(@user), method: :patch, class: "flex flex-col gap-6 p-6") do |form| %>
     <%= render 'shared/components/form_errors', resource: @user %>
     <div data-controller="role-change">
       <%= render "users/role_dropdown", form: form, user: @user, selected_role: @user.role %>
