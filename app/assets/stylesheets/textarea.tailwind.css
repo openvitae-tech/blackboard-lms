@@ -30,6 +30,10 @@
   @apply px-3 py-2 md:p-4 rounded-lg;
 }
 
+.textarea-label {
+  @apply inline-block mb-1 px-1;
+}
+
 .textarea-support-text {
-  @apply px-3 flex justify-start items-start;
+  @apply flex justify-start items-start;
 }

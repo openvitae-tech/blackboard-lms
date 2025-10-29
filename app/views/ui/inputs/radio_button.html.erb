@@ -36,7 +36,7 @@
 <% end %>
 
 <%= doc_section_component(title: "Radio button error with form attribute") do %>
-  <%= form_with url: "/", method: "GET" do |f| %>
+  <%= form_with do |f| %>
     <%= input_radio_component(form: f, name: :choice, label: "Veg", value: 'Veg') %>
     <%= input_radio_component(form: f, name: :choice, label: "Non-veg", value: 'Non') %>
   <% end %>

@@ -151,5 +151,16 @@ module ViewComponent
       render partial: 'view_components/inputs/input_radio_component',
              locals: { input: }
     end
+
+    def input_checkbox_component(form: nil, name: nil, label: nil, value: nil, disabled: false, error: nil,
+                                 label_position: 'right',
+                                 html_options: {})
+      input = InputCheckboxComponent.new(
+        form:, name:, label:, value:, disabled:, error:, label_position:, html_options:
+      )
+
+      render partial: 'view_components/inputs/input_checkbox_component',
+             locals: { input: }
+    end
   end
 end

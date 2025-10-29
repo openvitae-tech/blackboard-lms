@@ -37,7 +37,7 @@ class LearningPartner < ApplicationRecord
   end
 
   def active_certificate_template
-    certificate_templates.find_by!(active: true)
+    certificate_templates.find_by(active: true)
   end
 
   private

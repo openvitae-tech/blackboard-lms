@@ -1,5 +1,5 @@
 .input-text-base {
-    @apply w-full border-none px-0 py-0 focus:ring-0 outline-none;
+    @apply w-full placeholder-disabled-color border-none px-0 py-0 focus:ring-0 outline-none;
 }
 
 .input-text-md {
@@ -27,7 +27,7 @@
 }
 
 .input-text-div-base-md {
-    @apply rounded-md px-3 py-2;
+    @apply rounded px-3 py-2;
 }
 
 .input-text-div-base-lg {
