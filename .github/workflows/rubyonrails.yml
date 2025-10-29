@@ -44,8 +44,10 @@ jobs:
         with:
           ruby-version: "3.3.0"
           bundler-cache: true
-      - uses: FedericoCarboni/setup-ffmpeg@v3
-        id: setup-ffmpeg
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
       # Add or replace database setup steps here
       - name: Set up database schema
         run: bin/rails db:schema:load
