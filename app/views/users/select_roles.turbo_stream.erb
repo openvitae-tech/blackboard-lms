@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "user-role-dropdown" do %>
+  <%= render "users/role_dropdown", user: @user, selected_role: @user.role %>
+<% end %>
