@@ -23,5 +23,6 @@ Rails.application.routes.draw do
     get :breadcrumbs, to: 'breadcrumbs#index'
     get :modal_component, to: 'modal#index'
     get :modal_preview, to: 'modal#preview'
+    get :chip, to: 'chips#index'
   end
 end
