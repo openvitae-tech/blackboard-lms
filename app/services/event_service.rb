@@ -228,6 +228,17 @@ class EventService
     publish_event(user, event)
   end
 
+  def publish_lesson_rating(user, lesson, rating)
+    event = Event::LessonRating.new(
+      user_id: user.id,
+      lesson_id: lesson.id,
+      partner_id: user.learning_partner_id,
+      rating:
+    )
+
+    publish_event(user, event)
+  end
+
   private
 
   def build_event(user, event_data)

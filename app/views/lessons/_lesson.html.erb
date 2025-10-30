@@ -38,7 +38,10 @@
             <%= button(label: t("lesson.next"), size: "lg") %>
           <% end %>
         <% else %>
-          <%= button_to complete_course_module_lesson_path(course, course_module, lesson),
+          <div
+            data-controller="lesson-rating"
+            data-lesson-rating-url-value="<%= new_course_module_lesson_rating_path(course, course_module, lesson) %>">
+            <%= button_to complete_course_module_lesson_path(course, course_module, lesson),
                         params: {
                           time_spent: 0
                         },
@@ -46,18 +49,19 @@
                           vimeo_target: "completeButtonForm",
                           turbo_method: :post
                         } do %>
-              <%= button(
-                    label: t("lesson.complete_and_continue"),
-                    size: "lg",
-                    icon_name: "chevron-double-right",
-                    icon_position: "right",
-                    tooltip_text: "Complete the lesson to continue.",
-                    html_options: {
-                      data: { vimeo_target: "completeButton" } 
-                    }
-                  ) %>
+                <%= button(
+                      label: t("lesson.complete_and_continue"),
+                      size: "lg",
+                      icon_name: "chevron-double-right",
+                      icon_position: "right",
+                      tooltip_text: "Complete the lesson to continue.",
+                      html_options: {
+                        data: { vimeo_target: "completeButton", action: "click->lesson-rating#completeAndRate" }
+                      }
+                    ) %>
 
-          <% end %>
+            <% end %>
+          </div>
         <% end %>
       </div>
     <% end %>

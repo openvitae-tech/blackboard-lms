@@ -1,0 +1,33 @@
+<%= turbo_stream.replace "modal" do %>
+  <%= modal_component(title: 'How would you rate this lesson?') do %>
+    <%= form_with url: course_module_lesson_rating_path(@course, @course_module, @lesson),
+                  method: :post,
+                  local: true,
+                  data: { controller: "lesson-rating" } do |form| %>
+
+      <div class="pl-4 pt-2 flex space-x-2 justify-center mt-4">
+        <% 5.times do |count| %>
+          <span
+            class="icon-star-transparent icon-large cursor-pointer bg-secondary"
+            data-lesson-rating-target="star"
+            data-lesson-rating-value="<%= count + 1 %>"
+            data-action="click->lesson-rating#select"
+          ></span>
+        <% end %>
+      </div>
+
+      <input type="hidden" name="lesson_rating[value]" data-lesson-rating-target="input" value="0">
+
+      <div class="flex flex-col pl-6 pr-6 pb-4 mt-8">
+        <%= form.button type: :submit do %>
+          <%= button_component(text: 'Submit') %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="pl-6 pr-6 pb-6" data-controller="lesson-rating">
+      <%= link_to 'javascript:void(0);', data: { action: "click->lesson-rating#handleSubmit" } do %>
+        <%= button_component(text: "Skip and Learn On", type: "outline")%>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
