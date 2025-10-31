@@ -26,12 +26,21 @@ export default class extends Controller {
 
   updateStars(value) {
     this.starTargets.forEach((star, index) => {
+      const svg = star.querySelector("svg");
+      const smileySvg = star.querySelectorAll("svg")[1];
+
+      if (smileySvg) {
+        if (index + 1 === value) {
+          smileySvg.classList.add("fill-gold");
+        } else {
+          smileySvg.classList.remove("fill-gold");
+        }
+      }
+
       if (index < value) {
-        star.classList.add("icon-star");
-        star.classList.remove("icon-star-transparent");
+        svg.classList.add("fill-secondary");
       } else {
-        star.classList.add("icon-star-transparent");
-        star.classList.remove("icon-star");
+        svg.classList.remove("fill-secondary");
       }
     });
 

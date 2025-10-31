@@ -4,10 +4,12 @@ class Lesson::RatingsController < ApplicationController
   before_action :set_lesson
 
   def new
-    render
+    authorize @lesson, policy_class: LessonRatingPolicy
   end
 
   def create
+    authorize @lesson, policy_class: LessonRatingPolicy
+
     service = Lessons::RatingService.instance
     service.rate_lesson!(current_user, @lesson, rating_params[:value].to_f)
   end

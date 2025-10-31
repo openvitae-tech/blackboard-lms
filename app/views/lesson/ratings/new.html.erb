@@ -5,14 +5,17 @@
                   local: true,
                   data: { controller: "lesson-rating" } do |form| %>
 
-      <div class="pl-4 pt-2 flex space-x-2 justify-center mt-4">
+      <div class="pl-4 pt-2 flex space-x-4 justify-center mt-4">
         <% 5.times do |count| %>
-          <span
-            class="icon-star-transparent icon-large cursor-pointer bg-secondary"
+          <div
+            class="flex flex-col items-center"
             data-lesson-rating-target="star"
             data-lesson-rating-value="<%= count + 1 %>"
             data-action="click->lesson-rating#select"
-          ></span>
+          >
+            <%= icon("star-transparent", css: "h-10 w-10 cursor-pointer text-secondary") %>
+            <%= icon("smiley-#{%w[one two three four five][count]}", css: "h-6 w-6 mt-2 text-primary") %>
+          </div>
         <% end %>
       </div>
 
