@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Lesson < ApplicationRecord
-  DIMINISHING_WINDOW = 30
   belongs_to :course_module, counter_cache: true
 
   validates :title, presence: true
