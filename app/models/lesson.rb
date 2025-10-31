@@ -24,6 +24,11 @@ class Lesson < ApplicationRecord
   before_save :set_recompute_course_duration_flag
   after_save :update_course_duration
 
+  def current_rating
+    service = Lessons::RatingService.instance
+    service.diminished_rating(rating, last_rated_at)
+  end
+
   private
 
   def unique_local_content_lang

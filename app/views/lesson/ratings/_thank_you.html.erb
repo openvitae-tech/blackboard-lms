@@ -1,0 +1,10 @@
+<%= modal_component(title: 'Thanks for helping us improve !') do %>
+  <div class="flex justify-center">
+    <%= image_tag "student-illustration.svg" %>
+  </div>
+  <div class="flex flex-col p-6" data-controller="lesson-rating">
+    <%= link_to 'javascript:void(0);', data: { action: "click->lesson-rating#handleSubmit" } do %>
+      <%= button_component(text: "Move to next lesson")%>
+    <% end %>
+  </div>
+<% end %>

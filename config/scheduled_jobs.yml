@@ -3,3 +3,8 @@ course_deadline_reminder:
   cron: "0 4 * * *"
   class: "CourseDeadlineReminder"
   queue: "daily_jobs"
+
+lesson_rating:
+  cron: "1 0 * * *"
+  class: "LessonRatingJob"
+  queue: "daily_jobs"

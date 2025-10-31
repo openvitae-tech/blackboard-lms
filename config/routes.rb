@@ -104,6 +104,7 @@ Rails.application.routes.draw do
           put :moveup
           put :movedown
         end
+        resource :rating, only: %i[new create], module: :lesson
       end
 
       resources :quizzes, except: :index do
