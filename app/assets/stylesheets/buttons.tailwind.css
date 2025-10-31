@@ -55,7 +55,7 @@
 }
 
 .btn-sm {
-    @apply h-6 rounded-sm px-3 py-1 md:h-9 md:rounded-md md:px-4 md:py-2;
+    @apply h-6 rounded px-3 py-1 md:h-9 md:rounded-md md:px-4 md:py-2;
 }
 
 .btn-md {
@@ -83,13 +83,13 @@
 }
 
 .btn-icon-sm {
-    @apply h-4 w-4 md:h-5 md:w-5;
+    @apply h-3 w-3 md:h-3.5 md:w-3.5;
 }
 
 .btn-icon-md {
-    @apply h-5 w-5 md:h-6 md:w-6;
+    @apply h-3.5 w-3.5 md:h-4 md:w-4;
 }
 
 .btn-icon-lg {
-    @apply h-6 w-6 md:h-7 md:w-7;
+    @apply h-4 w-4 md:h-5 md:w-5;
 }
