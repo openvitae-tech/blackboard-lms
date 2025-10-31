@@ -6,6 +6,8 @@
 @import "mobile_inputs.tailwind.css";
 @import "dropdown.tailwind.css";
 @import "file_selector.tailwind.css";
+@import "menu_component.tailwind.css";
+
 
 @layer base {
   input[type="number"]::-webkit-outer-spin-button,
