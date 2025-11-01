@@ -124,20 +124,24 @@ RSpec.describe 'Request spec for Lessons', type: :request do
 
   describe 'POST /lessons' do
     it 'allow creating lessons by admin' do
-      expect do
-        post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
-             params: lesson_params(new_blob)
-      end.to change(@course_module_two.lessons, :count).by(1)
+      Sidekiq::Testing.fake! do
+        expect do
+          post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
+              params: lesson_params(new_blob)
+        end.to change(@course_module_two.lessons, :count).by(1)
+      end
     end
 
     it 'set the course duration' do
       course_duration = @course.duration
       changed_duration = lesson_params(new_blob)[:lesson][:duration].to_i
 
-      expect do
-        post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
-             params: lesson_params(new_blob)
-      end.to change { @course.reload.duration - course_duration }.by(changed_duration)
+      Sidekiq::Testing.fake! do
+        expect do
+          post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
+              params: lesson_params(new_blob)
+        end.to change { @course.reload.duration - course_duration }.by(changed_duration)
+      end
     end
 
     it 'does not allow creating lessons by non-admin' do
@@ -187,11 +191,12 @@ RSpec.describe 'Request spec for Lessons', type: :request do
     end
 
     it 'allow updating lesson by admin' do
-      expect do
-        put course_module_lesson_path(course_id: @course.id, module_id: @course_module_two.id, id: @lesson.id),
-            params: { lesson: update_lesson_params(@lesson_title, @lesson, new_blob) }
-      end.to change(@lesson.local_contents, :count).by(1)
-
+      Sidekiq::Testing.fake! do
+        expect do
+          put course_module_lesson_path(course_id: @course.id, module_id: @course_module_two.id, id: @lesson.id),
+              params: { lesson: update_lesson_params(@lesson_title, @lesson, new_blob) }
+        end.to change(@lesson.local_contents, :count).by(1)
+      end
       @lesson.reload
       local_contents_langs = @lesson.local_contents.pluck(:lang)
       expect(local_contents_langs.sort).to eq(%w[english hindi])

@@ -8,18 +8,9 @@ module Lessons
       lesson = course_module.lessons.create!(lesson_params)
       service = CourseManagementService.instance
       service.update_lesson_ordering!(course_module, lesson, :create)
-
-      upload_to_vimeo(lesson) if APP_CONFIG.external_video_hosting?
+      PostProcessingService.instance.process_local_contents(lesson.local_contents)
+      # upload_to_vimeo(lesson) if APP_CONFIG.external_video_hosting?
       lesson
-    end
-
-    private
-
-    def upload_to_vimeo(lesson)
-      lesson.local_contents.each do |item|
-        blob = item.video.blob
-        UploadVideoToVimeoJob.perform_async(blob.id, item.id)
-      end
     end
   end
 end

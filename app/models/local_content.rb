@@ -22,10 +22,11 @@ class LocalContent < ApplicationRecord
   belongs_to :lesson
 
   has_one_attached :video
+  has_one_attached :audio
 
   before_create :attach_blob_to_video
-
   before_create :set_status_to_complete
+
   validates :lang, presence: true
   validate :presence_of_blob_id
 

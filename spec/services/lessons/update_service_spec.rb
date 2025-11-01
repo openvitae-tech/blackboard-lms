@@ -9,6 +9,7 @@ RSpec.describe Lessons::UpdateService do
 
   describe '#update_lesson' do
     it 'Update lesson' do
+      allow(Lessons::PostProcessingService.instance).to receive(:process_local_contents)
       blob = ActiveStorage::Blob.create_and_upload!(
         io: Rails.root.join('spec/fixtures/files/sample_video.mp4').open,
         filename: 'sample_video.mp4',
@@ -18,6 +19,7 @@ RSpec.describe Lessons::UpdateService do
       expect do
         subject.update_lesson!(lesson, lesson_params(blob))
       end.to change(LocalContent, :count).by(2)
+      expect(Lessons::PostProcessingService.instance).to have_received(:process_local_contents)
     end
   end
 

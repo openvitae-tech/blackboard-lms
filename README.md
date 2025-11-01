@@ -36,6 +36,16 @@ $ gem install bundler
 $ brew install imagemagick
 ```
 
+### Install ffmpeg
+##### OSX
+```
+$ brew install ffmpeg
+```
+##### Ubuntu
+```
+$ sudo apt-get install ffmpeg
+```
+
 ### Set your favourite editor to edit credential file
 ```
 $ export EDITOR="code --wait" # or export EDITOR="vim --wait"
