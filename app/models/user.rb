@@ -183,6 +183,15 @@ class User < ApplicationRecord
     user.phone_confirmed_at.present?
   end
 
+  def selectable_roles(team)
+    roles = USER_ROLES.dup
+    roles.delete(ADMIN)
+    roles.delete(SUPPORT)
+    roles.delete(OWNER) if is_manager?
+    roles.delete(OWNER) unless team.parent_team?
+    roles
+  end
+
   private
 
   def password_verifier

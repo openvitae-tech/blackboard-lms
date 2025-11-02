@@ -180,6 +180,8 @@ en:
       certificates: "certificates"
       share_on_linkedin: "Share on LinkedIn"
   user:
+    role_updated: "Role updated successfully."
+    role_update_failed: "Failed to update role."
     invalid_role: "%{value} is not a valid user role"
     invalid_state: "%{value} is not a valid user state"
     invalid_gender: "%{value} is not a valid gender"
