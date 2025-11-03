@@ -162,5 +162,15 @@ module ViewComponent
       render partial: 'view_components/inputs/input_checkbox_component',
              locals: { input: }
     end
+
+    def file_selector_component(type:, form: nil, name: nil, label: nil, support_text: nil,
+                                support_text_two: nil, error: nil,
+                                disabled: false, html_options: {})
+      file_selector = FileSelectorComponent.new(
+        form:, name:, label:, support_text:, support_text_two:, error:, disabled:, html_options:, type:
+      )
+
+      render partial: 'view_components/inputs/file_selector', locals: { file_selector: }
+    end
   end
 end

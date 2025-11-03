@@ -59,11 +59,23 @@ module UsersHelper
       deactivate_item(user),
       activate_item(user),
       delete_item(user),
+      change_role_item(user),
       change_team_item(user)
     ].compact
   end
 
   private
+
+  def change_role_item(user)
+    return unless policy(user).change_role?
+
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: 'Change role',
+      url: change_role_member_path(user),
+      type: :link,
+      options: { data: { turbo_frame: 'modal' } }
+    )
+  end
 
   def deactivate_item(user)
     return unless policy(user).deactivate?

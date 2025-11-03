@@ -52,6 +52,30 @@ class UsersController < ApplicationController
     redirect_to @user.team, notice: I18n.t('user.deleted') and return
   end
 
+  def change_role
+    authorize @user
+  end
+
+  def confirm_change_role
+    authorize @user, :change_role?
+    new_role = change_role_params[:role]
+    if current_user.selectable_roles(@user.team).include?(new_role)
+      @user.role = new_role
+      if @user.save
+        flash.now[:success] = I18n.t('user.role_updated')
+      else
+        flash.now[:error] = I18n.t('user.role_update_failed')
+      end
+    else
+      flash.now[:error] = I18n.t('user.role_update_failed')
+    end
+  end
+
+  def select_roles
+    authorize @user, :change_role?
+    @user.role = params[:selected]
+  end
+
   def change_team
     authorize @user
     sub_teams = current_user.team.sub_teams
@@ -81,6 +105,10 @@ class UsersController < ApplicationController
 
     def change_team_params
       params.require(:user).permit(:team_id)
+    end
+
+    def change_role_params
+      params.require(:user).permit(:role)
     end
 
     def handle_missing_team_id
