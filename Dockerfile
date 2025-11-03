@@ -71,7 +71,7 @@ RUN apt-get update -qq && \
 FROM base
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y libvips chromium && \
+    apt-get install --no-install-recommends -y libvips chromium ffmpeg && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy Node from node-fetch stage

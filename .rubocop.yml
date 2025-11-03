@@ -55,3 +55,7 @@ RSpec/DescribedClass:
   Enabled: false
 Naming/PredicateMethod:
   Enabled: false
+RSpec/NestedGroups:
+  Max: 10
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
