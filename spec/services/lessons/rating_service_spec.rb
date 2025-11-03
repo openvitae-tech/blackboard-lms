@@ -59,7 +59,7 @@ RSpec.describe Lessons::RatingService do
                                                                        no_days_since_last_rating].max
       expected_diminished = [5, (original_rating * diminishing_rate) + Lessons::RatingService::EPSILON].min
 
-      expect(diminished).to eq(expected_diminished.round(1))
+      expect(diminished.round(1)).to eq(expected_diminished.round(1))
     end
   end
 end

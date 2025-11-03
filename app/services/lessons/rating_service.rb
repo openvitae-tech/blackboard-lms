@@ -25,11 +25,13 @@ module Lessons
       events_by_lesson.each do |lesson_id, events|
         ratings = events.map { |e| e.data['rating'].to_f }
         average_rating = ratings.sum / ratings.size
-        lesson = Lesson.find(lesson_id)
+        lesson = Lesson.find_by(id: lesson_id)
+
+        next unless lesson
 
         # finding avg
         new_rating = 0.5 * (average_rating + (DISCOUNTED_FACTOR * lesson.current_rating))
-        lesson.update!(rating: new_rating.round(1), last_rated_at: events.last.created_at)
+        lesson.update!(rating: new_rating.round(1), last_rated_at: events.max_by(&:created_at).created_at)
       end
     end
 

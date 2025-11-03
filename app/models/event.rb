@@ -65,7 +65,7 @@ class Event < ApplicationRecord
   PaymentPlanModified = Struct.new(:partner_id, :user_id, :payment_plan_id, :plan_start_date, :plan_end_date,
                                    :per_seat_amount, :total_seats, keyword_init: true)
   EmailVerified = Struct.new(:partner_id, :team_id, :user_id, :email, keyword_init: true)
-  LessonRating = Struct.new(:user_id, :lesson_id, :partner_id, :rating, keyword_init: true)
+  LessonRating = Struct.new(:user_id, :lesson_id, :team_id, :partner_id, :rating, keyword_init: true)
 
   validates :name, presence: true
   validates :name, inclusion: { in: VALID_EVENTS, message: I18n.t('event.invalid') }

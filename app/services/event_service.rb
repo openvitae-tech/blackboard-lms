@@ -233,6 +233,7 @@ class EventService
       user_id: user.id,
       lesson_id: lesson.id,
       partner_id: user.learning_partner_id,
+      team_id: user.team_id,
       rating:
     )
 

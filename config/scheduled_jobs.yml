@@ -10,8 +10,8 @@ lesson_rating:
   class: "LessonRatingJob"
   queue: "daily_jobs"
 
-# run daily at 01:01 am
+# run daily at 02:01 am
 course_rating:
-  cron: "1 1 * * *"
+  cron: "1 2 * * *"
   class: "CourseRatingJob"
   queue: "daily_jobs"

@@ -12,6 +12,9 @@ class Lesson::RatingsController < ApplicationController
 
     service = Lessons::RatingService.instance
     service.rate_lesson!(current_user, @lesson, rating_params[:value].to_f)
+  rescue StandardError => error
+    flash[:error] = error.full_messages.to_sentence
+    render :new, status: :unprocessable_entity
   end
 
   private
