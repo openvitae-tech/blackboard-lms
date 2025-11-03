@@ -6,14 +6,14 @@ class ExtractAndSaveAudioJob < BaseJob
   def perform(local_content_id)
     with_tracing "local_content_id=#{local_content_id}" do
       local_content = LocalContent.find_by(id: local_content_id)
-      return if local_content.nil? || local_content.video.blank? || !local_content.video.attached?
+      return false if local_content.nil? || local_content.video.blank? || !local_content.video.attached?
 
       local_content.video.blob.open do |file|
         service = FfmpegService.instance
         audio_io = service.extract_audio(file.path)
         if audio_io.blank?
           log_error_to_sentry("Audio extraction failed for LocalContent ID: #{local_content_id}")
-          return
+          return false
         end
 
         filename = "#{SecureRandom.uuid}.mp3"
