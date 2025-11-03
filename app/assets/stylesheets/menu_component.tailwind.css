@@ -26,7 +26,7 @@
 }
 
 .menu-component-center {
-  @apply mx-0;
+  @apply left-1/2 -translate-x-1/2;
 
 }
 .menu-component-list-items {

@@ -1,11 +1,11 @@
-<div class="menu-component-container" data-controller="more-action">
+<div class="menu-component-container" data-controller="menu-component">
   <button type="button" class="menu-component-button"
-          data-action="click->more-action#toggleDropdown" data-more-action-target="menuButton">
+          data-action="click->menu-component#toggleDropdown" data-menu-component-target="menuButton">
     <%= icon("ellipsis-vertical", css: "menu-component-button-icon") %>
   </button>
 
-  <div class="absolute menu-component-list-box hidden menu-component-<%= position %>"
-       data-more-action-target="moreMenu"
+  <div class="absolute menu-component-list-box hidden <%= position_class %>"
+       data-menu-component-target="moreMenu"
        <%= tag.attributes(html_options) %>>
     <div class="menu-component-list-items">
       <% menu_items.each do |item| %>
