@@ -40,8 +40,8 @@ RSpec.describe FfmpegService do
         it 'returns a StringIO with audio data' do
           allow(File).to receive(:exist?).with(input_path).and_return(true)
           allow(File).to receive(:readable?).with(input_path).and_return(true)
-          allow(Open3).to receive(:popen3).and_yield(nil, StringIO.new('audio data'), StringIO.new,
-                                                     double(value: double(success?: true, exitstatus: 0)))
+          fake_wait_thr = instance_double(Thread, value: instance_double(Process::Status, success?: true))
+          allow(Open3).to receive(:popen3).and_yield(nil, StringIO.new('audio data'), StringIO.new, fake_wait_thr)
           result = service.extract_audio(input_path)
           expect(result).to be_a(StringIO)
           expect(result.string).to eq('audio data')
@@ -52,8 +52,10 @@ RSpec.describe FfmpegService do
         it 'raises an error' do
           allow(File).to receive(:exist?).with(input_path).and_return(true)
           allow(File).to receive(:readable?).with(input_path).and_return(true)
-          allow(Open3).to receive(:popen3).and_yield(nil, StringIO.new, StringIO.new('error'),
-                                                     double(value: double(success?: false, exitstatus: 1)))
+          fake_wait_thr = instance_double(Thread, value: instance_double(Process::Status,
+                                                                         success?: false,
+                                                                         exitstatus: 1))
+          allow(Open3).to receive(:popen3).and_yield(nil, StringIO.new, StringIO.new('error'), fake_wait_thr)
           expect { service.extract_audio(input_path) }.to raise_error(RuntimeError, /FFmpeg command failed/)
         end
       end

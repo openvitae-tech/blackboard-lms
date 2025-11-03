@@ -127,7 +127,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
       Sidekiq::Testing.fake! do
         expect do
           post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
-              params: lesson_params(new_blob)
+               params: lesson_params(new_blob)
         end.to change(@course_module_two.lessons, :count).by(1)
       end
     end
@@ -139,7 +139,7 @@ RSpec.describe 'Request spec for Lessons', type: :request do
       Sidekiq::Testing.fake! do
         expect do
           post course_module_lessons_path(course_id: @course.id, module_id: @course_module_two.id),
-              params: lesson_params(new_blob)
+               params: lesson_params(new_blob)
         end.to change { @course.reload.duration - course_duration }.by(changed_duration)
       end
     end
