@@ -2,7 +2,7 @@
   @apply relative inline-block;
 }
 .menu-component-button {
-  @apply flex justify-center cursor-pointer rounded-full bg-primary-light-50 text-primary border border-primary hover:bg-primary-light hover:text-white p-1;
+  @apply flex justify-center cursor-pointer rounded-full bg-primary-light-50 text-primary border border-primary hover:bg-primary-light hover:text-white p-0.5;
 }
 
 .menu-component-button-active {
