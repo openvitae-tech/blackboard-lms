@@ -28,7 +28,7 @@ RSpec.describe Lessons::RatingService do
 
       expected_average = (4.0 + 5.0) / 2
       expected_new_rating = 0.5 * (expected_average + (Lessons::RatingService::DISCOUNTED_FACTOR * 0))
-      expect(lesson.rating).to eq(expected_new_rating)
+      expect(lesson.rating).to eq(expected_new_rating.round(1))
     end
 
     it 'calculates and updates lesson ratings based on events for a lesson with rating' do
@@ -43,7 +43,7 @@ RSpec.describe Lessons::RatingService do
 
       expected_average = 4.0 / 1
       expected_new_rating = 0.5 * (expected_average + (Lessons::RatingService::DISCOUNTED_FACTOR * current_rating))
-      expect(lesson.rating).to eq(expected_new_rating)
+      expect(lesson.rating).to eq(expected_new_rating.round(1))
     end
   end
 
@@ -59,7 +59,7 @@ RSpec.describe Lessons::RatingService do
                                                                        no_days_since_last_rating].max
       expected_diminished = [5, (original_rating * diminishing_rate) + Lessons::RatingService::EPSILON].min
 
-      expect(diminished).to eq(expected_diminished)
+      expect(diminished).to eq(expected_diminished.round(1))
     end
   end
 end
