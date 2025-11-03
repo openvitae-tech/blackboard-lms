@@ -49,7 +49,7 @@ module ViewComponent
           elsif error.present?
             'border-danger'
           else
-            'border-primary'
+            'border-slate-grey-50 hover:border-primary-light focus:border-primary-light'
           end
 
         class_list(base, color_style)

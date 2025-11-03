@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = [
+    "wrapper",
     "chooseFile",
     "fileInput",
     "selectedFileName",
@@ -17,7 +18,16 @@ export default class extends Controller {
       const file = e.target.files[0];
       this.updateFileName(file);
       this.showPreview(file);
+      if (file) this.activate(); 
     });
+  }
+
+  activate() {
+    this.wrapperTarget.classList.add("file-selector-is-active");
+  }
+
+  deactivate() {
+    this.wrapperTarget.classList.remove("file-selector-is-active");
   }
 
   updateFileName(file) {
@@ -46,6 +56,7 @@ export default class extends Controller {
     const fileType = file.type || "";
     const fileName = file.name.toLowerCase();
     this.previewContainerTarget.classList.remove("hidden");
+    this.activate(); 
 
     if (this.previewTarget.src.startsWith("blob:")) {
       URL.revokeObjectURL(this.previewTarget.src);
@@ -63,9 +74,9 @@ export default class extends Controller {
       const blobURL = URL.createObjectURL(file);
       this.previewTarget.src = blobURL;
       this.previewTarget.load();
-      this.previewTarget.controls = false; 
-      this.previewTarget.muted = true; 
-      this.previewTarget.autoplay = false; 
+      this.previewTarget.controls = false;
+      this.previewTarget.muted = true;
+      this.previewTarget.autoplay = false;
 
     } else {
       this.previewTarget.src = "";
@@ -96,11 +107,14 @@ export default class extends Controller {
     if (this.hasPreviewTarget && this.previewTarget.src) {
       this.previewTarget.src = "";
     } 
+
     this.chooseFileTarget.classList.remove("hidden");
+    this.wrapperTarget.classList.remove("file-selector-is-active"); 
   }
 
   chooseFile() {
     if (!this.chooseFileTarget.classList.contains("hidden")) {
+      this.activate(); 
       this.fileInputTarget.click();
     }
   }
