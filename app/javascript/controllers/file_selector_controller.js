@@ -23,11 +23,17 @@ export default class extends Controller {
   }
 
   activate() {
-    this.wrapperTarget.classList.add("file-selector-is-active");
+    if (!this.isErrorState()) {
+      this.wrapperTarget.classList.add("file-selector-is-active");
+    }
   }
 
   deactivate() {
     this.wrapperTarget.classList.remove("file-selector-is-active");
+  }
+  
+  isErrorState() {
+    return this.wrapperTarget.classList.contains("border-danger");
   }
 
   updateFileName(file) {
