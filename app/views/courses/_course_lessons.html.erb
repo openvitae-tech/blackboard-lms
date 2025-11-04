@@ -78,6 +78,7 @@
               <span><%= lesson.title %></span>
             </div>
             <div class="flex gap-6 items-center">
+              <%= render 'lessons/transcript_available', lesson: lesson %>
               <% if policy(@course).edit? %>
                 <%= link_to edit_course_module_lesson_path(course, course_module, lesson), class: "link-text" do %>
                   <%= button(label: "Edit", type: "secondary",size:"sm", icon_name: "pencil") %>

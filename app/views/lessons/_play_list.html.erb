@@ -47,6 +47,7 @@
                 </p>
               </div>
               <div class="flex gap-4 heading">
+                <%= render 'lessons/transcript_available', lesson: lesson %>
                 <%= link_to course_module_lesson_path(course, course_module, lesson) do %>
                   <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center">
                     <span class="icon icon-play bg-primary h-2 w-2 md:h-3 md:w-3"></span>
