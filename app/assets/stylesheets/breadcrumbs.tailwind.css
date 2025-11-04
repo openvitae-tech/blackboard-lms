@@ -1,0 +1,35 @@
+.breadcrumbs-list-container {
+  @apply py-1 flex flex-wrap items-start gap-x-1 gap-y-2 text-letter-color-light;
+}
+
+.breadcrumbs-list {
+  @apply flex items-center gap-1 overflow-hidden;
+}
+
+.breadcrumbs-list-content {
+  @apply flex items-center min-w-0;
+}
+
+.breadcrumbs-intermediate-link,
+.breadcrumbs-last-link {
+  @apply break-words whitespace-normal leading-tight overflow-visible max-w-full;
+}
+
+@screen md {
+  .breadcrumbs-intermediate-link,
+  .breadcrumbs-last-link {
+    @apply whitespace-nowrap overflow-hidden text-ellipsis max-w-[300px];
+  }
+}
+
+.breadcrumbs-intermediate-link {
+  @apply hover:underline hover:text-primary-light ;
+}
+
+.breadcrumbs-last-link {
+  @apply hover:underline text-primary hover:text-primary-light ;
+}
+
+.breadcrumbs-divider-arrow {
+  @apply h-3 w-3 md:h-4 md:w-4 flex-shrink-0;
+}

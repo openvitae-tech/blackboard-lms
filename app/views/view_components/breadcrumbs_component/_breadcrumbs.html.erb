@@ -1,0 +1,32 @@
+<div class="main-text-sm-normal">
+  <div class="breadcrumbs-list-container ">
+    <% breadcrumbs.intermediate_links.each do |title, link| %>
+      <%= render 'shared/components/tooltip', tooltip_text: title do %>
+        <div class="breadcrumbs-list">
+          <span class="breadcrumbs-list-content">
+            <% if link.present? %>
+              <%= link_to title, link, class: 'breadcrumbs-intermediate-link' %>
+            <% else %>
+              <span class="breadcrumbs-intermediate-link"><%= title %></span>
+            <% end %>
+            <%= icon("chevron-right", css: 'breadcrumbs-divider-arrow') %>
+          </span>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if (title, link = breadcrumbs.last_link) %>
+      <%= render 'shared/components/tooltip', tooltip_text: title do %>    
+        <div class="breadcrumbs-list">
+          <span class="breadcrumbs-list-content">
+            <% if link.present? %>
+              <%= link_to title, link, class: 'breadcrumbs-last-link' %>
+            <% else %>
+              <span class="breadcrumbs-last-link"><%= title %></span>
+            <% end %>
+          </span>
+        </div>
+       <% end %>  
+    <% end %>
+  </div>
+</div>
