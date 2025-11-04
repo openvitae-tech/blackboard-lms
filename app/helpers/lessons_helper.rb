@@ -103,4 +103,8 @@ module LessonsHelper
       associations:
     ).call
   end
+
+  def lesson_transcript_available?(lesson)
+    policy(lesson).edit? && lesson.local_contents.first&.transcripts.present?
+  end
 end
