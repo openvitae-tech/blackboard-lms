@@ -314,6 +314,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_03_085251) do
     t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
   end
 
+  create_table "transcripts", force: :cascade do |t|
+    t.integer "start_at"
+    t.integer "end_at"
+    t.string "text"
+    t.bigint "local_content_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["local_content_id"], name: "index_transcripts_on_local_content_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "role"
@@ -384,6 +394,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_03_085251) do
   add_foreign_key "team_enrollments", "teams"
   add_foreign_key "team_enrollments", "users", column: "assigned_by_id"
   add_foreign_key "teams", "learning_partners"
+  add_foreign_key "transcripts", "local_contents"
   add_foreign_key "users", "learning_partners"
   add_foreign_key "users", "teams"
 end

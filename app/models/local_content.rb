@@ -20,6 +20,7 @@ class LocalContent < ApplicationRecord
   DEFAULT_LANGUAGE = SUPPORTED_LANGUAGES[:english]
 
   belongs_to :lesson
+  has_many :transcripts, dependent: :destroy
 
   has_one_attached :video
   has_one_attached :audio
