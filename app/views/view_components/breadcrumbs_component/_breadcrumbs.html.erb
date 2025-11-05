@@ -1,7 +1,7 @@
-<div class="main-text-sm-normal">
-  <div class="breadcrumbs-list-container ">
+<div class="breadcrumbs-wrapper main-text-sm-normal" data-controller="breadcrumbs" data-action="click->breadcrumbs#toggle">
+  <div class="breadcrumbs-list-container">
     <% breadcrumbs.intermediate_links.each do |title, link| %>
-      <%= render 'shared/components/tooltip', tooltip_text: title do %>
+      <div class="relative group inline-block">
         <div class="breadcrumbs-list">
           <span class="breadcrumbs-list-content">
             <% if link.present? %>
@@ -12,11 +12,14 @@
             <%= icon("chevron-right", css: 'breadcrumbs-divider-arrow') %>
           </span>
         </div>
-      <% end %>
+        <span class="absolute breadcrumbs-tooltip">
+          <%= title %>
+        </span>
+      </div>
     <% end %>
 
     <% if (title, link = breadcrumbs.last_link) %>
-      <%= render 'shared/components/tooltip', tooltip_text: title do %>    
+      <div class="relative group inline-block">
         <div class="breadcrumbs-list">
           <span class="breadcrumbs-list-content">
             <% if link.present? %>
@@ -26,7 +29,10 @@
             <% end %>
           </span>
         </div>
-       <% end %>  
+        <span class="absolute breadcrumbs-tooltip">
+          <%= title %>
+        </span>
+      </div>
     <% end %>
   </div>
 </div>
