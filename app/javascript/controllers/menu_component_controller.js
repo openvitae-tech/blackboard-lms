@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["moreMenu"];
+  static targets = ["moreMenu","menuButton"];
 
   connect() {
     window.addEventListener("click",(e) => {
@@ -16,6 +16,8 @@ export default class extends Controller {
   toggleDropdown(event) {
     event.stopPropagation();
     this.moreMenuTarget.classList.toggle("hidden");
+    this.menuButtonTarget.classList.toggle("menu-component-button-active")
+
   }
 
   isMenuHidden() {

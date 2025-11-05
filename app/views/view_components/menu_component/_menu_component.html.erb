@@ -1,13 +1,13 @@
-<div class="relative mt-1" data-controller="more-action">
-  <button type="button" class="flex items-center cursor-pointer rounded-full bg-line-colour hover:bg-white"
-          data-action="click->more-action#toggleDropdown">
-    <%= icon("ellipsis-vertical", css: "#{icon_class.presence || 'h-4 w-4'} rounded-full") %>
+<div class="menu-component-container" data-controller="menu-component">
+  <button type="button" class="menu-component-button"
+          data-action="click->menu-component#toggleDropdown" data-menu-component-target="menuButton">
+    <%= icon("ellipsis-vertical", css: "menu-component-button-icon") %>
   </button>
 
-  <div class="absolute right-0 bg-white rounded box-shadow-medium hidden mt-3 z-50 text-slate-grey-50 whitespace-nowrap"
-       data-more-action-target="moreMenu"
+  <div class="absolute menu-component-list-box hidden <%= position_class %>"
+       data-menu-component-target="moreMenu"
        <%= tag.attributes(html_options) %>>
-    <div class="pt-2 pb-2 flex flex-col">
+    <div class="menu-component-list-items">
       <% menu_items.each do |item| %>
         <%= render "view_components/menu_component/menu_item_#{item.type}", item: item %>
       <% end %>

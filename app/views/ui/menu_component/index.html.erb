@@ -1,0 +1,20 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+
+<%= doc_section_component(title: "Menu Component on left") do %>
+   <%= menu_component(menu_items: sample_menu_items, position:"left") %>
+
+<% end %>
+
+<%= doc_section_component(title: "Menu Component on right") do %>
+<div class="flex w-full justify-end">
+     <%= menu_component(menu_items: sample_menu_items) %>
+</div>
+<% end %>
+
+<%= doc_section_component(title: "Menu Component on center") do %>
+<div class="flex w-full justify-center">
+     <%= menu_component(menu_items: sample_menu_items, position:"center") %>
+</div>
+<% end %>
