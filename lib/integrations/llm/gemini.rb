@@ -28,14 +28,14 @@ module Integrations
       end
 
       def generate_transcript(audio_file)
-        ask(TRANSCRIPTION_PROMPT, file_path: audio_file, response_type: :json)
+        ask(TRANSCRIPTION_PROMPT, file_path: audio_file, response_type: 'TranscriptSchema')
       end
 
       private
 
       def ask(prompt, file_path: nil, response_type: :text)
         service = RubyLLM.chat(model: model, provider: :gemini)
-        service = service.with_schema(TranscriptSchema) if schema_class?(response_type)
+        service = service.with_schema(Object.const_get(response_type.to_s.capitalize)) if schema_class?(response_type)
 
         if response_type == :json || schema_class?(response_type)
           service = service.with_params(generationConfig: { response_mime_type: 'application/json' })
