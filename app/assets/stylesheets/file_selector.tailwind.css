@@ -6,6 +6,10 @@
   @apply w-full border h-28 md:h-40 p-3 md:p-4 bg-white transition-all flex justify-center rounded-lg md:rounded-xl border-dashed hover:bg-primary-light-50;
 }
 
+.file-selector-is-active {
+  @apply border-primary-light;
+}
+
 .file-selector-input-box {
   @apply flex w-full cursor-pointer justify-center items-center gap-4;
 }
@@ -15,19 +19,19 @@
 }
 
 .file-selector-upload-icon {
-  @apply h-7 w-7 md:h-7 md:w-7 text-white;
+  @apply h-7 w-7 md:h-8 md:w-8 text-white;
 }
 
 .file-selector-close-icon {
-  @apply h-4 w-4 md:w-5 md:h-5 fill-white icon-small text-letter-color opacity-50;
+  @apply h-4 w-4 md:w-5 md:h-5 bg-white rounded-full text-letter-color opacity-50;
 }
 
 .file-selector-preview {
-  @apply relative rounded-md h-20 w-20 md:w-32 md:h-32 bg-cover border border-line-colour;
+  @apply relative rounded-lg h-20 w-20 md:w-32 md:h-32 bg-cover border border-line-colour;
 }
 
 .file-selector-preview-image {
-  @apply h-full w-full object-cover;
+  @apply h-full w-full object-cover rounded-lg;
 }
 
 .file-selector-doc-preview {
@@ -35,7 +39,7 @@
 }
 
 .file-selector-preview-close {
-  @apply absolute top-2 right-1;
+  @apply absolute top-1 right-1;
 }
 
 .file-selctor-error-text {
