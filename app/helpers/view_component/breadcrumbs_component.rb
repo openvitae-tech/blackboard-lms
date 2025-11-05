@@ -3,8 +3,6 @@
 module ViewComponent
   module BreadcrumbsComponent
     class BreadcrumbsComponent
-      include ViewComponent::ComponentHelper
-
       attr_accessor :links
 
       def initialize(links: [])
