@@ -12,9 +12,7 @@ module Integrations
 
       SUPPORTED_MODELS = %w[gemini-2.5-pro gemini-2.5-flash gemini-2.5-flash-lite].freeze
       DEFAULT_MODEL = 'gemini-2.5-flash'
-      TRANSCRIPTION_PROMPT = "Generate timestamped transcription for the given audio file \
-                        with output in json format. json should have start_at and end_at \
-                        timestamps in milliseconds integers for each segment."
+      TRANSCRIPTION_PROMPT = 'Generate timestamped transcription for the given audio file'
 
       def initialize(model)
         super()
@@ -35,9 +33,10 @@ module Integrations
 
       def ask(prompt, file_path: nil, response_type: :text)
         service = RubyLLM.chat(model: model, provider: :gemini)
-        service = service.with_schema(Object.const_get(response_type.to_s.capitalize)) if schema_class?(response_type)
+        json_schema = schema_class(response_type)
+        service = service.with_schema(json_schema) if json_schema.present?
 
-        if response_type == :json || schema_class?(response_type)
+        if response_type == :json || json_schema.present?
           service = service.with_params(generationConfig: { response_mime_type: 'application/json' })
         end
 
@@ -52,9 +51,12 @@ module Integrations
         Result.error(e.message)
       end
 
-      def schema_class?(response_type)
-        str_response_type = response_type.to_s.capitalize
-        Object.const_defined?(str_response_type) && Object.const_get(str_response_type) < RubyLLM::Schema
+      def schema_class(response_type)
+        str_response_type = response_type.to_s.camelize
+        JsonSchema.const_get(str_response_type)
+      rescue StandardError
+        Rails.logger.info "Schema class not found for response type: #{response_type}"
+        nil
       end
     end
   end

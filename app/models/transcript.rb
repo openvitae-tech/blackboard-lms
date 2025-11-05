@@ -15,8 +15,8 @@ class Transcript < ApplicationRecord
         {
           local_content_id: local_content.id,
           text: entry['text'],
-          start_at: entry['start_at'],
-          end_at: entry['end_at'],
+          start_at: entry['start_ms'],
+          end_at: entry['end_ms'],
           created_at: timestamp,
           updated_at: timestamp
         }
