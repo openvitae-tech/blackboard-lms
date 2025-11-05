@@ -105,6 +105,6 @@ module LessonsHelper
   end
 
   def lesson_transcript_available?(lesson)
-    policy(lesson).edit? && lesson.local_contents.first&.transcripts.present?
+    policy(lesson).edit? && default_local_content(lesson)&.transcripts.present?
   end
 end
