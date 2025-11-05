@@ -19,6 +19,7 @@ class Event < ApplicationRecord
   ACTIVE_USER_COUNT = 'active_user_count'
   PAYMENT_PLAN_MODIFIED = 'payment_plan_modified'
   EMAIL_VERIFIED = 'email_verified'
+  LESSON_RATING = 'lesson_rating'
 
   VALID_EVENTS = [
     ONBOARDING_INITIATED,
@@ -38,7 +39,8 @@ class Event < ApplicationRecord
     USER_DEACTIVATED,
     ACTIVE_USER_COUNT,
     PAYMENT_PLAN_MODIFIED,
-    EMAIL_VERIFIED
+    EMAIL_VERIFIED,
+    LESSON_RATING
   ].freeze
 
   OnboardingInitiated = Struct.new(:partner_id, :partner_name, keyword_init: true)
@@ -63,6 +65,7 @@ class Event < ApplicationRecord
   PaymentPlanModified = Struct.new(:partner_id, :user_id, :payment_plan_id, :plan_start_date, :plan_end_date,
                                    :per_seat_amount, :total_seats, keyword_init: true)
   EmailVerified = Struct.new(:partner_id, :team_id, :user_id, :email, keyword_init: true)
+  LessonRating = Struct.new(:user_id, :lesson_id, :team_id, :partner_id, :rating, keyword_init: true)
 
   validates :name, presence: true
   validates :name, inclusion: { in: VALID_EVENTS, message: I18n.t('event.invalid') }

@@ -3,3 +3,15 @@ course_deadline_reminder:
   cron: "0 4 * * *"
   class: "CourseDeadlineReminder"
   queue: "daily_jobs"
+
+# run daily at 12:01 am
+lesson_rating:
+  cron: "1 0 * * *"
+  class: "LessonRatingJob"
+  queue: "daily_jobs"
+
+# run daily at 02:01 am
+course_rating:
+  cron: "1 2 * * *"
+  class: "CourseRatingJob"
+  queue: "daily_jobs"
