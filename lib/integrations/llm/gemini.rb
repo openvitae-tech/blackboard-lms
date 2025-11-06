@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# require_relative 'json_schema'
-
 module Integrations
   module Llm
     class Gemini < Api
@@ -54,7 +52,7 @@ module Integrations
       def schema_class(response_type)
         str_response_type = response_type.to_s.camelize
         JsonSchema.const_get(str_response_type)
-      rescue StandardError
+      rescue NameError
         Rails.logger.info "Schema class not found for response type: #{response_type}"
         nil
       end
