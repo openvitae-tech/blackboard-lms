@@ -17,8 +17,8 @@ Sidekiq.configure_server do |config|
 
   schedule_file = 'config/scheduled_jobs.yml'
   if File.exist?(schedule_file)
-    Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file, aliases: true)[Rails.env] ||
-                                      YAML.load_file(schedule_file, aliases: true)
+    jobs_hash = YAML.load_file(schedule_file, aliases: true)
+    Sidekiq::Cron::Job.load_from_hash jobs_hash
   end
 
   config.error_handlers << proc { |ex, ctx_hash|
