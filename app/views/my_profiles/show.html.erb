@@ -35,7 +35,7 @@
       <% course = enrollment.course %>
       <% certificate = get_certificate(current_user, course.id) %>
 
-      <% next if certificate.present? || current_user.learning_partner.active_certificate_template.blank? %>
+      <% next if certificate.present? || @active_template.blank? %>
       <% any_rendered = true %>
 
       <div class="px-4 py-3">

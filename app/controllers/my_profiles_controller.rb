@@ -9,6 +9,7 @@ class MyProfilesController < ApplicationController
     authorize :my_profile
     @course_certificates = @course_certificates.includes([:course, :file_attachment])
     @completed_enrollments = current_user.enrollments.where(course_completed: true)
+    @active_template = current_user.learning_partner.active_certificate_template
   end
 
   def share_certificate
@@ -16,6 +17,9 @@ class MyProfilesController < ApplicationController
   end
 
   def generate_certificate
+    authorize :my_profile
+
+    return unless current_user.learning_partner.active_certificate_template.present?
     return if @enrollment.course_completed == false
 
     key = "GenerateCertificate:#{@enrollment.course_id}:#{current_user.id}"
