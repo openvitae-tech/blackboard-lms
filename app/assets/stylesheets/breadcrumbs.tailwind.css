@@ -1,5 +1,18 @@
 .breadcrumbs-list-container {
-  @apply py-1 flex flex-wrap items-start gap-x-1 gap-y-2 text-letter-color-light;
+  @apply py-1 flex flex-wrap items-start gap-x-1 gap-y-2 text-primary ;
+}
+@media (max-width: 767px) {
+  .breadcrumbs-list-container > .group:not(:nth-last-child(2)) {
+    @apply hidden;
+  }
+
+  .breadcrumbs-list-container > .group:nth-last-child(2) .breadcrumbs-intermediate-link {
+    @apply overflow-hidden text-ellipsis whitespace-nowrap max-w-[220px];
+  }
+
+  .breadcrumbs-list-container > .group:last-child {
+    @apply hidden;
+  }
 }
 
 .breadcrumbs-list {
@@ -54,7 +67,7 @@ border-b-slate-grey-50;
 }
 
 .breadcrumbs-last-link {
-  @apply hover:underline text-primary hover:text-primary-light;
+  @apply hover:underline text-letter-color-light hover:text-primary-light;
 }
 
 .breadcrumbs-divider-arrow {
