@@ -1,5 +1,5 @@
 .breadcrumbs-list-container {
-  @apply py-1 flex flex-col md:flex-row md:flex-wrap items-start gap-x-1 gap-y-2 text-letter-color-light;
+  @apply py-1 flex flex-wrap items-start gap-x-1 gap-y-2 text-letter-color-light;
 }
 
 .breadcrumbs-list {
