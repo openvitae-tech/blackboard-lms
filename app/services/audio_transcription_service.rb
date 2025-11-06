@@ -5,7 +5,7 @@ class AudioTranscriptionService
   include CommonsHelper
 
   def transcribe(audio)
-    return unless audio.attached?
+    raise StandardError, 'Audio file is not attached' if audio.blank?
 
     audio.open do |file|
       result = Integrations::Llm::Api.llm_instance(provider: :gemini).generate_transcript(file.path)
