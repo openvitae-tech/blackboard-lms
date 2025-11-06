@@ -7,4 +7,8 @@ module MyProfilesHelper
 
     "https://www.linkedin.com/sharing/share-offsite/?url=#{certificate_url}"
   end
+
+  def get_certificate(user, course_id)
+    user.course_certificates.find_by(course_id:)
+  end
 end

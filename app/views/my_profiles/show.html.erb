@@ -1,3 +1,5 @@
+<% any_rendered = false %>
+
 <div class="mt-2">
   <%= heading_component(text: t("my_profile.label"), size: 'md') %>
 </div>
@@ -8,26 +10,48 @@
   <div class="mx-auto mt-6 rounded-lg border border-slate-grey-50 divide-y divide-slate-grey-50 border-opacity-40 divide-opacity-40">
     <% if @course_certificates.present? %>
       <% @course_certificates.each do |course_certificate| %>
+        <% any_rendered = true %>
+
         <div class="px-4 py-3">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <h2 class="body-extra-small-regular p-2"><%= course_certificate.course.title %></h2>
 
             <div class="flex gap-2 mt-2 sm:mt-0">
               <%= link_to rails_blob_path(course_certificate.file, disposition: "attachment") do %>
-                <%= button(label: t("button.download"), type: "secondary",
-                          icon_name: "arrow-down-tray", icon_position: "right") %>
+                <%= button_component(text: t("button.download"), type: "outline", size: "sm",
+                      icon_name: "arrow-down-tray", icon_position: "right") %>
               <% end %>
 
               <%= link_to share_certificate_profile_path(certificate_id: course_certificate.id),
                           data: { turbo_frame: "modal" } do %>
-                <%= button(label: t("button.share"), type: "primary",
-                          icon_name: "share", icon_position: "right") %>
+                <%= button_component(text: t("button.share"), size: "sm", icon_name: "share", icon_position: "right") %>
               <% end %>
             </div>
           </div>
         </div>
       <% end %>
-    <% else %>
+    <% end %>
+    <% @completed_enrollments.each do |enrollment| %>
+      <% course = enrollment.course %>
+      <% certificate = get_certificate(current_user, course.id) %>
+
+      <% next if certificate.present? || current_user.learning_partner.active_certificate_template.blank? %>
+      <% any_rendered = true %>
+
+      <div class="px-4 py-3">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <h2 class="body-extra-small-regular p-2"><%= course.title %></h2>
+          <div class="flex gap-2 mt-2 sm:mt-0">
+            <%= button_to generate_certificate_profile_path(enrollment_id: enrollment.id),
+              method: :post,
+              data: { turbo_frame: "modal" } do %>
+              <%= button_component(text: t("my_profile.my_certificates.request_certificate"), size: "sm") %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% unless any_rendered %>
       <div class="flex flex-col items-center justify-center mt-10 mb-5">
         <h2 class="text-semibold pb-4">
           <%= t("record.empty", resource: t("my_profile.my_certificates.certificates")) %>

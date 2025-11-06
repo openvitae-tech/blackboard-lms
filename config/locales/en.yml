@@ -160,9 +160,9 @@ en:
   programs:
     label: "Programs"
     choose_learning_program: "Choose learning program"
-    choose_success: 'Courses in the selected program assigned successfully.'
+    choose_success: "Courses in the selected program assigned successfully."
     choose_label: "Please choose your learning program"
-    info_text: '(Choose a learning program that suits your department.)'
+    info_text: "(Choose a learning program that suits your department.)"
   tags:
     label: "Tags"
   certificate_templates:
@@ -179,6 +179,8 @@ en:
       label: "My Certificates"
       certificates: "certificates"
       share_on_linkedin: "Share on LinkedIn"
+      request_certificate: "Request certificate"
+      certificate_available_soon: "Certificate will be available soon"
   user:
     role_updated: "Role updated successfully."
     role_update_failed: "Failed to update role."
