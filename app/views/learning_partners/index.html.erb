@@ -1,30 +1,51 @@
-  <div class="flex flex-col gap-3 mt-4 md:mt-5 mb-5 md:mb-6">
-    <div class="flex justify-between items-center ">
-      <%= h3_component(text: "Partners List") %>
-      <%= link_to new_learning_partner_path, class: 'inline-block' do %>
-        <%= button_component(text: 'Add Partner', icon_name: "plus") %>
-      <% end %>
-    </div>
-    <div class="w-full md:w-[490px]">
-      <%= input_text_component(placeholder: 'Search partners', icon_name: 'magnifying-glass', disabled: true) %>
-    </div>
-  </div>
-  <ul class="w-full">
-    <% @learning_partners.each do |learning_partner| %>
-      <li class="my-6">
-        <%= link_to learning_partner, class: "link" do %>
-          <div class="flex items-center gap-4 py-2 px-6 text-base box-shadow-medium rounded-lg">
-            <% if learning_partner.logo.attached? %>
-              <%= image_tag partner_logo(learning_partner, :small), alt: 'Logo', class: 'h-[80px] w-[80px] object-contain' %>
-            <% else %>
-              <%= image_tag 'logo_placeholder.png', class: 'h-[80px] w-[80px] object-contain' %>
-            <% end %>
-            <span class="text-sm font-medium"><%= learning_partner.name %></span>
-          </div>
-        <% end %>
-      </li>
+<div class="flex flex-col gap-4 mt-4 md:mt-5 mb-5 md:mb-6">
+  <div class="flex justify-between items-center ">
+    <%= h3_component(text: "Partner List") %>
+    <%= link_to new_learning_partner_path, class: 'inline-block' do %>
+      <%= button_component(text: 'Add Partner', icon_name: "plus") %>
     <% end %>
-  </ul>
-  <div class="mx-4 my-6 text-center">
-    <%= paginator_component(collection: @learning_partners, path: learning_partners_path) %>
   </div>
+  <div class="w-full">
+    <%= form_with do |f| %>
+      <div class="flex gap-3">
+        <%= input_text_component(form: f, placeholder: 'Search partners', icon_name: 'magnifying-glass', icon_position: 'left', disabled: true) %>
+        <%= f.button type: :submit, disabled: true do %>
+          <%= button_component(text: 'Search', type: 'outline', disabled: true) %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<ul class="w-full">
+  <% @learning_partners.each do |learning_partner| %>
+    <li class="px-4 md:px-5 py-3 md:py-3 first:rounded-t-lg first:md:rounded-t-xl last:rounded-b-lg last:md:rounded-b-xl border border-line-colour border-b-0 last:border-b">
+      <%= link_to learning_partner_path(learning_partner), class: "inline-block w-full" do %>
+        <div class="flex gap-5">
+          <div>
+            <% if learning_partner.logo.attached? %>
+              <%= image_tag partner_logo(learning_partner, :small), alt: 'Logo', class: 'h-[50px] w-[50px] md:h-[70px] md:w-[70px] object-contain' %>
+            <% else %>
+              <%= image_tag 'logo_placeholder.png', class: 'h-[50px] w-[50px] md:h-[70px] md:w-[70px] object-contain' %>
+            <% end %>
+          </div>
+
+          <div class="flex items-center justify-between flex-grow">
+            <div class="flex flex-col">
+              <div><span class="main-text-lg-normal"><%= learning_partner.name %></span></div>
+              <% unless learning_partner.first_owner_joined? %>
+                <%= chip_component(text: 'Owner not joined', colorscheme: 'danger', icon_name: 'x-mark') %>
+              <% end %>
+            </div>
+
+            <%= progress_circle_component(numerator: learning_partner.active_users_count, denominator: learning_partner.payment_plan&.total_seats) %>
+          </div>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<div class="my-6 flex justify-end">
+  <%= paginator_component(collection: @learning_partners, path: learning_partners_path) %>
+</div>

@@ -26,4 +26,5 @@ module UiHelper
   include ViewComponent::TextareaComponent
   include ViewComponent::DropdownComponent
   include ViewComponent::ChipComponent
+  include ViewComponent::ProgressComponent
 end
