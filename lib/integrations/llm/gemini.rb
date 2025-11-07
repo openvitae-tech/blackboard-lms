@@ -11,6 +11,7 @@ module Integrations
       SUPPORTED_MODELS = %w[gemini-2.5-pro gemini-2.5-flash gemini-2.5-flash-lite].freeze
       DEFAULT_MODEL = 'gemini-2.5-flash'
       TRANSCRIPTION_PROMPT = 'Generate timestamped transcription for the given audio file'
+      RESPONSE_TYPES = %i[text json].freeze
 
       def initialize(model)
         super()
@@ -49,12 +50,17 @@ module Integrations
         Result.error(e.message)
       end
 
+      def response_type_allowed?(response_type)
+        RESPONSE_TYPES.include?(response_type.to_sym)
+      end
+
       def schema_class(response_type)
+        return nil if response_type_allowed?(response_type)
+
         str_response_type = response_type.to_s.camelize
         JsonSchema.const_get(str_response_type)
       rescue NameError
-        Rails.logger.info "Schema class not found for response type: #{response_type}"
-        nil
+        raise StandardError, "Schema class or implementation not found for response type: #{response_type}"
       end
     end
   end
