@@ -1,0 +1,17 @@
+<%= modal_box_component(title: "Sample modal") do %>
+    <%= form_with url: "#", method: :post do |form| %>
+    <div class="flex flex-col gap-7">
+      <p class="main-text-lg-normal">
+        Tis is a smaple modal box ,would you like to continue?,if yes please submit.    
+      </p>
+    
+      <div class="flex gap-2">
+        <%= button_component(type: 'outline', text: "Cancel") %>
+        <%= form.button type: :submit do %>
+          <%= button_component(text: 'Submit') %>
+        <% end %>    
+      </div>
+    </div>
+      
+  <% end %>  
+<% end %>

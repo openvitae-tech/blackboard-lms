@@ -8,6 +8,7 @@
 @import "file_selector.tailwind.css";
 @import "menu_component.tailwind.css";
 @import "breadcrumbs.tailwind.css";
+@import "modalbox.tailwind.css";
 
 
 @layer base {

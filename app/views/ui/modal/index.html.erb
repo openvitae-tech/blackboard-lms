@@ -1,0 +1,16 @@
+
+
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+
+<%= h3_component(text: "Modal Component") %>
+
+<%= doc_section_component(title: "Sample modal") do %>
+  <%= link_to ui_modal_preview_path, data: { turbo_frame: "modal" } do %>
+    <%= button(label: "Click here for modal") %>
+  <% end %>
+<% end %>
+
+
+
