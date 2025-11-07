@@ -28,19 +28,9 @@
   @apply whitespace-nowrap overflow-hidden text-ellipsis max-w-[220px] sm:max-w-[300px] md:max-w-[300px];
 }
 
-.breadcrumbs-wrapper.expanded .breadcrumbs-intermediate-link,
-.breadcrumbs-wrapper.expanded .breadcrumbs-last-link {
-  @apply whitespace-normal break-words overflow-visible max-w-full;
-}
-
 @screen md {
   .breadcrumbs-intermediate-link,
   .breadcrumbs-last-link {
-    @apply whitespace-nowrap overflow-hidden text-ellipsis max-w-[300px];
-  }
-
-  .breadcrumbs-wrapper.expanded .breadcrumbs-intermediate-link,
-  .breadcrumbs-wrapper.expanded .breadcrumbs-last-link {
     @apply whitespace-nowrap overflow-hidden text-ellipsis max-w-[300px];
   }
 }
