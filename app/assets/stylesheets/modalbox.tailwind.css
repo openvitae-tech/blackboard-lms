@@ -3,7 +3,7 @@
 }
 
 .modal-container {
-  @apply relative w-[300px] md:w-[440px];
+  @apply relative w-[300px] md:w-[400px];
 }
 
 .modal-content {
