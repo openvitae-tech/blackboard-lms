@@ -7,7 +7,7 @@
   <div class="absolute menu-component-list-box hidden <%= position_class %>"
        data-menu-component-target="moreMenu"
        <%= tag.attributes(html_options) %>>
-    <div class="menu-component-list-items">
+    <div class="menu-component-list">
       <% menu_items.each do |item| %>
         <%= render "view_components/menu_component/menu_item_#{item.type}", item: item %>
       <% end %>

@@ -24,4 +24,5 @@ module UiHelper
   include ViewComponent::TextareaComponent
   include ViewComponent::DropdownComponent
   include ViewComponent::BreadcrumbsComponent
+  include ViewComponent::MenuComponent
 end
