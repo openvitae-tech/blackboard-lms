@@ -1,6 +1,7 @@
 .breadcrumbs-list-container {
   @apply py-1 flex flex-wrap items-start gap-x-1 gap-y-2 text-primary ;
 }
+
 @media (max-width: 767px) {
   .breadcrumbs-list-container > .group:not(:nth-last-child(2)) {
     @apply hidden;
@@ -61,5 +62,5 @@ border-b-slate-grey-50;
 }
 
 .breadcrumbs-divider-arrow {
-  @apply h-3 w-3 md:h-4 md:w-4 flex-shrink-0;
+  @apply h-4 w-4 flex-shrink-0 text-letter-color-light;
 }
