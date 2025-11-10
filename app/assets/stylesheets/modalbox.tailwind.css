@@ -11,7 +11,7 @@
 }
 
 .modal-header {
-  @apply flex items-center justify-between border-b border-line-colour-light px-7 md:px-8 py-4 md:py-5;
+  @apply flex items-center gap-1 justify-between border-b border-line-colour-light pl-7 md:pl-8 pr-4 md:pr-5 py-4 md:py-5;
 }
 
 .modal-body {
