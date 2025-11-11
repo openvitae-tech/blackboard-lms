@@ -31,6 +31,18 @@ RSpec.describe 'Request spec for GET /courses' do
       expect(assigns[:available_courses].pluck(:id).sort).to eq(Course.published.pluck(:id).sort)
     end
 
+    it 'list only public courses for whose learning partner is public' do
+      learning_partner = create(:learning_partner, is_public: true)
+      user = create :user, :learner, learning_partner: learning_partner
+      new_course = create(:course, visibility: 'public', is_published: true)
+
+      sign_in user
+
+      get courses_path
+
+      expect(assigns[:available_courses].pluck(:id).sort).to eq([new_course.id])
+    end
+
     it 'shows only 4 enrolled courses on the learner dashboard' do
       [0, 2, 4, 6].each do |index|
         courses[index].enroll!(user)

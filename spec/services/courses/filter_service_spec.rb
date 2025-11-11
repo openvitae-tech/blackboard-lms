@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Courses::FilterService do
+  let(:learning_partner) { create :learning_partner }
+
   describe 'with search term' do
     before do
       title = 'My best course'
@@ -30,13 +32,28 @@ RSpec.describe Courses::FilterService do
     end
 
     describe 'by non admin user' do
-      let(:user) { create(:user, role: :manager) }
+      let(:user) { create(:user, role: :manager, learning_partner:) }
 
       it 'filters published courses using search term' do
         service = Courses::FilterService.new(user, search_context)
         result = service.filter
         expect(result.records.count).to eq(1)
         expect(result.records).to eq([@published1])
+      end
+
+      it 'list only public courses for the user whose learning partner is public' do
+        learning_partner = create(:learning_partner, is_public: true)
+        user_one = create(:user, :learner, learning_partner:)
+        @published1.update!(visibility: 'public')
+
+        search_context = SearchContext.new(
+          context: SearchContext::COURSE_LISTING,
+          term: ''
+        )
+        service = Courses::FilterService.new(user_one, search_context)
+        result = service.filter
+
+        expect(result.records.pluck(:id)).to eq([@published1.id])
       end
     end
   end
@@ -71,7 +88,7 @@ RSpec.describe Courses::FilterService do
     end
 
     describe 'by non admin user' do
-      let(:user) { create(:user, role: :manager) }
+      let(:user) { create(:user, role: :manager, learning_partner:) }
 
       let(:search_context) do
         SearchContext.new(
@@ -89,7 +106,7 @@ RSpec.describe Courses::FilterService do
     end
 
     describe 'with multiple level tags' do
-      let(:user) { create(:user, role: :manager) }
+      let(:user) { create(:user, role: :manager, learning_partner:) }
 
       let(:search_context) do
         SearchContext.new(
@@ -107,7 +124,7 @@ RSpec.describe Courses::FilterService do
     end
 
     describe 'with multiple category tags' do
-      let(:user) { create(:user, role: :manager) }
+      let(:user) { create(:user, role: :manager, learning_partner:) }
 
       let(:search_context) do
         SearchContext.new(
@@ -125,7 +142,7 @@ RSpec.describe Courses::FilterService do
     end
 
     describe 'with multiple category tags and single level' do
-      let(:user) { create(:user, role: :manager) }
+      let(:user) { create(:user, role: :manager, learning_partner:) }
 
       let(:search_context) do
         SearchContext.new(
@@ -143,7 +160,7 @@ RSpec.describe Courses::FilterService do
     end
 
     describe 'for both multiple categories and multiple levels' do
-      let(:user) { create(:user, role: :manager) }
+      let(:user) { create(:user, role: :manager, learning_partner:) }
 
       let(:search_context) do
         SearchContext.new(
@@ -165,7 +182,7 @@ RSpec.describe Courses::FilterService do
     end
 
     describe 'for multiple categories, multiple levels and term' do
-      let(:user) { create(:user, role: :manager) }
+      let(:user) { create(:user, role: :manager, learning_partner:) }
 
       let(:search_context) do
         SearchContext.new(

@@ -34,6 +34,7 @@ FactoryBot.define do
   factory :course do
     title { Faker::Lorem.sentence(word_count: 6) }
     description { Faker::Lorem.paragraph_by_chars(number: 140) }
+    visibility { 'private' }
 
     trait :with_attachment do
       banner { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/less_than_1_mb.jpg').to_s) }

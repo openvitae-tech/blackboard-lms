@@ -2,7 +2,7 @@
   <%= form_with(model: course) do |form| %>
     <%= render "shared/components/form_errors", resource: course %>
     <div class="mb-8 text-sm">
-      <%= input_field(form:, field_name: :title, label: "Title", placeholder: "Enter the Title",type: "text",width:"w-full") %>     
+      <%= input_field(form:, field_name: :title, label: "Title", placeholder: "Enter the Title",type: "text",width:"w-full") %>
     </div>
     <div class="my-8 text-sm">
       <div class="flex justify-between">
@@ -19,6 +19,25 @@
     <div class="my-8 text-sm flex flex-col">
       <%= input_dropdown(form:, field_name: :level_id, label: "Level", options: @levels.pluck(:name, :id), value: @level&.id) %>
     </div>
+
+    <div>
+      <label class="text-letter-color-light text-sm md:text-base leading-tight">
+          Set course visibility
+      </label>
+      <% course_visibility.each do |item| %>
+        <div class="mt-3">
+          <%= input_radio(
+                field_name: "course[visibility]",
+                option: item.capitalize,
+                value: item,
+                html_options: {
+                  checked: course&.visibility == item
+                }
+              ) %>
+        </div>
+      <% end %>
+    </div>
+
     <div class="my-8 text-sm">
       <%= input_textarea_component(form:, field_name: :description, label: "Description", placeholder: "Enter description") %>
     </div>
