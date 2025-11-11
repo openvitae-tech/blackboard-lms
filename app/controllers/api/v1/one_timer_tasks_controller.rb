@@ -5,7 +5,7 @@ module Api
     class OneTimerTasksController < ApiController
       before_action :load_rake_tasks
 
-      TASKS = [:upload_from_s3_to_vimeo]
+      TASKS = [:generate_transcripts_for_existing_videos]
 
       def run_tasks
         results = []
