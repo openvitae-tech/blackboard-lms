@@ -104,7 +104,7 @@ module LessonsHelper
     ).call
   end
 
-  def lesson_transcript_available?(lesson)
-    policy(lesson).edit? && default_local_content(lesson)&.transcripts.present?
+  def readable_milliseconds(msecs)
+    Time.at(msecs / 1000).utc.strftime('%M:%S')
   end
 end
