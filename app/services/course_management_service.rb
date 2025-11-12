@@ -223,7 +223,11 @@ class CourseManagementService
 
     return if user.learning_partner.active_certificate_template.blank?
 
-    GenerateCourseCertificateJob.perform_async(course_module.course.id, user.id,
-                                               user.learning_partner.active_certificate_template.id)
+    key = "GenerateCertificate:#{course_module.course.id}:#{user.id}"
+
+    Rails.cache.fetch(key, expires_in: 1.hour) do
+      GenerateCourseCertificateJob.perform_async(course_module.course.id, user.id,
+                                                 user.learning_partner.active_certificate_template.id)
+    end
   end
 end
