@@ -45,6 +45,34 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def generate
+    authorize Quiz
+
+    quizzes = Quizzes::GenerationService.new(@course_module).generate_via_ai
+    if quizzes.empty?
+      redirect_to course_module_path(@course, @course_module), notice: 'Quiz generation via AI failed. Please try again later.'
+      return
+    end
+
+    quizzes.each do |quiz_data|
+      quiz = @course_module.quizzes.new(
+        question: quiz_data['question'],
+        option_a: quiz_data['options'][0],
+        option_b: quiz_data['options'][1],
+        option_c: quiz_data['options'][2],
+        option_d: quiz_data['options'][3],
+        answer: quiz_data['answer_text']
+      )
+      if quiz.save
+        service = CourseManagementService.instance
+        service.update_quiz_ordering!(@course_module, quiz, :create)
+      else
+        Rails.logger.error("Failed to save generated quiz: #{quiz.errors.full_messages.join(', ')}")
+      end
+    end
+    redirect_to course_module_path(@course, @course_module), notice: 'Quizzes were successfully generated via AI.'
+  end
+
   def destroy
     authorize @quiz
 

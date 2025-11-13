@@ -81,9 +81,12 @@
 <div class="flex justify-between">
   <h1 class="heading page-sub-heading">Quizzes</h1>
   <% if policy(:quiz).new? && @course_module.quizzes.present? %>
-    <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
-      <%= button(label: 'New quiz',  icon_name: "plus") %>
-    <% end %>
+    <div class="flex gap-4">
+      <%= render 'course_modules/generate_quiz_button', course: @course, course_module: @course_module %>
+      <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
+        <%= button(label: 'New quiz',  icon_name: "plus") %>
+      <% end %>
+    </div>
   <% end %>
 </div>
 <% if current_user.is_admin? %>
@@ -103,6 +106,15 @@
                   <%= link_to edit_course_module_quiz_path(@course, @course_module, quiz) do %>
                     <%= button(label: "Edit", type: "secondary",size:"sm", icon_name: "pencil") %>
                   <% end %>
+                <% end %>
+                <% if policy(quiz).destroy? %>
+                  <%= link_to course_module_quiz_path(@course, @course_module, quiz),
+                              data: { turbo_method: :delete, turbo_confirm: "Are you sure want to delete?"} do %>
+                    <%= button(label: "Delete", type: "danger", size:"sm", icon_name: "trash") %>
+                  <% end %>
+                <% else %>
+                  <%= button(label: "Delete", type: "danger", size: "sm", icon_name: "trash",
+                             tooltip_text: quiz_delete_tooltip_message(@course), disabled: true) %>
                 <% end %>
                 <div class="flex flex-col items-center">
                   <% if policy(:lesson).moveup? %>
@@ -126,9 +138,14 @@
         <li class="mb-4 gap-2 justify-between rounded border p-6 text-sm border-line-colour-light">
           <div class="flex flex-col items-center justify-center">
             <h2 class="text-semibold pb-4"><%= t("quiz.empty") %></h2>
-            <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
-              <%= button(label: 'New quiz', icon_name: "plus" ) %>
-            <% end %>
+            <div class="flex gap-4">
+              <%= link_to generate_course_module_quizzes_path(@course, @course_module), class: "nav-link" do %>
+                <%= button_component(text: 'Generate Quiz', icon_name: "sparkles" ) %>
+              <% end %>
+              <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
+                <%= button(label: 'New quiz', icon_name: "plus" ) %>
+              <% end %>
+            </div>
           </div>
         </li>
       <% end %>
