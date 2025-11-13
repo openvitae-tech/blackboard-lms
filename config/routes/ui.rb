@@ -18,5 +18,6 @@ Rails.application.routes.draw do
     get :textarea, to: 'textarea#index'
     get :dropdown, to: 'dropdown#index'
     get :menu_component, to: 'menu_component#index'
+    get :breadcrumbs, to: 'breadcrumbs#index'
   end
 end
