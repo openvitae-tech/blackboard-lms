@@ -8,7 +8,7 @@ module Quizzes
 
     def initialize(course_module)
       @course_module = course_module
-      @transcripts = summerized_transcripts
+      @transcripts = summarized_transcripts
     end
 
     def generate_via_ai
