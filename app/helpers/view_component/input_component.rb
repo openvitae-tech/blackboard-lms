@@ -172,5 +172,29 @@ module ViewComponent
 
       render partial: 'view_components/inputs/file_selector', locals: { file_selector: }
     end
+
+    def input_mobile_component(
+      form: nil,
+      name: nil,
+      label: nil,
+      placeholder: 'Enter your mobile number',
+      country_code: '',
+      value: '',
+      subtext: nil,
+      error: nil,
+      icon_name: nil,
+      icon_position: 'right',
+      disabled: false,
+      size: 'md',
+      html_options: {}
+    )
+      input = InputMobileComponent.new(
+        form:, name:, label:, type: 'number', placeholder:, code_value: country_code, value:, subtext:, error:,
+        icon_name:, icon_position:, disabled:, size:, html_options:
+      )
+
+      render partial: 'view_components/inputs/input_mobile_component',
+             locals: { input: }
+    end
   end
 end

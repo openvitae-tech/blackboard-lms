@@ -10,7 +10,6 @@ module UiHelper
   include ViewComponent::IconComponent
   include ViewComponent::ButtonComponent
   include ViewComponent::InputComponent
-  include ViewComponent::InputMobileComponent
   include ViewComponent::TableComponent
   include ViewComponent::ModalComponent
   include ViewComponent::CourseCardComponent
