@@ -425,6 +425,7 @@ GEM
       faraday-retry (>= 1)
       marcel (~> 1.0)
       zeitwerk (~> 2)
+    ruby_llm-schema (0.2.1)
     rubyzip (2.3.2)
     scorm-package (0.1.2)
     securerandom (0.4.1)
@@ -563,6 +564,7 @@ DEPENDENCIES
   rubocop-rails (>= 2.25)
   rubocop-rspec (>= 2.25)
   ruby_llm
+  ruby_llm-schema
   rubyzip
   scorm-package (~> 0.1.2)
   selenium-webdriver

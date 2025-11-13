@@ -24,6 +24,7 @@ class ExtractAndSaveAudioJob < BaseJob
           key: "audio/#{filename}"
         )
         local_content.save!
+        TranscribeContentAudioJob.perform_async(local_content.id)
       end
     end
   end
