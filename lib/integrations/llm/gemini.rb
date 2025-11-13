@@ -12,7 +12,7 @@ module Integrations
       DEFAULT_MODEL = 'gemini-2.5-flash'
       TRANSCRIPTION_PROMPT = 'Generate timestamped transcription for the given audio file'
       QUIZ_GENERATION_PROMPT = 'You are an expert quiz generator. Given the following content, \
-        create #COUNT quizzes that tests comprehension, key concepts, and critical thinking.\
+        create #COUNT quizzes that test comprehension, key concepts, and critical thinking.\
         Each quiz should have one question, four options, and indicate the correct answer. \
         Keep questions clear and concise. Avoid references to the source material.'
       RESPONSE_TYPES = %i[text json].freeze
