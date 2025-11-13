@@ -2,14 +2,7 @@
 
 module ViewComponent
   module MenuComponent
-    MenuItem = Struct.new(
-      :label,
-      :url,
-      :type,
-      :options,
-      :extra_classes,
-      keyword_init: true
-    )
+    MenuItem = ViewComponent::MenuItem
 
     MENU_POSITIONS = {
       left: 'menu-component-left',
