@@ -15,4 +15,8 @@ class MyProfilePolicy
   def share_certificate?
     user.is_learner?
   end
+
+  def generate_certificate?
+    user.is_learner?
+  end
 end
