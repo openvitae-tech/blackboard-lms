@@ -6,6 +6,8 @@ class Course < ApplicationRecord
   ENROLLED_COURSES_LIMIT = 4
   PER_PAGE_LIMIT = 12
 
+  enum :visibility, { public: 'public', private: 'private' }, prefix: :visibility
+
   has_many :course_modules, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments
@@ -19,6 +21,7 @@ class Course < ApplicationRecord
   has_one_attached :banner
   validates :title, presence: true, length: { minimum: 6, maximum: 255 }
   validates :description, presence: true, length: { minimum: 32, maximum: 1024 }
+  validates :visibility, presence: true
 
   validate :acceptable_banner
   validate :unique_tags

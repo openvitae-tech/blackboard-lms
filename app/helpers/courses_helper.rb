@@ -178,6 +178,10 @@ module CoursesHelper
     end
   end
 
+  def course_visibility
+    %w[public private]
+  end
+
   private
 
   def partner_metrics

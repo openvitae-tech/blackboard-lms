@@ -89,6 +89,8 @@ module Courses
 
       scope = scope.published unless user.is_admin?
 
+      scope = scope.where(visibility: :public) if !user.is_admin? && user.learning_partner.is_public?
+
       scope.includes(%i[banner_attachment tags])
            .order(created_at: :desc)
     end
