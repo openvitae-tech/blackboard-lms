@@ -21,10 +21,10 @@ RSpec.describe Quizzes::GenerationService do
 
   describe '#initialize' do
     it 'sets course_module and transcripts' do
-      summerized_transcripts = [{ title: lesson_one.title, transcripts: transcript_one.text },
+      summarized_transcripts = [{ title: lesson_one.title, transcripts: transcript_one.text },
                                 { title: lesson_two.title, transcripts: transcript_two.text }]
       expect(service.course_module).to eq(course_module)
-      expect(service.transcripts).to eq(summerized_transcripts)
+      expect(service.transcripts).to eq(summarized_transcripts)
     end
   end
 

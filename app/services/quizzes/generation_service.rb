@@ -41,7 +41,7 @@ module Quizzes
 
     private
 
-    def summerized_transcripts
+    def summarized_transcripts
       module_transcripts = course_module.lessons.includes(local_contents: :transcripts).collect do |lesson|
         content = lesson.local_contents.first
         {
