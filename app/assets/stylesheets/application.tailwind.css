@@ -7,6 +7,7 @@
 @import "dropdown.tailwind.css";
 @import "file_selector.tailwind.css";
 @import "menu_component.tailwind.css";
+@import "breadcrumbs.tailwind.css";
 
 
 @layer base {
@@ -371,4 +372,3 @@ input.tags-checkbox:checked:focus {
 .code {
   @apply bg-black text-white p-4 overflow-x-auto;
 }
-
