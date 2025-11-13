@@ -19,6 +19,7 @@ class LearningPartner < ApplicationRecord
   validate :acceptable_banner
   validate :supported_countries_must_be_valid
   validate :only_one_supported_country
+  validate :only_one_public_partner
 
   has_one_attached :logo
   has_one_attached :banner
@@ -59,5 +60,13 @@ class LearningPartner < ApplicationRecord
     return unless supported_countries.size > 1
 
     errors.add(:supported_countries, 'can only have one country')
+  end
+
+  def only_one_public_partner
+    return unless is_public?
+
+    return unless LearningPartner.where(is_public: true).where.not(id: id).exists?
+
+    errors.add(:base, 'Public learning partner already exists.')
   end
 end
