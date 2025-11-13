@@ -138,14 +138,14 @@
         <li class="mb-4 gap-2 justify-between rounded border p-6 text-sm border-line-colour-light">
           <div class="flex flex-col items-center justify-center">
             <h2 class="text-semibold pb-4"><%= t("quiz.empty") %></h2>
+            <% if policy(:quiz).new? %>
             <div class="flex gap-4">
-              <%= link_to generate_course_module_quizzes_path(@course, @course_module), class: "nav-link" do %>
-                <%= button_component(text: 'Generate Quiz', icon_name: "sparkles" ) %>
-              <% end %>
+              <%= render 'course_modules/generate_quiz_button', course: @course, course_module: @course_module %>
               <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
                 <%= button(label: 'New quiz', icon_name: "plus" ) %>
               <% end %>
             </div>
+            <% end %>
           </div>
         </li>
       <% end %>
