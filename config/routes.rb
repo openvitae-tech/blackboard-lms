@@ -115,7 +115,7 @@ Rails.application.routes.draw do
           put :movedown
         end
         collection do
-          get :generate
+          post :generate
         end
       end
     end
