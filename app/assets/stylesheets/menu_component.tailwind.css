@@ -14,7 +14,7 @@
 }
 
 .menu-component-list-box {
-  @apply w-max min-w-full bg-white rounded-lg border border-line-colour mt-1 z-50 text-slate-grey-50 whitespace-nowrap;
+  @apply w-max min-w-full bg-white rounded-lg md:rounded-xl border border-line-colour mt-1 z-50 text-slate-grey-50 whitespace-nowrap;
 }
 
 .menu-component-left {
@@ -29,7 +29,11 @@
   @apply left-1/2 -translate-x-1/2;
 
 }
-.menu-component-list-items {
-  @apply flex flex-col divide-y divide-line-colour;
+
+.menu-component-list {
+  @apply flex flex-col divide-y divide-line-colour text-letter-color;
 }
 
+.menu-component-list-items{
+  @apply p-4 md:px-5 md:py-4 hover:bg-primary-light-50 flex w-full;
+}
