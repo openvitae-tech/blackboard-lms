@@ -54,23 +54,31 @@ class QuizzesController < ApplicationController
       return
     end
 
+    service = CourseManagementService.instance
+    saved_count = 0
     quizzes.each do |quiz_data|
+      options = quiz_data['options'] || []
+      unless options.count == 4
+        Rails.logger.error("Invalid quiz data: expected 4 options, got #{options.count}")
+        next
+      end
       quiz = @course_module.quizzes.new(
         question: quiz_data['question'],
-        option_a: quiz_data['options'][0],
-        option_b: quiz_data['options'][1],
-        option_c: quiz_data['options'][2],
-        option_d: quiz_data['options'][3],
+        option_a: options[0],
+        option_b: options[1],
+        option_c: options[2],
+        option_d: options[3],
         answer: quiz_data['answer_text']
       )
       if quiz.save
-        service = CourseManagementService.instance
+        saved_count += 1
         service.update_quiz_ordering!(@course_module, quiz, :create)
       else
         Rails.logger.error("Failed to save generated quiz: #{quiz.errors.full_messages.join(', ')}")
       end
     end
-    redirect_to course_module_path(@course, @course_module), notice: 'Quizzes were successfully generated via AI.'
+    redirect_to course_module_path(@course, @course_module),
+                notice: "#{saved_count} quizzes were successfully generated via AI."
   end
 
   def destroy
