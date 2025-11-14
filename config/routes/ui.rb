@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     get 'inputs/checkbox', to: 'inputs#checkbox'
     get 'inputs/file_selector', to: 'inputs#file_selector'
     get 'inputs/mobile_inputs', to: 'inputs#mobile_inputs'
+    get 'inputs/textarea', to: 'inputs#textarea'
+    get 'inputs/dropdown', to: 'inputs#dropdown'
+
     get :tables, to: 'tables#index'
     get :notification_bars, to: 'notification_bars#index'
     get :app_components, to: 'components#app'

@@ -196,5 +196,66 @@ module ViewComponent
       render partial: 'view_components/inputs/input_mobile_component',
              locals: { input: }
     end
+
+    def textarea_component(
+      name:,
+      placeholder:,
+      form: nil,
+      label: nil,
+      value: nil,
+      rows: 5,
+      size: 'md',
+      support_text: nil,
+      error: nil,
+      disabled: false,
+      html_options: {}
+    )
+      textarea = TextareaComponent.new(
+        form:,
+        name:,
+        label:,
+        placeholder:,
+        value:,
+        rows:,
+        size:,
+        support_text:,
+        error:,
+        disabled:,
+        html_options:
+      )
+
+      render partial: 'view_components/inputs/textarea_component/textarea', locals: { textarea: }
+    end
+
+    def dropdown_component(
+      form: nil,
+      name: nil,
+      label: nil,
+      options: [],
+      value: nil,
+      size: 'md',
+      support_text: nil,
+      error: nil,
+      disabled: false,
+      html_options: {},
+      prompt: nil
+    )
+      dropdown = DropdownComponent.new(
+        form:,
+        name:,
+        label:,
+        options:,
+        value:,
+        size:,
+        support_text:,
+        error:,
+        disabled:,
+        html_options:,
+        prompt:
+      )
+
+      render partial: 'view_components/inputs/dropdown_component/dropdown',
+             locals: { dropdown: }
+    end
   end
 end

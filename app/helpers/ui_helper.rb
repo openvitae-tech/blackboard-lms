@@ -20,8 +20,6 @@ module UiHelper
   include ViewComponent::PaginatorComponent
   include ViewComponent::InputTextareaComponent
   include ViewComponent::DocSectionComponent
-  include ViewComponent::TextareaComponent
-  include ViewComponent::DropdownComponent
   include ViewComponent::BreadcrumbsComponent
   include ViewComponent::MenuComponent
 end
