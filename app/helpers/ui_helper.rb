@@ -22,4 +22,5 @@ module UiHelper
   include ViewComponent::DocSectionComponent
   include ViewComponent::BreadcrumbsComponent
   include ViewComponent::MenuComponent
+  include ViewComponent::ModalBoxComponent
 end
