@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :user_searches, only: %i[index create]
   resources :reports, only: %i[new create show]
 
+  namespace :webhooks do
+    resources :chatwoot, only: :create, defaults: { format: :json }
+  end
+
   resources :searches, only: [:index] do
     collection do
       match '/', to: 'searches#index', via: %i[get post], as: ''
