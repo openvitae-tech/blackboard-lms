@@ -46,4 +46,8 @@ class LessonPolicy
   def movedown?
     user.is_admin?
   end
+
+  def transcribe?
+    user.is_admin?
+  end
 end
