@@ -32,7 +32,7 @@ class LocalContent < ApplicationRecord
   validate :presence_of_blob_id
 
   def english?
-    lang == SUPPORTED_LANGUAGES[:english].downcase
+    lang.downcase == SUPPORTED_LANGUAGES[:english].downcase
   end
 
   private
