@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module ViewComponent
-  module TextareaComponent
-    TEXTAREA_SIZES = %w[md lg].freeze
-
+  module InputComponent
     class TextareaComponent
       include ViewComponent::ComponentHelper
+
+      TEXTAREA_SIZES = %w[md lg].freeze
 
       TEXTAREA_SIZE_STYLE = {
         md: 'textarea-component-md main-text-md-normal',
@@ -96,36 +96,6 @@ module ViewComponent
 
         class_list(base, size_style, color_style)
       end
-    end
-
-    def textarea_component(
-      name:,
-      placeholder:,
-      form: nil,
-      label: nil,
-      value: nil,
-      rows: 5,
-      size: 'md',
-      support_text: nil,
-      error: nil,
-      disabled: false,
-      html_options: {}
-    )
-      textarea = TextareaComponent.new(
-        form:,
-        name:,
-        label:,
-        placeholder:,
-        value:,
-        rows:,
-        size:,
-        support_text:,
-        error:,
-        disabled:,
-        html_options:
-      )
-
-      render partial: 'view_components/textarea_component/textarea', locals: { textarea: }
     end
   end
 end

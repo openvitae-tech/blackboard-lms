@@ -72,6 +72,7 @@ Rails.application.routes.draw do
   resource :profile, only: :show, controller: 'my_profiles' do
     collection do
       get :share_certificate
+      post :generate_certificate
     end
   end
 

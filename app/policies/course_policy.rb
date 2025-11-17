@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CoursePolicy
+  include CourseVisibilityHelper
+
   attr_reader :user, :course
 
   def initialize(user, course)
@@ -23,6 +25,8 @@ class CoursePolicy
   def show?
     return true if user.is_admin?
 
+    return false unless visible_course?(course)
+
     @course.published? || user.enrolled_for_course?(course)
   end
 
@@ -40,6 +44,8 @@ class CoursePolicy
   end
 
   def enroll?
+    return false unless visible_course?(course)
+
     !user.is_admin? && !user.enrolled_for_course?(course)
   end
 

@@ -161,4 +161,16 @@ RSpec.describe LearningPartner, type: :model do
       expect(learning_partner.active_certificate_template).to eq(@certificate_template)
     end
   end
+
+  describe '#only_one_public_partner' do
+    before { create(:learning_partner, is_public: true) }
+
+    it 'adds an error if another public learning_partner is present' do
+      learning_partner_two = build(:learning_partner, is_public: true)
+
+      expect(learning_partner_two).not_to be_valid
+      expect(learning_partner_two.errors.full_messages.to_sentence)
+        .to eq('Public learning partner already exists.')
+    end
+  end
 end

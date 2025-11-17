@@ -1,0 +1,45 @@
+.breadcrumbs-list-container {
+  @apply py-1 flex flex-wrap items-start gap-x-1 gap-y-2 text-primary ;
+}
+
+.breadcrumbs-list {
+  @apply flex items-center gap-1 overflow-hidden;
+}
+
+.breadcrumbs-list-content {
+  @apply flex items-center min-w-0;
+}
+
+.breadcrumbs-intermediate-link,
+.breadcrumbs-last-link {
+  @apply whitespace-nowrap overflow-hidden text-ellipsis max-w-[300px];
+}
+
+.breadcrumbs-tooltip {
+  @apply whitespace-nowrap py-1 px-2 text-xs text-white bg-slate-grey-50 rounded opacity-0 transition-opacity duration-200
+  z-10 pointer-events-none top-full mt-2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .breadcrumbs-tooltip {
+    @apply opacity-100 visible;
+  }
+}
+
+.breadcrumbs-tooltip::before {
+  @apply content-[""] absolute w-0 h-0 border-solid left-1/2 -top-1 -translate-x-1/2
+  border-x-4 border-b-4 border-t-0 border-x-white border-t-white
+border-b-slate-grey-50;
+}
+
+.breadcrumbs-intermediate-link {
+  @apply hover:underline hover:text-primary-light;
+}
+
+.breadcrumbs-last-link {
+  @apply hover:underline text-letter-color-light hover:text-primary-light;
+}
+
+.breadcrumbs-divider-arrow {
+  @apply h-4 w-4 flex-shrink-0 text-letter-color-light;
+}

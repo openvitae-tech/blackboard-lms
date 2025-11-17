@@ -118,7 +118,8 @@ class DevelopmentSeed
     course = Course.create!(
       title:,
       description:,
-      is_published: true
+      is_published: true,
+      visibility: "private"
     )
 
     Thread.new do

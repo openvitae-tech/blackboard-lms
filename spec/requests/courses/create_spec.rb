@@ -88,7 +88,8 @@ RSpec.describe 'Request spec for POST /course' do
           banner: image_file,
           description: Faker::Lorem.paragraph_by_chars(number: 141),
           category_id: @category_tag.id,
-          level_id: @level_tag.id
+          level_id: @level_tag.id,
+          visibility: 'private'
         }
       }
 

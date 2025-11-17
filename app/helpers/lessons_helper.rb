@@ -103,4 +103,8 @@ module LessonsHelper
       associations:
     ).call
   end
+
+  def readable_milliseconds(msecs)
+    Time.at(msecs / 1000).utc.strftime('%M:%S')
+  end
 end
