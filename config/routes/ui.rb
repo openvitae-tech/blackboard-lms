@@ -11,7 +11,9 @@ Rails.application.routes.draw do
     get 'inputs/radio_button', to: 'inputs#radio_button'
     get 'inputs/checkbox', to: 'inputs#checkbox'
     get 'inputs/file_selector', to: 'inputs#file_selector'
-    get :mobile_inputs, to: 'mobile_inputs#index'
+    get 'inputs/mobile_inputs', to: 'inputs#mobile_inputs'
+    get 'inputs/textarea', to: 'inputs#textarea'
+    get 'inputs/dropdown', to: 'inputs#dropdown'
     get :tables, to: 'tables#index'
     get :notification_bars, to: 'notification_bars#index'
     get :app_components, to: 'components#app'
@@ -19,5 +21,7 @@ Rails.application.routes.draw do
     get :dropdown, to: 'dropdown#index'
     get :menu_component, to: 'menu_component#index'
     get :breadcrumbs, to: 'breadcrumbs#index'
+    get :modal_component, to: 'modal#index'
+    get :modal_preview, to: 'modal#preview'
   end
 end

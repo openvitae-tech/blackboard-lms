@@ -2,10 +2,10 @@
   <% if dropdown.label.present? %>
     <label class="group">
       <span class="<%= dropdown.label_style %> inline-block mb-1"><%= dropdown.label %></span>
-      <%= render 'view_components/dropdown_component/select_box', { dropdown: } %>
+      <%= render 'view_components/inputs/dropdown_component/select_box', { dropdown: } %>
     </label>
   <% else %>
-    <%= render 'view_components/dropdown_component/select_box', { dropdown: } %>
+    <%= render 'view_components/inputs/dropdown_component/select_box', { dropdown: } %>
   <% end %>
 
   <% if dropdown.support_text.present? %>

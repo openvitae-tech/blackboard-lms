@@ -2,10 +2,10 @@
   <% if textarea.label.present? %>
     <label class="group">
       <span class="<%= textarea.label_style %>"><%= textarea.label %></span>
-      <%= render 'view_components/textarea_component/text_area_box', { textarea: } %>
+      <%= render 'view_components/inputs/textarea_component/text_area_box', { textarea: } %>
     </label>
   <% else %>
-    <%= render 'view_components/textarea_component/text_area_box', { textarea: } %>
+    <%= render 'view_components/inputs/textarea_component/text_area_box', { textarea: } %>
   <% end %>
 
   <% if textarea.support_text.present? %>
