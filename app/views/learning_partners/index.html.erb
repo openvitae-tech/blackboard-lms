@@ -37,7 +37,7 @@
                 <%= chip_component(text: 'Owner not joined', colorscheme: 'danger', icon_name: 'x-mark') %>
               <% end %>
             </div>
-            <div class="flex flex-col justify-between h-full">
+            <div class="flex flex-col gap-1">
               <div class="main-text-sm-normal text-primary">Seats</div>
               <div class="main-text-sm-normal text-primary"><%= learning_partner.active_users_count %>/<%= learning_partner.payment_plan&.total_seats %></div>
               <%= progressbar_component(numerator: learning_partner.active_users_count, denominator: learning_partner.payment_plan&.total_seats) %>
