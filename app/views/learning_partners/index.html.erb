@@ -32,13 +32,16 @@
 
           <div class="flex items-center justify-between flex-grow">
             <div class="flex flex-col">
-              <div><span class="main-text-lg-normal"><%= learning_partner.name %></span></div>
+              <div><span class="main-text-lg-normal"><%= truncate(learning_partner.name, length: 30) %></span></div>
               <% unless learning_partner.first_owner_joined? %>
                 <%= chip_component(text: 'Owner not joined', colorscheme: 'danger', icon_name: 'x-mark') %>
               <% end %>
             </div>
-
-            <%= progress_circle_component(numerator: learning_partner.active_users_count, denominator: learning_partner.payment_plan&.total_seats) %>
+            <div class="flex flex-col justify-between h-full">
+              <div class="main-text-sm-normal text-primary">Seats</div>
+              <div class="main-text-sm-normal text-primary"><%= learning_partner.active_users_count %>/<%= learning_partner.payment_plan&.total_seats %></div>
+              <%= progressbar_component(numerator: learning_partner.active_users_count, denominator: learning_partner.payment_plan&.total_seats) %>
+            </div>
           </div>
         </div>
       <% end %>
