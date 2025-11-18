@@ -107,4 +107,8 @@ module LessonsHelper
   def readable_milliseconds(msecs)
     Time.at(msecs / 1000).utc.strftime('%M:%S')
   end
+
+  def transcript_button_title(local_content)
+    local_content.transcripts.present? ? t('lesson.transcribe_again') : t('lesson.transcribe')
+  end
 end
