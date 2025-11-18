@@ -35,5 +35,5 @@
 }
 
 .menu-component-list-items{
-  @apply p-4 md:px-5 md:py-4 hover:bg-primary-light-50 flex w-full;
+  @apply px-4 md:px-5 py-3 md:py-4 hover:bg-primary-light-50 flex w-full;
 }
