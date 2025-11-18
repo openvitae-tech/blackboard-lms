@@ -31,6 +31,12 @@
         </div>
       </div>
     <% end %>
+    <%= link_to transcribe_course_module_lesson_path(@course, @course_module, @lesson),
+                class: "nav-link",
+                data: { turbo_method: :post } do %>
+      <%= button_component(text: "Transcribe Again", size: "sm") %>
+    <% end if policy(@lesson).transcribe? && @local_content.english? %>
+
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
         <% if lesson_completed?(enrollment, lesson) %>
