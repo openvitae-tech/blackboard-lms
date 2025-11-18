@@ -55,10 +55,10 @@ module ViewComponent
       }.freeze
 
       attr_accessor :text, :type, :colorscheme, :size, :icon_name, :icon_position, :tooltip_text, :tooltip_position,
-                    :disabled, :html_options, :color_mapping
+                    :disabled, :hide_label_in_mobile, :html_options, :color_mapping
 
       def initialize(text:, type:, colorscheme:, size:, icon_name:, icon_position:, tooltip_text:, tooltip_position:,
-                     disabled:, html_options:)
+                     disabled:, hide_label_in_mobile:, html_options:)
         self.text = text
         self.type = type
         self.size = size
@@ -68,6 +68,7 @@ module ViewComponent
         self.tooltip_text = tooltip_text
         self.tooltip_position = tooltip_position
         self.disabled = disabled
+        self.hide_label_in_mobile = hide_label_in_mobile
         self.html_options = html_options
         # validation
         raise "Incorrect button type: #{type}" unless BUTTON_TYPES.include? type
@@ -94,8 +95,11 @@ module ViewComponent
       end
 
       def text_styles
-        style = BUTTON_TEXT_STYLE_MAPPING[size.to_sym]
-        ['btn-text-base', style].join(' ')
+        size_styles = BUTTON_TEXT_STYLE_MAPPING[size.to_sym]
+        styles = ['btn-text-base']
+        styles.append('hidden md:flex') if hide_label_in_mobile
+        styles.append(size_styles)
+        styles.join(' ')
       end
 
       def icon_styles
@@ -150,6 +154,7 @@ module ViewComponent
       tooltip_text: '',
       tooltip_position: 'bottom',
       disabled: false,
+      hide_label_in_mobile: false,
       html_options: {}
     )
       button = ButtonComponent.new(
@@ -162,6 +167,7 @@ module ViewComponent
         tooltip_text:,
         tooltip_position:,
         disabled:,
+        hide_label_in_mobile:,
         html_options:
       )
 
