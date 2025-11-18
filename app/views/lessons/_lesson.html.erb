@@ -88,65 +88,17 @@
     </div>
   </div>
   <% if current_user.is_admin? %>
-    <div class="flex py-8">
-      <%= link_to transcribe_course_module_lesson_path(@course, @course_module, @lesson),
-                  class: "nav-link",
-                  data: { turbo_method: :post } do %>
-        <%= button_component(text: "Transcribe Again", type: "outline", size: "sm") %>
-      <% end if policy(@lesson).transcribe? && @local_content.english? %>
-      <div class="flex gap-4 ml-auto"> 
-        <% lesson_navigation_buttons(course, course_module, lesson).each do |item| %>
-          <% if item[:link].blank? %>
-            <%= button(label: item[:label], type: "secondary", disabled: true) %>
-          <% else %>
-            <%= link_to item[:link] do %>
-              <%= button(label: item[:label], type: "secondary") %>
-            <% end %>
+    <div class="flex justify-end gap-4 py-8">
+      <% lesson_navigation_buttons(course, course_module, lesson).each do |item| %>
+        <% if item[:link].blank? %>
+          <%= button(label: item[:label], type: "secondary", disabled: true) %>
+        <% else %>
+          <%= link_to item[:link] do %>
+            <%= button(label: item[:label], type: "secondary") %>
           <% end %>
         <% end %>
-      </div>
+      <% end %>
     </div>
-
-    <% if @local_content.audio.attached? %>
-      <div class="bg-primary-light-50 mt-2 flex flex-col gap-4 p-6">
-        <p class="overflow-hidden text-ellipsis text-xl font-semibold border-b border-line-colour pb-6 heading">Audio</p>
-        <div class="flex gap-2 overflow-hidden show-more-desc text-sm">
-          <div class="h-full overflow-hidden flex text-base">
-          <%= audio_tag rails_blob_url(@local_content.audio), controls: true, type: @local_content.audio.content_type %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    <% if @local_content.transcripts.present? %>
-      <div class="bg-primary-light-50 mt-2 flex flex-col gap-4 p-6" data-controller="course-description-card">
-        <div class="flex justify-between border-b border-line-colour">
-          <p class="overflow-hidden text-ellipsis text-xl font-semibold pb-6 heading">Transcripts</p>
-          <button
-            class="flex rounded p-2 bg-primary-light-50"
-            data-course-description-card-target="showMoreToggle"
-            data-action="click->course-description-card#showMoreToggle"
-            >
-            <span class="text-xs text-primary heading">Show more</span>
-            <span class="hidden icon-arrow-up icon-small bg-primary" data-course-description-card-target="upArrow"></span>
-            <span class="icon icon-arrow-down icon-small bg-primary" data-course-description-card-target="downArrow"></span>
-          </button>
-        </div>
-        <div class="flex gap-2 overflow-hidden show-less-desc text-sm" data-course-description-card-target="courseDescription">
-          <div class="h-full flex overflow-hidden text-base">
-              <ul class="w-full">
-                <% @local_content.transcripts.order(:start_at).each do |tt| %>
-                  <li class="py-2 border-b border-line-colour-light">
-                    <span class="font-mono text-xs text-primary mr-2">
-                      [<%= readable_milliseconds(tt.start_at) %> - <%= readable_milliseconds(tt.end_at) %>]
-                    </span>
-                    <span><%= tt.text %></span>
-                  </li>
-                <% end %>
-              </ul>
-          </div>
-        </div>
-      </div>
-    <% end %>
+    <%= render 'lessons/transcripts', { local_content: @local_content } %>
   <% end %>
 </div>
