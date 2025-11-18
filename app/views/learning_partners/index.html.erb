@@ -10,7 +10,7 @@
       <div class="flex gap-3">
         <%= input_text_component(form: f, placeholder: 'Search partners', icon_name: 'magnifying-glass', icon_position: 'left', disabled: true) %>
         <%= f.button type: :submit, disabled: true do %>
-          <%= button_component(text: 'Search', type: 'outline', disabled: true, hide_label_in_mobile: true, icon_name: 'magnifying-glass') %>
+          <%= button_component(text: 'Go', type: 'outline', disabled: true, hide_label_in_mobile: true, icon_name: 'arrow-right', icon_position: 'right') %>
         <% end %>
       </div>
     <% end %>
