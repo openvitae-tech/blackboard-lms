@@ -35,7 +35,7 @@
                 class: "nav-link",
                 data: { turbo_method: :post } do %>
       <%= button_component(text: "Transcribe Again", size: "sm") %>
-    <% end if policy(@lesson).transcribe? %>
+    <% end if policy(@lesson).transcribe? && @local_content.english? %>
 
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
