@@ -17,11 +17,11 @@ Rails.application.routes.draw do
     get :tables, to: 'tables#index'
     get :notification_bars, to: 'notification_bars#index'
     get :app_components, to: 'components#app'
-    get :textarea, to: 'textarea#index'
-    get :dropdown, to: 'dropdown#index'
     get :menu_component, to: 'menu_component#index'
     get :breadcrumbs, to: 'breadcrumbs#index'
     get :modal_component, to: 'modal#index'
     get :modal_preview, to: 'modal#preview'
+    get :chip, to: 'chips#index'
+    get :progress, to: 'progress#index'
   end
 end
