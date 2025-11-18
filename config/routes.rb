@@ -108,6 +108,7 @@ Rails.application.routes.draw do
           post :complete
           put :moveup
           put :movedown
+          post :transcribe
         end
         resource :rating, only: %i[new create], module: :lesson
       end

@@ -6,7 +6,7 @@ class LessonsController < ApplicationController
   before_action :set_course
   before_action :set_course_module
   before_action :set_enrollment, only: %i[show complete]
-  before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown]
+  before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown transcribe]
   before_action :set_local_content, only: :show
 
   def new
@@ -136,6 +136,17 @@ class LessonsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to course_module_path(@course, @course_module) }
       format.json { head :no_content }
+    end
+  end
+
+  def transcribe
+    authorize @lesson
+    english_content = @lesson.local_contents.find_by(lang: LocalContent::SUPPORTED_LANGUAGES[:english].downcase)
+    if (english_content)
+      ExtractAndSaveAudioJob.perform_async(english_content.id)
+      redirect_to course_module_lesson_path(@course, @course_module, @lesson), notice: "Transcription job has been initiated for English content."
+    else
+      redirect_to course_module_lesson_path(@course, @course_module, @lesson), notice: "No English content found for this lesson."
     end
   end
 

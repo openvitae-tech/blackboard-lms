@@ -23,4 +23,6 @@ module UiHelper
   include ViewComponent::BreadcrumbsComponent
   include ViewComponent::MenuComponent
   include ViewComponent::ModalBoxComponent
+  include ViewComponent::ChipComponent
+  include ViewComponent::ProgressComponent
 end

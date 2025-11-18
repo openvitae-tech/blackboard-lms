@@ -68,6 +68,9 @@
 
 .btn-text-base {
     @apply font-['Poppins'];
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .btn-text-sm {
