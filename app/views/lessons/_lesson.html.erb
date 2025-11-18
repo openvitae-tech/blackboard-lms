@@ -31,11 +31,6 @@
         </div>
       </div>
     <% end %>
-    <%= link_to transcribe_course_module_lesson_path(@course, @course_module, @lesson),
-                class: "nav-link",
-                data: { turbo_method: :post } do %>
-      <%= button_component(text: "Transcribe Again", size: "sm") %>
-    <% end if policy(@lesson).transcribe? && @local_content.english? %>
 
     <% if policy(lesson).complete? %>
       <div class="flex justify-end">
@@ -93,6 +88,25 @@
     </div>
   </div>
   <% if current_user.is_admin? %>
+    <div class="flex py-8">
+      <%= link_to transcribe_course_module_lesson_path(@course, @course_module, @lesson),
+                  class: "nav-link",
+                  data: { turbo_method: :post } do %>
+        <%= button_component(text: "Transcribe Again", type: "outline", size: "sm") %>
+      <% end if policy(@lesson).transcribe? && @local_content.english? %>
+      <div class="flex gap-4 ml-auto"> 
+        <% lesson_navigation_buttons(course, course_module, lesson).each do |item| %>
+          <% if item[:link].blank? %>
+            <%= button(label: item[:label], type: "secondary", disabled: true) %>
+          <% else %>
+            <%= link_to item[:link] do %>
+              <%= button(label: item[:label], type: "secondary") %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
     <% if @local_content.audio.attached? %>
       <div class="bg-primary-light-50 mt-2 flex flex-col gap-4 p-6">
         <p class="overflow-hidden text-ellipsis text-xl font-semibold border-b border-line-colour pb-6 heading">Audio</p>
@@ -134,17 +148,5 @@
         </div>
       </div>
     <% end %>
-
-    <div class="flex justify-end gap-4 py-8">
-      <% lesson_navigation_buttons(course, course_module, lesson).each do |item| %>
-        <% if item[:link].blank? %>
-          <%= button(label: item[:label], type: "secondary", disabled: true) %>
-        <% else %>
-          <%= link_to item[:link] do %>
-            <%= button(label: item[:label], type: "secondary") %>
-          <% end %>
-        <% end %>
-      <% end %>
-    </div>
   <% end %>
 </div>
