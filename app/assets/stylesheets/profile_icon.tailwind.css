@@ -1,0 +1,15 @@
+.profile-icon-base {
+  @apply  border border-line-colour bg-primary-light-50 flex items-center justify-center rounded-full text-primary;
+}
+
+.profile-icon-sm {
+  @apply w-6 h-6 font-poppins antialiased text-xs font-medium; 
+}
+
+.profile-icon-md {
+  @apply w-6 h-6 md:h-10 md:w-10 font-poppins antialiased text-xs font-medium md:text-lg;
+}
+
+.profile-icon-lg {
+  @apply w-10 h-10 md:h-14 md:w-14 font-poppins antialiased text-base font-medium md:text-3xl md:font-semibold;
+}

@@ -1,0 +1,25 @@
+<div class="flex flex-col md:flex-row w-full gap-4">
+  <div class="border border-line-colour rounded-lg md:rounded-xl flex justify-between p-3 md:p-4 flex-1">
+    <div class="flex items-center gap-2 md:gap-3">
+      <%= profile_icon_component(letter: @current_user.display_name.first, size: 'lg' ) %>
+      <span class="flex items-center main-text-lg-semibold"><%= @current_user.display_name %></span>
+    </div>
+
+    <div class="flex flex-col bg-gold rounded-lg md:rounded-xl p-2 md:p-3 gap-1 md:gap-2">
+      <span class="flex items-center general-text-md-normal text-white">Points Earned</span>
+
+      <div class="rounded-[4px] md:rounded-lg bg-gold-light flex items-center gap-2 justify-center">
+        <%= image_tag 'points.png', alt: 'coin', class: 'h-5 w-5 md:h-6 md:w-6' %></p>
+        <span class="flex items-center heading-3xl text-primary">32</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="border border-line-colour rounded-lg md:rounded-xl flex flex-col md:flex-row gap-2 md:gap-4 justify-between p-3 md:p-4">
+    <div class="flex flex-col gap-2 justify-center main-text-lg-normal">
+      <div class="flex gap-1"><span class="flex items-center text-primary">Team:</span><span class="text-letter-color-light"><%= current_user.team.name %></span></div>
+      <div class="flex gap-1"><span class="flex items-center text-primary"> Role:</span><span class="text-letter-color-light"><%= current_user.role %></span></div>
+    </div>
+    <%= image_tag team_banner(current_user.team, 'desktop'), class: 'w-full h-36 md:h-20 md:w-44 rounded-lg object-cover' %>
+  </div>
+</div>
