@@ -8,9 +8,12 @@ module Integrations
           object do
             string :question
             array :options do
-              string :text
+              object do
+                string :option_label_letter
+                string :option_text
+              end
             end
-            string :answer_text
+            string :answer_letter
           end
         end
       end

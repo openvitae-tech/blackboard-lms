@@ -57,24 +57,12 @@ class QuizzesController < ApplicationController
     service = CourseManagementService.instance
     saved_count = 0
     quizzes.each do |quiz_data|
-      options = quiz_data['options'] || []
-      unless options.count == 4
-        Rails.logger.error("Invalid quiz data: expected 4 options, got #{options.count}")
-        next
-      end
-      quiz = @course_module.quizzes.new(
-        question: quiz_data['question'],
-        option_a: options[0],
-        option_b: options[1],
-        option_c: options[2],
-        option_d: options[3],
-        answer: quiz_data['answer_text']
-      )
+      quiz = @course_module.quizzes.new build_quiz_attributes(quiz_data)
       if quiz.save
         saved_count += 1
         service.update_quiz_ordering!(@course_module, quiz, :create)
       else
-        Rails.logger.error("Failed to save generated quiz: #{quiz.errors.full_messages.join(', ')}")
+        log_error_to_sentry("Failed to save generated quiz: #{quiz.errors.full_messages.join(', ')}")
       end
     end
     redirect_to course_module_path(@course, @course_module),
@@ -143,5 +131,18 @@ class QuizzesController < ApplicationController
 
   def set_lesson
     @quiz = @course_module.quizzes.find(params[:id])
+  end
+
+  def build_quiz_attributes(quiz_data)
+    options = quiz_data['options'] || []
+    quiz = {
+      question: quiz_data['question'],
+      answer: quiz_data['answer_letter'].downcase
+    }
+
+    options.each_with_index do |opt, index|
+      quiz[:"option_#{opt['option_label_letter'].downcase}"] = opt['option_text']
+    end
+    quiz
   end
 end
