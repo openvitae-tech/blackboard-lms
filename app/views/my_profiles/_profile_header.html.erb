@@ -10,7 +10,7 @@
 
       <div class="rounded-[4px] md:rounded-lg bg-gold-light flex items-center gap-2 justify-center">
         <%= image_tag 'points.png', alt: 'coin', class: 'h-5 w-5 md:h-6 md:w-6' %>
-        <span class="flex items-center heading-3xl text-primary">32</span>
+        <span class="flex items-center heading-3xl text-primary"><%= current_user.score %></span>
       </div>
     </div>
   </div>
