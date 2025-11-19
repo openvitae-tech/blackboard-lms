@@ -82,7 +82,10 @@
   <h1 class="heading page-sub-heading">Quizzes</h1>
   <% if policy(:quiz).new? && @course_module.quizzes.present? %>
     <div class="flex gap-4">
-      <%= render 'course_modules/generate_quiz_button', course: @course, course_module: @course_module %>
+      <%= render 'course_modules/generate_quiz_button',
+                  service: @quiz_generation_service,
+                  course: @course,
+                  course_module: @course_module %>
       <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
         <%= button(label: 'New quiz',  icon_name: "plus") %>
       <% end %>
@@ -140,7 +143,10 @@
             <h2 class="text-semibold pb-4"><%= t("quiz.empty") %></h2>
             <% if policy(:quiz).new? %>
             <div class="flex gap-4">
-              <%= render 'course_modules/generate_quiz_button', course: @course, course_module: @course_module %>
+              <%= render 'course_modules/generate_quiz_button',
+                          service: @quiz_generation_service,
+                          course: @course,
+                          course_module: @course_module %>
               <%= link_to new_course_module_quiz_path(@course, @course_module), class: "nav-link" do %>
                 <%= button(label: 'New quiz', icon_name: "plus" ) %>
               <% end %>

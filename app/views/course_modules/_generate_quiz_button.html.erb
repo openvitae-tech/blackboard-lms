@@ -1,4 +1,4 @@
-<% if @quiz_generation_service.generate? %>
+<% if service.generate? %>
   <%= link_to generate_course_module_quizzes_path(course, course_module),
               class: "nav-link",
               data: { turbo_method: :post } do %>
