@@ -10,6 +10,7 @@ class MyProfilesController < ApplicationController
     @course_certificates = @course_certificates.includes([:course, :file_attachment])
     @completed_enrollments = current_user.enrollments.where(course_completed: true)
     @active_template = current_user.learning_partner.active_certificate_template
+    @team = Team.with_attached_banner.find(current_user.team_id)
   end
 
   def share_certificate

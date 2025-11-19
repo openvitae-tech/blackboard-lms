@@ -45,7 +45,7 @@
 
       <div class="px-4 md:px-5 py-3 md:py-4">
         <div class="flex flex-col md:flex-row gap-3 justify-between">
-          <h2 class="main-text-lg-normal flex items-cente"><%= course.title %></h2>
+          <h2 class="main-text-lg-normal flex items-center"><%= course.title %></h2>
           <div class="flex gap-2">
             <%= button_to generate_certificate_profile_path(enrollment_id: enrollment.id),
               method: :post,
