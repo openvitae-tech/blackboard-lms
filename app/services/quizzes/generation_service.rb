@@ -2,6 +2,8 @@
 
 module Quizzes
   class GenerationService
+    include CommonsHelper
+
     attr_accessor :course_module, :transcripts
 
     MAX_QUIZ_QUESTIONS = 5
@@ -17,12 +19,8 @@ module Quizzes
       result = Integrations::Llm::Api.llm_instance(provider: :gemini).generate_quiz(MAX_QUIZ_QUESTIONS, transcripts)
       return result.data['quizzes'] if result.ok?
 
-      Rails.logger.error("Quiz generation failed: #{result.data}")
+      log_error_to_sentry("Quiz generation failed for course module #{@course_module.id}: #{result.data}")
       []
-    end
-
-    def max_quiz_reached?
-      course_module.quizzes.count >= MAX_QUIZ_QUESTIONS
     end
 
     def generate?
@@ -41,9 +39,13 @@ module Quizzes
 
     private
 
+    def max_quiz_reached?
+      course_module.quizzes.count >= MAX_QUIZ_QUESTIONS
+    end
+
     def summarized_transcripts
       module_transcripts = course_module.lessons.includes(local_contents: :transcripts).collect do |lesson|
-        content = lesson.local_contents.first
+        content = lesson.local_contents.in_english.first
         {
           title: lesson.title,
           transcripts: (content && content.transcripts.pluck(:text).join(' ')) || ''
