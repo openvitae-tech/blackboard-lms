@@ -29,6 +29,14 @@ class Lesson < ApplicationRecord
     service.diminished_rating(rating, last_rated_at)
   end
 
+  def transcripts
+    local_contents.in_english.first&.transcripts
+  end
+
+  def transcript_text
+    transcripts.present? ? transcripts.pluck(:text).join(' ') : ''
+  end
+
   private
 
   def unique_local_content_lang

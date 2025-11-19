@@ -44,14 +44,14 @@ module Quizzes
     end
 
     def summarized_transcripts
-      module_transcripts = course_module.lessons.includes(local_contents: :transcripts).collect do |lesson|
-        content = lesson.local_contents.in_english.first
-        {
+      course_module.lessons.each_with_object([]) do |lesson, accumulated|
+        next if lesson.transcript_text.blank?
+
+        accumulated << {
           title: lesson.title,
-          transcripts: (content && content.transcripts.pluck(:text).join(' ')) || ''
+          transcripts: lesson.transcript_text
         }
       end
-      module_transcripts.select { |lt| lt[:transcripts].present? }
     end
   end
 end
