@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_10_072822) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_17_134815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -317,9 +317,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_10_072822) do
   end
 
   create_table "transcripts", force: :cascade do |t|
-    t.integer "start_at"
-    t.integer "end_at"
-    t.string "text"
+    t.integer "start_at", null: false
+    t.integer "end_at", null: false
+    t.string "text", null: false
     t.bigint "local_content_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

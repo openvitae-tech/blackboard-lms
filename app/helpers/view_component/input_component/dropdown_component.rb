@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module ViewComponent
-  module DropdownComponent
-    DROPDOWN_SIZES = %w[md lg].freeze
-
+  module InputComponent
     class DropdownComponent
       include ViewComponent::ComponentHelper
+
+      DROPDOWN_SIZES = %w[md lg].freeze
 
       DROPDOWN_SIZE_STYLE = {
         md: 'dropdown-component-md main-text-md-normal',
@@ -94,37 +94,6 @@ module ViewComponent
 
         class_list(base, size_style, color_style)
       end
-    end
-
-    def dropdown_component(
-      form: nil,
-      name: nil,
-      label: nil,
-      options: [],
-      value: nil,
-      size: 'md',
-      support_text: nil,
-      error: nil,
-      disabled: false,
-      html_options: {},
-      prompt: nil
-    )
-      dropdown = DropdownComponent.new(
-        form:,
-        name:,
-        label:,
-        options:,
-        value:,
-        size:,
-        support_text:,
-        error:,
-        disabled:,
-        html_options:,
-        prompt:
-      )
-
-      render partial: 'view_components/dropdown_component/dropdown',
-             locals: { dropdown: }
     end
   end
 end

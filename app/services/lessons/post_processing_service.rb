@@ -9,7 +9,7 @@ module Lessons
         next unless content.video.attached?
 
         UploadVideoToVimeoJob.perform_async(content.video.blob.id, content.id) if APP_CONFIG.external_video_hosting?
-        ExtractAndSaveAudioJob.perform_async(content.id)
+        ExtractAndSaveAudioJob.perform_async(content.id) if content.english?
       end
     end
   end

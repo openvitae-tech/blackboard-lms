@@ -91,6 +91,14 @@
   </div>
 <% end %>
 
+<%= doc_section_component(title: "Button without label in mobile") do %>
+  <div class="flex gap-4">
+    <%= button_component(type: 'outline', colorscheme: 'secondary', text: "Button", size: "sm", icon_name: "user-circle", hide_label_in_mobile: true) %>
+    <%= button_component(type: 'outline', colorscheme: 'danger', text: "Button", icon_name: "user-circle", hide_label_in_mobile: true) %>
+  </div>
+<% end %>
+
+
 <%= doc_section_component(title: "Disabled outline buttons") do %>
   <div class="flex gap-4">
     <%= button_component(type: 'outline', colorscheme: 'secondary', text: "Button", size: "sm", icon_name: "user-circle", disabled: true) %>

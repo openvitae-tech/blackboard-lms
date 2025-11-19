@@ -10,7 +10,6 @@ module UiHelper
   include ViewComponent::IconComponent
   include ViewComponent::ButtonComponent
   include ViewComponent::InputComponent
-  include ViewComponent::InputMobileComponent
   include ViewComponent::TableComponent
   include ViewComponent::ModalComponent
   include ViewComponent::CourseCardComponent
@@ -21,8 +20,9 @@ module UiHelper
   include ViewComponent::PaginatorComponent
   include ViewComponent::InputTextareaComponent
   include ViewComponent::DocSectionComponent
-  include ViewComponent::TextareaComponent
-  include ViewComponent::DropdownComponent
   include ViewComponent::BreadcrumbsComponent
   include ViewComponent::MenuComponent
+  include ViewComponent::ModalBoxComponent
+  include ViewComponent::ChipComponent
+  include ViewComponent::ProgressComponent
 end
