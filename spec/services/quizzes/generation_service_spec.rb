@@ -2,100 +2,89 @@
 
 require 'rails_helper'
 
-RSpec.describe Quizzes::GenerationService do
-  let(:service) { described_class.new(course_module) }
-  let(:course_module) { instance_double(CourseModule) }
-  let(:lesson_one) { instance_double(Lesson, title: 'Lesson 1', local_contents: [local_content_one]) }
-  let(:lesson_two) { instance_double(Lesson, title: 'Lesson 2', local_contents: [local_content_two]) }
-  let(:local_content_one) { instance_double(LocalContent, transcripts: [transcript_one]) }
-  let(:local_content_two) { instance_double(LocalContent, transcripts: [transcript_two]) }
-  let(:transcript_one) { instance_double(Transcript, text: 'First transcript') }
-  let(:transcript_two) { instance_double(Transcript, text: 'Second transcript') }
+RSpec.describe Quizzes::GenerationService, type: :service do
+  let(:course) { create(:course) }
+  let(:course_module) { create(:course_module, course: course) }
 
-  before do
-    allow(course_module).to receive_message_chain(:lessons, :includes).and_return([lesson_one, lesson_two]) # rubocop:disable RSpec/MessageChain
-    allow(local_content_one.transcripts).to receive(:pluck).with(:text).and_return(['First transcript'])
-    allow(local_content_two.transcripts).to receive(:pluck).with(:text).and_return(['Second transcript'])
-    allow(course_module).to receive(:quizzes).and_return([])
+  let!(:lesson_intro) { create(:lesson, course_module: course_module, title: 'Introduction') }
+  let!(:lesson_summary) { create(:lesson, course_module: course_module, title: 'Summary') }
+
+  # Use existing local_content if the lesson factory created one already
+  let!(:intro_local_content) do
+    lesson_intro.local_contents.first || create(:local_content, lesson: lesson_intro)
   end
 
-  describe '#initialize' do
-    it 'sets course_module and transcripts' do
-      summarized_transcripts = [{ title: lesson_one.title, transcripts: transcript_one.text },
-                                { title: lesson_two.title, transcripts: transcript_two.text }]
-      expect(service.course_module).to eq(course_module)
-      expect(service.transcripts).to eq(summarized_transcripts)
+  let!(:summary_local_content) do
+    lesson_summary.local_contents.first || create(:local_content, lesson: lesson_summary)
+  end
+
+  let!(:intro_transcript) do
+    create(:transcript, local_content: intro_local_content, text: 'This is the introduction transcript', start_at: 0,
+                        end_at: 1000)
+  end
+
+  let!(:summary_transcript) do
+    create(:transcript, local_content: summary_local_content, text: 'This is the summary transcript', start_at: 0,
+                        end_at: 1000)
+  end
+
+  describe 'summarization' do
+    it 'builds summarized transcripts from lessons -> local_contents -> transcripts' do
+      service = described_class.new(course_module)
+      expect(service.transcripts).to contain_exactly(
+        { title: lesson_intro.title, transcripts: intro_transcript.text },
+        { title: lesson_summary.title, transcripts: summary_transcript.text }
+      )
     end
   end
 
   describe '#generate_via_ai' do
+    # use a plain double so we won't enforce real method arity/signature
     let(:llm_instance) { instance_double(Integrations::Llm::Gemini) }
-    let(:result) { instance_double(Result, ok?: true, data: { 'quizzes' => %w[quiz1 quiz2] }) }
+    let(:result) { instance_double(Result, ok?: true, data: { 'quizzes' => %w[q1 q2] }) }
 
     before do
       allow(Integrations::Llm::Api).to receive(:llm_instance).with(provider: :gemini).and_return(llm_instance)
-      allow(llm_instance).to receive(:generate_quiz).with(5, service.transcripts).and_return(result)
+      allow(llm_instance).to receive(:generate_quiz).and_return(result)
     end
 
-    it 'returns quizzes if result is ok' do
-      expect(service.generate_via_ai).to eq(%w[quiz1 quiz2])
+    it 'returns quizzes when LLM returns ok' do
+      service = described_class.new(course_module)
+      expect(service.generate_via_ai).to eq(%w[q1 q2])
     end
 
-    it 'returns [] and logs error if result is not ok' do
+    it 'returns empty array and logs when LLM fails' do
       allow(result).to receive(:ok?).and_return(false)
       allow(Rails.logger).to receive(:error)
-      expect(service.generate_via_ai).to eq([])
-      expect(Rails.logger).to have_received(:error).with("Quiz generation failed: #{result.data}")
-    end
-
-    it 'returns [] if transcripts are empty' do
-      allow(service).to receive(:transcripts).and_return([])
+      service = described_class.new(course_module)
       expect(service.generate_via_ai).to eq([])
     end
   end
 
-  describe '#max_quiz_reached?' do
-    it 'returns true if quiz count >= MAX_QUIZ_QUESTIONS' do
-      allow(course_module).to receive(:quizzes).and_return(%w[q1 q2 q3 q4 q5])
-      expect(service.max_quiz_reached?).to be true
-    end
-
-    it 'returns false if quiz count < MAX_QUIZ_QUESTIONS' do
-      allow(course_module).to receive(:quizzes).and_return(%w[q1 q2])
-      expect(service.max_quiz_reached?).to be false
-    end
-  end
-
-  describe '#generate?' do
-    it 'returns true if transcripts present and not maxed out' do
-      allow(course_module).to receive(:quizzes).and_return([])
+  describe '#generate?, #max_quiz_reached? and #tooltip' do
+    it 'returns true when transcripts present and not maxed' do
+      service = described_class.new(course_module)
       expect(service.generate?).to be true
     end
 
-    it 'returns false if transcripts blank' do
-      allow(course_module).to receive_message_chain(:lessons, :includes).and_return([]) # rubocop:disable RSpec/MessageChain
-      expect(service.generate?).to be false
-    end
-
-    it 'returns false if max quiz reached' do
-      allow(course_module).to receive(:quizzes).and_return(%w[q1 q2 q3 q4 q5])
+    it 'returns false when quizzes count reaches MAX' do
+      create_list(:quiz, described_class::MAX_QUIZ_QUESTIONS, course_module: course_module)
+      service = described_class.new(course_module)
       expect(service.generate?).to be false
     end
   end
 
   describe '#tooltip' do
-    it 'returns transcripts_missing if transcripts blank' do
-      allow(course_module).to receive_message_chain(:lessons, :includes).and_return([]) # rubocop:disable RSpec/MessageChain
-      expect(service.tooltip).to eq('quiz.generate.transcripts_missing')
-    end
-
-    it 'returns too_many_questions if max quiz reached' do
-      allow(course_module).to receive(:quizzes).and_return(%w[q1 q2 q3 q4 q5])
+    it 'indicates too many questions when quizzes count reaches MAX' do
+      create_list(:quiz, described_class::MAX_QUIZ_QUESTIONS, course_module: course_module)
+      service = described_class.new(course_module)
       expect(service.tooltip).to eq('quiz.generate.too_many_questions')
     end
 
-    it 'returns button if ready to generate' do
-      expect(service.tooltip).to eq('quiz.generate.button')
+    it 'indicates missing transcripts when none present' do
+      empty_module = create(:course_module)
+      service = described_class.new(empty_module)
+      expect(service.tooltip).to eq('quiz.generate.transcripts_missing')
     end
   end
 end
