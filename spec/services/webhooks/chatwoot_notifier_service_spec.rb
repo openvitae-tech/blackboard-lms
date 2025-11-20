@@ -25,7 +25,7 @@ RSpec.describe Webhooks::ChatwootNotifierService, type: :service do
       stub_chatwoot_api(999, llm_response, account_id)
 
       allow(Integrations::Llm::Api).to receive(:llm_instance).with(provider: :openai).and_return(llm_instance)
-      allow(llm_instance).to receive(:chat).with(incoming_text).and_return(llm_response)
+      allow(llm_instance).to receive(:vector_search).with(incoming_text).and_return(llm_response)
 
       expected_url = "https://app.chatwoot.com/api/v1/accounts/#{account_id}/conversations/999/messages"
       expected_body = { content: llm_response.data, message_type: 'outgoing' }.to_json
@@ -46,7 +46,7 @@ RSpec.describe Webhooks::ChatwootNotifierService, type: :service do
       llm_response = double(data: 'ai-generated-response') # rubocop:disable RSpec/VerifiedDoubles
 
       allow(Integrations::Llm::Api).to receive(:llm_instance).with(provider: :openai).and_return(llm_instance)
-      allow(llm_instance).to receive(:chat).with(incoming_text).and_return(llm_response)
+      allow(llm_instance).to receive(:vector_search).with(incoming_text).and_return(llm_response)
 
       response_double = double(status: 500, body: 'something went wrong') # rubocop:disable RSpec/VerifiedDoubles
       allow(Faraday).to receive(:post).and_return(response_double)

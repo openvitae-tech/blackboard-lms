@@ -10,7 +10,7 @@ module Webhooks
 
       text = params.dig('conversation', 'messages').first['content']
 
-      llm_response = Integrations::Llm::Api.llm_instance(provider: :openai).chat(text)
+      llm_response = Integrations::Llm::Api.llm_instance(provider: :openai).vector_search(text)
       response = create_request(params, llm_response.data)
       return if response.status == 200
 

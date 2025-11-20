@@ -12,6 +12,7 @@ staging:
   <<: *default
   external_video_hosting: true
   sidekiq_auth_enabled: true
+  enable_chatwoot: true
 
 development:
   <<: *default
