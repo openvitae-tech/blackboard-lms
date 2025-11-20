@@ -12,4 +12,8 @@ class AppConfigService
   def sidekiq_auth_enabled?
     CONFIG[:sidekiq_auth_enabled]
   end
+
+  def chatwoot_enabled?
+    CONFIG[:enable_chatwoot]
+  end
 end
