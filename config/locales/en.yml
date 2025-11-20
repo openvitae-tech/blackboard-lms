@@ -260,3 +260,6 @@ en:
       deactivate: "Are you sure want to de-activate this partner?"
     user:
       delete: "Are you sure you want to delete?"
+  llm:
+    response:
+      idontknow: "I'm unable to provide a response as the question appears outside the current scope."

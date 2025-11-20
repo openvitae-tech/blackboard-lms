@@ -47,7 +47,7 @@ module Integrations
         client = OpenAI::Client.new
         context = search_vector_store(prompt, client)
 
-        return Result.ok("I don't know") if context.blank?
+        return Result.ok(I18n.t('llm.response.idontknow')) if context.blank?
 
         response = client.responses.create(
           parameters: {
@@ -57,7 +57,7 @@ module Integrations
                 role: 'system',
                 content: <<~SYS
                   You MUST answer ONLY using the Context.
-                  If the answer is not in the Context, reply exactly with: "I don't know".
+                  If the answer is not in the Context, reply exactly with: #{I18n.t('llm.response.idontknow')}.
                 SYS
               },
               {
