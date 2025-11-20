@@ -9,6 +9,7 @@
 @import "menu_component.tailwind.css";
 @import "breadcrumbs.tailwind.css";
 @import "modalbox.tailwind.css";
+@import "profile_icon.tailwind.css";
 
 
 @layer base {
