@@ -31,6 +31,8 @@ class LocalContent < ApplicationRecord
   validates :lang, presence: true
   validate :presence_of_blob_id
 
+  scope :in_english, -> { where(lang: SUPPORTED_LANGUAGES[:english].downcase) }
+
   def english?
     lang.downcase == SUPPORTED_LANGUAGES[:english].downcase
   end

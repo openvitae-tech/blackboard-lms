@@ -20,6 +20,10 @@ class QuizPolicy
     user.is_admin?
   end
 
+  def generate?
+    user.is_admin?
+  end
+
   def update?
     user.is_admin?
   end
