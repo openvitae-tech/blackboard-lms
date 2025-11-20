@@ -96,6 +96,7 @@ module Integrations
           id: vector_store_id,
           parameters: {
             query: query,
+            # Reduce max_num_results to 5 or 10 and uncomment ranking_options for less token consumption
             max_num_results: 20,
             # ranking_options: {
             #   score_threshold: 0.65,
