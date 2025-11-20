@@ -96,11 +96,11 @@ module Integrations
           id: vector_store_id,
           parameters: {
             query: query,
-            max_num_results: 5, # change to 20 to return maximum number of results
-            ranking_options: {
-              score_threshold: 0.65,
-              ranker: 'default-2024-11-15'
-            },
+            max_num_results: 20,
+            # ranking_options: {
+            #   score_threshold: 0.65,
+            #   ranker: 'default-2024-11-15'
+            # },
             rewrite_query: true
           }
         )

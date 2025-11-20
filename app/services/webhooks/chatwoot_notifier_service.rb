@@ -11,6 +11,9 @@ module Webhooks
       text = params.dig('conversation', 'messages').first['content']
 
       llm_response = Integrations::Llm::Api.llm_instance(provider: :openai).vector_search(text)
+      return unless llm_response.ok?
+      return if llm_response.nil? || llm_response.data.blank?
+
       response = create_request(params, llm_response.data)
       return if response.status == 200
 
@@ -33,7 +36,11 @@ module Webhooks
         message_type: 'outgoing'
       }
 
-      Faraday.post(url, body.to_json, headers)
+      connection = Faraday.new(url: url) do |f|
+        f.options.timeout = 10
+        f.options.open_timeout = 5
+      end
+      connection.post(url, body.to_json, headers)
     end
   end
 end

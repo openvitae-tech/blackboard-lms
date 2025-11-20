@@ -18,7 +18,7 @@ RSpec.describe Webhooks::ChatwootNotifierService, type: :service do
     end
 
     it 'sends llm response to chatwoot' do
-      llm_response = double(data: 'ai-generated-response') # rubocop:disable RSpec/VerifiedDoubles
+      llm_response = double(data: 'ai-generated-response', ok?: true) # rubocop:disable RSpec/VerifiedDoubles
       llm_instance = instance_double('LlmInstance') # rubocop:disable RSpec/VerifiedDoubleReference
       account_id = Rails.application.credentials.dig(:chatwoot, :account_id)
 
@@ -43,17 +43,19 @@ RSpec.describe Webhooks::ChatwootNotifierService, type: :service do
 
     it 'when Chatwoot responds with non-200' do
       llm_instance = instance_double('LlmInstance') # rubocop:disable RSpec/VerifiedDoubleReference
-      llm_response = double(data: 'ai-generated-response') # rubocop:disable RSpec/VerifiedDoubles
+      llm_response = double(data: 'ai-generated-response', ok?: true) # rubocop:disable RSpec/VerifiedDoubles
 
       allow(Integrations::Llm::Api).to receive(:llm_instance).with(provider: :openai).and_return(llm_instance)
       allow(llm_instance).to receive(:vector_search).with(incoming_text).and_return(llm_response)
 
-      response_double = double(status: 500, body: 'something went wrong') # rubocop:disable RSpec/VerifiedDoubles
-      allow(Faraday).to receive(:post).and_return(response_double)
+      account_id = Rails.application.credentials.dig(:chatwoot, :account_id)
+      stub_request(:post, "https://app.chatwoot.com/api/v1/accounts/#{account_id}/conversations/999/messages")
+        .to_return(status: 500, body: 'something went wrong')
 
-      expect_any_instance_of(described_class).to receive(:log_error_to_sentry).with(response_double.body)
+      allow(service).to receive(:log_error_to_sentry)
 
       service.notify(@params)
+      expect(service).to have_received(:log_error_to_sentry).with('something went wrong')
     end
   end
 end

@@ -3,6 +3,12 @@ class Webhooks::ChatwootController < ApplicationController
   skip_before_action :authenticate_user!
 
   def create
+    account_id = Rails.application.credentials.dig(:chatwoot, :account_id)
+
+    unless params.dig(:account, :id).to_s == account_id.to_s
+      return head :unauthorized
+    end
+
     message_type, sender_type = extract_message_data(params)
 
     return head :ok unless message_type == 'incoming' || sender_type == 'contact'
