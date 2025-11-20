@@ -2,7 +2,7 @@
 
 <div class="mt-2 flex flex-col gap-3 md:gap-4">
   <%= heading_component(text: t("my_profile.label"), size: 'md') %>
-  <%= render "my_profiles/profile_header" %>
+  <%= render "my_profiles/profile_header" , team: @team%>
 </div>
 <div class="mt-5 md:mt-7">
   <%= heading_component(text: t("my_profile.my_certificates.label"), size: 'sm') %>

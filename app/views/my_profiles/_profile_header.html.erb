@@ -17,9 +17,9 @@
 
   <div class="border border-line-colour rounded-lg md:rounded-xl flex flex-col md:flex-row gap-2 md:gap-4 justify-between p-3 md:p-4">
     <div class="flex flex-col gap-2 justify-center main-text-lg-normal">
-      <div class="flex gap-1"><span class="flex items-center text-primary">Team:</span><span class="text-letter-color-light"><%= current_user.team.name %></span></div>
+      <div class="flex gap-1"><span class="flex items-center text-primary">Team:</span><span class="text-letter-color-light"><%= team.name %></span></div>
       <div class="flex gap-1"><span class="flex items-center text-primary"> Role:</span><span class="text-letter-color-light"><%= current_user.role %></span></div>
     </div>
-    <%= image_tag team_banner(current_user.team, 'desktop'), class: 'w-full h-36 md:h-20 md:w-44 rounded-lg object-cover' %>
+    <%= image_tag team_banner(team, 'desktop'), class: 'w-full h-36 md:h-20 md:w-44 rounded-lg object-cover' %>
   </div>
 </div>
