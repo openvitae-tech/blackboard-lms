@@ -146,6 +146,9 @@ en:
     empty: "There are no quizzes to show."
     cannot_delete_published: "Quiz cannot be deleted since the course is published."
     cannot_delete_enrolled: "Quiz cannot be deleted since the course has enrolled users."
+    generate:
+      button: "Generate Quiz"
+      too_many_questions: "Maximum number of quizzes reached"
   team:
     label: "Teams"
     created: "Team created successfully"
