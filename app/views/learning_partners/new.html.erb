@@ -1,4 +1,36 @@
-<div class="mb-8 mx-auto w-full text-left pt-2">
-  <%= render "shared/components/back_button", back_link: learning_partners_path %>
-  <%= render "form", learning_partner: @learning_partner %>
-</div>
+<%= modal_box_component(title: "Add Partner") do %>
+  <%= form_with url: create_step1_learning_partners_path, method: :post, model: @learning_partner do |form| %>
+    <div class="flex flex-col gap-6 md:gap-7">
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center px-[50px]">
+          <div class="w-5 h-5 bg-primary rounded-full"></div>
+          <div class="h-1 grow bg-primary-light-100"></div>
+          <div class="w-5 h-5 bg-primary-light-100 rounded-full"></div>
+        </div>
+        <div class="flex justify-between px-[50px]">
+          <span class="general-text-sm-normal text-letter-color">Step 1</span>
+          <span class="general-text-sm-normal text-letter-color-light">Step 2</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <%= input_text_component(form:, label: 'Partner Name *', name: 'name', placeholder: 'Enter Partner Name') %>
+        <%= textarea_component(form:, label: 'About', name: 'about', placeholder: 'Partner description') %>
+        <%=  dropdown_component(form:, label: 'Country *', name: 'supported_countries', prompt: 'Choose country', options: AVAILABLE_COUNTRIES.map { |_, value| [value[:label], value[:value]]}) %>
+      </div>
+
+      <div class="flex gap-3">
+        <div class="w-1/2">
+          <%= link_to "javascript:void(0);", data: { action: "click->modals#closeModal" }, class: 'inline-block w-full' do %>
+            <%= button_component(text: 'Cancel', type: 'outline') %>
+          <% end %>
+        </div>
+        <div class="w-1/2">
+          <%= form.button type: :submit, class: 'w-full' do %>
+            <%= button_component(text: 'Next') %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -35,13 +35,16 @@ module ViewComponent
 
       def initialize(form:, name:, label:, type:, placeholder:, value:, subtext:, error:, icon_name:, icon_position:,
                      disabled:, size:, html_options:)
+
+        error_message = resolve_error(form, name, error)
+
         self.form = form
         self.name = name
         self.label = label
         self.type = type
         self.value = value
-        self.subtext = error || subtext # Prioritise error over subtext
-        self.error = error
+        self.subtext = error_message || subtext # Prioritise error over subtext
+        self.error = error_message
         self.icon_name = icon_name
         self.icon_position = icon_position
         self.disabled = disabled

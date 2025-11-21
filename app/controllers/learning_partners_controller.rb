@@ -30,7 +30,20 @@ class LearningPartnersController < ApplicationController
     authorize :learning_partner
   end
 
-  # POST /learning_partners or /learning_partners.json
+  def create_step1
+    authorize :learning_partner
+    service = PartnerOnboardingService.instance
+    result = service.create_step1(learning_partner_step1_params)
+
+    if result.ok?
+      Rails.logger.info "Learning partner created"
+      render nothing: true
+    else
+      @learning_partner = result.data
+      render :new
+    end
+  end
+
   def create
     authorize :learning_partner
 
@@ -103,13 +116,13 @@ class LearningPartnersController < ApplicationController
     @learning_partner = LearningPartner.find(params[:id])
   end
 
+  def learning_partner_step1_params
+    params.require(:learning_partner).permit(:name, :about, :country)
+  end
+
   # Only allow a list of trusted parameters through.
   def learning_partner_params
     params.require(:learning_partner).permit(:name, :about, :logo, :banner, :max_user_count, supported_countries: [])
-  end
-
-  def authorize_admin!
-    authorize :learning_partner
   end
 
   def terminate_impersonation

@@ -133,6 +133,10 @@ Rails.application.routes.draw do
   end
 
   resources :learning_partners do
+    collection do
+      post :create_step1
+    end
+
     member do
       put :activate
       put :deactivate
