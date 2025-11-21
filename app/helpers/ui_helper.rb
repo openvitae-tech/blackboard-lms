@@ -25,4 +25,5 @@ module UiHelper
   include ViewComponent::ModalBoxComponent
   include ViewComponent::ChipComponent
   include ViewComponent::ProgressComponent
+  include ViewComponent::ProfileIconComponent
 end

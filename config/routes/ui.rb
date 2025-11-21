@@ -23,5 +23,6 @@ Rails.application.routes.draw do
     get :modal_preview, to: 'modal#preview'
     get :chip, to: 'chips#index'
     get :progress, to: 'progress#index'
+    get :profile_icon, to: 'profile_icon#index'
   end
 end

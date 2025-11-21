@@ -1,0 +1,20 @@
+
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+<%= h3_component(text: "Profile icon Component") %>
+
+<%= doc_section_component(title: "Small profile icon") do %>
+  <%= profile_icon_component(letter: @current_user.display_name.first, size: 'sm' ) %>
+
+<% end %>
+
+<%= doc_section_component(title: "Medium profile icon") do %>
+  <%= profile_icon_component(letter: @current_user.display_name.first, size: 'md' ) %>
+
+<% end %>
+
+<%= doc_section_component(title: "Large profile icon") do %>
+  <%= profile_icon_component(letter: @current_user.display_name.first, size: 'lg' ) %>
+
+<% end %>
