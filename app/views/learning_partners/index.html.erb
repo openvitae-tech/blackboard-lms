@@ -22,16 +22,16 @@
     <li class="px-4 md:px-5 py-3 md:py-3 first:rounded-t-lg first:md:rounded-t-xl last:rounded-b-lg last:md:rounded-b-xl border border-line-colour border-b-0 last:border-b">
       <%= link_to learning_partner_path(learning_partner), class: "inline-block w-full" do %>
         <div class="flex gap-5">
-          <div>
+          <div class="border rounded border-white overflow-hidden">
             <% if learning_partner.logo.attached? %>
-              <%= image_tag partner_logo(learning_partner, :small), alt: 'Logo', class: 'h-[50px] w-[50px] md:h-[70px] md:w-[70px] object-contain' %>
+              <%= image_tag partner_logo(learning_partner, :small), alt: 'Logo', class: 'h-[50px] w-[50px] md:h-[70px] md:w-[70px] object-cover' %>
             <% else %>
-              <%= image_tag 'logo_placeholder.png', class: 'h-[50px] w-[50px] md:h-[70px] md:w-[70px] object-contain' %>
+              <%= image_tag 'logo_placeholder.png', class: 'h-[50px] w-[50px] md:h-[70px] md:w-[70px] object-cover' %>
             <% end %>
           </div>
 
           <div class="flex items-center justify-between flex-grow">
-            <div class="flex flex-col">
+            <div class="flex flex-col gap-2 md:gap-2">
               <div><span class="main-text-lg-normal"><%= truncate(learning_partner.name, length: 30) %></span></div>
               <% unless learning_partner.first_owner_joined? %>
                 <%= chip_component(text: 'Owner not joined', colorscheme: 'danger', icon_name: 'x-mark') %>
