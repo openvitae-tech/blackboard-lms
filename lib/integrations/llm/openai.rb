@@ -45,30 +45,27 @@ module Integrations
 
       def perform_vector_search(prompt)
         client = OpenAI::Client.new
-        context = search_vector_store(prompt, client)
-
-        return Result.ok(I18n.t('llm.response.idontknow')) if context.blank?
-
         response = client.responses.create(
           parameters: {
             model: model,
-            input: [
+            input: prompt,
+            tools: [
               {
-                role: 'system',
-                content: <<~SYS
-                  You MUST answer ONLY using the Context.
-                  If the answer is not in the Context, reply exactly with: #{I18n.t('llm.response.idontknow')}.
-                SYS
-              },
-              {
-                role: 'system',
-                content: "Context:\n\n#{context}"
-              },
-              {
-                role: 'user',
-                content: prompt
+                'type' => 'file_search',
+                'vector_store_ids' => [vector_store_id],
+                'max_num_results' => 20
               }
-            ]
+            ],
+            tool_choice: 'required',
+            instructions: <<~SYS
+              You are an AI assistant. Please answer the questions as per the following instruction.
+              RULES (these are strict, do not break them):
+
+              1. If the answer is found in the vector store then respond using that information.
+              2. If the answer is NOT found in the vector store AND the question is related to hospitality then use your own hospitality-domain knowledge.
+              3. If the answer is NOT found in the vector store AND the question is NOT related to hospitality then reply exactly: #{I18n.t('llm.response.idontknow')}"
+              4. You can answer to any greetings.
+            SYS
           }
         )
 
@@ -89,34 +86,6 @@ module Integrations
         output.flat_map do |item|
           (item['content'] || []).map { |c| c['text'] }
         end.compact.join("\n")
-      end
-
-      def search_vector_store(query, client)
-        result = client.vector_stores.search(
-          id: vector_store_id,
-          parameters: {
-            query: query,
-            # Reduce max_num_results to 5 or 10 and uncomment ranking_options for less token consumption
-            max_num_results: 20,
-            # ranking_options: {
-            #   score_threshold: 0.65,
-            #   ranker: 'default-2024-11-15'
-            # },
-            rewrite_query: true
-          }
-        )
-
-        chunks = result['data'] || []
-
-        chunks.flat_map do |chunk|
-          (chunk['content'] || []).map do |c|
-            if c['text'].is_a?(Hash)
-              c['text']['value']
-            else
-              c['text']
-            end
-          end
-        end.compact.join("\n\n")
       end
     end
   end
