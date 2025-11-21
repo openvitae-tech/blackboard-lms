@@ -1,6 +1,7 @@
 default: &default
   external_video_hosting: false
   sidekiq_auth_enabled: false
+  enable_chatwoot: false
 
 production:
   <<: *default
@@ -11,6 +12,7 @@ staging:
   <<: *default
   external_video_hosting: true
   sidekiq_auth_enabled: true
+  enable_chatwoot: true
 
 development:
   <<: *default

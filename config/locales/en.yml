@@ -140,10 +140,15 @@ en:
     next: "Next"
     duration_not_set: "for the video is not set"
     lesson_not_accessible: "You are not allowed to access this lesson."
+    transcribe: "Transcribe"
+    transcribe_again: "Transcribe Again"
   quiz:
     empty: "There are no quizzes to show."
     cannot_delete_published: "Quiz cannot be deleted since the course is published."
     cannot_delete_enrolled: "Quiz cannot be deleted since the course has enrolled users."
+    generate:
+      button: "Generate Quiz"
+      too_many_questions: "Maximum number of quizzes reached"
   team:
     label: "Teams"
     created: "Team created successfully"
@@ -255,3 +260,6 @@ en:
       deactivate: "Are you sure want to de-activate this partner?"
     user:
       delete: "Are you sure you want to delete?"
+  llm:
+    response:
+      idontknow: "I'm unable to provide a response as the question appears outside the current scope."

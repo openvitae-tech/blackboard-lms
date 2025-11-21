@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Ui::DropdownController < Ui::BaseController
+class Ui::ProgressController < Ui::BaseController
   def index
   end
 end

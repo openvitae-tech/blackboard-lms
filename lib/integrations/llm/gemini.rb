@@ -11,6 +11,10 @@ module Integrations
       SUPPORTED_MODELS = %w[gemini-2.5-pro gemini-2.5-flash gemini-2.5-flash-lite].freeze
       DEFAULT_MODEL = 'gemini-2.5-flash'
       TRANSCRIPTION_PROMPT = 'Generate timestamped transcription for the given audio file'
+      QUIZ_GENERATION_PROMPT = 'You are an expert quiz generator. Given the following content, \
+        create #COUNT quizzes that test comprehension, key concepts, and critical thinking.\
+        Each quiz should have one question, four options, and indicate the correct answer. \
+        Keep questions clear and concise. Avoid references to the source material.'
       RESPONSE_TYPES = %i[text json].freeze
 
       def initialize(model)
@@ -26,6 +30,11 @@ module Integrations
 
       def generate_transcript(audio_file)
         ask(TRANSCRIPTION_PROMPT, file_path: audio_file, response_type: 'TranscriptSchema')
+      end
+
+      def generate_quiz(count, transcripts)
+        prompt = "#{QUIZ_GENERATION_PROMPT.gsub('#COUNT', count.to_s)}\n```#{transcripts.to_json}```"
+        ask(prompt, response_type: 'QuizSchema')
       end
 
       private

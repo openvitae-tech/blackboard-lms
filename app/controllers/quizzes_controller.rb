@@ -45,6 +45,30 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def generate
+    authorize Quiz
+
+    quizzes = Quizzes::GenerationService.new(@course_module).generate_via_ai
+    if quizzes.empty?
+      redirect_to course_module_path(@course, @course_module), notice: 'Quiz generation via AI failed. Please try again later.'
+      return
+    end
+
+    service = CourseManagementService.instance
+    saved_count = 0
+    quizzes.each do |quiz_data|
+      quiz = @course_module.quizzes.new build_quiz_attributes(quiz_data)
+      if quiz.save
+        saved_count += 1
+        service.update_quiz_ordering!(@course_module, quiz, :create)
+      else
+        log_error_to_sentry("Failed to save generated quiz: #{quiz.errors.full_messages.join(', ')}")
+      end
+    end
+    redirect_to course_module_path(@course, @course_module),
+                notice: "#{saved_count} quizzes were successfully generated via AI."
+  end
+
   def destroy
     authorize @quiz
 
@@ -107,5 +131,18 @@ class QuizzesController < ApplicationController
 
   def set_lesson
     @quiz = @course_module.quizzes.find(params[:id])
+  end
+
+  def build_quiz_attributes(quiz_data)
+    options = quiz_data['options'] || []
+    quiz = {
+      question: quiz_data['question'],
+      answer: quiz_data['answer_letter'].downcase
+    }
+
+    options.each_with_index do |opt, index|
+      quiz[:"option_#{opt['option_label_letter'].downcase}"] = opt['option_text']
+    end
+    quiz
   end
 end

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module ViewComponent
-  module InputMobileComponent
-    include ViewComponent::InputComponent
+  module InputComponent
     class InputMobileComponent < InputTextComponent
       CODE_WIDTH = {
         md: 'w-16',
@@ -64,30 +63,6 @@ module ViewComponent
         code_text = CODE_TEXT[size.to_sym]
         [class_list(base, size_style, color_style), code_width, code_text].join(' ')
       end
-    end
-
-    def input_mobile_component(
-      form: nil,
-      name: nil,
-      label: nil,
-      placeholder: 'Enter your mobile number',
-      country_code: '',
-      value: '',
-      subtext: nil,
-      error: nil,
-      icon_name: nil,
-      icon_position: 'right',
-      disabled: false,
-      size: 'md',
-      html_options: {}
-    )
-      input = InputMobileComponent.new(
-        form:, name:, label:, type: 'number', placeholder:, code_value: country_code, value:, subtext:, error:,
-        icon_name:, icon_position:, disabled:, size:, html_options:
-      )
-
-      render partial: 'view_components/inputs/input_mobile_component',
-             locals: { input: }
     end
   end
 end

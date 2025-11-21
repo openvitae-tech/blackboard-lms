@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :user_searches, only: %i[index create]
   resources :reports, only: %i[new create show]
 
+  namespace :webhooks do
+    resources :chatwoot, only: :create, defaults: { format: :json }
+  end
+
   resources :searches, only: [:index] do
     collection do
       match '/', to: 'searches#index', via: %i[get post], as: ''
@@ -104,6 +108,7 @@ Rails.application.routes.draw do
           post :complete
           put :moveup
           put :movedown
+          post :transcribe
         end
         resource :rating, only: %i[new create], module: :lesson
       end
@@ -113,6 +118,9 @@ Rails.application.routes.draw do
           post :submit_answer
           put :moveup
           put :movedown
+        end
+        collection do
+          post :generate
         end
       end
     end

@@ -1,0 +1,9 @@
+<% if service.generate? %>
+  <%= link_to generate_course_module_quizzes_path(course, course_module),
+              class: "nav-link",
+              data: { turbo_method: :post } do %>
+    <%= button_component(text: t("quiz.generate.button"), icon_name: "sparkle", size: "sm") %>
+  <% end %>
+<% else %>
+  <%= button_component(text: t("quiz.generate.button"), icon_name: "sparkle", size: "sm", disabled: true, tooltip_text: t(@quiz_generation_service.tooltip)) %>
+<% end %>

@@ -1,7 +1,7 @@
 <% if collection.prev_page %>
-  <%= link_to query_url(path, {page: collection.prev_page}), data: { turbo_stream: true } do %>
-    <%= button(label: 'Previous', type: "secondary", size: "md") %>
+  <%= link_to query_url(path, {page: collection.prev_page}), data: { turbo_stream: true }, class: 'inline-block' do %>
+    <%= button_component(text: 'Prev', type: 'outline', icon_name: 'chevron-left') %>
   <% end %>
 <% else %>
-  <%= button(label: 'Previous', type: "secondary", size: "md", disabled: true) %>
+  <%= button_component(text: 'Prev', type: 'outline', icon_name: 'chevron-left', disabled: true) %>
 <% end %>

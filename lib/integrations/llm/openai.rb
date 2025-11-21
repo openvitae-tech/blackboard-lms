@@ -21,6 +21,10 @@ module Integrations
         ask(prompt)
       end
 
+      def vector_search(prompt)
+        perform_vector_search(prompt)
+      end
+
       private
 
       def ask(prompt, file_path: nil, response_type: :text)
@@ -37,6 +41,51 @@ module Integrations
         log_error_to_sentry(e.message)
 
         Result.error(e.message)
+      end
+
+      def perform_vector_search(prompt)
+        client = OpenAI::Client.new
+        response = client.responses.create(
+          parameters: {
+            model: model,
+            input: prompt,
+            tools: [
+              {
+                'type' => 'file_search',
+                'vector_store_ids' => [vector_store_id],
+                'max_num_results' => 20
+              }
+            ],
+            tool_choice: 'required',
+            instructions: <<~SYS
+              You are an AI assistant. Please answer the questions as per the following instruction.
+              RULES (these are strict, do not break them):
+
+              1. If the answer is found in the vector store then respond using that information.
+              2. If the answer is NOT found in the vector store AND the question is related to hospitality then use your own hospitality-domain knowledge.
+              3. If the answer is NOT found in the vector store AND the question is NOT related to hospitality then reply exactly: #{I18n.t('llm.response.idontknow')}"
+              4. You can answer to any greetings.
+            SYS
+          }
+        )
+
+        Result.ok(extract_text(response))
+      rescue StandardError => e
+        log_error_to_sentry(e.message)
+        Result.error(e.message)
+      end
+
+      def vector_store_id
+        Rails.application.credentials.dig(:llm_token, :openai_vector_store_id)
+      end
+
+      def extract_text(resp)
+        output = resp['output'] || []
+        return '' if output.empty?
+
+        output.flat_map do |item|
+          (item['content'] || []).map { |c| c['text'] }
+        end.compact.join("\n")
       end
     end
   end

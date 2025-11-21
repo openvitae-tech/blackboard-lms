@@ -1,6 +1,13 @@
-<%= render "shared/components/modal", modalTitle: "Certificate" do %>
+<%= modal_box_component(title: "Certificate") do %>
   <%= image_tag @course_certificate.certificate_thumbnail, alt: "Course certificate" %>
-  <div class="flex justify-center p-6">
-    <%= link_to t("my_profile.my_certificates.share_on_linkedin"), linkedin_share_url(@course_certificate.certificate_uuid), class: 'body-extra-small-medium w-full hover:cursor-pointer btn-primary', target: "_blank" %>
+  <div class="flex justify-center mt-4 md:mt-5">
+    <%= link_to linkedin_share_url(@course_certificate.certificate_uuid),
+                class: "w-full rounded-md md:rounded-lg flex gap-2 bg-[#0967C2] text-white py-2 pl-4 pr-5 items-center justify-center",
+                target: "_blank" do %>
+      <%= image_tag 'linkedin_icon.png', alt: 'LinkedIn', class: 'h-3 md:h-4 w-3 md:w-4' %>
+      <span class="flex flex-1 justify-center main-text-md-medium">
+        <%= t("my_profile.my_certificates.share_on_linkedin") %>
+      </span>
+    <% end %>
   </div>
 <% end %>
