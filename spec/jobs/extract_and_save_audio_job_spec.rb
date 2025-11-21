@@ -73,7 +73,6 @@ describe ExtractAndSaveAudioJob do
 
     context 'when everything is valid' do
       it 'attaches the extracted audio to local_content' do
-        allow(TranscribeContentAudioJob).to receive(:perform_async)
         job.perform(local_content.id)
         expect(audio_attachment).to have_received(:attach)
           .with(hash_including(io: audio_io,
@@ -81,7 +80,6 @@ describe ExtractAndSaveAudioJob do
                                content_type: 'audio/mpeg',
                                key: 'audio/uuid.mp3'))
         expect(local_content).to have_received(:save!)
-        expect(TranscribeContentAudioJob).to have_received(:perform_async).with(local_content.id)
       end
     end
   end

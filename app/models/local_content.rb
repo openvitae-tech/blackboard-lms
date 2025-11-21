@@ -27,6 +27,7 @@ class LocalContent < ApplicationRecord
 
   before_create :attach_blob_to_video
   before_create :set_status_to_complete
+  after_save_commit :transcribe_audio, if: -> { english? && audio.attached? && audio.blob.saved_changes? }
 
   validates :lang, presence: true
   validate :presence_of_blob_id
@@ -50,5 +51,9 @@ class LocalContent < ApplicationRecord
 
   def set_status_to_complete
     self.status = 'complete' unless APP_CONFIG.external_video_hosting?
+  end
+
+  def transcribe_audio
+    TranscribeContentAudioJob.perform_async(id)
   end
 end
