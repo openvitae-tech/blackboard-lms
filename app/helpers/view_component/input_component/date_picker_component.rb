@@ -50,7 +50,7 @@ module ViewComponent
       end
 
       def date_picker_style
-        base = ['w-full borde']
+        base = ['w-full border']
         size_style = DATE_PICKER_SIZE_STYLE[size.to_sym]
 
         color_style =
