@@ -15,7 +15,8 @@ RSpec.describe TranscribeContentAudioJob do
   before do
     allow(LocalContent).to receive(:find).with(local_content_id).and_return(local_content)
     allow(AudioTranscriptionService).to receive(:instance).and_return(service)
-    allow(service).to receive(:transcribe).with(local_content.audio).and_return(transcripts_data)
+    allow(service).to receive(:transcribe).with(local_content.audio)
+                  .and_return(Result.ok({ 'segments' => transcripts_data }))
     allow(Transcript).to receive(:update_with_transaction)
   end
 
@@ -26,15 +27,17 @@ RSpec.describe TranscribeContentAudioJob do
       expect(service).to have_received(:transcribe).with(local_content.audio)
     end
 
-    it 'updates transcript if data is present' do
+    it 'updates transcript if result is ok' do
       described_class.new.perform(local_content_id)
       expect(Transcript).to have_received(:update_with_transaction).with(local_content, transcripts_data)
     end
 
-    it 'does not update transcript if data is nil' do
-      allow(service).to receive(:transcribe).and_return(nil)
-      described_class.new.perform(local_content_id)
-      expect(Transcript).not_to have_received(:update_with_transaction)
+    it 'does not update transcript if result is not ok' do
+      allow(service).to receive(:transcribe).with(local_content.audio)
+                    .and_return(Result.error('LLM model error'))
+      expect do
+        described_class.new.perform(local_content_id)
+      end.to raise_error(StandardError, /Transcription failed: LLM model error/)
     end
   end
 end
