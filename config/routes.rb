@@ -134,7 +134,8 @@ Rails.application.routes.draw do
 
   resources :learning_partners do
     collection do
-      post :create_step1
+      post :next_step
+      get :prev_step
     end
 
     member do

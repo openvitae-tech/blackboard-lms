@@ -1,5 +1,5 @@
 <%= modal_box_component(title: "Add Partner") do %>
-  <%= form_with url: create_step1_learning_partners_path, method: :post, model: @learning_partner do |form| %>
+  <%= form_with url: next_step_learning_partners_path, method: :post, model: @learning_partner do |form| %>
     <div class="flex flex-col gap-6 md:gap-7">
       <div class="flex flex-col gap-1">
         <div class="flex items-center px-[50px]">
@@ -12,6 +12,9 @@
           <span class="general-text-sm-normal text-letter-color-light">Step 2</span>
         </div>
       </div>
+
+      <%= form.hidden_field :step, value: 1 %>
+      <%= form.hidden_field :cache_key, value: @cache_key %>
 
       <div class="flex flex-col gap-4">
         <%= input_text_component(form:, label: 'Partner Name *', name: 'name', placeholder: 'Enter Partner Name') %>

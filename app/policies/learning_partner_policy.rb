@@ -16,7 +16,11 @@ class LearningPartnerPolicy
     user.is_admin?
   end
 
-  def create_step1?
+  def next_step?
+    user.is_admin?
+  end
+
+  def prev_step?
     user.is_admin?
   end
 

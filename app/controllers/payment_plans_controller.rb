@@ -15,7 +15,7 @@ class PaymentPlansController < ApplicationController
     @payment_plan = @learning_partner.build_payment_plan(payment_plan_params)
     if @payment_plan.save
       EVENT_LOGGER.publish_payment_plan_modified(current_user, @learning_partner)
-      redirect_to learning_partner_path(@learning_partner), notice: t("resource.created", resource_name: "Payment plan")
+      flash.now[:success] = t("resource.created", resource_name: "Payment plan")
     else
       render :new, status: :unprocessable_entity
     end

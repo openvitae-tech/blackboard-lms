@@ -1,0 +1,8 @@
+<%= turbo_stream.update "flash", partial: "shared/components/flash" %>
+<%= turbo_stream.replace "modal" do %>
+  <%= modal_box_component(title: nil)  do %>
+    <%= link_to learning_partner_path(@learning_partner), data: { turbo: false }, class: 'inline-block w-full' do %>
+      <%= button_component(text: 'View Learning Partner') %>
+    <% end %>
+  <% end %>
+<% end %>

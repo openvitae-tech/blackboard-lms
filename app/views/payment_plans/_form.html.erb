@@ -1,51 +1,27 @@
-<%= form_with(url:, model: payment_plan, method:, class: "flex flex-col gap-6 p-6") do |form| %>
-  <%= render 'shared/components/form_errors', resource: payment_plan %>
-  <div class="flex flex-row space-x-5 justify-between">
-    <div class="flex flex-col">
-      <div class="relative flex flex-col gap-3" data-controller="date-picker">
-        <%= form.label :start_date, t("learning_partner.payment_plan.subscription_start_date"), class: "text-sm font-medium" %>
-        <div class="relative flex w-full flex-row items-center">
-          <input type="date" id="datePicker" class="invisible p-0 w-[2px]" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker" min="<%= Date.today.strftime('%Y-%m-%d') %>" />
-          <%= input_field(form:form, field_name: :start_date, placeholder: "YYYY-MM-DD",type: "text", width:"w-full",value: form.object.start_date,html_options: { data: { date_picker_target: "dateSelector" } }) %>
+<%= modal_box_component(title:) do %>
+  <%= form_with url: learning_partner_payment_plan_path(learning_partner), model: payment_plan do |form| %>
+    <div class="flex flex-col gap-6 md:gap-7">
+      <div class="flex flex-col gap-4">
+        <div class="flex gap-4">
+          <div class="w-1/2"><%= input_text_component(form:, label: 'Start Date *', name: 'start_date', placeholder: 'YYYY-MM-DD') %></div>
+          <div class="w-1/2"><%= input_text_component(form:, label: 'End Date *', name: 'end_date', placeholder: 'YYYY-MM-DD') %></div>
+        </div>
+        <%= input_text_component(form:, label: 'User limit *', name: 'total_seats', placeholder: '1000') %>
+        <%= input_text_component(form:, label: 'Per user amount (INR) *', name: 'per_seat_cost', placeholder: '500') %>
+      </div>
 
-          <div class="absolute right-2 flex items-center pl-2">
-            <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->date-picker#openDatePicker"></span>
-          </div>
+      <div class="flex gap-3">
+        <div class="w-1/2">
+          <%= link_to "javascript:void(0);", data: { action: "click->modals#closeModal" }, class: 'inline-block w-full' do %>
+            <%= button_component(text: 'Cancel', type: 'outline') %>
+          <% end %>
+        </div>
+        <div class="w-1/2">
+          <%= form.button type: :submit, class: 'w-full' do %>
+            <%= button_component(text: action_text) %>
+          <% end %>
         </div>
       </div>
-    </div>
-    <div class="flex flex-col">
-      <div class="relative flex flex-col gap-3" data-controller="date-picker">
-        <%= form.label :end_date, t("learning_partner.payment_plan.subscription_end_date"), class: "text-sm font-medium" %>
-        <div class="relative flex w-full flex-row items-center">
-          <input type="date" id="datePicker" class="invisible p-0 w-[2px]" data-action="change->date-picker#datePicked" data-date-picker-target="datePicker" min="<%= Date.today.strftime('%Y-%m-%d') %>" />
-          <%= input_field(form:form, field_name: :end_date, placeholder: "YYYY-MM-DD",type: "text", width:"w-full",value: form.object.end_date,html_options: { data: { date_picker_target: "dateSelector"}}) %>
-          <div class="absolute right-2 flex items-center pl-2">
-            <span class="cursor-pointer icon-small icon icon-calendar bg-letter-color" data-action="click->date-picker#openDatePicker"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <%= form.label :total_seats, t("learning_partner.payment_plan.user_limit"), class: "text-sm font-medium" %>
-    <%= form.number_field :total_seats, class: "input-text" %>
-  </div>
-  <div>
-    <%= form.label :per_seat_cost, t("learning_partner.payment_plan.per_user_amount"), class: "text-sm font-medium" %>
-    <%= form.number_field :per_seat_cost, class: "input-text" %>
-  </div>
-  <% if action_name == "new" %>
-    <div class="flex items-center gap-6 text-sm">
-      <%= link_to t("button.cancel"), cancel_path, class: "nav-link" %>
-      <div>
-        <%= form.submit t("button.submit"), class: "btn-primary" %>
-      </div>
-    </div>
-  <% else %>
-    <div class="flex flex-col gap-6 justify-between heading">
-      <%= form.button t("button.update"), class: "bg-primary text-white p-4 rounded" %>
-      <%= link_to t("button.cancel"), cancel_path, data: { action: "click->modals#closeModal" }, class: "flex justify-center" %>
     </div>
   <% end %>
 <% end %>

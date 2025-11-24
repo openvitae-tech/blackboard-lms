@@ -1,0 +1,53 @@
+<%= modal_box_component(title: "Add Partner") do %>
+  <%= form_with url: learning_partners_path, method: :post, model: @learning_partner do |form| %>
+    <div class="flex flex-col gap-6 md:gap-7">
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center px-[50px]">
+          <div class="w-5 h-5 bg-primary-light-100 rounded-full"></div>
+          <div class="h-1 grow bg-primary-light-100"></div>
+          <div class="w-5 h-5 bg-primary rounded-full"></div>
+        </div>
+        <div class="flex justify-between px-[50px]">
+          <span class="general-text-sm-normal text-letter-color-light">Step 1</span>
+          <span class="general-text-sm-normal text-letter-color">Step 2</span>
+        </div>
+      </div>
+
+      <%= form.hidden_field :step, value: 2 %>
+      <%= form.hidden_field :cache_key, value: @cache_key %>
+
+      <div class="flex flex-col gap-4">
+        <%= file_selector_component(
+              form:,
+              name: :logo,
+              label: "Logo",
+              type: "image",
+              support_text: "Max file size is 1MB",
+              support_text_two: "Supporting files are .jpg,.png,.jpeg"
+            ) %>
+
+        <%= file_selector_component(
+              form:,
+              name: :banner,
+              label: "Banner",
+              type: "image",
+              support_text: "Max file size is 1MB",
+              support_text_two: "Supporting files are .jpg,.png,.jpeg"
+            ) %>
+      </div>
+
+      <div class="flex gap-3">
+        <div class="w-1/2">
+          <%= link_to prev_step_learning_partners_path(cache_key: @cache_key, step: 2), class: 'inline-block w-full' do %>
+            <%= button_component(text: 'Previous', type: 'outline') %>
+          <% end %>
+        </div>
+        <div class="w-1/2">
+          <%= form.button type: :submit, class: 'w-full' do %>
+            <%= button_component(text: 'Next') %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

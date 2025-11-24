@@ -1,0 +1,14 @@
+<%= modal_box_component(title: "Headless") do %>
+  <div class="flex gap-3">
+    <div class="w-1/2">
+      <%= link_to learning_partner_path(@learning_partner), data: { turbo: false }, class: 'inline-block w-full' do %>
+        <%= button_component(text: 'Cancel', type: 'outline') %>
+      <% end %>
+    </div>
+    <div class="w-1/2">
+      <%= link_to new_learning_partner_payment_plan_path(@learning_partner), class: 'inline-block w-full' do %>
+        <%= button_component(text: 'Add payment plan', type: 'outline') %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
