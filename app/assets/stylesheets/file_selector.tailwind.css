@@ -31,7 +31,7 @@
 }
 
 .file-selector-preview-image {
-  @apply h-full w-full object-cover rounded-lg;
+  @apply h-full w-full object-contain rounded-lg;
 }
 
 .file-selector-doc-preview {
