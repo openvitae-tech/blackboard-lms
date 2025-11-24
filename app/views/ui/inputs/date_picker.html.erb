@@ -1,0 +1,79 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_inputs_path %>
+</div>
+<%= h3_component(text: "Date picker") %>
+
+<%= doc_section_component(title: "Date picker without label") do %>
+    <%= date_picker_component(
+        name: :start_date,
+        support_text:"choose a valid"
+        )
+    %>
+<% end %>
+<%= doc_section_component(title: "Date picker with label") do %>
+    <%= date_picker_component(
+        name: :start_date,
+        label: "Subscription Start Date",
+        support_text:"choose a valid"
+        )
+    %>
+<% end %>
+<%= doc_section_component(title: "Date picker without support text") do %>
+    <%= date_picker_component(
+        name: :start_date,
+        label: "Subscription Start Date"
+        )
+    %>
+<% end %>
+<%= doc_section_component(title: "Date picker without label and support text") do %>
+    <%= date_picker_component(
+        name: :start_date
+        )
+    %>
+<% end %>
+<%= doc_section_component(title: "Medium Date picker") do %>
+    <%= date_picker_component(
+        name: :start_date,
+        support_text:"choose a valid"
+        )
+    %>
+<% end %>
+<%= doc_section_component(title: "Large Date picker") do %>
+    <%= date_picker_component(
+        name: :start_date,
+        size: "lg",
+        support_text:"choose a valid"
+        )
+    %>
+<% end %>
+<%= doc_section_component(title: "Disabled Date picker") do %>
+    <%= date_picker_component(
+        name: :start_date,
+        support_text:"choose a valid",
+        disabled:true,
+        )
+    %>
+<% end %>
+<%= doc_section_component(title: "Date picker in error state") do %>
+    <%= date_picker_component(
+        name: :start_date,
+        support_text:"choose a valid",
+        error:"error"
+        )
+    %>
+<% end %>
+
+<%= h3_component(text: "Form with date picker") %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Medium Date picker") do %>
+    <%= date_picker_component(
+        form: form,
+        name: :start_date,
+        label: "Subscription Start Date",
+        support_text:"choose a valid"
+
+        )
+    %>
+  <% end %>
+<% end %>

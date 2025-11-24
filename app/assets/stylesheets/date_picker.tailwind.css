@@ -1,0 +1,7 @@
+.date-picker-icon-wrapper {
+  @apply absolute right-2 flex items-center;
+}
+
+.date-picker-icon-wrapper-disabled {
+  @apply pointer-events-none cursor-not-allowed;
+}

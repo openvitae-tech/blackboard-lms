@@ -10,6 +10,7 @@
 @import "breadcrumbs.tailwind.css";
 @import "modalbox.tailwind.css";
 @import "profile_icon.tailwind.css";
+@import "date_picker.tailwind.css";
 
 
 @layer base {
