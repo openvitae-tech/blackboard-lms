@@ -18,9 +18,7 @@ module Courses
       course_scope = filter_by_matching_term(course_scope, search_context)
       course_scope = filter_by_tags(search_context.tags, course_scope)
 
-      course_scope = if search_context.team_assign?
-                       filter_out_team_enrolled_courses(course_scope, search_context)
-                     elsif search_context.user_assign?
+      course_scope = if search_context.user_assign?
                        filter_out_user_enrolled_courses(course_scope, search_context)
                      elsif search_context.program?
                        filter_out_program_courses(course_scope, search_context)
@@ -64,11 +62,6 @@ module Courses
       return scope if search_context.term.blank?
 
       scope.where('title ILIKE ?', "%#{search_context.term}%")
-    end
-
-    def filter_out_team_enrolled_courses(scope, search_context)
-      enrolled_courses_ids = search_context.team.team_enrollments.pluck(:course_id)
-      scope.where.not(id: enrolled_courses_ids)
     end
 
     def filter_out_user_enrolled_courses(scope, search_context)
