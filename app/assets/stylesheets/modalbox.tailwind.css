@@ -7,7 +7,7 @@
 }
 
 .modal-success {
-  @apply relative w-[312px] md:w-[515px] h-[140px] md:h-[140px] overflow-visible bg-white rounded-xl;
+  @apply relative w-[312px] md:w-[515px] h-[140px] overflow-visible bg-white rounded-xl;
 }
 
 .modal-content {
