@@ -19,7 +19,8 @@ module Courses
       course_scope = filter_by_tags(search_context.tags, course_scope)
 
       course_scope = if search_context.team_assign?
-                       filter_out_team_enrolled_courses(course_scope, search_context)
+                       # filter_out_team_enrolled_courses(course_scope, search_context)
+                       course_scope
                      elsif search_context.user_assign?
                        filter_out_user_enrolled_courses(course_scope, search_context)
                      elsif search_context.program?

@@ -224,11 +224,11 @@ RSpec.describe Courses::FilterService do
       )
     end
 
-    it 'filters out already assigned/enrolled courses' do
+    it 'does not filters out already assigned/enrolled courses for team assign' do
       service = Courses::FilterService.new(@manager, search_context)
       results = service.filter
-      expect(results.records.count).to eq(1)
-      expect(results.records).to eq([@course2])
+      expect(results.records.count).to eq(2)
+      expect(results.records).to eq([@course2, @course1])
     end
   end
 
