@@ -1,0 +1,26 @@
+<%= modal_box_component(variant: :success) do %>
+  <%= form_with url: "#", method: :post do |form| %>
+    <div class="relative w-full bg-white flex items-center justify-between">
+
+        <div class="flex flex-col gap-6 w-[155px] md:w-[279px]">
+            <p class="main-text-lg-semibold">
+            Learning Partner Created !
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-2">
+            <%= button_component(type: 'outline', text: "Dismiss", size:"sm") %>
+
+            <%= form.button type: :submit do %>
+                <%= button_component(text: "Create payment plan", size: "sm") %>
+            <% end %>
+            </div>
+        </div>
+
+       
+    </div>
+    <div class="absolute -bottom-9 md:bottom-0 -right-7 md:right-0">
+        <%= image_tag "success.png", alt: "Success", class: "w-[150px] md:w-44 h-[150px] md:h-44" %>
+    </div>
+
+  <% end %>  
+<% end %>
