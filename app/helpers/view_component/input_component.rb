@@ -257,5 +257,32 @@ module ViewComponent
       render partial: 'view_components/inputs/dropdown_component/dropdown',
              locals: { dropdown: }
     end
+
+    def date_picker_component(
+      form: nil,
+      name: nil,
+      label: nil,
+      value: nil,
+      size: 'md',
+      support_text: nil,
+      error: nil,
+      disabled: false,
+      html_options: {}
+    )
+      date_picker = DatePickerComponent.new(
+        form:,
+        name:,
+        label:,
+        value:,
+        size:,
+        support_text:,
+        error:,
+        disabled:,
+        html_options:
+      )
+
+      render partial: 'view_components/inputs/date_picker_component/date_picker',
+             locals: { date_picker: }
+    end
   end
 end

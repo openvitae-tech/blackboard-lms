@@ -1,18 +1,20 @@
 <%= turbo_frame_tag 'modal' do %>
 <div data-controller="modal-loader" class="relative">
     <div class="modal-wrapper" data-controller="modals" data-modals-target="modalBox">     
-      <div class="modal-container">
+      <div class="<%= container_class %>">
         <div data-modal-loader-target="loader"
              class="hidden absolute flex modal-loader-container">
           <div class="modal-loader"></div>
         </div>
         <div class="modal-content">
-          <div class="modal-header">
-            <span class="main-text-lg-semibold"><%= modal.title%></span>
-            <button data-action="click->modals#closeModal">
-              <%= icon("x-circle", css: "h-6 w-6") %>
-            </button>
-          </div>
+          <% if modal.title.present? %>
+            <div class="modal-header">
+              <span class="main-text-lg-semibold"><%= modal.title %></span>
+              <button data-action="click->modals#closeModal">
+                <%= icon("x-circle", css: "h-6 w-6") %>
+              </button>
+            </div>
+          <% end %>
           <div class="modal-body">
             <%= body %>
           </div>
