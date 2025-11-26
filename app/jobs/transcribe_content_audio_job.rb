@@ -7,7 +7,7 @@ class TranscribeContentAudioJob < BaseJob
 
       service = AudioTranscriptionService.instance
       result = service.transcribe(local_content.audio)
-      raise StandardError, "Transcription failed: #{result.data}" unless result.ok?
+      raise Errors::LlmTranscriptionError, "Transcription failed: #{result.data}" unless result.ok?
 
       Transcript.update_with_transaction(local_content, result.data['segments'])
     end

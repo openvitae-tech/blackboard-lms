@@ -37,7 +37,7 @@ RSpec.describe TranscribeContentAudioJob do
                     .and_return(Result.error('LLM model error'))
       expect do
         described_class.new.perform(local_content_id)
-      end.to raise_error(StandardError, /Transcription failed: LLM model error/)
+      end.to raise_error(Errors::LlmTranscriptionError, /Transcription failed: LLM model error/)
     end
   end
 end
