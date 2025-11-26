@@ -7,4 +7,8 @@ class Ui::ModalController < Ui::BaseController
   def preview
     render partial: "ui/modal/sample_modal"
   end
+  
+  def success_modal
+    render partial: "ui/modal/success_modal"
+  end
 end
