@@ -12,5 +12,11 @@
   <% end %>
 <% end %>
 
+<%= doc_section_component(title: "Success modal (header-less modal)") do %>
+  <%= link_to ui_success_modal_path, data: { turbo_frame: "modal" } do %>
+    <%= button(label: "Click here for success modal") %>
+  <% end %>
+<% end %>
+
 
 

@@ -6,6 +6,10 @@
   @apply relative w-[300px] md:w-[400px];
 }
 
+.modal-success {
+  @apply relative w-[312px] md:w-[515px] h-[140px] overflow-visible bg-white rounded-xl;
+}
+
 .modal-content {
   @apply bg-white rounded-lg md:rounded-xl w-full z-[9999];
 }

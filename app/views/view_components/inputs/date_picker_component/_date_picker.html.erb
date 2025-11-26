@@ -1,0 +1,16 @@
+<div class="w-full flex flex-col gap-1" data-controller="date-picker">
+  <% if date_picker.label.present? %>
+    <label class="group">
+      <span class="<%= date_picker.label_style %>"><%= date_picker.label %></span>
+      <%= render 'view_components/inputs/date_picker_component/input_box', { date_picker: } %>
+    </label>
+  <% else %>
+    <%= render 'view_components/inputs/date_picker_component/input_box', { date_picker: } %>
+  <% end %>
+
+  <% if date_picker.support_text.present? %>
+    <span class="<%= date_picker.support_text_style %>">
+      <%= date_picker.support_text %>
+    </span>
+  <% end %>
+</div>
