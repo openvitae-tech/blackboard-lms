@@ -57,8 +57,8 @@
           <% end %>
         </ul>
       </details>
-      <% if module_completed?(enrollment, course_module) && @course_module.quiz_present? %>
-        <% if @enrollment.quiz_completed_for?(course_module) %>
+      <% if module_completed?(enrollment, course_module) && course_module.quiz_present? %>
+        <% if enrollment.quiz_completed_for?(course_module) %>
           <%= link_to redo_quiz_course_module_path(course, course_module), data: { turbo_method: :delete },class: "px-2" do %>
             <%= button(
             size: "lg",
