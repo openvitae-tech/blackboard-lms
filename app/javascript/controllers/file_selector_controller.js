@@ -42,12 +42,30 @@ export default class extends Controller {
     this.selectedFileNameTarget.classList.remove("hidden");
 
     if (file) {
-      this.fileNameTarget.textContent = file.name;
+      const truncated = this.truncateFileName(file.name, 20); 
+      this.fileNameTarget.textContent = truncated;
       this.fileSizeTarget.textContent = this.formatFileSize(file.size);
     } else {
       this.fileNameTarget.textContent = "No file chosen";
       this.fileSizeTarget.textContent = "";
     }
+  }
+
+  truncateFileName(fileName, maxLength = 10) {
+    const dotIndex = fileName.lastIndexOf(".");
+
+    if (dotIndex === -1) {
+      return fileName.length > maxLength
+        ? fileName.slice(0, maxLength) + "..."
+        : fileName;
+    }
+
+    const namePart = fileName.slice(0, dotIndex);
+    const extension = fileName.slice(dotIndex);
+
+    if (namePart.length <= maxLength) return fileName;
+
+    return namePart.slice(0, maxLength) + "..." + extension;
   }
 
   formatFileSize(bytes) {
