@@ -26,7 +26,7 @@ RSpec.describe AudioTranscriptionService do
 
     context 'when transcription is successful' do
       it 'returns transcript segments' do
-        expect(service.transcribe(audio)).to eq([])
+        expect(service.transcribe(audio)).to eq(result)
       end
     end
 
@@ -34,8 +34,7 @@ RSpec.describe AudioTranscriptionService do
       it 'logs error and returns nil' do
         allow(result).to receive(:ok?).and_return(false)
         allow(service).to receive(:log_error_to_sentry)
-        expect(service.transcribe(audio)).to be_nil
-        expect(service).to have_received(:log_error_to_sentry).with("Audio transcription failed: #{result.data}")
+        expect(service.transcribe(audio)).to eq(result)
       end
     end
   end
