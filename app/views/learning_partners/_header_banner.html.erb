@@ -1,0 +1,19 @@
+<div class="relative h-[194px] w-full rounded-lg">
+  <div class="h-full rounded-lg md:rounded-xl">
+    <%= image_tag partner_banner(learning_partner), class: 'h-full w-full object-cover rounded-lg md:rounded-xl' %>
+  </div>
+  <div class="absolute top-6 left-6 flex items-center space-x-3 z-10">
+    <%= image_tag partner_logo(learning_partner, :large), class: 'h-6 md:h-10 w-6 md:w-10 object-cover rounded-full border-2 border-white box-shadow-medium' %>
+    <span class="heading-xl text-white"><%= learning_partner.name %> </span>
+  </div>
+  <div class="absolute top-3 md:top-4 right-3 md:right-4 flex">
+    <%= menu_component(menu_items: learning_partner_menu_items(learning_partner)) %>      
+  </div>
+  <%= link_to 'javascript:void(0);' do %>
+  <button
+      type="button"
+      class="absolute bottom-3 md:bottom-4 right-3 md:right-4 h-7 w-7 border border-letter-color rounded-full bg-white opacity-70 flex justify-center">
+      <%= icon("pencil", css: "h-4 w-4 md:w-4 md:h-4 text-letter-color") %>
+      </button>
+  <% end %>    
+</div>
