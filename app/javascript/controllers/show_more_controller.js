@@ -13,7 +13,7 @@ export default class extends Controller {
 
   collectHeightClasses() {
     this.heightClasses = Array.from(this.contentTarget.classList).filter(cls =>
-      cls.match(/(^h-\[?.*\]?$)|(^max-h-\[?.*\]?$)|(.*:h-\[?.*\]?$)|(.*:max-h-\[?.*\]?$)/)
+      cls.match(/^(.*:)?(max-)?h-(\d+|px|full|screen|min|max|fit|\[.+\])$/)
     )
   }
 
