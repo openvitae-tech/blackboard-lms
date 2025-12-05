@@ -1,4 +1,4 @@
-<div class="flex justify-between items-center my-2">
+<div class="flex justify-between items-center pt-5 pb-3 sticky top-0 left-0 w-full z-40 bg-white">
   <%= render 'shared/components/back_button', back_link: learning_partners_path %>
   <div class="flex items-center gap-4">
     <% if policy(@learning_partner).destroy? %>
@@ -6,86 +6,63 @@
         <span>Delete</span>
       <% end %>
     <% end %>
-    <%= render "commons/invite_user", learning_partner: @learning_partner, team: @learning_partner.parent_team %>
-    <%= menu_component_old(menu_items: learning_partner_menu_items(@learning_partner), icon_class: "icon-medium" ) %>
   </div>
 </div>
-<div class="w-full mt-8">
-  <div class="relative h-[250px] w-full">
-    <div class="relative h-full">
-      <%= image_tag partner_banner(@learning_partner), class: 'h-full w-full object-cover' %>
+<div class="flex flex-col gap-6 pt-3">
+  <div class="w-full">
+    <%= render "learning_partners/header_banner", learning_partner: @learning_partner%>
+    <div class="flex flex-col gap-4 mt-3">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col md:flex-row gap-2 md:gap-6 ">
+          <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
+            <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
+            <p class="main-text-md-normal">Seats Occupied</p>
+            <p class="heading-2xl"><%= activate_users_count(@learning_partner) %> / <%= @learning_partner.payment_plan.total_seats %></p>
+          </div>
+          <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
+            <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
+            <p class="main-text-md-normal">Verified users</p>
+            <p class="heading-2xl"><%= @metrics.user_joined_count %></p>
+          </div>
+          <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
+            <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
+            <p class="main-text-md-normal">Course Enrolled</p>
+            <p class="heading-2xl"><%= @metrics.user_enrolled_count %></p>
+          </div>
+        </div>
+        <div class="flex w-full">
+          <%= render "learning_partners/payment_plan_details", learning_partner: @learning_partner, payment_plan: @learning_partner.payment_plan, users_count: @learning_partner.users_count  %>
+        </div>
+      </div> 
+      <div class="grid grid-cols-2 grid-rows-6 md:grid-cols-5 md:grid-rows-1 gap-4">
+        <div class="border border-line-colour-light px-1 py-4 flex flex-col items-center justify-center rounded-lg md:rounded-xl col-start-1 row-span-3 md:row-span-1 md:col-span-1">
+          <p class="main-text-sm-medium">Course Started</p>
+          <p class="main-text-md-semibold"><%= @metrics.course_started_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 flex flex-col items-center justify-center text-center rounded-lg md:rounded-xl col-start-1 md:col-start-2 row-span-3 md:row-span-1 md:col-span-1">
+          <p class="main-text-sm-medium">Course Completed</p>
+          <p class="main-text-md-semibold"><%= @metrics.course_completed_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 flex flex-col items-center justify-center text-center rounded-lg md:rounded-xl col-start-2 md:col-start-3 row-start-1 row-span-2 md:row-span-1 md:col-span-1">
+          <p class="main-text-sm-medium">Course Views</p>
+          <p class="main-text-md-semibold"><%= @metrics.course_views_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 flex flex-col items-center justify-center text-center rounded-lg md:rounded-xl col-start-2 md:col-start-4 row-start-3 row-span-2 md:row-span-1 md:col-span-1">
+          <p class="main-text-sm-medium">Lesson Views</p>
+          <p class="main-text-md-semibold"><%= @metrics.lesson_views_count %></p>
+        </div>
+        <div class="border border-line-colour-light px-1 py-4 flex flex-col items-center justify-center text-center rounded-lg md:rounded-xl col-start-2 md:col-start-5 row-start-5 row-span-2 md:row-span-1 md:col-span-1">
+          <p class="main-text-sm-medium">Time spent</p>
+          <p class="main-text-md-semibold"><%= duration_in_words(@metrics.time_spent_total) %></p>
+        </div>
+      </div>
     </div>
-    <div class="absolute inset-0 bg-black opacity-60"></div>
-    <div class="absolute top-6 left-6 flex items-center space-x-4 z-10">
-      <%= image_tag partner_logo(@learning_partner, :large), class: 'h-16 w-16 object-cover rounded-full border-2 border-white box-shadow-medium' %>
-      <span class="heading heading-overlay"><%= @learning_partner.name %></span>
-    </div>
+    <% if @learning_partner.about? %>
+      <div class="mt-6 ">
+        <%= render "commons/about", text: @learning_partner.about, title:"About" %>
+      </div>
+    <% end %>
   </div>
-  <div class="flex flex-col gap-4 my-8">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Onboarding Initiated</p>
-        <p><%= @metrics.onboarding_initiated? %></p>
-      </div>
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Owner Joined</p>
-        <p><%= @metrics.first_owner_joined? %></p>
-      </div>
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>User Login</p>
-        <p><%= @metrics.user_login_count %></p>
-      </div>
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>User Logout</p>
-        <p><%= @metrics.user_logout_count %></p>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Users</p>
-        <p><%= @metrics.user_invited_count %></p>
-      </div>
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Verified users</p>
-        <p><%= @metrics.user_joined_count %></p>
-      </div>
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Course Enrolled</p>
-        <p><%= @metrics.user_enrolled_count %></p>
-      </div>
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Course Started</p>
-        <p><%= @metrics.course_started_count %></p>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Course Completed</p>
-        <p><%= @metrics.course_completed_count %></p>
-      </div>
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Course Views</p>
-        <p><%= @metrics.course_views_count %></p>
-      </div>
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Lesson Views</p>
-        <p><%= @metrics.lesson_views_count %></p>
-      </div>
-      <div class="border border-line-colour-light px-1 py-4 text-center">
-        <p>Time spent</p>
-        <p><%= duration_in_words(@metrics.time_spent_total) %></p>
-      </div>
-    </div>
-  </div>
-  <%= render "commons/payment_plan_details", learning_partner: @learning_partner, payment_plan: @learning_partner.payment_plan, users_count: @learning_partner.users_count  %>
-  <% if @learning_partner.about? %>
-    <div class="my-8">
-      <h3 class="text-sm font-medium">About</h3>
-      <div class="my-4 p-6 box-shadow-medium">
-        <%= text_with_paragraph(@learning_partner.about)%>
-      </div>
-    </div>
-  <% end %>
+  <%= member_list_component(team: @learning_partner.parent_team, members: @members) %>
 </div>
 
-<%= member_list_component(team: @learning_partner.parent_team, members: @members) %>
