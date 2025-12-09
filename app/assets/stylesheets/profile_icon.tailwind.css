@@ -3,13 +3,13 @@
 }
 
 .profile-icon-sm {
-  @apply w-6 h-6 font-poppins antialiased text-xs font-medium; 
+  @apply w-6 h-6 antialiased main-text-sm-medium; 
 }
 
 .profile-icon-md {
-  @apply w-6 h-6 md:h-10 md:w-10 font-poppins antialiased text-xs font-medium md:text-lg;
+  @apply w-6 h-6 md:h-10 md:w-10 antialiased main-text-lg-medium;
 }
 
 .profile-icon-lg {
-  @apply w-10 h-10 md:h-14 md:w-14 font-poppins antialiased text-base font-medium md:text-3xl md:font-semibold;
+  @apply w-10 h-10 md:h-14 md:w-14 antialiased heading-3xl;
 }
