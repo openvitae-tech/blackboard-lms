@@ -1,0 +1,12 @@
+<div class="px-4 md:px-5 py-3 md:py-4 flex flex-col gap-2 rounded-lg bg-primary-light-50 main-text-sm-normal" data-controller="show-more">        
+  <h3 class="main-text-md-semibold"> <%= title %></h3>
+  <div data-show-more-target="content" class="overflow-hidden <%= local_assigns[:height] || 'h-[42px] md:h-[50px]' %>">
+    <%= text_with_paragraph(text)%>
+  </div>
+  <button 
+    data-show-more-target="button"
+    data-action="click->show-more#toggle"
+    class="text-primary underline cursor-pointer hidden self-start">
+    Show more
+  </button>
+</div>  

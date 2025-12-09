@@ -1,0 +1,20 @@
+<div id="payment-plan-details" class="px-5 py-4 bg-primary-light-100 rounded-lg md:rounded-xl flex flex-col md:gap-2 items-center gap-3 md:justify-center w-full md:h-20">
+  <% if learning_partner.payment_plan.present? %>
+    <h3 class="main-text-md-semibold text-primary"><%= t("learning_partner.payment_plan.label")%></h3>
+    <div class="flex flex-col gap-3 md:gap-1 md:flex-row justify-between items-center w-full h-full">
+      <div class="main-text-sm-normal flex flex-col md:flex-row gap-1 items-center">
+        <span> Cost/seat:</span> <span class="main-text-sm-medium">₹ <%= payment_plan.per_seat_cost %></span>
+      </div>
+      <div class="w-20 md:w-px h-px md:h-full bg-primary-light"></div>
+      <div class="main-text-sm-normal flex flex-col md:flex-row gap-1 items-center">
+        <span> Period:</span> <span class="main-text-sm-medium"><%= payment_plan.start_date.strftime("%d %b %Y") %> - <%= payment_plan.end_date.strftime("%d %b %Y") %></span>
+      </div>
+      <% if policy(learning_partner.payment_plan).show? %>
+        <div class="w-20 md:w-px h-px md:h-full bg-primary-light"></div>
+        <div class="main-text-sm-normal flex flex-col md:flex-row gap-1 items-center">
+         <span> Total seats:</span> <span class="main-text-sm-medium"><%= payment_plan.total_seats %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
