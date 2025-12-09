@@ -117,7 +117,7 @@ module ViewComponent
           elsif error.present?
             'text-danger'
           else
-            'text-letter-color-light'
+            'text-letter-color-light hover:text-primary'
           end
         class_list([], size_style, color_style)
       end
