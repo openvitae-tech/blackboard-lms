@@ -12,28 +12,42 @@
   <div class="w-full">
     <%= render "learning_partners/header_banner", learning_partner: @learning_partner%>
     <div class="flex flex-col gap-4 mt-3">
-      <div class="grid grid-cols-2 gap-4">
-        <div class="flex flex-col md:flex-row gap-2 md:gap-6 ">
-          <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
-            <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
-            <p class="main-text-md-normal">Seats Occupied</p>
-            <p class="heading-2xl"><%= activate_users_count(@learning_partner) %> / <%= @learning_partner.payment_plan.total_seats %></p>
+      <% if @learning_partner.payment_plan.present? %>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex flex-col md:flex-row gap-2 md:gap-6 ">
+            <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
+              <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
+              <p class="main-text-md-normal">Seats Occupied</p>
+              <p class="heading-2xl"><%= activate_users_count(@learning_partner) %> / <%= @learning_partner.payment_plan.total_seats %></p>
+            </div>
+            <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
+              <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
+              <p class="main-text-md-normal">Verified users</p>
+              <p class="heading-2xl"><%= @metrics.user_joined_count %></p>
+            </div>
+            <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
+              <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
+              <p class="main-text-md-normal">Course Enrolled</p>
+              <p class="heading-2xl"><%= @metrics.user_enrolled_count %></p>
+            </div>
           </div>
-          <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
-            <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
-            <p class="main-text-md-normal">Verified users</p>
-            <p class="heading-2xl"><%= @metrics.user_joined_count %></p>
+          <div class="flex w-full">
+            <%= render "learning_partners/payment_plan_details", learning_partner: @learning_partner, payment_plan: @learning_partner.payment_plan, users_count: @learning_partner.users_count  %>
           </div>
-          <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
-            <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
-            <p class="main-text-md-normal">Course Enrolled</p>
-            <p class="heading-2xl"><%= @metrics.user_enrolled_count %></p>
-          </div>
+        </div> 
+      <% else %>
+        <div class="px-5 py-4 bg-primary-light-100 rounded-lg md:rounded-xl flex flex-col md:flex-row gap-2 items-center justify-center w-full md:h-20 main-text-sm-normal">
+          <span>No playment plan is selected ,</span>
+          <%= link_to edit_learning_partner_payment_plan_path(@learning_partner),
+              {
+                class: "underline text-primary hover:text-primary-light",
+                data: { turbo_frame: "modal" }
+              } do %>
+              Please select a payment plan
+          <% end %>
         </div>
-        <div class="flex w-full">
-          <%= render "learning_partners/payment_plan_details", learning_partner: @learning_partner, payment_plan: @learning_partner.payment_plan, users_count: @learning_partner.users_count  %>
-        </div>
-      </div> 
+
+      <% end %>
       <div class="grid grid-cols-2 grid-rows-6 md:grid-cols-5 md:grid-rows-1 gap-4">
         <div class="border border-line-colour-light px-1 py-4 flex flex-col items-center justify-center rounded-lg md:rounded-xl col-start-1 row-span-3 md:row-span-1 md:col-span-1">
           <p class="main-text-sm-medium">Course Started</p>
