@@ -37,13 +37,9 @@
         </div> 
       <% else %>
         <div class="px-5 py-4 bg-primary-light-100 rounded-lg md:rounded-xl flex flex-col md:flex-row gap-2 items-center justify-center w-full md:h-20 main-text-sm-normal">
-          <span>No payment plan is selected,</span>
-          <%= link_to edit_learning_partner_payment_plan_path(@learning_partner),
-              {
-                class: "underline text-primary hover:text-primary-light",
-                data: { turbo_frame: "modal" }
-              } do %>
-              Please select a payment plan
+          <span>No payment plan is selected</span>
+          <%= link_to edit_learning_partner_payment_plan_path(@learning_partner), data: { turbo_frame: "modal" } do %>
+            <%= button_component(text: "Choose payment plan", type:"outline", size:"sm") %>
           <% end %>
         </div>
       <% end %>
