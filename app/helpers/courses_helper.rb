@@ -132,7 +132,7 @@ module CoursesHelper
   end
 
   def modules_in_order(course)
-    records_in_order(course.course_modules, course.course_modules_in_order)
+    records_in_order(course.course_modules.includes(:lessons), course.course_modules_in_order)
   end
 
   def options_for_duration

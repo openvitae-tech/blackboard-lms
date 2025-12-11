@@ -22,6 +22,7 @@ class CoursesController < ApplicationController
     @tags = Tag.load_tags
     @type = permitted_type(params[:type])
     apply_pagination
+    preload_course_assets
   end
 
   # GET /courses/1 or /courses/1.json
@@ -193,5 +194,24 @@ class CoursesController < ApplicationController
   def updated_params
     tag_ids = [course_params[:category_id], course_params[:level_id]].compact
     course_params.merge(tag_ids:).except(:category_id, :level_id)
+  end
+
+  def preload_course_assets
+    available_courses = @available_courses.present? ? @available_courses.to_a : []
+    enrolled_courses   = @enrolled_courses.present? ? @enrolled_courses.to_a : []
+    records = available_courses + enrolled_courses
+    return if records.empty?
+
+    ActiveRecord::Associations::Preloader.new(
+      records: records,
+      associations: :banner_attachment
+    ).call
+
+    if enrolled_courses.any?
+      ActiveRecord::Associations::Preloader.new(
+        records: enrolled_courses,
+        associations: :course_modules
+      ).call
+    end
   end
 end
