@@ -20,13 +20,9 @@ module CourseAssociationsPreloader
 
     ActiveRecord::Associations::Preloader.new(
       records: records,
-      associations: :banner_attachment
+      associations: [ :banner_attachment, :tags ]
     ).call
 
-    ActiveRecord::Associations::Preloader.new(
-      records: records,
-      associations: :tags
-    ).call
 
     if enrolled_courses.any?
       ActiveRecord::Associations::Preloader.new(
