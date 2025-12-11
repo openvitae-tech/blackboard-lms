@@ -18,7 +18,7 @@
             <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
               <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
               <p class="main-text-md-normal">Seats Occupied</p>
-              <p class="heading-2xl"><%= activate_users_count(@learning_partner) %> / <%= @learning_partner.payment_plan.total_seats %></p>
+              <p class="heading-2xl"><%= @learning_partner.active_users_count %> / <%= @learning_partner.payment_plan.total_seats %></p>
             </div>
             <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
               <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
@@ -37,9 +37,9 @@
         </div> 
       <% else %>
         <div class="px-5 py-4 bg-primary-light-100 rounded-lg md:rounded-xl flex flex-col md:flex-row gap-2 items-center justify-center w-full md:h-20 main-text-sm-normal">
-          <span>No payment plan is selected</span>
+          <span>No payment plan is created</span>
           <%= link_to edit_learning_partner_payment_plan_path(@learning_partner), data: { turbo_frame: "modal" } do %>
-            <%= button_component(text: "Choose payment plan", type:"outline", size:"sm") %>
+            <%= button_component(text: "Create a payment plan", type:"outline", size:"sm") %>
           <% end %>
         </div>
       <% end %>
