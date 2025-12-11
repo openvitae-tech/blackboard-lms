@@ -10,7 +10,7 @@ class CourseAssignsController < ApplicationController
     context = @team_assign ? SearchContext::TEAM_ASSIGN : SearchContext::USER_ASSIGN
     @search_context = build_search_context(context:, resource: @team || @user)
     service = Courses::FilterService.new(current_user, @search_context)
-    @courses = service.filter.records.includes(:banner_attachment).page(params[:page]).per(Course::PER_PAGE_LIMIT)
+    @courses = service.filter.records.includes(:banner_attachment, :tags).page(params[:page]).per(Course::PER_PAGE_LIMIT)
     @tags = Tag.load_tags
   end
 
