@@ -39,8 +39,15 @@ module LearningPartnersHelper
   end
 
   def payment_plan_item(learning_partner)
+    label_key =
+      if learning_partner.payment_plan.present?
+        'learning_partner.payment_plan.modify'
+      else
+        'learning_partner.payment_plan.create'
+      end
+
     ViewComponent::MenuComponentHelper::MenuItem.new(
-      label: t('learning_partner.payment_plan.modify'),
+      label: t(label_key),
       url: edit_learning_partner_payment_plan_path(learning_partner),
       type: :link,
       options: { data: { turbo_frame: 'modal' } }

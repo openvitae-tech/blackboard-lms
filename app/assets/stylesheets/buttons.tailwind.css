@@ -31,7 +31,7 @@
 }
 
 .btn-outline-primary {
-    @apply bg-white border-primary text-primary hover:border-primary-light hover:text-primary-light;
+    @apply border-primary text-primary hover:border-primary-light hover:text-primary-light;
 }
 
 .btn-outline-primary-disabled {
@@ -39,7 +39,7 @@
 }
 
 .btn-outline-secondary {
-    @apply bg-white border-secondary text-secondary hover:border-secondary-dark hover:text-secondary-dark;
+    @apply border-secondary text-secondary hover:border-secondary-dark hover:text-secondary-dark;
 }
 
 .btn-outline-secondary-disabled {
@@ -47,7 +47,7 @@
 }
 
 .btn-outline-danger {
-    @apply bg-white border-danger-dark text-danger-dark hover:border-danger hover:text-danger;
+    @apply border-danger-dark text-danger-dark hover:border-danger hover:text-danger;
 }
 
 .btn-outline-danger-disabled {

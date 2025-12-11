@@ -1,5 +1,5 @@
 <%= render "shared/components/modal", modalTitle: t('invite.modal_title') do %>
-  <%= form_with(url: invites_path, method: :post, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
+  <%= form_with(url: invites_path, method: :post, model: @user, class: "flex flex-col gap-6") do |form| %>
     <%= render "shared/components/form_errors", resource: @user %>
     <%= form.hidden_field :team_id %>
 
