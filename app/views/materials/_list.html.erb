@@ -1,0 +1,19 @@
+<turbo-frame id="course_materials_list">
+  <% if course.materials.attached? %>
+    <ul class="w-full">
+      <% course.materials.each do |document| %>
+        <li class="flex items-center justify-between flex-grow px-4 md:px-5 py-3 md:py-3 first:rounded-t-lg first:md:rounded-t-xl last:rounded-b-lg last:md:rounded-b-xl border border-line-colour border-b-0 last:border-b">
+          <%= link_component text: document.filename, url: rails_blob_path(document), target: "_blank" %> 
+          <%= link_to alert_modal_path(
+                        title: t("alert.title", resource_name: "Course Material"),
+                        description: t("alert.description", label: document.filename, resource_name: "document"),
+                        action_path: course_material_path(course_id: course.id, id: document.id),
+                        method: :delete
+                      ), data: { turbo_frame: "modal" } do %>
+            <%= button_component text: "Delete", size: "sm", type: "outline", colorscheme: "danger" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>    
+  <% end %>
+</turbo-frame>

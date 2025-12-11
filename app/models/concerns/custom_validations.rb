@@ -3,6 +3,9 @@
 module CustomValidations
   extend ActiveSupport::Concern
 
+  MATERIAL_CONTENT_TYPES = %w[application/pdf].freeze
+  MATERIAL_MAX_MB = 10
+
   included do
     def acceptable_logo
       acceptable_image('logo')
@@ -10,6 +13,18 @@ module CustomValidations
 
     def acceptable_banner
       acceptable_image('banner')
+    end
+
+    def acceptable_materials
+      materials.each do |material|
+        unless material.content_type.in?(MATERIAL_CONTENT_TYPES)
+          errors.add(:base,
+                     'Course material must be a PDF document')
+        end
+        if material.byte_size > MATERIAL_MAX_MB.megabytes
+          errors.add(:base, "Course material must be less than #{MATERIAL_MAX_MB}MB")
+        end
+      end
     end
 
     private
