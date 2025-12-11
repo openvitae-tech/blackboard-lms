@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
+  include CourseAssociationsPreloader
+
   before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
   before_action :set_tags, only: %i[new create edit update]
 
@@ -22,6 +24,7 @@ class CoursesController < ApplicationController
     @tags = Tag.load_tags
     @type = permitted_type(params[:type])
     apply_pagination
+    preload_course_associations
   end
 
   # GET /courses/1 or /courses/1.json

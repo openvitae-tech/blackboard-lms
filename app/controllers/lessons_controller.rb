@@ -24,8 +24,6 @@ class LessonsController < ApplicationController
       end
     end
 
-    association_preloader([@course], { course_modules: :lessons })
-
     @course_modules = helpers.modules_in_order(@course)
     @video_iframe = get_video_iframe(@local_content)
   end
