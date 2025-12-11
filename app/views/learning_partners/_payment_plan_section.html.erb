@@ -1,0 +1,33 @@
+<div id="payment_plan_section">
+  <% if learning_partner.payment_plan.present? %>
+  <div class="grid grid-cols-2 gap-4">
+      <div class="flex flex-col md:flex-row gap-2 md:gap-6 ">
+      <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
+          <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
+          <p class="main-text-md-normal">Seats Occupied</p>
+          <p class="heading-2xl"><%= learning_partner.active_users_count %> / <%= learning_partner.payment_plan.total_seats %></p>
+      </div>
+      <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
+          <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
+          <p class="main-text-md-normal">Verified users</p>
+          <p class="heading-2xl"><%= metrics.user_joined_count %></p>
+      </div>
+      <div class="bg-primary-light text-white text-center rounded-lg md:rounded-xl flex flex-col items-center justify-center gap-1 flex-1 h-16 md:h-20 relative">
+          <%= icon("i-vector", css: 'absolute w-14 top-0  -right-2.5') %>
+          <p class="main-text-md-normal">Course Enrolled</p>
+          <p class="heading-2xl"><%= metrics.user_enrolled_count %></p>
+      </div>
+      </div>
+      <div class="flex w-full">
+      <%= render "learning_partners/payment_plan_details", learning_partner: learning_partner, payment_plan: learning_partner.payment_plan, users_count: learning_partner.users_count  %>
+      </div>
+  </div> 
+  <% else %>
+  <div class="px-5 py-4 bg-primary-light-100 rounded-lg md:rounded-xl flex flex-col md:flex-row gap-2 items-center justify-center w-full md:h-20 main-text-sm-normal">
+      <span>No payment plan is created</span>
+      <%= link_to edit_learning_partner_payment_plan_path(@learning_partner), data: { turbo_frame: "modal" } do %>
+      <%= button_component(text: "Create a payment plan", type:"outline", size:"sm") %>
+      <% end %>
+  </div>
+  <% end %>
+</div>
