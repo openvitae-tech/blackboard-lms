@@ -1,5 +1,5 @@
 <%= turbo_stream.update "member-list-component" do %>
-  <%= member_list_component(team: @team, members: @members) %>
+  <%= member_list_component(learning_partner: @partner, team: @team, members: @members) %>
 <% end %>
 
 <%= turbo_stream.replace "invite_button_section", partial: "commons/invite_user", locals: { learning_partner: @partner, team: @team } %>

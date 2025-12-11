@@ -72,6 +72,6 @@
       </div>
     <% end %>
   </div>
-  <%= member_list_component(team: @learning_partner.parent_team, members: @members) %>
+  <%= member_list_component(learning_partner: @learning_partner, team: @learning_partner.parent_team, members: @members) %>
 </div>
 
