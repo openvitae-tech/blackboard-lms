@@ -1,4 +1,6 @@
-<%= render "shared/components/modal", modalTitle: t("learning_partner.payment_plan.modify") do %>
+<%= render "shared/components/modal",
+    modalTitle: (@learning_partner.payment_plan.present? ?
+    t("learning_partner.payment_plan.modify") : t("learning_partner.payment_plan.create")) do %>
   <%= render "form", learning_partner: @learning_partner, payment_plan: @payment_plan,
-    url: learning_partner_payment_plan_path(@learning_partner), method: :patch, cancel_path: "#" %>
+      url: learning_partner_payment_plan_path(@learning_partner), method: :patch, cancel_path: "#" %>
 <% end %>
