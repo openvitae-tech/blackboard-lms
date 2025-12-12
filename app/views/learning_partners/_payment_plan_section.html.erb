@@ -25,7 +25,7 @@
   <% else %>
   <div class="px-5 py-4 bg-primary-light-100 rounded-lg md:rounded-xl flex flex-col md:flex-row gap-2 items-center justify-center w-full md:h-20 main-text-sm-normal">
       <span>No payment plan is created</span>
-      <%= link_to edit_learning_partner_payment_plan_path(@learning_partner), data: { turbo_frame: "modal" } do %>
+      <%= link_to edit_learning_partner_payment_plan_path(learning_partner), data: { turbo_frame: "modal" } do %>
       <%= button_component(text: "Create a payment plan", type:"outline", size:"sm") %>
       <% end %>
   </div>
