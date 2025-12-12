@@ -1,7 +1,7 @@
 <%= turbo_stream.update "flash", partial: "shared/components/flash" %>
 <%= turbo_stream.replace "invite_button_section", partial: "commons/invite_user", locals: { learning_partner: @learning_partner, team: @learning_partner.parent_team } %>
 <%= turbo_stream.replace "payment_plan_details", partial: "commons/payment_plan_details", locals: { learning_partner: @learning_partner, payment_plan: @learning_partner.payment_plan, users_count: @learning_partner.users_count } %>
-<%= turbo_stream.replace "learners_payment_plan_details", partial: "learning_partners/payment_plan_details", locals: { learning_partner: @learning_partner, users_count: @learning_partner.users_count } %>
+<%= turbo_stream.replace "header_banner", partial: "learning_partners/header_banner", locals: { learning_partner: @learning_partner} %>
 <%= turbo_stream.replace "payment_plan_section", partial: "learning_partners/payment_plan_section", locals: { learning_partner: @learning_partner, metrics: @metrics, users_count: @learning_partner.users_count } %>
 <%= turbo_stream.replace "modal" do %>
   <%= turbo_frame_tag "modal" %>
