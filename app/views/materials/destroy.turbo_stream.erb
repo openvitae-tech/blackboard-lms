@@ -1,0 +1,8 @@
+<%= turbo_stream.replace "modal" do %>
+  <%= turbo_frame_tag "modal" %>
+<% end %>
+
+<%= turbo_stream.update "flash", partial: "shared/components/flash" %>
+<%= turbo_stream.replace "course_materials_list" do %>
+  <%= render 'list', course: @course %>
+<% end %>

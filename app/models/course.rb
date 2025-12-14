@@ -19,10 +19,13 @@ class Course < ApplicationRecord
   has_many :programs, through: :program_courses
 
   has_one_attached :banner
+  has_many_attached :materials
+
   validates :title, presence: true, length: { minimum: 6, maximum: 255 }
   validates :description, presence: true, length: { minimum: 32, maximum: 1024 }
   validates :visibility, presence: true
 
+  validate :acceptable_materials
   validate :acceptable_banner
   validate :unique_tags
 

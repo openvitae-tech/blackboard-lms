@@ -1,0 +1,15 @@
+<div class="flex flex-col gap-4">
+  <%= breadcrumbs_component links: [
+   ["My Courses", courses_path],
+   [@course.title, course_path(@course)],
+   ["Course Materials"]
+  ]%>
+  <div class="flex justify-between items-center">
+    <div class="flex gap-2 items-center">
+      <%= render 'shared/components/back_button', back_link: course_path(@course) %>
+      <p class="main-text-lg-semibold">Course Materials</p>
+    </div>
+    <%= render 'document_uploader', course: @course %>
+  </div>
+  <%= render "list", course: @course %>
+</div>

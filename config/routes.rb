@@ -89,6 +89,8 @@ Rails.application.routes.draw do
       put :unpublish
     end
 
+    resources :materials, only: %i[index create destroy]
+
     resource :scorm, only: %i[new create] do
       collection do
         get :download
