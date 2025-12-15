@@ -13,9 +13,9 @@
           Incorrect answers - <span class="text-danger"><%= enrollment.incorrect_quiz_count_for(course_module) %></span>
         </span>
       </div>
-    </div>    
+    </div>
     <ul class="mt-4 space-y-4 text-sm md:text-base">
-      <% enrollment.quiz_answers_for(course_module).each_with_index do |answer, index| %>
+      <% enrollment.quiz_answers_for(course_module, eager_load_quiz: true).each_with_index do |answer, index| %>
         <li class="flex flex-col md:flex-row items-start gap-4 md:items-center md:gap-6">
           <div class="bg-primary-light-50 p-2 rounded w-full md:w-1/2">
             <span><%= index + 1 %>.</span>
@@ -34,5 +34,5 @@
         </li>
       <% end %>
     </ul>
-  </div>   
+  </div>
 </div>

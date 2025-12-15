@@ -2,10 +2,9 @@
 
 class UsersController < ApplicationController
   before_action :set_user
-
   def show
     authorize @user
-    @enrolled_courses = @user.courses.includes(:enrollments)
+    @enrolled_courses = @user.courses.includes(:tags, :banner_attachment)
     service = UserStatisticsService.instance
     @user_stats = service.build_stats_for(@user)
   end
