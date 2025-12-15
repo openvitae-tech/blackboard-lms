@@ -21,6 +21,6 @@ class SearchesController < ApplicationController
   def load_courses
     @search_context = build_search_context
     service = Courses::FilterService.new(current_user, @search_context)
-    service.filter.records
+    service.filter.records.includes(:banner_attachment, :tags)
   end
 end

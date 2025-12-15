@@ -31,6 +31,9 @@ class PaymentPlansController < ApplicationController
     authorize @payment_plan
 
     if @payment_plan.update(payment_plan_params)
+      @learning_partner.reload
+      @metrics = PartnerMetrics.new(@learning_partner)
+      
       EVENT_LOGGER.publish_payment_plan_modified(current_user, @learning_partner)
       flash.now[:success] = t("resource.updated", resource_name: "Payment plan")
     else
