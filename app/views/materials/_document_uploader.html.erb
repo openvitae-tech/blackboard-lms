@@ -1,0 +1,10 @@
+<div data-controller="course-material" data-course-material-course-id-value="<%= course.id %>">
+  
+  <label for="document_uploader" class="cursor-pointer">
+    <%= button_component text: "Upload Documents", type: "solid", icon_name: "plus", size: "sm" %>
+  </label>
+  <%= file_field_tag :document_uploader, 
+                     multiple: true, 
+                     class: "hidden",
+                     data: { action: "course-material#upload" } %>
+</div>
