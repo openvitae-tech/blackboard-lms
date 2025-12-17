@@ -100,8 +100,9 @@ class Enrollment < ApplicationRecord
     quiz_answers_for(course_module).each(&:destroy)
   end
 
-  def quiz_answers_for(course_module)
-    quiz_answers.includes(:quiz).where(course_module_id: course_module.id)
+  def quiz_answers_for(course_module, eager_load_quiz: false)
+    scope = quiz_answers.where(course_module_id: course_module.id)
+    eager_load_quiz ? scope.includes(:quiz) : scope
   end
 
   def set_score!(score)
