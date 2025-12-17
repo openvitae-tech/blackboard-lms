@@ -32,6 +32,8 @@ module Lessons
         # finding avg
         new_rating = 0.5 * (average_rating + (DISCOUNTED_FACTOR * lesson.current_rating))
         lesson.update!(rating: new_rating.round(1), last_rated_at: events.max_by(&:created_at).created_at)
+
+        Rails.logger.info "Executed Lessons::RatingService at #{Time.current}"
       end
     end
 
