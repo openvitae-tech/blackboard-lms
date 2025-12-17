@@ -5,9 +5,12 @@ DISCOUNTED_FACTOR = 0.8
 namespace :one_timer do
   desc 'Generate course ratings based on lesson ratings'
   task generate_course_ratings: :environment do
-    events_by_lesson = Event.where(
-      name: 'lesson_rating'
-    ).group_by { |e| e.data['lesson_id'] }
+    events_by_lesson = {}
+    Event.where(name: 'lesson_rating').find_each do |event|
+      lesson_id = event.data['lesson_id']
+      events_by_lesson[lesson_id] ||= []
+      events_by_lesson[lesson_id] << event
+    end
 
     return if events_by_lesson.empty?
 
