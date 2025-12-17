@@ -10,12 +10,12 @@ Clone the repo and install the dependencies as follows
 
 ### Install postgresql database version 15.x
 
-You can either refer this https://www.postgresql.org/ or use package manager of your OS to install postgres. In case of a mac os you can use https://postgresapp.com/ to set it up very easily.
+You can either to the [PostgreSQL documentation](https://www.postgresql.org/) or use package manager of your OS to install postgres. On macOs you can use [Postgress.app](https://postgresapp.com/) for easy setup.
 
 
 #### Running using docker
 
-```
+```bash
 sudo docker run -d --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres  -e POSTGRES_DB=blackboard_development -p 5432:5432 postgres:15.4-bookworm
 ```
 
@@ -27,7 +27,7 @@ You can refer to [this](https://redis.io/docs/latest/operate/oss_and_stack/insta
 
 #### Running using docker
 
-```
+```bash
 sudo docker run -d --name redis -p 6379:6379 redis:7.2.6-alpine
 ```
 
@@ -47,7 +47,7 @@ $ gem install bundler
 
 ### install imagemagick
 ##### OSX
-```
+```bash
 $ brew install imagemagick
 ```
 ##### Ubuntu
@@ -66,7 +66,7 @@ $ sudo apt install ffmpeg
 ```
 
 ### Set your favourite editor to edit credential file
-```
+```bash
 $ export EDITOR="code --wait" 
 
 # or
@@ -75,7 +75,7 @@ $ export EDITOR="vim --wait"
 ```
 
 Copy the contents of config/credentials.yml.enc.example file and generate your master key and edit the credential file
-```
+```bash
 $ rails credentials:edit
 ```
 Replace the editor content with the copied content, edit and save then close the file.
@@ -84,7 +84,7 @@ Replace the editor content with the copied content, edit and save then close the
 ### Setup git hooks
 You can either install [husky](https://typicode.github.io/husky/get-started.html) or use the git command below to setup the git precommits hooks
 
-```
+```bash
 git config core.hooksPath .husky
 ```
 
@@ -104,11 +104,11 @@ Make sure you have setup the test environment as mentioned in the earlier sectio
 
 You might need to create the db first before running the tests This usually happens while running `./bin/setup`. But incase the db is not created run the following command to create the database.
 
-```
+```bash
 $ bundle exec rails db:create -e test
 ```
 
-```
+```bash
 $ bundle exec rspec
 $ bundle exec rspec -f d                 # view test descriptions
 $ bundle exec rspec -f d --tag focus     # view test descriptions and run only focussed sections, usefull for debugging
