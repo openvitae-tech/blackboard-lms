@@ -14,6 +14,7 @@ module Courses
         average_rating = total_rating / lessons.size.to_f
 
         course.update!(rating: average_rating.round(1))
+        EVENT_LOGGER.publish_last_rated_at
       end
     end
   end

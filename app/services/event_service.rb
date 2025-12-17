@@ -240,6 +240,19 @@ class EventService
     publish_event(user, event)
   end
 
+  def publish_last_rated_at
+    event = Event::LastRatedAt.new(
+      last_rated_at: Time.current
+    )
+
+    build_event = Event.new do |e|
+      e.name = 'last_rated_at'
+      e.data = event.to_h.with_indifferent_access
+    end
+
+    build_event.save
+  end
+
   private
 
   def build_event(user, event_data)
