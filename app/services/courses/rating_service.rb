@@ -16,7 +16,7 @@ module Courses
         course.update!(rating: average_rating.round(1))
         Rails.logger.info "Executed Courses::RatingService at #{Time.current}"
 
-        EVENT_LOGGER.publish_last_rated_at
+        EVENT_LOGGER.publish_rating_job_ran
       end
     end
   end
