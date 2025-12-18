@@ -14,14 +14,17 @@ module Lessons
       EVENT_LOGGER.publish_lesson_rating(user, lesson, rating)
     end
 
-    def calculate_ratings
-      events_by_lesson = Event.where(
-        name: 'lesson_rating',
-        created_at: Date.yesterday.all_day
-      ).group_by { |e| e.data['lesson_id'] }
+    def calculate_ratings(date: '')
+      scope = Event.where(name: 'lesson_rating')
+      scope = scope.where(created_at: date) if date.present?
 
+      events_by_lesson = scope.group_by { |e| e.data['lesson_id'] }
       return if events_by_lesson.empty?
 
+      update_lesson_rating(events_by_lesson)
+    end
+
+    def update_lesson_rating(events_by_lesson)
       events_by_lesson.each do |lesson_id, events|
         ratings = events.map { |e| e.data['rating'].to_f }
         average_rating = ratings.sum / ratings.size

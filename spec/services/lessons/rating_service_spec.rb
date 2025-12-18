@@ -23,7 +23,7 @@ RSpec.describe Lessons::RatingService do
       create(:event, name: 'lesson_rating', data: { 'lesson_id' => lesson.id, 'rating' => 5.0 },
                      created_at: Date.yesterday)
 
-      subject.calculate_ratings
+      subject.calculate_ratings(date: Date.yesterday.all_day)
       lesson.reload
 
       expected_average = (4.0 + 5.0) / 2
@@ -38,7 +38,7 @@ RSpec.describe Lessons::RatingService do
       create(:event, name: 'lesson_rating', data: { 'lesson_id' => lesson.id, 'rating' => 4.0 },
                      created_at: Date.yesterday)
 
-      subject.calculate_ratings
+      subject.calculate_ratings(date: Date.yesterday.all_day)
       lesson.reload
 
       expected_average = 4.0 / 1

@@ -5,6 +5,6 @@ class LessonRatingJob < BaseJob
     Rails.logger.info "Starting LessonRatingJob at #{Time.current}"
 
     service = Lessons::RatingService.instance
-    service.calculate_ratings
+    service.calculate_ratings(date: Date.yesterday.all_day)
   end
 end
