@@ -5,7 +5,7 @@ module Api
     class OneTimerTasksController < ApiController
       before_action :load_rake_tasks
 
-      TASKS = [:generate_transcripts_for_existing_videos]
+      TASKS = [:generate_course_ratings]
 
       def run_tasks
         results = []
