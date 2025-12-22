@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::OneTimerTasksController', type: :request do
-  let(:task) { :generate_transcripts_for_existing_videos }
+  let(:task) { :generate_course_ratings }
   let(:mock_rake_task) { instance_double(Rake::Task, invoke: true) }
   let(:auth_token) { Rails.application.credentials[:api_token] }
 

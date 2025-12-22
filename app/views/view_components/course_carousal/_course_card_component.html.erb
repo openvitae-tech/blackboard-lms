@@ -31,7 +31,7 @@
           <% if course.rating.present? %>
             <div class="flex items-center">
               <%= icon("star-transparent", css: "h-4 w-4 text-primary fill-primary") %>
-              <span class="ml-2 text-xs font-medium"><%= course.rating %></span>
+              <span class="ml-2 text-xs font-medium"><%= course.rating.ceil %></span>
             </div>
           <% end %>
         </div>
