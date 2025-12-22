@@ -14,46 +14,50 @@
         <%= render 'shared/components/back_button', back_link: courses_path %>
       </div>
     <% end %>
-    <div class="flex gap-3 items-start">
-      <div class="flex flex-col gap-1 w-full justify-center">
-        <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
-          <div class="relative rounded-md border border-line-colour-light w-full">      
-            <%= input_text_component( 
-              name: :term,
-              placeholder: 'Search courses ...', 
-              icon_name: 'magnifying-glass', 
-              icon_position: 'left', 
-              value: params[:term], 
-              html_options: {
-                data: {
-                  courses_target: 'searchInput'
-                },
-                id: 'course-search'
-                }
-            ) %>
-            <% if params[:term].present? %>
-              <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" data-action="click->courses#clearSearch">
-                <span class="flex cursor-pointer items-center text-primary-light text-sm">Clear search</span>
+    <div class="flex flex-col gap-1">
+      <div class="flex gap-3 items-center">
+        <div class="flex flex-col gap-1 w-full justify-start">
+          <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
+            <div class="flex gap-3 items-center">
+              <div class="relative rounded-md border border-line-colour-light w-full">      
+                <%= input_text_component( 
+                  name: :term,
+                  placeholder: 'Search courses ...', 
+                  icon_name: 'magnifying-glass', 
+                  icon_position: 'left', 
+                  value: params[:term], 
+                  html_options: {
+                    data: {
+                      courses_target: 'searchInput'
+                    },
+                    id: 'course-search'
+                    }
+                ) %>
+                <% if params[:term].present? %>
+                  <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" data-action="click->courses#clearSearch">
+                    <span class="flex cursor-pointer items-center text-primary-light text-sm">Clear search</span>
+                  </div>
+                <% end %>
               </div>
-            <% end %>
+              <div class="cursor-pointer flex">
+                <%= button_component(text: 'Go', type: "outline", icon_name: "arrow-right", icon_position: 'right') %>
+              </div>
+            </div> 
+          <% end %>
+        </div>            
+        <% if @type.present? || policy(:course).new? %>
+          <div data-action="click->courses#openFilter" class="cursor-pointer flex items-center">
+            <%= button_component(text: 'Filter', type: "outline", icon_name: "funnel",) %>
           </div>
         <% end %>
-        <div class="space-x-2 flex flex-row">
-          <% params[:tags]&.each do |tag| %>
-            <%= link_to updated_tags_query_params(tag), method: :get do %>
-              <%= chip_component(text: tag , colorscheme: 'input', close: true) %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>     
-      <div class="cursor-pointer flex items-center">
-        <%= button_component(text: 'Go', type: "outline", icon_name: "arrow-right", icon_position: 'right') %>
       </div>
-      <% if @type.present? || policy(:course).new? %>
-        <div data-action="click->courses#openFilter" class="cursor-pointer flex items-center">
-          <%= button_component(text: 'Filter', type: "outline", icon_name: "funnel",) %>
-        </div>
-      <% end %>
+      <div class="space-x-2 flex flex-row">
+        <% params[:tags]&.each do |tag| %>
+          <%= link_to updated_tags_query_params(tag), method: :get do %>
+            <%= chip_component(text: tag , colorscheme: 'input', close: true) %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
   
@@ -102,5 +106,6 @@
         <% end %>
       <% end %>
     </div>  
+    <%= paginate(@available_courses) if @type.present? %>
   <% end %>
 </div>

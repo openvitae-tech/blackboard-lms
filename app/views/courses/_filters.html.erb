@@ -5,7 +5,7 @@
      </button>
      <h2 class="main-text-lg-medium ">Filter by</h2>
   </div>
-  <%= form_with url: courses_path, method: :get, local: true,class:"h-full flex flex-col justify-between", data: {controller: "courses", action: "submit->courses#formSubmit"} do |form| %>
+  <%= form_with url: courses_path, method: :get, local: true,class:"h-full flex flex-col justify-between", data: {action: "submit->courses#formSubmit"} do |form| %>
     <div class="overflow-y-auto max-h-[calc(100vh-220px)] py-2 ">
       <span class="main-text-sm-normal cursor-pointer flex justify-end px-8 text-primary" data-action="click->courses#clearFilters">Clear filter</span>
       <div class="flex flex-col border-b border-line-colour px-8">

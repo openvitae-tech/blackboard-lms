@@ -2,7 +2,7 @@
   <% if icon_name.present? %>
     <%= icon(icon_name, span_css: icon_style, css: 'h-4 w-4') %>
   <% end %>
-  <span class="whitespace-nowrap general-text-sm-normal flex justify-centet items-center <%= text_style %>"><%= text %></span>
+  <span class="whitespace-nowrap general-text-sm-normal flex items-center <%= text_style %>"><%= text %></span>
   <% if close %>
     <%= icon("x-circle", span_css: close_style, css: 'h-4 w-4') %>
   <% end %>
