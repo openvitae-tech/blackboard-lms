@@ -15,10 +15,10 @@
       </div>
     <% end %>
     <div class="flex flex-col gap-1">
-      <div class="flex gap-3 items-center">
+      <div class="flex gap-2 md:gap-3 items-center">
         <div class="flex flex-col gap-1 w-full justify-start">
           <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
-            <div class="flex gap-3 items-center">
+            <div class="flex gap-2 md:gap-3 items-center">
               <div class="relative rounded-md border border-line-colour-light w-full">      
                 <%= input_text_component( 
                   name: :term,
@@ -39,15 +39,21 @@
                   </div>
                 <% end %>
               </div>
-              <div class="cursor-pointer flex">
+              <div class="cursor-pointer hidden md:block">
                 <%= button_component(text: 'Go', type: "outline", icon_name: "arrow-right", icon_position: 'right') %>
+              </div>
+              <div class="cursor-pointer md:hidden">
+                <%= button_component(type: "outline", icon_name: "arrow-right", icon_position: 'right') %>
               </div>
             </div> 
           <% end %>
         </div>            
         <% if @type.present? || policy(:course).new? %>
-          <div data-action="click->courses#openFilter" class="cursor-pointer flex items-center">
+          <div data-action="click->courses#openFilter" class="cursor-pointer hidden md:block">
             <%= button_component(text: 'Filter', type: "outline", icon_name: "funnel",) %>
+          </div>
+          <div data-action="click->courses#openFilter" class="cursor-pointer md:hidden">
+            <%= button_component(type: "outline", icon_name: "funnel",) %>
           </div>
         <% end %>
       </div>
@@ -99,7 +105,7 @@
     <%= paginate(@available_courses) if @type.present? %>
   <% end %>
   <% if available_courses?(@available_courses) && @type != "enrolled" && policy(:course).new? %>
-    <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-5 md:gap-6">
       <div class="flex flex-col gap-4 mt-3">
         <% @available_courses.each do |course| %>
           <%= link_to course_path(course) do %>
