@@ -2,7 +2,7 @@
   <% if input.form.present? %>
     <%= input.form.check_box input.name, input.html_options, input.value, nil %>
   <% else %>
-    <%= checkbox_tag input.name, '1', checked = input.value.present?, input.html_options %>
+    <%= checkbox_tag input.name, input.value, input.html_options %>
   <% end %>
   <div class="w-5 h-5 flex justify-center items-center rounded-sm border-2 <%= input.box_style %>">
     <%= icon("check", span_css: "w-5 h-5 #{input.check_style}", stroke_width: '2.0') %>
