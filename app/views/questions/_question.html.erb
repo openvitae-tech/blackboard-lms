@@ -1,0 +1,64 @@
+<div class="bg-primary-light-50 p-6 rounded-xl border border-slate-grey-light" id="<%= dom_id(question)%>">  
+  <div class="flex justify-between items-center pb-4">
+    <div class="flex items-center gap-1 main-text-sm-medium">
+      <% if question.is_verified %>
+        <%= icon("check-badge-solid", css: "h-5 w-5 cursor-pointer text-primary") %>
+      <% end %>
+      <span>Question <%= ((params[:page]||'1').to_i-1)*5 + index+1 %> of <%= count %></span>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to edit_course_question_path(question.course, question, tab: params[:tab], page: params[:page]), data: { turbo_frame: "modal" } do %>
+        <%= button_component text: "Edit", size: "sm", type: "outline", icon_name: "pencil" %>
+      <% end %>
+      <%= link_to alert_modal_path(
+                    title: t("alert.title", resource_name: "Question"),
+                    description: t("alert.description", label: "", resource_name: "question"),
+                    action_path: course_question_path(question.course, question, tab: params[:tab], page: params[:page]),
+                    method: :delete
+                  ), data: { turbo_frame: "modal" } do %>
+        <%= button_component text: "Delete", size: "sm", type: "outline", colorscheme: "danger", icon_name: "trash" %>
+      <% end %>
+    </div>
+  </div>
+
+  <p class="main-text-lg-semibold my-4">
+    <%= question.content %>
+  </p>
+
+  <div class="space-y-4">  
+    <% question.options.each do |option_text| %>
+      
+      <%# Determine if this option is one of the correct answers (to apply green styling) %>
+      <% is_correct_answer = question.answers.include?(option_text) %>
+      
+      <div class="flex items-center p-4 rounded-lg bg-white main-text-sm-normal
+                    <%= is_correct_answer ? 'border border-secondary-dark' : '' %>">
+        
+        <%# Icon Slot: Renders the checkmark or empty box as per the screenshot design %>
+        <div class="mr-4 flex-shrink-0">
+          <% if is_correct_answer %>
+            <%# Green Checked Icon (Matches screenshot) %>
+            <div class="h-5 w-5 rounded-sm border border-secondary-dark bg-secondary-dark flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          <% else %>
+            <%# Empty Box/Circle Icon (Matches screenshot) %>
+            <div class="h-5 w-5 rounded-sm border bg-white"></div>
+          <% end %>
+        </div>
+
+        <%# Option Text %>
+        <span class="text-base text-gray-800 flex-grow">
+          <%= option_text %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="pt-6 flex justify-end">
+    <%= render "verification_button", question: question %>
+  </div>
+  
+</div>

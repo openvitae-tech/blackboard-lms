@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_17_134815) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -233,6 +233,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_17_134815) do
     t.index ["learning_partner_id"], name: "index_programs_on_learning_partner_id"
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.text "content", null: false
+    t.text "options", default: [], null: false, array: true
+    t.text "answers", default: [], null: false, array: true
+    t.boolean "is_verified", default: false
+    t.boolean "is_gen_ai", default: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_questions_on_course_id"
+  end
+
   create_table "quiz_answers", force: :cascade do |t|
     t.string "status"
     t.bigint "quiz_id", null: false
@@ -386,6 +398,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_17_134815) do
   add_foreign_key "program_users", "programs"
   add_foreign_key "program_users", "users"
   add_foreign_key "programs", "learning_partners"
+  add_foreign_key "questions", "courses"
   add_foreign_key "quiz_answers", "enrollments"
   add_foreign_key "quiz_answers", "quizzes"
   add_foreign_key "quizzes", "course_modules"

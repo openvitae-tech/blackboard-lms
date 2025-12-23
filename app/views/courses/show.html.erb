@@ -46,6 +46,9 @@
     <%= link_to course_materials_path(@course) do %>
       <%= button_component text: "Course Materials", type: "outline", size: "sm" %>
     <% end %>
+    <%= link_to course_questions_path(@course) do %>
+      <%= button_component text: "Questions Bank", type: "outline", size: "sm" %>
+    <% end %>
   </div>
 <% end %>
 <% if @course.course_modules.present? %>

@@ -107,6 +107,15 @@ en:
       empty: "There are no modules to show."
       cannot_delete_published: "Module cannot be deleted since the course is published."
       cannot_delete_enrolled: "Module cannot be deleted since the course has enrolled users."
+  question:
+    not_enough_options: "Provide atleast 2 options"
+    not_answers: "Provide atleast 1 correct answer"
+    notice:
+      create: "Question was successfully added"
+      update: "Question was successfully updated"
+      destroy: "Question was successfully deleted."
+      verify: "Question verified successfully"
+      unverify: "Question unverified successfully"
   login:
     invalid_or_incorrect_otp: "Incorrect otp or otp expired"
     incorrect_phone: "Incorrect mobile number"
@@ -221,6 +230,10 @@ en:
       per_user_amount: "Per user amount (₹)"
   notifications:
     course:
+      questions:
+        title: "Course questions generated"
+        message: "Questions for the course %{title} has been generated"
+        generate_start: "Question generation started"
       certificate:
         title: "Course certificate generated"
         message: "Certificate for the course %{title} has been generated"
