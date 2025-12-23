@@ -18,9 +18,9 @@
           <div class="modal-body">
             <%= body %>
           </div>
-          <div class="modal-footer">
+          <%= content_tag :div, class: "modal-footer" do %>
             <%= modal_footer %>
-          </div>
+          <% end if modal_footer %>
         </div>
       </div>
     </div>
