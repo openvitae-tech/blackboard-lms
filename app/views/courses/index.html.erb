@@ -89,74 +89,76 @@
     </div>
     <%= paginate(@enrolled_courses) if @type.present? %>
   <% end %>
-  <% if current_user.is_admin? %>
-    <div class="flex flex-col gap-5 md:gap-6">
-      <div class="flex flex-col gap-4 mt-3">
-        <% @available_courses.each do |course| %>
-          <%= link_to course_path(course) do %>
-            <%= long_course_card_component(course: course) %>
+  <% if available_courses?(@available_courses) %>
+    <% if current_user.is_admin? %>
+      <div class="flex flex-col gap-5 md:gap-6">
+        <div class="flex flex-col gap-4 mt-3">
+          <% @available_courses.each do |course| %>
+            <%= link_to course_path(course) do %>
+              <%= long_course_card_component(course: course) %>
+            <% end %>
           <% end %>
-        <% end %>
-      </div>  
-      <div class="flex justify-end gap-3">
-        <% if (prev_path = path_to_previous_page(@available_courses)) %>
-          <div class="w-fit">
-            <%= link_to prev_path do %>
+        </div>  
+        <div class="flex justify-end gap-3">
+          <% if (prev_path = path_to_previous_page(@available_courses)) %>
+            <div class="w-fit">
+              <%= link_to prev_path do %>
+                <%= button_component(
+                      text: 'Previous',
+                      type: 'outline',
+                      icon_name: 'chevron-left'
+                    ) %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="w-fit hidden md:block">
               <%= button_component(
                     text: 'Previous',
                     type: 'outline',
-                    icon_name: 'chevron-left'
+                    icon_name: 'chevron-left',
+                    disabled: true
                   ) %>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="w-fit hidden md:block">
-            <%= button_component(
-                  text: 'Previous',
-                  type: 'outline',
-                  icon_name: 'chevron-left',
-                  disabled: true
-                ) %>
-          </div>
-        <% end %>
+            </div>
+          <% end %>
 
-        <% if (next_path = path_to_next_page(@available_courses)) %>
-          <div class="w-fit">
-            <%= link_to next_path do %>
+          <% if (next_path = path_to_next_page(@available_courses)) %>
+            <div class="w-fit">
+              <%= link_to next_path do %>
+                <%= button_component(
+                      text: 'Next',
+                      type: 'outline',
+                      icon_name: 'chevron-right',
+                      icon_position: 'right',
+                    ) %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="w-fit hidden md:block">
               <%= button_component(
                     text: 'Next',
                     type: 'outline',
                     icon_name: 'chevron-right',
                     icon_position: 'right',
+                    disabled: true
                   ) %>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="w-fit hidden md:block">
-            <%= button_component(
-                  text: 'Next',
-                  type: 'outline',
-                  icon_name: 'chevron-right',
-                  icon_position: 'right',
-                  disabled: true
-                ) %>
-          </div>
+            </div>
+          <% end %>
+        </div>
+      </div>  
+    <% elsif @type != "enrolled" %>
+      <p class="heading heading-medium my-4">
+        <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses_count, 'course') %>
+          )</span>
+        <%= link_to 'View more', courses_path(type: 'all', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <% @available_courses.each do |course| %>
+          <%= link_to course_path(course) do %>
+            <%= course_card_component(course: course) %>
+          <% end %>
         <% end %>
       </div>
-    </div>  
-  <% else %>
-    <p class="heading heading-medium my-4">
-      <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses_count, 'course') %>
-        )</span>
-      <%= link_to 'View more', courses_path(type: 'all', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
-    </p>
-    <div class="flex flex-wrap gap-4">
-      <% @available_courses.each do |course| %>
-        <%= link_to course_path(course) do %>
-          <%= course_card_component(course: course) %>
-        <% end %>
-      <% end %>
-    </div>
-    <%= paginate(@available_courses) if @type.present? %>
-  <% end %>
+      <%= paginate(@available_courses) if @type.present? %>
+    <% end %>
+  <% end %>  
 </div>
