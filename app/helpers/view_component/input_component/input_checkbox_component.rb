@@ -42,11 +42,11 @@ module ViewComponent
 
       def check_style
         if disabled
-          'text-white'
+          'hidden'
         elsif error
-          'text-white group-has-[input:checked]:text-danger-dark'
+          'hidden group-has-[input:checked]:flex group-has-[input:checked]:text-danger-dark'
         else
-          'text-white group-has-[input:checked]:text-primary'
+          'hidden group-has-[input:checked]:flex group-has-[input:checked]:text-primary'
         end
       end
     end
