@@ -1,59 +1,72 @@
 <div data-controller="courses">
-  <%= render 'filters', tags: @tags %>
-  <div class="flex flex-row justify-between mb-4">
-    <h1 class="heading mb-4 page-heading-medium">My Courses</h1>
-    <% if policy(:course).new? %>
-      <%= link_to new_course_path, class: "nav-link" do %>
-        <%= button(
-        label: 'Add course', 
-        icon_name: "plus"
-      ) %>
-      <% end %>
-    <% end %>
-  </div>
-  <% if @type == "all" || @type == "enrolled" %>
-    <div class="mb-4">
-      <%= render 'shared/components/back_button', back_link: courses_path %>
-    </div>
-  <% end %>
-  <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
-    <div class="relative rounded-md border border-line-colour-light w-full">      
-      <%= input_field(
-        field_name: :term,
-        placeholder: "Search courses ...",
-        type: "text",
-        value: params[:term],
-        left_icon: "magnifying-glass",
-        width: "w-full",
-        html_options: {
-          data: {
-            courses_target: 'searchInput'
-          },
-          id: 'course-search'
-          }
-      ) %>
-
-      <% if params[:term].present? %>
-        <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" data-action="click->courses#clearSearch">
-          <span class="flex cursor-pointer items-center text-primary-light text-sm">Clear search</span>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-  <div class="flex flex-row mt-5 justify-between mb-4">
-    <div class="space-x-2 flex flex-row">
-      <% params[:tags]&.each do |tag| %>
-        <%= link_to updated_tags_query_params(tag), method: :get do %>
-          <%= button(label: tag, type: "secondary", size: "sm", icon_name: "x-circle", icon_position: "right") %>
+  <div class="pt-4 md:pt-5 pb-3 flex flex-col gap-4 sticky top-0 w-full z-40 bg-white">
+    <%= render 'filters', tags: @tags %>
+    <div class="flex flex-row justify-between">
+      <h1 class="heading-xl">My Courses</h1>
+      <% if policy(:course).new? %>
+        <%= link_to new_course_path, class: "nav-link" do %>
+          <%= button_component(text: 'Add course', icon_name: "plus") %>
         <% end %>
       <% end %>
     </div>
-    <% if @type.present? %>
-      <div data-action="click->courses#openFilter" class="cursor-pointer">
-        <%= button(label: 'Filter', type: "secondary", size: "sm", icon_name: "funnel", icon_position: "right") %>
+    <% if @type == "all" || @type == "enrolled" %>
+      <div class="mb-4">
+        <%= render 'shared/components/back_button', back_link: courses_path %>
       </div>
     <% end %>
+    <div class="flex flex-col gap-1">
+      <div class="flex gap-2 md:gap-3 items-center">
+        <div class="flex flex-col gap-1 w-full justify-start">
+          <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
+            <div class="flex gap-2 md:gap-3 items-center">
+              <div class="relative rounded-md border border-line-colour-light w-full">      
+                <%= input_text_component( 
+                  name: :term,
+                  placeholder: 'Search courses ...', 
+                  icon_name: 'magnifying-glass', 
+                  icon_position: 'left', 
+                  value: params[:term], 
+                  html_options: {
+                    data: {
+                      courses_target: 'searchInput'
+                    },
+                    id: 'course-search'
+                    }
+                ) %>
+                <% if params[:term].present? %>
+                  <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" data-action="click->courses#clearSearch">
+                    <span class="flex cursor-pointer items-center text-primary-light text-sm">Clear search</span>
+                  </div>
+                <% end %>
+              </div>
+              <div class="cursor-pointer hidden md:block">
+                <%= button_component(text: 'Go', type: "outline", icon_name: "arrow-right", icon_position: 'right') %>
+              </div>
+              <div class="cursor-pointer md:hidden">
+                <%= button_component(type: "outline", icon_name: "arrow-right", icon_position: 'right') %>
+              </div>
+            </div> 
+          <% end %>
+        </div>            
+        <% if @type.present? || policy(:course).new? %>
+          <div data-action="click->courses#openFilter" class="cursor-pointer hidden md:block">
+            <%= button_component(text: 'Filter', type: "outline", icon_name: "funnel",) %>
+          </div>
+          <div data-action="click->courses#openFilter" class="cursor-pointer md:hidden">
+            <%= button_component(type: "outline", icon_name: "funnel",) %>
+          </div>
+        <% end %>
+      </div>
+      <div class="space-x-2 flex flex-row">
+        <% params[:tags]&.each do |tag| %>
+          <%= link_to updated_tags_query_params(tag), method: :get do %>
+            <%= chip_component(text: tag , colorscheme: 'input', close: true) %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
+  
   <% if @type.nil? && @available_courses.blank? && @enrolled_courses.blank? %>
     <%= render 'courses/not_found_msg', type: 'search' %>
   <% elsif @type == "enrolled" && @enrolled_courses.blank? %>
@@ -76,19 +89,76 @@
     </div>
     <%= paginate(@enrolled_courses) if @type.present? %>
   <% end %>
-  <% if available_courses?(@available_courses) && @type != "enrolled" %>
-    <p class="heading heading-medium my-4">
-      <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses_count, 'course') %>
-        )</span>
-      <%= link_to 'View more', courses_path(type: 'all', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
-    </p>
-    <div class="flex flex-wrap gap-4">
-      <% @available_courses.each do |course| %>
-        <%= link_to course_path(course) do %>
-          <%= course_card_component(course: course) %>
+  <% if available_courses?(@available_courses) %>
+    <% if current_user.is_admin? %>
+      <div class="flex flex-col gap-5 md:gap-6">
+        <div class="flex flex-col gap-4 mt-3">
+          <% @available_courses.each do |course| %>
+            <%= link_to course_path(course) do %>
+              <%= long_course_card_component(course: course) %>
+            <% end %>
+          <% end %>
+        </div>  
+        <div class="flex justify-end gap-3">
+          <% if (prev_path = path_to_previous_page(@available_courses)) %>
+            <div class="w-fit">
+              <%= link_to prev_path do %>
+                <%= button_component(
+                      text: 'Previous',
+                      type: 'outline',
+                      icon_name: 'chevron-left'
+                    ) %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="w-fit hidden md:block">
+              <%= button_component(
+                    text: 'Previous',
+                    type: 'outline',
+                    icon_name: 'chevron-left',
+                    disabled: true
+                  ) %>
+            </div>
+          <% end %>
+
+          <% if (next_path = path_to_next_page(@available_courses)) %>
+            <div class="w-fit">
+              <%= link_to next_path do %>
+                <%= button_component(
+                      text: 'Next',
+                      type: 'outline',
+                      icon_name: 'chevron-right',
+                      icon_position: 'right',
+                    ) %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="w-fit hidden md:block">
+              <%= button_component(
+                    text: 'Next',
+                    type: 'outline',
+                    icon_name: 'chevron-right',
+                    icon_position: 'right',
+                    disabled: true
+                  ) %>
+            </div>
+          <% end %>
+        </div>
+      </div>  
+    <% elsif @type != "enrolled" %>
+      <p class="heading heading-medium my-4">
+        <span class="">Available courses</span>&nbsp<span class="text-letter-color-light">(<%= pluralize(@available_courses_count, 'course') %>
+          )</span>
+        <%= link_to 'View more', courses_path(type: 'all', term: params[:term]), class: 'text-xs text-primary hover:cursor-pointer underline' if @type.nil? %>
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <% @available_courses.each do |course| %>
+          <%= link_to course_path(course) do %>
+            <%= course_card_component(course: course) %>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-    <%= paginate(@available_courses) if @type.present? %>
-  <% end %>
+      </div>
+      <%= paginate(@available_courses) if @type.present? %>
+    <% end %>
+  <% end %>  
 </div>

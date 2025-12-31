@@ -13,6 +13,7 @@ module UiHelper
   include ViewComponent::TableComponent
   include ViewComponent::ModalComponent
   include ViewComponent::CourseCardComponent
+  include ViewComponent::LongCourseCardComponent
   include ViewComponent::CourseCarousalComponent
   include ViewComponent::CourseSelectComponent
   include ViewComponent::MemberListComponent

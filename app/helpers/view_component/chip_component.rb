@@ -2,19 +2,45 @@
 
 module ViewComponent
   module ChipComponent
-    COLOR_SCHEMES = %w[primary danger].freeze
+    COLOR_SCHEMES = {
+      'primary' => %w[
+        bg-primary-light-100
+        text-primary-dark
+        text-primary
+        text-primary
+        border-0
+      ],
+      'danger' => %w[
+        bg-danger-light
+        text-primary-dark
+        text-danger-dark
+        text-danger-dark
+        border-0
+      ],
+      'input' => %w[
+        bg-primary-light-50
+        text-primary-dark
+        text-primary
+        text-primary
+        border-slate-grey-light
+      ]
+    }.freeze
 
     def chip_component(text: '', icon_name: nil, close: false, colorscheme: 'primary')
-      raise "Incorrect color scheme #{colorscheme}" unless COLOR_SCHEMES.include? colorscheme
+      styles = COLOR_SCHEMES[colorscheme]
+      raise "Incorrect color scheme #{colorscheme}" unless styles
 
-      bg_style, text_style, icon_style, close_style =
-        case colorscheme
-        when 'primary' then %w[bg-primary-light-100 text-primary-dark text-primary text-primary]
-        when 'danger' then %w[bg-danger-light text-primary-dark text-danger-dark text-danger-dark]
-        end
+      bg_style, text_style, icon_style, close_style, border_style = styles
 
       render partial: 'view_components/chip_component/chip_component', locals: {
-        text:, icon_name:, close:, bg_style:, text_style:, icon_style:, close_style:
+        text:,
+        icon_name:,
+        close:,
+        bg_style:,
+        text_style:,
+        icon_style:,
+        close_style:,
+        border_style:
       }
     end
   end

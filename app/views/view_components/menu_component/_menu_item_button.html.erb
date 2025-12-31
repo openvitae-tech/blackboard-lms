@@ -1,7 +1,7 @@
 <%= button_to item.url,
   item.options.reverse_merge(
     method: :post,
-    class: "main-text-lg-medium menu-component-list-items #{item.extra_classes}"
+    class: "main-text-lg-normal menu-component-list-items #{item.extra_classes}"
   ) do %>
-  <span class="main-text-lg-medium"><%= item.label %></span>
+  <span class="main-text-lg-normal"><%= item.label %></span>
 <% end %>

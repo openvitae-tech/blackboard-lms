@@ -145,7 +145,7 @@ module ViewComponent
     end
 
     def button_component(
-      text: 'Button',
+      text: '',
       type: 'solid',
       size: 'md',
       colorscheme: 'primary',

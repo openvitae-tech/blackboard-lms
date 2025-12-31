@@ -1,41 +1,55 @@
-<div class="md:w-80 w-full bg-white box-shadow-medium fixed right-0 -mt-8 h-screen hidden z-50" data-courses-target="filters">
-  <div class="flex flex-row items-center justify-between border-b-2 border-line-colour mb-4 p-4">
-    <h2 class="text-lg font-semibold">Filter by</h2>
-    <span class="icon icon-close icon-base cursor-pointer bg-black" data-action="click->courses#closeFilter"></span>
+<div  style="display:none" class="md:w-80 w-full bg-primary-light-50 box-shadow-medium fixed right-0 top-0 mt-[74px] md:mt-[81px] h-screen z-50" data-courses-target="filter">
+  <div class="flex flex-row gap-1 items-center shadow-[0px_1px_4px_0px_rgba(0,0,0,0.10)] py-5 px-6 text-primary">    
+     <button class="p-2 flex items-center" data-action="click->courses#closeFilter">
+       <%= icon("x-circle", css: "h-6 w-6") %>
+     </button>
+     <h2 class="main-text-lg-medium ">Filter by</h2>
   </div>
-  <%= form_with url: courses_path, method: :get, local: true,class:"h-full flex flex-col justify-between", data: {controller: "courses", action: "submit->courses#formSubmit"} do |form| %>
-    <div class="overflow-y-auto max-h-[calc(100vh-220px)] pb-4">
-      <div class="flex flex-col gap-2 p-4 border-b-2 border-line-colour">
-        <div class=" flex justify-between">
-          <h3 class="text-xs font-medium text-primary mb-2">Levels</h3>
-          <span class="text-xs cursor-pointer mb-2" data-action="click->courses#clearFilters">Clear filter</span>
-        </div>
-        <ul class="flex flex-col gap-4">
+  <%= form_with url: courses_path, method: :get, local: true,class:"h-full flex flex-col justify-between", data: {action: "submit->courses#formSubmit"} do |form| %>
+    <div class="overflow-y-auto max-h-[calc(100vh-220px)] py-2 ">
+      <span class="main-text-sm-normal cursor-pointer flex justify-end px-8 text-primary" data-action="click->courses#clearFilters">Clear filter</span>
+      <div class="flex flex-col border-b border-line-colour px-8">
+        <h3 class="main-text-lg-medium text-primary py-1">Levels</h3>
+        <ul class="flex flex-col">
           <% tags.level.each do |tag| %>
-            <li class="mb-2 flex items-center">
-              <%= check_box_tag 'tags[]', tag.name, params[:tags]&.include?(tag.name), class: 'mr-2 h-3 w-3 tags-checkbox', data: { courses_target: 'checkbox' } %>
-              <a class="text-sm"><%= tag.name %></a>
+            <li class="py-2 flex items-center">
+              <%= input_checkbox_component(
+                    name: :tags,
+                    label: tag.name,
+                    value: tag.name,
+                    html_options: {
+                      checked: params[:tags]&.include?(tag.name),
+                      data: { courses_target: 'checkbox' }
+                    }
+                  ) %>
             </li>
           <% end %>
         </ul>
       </div>
-      <div class="flex flex-col gap-2 p-4">
-        <div class="pt-2">
-          <h3 class="text-xs font-medium text-primary mb-2">Category</h3>
-        </div>
-        <ul class="flex flex-col gap-4">
+      <div class="flex flex-col border-b border-line-colour px-8 mt-6">
+        <h3 class="main-text-lg-medium text-primary py-1">Category</h3>
+        <ul class="flex flex-col">
           <% tags.category.each do |tag| %>
-            <li class="mb-2 flex items-center">
-              <%= check_box_tag 'tags[]', tag.name, params[:tags]&.include?(tag.name), class: 'mr-2 h-3 w-3 tags-checkbox', data: { courses_target: 'checkbox' } %>
-              <a class="text-sm"><%= tag.name %></a>
+            <li class="py-2 flex items-center">
+              <%= input_checkbox_component(
+                    name: :tags,
+                    label: tag.name,
+                    value: tag.name,
+                    html_options: {
+                      checked: params[:tags]&.include?(tag.name),
+                      data: { courses_target: 'checkbox' }
+                    }
+                  ) %>              
             </li>
           <% end %>
         </ul>
       </div>
     </div>
 
-    <div class="flex p-4 text-sm justify-center fixed bottom-0 md:w-80 w-full bg-white items-center border-t-2 border-line-colour">
-      <%= form.submit 'Apply Filters', class: 'btn-primary w-full' %>
+    <div class="flex p-4 text-sm justify-center fixed bottom-0 md:w-80 w-full items-center">
+      <%= form.button type: :submit, class:"w-full px-6" do %>
+        <%= button_component(text: 'Apply Filters') %>
+      <% end %>
     </div>
   <% end %>
 </div>
