@@ -1,9 +1,10 @@
 import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
-  static targets = ["filters", "checkbox", "searchInput"]
+  static targets = ["filter", "checkbox", "searchInput"]
 
   connect() {
     const url =  this.getUrl();
+    this.filterTarget.style.display = "none";
 
     if (url.searchParams.has('clear_search')) {
       this.searchInputTarget.focus();
@@ -13,12 +14,12 @@ export default class extends Controller {
   }
 
   openFilter() {
-    this.filtersTarget.classList.remove("hidden")
+    this.filterTarget.style.display = "block";
     document.body.style.overflow = "hidden";
   }
 
   closeFilter() {
-    this.filtersTarget.classList.add("hidden")
+    this.filterTarget.style.display = "none";
     document.body.style.overflow = "";
   }
 
