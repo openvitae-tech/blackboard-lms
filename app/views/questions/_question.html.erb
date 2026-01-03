@@ -28,28 +28,21 @@
   <div class="space-y-4">  
     <% question.options.each do |option_text| %>
       
-      <%# Determine if this option is one of the correct answers (to apply green styling) %>
       <% is_correct_answer = question.answers.include?(option_text) %>
       
-      <div class="flex items-center p-4 rounded-lg bg-white main-text-sm-normal
-                    <%= is_correct_answer ? 'border border-secondary-dark' : '' %>">
+      <div class="flex items-center p-4 rounded-lg bg-white main-text-sm-normal border
+                    <%= is_correct_answer ? 'border-secondary-dark' : 'border-line-colour-light' %>">
         
-        <%# Icon Slot: Renders the checkmark or empty box as per the screenshot design %>
         <div class="mr-4 flex-shrink-0">
           <% if is_correct_answer %>
-            <%# Green Checked Icon (Matches screenshot) %>
-            <div class="h-5 w-5 rounded-sm border border-secondary-dark bg-secondary-dark flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
+            <div class="h-5 w-5 rounded bg-secondary-dark flex items-center justify-center">
+              <%= icon("check", css: "h-4 w-4 text-white") %>
             </div>
           <% else %>
-            <%# Empty Box/Circle Icon (Matches screenshot) %>
-            <div class="h-5 w-5 rounded-sm border bg-white"></div>
+            <div class="h-5 w-5 rounded border-2 border-disabled-color bg-white"></div>
           <% end %>
         </div>
 
-        <%# Option Text %>
         <span class="text-base text-gray-800 flex-grow">
           <%= option_text %>
         </span>
@@ -58,7 +51,7 @@
   </div>
 
   <div class="pt-6 flex justify-end">
-    <%= render "verification_button", question: question %>
+    <%= render "questions/verification_button", question: question %>
   </div>
   
 </div>

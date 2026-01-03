@@ -7,12 +7,8 @@ module Integrations
         array :questions do
           object do
             string :question
-            array :options do
-              string :option_text
-            end
-            array :answers do
-              string :answer_text
-            end
+            array :options, of: :string
+            array :answers, of: :string
           end
         end
       end

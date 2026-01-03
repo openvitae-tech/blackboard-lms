@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class GenerateQuestionsJob < BaseJob
+  include CommonsHelper
+
   def perform(course_id, user_id, notification_link)
     return if course_id.blank? || user_id.blank?
 
@@ -18,11 +20,15 @@ class GenerateQuestionsJob < BaseJob
       if question.save
         saved_count += 1
       else
-        log_error_to_sentry("Failed to save generated quiz: #{question.errors.full_messages.join(', ')}")
+        log_error_to_sentry("Failed to save generated question: #{question.errors.full_messages.join(', ')}")
       end
     end
 
     Question.where(id: prev_question_ids).destroy_all
+    Turbo::StreamsChannel.broadcast_refresh_to(
+      course, :questions
+    )
+
     NotificationService.notify(
       user,
       I18n.t('notifications.course.questions.title'),

@@ -29,6 +29,6 @@ class Question < ApplicationRecord
     return unless options.present? && answers.present?
     return if answers.to_set.subset?(options.to_set)
 
-    errors.add(:answers_text, 'must be included in the list of options')
+    errors.add(:answers, 'must be included in the list of options')
   end
 end

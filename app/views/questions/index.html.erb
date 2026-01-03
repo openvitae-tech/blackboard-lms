@@ -1,3 +1,5 @@
+<%= turbo_stream_from @course, :questions %>
+<% content_for :header do %>
 <div class="flex flex-col gap-4">
   <%= breadcrumbs_component links: [
    ["My Courses", courses_path],
@@ -9,31 +11,25 @@
       <%= render 'shared/components/back_button', back_link: course_path(@course) %>
       <p class="main-text-lg-semibold">Question Bank</p>
     </div>
-    <div class="flex gap-2 items-center">
-      <%= link_to generate_course_questions_path(@course), data: { turbo_method: :post } do %>
-        <%= button_component text: "Generate", icon_name: "sparkle", size: "sm" %>
-      <% end %>
-      <%= link_to new_course_question_path(@course, tab: params[:tab], page: params[:page]), data: {turbo_frame: "modal"} do %>
-        <%= button_component text: "Add", icon_name: "plus", size: "sm" %>
-      <% end %>
-    </div>
+    <%= render "questions/action_buttons", course: @course, disabled: @is_generating %>
   </div>
   <div class="flex gap-4">
     <% tab_keys.each do |tab_key| %>
     <div class="px-2 py-1 <%= tab_style(tab_key) %>">
       <%= link_to tab_name_with_count(tab_key,
-                                      @questionsBank.send(tab_key).count),
+                                      @questions_bank.send(tab_key).count),
                                       course_questions_path(@course, tab: tab_key),
                                       class: "main-text-md-semibold" %>
     </div>
     <% end %>
   </div>
-  <div class="w-full space-y-6">
-    <% @questionsBank.per_page(current_tab, params[:page]).select(&:persisted?).each_with_index  do |question, index| %>
-      <%= render 'question', question:, index:, count: @questionsBank.count(current_tab) %>
-    <% end %>
-  </div>
-  <div class="my-6 flex justify-end">
-    <%= paginator_component(collection: @questionsBank.per_page(current_tab, params[:page]), path: course_questions_path(@course, tab: params[:tab])) %>
-  </div>
+</div>
+<% end %>
+<div class="w-full space-y-6">
+  <% @questions_bank.per_page(current_tab, params[:page]).select(&:persisted?).each_with_index  do |question, index| %>
+    <%= render 'questions/question', question:, index:, count: @questions_bank.count(current_tab) %>
+  <% end %>
+</div>
+<div class="flex justify-end mt-6">
+  <%= paginator_component(collection: @questions_bank.per_page(current_tab, params[:page]), path: course_questions_path(@course, tab: params[:tab])) %>
 </div>

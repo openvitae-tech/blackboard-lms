@@ -58,6 +58,9 @@ en:
   alert:
     title: "Delete %{resource_name}?"
     description: "You are permanently deleting the <b>%{label}</b> %{resource_name}. This action can't be undone."
+    question_bank_generation:
+      title: "Question Bank Generation"
+      description: "All existing questions will be deleted once new questions are generated."
   embeds:
     invalid_token: "Invalid token"
   scorm:

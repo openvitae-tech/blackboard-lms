@@ -17,17 +17,13 @@ class QuestionsController < ApplicationController
 
   def create
     authorize :question
-    question_params = {content: params[:content], options: params[:options].select(&:present?)}
-
-    correct_indices = params[:answers_indices]&.map(&:to_i) || []
-    answers = correct_indices.map { |index| question_params[:options][index] }.select(&:present?)
-    @question = @course.questions.build(question_params.merge(answers: answers))
+    @question = @course.questions.build(question_attributes)
     if @question.save
       render turbo_stream: turbo_stream.redirect_to(
         course_questions_path(@course, tab: params[:tab], page: params[:page])
         ), notice: I18n.t('question.notice.create')
     else
-      @question.options.fill("", @question.options.length...4)
+      @question.options.fill("", @question.options.length...5)
       render turbo_stream: turbo_stream.replace("modal",
                                                 partial: "form_modal",
                                                 locals: { course: @course, question: @question })
@@ -41,17 +37,12 @@ class QuestionsController < ApplicationController
 
   def update
     authorize @question
-    question_params = {content: params[:content], options: params[:options].select(&:present?)}
 
-    correct_indices = params[:answers_indices]&.map(&:to_i) || []
-    answers = correct_indices.map { |index| question_params[:options][index] }
-
-    if @question.update(question_params.merge(answers: answers))
-      render turbo_stream: turbo_stream.redirect_to(
-          course_questions_path(@course, tab: params[:tab], page: params[:page])
-        ), notice: I18n.t('question.notice.update')
+    if @question.update(question_attributes)
+      flash[:notice] = I18n.t("question.notice.update")
+      render turbo_stream: turbo_stream.refresh(request_id: nil)
     else
-      @question.options.fill("", @question.options.length...4)
+      @question.options.fill("", @question.options.length...5)
       render turbo_stream: turbo_stream.replace("modal",
                                                 partial: "form_modal",
                                                 locals: { course: @course, question: @question })
@@ -61,30 +52,29 @@ class QuestionsController < ApplicationController
   def destroy
     authorize @question
     @question.destroy!
-    redirect_to course_questions_path(@course, tab: params[:tab], page: params[:page]), 
-                notice: I18n.t('question.notice.destroy')
+    flash[:notice] = I18n.t("question.notice.destroy")
+    render turbo_stream: turbo_stream.refresh(request_id: nil)
   end
 
   def generate
     authorize :question
     GenerateQuestionsJob.perform_async(@course.id, current_user.id, course_questions_path(@course))
-
-    redirect_to course_questions_path(@course, tab: params[:tab], page: params[:page]),
-                notice: I18n.t('notifications.course.questions.generate_start')
+    flash[:notice] = I18n.t("notifications.course.questions.generate_start")
+    flash.discard
   end
 
   def verify
     authorize @question
     @question.verify
     flash[:notice] = I18n.t("question.notice.verify")
-    redirect_to course_questions_path(@course, tab: params[:tab], page: params[:page])
+    render turbo_stream: turbo_stream.refresh(request_id: nil)
   end
 
   def unverify
     authorize @question
     @question.unverify
-    flash[:notice] = I18n.t("question.notice.verify")
-    redirect_to course_questions_path(@course, tab: params[:tab], page: params[:page])
+    flash[:notice] = I18n.t("question.notice.unverify")
+    render turbo_stream: turbo_stream.refresh(request_id: nil)
   end
 
   private
@@ -98,10 +88,18 @@ class QuestionsController < ApplicationController
   end
 
   def build_new_question
-    @question = Question.new options: Array.new(4, "")
+    @question = Question.new options: Array.new(5, "")
   end
 
   def build_question_bank
-    @questionsBank = QuestionsBank.new(@course.questions.order(:created_at))
+    @questions_bank = QuestionsBank.new(@course.questions.order(:created_at))
+  end
+
+  def question_attributes
+    question_params = {content: params[:content], options: params[:options].select(&:present?)}
+
+    correct_indices = params[:answers_indices]&.map(&:to_i) || []
+    answers = correct_indices.map { |index| question_params[:options][index] }.select(&:present?)
+    question_params.merge(answers: answers)
   end
 end

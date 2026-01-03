@@ -50,7 +50,7 @@ module ViewComponent
       end
 
       def textarea_style
-        base = ['textarea-component-base']
+        base = ['textarea-component-base field-sizing-content']
         size_style = TEXTAREA_SIZE_STYLE[size.to_sym]
 
         color_style =

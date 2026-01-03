@@ -15,7 +15,7 @@ module Integrations
         create #COUNT quizzes that test comprehension, key concepts, and critical thinking.\
         Each quiz should have one question, four options, and indicate the correct answer. \
         Keep questions clear and concise. Avoid references to the source material.'
-      QUESTION_GENERATION_PROMPT = 'You are an expert question generation. Given the following content, \
+      QUESTION_GENERATION_PROMPT = 'You are an expert in question generation. Given the following content, \
         and attached files create #COUNT questions that test comprehension, key concepts, and critical thinking.\
         Each question can have mininum 2 options and maximum 5 options to select. \
         Some questions can have one answer while some can have multiple answers. \

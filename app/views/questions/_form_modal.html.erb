@@ -1,42 +1,43 @@
-<%= modal_box_component(title: question.persisted? ? "Edit Question" : "Add Question") do %>
-  <%= form_with url: (question.persisted? ? course_question_path(course, question, tab: params[:tab], page: params[:page]) : course_questions_path(course, tab: params[:tab], page: params[:page])), method: question.persisted? ? :patch : :post, data: {turbo_frame: "modal"} do |form| %>
-    <div class="flex flex-col gap-7">
-      <div class="size-fit overflow-auto w-full">
-        <%= textarea_component(
-          name: :content,
-          label: "Question",
-          placeholder: "",
-          rows: 3,
-          value: question.content,
-          error: question.errors.messages[:content][0]) %>
-        <div class="space-y-5 mt-2">
-          <p class="main-text-sm-medium">Answer Options</p>
-          <% question.options.each_with_index do |option, index| %>
-            <div class="flex flex-row items-center justify-between">
-              <%= textarea_component(
-                name: "options[]",
-                placeholder: "",
-                rows: 2,
-                value: option,
-                error: option.blank? && index < 2 && question.errors[:options][0]) %>
-              <%= input_checkbox_component(
-                label_position: "left",
-                name: "answers_indices[]",
-                error: option.present? && question.errors[:answers].any?,
-                value: index,
-                html_options: {checked: question.answers.include?(option)}) %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      <div class="flex gap-2">
-        <%= link_to "#", class: "w-full" do %>
-          <%= button_component text: t("button.cancel"), type: "outline" %>
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white">
+    <%= link_to "#", class: "w-full" do %>
+      <%= button_component text: t("button.cancel"), type: "outline" %>
+    <% end %>
+    <%= button_tag form: "questons-form", class: "w-full" do %>
+      <%= button_component(text: t("button.save")) %>
+    <% end %>    
+  </div>
+<% end %>
+<%= modal_box_component(title: question.persisted? ? "Edit Question" : "Add Question", modal_footer:) do %>
+  <%= form_with id: "questons-form", url: (question.persisted? ? course_question_path(course, question, tab: params[:tab], page: params[:page]) : course_questions_path(course, tab: params[:tab], page: params[:page])), method: question.persisted? ? :patch : :post, data: {turbo_frame: "modal"} do |form| %>
+    <div class="flex flex-col gap-7 w-full">
+      <%= textarea_component(
+        name: :content,
+        label: "Question",
+        placeholder: "",
+        html_options: {class: "field-sizing-content"},
+        rows: 3,
+        value: question.content,
+        error: question.errors.messages[:content][0]) %>
+      <div class="space-y-5">
+        <p class="main-text-sm-medium">Answer Options</p>
+        <% question.options.each_with_index do |option, index| %>
+          <div class="flex flex-row items-center justify-between">
+            <%= textarea_component(
+              name: "options[]",
+              placeholder: "",
+              rows: 2,
+              value: option,
+              error: option.blank? && index < 2 && question.errors[:options][0]) %>
+            <%= input_checkbox_component(
+              label_position: "left",
+              name: "answers_indices[]",
+              error: option.present? && question.errors[:answers].any?,
+              value: index,
+              html_options: {checked: question.answers.include?(option)}) %>
+          </div>
         <% end %>
-        <%= form.button type: "submit", html_options: {class: "w-full" } do %>
-          <%= button_component(text: 'Save') %>
-        <% end %>    
       </div>
     </div>
-  <% end %>  
+  <% end %>
 <% end %>
