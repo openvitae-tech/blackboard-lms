@@ -237,6 +237,7 @@ en:
         title: "Course questions generated"
         message: "Questions for the course %{title} has been generated"
         generate_start: "Question generation started"
+        generate_failed: "Failed to generate questions at this time"
       certificate:
         title: "Course certificate generated"
         message: "Certificate for the course %{title} has been generated"

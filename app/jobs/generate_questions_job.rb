@@ -25,31 +25,34 @@ class GenerateQuestionsJob < BaseJob
     end
 
     if saved_count.positive?
-      Question.where(id: prev_question_ids).destroy_all
-      Turbo::StreamsChannel.broadcast_refresh_to(
-        course, :questions
-      )
-
-      NotificationService.notify(
-        user,
-        I18n.t('notifications.course.questions.title'),
-        format(I18n.t('notifications.course.questions.message'), title: course.title),
-        link: notification_link
-      )
+      response_on_success course:, user:, prev_question_ids:, notification_link:
     else
-      Turbo::StreamsChannel.broadcast_replace_to(
-        course, :questions,
-        target: 'question-actions',
-        partial: 'questions/action_buttons',
-        locals: { course:, disabled: false }
-      )
-
-      Turbo::StreamsChannel.broadcast_replace_to(
-        course, :questions,
-        target: 'flash',
-        partial: 'shared/components/flash',
-        locals: { flash: { 'error' => 'Failed to generate questions at this time' } }
-      )
+      response_on_failure course:
     end
+  end
+
+  private
+
+  def response_on_success(course:, user:, prev_question_ids:, notification_link:)
+    Question.where(id: prev_question_ids).destroy_all
+    Turbo::StreamsChannel.broadcast_refresh_to(course, :questions)
+
+    NotificationService.notify(user,
+                               I18n.t('notifications.course.questions.title'),
+                               format(I18n.t('notifications.course.questions.message'), title: course.title),
+                               link: notification_link)
+  end
+
+  def response_on_failure(course:)
+    Turbo::StreamsChannel.broadcast_replace_to(course, :questions,
+                                               target: 'question-actions',
+                                               partial: 'questions/action_buttons',
+                                               locals: { course:, disabled: false })
+
+    error_text = I18n.t('notifications.course.questions.generate_failed')
+    Turbo::StreamsChannel.broadcast_replace_to(course, :questions,
+                                               target: 'flash',
+                                               partial: 'shared/components/flash',
+                                               locals: { flash: { 'error' => error_text } })
   end
 end
