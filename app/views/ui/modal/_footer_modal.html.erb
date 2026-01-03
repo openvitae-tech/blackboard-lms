@@ -1,0 +1,25 @@
+<% modal_footer = capture do %>
+  <div class="flex gap-2">
+    <%= button_component text: "Cancel", type: "outline", colorscheme: "danger", html_options: { data: { action: "click->modals#closeModal" } } %>
+    <%= button_component(text: 'Save') %>
+  </div>
+<% end %>
+
+<%= modal_box_component(title: "Sample modal", modal_footer:) do %>
+  <%= form_with id: "form", url: "#", method: :post do |form| %>
+    <div class="flex flex-col gap-7 w-full">
+      <p class="main-text-lg-normal">
+        This is a scrolling form in a modal with action buttons in footer.
+      </p>
+      <%= input_text_component(form:, label: 'First Name', name: 'firstname') %>
+      <%= input_text_component(form:, label: 'Last Name', name: 'lastname') %>
+      <%= input_text_component(form:, label: 'Age', name: 'age') %>
+      <%= input_text_component(form:, label: 'Phone', name: 'phone') %>
+      <%= input_text_component(form:, label: 'Address', name: 'address') %>
+      <%= input_text_component(form:, label: 'City', name: 'city') %>
+      <%= input_text_component(form:, label: 'State', name: 'state') %>
+      <%= input_text_component(form:, label: 'Pincode', name: 'pincode') %>
+    </div>
+      
+  <% end %>  
+<% end %>

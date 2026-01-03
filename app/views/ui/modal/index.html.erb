@@ -18,5 +18,10 @@
   <% end %>
 <% end %>
 
+<%= doc_section_component(title: "Scrolling modal with Footer") do %>
+  <%= link_to ui_footer_modal_path, data: { turbo_frame: "modal" } do %>
+    <%= button(label: "Click here for modal with footer") %>
+  <% end %>
+<% end %>
 
 
