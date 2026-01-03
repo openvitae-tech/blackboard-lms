@@ -24,16 +24,32 @@ class GenerateQuestionsJob < BaseJob
       end
     end
 
-    Question.where(id: prev_question_ids).destroy_all
-    Turbo::StreamsChannel.broadcast_refresh_to(
-      course, :questions
-    )
+    if saved_count.positive?
+      Question.where(id: prev_question_ids).destroy_all
+      Turbo::StreamsChannel.broadcast_refresh_to(
+        course, :questions
+      )
 
-    NotificationService.notify(
-      user,
-      I18n.t('notifications.course.questions.title'),
-      format(I18n.t('notifications.course.questions.message'), title: course.title),
-      link: notification_link
-    )
+      NotificationService.notify(
+        user,
+        I18n.t('notifications.course.questions.title'),
+        format(I18n.t('notifications.course.questions.message'), title: course.title),
+        link: notification_link
+      )
+    else
+      Turbo::StreamsChannel.broadcast_replace_to(
+        course, :questions,
+        target: 'question-actions',
+        partial: 'questions/action_buttons',
+        locals: { course:, disabled: false }
+      )
+
+      Turbo::StreamsChannel.broadcast_replace_to(
+        course, :questions,
+        target: 'flash',
+        partial: 'shared/components/flash',
+        locals: { flash: { 'error' => 'Failed to generate questions at this time' } }
+      )
+    end
   end
 end
