@@ -111,8 +111,8 @@ en:
       cannot_delete_published: "Module cannot be deleted since the course is published."
       cannot_delete_enrolled: "Module cannot be deleted since the course has enrolled users."
   question:
-    not_enough_options: "Provide atleast 2 options"
-    not_answers: "Provide atleast 1 correct answer"
+    not_enough_options: "Minimum two options are required"
+    not_answers: "Select at least one correct answer"
     notice:
       create: "Question was successfully added"
       update: "Question was successfully updated"

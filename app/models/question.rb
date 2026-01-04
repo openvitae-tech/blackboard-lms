@@ -6,8 +6,8 @@ class Question < ApplicationRecord
   paginates_per 5
 
   validates :content, presence: true
-  validates :options, length: { minimum: 2, message: I18n.t('question.not_enough_options') }
-  validates :answers, length: { minimum: 1, message: I18n.t('question.not_answers') }
+  validates :options, length: { minimum: 2, message: ->(_object, _data) { I18n.t('question.not_enough_options') } }
+  validates :answers, length: { minimum: 1, message: ->(_object, _data) { I18n.t('question.not_answers') } }
   validate :validate_answers
 
   scope :verified, -> { where(is_verified: true) }
