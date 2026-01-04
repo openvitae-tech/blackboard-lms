@@ -1,9 +1,9 @@
-<div id="question-actions" class="flex gap-2 items-center">
+<div id="question-actions" class="flex gap-3 items-center">
   <% if course.questions.present? %>
     <%= link_to alert_modal_path(title: t("alert.question_bank_generation.title"),
                                 description: t("alert.question_bank_generation.description"),
                                 action_path: generate_course_questions_path(course),
-                                method: :post), data: { turbo_frame: "modal" } do %>
+                                method: :post), class: "w-full", data: { turbo_frame: "modal" } do %>
       <%= button_component text: "Generate", icon_name: "sparkle", size: "sm", disabled: disabled %>
     <% end %>
   <% else %>
@@ -11,7 +11,8 @@
       <%= button_component text: "Generate", icon_name: "sparkle", size: "sm", disabled: disabled %>
     <% end %>
   <% end %>
-  <%= link_to new_course_question_path(course, tab: params[:tab], page: params[:page]), data: {turbo_frame: "modal"} do %>
+  <%= link_to new_course_question_path(course, tab: params[:tab], page: params[:page]),
+              class: "w-full", data: {turbo_frame: "modal"} do %>
     <%= button_component text: "Add", icon_name: "plus", size: "sm", disabled: disabled %>
   <% end %>
 </div>
