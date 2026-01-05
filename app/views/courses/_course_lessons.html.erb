@@ -35,7 +35,7 @@
           </h2>
 
           <div class="flex gap-4 items-center">
-            <% if policy(@course).edit? %>
+            <% if policy(course).edit? %>
               <%= link_to course_module_path(course, course_module), class:"hidden md:block" do %>
                 <%= button_component text: "View module", type: "outline", size: "sm", icon_name: "eye" %>
               <% end %>
@@ -104,7 +104,7 @@
             <% end %>
             <% end %>
           <% end %>
-          <% if policy(@course).edit? %>
+          <% if policy(course).edit? %>
             <li class="flex items-center space-x-5 border-t border-line-colour px-4 py-4 text-sm md:px-6">
               <%= link_to new_course_module_lesson_path(course, course_module), class: "nav-link" do %>
                 <%= button_component(text: 'Add lesson', icon_name: "plus" ) %>
