@@ -3,6 +3,8 @@
     <%= link_to alert_modal_path(title: t("alert.question_bank_generation.title"),
                                 description: t("alert.question_bank_generation.description"),
                                 action_path: generate_course_questions_path(course),
+                                action_type: 'danger',
+                                action_text: t('button.continue'),
                                 method: :post), class: "w-full", data: { turbo_frame: "modal" } do %>
       <%= button_component text: "Generate", icon_name: "sparkle", size: "sm", disabled: disabled %>
     <% end %>

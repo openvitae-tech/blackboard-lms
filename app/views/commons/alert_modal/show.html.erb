@@ -8,7 +8,7 @@
         <%= button_component text: t("button.cancel"), type: "outline", colorscheme: "primary" %>
       <% end %>
       <%= link_to @action_path, data: { turbo_method: @method, turbo_frame: "_top" }, class: "w-full" do %>
-        <%= button_component text: @method == "delete" ? t("button.delete") : t("button.ok"), colorscheme: @method == "delete" ? 'danger' : 'primary' %>
+        <%= button_component text: @action_text, colorscheme: @action_type %>
       <% end %>
     </div>
   </div>
