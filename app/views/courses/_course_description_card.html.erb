@@ -21,10 +21,15 @@
       </div> 
     <% end %>
     <div class="flex w-full flex-col gap-3 p-5">
-      <div class="flex justify-between">
+      <div class="flex flex-wrap gap-2 items-center">
         <p class="overflow-hidden text-ellipsis text-letter-color main-text-lg-medium">
           <%= course.title %>
         </p>
+        <% if course.visibility == "private" %>
+          <%= chip_component(text: "Private" , colorscheme: 'primary') %>
+        <% else %>
+          <%= chip_component(text: "Public" , colorscheme: 'primary') %>
+        <% end %>
       </div>
       <% if local_assigns[:enrollment].present? %>
         <div class="w-full md:w-80">
