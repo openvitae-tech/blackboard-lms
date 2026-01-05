@@ -1,0 +1,11 @@
+<% if @question.valid? %>
+  <%= turbo_stream.replace(question_body_id(@question),
+                           partial: "questions/question_body",
+                          locals: { question: @question }) %>
+  <%= turbo_stream.replace "modal" do %>
+    <%= turbo_frame_tag "modal" %>
+  <% end %>
+  <%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
+<% else %>
+  <%= turbo_stream.replace("modal", partial: "form_modal", locals: { course: @course, question: @question }) %>
+<% end %>
