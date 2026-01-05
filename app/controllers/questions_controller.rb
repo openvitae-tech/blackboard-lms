@@ -19,15 +19,10 @@ class QuestionsController < ApplicationController
     authorize :question
     @question = @course.questions.build(question_attributes)
     if @question.save
-      render turbo_stream: turbo_stream.redirect_to(
-        course_questions_path(@course, tab: params[:tab], page: params[:page])
-        ), notice: I18n.t('question.notice.create')
+      flash.now[:notice] = I18n.t('question.notice.create')
     else
       @question.options.fill("", @question.options.length...5)
-      render turbo_stream: turbo_stream.replace("modal",
-                                                partial: "form_modal",
-                                                locals: { course: @course, question: @question })
-    end    
+    end
   end
 
   def edit
@@ -39,28 +34,23 @@ class QuestionsController < ApplicationController
     authorize @question
 
     if @question.update(question_attributes)
-      flash[:notice] = I18n.t("question.notice.update")
-      render turbo_stream: turbo_stream.refresh(request_id: nil)
+      flash.now[:notice] = I18n.t("question.notice.update")
     else
       @question.options.fill("", @question.options.length...5)
-      render turbo_stream: turbo_stream.replace("modal",
-                                                partial: "form_modal",
-                                                locals: { course: @course, question: @question })
     end    
   end
 
   def destroy
     authorize @question
     @question.destroy!
-    flash[:notice] = I18n.t("question.notice.destroy")
+    flash.now[:notice] = I18n.t("question.notice.destroy")
     render turbo_stream: turbo_stream.refresh(request_id: nil)
   end
 
   def generate
     authorize :question
     GenerateQuestionsJob.perform_async(@course.id, current_user.id, course_questions_path(@course))
-    flash[:notice] = I18n.t("notifications.course.questions.generate_start")
-    flash.discard
+    flash.now[:notice] = I18n.t("notifications.course.questions.generate_start")
   end
 
   def verify

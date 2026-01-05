@@ -21,4 +21,8 @@ module QuestionsHelper
       'border-b border-secondary'
     end
   end
+
+  def question_body_id(question)
+    dom_id(question).concat '_body'
+  end
 end
