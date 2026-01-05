@@ -258,6 +258,4 @@ module CoursesHelper
       }
     )
   end
-
-
 end
