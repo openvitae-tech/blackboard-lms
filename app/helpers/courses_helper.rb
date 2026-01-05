@@ -182,10 +182,82 @@ module CoursesHelper
     %w[public private]
   end
 
+  def course_menu_items(course)
+    [
+      edit_course_item(course),
+      download_course_item(course),
+      delete_course_item(course)
+    ].compact
+  end
+
   private
 
   def partner_metrics
     # probably cache this in a short term basis rather than on demand memoization
     @partner_metrics ||= PartnerMetrics.new(current_user.learning_partner)
   end
+
+  def edit_course_item(course)
+    return unless policy(course).edit?
+
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: 'Edit course',
+      url: edit_course_path(course),
+      type: :link
+    )
+  end
+
+  def download_course_item(course)
+    return unless policy(course).edit?
+
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: 'Download course',
+      url: new_course_scorm_path(course),
+      type: :link
+    )
+  end
+
+  def delete_course_item(course)
+    if policy(course).destroy?
+      deletable_course_menu_item(course)
+    else
+      disabled_delete_course_menu_item(course)
+    end
+  end
+
+  def deletable_course_menu_item(course)
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: 'Delete course',
+      url: alert_modal_path(
+        title: t('alert.title', resource_name: 'course'),
+        description: t(
+          'alert.description',
+          label: course.title,
+          resource_name: 'course'
+        ),
+        action_path: course_path(course),
+        method: :delete
+      ),
+      type: :link,
+      options: {
+        data: { turbo_frame: 'modal' },
+        class: 'text-danger main-text-lg-normal menu-component-list-items'
+      }
+    )
+  end
+
+  def disabled_delete_course_menu_item(course)
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: 'Delete course',
+      url: '#',
+      type: :button,
+      options: {
+        class: 'cursor-not-allowed main-text-lg-normal menu-component-list-items text-disabled-color',
+        tooltip_text: delete_tooltip_message(course),
+        tooltip_position: 'left'
+      }
+    )
+  end
+
+
 end

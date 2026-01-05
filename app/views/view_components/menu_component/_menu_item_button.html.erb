@@ -1,7 +1,17 @@
-<%= button_to item.url,
-  item.options.reverse_merge(
-    method: :post,
-    class: "main-text-lg-normal menu-component-list-items #{item.extra_classes}"
-  ) do %>
-  <span class="main-text-lg-normal"><%= item.label %></span>
-<% end %>
+<% button_content = capture do %>
+  <%= button_to item.url,
+    item.options.reverse_merge(
+      method: :post,
+      class: "main-text-lg-normal menu-component-list-items #{item.extra_classes}"
+    ) do %>
+    <span class="main-text-lg-normal"><%= item.label %></span>
+  <% end %>
+<% end %>  
+<%= item.options[:tooltip_text].present? ?
+  render(
+    'shared/components/tooltip',
+    tooltip_position: item.options[:tooltip_position] || 'right',
+    tooltip_text: item.options[:tooltip_text]
+  ) { button_content } :
+  button_content
+%>
