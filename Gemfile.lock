@@ -488,10 +488,9 @@ GEM
       railties (>= 7.0.0)
     thor (1.4.0)
     timeout (0.4.3)
-    turbo-rails (2.0.5)
-      actionpack (>= 6.0.0)
-      activejob (>= 6.0.0)
-      railties (>= 6.0.0)
+    turbo-rails (2.0.20)
+      actionpack (>= 7.1.0)
+      railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.1.4)
@@ -586,7 +585,7 @@ DEPENDENCIES
   stackprof
   stimulus-rails
   tailwindcss-rails (~> 2.6.5)
-  turbo-rails
+  turbo-rails (>= 2.0.20)
   tzinfo-data
   uri (>= 1.0.4)
   web-console

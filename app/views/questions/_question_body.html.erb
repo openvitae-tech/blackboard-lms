@@ -1,0 +1,34 @@
+<div id="<%= question_body_id(question) %>">
+  <p class="main-text-lg-semibold my-4">
+    <%= question.content %>
+  </p>
+
+  <div class="space-y-4">  
+    <% question.options.each do |option_text| %>
+      
+      <% is_correct_answer = question.answers.include?(option_text) %>
+      
+      <div class="flex items-center p-4 rounded-lg bg-white main-text-sm-normal border
+                    <%= is_correct_answer ? 'border-secondary-dark' : 'border-line-colour-light' %>">
+        
+        <div class="mr-4 flex-shrink-0">
+          <% if is_correct_answer %>
+            <div class="h-5 w-5 rounded bg-secondary-dark flex items-center justify-center">
+              <%= icon("check", css: "h-4 w-4 text-white") %>
+            </div>
+          <% else %>
+            <div class="h-5 w-5 rounded border-2 border-disabled-color bg-white"></div>
+          <% end %>
+        </div>
+
+        <span class="flex-grow text-letter-color-light">
+          <%= option_text %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="pt-6 flex justify-end">
+    <%= render "questions/verification_button", question: question %>
+  </div>
+</div>

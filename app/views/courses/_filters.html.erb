@@ -14,7 +14,7 @@
           <% tags.level.each do |tag| %>
             <li class="py-2 flex items-center">
               <%= input_checkbox_component(
-                    name: :tags,
+                    name: "tags[]",
                     label: tag.name,
                     value: tag.name,
                     html_options: {
@@ -32,7 +32,7 @@
           <% tags.category.each do |tag| %>
             <li class="py-2 flex items-center">
               <%= input_checkbox_component(
-                    name: :tags,
+                    name: "tags[]",
                     label: tag.name,
                     value: tag.name,
                     html_options: {

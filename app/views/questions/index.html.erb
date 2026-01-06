@@ -1,0 +1,35 @@
+<%= turbo_stream_from @course, :questions %>
+<% content_for :header do %>
+<div class="flex flex-col gap-4">
+  <%= breadcrumbs_component links: [
+   ["My Courses", courses_path],
+   [@course.title, course_path(@course)],
+   ["Questions Bank"]
+  ]%>
+  <div class="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
+    <div class="flex gap-2 items-center">
+      <%= render 'shared/components/back_button', back_link: course_path(@course) %>
+      <p class="main-text-lg-semibold">Question Bank</p>
+    </div>
+    <%= render "questions/action_buttons", course: @course, disabled: @is_generating %>
+  </div>
+  <div class="flex gap-3 md:gap-4">
+    <% tab_keys.each do |tab_key| %>
+    <div class="md:px-2 p-1 <%= tab_style(tab_key) %>">
+      <%= link_to tab_name_with_count(tab_key,
+                                      @questions_bank.send(tab_key).count),
+                                      course_questions_path(@course, tab: tab_key),
+                                      class: "main-text-md-semibold" %>
+    </div>
+    <% end %>
+  </div>
+</div>
+<% end %>
+<div class="w-full space-y-6 mt-3">
+  <% @questions_bank.per_page(current_tab, params[:page]).select(&:persisted?).each_with_index  do |question, index| %>
+    <%= render 'questions/question', question:, index:, count: @questions_bank.count(current_tab) %>
+  <% end %>
+</div>
+<div class="flex justify-end mt-6">
+  <%= paginator_component(collection: @questions_bank.per_page(current_tab, params[:page]), path: course_questions_path(@course, tab: params[:tab])) %>
+</div>

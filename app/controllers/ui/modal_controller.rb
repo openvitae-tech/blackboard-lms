@@ -11,4 +11,8 @@ class Ui::ModalController < Ui::BaseController
   def success_modal
     render partial: "ui/modal/success_modal"
   end
+
+  def footer_modal
+    render partial: "ui/modal/footer_modal"
+  end
 end

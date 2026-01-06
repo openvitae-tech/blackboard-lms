@@ -1,0 +1,9 @@
+<% if question.is_verified %>
+  <%= link_to unverify_course_question_path(question.course, question, tab: params[:tab], page: params[:page]), data: {turbo_method: :put, turbo_scroll: :preseve} do %>
+    <%= button_component text: "Unverify", size: "sm", icon_name: "check", icon_position: "right" %>
+  <% end %>
+<% else %>
+  <%= link_to verify_course_question_path(question.course, question, tab: params[:tab], page: params[:page]), data: {turbo_method: :put, turbo_scroll: :preseve} do %>
+    <%= button_component text: "Verify", size: "sm", icon_name: "check", icon_position: "right" %>
+  <% end %>
+<% end %>

@@ -11,7 +11,7 @@ module ViewComponent
       end
     end
 
-    def modal_box_component(title: nil, variant: nil, &)
+    def modal_box_component(title: nil, variant: nil, modal_footer: nil, &)
       modal = ModalBoxComponent.new(title:, variant:)
       block_content = capture(&) if block_given?
 
@@ -23,7 +23,7 @@ module ViewComponent
         end
 
       render partial: 'view_components/modal_component/modal_box_component',
-             locals: { modal:, body: block_content, container_class: }
+             locals: { modal:, body: block_content, modal_footer:, container_class: }
     end
   end
 end

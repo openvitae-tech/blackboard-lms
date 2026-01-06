@@ -90,6 +90,15 @@ Rails.application.routes.draw do
     end
 
     resources :materials, only: %i[index create destroy]
+    resources :questions do
+      collection do
+        post :generate
+      end
+      member do
+        put :verify
+        put :unverify
+      end
+    end
 
     resource :scorm, only: %i[new create] do
       collection do

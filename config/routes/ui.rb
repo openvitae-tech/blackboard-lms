@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     get :modal_component, to: 'modal#index'
     get :modal_preview, to: 'modal#preview'
     get :success_modal, to: 'modal#success_modal'
+    get :footer_modal, to: 'modal#footer_modal'
     get :chip, to: 'chips#index'
     get :progress, to: 'progress#index'
     get :profile_icon, to: 'profile_icon#index'

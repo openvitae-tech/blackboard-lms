@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "modal" do %>
+  <%= turbo_frame_tag "modal" %>
+<% end %>
+<%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
+<%= turbo_stream.replace("question-actions",
+                          partial: "questions/action_buttons",
+                          locals: {course: @course, disabled: true}) %>

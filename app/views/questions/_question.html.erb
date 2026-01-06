@@ -1,0 +1,25 @@
+<div class="bg-primary-light-50 p-6 rounded-xl border border-slate-grey-light" id="<%= dom_id(question)%>">  
+  <div class="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
+    <div class="flex items-center gap-1 main-text-sm-medium">
+      <% if question.is_verified %>
+        <%= icon("check-badge-solid", css: "h-5 w-5 cursor-pointer text-primary") %>
+      <% end %>
+      <span>Question <%= ((params[:page]||'1').to_i-1)*5 + index+1 %> of <%= count %></span>
+    </div>
+    <div class="flex gap-3">
+      <%= link_to edit_course_question_path(question.course, question, tab: params[:tab], page: params[:page]),
+                  class: "w-full", data: { turbo_frame: "modal" } do %>
+        <%= button_component text: "Edit", size: "sm", type: "outline", icon_name: "pencil" %>
+      <% end %>
+      <%= link_to alert_modal_path(
+                    title: t("alert.title", resource_name: "Question"),
+                    description: t("alert.description", label: "", resource_name: "question"),
+                    action_path: course_question_path(question.course, question, tab: params[:tab], page: params[:page]),
+                    method: :delete
+                  ), class: "w-full", data: { turbo_frame: "modal" } do %>
+        <%= button_component text: "Delete", size: "sm", type: "outline", colorscheme: "danger", icon_name: "trash" %>
+      <% end %>
+    </div>
+  </div>
+  <%= render "questions/question_body", question: question %>  
+</div>

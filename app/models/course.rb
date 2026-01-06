@@ -9,6 +9,7 @@ class Course < ApplicationRecord
   enum :visibility, { public: 'public', private: 'private' }, prefix: :visibility
 
   has_many :course_modules, dependent: :destroy
+  has_many :questions, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments
   has_and_belongs_to_many :tags # rubocop:disable Rails/HasAndBelongsToMany

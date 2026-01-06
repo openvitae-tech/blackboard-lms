@@ -24,7 +24,7 @@
 }
 
 body {
-  @apply font-roboto text-letter-color;
+  @apply font-roboto text-letter-color overflow-hidden;
 }
 
 @layer components {

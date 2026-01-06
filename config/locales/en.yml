@@ -55,9 +55,13 @@ en:
     share: "Share"
     choose: "Choose"
     save: "Save"
+    continue: "Continue"
   alert:
     title: "Delete %{resource_name}?"
     description: "You are permanently deleting the <b>%{label}</b> %{resource_name}. This action can't be undone."
+    question_bank_generation:
+      title: "Question Bank Generation"
+      description: "All existing questions will be deleted once new questions are generated."
   embeds:
     invalid_token: "Invalid token"
   scorm:
@@ -107,6 +111,15 @@ en:
       empty: "There are no modules to show."
       cannot_delete_published: "Module cannot be deleted since the course is published."
       cannot_delete_enrolled: "Module cannot be deleted since the course has enrolled users."
+  question:
+    not_enough_options: "Minimum two options are required"
+    not_answers: "Select at least one correct answer"
+    notice:
+      create: "Question was successfully added"
+      update: "Question was successfully updated"
+      destroy: "Question was successfully deleted."
+      verify: "Question verified successfully"
+      unverify: "Question unverified successfully"
   login:
     invalid_or_incorrect_otp: "Incorrect otp or otp expired"
     incorrect_phone: "Incorrect mobile number"
@@ -221,6 +234,11 @@ en:
       per_user_amount: "Per user amount (₹)"
   notifications:
     course:
+      questions:
+        title: "Course questions generated"
+        message: "Questions for the course %{title} has been generated"
+        generate_start: "Question generation started"
+        generate_failed: "Failed to generate questions at this time"
       certificate:
         title: "Course certificate generated"
         message: "Certificate for the course %{title} has been generated"
