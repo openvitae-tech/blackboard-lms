@@ -22,7 +22,7 @@
     <% end %>
     <div class="flex w-full flex-col gap-3 p-5">
       <div class="flex flex-wrap gap-2 items-center">
-        <p class="overflow-hidden text-ellipsis text-letter-color main-text-lg-medium">
+        <p class="truncate md:whitespace-normal md:overflow-visible md:text-clip text-letter-color main-text-lg-medium">
           <%= course.title %>
         </p>
         <% if course.visibility == "private" %>
@@ -61,8 +61,8 @@
           </div>
         <% end %>
       </div>
-      <div class="p-4 text-justify tracking-tight bg-primary-light-50 rounded-lg max-h-[116px]">
-        <div class="h-full overflow-hidden flex items-center main-text-sm-normal">
+      <div class="px-3 py-2 bg-primary-light-50 rounded-lg main-text-sm-normal">
+        <div class="max-h-[192px] md:max-h-[100px] overflow-y-auto">
           <%= course_description(course) %>
         </div>
       </div>

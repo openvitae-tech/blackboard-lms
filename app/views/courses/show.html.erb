@@ -1,22 +1,21 @@
 <div class="flex justify-end flex-col sticky top-0 w-full z-40 bg-white pb-3">
   <%= render "shared/components/bread_crumbs", links: [[I18n.t('course.label'), courses_path], [@course.title, nil]] %>
-  <div class="flex justify-between gap-4">
+  <div class="flex flex-col md:flex-row justify-between gap-4 w-full">
     <%= render 'shared/components/back_button', back_link: courses_path %>
-    <div class="flex flex-wrap justify-end gap-4">
-
+    <div class="flex flex-nowrap w-full md:w-fit gap-4">
+      <% if policy(:course_module).new? %>
+        <%= link_to new_course_module_path(@course), class:"w-1/2 md:w-fit" do %>
+          <%= button_component(text: "Add module", icon_name: "plus") %>
+        <% end %>
+      <% end %>
       <% if policy(@course).publish? %>
-        <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
+        <%= link_to publish_course_path(@course), class:"w-1/2 md:w-fit", data: { turbo_method: "put" } do %>
           <%= button_component(type: 'outline', text: "Publish") %>
         <% end %>
       <% end %>
       <% if policy(@course).unpublish? %>
-        <%= link_to unpublish_course_path(@course), data: { turbo_method: "put" } do %>
+        <%= link_to unpublish_course_path(@course), class:"w-1/2 md:w-fit", data: { turbo_method: "put" } do %>
           <%= button_component(type: 'outline', text: "Unpublish") %>
-        <% end %>
-      <% end %>
-      <% if policy(:course_module).new? %>
-        <%= link_to new_course_module_path(@course) do %>
-          <%= button_component(text: "Add module", icon_name: "plus") %>
         <% end %>
       <% end %>
     </div>
