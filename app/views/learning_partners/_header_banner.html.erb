@@ -3,14 +3,14 @@
     <%= image_tag partner_banner(learning_partner), class: 'h-full w-full object-cover rounded-lg md:rounded-xl' %>
   </div>
   <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/0 rounded-lg md:rounded-xl"></div>
-  <div class="absolute top-6 left-6 flex items-center space-x-3 z-10">
+  <div class="absolute top-6 left-6 flex flex-wrap items-center gap-3 z-10">
     <%= image_tag partner_logo(learning_partner, :large), class: 'h-6 md:h-10 w-6 md:w-10 object-cover rounded-full border-2 border-white box-shadow-medium' %>
-    <span class="heading-xl text-white"><%= learning_partner.name %> </span>
+    <span class="heading-xl text-white max-w-64 md:max-w-none"><%= learning_partner.name %> </span>
     <% unless learning_partner.first_owner_joined? %>
       <%= chip_component(text: 'Owner not joined', colorscheme: 'danger', icon_name: 'x-mark') %>
     <% end %>
   </div>
-  <div class="absolute top-3 md:top-4 right-3 md:right-4 flex">
+  <div class="absolute top-3 md:top-4 right-3 md:right-4 flex z-20 ">
     <%= menu_component(menu_items: learning_partner_menu_items(learning_partner)) %>      
   </div>
   <%= link_to 'javascript:void(0);' do %>
