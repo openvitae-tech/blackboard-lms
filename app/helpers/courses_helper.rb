@@ -200,7 +200,7 @@ module CoursesHelper
   def edit_course_item(course)
     return unless policy(course).edit?
 
-    ViewComponent::MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponent::MenuItem.new(
       label: 'Edit course',
       url: edit_course_path(course),
       type: :link
@@ -210,10 +210,13 @@ module CoursesHelper
   def download_course_item(course)
     return unless policy(course).edit?
 
-    ViewComponent::MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponent::MenuItem.new(
       label: 'Download course',
       url: new_course_scorm_path(course),
-      type: :link
+      type: :link,
+      options: {
+        data: { turbo_frame: 'modal' }
+      }
     )
   end
 
@@ -226,7 +229,7 @@ module CoursesHelper
   end
 
   def deletable_course_menu_item(course)
-    ViewComponent::MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponent::MenuItem.new(
       label: 'Delete course',
       url: alert_modal_path(
         title: t('alert.title', resource_name: 'course'),
@@ -247,7 +250,7 @@ module CoursesHelper
   end
 
   def disabled_delete_course_menu_item(course)
-    ViewComponent::MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponent::MenuItem.new(
       label: 'Delete course',
       url: '#',
       type: :button,
