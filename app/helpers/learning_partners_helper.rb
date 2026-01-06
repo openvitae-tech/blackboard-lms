@@ -15,7 +15,7 @@ module LearningPartnersHelper
   private
 
   def edit_partner_item(learning_partner)
-    ViewComponent::MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponent::MenuItem.new(
       label: t('button.edit'),
       url: edit_learning_partner_path(learning_partner),
       type: :link
@@ -25,7 +25,7 @@ module LearningPartnersHelper
   def activate_partner_item(learning_partner)
     return unless policy(learning_partner).activate?
 
-    ViewComponent::MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponent::MenuItem.new(
       label: t('learning_partner.activate'),
       url: activate_learning_partner_path(learning_partner),
       type: :link,
@@ -46,7 +46,7 @@ module LearningPartnersHelper
         'learning_partner.payment_plan.create'
       end
 
-    ViewComponent::MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponent::MenuItem.new(
       label: t(label_key),
       url: edit_learning_partner_payment_plan_path(learning_partner),
       type: :link,
@@ -55,7 +55,7 @@ module LearningPartnersHelper
   end
 
   def certificate_templates_item(learning_partner)
-    ViewComponent::MenuComponentHelper::MenuItem.new(
+    ViewComponent::MenuComponent::MenuItem.new(
       label: t('learning_partner.certificate_templates', default: 'Certificate templates'),
       url: learning_partner_certificate_templates_path(learning_partner.id),
       type: :link
