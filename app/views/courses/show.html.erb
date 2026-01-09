@@ -1,26 +1,28 @@
-<div class="flex justify-end flex-col sticky top-0 w-full z-40 bg-white pb-3">
-   <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]]%>
-  <div class="flex flex-col md:flex-row justify-between gap-4 w-full">
-    <%= render 'shared/components/back_button', back_link: courses_path %>
-    <div class="flex flex-nowrap w-full md:w-fit gap-4">
-      <% if policy(:course_module).new? %>
-        <%= link_to new_course_module_path(@course), class:"flex-1 md:w-fit" do %>
-          <%= button_component(text: "Add module",size:"sm", icon_name: "plus") %>
+<% content_for :header do %>
+  <div class="flex flex-col gap-4">
+    <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]]%>
+    <div class="flex flex-col md:flex-row justify-between gap-4 w-full">
+      <%= render 'shared/components/back_button', back_link: courses_path %>
+      <div class="flex flex-nowrap w-full md:w-fit gap-4">
+        <% if policy(:course_module).new? %>
+          <%= link_to new_course_module_path(@course), class:"flex-1 md:w-fit" do %>
+            <%= button_component(text: "Add module",size:"sm", icon_name: "plus") %>
+          <% end %>
         <% end %>
-      <% end %>
-      <% if policy(@course).publish? %>
-        <%= link_to publish_course_path(@course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
-          <%= button_component(type: 'outline', text: "Publish", size:"sm") %>
+        <% if policy(@course).publish? %>
+          <%= link_to publish_course_path(@course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
+            <%= button_component(type: 'outline', text: "Publish", size:"sm") %>
+          <% end %>
         <% end %>
-      <% end %>
-      <% if policy(@course).unpublish? %>
-        <%= link_to unpublish_course_path(@course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
-          <%= button_component(type: 'outline', text: "Unpublish", size:"sm",) %>
+        <% if policy(@course).unpublish? %>
+          <%= link_to unpublish_course_path(@course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
+            <%= button_component(type: 'outline', text: "Unpublish", size:"sm",) %>
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
 <div class="flex flex-col rounded gap-4 md:gap-6">
   <%= render 'courses/course_description_card', course: @course, enrollment: @enrollment %>
 </div>
