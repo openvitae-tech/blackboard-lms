@@ -1,48 +1,33 @@
-<div class="flex justify-end">
-  <div class="flex justify-between gap-4">
-    <% if current_user.is_admin? %>
-      <%= link_to new_course_scorm_path(@course), class: "nav-link", data: { turbo_frame: "modal" } do %>
-        <%= button(icon_name: "arrow-down-tray",tooltip_text: t("scorm.download_modal.title")) %>
-      <% end %>
-      <% if policy(@course).destroy? %>
-        <%= link_to alert_modal_path(
-                    title: t("alert.title", resource_name: "course"),
-                    description: t("alert.description", label: @course.title, resource_name: "course"),
-                    action_path: course_path(@course),
-                    method: :delete,
-                  ), data: { turbo_frame: "modal" } do %>
-          <%= button(label: "Delete", type: "danger") %>
+<% content_for :header do %>
+  <div class="flex flex-col gap-4">
+    <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]]%>
+    <div class="flex flex-col md:flex-row justify-between gap-4 w-full">
+      <%= render 'shared/components/back_button', back_link: courses_path %>
+      <div class="flex flex-nowrap w-full md:w-fit gap-4">
+        <% if policy(:course_module).new? %>
+          <%= link_to new_course_module_path(@course), class:"flex-1 md:w-fit" do %>
+            <%= button_component(text: "Add module",size:"sm", icon_name: "plus") %>
+          <% end %>
         <% end %>
-      <% else %>
-        <%= button(label: "Delete", type: "danger",  tooltip_text: delete_tooltip_message(@course),disabled: true) %>
-      <% end %>
-    <% end %>
-    <% if policy(@course).publish? %>
-      <%= link_to publish_course_path(@course), data: { turbo_method: "put" } do %>
-        <%= button(label: "Publish", type: "secondary") %>
-      <% end %>
-    <% end %>
-    <% if policy(@course).unpublish? %>
-      <%= link_to unpublish_course_path(@course), data: { turbo_method: "put" } do %>
-        <%= button(label: "Unpublish", type: "secondary") %>
-      <% end %>
-    <% end %>
-    <% if policy(:course_module).new? %>
-      <%= link_to new_course_module_path(@course) do %>
-        <%= button(
-          label: 'Add module', 
-          icon_name: "plus"
-        ) %>
-      <% end %>
-    <% end %>
+        <% if policy(@course).publish? %>
+          <%= link_to publish_course_path(@course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
+            <%= button_component(type: 'outline', text: "Publish", size:"sm") %>
+          <% end %>
+        <% end %>
+        <% if policy(@course).unpublish? %>
+          <%= link_to unpublish_course_path(@course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
+            <%= button_component(type: 'outline', text: "Unpublish", size:"sm",) %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
-</div>
-<%= render "shared/components/bread_crumbs", links: [[I18n.t('course.label'), courses_path], [@course.title, nil]] %>
-<div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6">
+<% end %>
+<div class="flex flex-col rounded gap-4 md:gap-6">
   <%= render 'courses/course_description_card', course: @course, enrollment: @enrollment %>
 </div>
 <% if current_user.is_admin? %>
-  <div class="flex gap-4 my-4">
+  <div class="flex gap-4 mt-4">
     <%= link_to course_materials_path(@course) do %>
       <%= button_component text: "Course Materials", type: "outline", size: "sm" %>
     <% end %>
@@ -52,7 +37,7 @@
   </div>
 <% end %>
 <% if @course.course_modules.present? %>
-  <div class="flex flex-col rounded box-shadow-medium gap-4 md:gap-6 pb-6 md:pb-6 pt-6">
+  <div class="flex flex-col mt-4">
     <% if course_completed?(@enrollment) %>
       <%= render "courses/course_stats", course: @course, enrollment: @enrollment %>
     <% end %>
@@ -62,8 +47,8 @@
   <div class="flex flex-col items-center justify-center flex-grow py-6">
     <h2 class="text-semibold"><%= t("course.course_module.empty") %></h2>
     <% if policy(:course_module).new? %>
-      <%= link_to new_course_module_path(@course), class: "mt-4" do %>
-        <%= button(label: 'Add module', icon_name: "plus" ) %>
+      <%= link_to new_course_module_path(@course), data: { turbo_frame: "modal" }, class: "mt-4" do %>
+        <%= button(label: 'Add module', size:"sm", icon_name: "plus" ) %>
       <% end %>
     <% end %>
   </div>
