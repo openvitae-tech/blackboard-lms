@@ -31,7 +31,7 @@ class CourseModulesController < ApplicationController
 
     if @course_module.save
       service.update_module_ordering(@course, @course_module, :create)
-      redirect_to course_url(@course), notice: I18n.t('course.module_created')
+      render turbo_stream: turbo_stream.redirect_to(course_url(@course)), notice: I18n.t('course.module_created') 
     else
       render :new, status: :unprocessable_entity
     end
@@ -41,7 +41,7 @@ class CourseModulesController < ApplicationController
   def update
     authorize @course_module
     if @course_module.update(course_module_params)
-      redirect_to course_module_url(@course, @course_module), notice: I18n.t('course.module_updated')
+      render turbo_stream: turbo_stream.redirect_to(course_module_url(@course, @course_module)), notice: I18n.t('course.module_updated')
     else
       render :edit, status: :unprocessable_entity
     end

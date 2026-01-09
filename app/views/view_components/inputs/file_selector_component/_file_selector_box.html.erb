@@ -1,14 +1,27 @@
 <div data-controller="file-selector" data-file-selector-target="wrapper" class="<%= file_selector.wrapper_style %>">
   <div
     class="file-selector-input-box"
-    data-action="click->file-selector#chooseFile" >
+    data-action="click->file-selector#chooseFile">
     <div class="flex flex-col gap-1 items-center" data-file-selector-target="chooseFile">
-      <input
-        type="file"
-        class="hidden"
-        data-file-selector-target="fileInput"
-        accept="<%= file_selector.accepted_types %>"
-        <%= 'disabled' if file_selector.disabled %> />
+
+      <% if file_selector.form.present? && file_selector.name.present? %>
+        <%= file_selector.form.file_field(
+              file_selector.name,
+              accept: file_selector.accepted_types,
+              class: "hidden",
+              disabled: file_selector.disabled,
+              data: { file_selector_target: "fileInput" }
+            ) %>
+      <% else %>
+        <%= file_field_tag(
+              file_selector.name,
+              accept: file_selector.accepted_types,
+              class: "hidden",
+              disabled: file_selector.disabled,
+              data: { file_selector_target: "fileInput" }
+            ) %>
+      <% end %>
+
       <%= icon("document-arrow-up", css: file_selector.upload_icon_style) %>
       <% if file_selector.error.present? %>
         <p class="general-text-sm-normal file-selctor-error-text">

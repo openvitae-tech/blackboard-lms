@@ -6,7 +6,7 @@
              class="hidden absolute flex modal-loader-container">
           <div class="modal-loader"></div>
         </div>
-        <div class="modal-content">
+        <div class="modal-content" <%= tag.attributes(html_options) %>>
           <% if modal.title.present? %>
             <div class="modal-header">
               <span class="main-text-lg-semibold"><%= modal.title %></span>

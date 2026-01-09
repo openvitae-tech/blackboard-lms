@@ -23,11 +23,11 @@
 }
 
 .textarea-component-md {
-  @apply px-3 py-2 rounded;
+  @apply px-3 py-2 rounded h-14 md:h-24;
 }
 
 .textarea-component-lg {
-  @apply px-3 py-2 md:p-4 rounded-lg;
+  @apply px-3 py-2 md:p-4 rounded-lg h-24 md:h-36;
 }
 
 .textarea-label {
