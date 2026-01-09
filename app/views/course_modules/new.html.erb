@@ -1,5 +1,15 @@
-<div class="my-4 mx-auto w-full text-left">
-  <%= render 'shared/components/back_button', back_link: course_path(@course) %>
-  <div class="heading page-heading my-4">Add new module</div>
-  <%= render "form", course: @course, course_module: @course_module %>
-</div>
+<% modal_footer = capture do %>
+  <div class="w-full flex gap-6 items-center">
+    <div class="flex-1" data-action="click->modals#closeModal">
+      <%= button_component(text: "Cancel", type:"outline") %>
+    </div>   
+    <%= button_tag form: "module-form", class: "flex-1" do %>
+      <%= button_component(text: "Create") %>
+    <% end %>  
+  </div>
+<% end %>
+<%= modal_box_component(title: "Add new module", modal_footer:) do %>
+  <%= render "form",
+    course: @course,
+    course_module: @course_module %>
+<% end %>

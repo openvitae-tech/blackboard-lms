@@ -203,7 +203,10 @@ module CoursesHelper
     ViewComponent::MenuComponent::MenuItem.new(
       label: 'Edit course',
       url: edit_course_path(course),
-      type: :link
+      type: :link,
+      options: {
+        data: { turbo_frame: 'modal' }
+      }
     )
   end
 

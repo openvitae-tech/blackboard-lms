@@ -1,25 +1,6 @@
-<div class="box md:max-w-3xl">
-  <div class="my-8 text-left">
-    <% url = course_module.persisted? ? course_module_path(course, course_module) : course_modules_path(course, course_module) %>
-    <%= form_with(model: [course, course_module], url: url) do |form| %>
-      <%= render "shared/components/form_errors", resource: course_module %>
-      <div class="my-8 text-sm">
-        <%= input_field(form:, field_name: :title, label: "Title", placeholder: "Enter title",type: "text",width:"w-full") %>     
-      </div>
-      <div class="my-8 text-sm  flex gap-6 items-center">
-        <div>
-          <% if @course_module.persisted? %>
-            <%= link_to "Cancel" , course_module_path(@course, @course_module), class: "nav-link" %>
-          <% else %>
-            <%= link_to "Cancel" , course_path(@course), class: "nav-link" %>
-          <% end %>
-        </div>
-        <div>
-          <%= form.submit submit_label_for(course_module), class: "btn-primary" do %>
-            <span><%= text %></span>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+<div class="text-left">
+  <% url = course_module.persisted? ? course_module_path(course, course_module) : course_modules_path(course, course_module) %>
+  <%= form_with(model: [course, course_module],id:"module-form", url: url) do |form| %>
+    <%= input_text_component(form:, name: :title, label: "Title", placeholder: "Enter the Title") %>    
+  <% end %>
 </div>

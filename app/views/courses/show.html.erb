@@ -5,7 +5,7 @@
       <%= render 'shared/components/back_button', back_link: courses_path %>
       <div class="flex flex-nowrap w-full md:w-fit gap-4">
         <% if policy(:course_module).new? %>
-          <%= link_to new_course_module_path(@course), class:"flex-1 md:w-fit" do %>
+          <%= link_to new_course_module_path(@course), data: { turbo_frame: "modal" }, class:"flex-1 md:w-fit" do %>
             <%= button_component(text: "Add module", size:"sm", icon_name: "plus") %>
           <% end %>
         <% end %>
@@ -47,7 +47,7 @@
   <div class="flex flex-col items-center justify-center flex-grow py-6">
     <h2 class="text-semibold"><%= t("course.course_module.empty") %></h2>
     <% if policy(:course_module).new? %>
-      <%= link_to new_course_module_path(@course), class: "mt-4" do %>
+      <%= link_to new_course_module_path(@course),  data: { turbo_frame: "modal" }, class: "mt-4" do %>
         <%= button_component(text: "Add module", size:"sm", icon_name: "plus") %>
       <% end %>
     <% end %>
