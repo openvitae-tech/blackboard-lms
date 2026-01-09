@@ -19,11 +19,11 @@
 }
 
 .modal-body {
-  @apply px-7 md:px-8 pt-4 md:pt-5 pb-7 md:pb-8 max-h-[500px] overflow-auto;
+  @apply px-7 md:px-8 pt-4 md:pt-5 pb-7 max-h-[500px] overflow-auto;
 }
 
 .modal-footer {
-  @apply px-7 md:px-8 pt-4 md:pt-5 pb-7 md:pb-8 sticky bottom-0;
+  @apply px-7 md:px-8 pb-7 md:pb-8 sticky bottom-0;
 }
 
 .modal-loader-container {

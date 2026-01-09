@@ -1,8 +1,25 @@
-<div class="my-4 mx-auto w-full text-left">
-  <%= render 'shared/components/back_button', back_link: courses_path %>
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white w-full">
 
-  <div class="box">
-    <h1 class="heading page-heading-medium">Create course</h1>
+    <div class="hidden flex-1" data-multistep-form-target="cancelButton" data-action="click->modals#closeModal">
+      <%= button_component(text: "Cancel", type:"outline") %>
+    </div>
+    <div class="hidden flex-1" data-multistep-form-target="prevButton" data-action="click->multistep-form#previous">
+      <%= button_component(text: "Previous", type:"outline") %>
+    </div>
+
+    <div class="flex-1"  data-multistep-form-target="nextButton" data-action="click->multistep-form#next">
+      <%= button_component(text: "Next") %>
+    </div>
+    <%= button_tag form: "course-form", class: "flex-1 hidden", data: { multistep_form_target: "submitButton" } do %>
+      <%= button_component(text: "Create") %>
+    <% end %>    
   </div>
+<% end %>
+
+<%= modal_box_component(
+      title: "Create course",
+      html_options: { data: { controller: "multistep-form" } }, modal_footer:
+    ) do %>
   <%= render "form", course: @course %>
-</div>
+<% end %>
