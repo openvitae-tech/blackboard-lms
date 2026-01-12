@@ -9,16 +9,11 @@ module ViewComponent
     end
 
     def resolve_error(form, name, explicit_error)
-      attribute =
-        name.to_s
-            .split('[').last
-            .delete(']')
-            .humanize
+      return explicit_error if explicit_error.present?
+      return if form.blank?
 
-      return "#{attribute} #{explicit_error}" if explicit_error.present?
-
-      errors = form&.object&.errors
-      message = errors&.[](name)&.first
+      attribute = name.to_s.split('[').last.delete(']').humanize
+      message = form.object.errors[name].first
 
       message.present? ? "#{attribute} #{message}" : nil
     end

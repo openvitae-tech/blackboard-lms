@@ -31,7 +31,12 @@ class CourseModulesController < ApplicationController
 
     if @course_module.save
       service.update_module_ordering(@course, @course_module, :create)
-      render turbo_stream: turbo_stream.redirect_to(course_url(@course)), notice: I18n.t('course.module_created') 
+      flash[:notice] = I18n.t('course.module_created')
+
+      respond_to do |format|
+        format.html { redirect_to course_url(@course) }
+        format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(course_url(@course)) }
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -40,8 +45,13 @@ class CourseModulesController < ApplicationController
   # PATCH/PUT /course_modules/1 or /course_modules/1.json
   def update
     authorize @course_module
-    if @course_module.update(course_module_params)
-      render turbo_stream: turbo_stream.redirect_to(course_module_url(@course, @course_module)), notice: I18n.t('course.module_updated')
+    if @course_module.update(course_module_params)      
+      flash[:notice] = I18n.t('course.module_updated')
+
+      respond_to do |format|
+        format.html { redirect_to course_module_url(@course, @course_module) }
+        format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(course_module_url(@course, @course_module)) }
+      end
     else
       render :edit, status: :unprocessable_entity
     end

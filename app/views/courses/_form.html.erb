@@ -1,6 +1,5 @@
 <div class="w-auto md:max-w-3xl">
   <%= form_with(model: course, id: "course-form") do |form| %>
-
     <div class="flex justify-center mt-2 mb-7">
       <div class="flex items-center">
         <span data-multistep-form-target="indicator" class="bg-primary-light-100 rounded-full h-5 w-5"></span>
@@ -21,7 +20,16 @@
         <label class="main-text-sm-medium">Set course visibility</label>
         <div class="flex flex-wrap gap-7">
           <% course_visibility.each do |item| %>
-            <%= input_radio_component( name: "course[visibility]", label: item.capitalize, value: item, html_options: { checked: item == 'private' }) %>
+            <%= input_radio_component( 
+                  name: "course[visibility]", 
+                  label: item.capitalize, 
+                  value: item, 
+                  html_options: { 
+                    checked: form.object.visibility.present? ?
+                        form.object.visibility == item :
+                        item == 'private'
+                    }
+                  ) %>
           <% end %>
         </div>
       </div>

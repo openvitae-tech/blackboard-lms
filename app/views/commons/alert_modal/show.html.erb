@@ -15,6 +15,6 @@
 
 <%= modal_box_component(title: @title, modal_footer: ) do %>
   <p class="main-text-md-normal">
-    <%= @description.html_safe %>
+    <%= sanitize(@description) %>
   </p>
 <% end %>
