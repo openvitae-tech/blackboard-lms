@@ -10,7 +10,7 @@ module ViewComponent
 
     def resolve_error(form, name, explicit_error)
       return explicit_error if explicit_error.present?
-      return if form.blank?
+      return if form.blank? || form.object.blank? || name.blank?
 
       attribute = name.to_s.split('[').last.delete(']').humanize
       message = form.object.errors[name].first
