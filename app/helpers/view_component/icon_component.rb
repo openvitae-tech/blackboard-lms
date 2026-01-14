@@ -16,7 +16,7 @@ module ViewComponent
         # Use default only if SVG does not have stroke-width
         svg['stroke-width'] = '1.5'
       end
-      content_tag(:span, svg.to_html.html_safe, class: "inline-flex justify-center items-center #{span_css}".strip) # rubocop:disable Rails/OutputSafety
+      content_tag(:span, svg.to_html.html_safe, class: "flex justify-center items-center #{span_css}".strip) # rubocop:disable Rails/OutputSafety
     end
   end
 end
