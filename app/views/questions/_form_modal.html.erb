@@ -26,7 +26,6 @@
             <%= textarea_component(
               name: "options[]",
               placeholder: "",
-              rows: 2,
               value: option,
               error: option.blank? && index < 2 && question.errors[:options][0]) %>
             <%= input_checkbox_component(

@@ -1,6 +1,6 @@
 <div class="w-auto md:max-w-3xl">
   <%= form_with(model: course, id: "course-form") do |form| %>
-    <div class="flex justify-center mt-2 mb-7">
+    <div class="flex justify-center sticky top-2 z-40 bg-white mb-7">
       <div class="flex items-center">
         <span data-multistep-form-target="indicator" class="bg-primary-light-100 rounded-full h-5 w-5"></span>
         <div class="flex grow"><div class="w-[201px] h-1 bg-primary-light-100"></div></div>
@@ -14,7 +14,7 @@
     </div>
 
     <div data-multistep-form-target="step" class="flex flex-col gap-4 hidden">
-      <%= textarea_component(form:, name: :description, label: "Description", placeholder: "Enter description") %>
+      <%= textarea_component(form:, name: :description, label: "Description", placeholder: "Enter description", rows: 4 ) %>
       <%= file_selector_component(form:, name: :banner, label: "banner", type: "image" ) %>
       <div class="flex flex-col gap-3 mt-1">
         <label class="main-text-sm-medium">Set course visibility</label>
