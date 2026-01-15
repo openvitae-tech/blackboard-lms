@@ -120,6 +120,11 @@ en:
       destroy: "Question was successfully deleted."
       verify: "Question verified successfully"
       unverify: "Question unverified successfully"
+  assessment:
+    take: "Take Assessment"
+    view_result: "View Assessment Result"
+    start: "Start Assessment"
+    restart: "Restart Assessment"
   login:
     invalid_or_incorrect_otp: "Incorrect otp or otp expired"
     incorrect_phone: "Incorrect mobile number"

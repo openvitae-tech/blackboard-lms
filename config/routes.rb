@@ -136,6 +136,13 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :assessments, only: %i[show update] do
+    member do
+      get :intro
+      get :result
+      get :retry
+    end
+  end
 
   resources :local_contents do
     member do

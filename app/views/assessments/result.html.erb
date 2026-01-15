@@ -1,0 +1,72 @@
+<div class="text-center space-y-6">
+  <div>
+  <% if @assessment.pass? %>
+    <%= image_tag "assessment-pass.png", alt: "Winner", class: "h-[200px] mx-auto mb-3" %>
+    <p class="heading-2xl mb-2">Congratulations! You Passed!</p>
+    <p class="main-text-sm-normal text-letter-color-light">You have successfully completed the Final Course Assessment</p>
+  <% else %>
+    <%= icon("exclaimation-circle-solid", css: "w-16 h-16 text-danger mb-2")%>
+    <p class="heading-2xl mb-2">Assessment NOT Passed</p>
+    <p class="main-text-sm-normal text-letter-color-light">You need at least 70% to pass. Please try again.</p>
+  <% end %>
+  </div>
+
+  <% style = result_styles(@assessment.pass?) %>
+  <div class="<%= style[:grid_bg] %> rounded-xl p-5">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      
+      <div class="<%= style[:grid_item_bg] %> backdrop-blur rounded-xl p-5 flex flex-col justify-center text-primary gap-2">
+        <span class="main-text-md-semibold uppercase">Score</span>
+        <div class="heading-3xl"><%= @assessment.score %>/<%= @assessment.questions.count %></div>
+        <span class="general-text-sm-normal"><%= @assessment.score_percentage %>% Score</span>
+      </div>
+
+      <div class="<%= style[:grid_item_bg] %> backdrop-blur rounded-xl p-5 flex flex-col justify-center text-primary gap-2">
+        <span class="main-text-md-semibold uppercase">Time Taken</span>
+        <div class="heading-3xl"><%= @assessment.time_taken %></div>
+        <span class="general-text-sm-normal">Minutes</span>
+      </div>
+
+      <div class="<%= style[:grid_item_bg] %> backdrop-blur rounded-xl p-5 flex flex-col justify-center text-primary gap-2">
+        <span class="main-text-md-semibold uppercase">Attempt No:</span>
+        <div class="heading-3xl"><%= @assessment.attempt %></div>
+        <span class="general-text-sm-normal"><%= @assessment.attempt.ordinalize.concat(' Attempt') %></span>
+      </div>
+
+      <div class="<%= style[:grid_item_bg] %> backdrop-blur rounded-xl p-5 flex flex-col justify-center text-primary gap-2">
+        <span class="main-text-md-semibold uppercase">Status</span>
+        <div class="heading-3xl"><%= @assessment.pass? ? 'Passed' : 'Failed' %></div>
+        <span class="general-text-sm-normal">Required: <%= Assessment::PASS_PERCENTAGE%>%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center gap-6">
+    <% if @assessment.pass? %>
+      <%= link_to rails_blob_path(@certificate.file, disposition: "attachment")  do %>
+        <%= button_component text: "Download Certificate", icon_name: "arrow-down-tray" %>        
+      <% end if @certificate %>
+    <% else %>
+      <%= link_to retry_assessment_path(id: @assessment.encoded_id) do %>
+        <%= button_component text: "Retry Assessment", icon_name: "user-circle" %>        
+      <% end unless @assessment.attempt >= Assessment::MAX_ATTEMPT %>
+    <% end %>
+    <%= link_to courses_path do %>
+      <%= button_component text: "Go to My Courses", icon_name: "chevron-right", icon_position: "right" %>
+    <% end %>
+  </div>
+
+  <%= content_tag :div, class: "space-y-6" do %>
+    <div class="relative">
+      <div class="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+        <div class="w-[600px] border-t border-slate-grey-light"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <span class="bg-white main-text-lg-semibold text-primary uppercase px-5">Assessment Review</span>
+      </div>
+    </div>
+    <% @assessment.questions.each_with_index  do |question, index| %>
+      <%= render 'assessments/question', question: AssessmentQuestion.new(question, @assessment.responses[question['id'].to_s]), index: %>
+    <% end %>
+  <% end if @assessment.pass? %>
+</div>

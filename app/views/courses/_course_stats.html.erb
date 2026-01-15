@@ -25,4 +25,11 @@
       </div>
     <% end %>
   </div>
+  <%= link_to intro_assessment_path(id: assessment.encoded_id) do %>
+    <%= button_component text: t('assessment.take'), type: 'solid', colorscheme: "secondary" %>
+  <% end if assessment && !assessment.completed? %>
+  <%= link_to result_assessment_path(id: assessment.encoded_id) do %>
+    <%= button_component text: t('assessment.view_result'), type: 'solid', colorscheme: "secondary" %>
+  <% end if assessment && assessment.completed? %>
+
 </div>

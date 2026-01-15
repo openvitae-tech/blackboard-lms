@@ -1,0 +1,105 @@
+  <div id="<%= dom_id(assessment) %>" class="flex flex-1 overflow-hidden">
+    
+    <aside class="py-5 pl-16 pr-7 overflow-y-auto flex flex-col gap-6 hidden md:block">      
+      <div>
+        <h3 class="main-text-md-semibold mb-4">Navigation</h3>
+        <div class="grid grid-cols-4 gap-2 bg-primary-light-50 rounded-xl p-5 border border-primary-light-100">
+          <% @question_statuses.each do |item| %>
+            <% 
+               base_classes = "h-10 w-10 flex items-center justify-center rounded-lg main-text-sm-normal transition-colors border hover:bg-disabled-color border-slate-grey-light"
+               status_classes = case item[:status]
+                                when :current
+                                  "bg-primary text-white-light shadow-md" # Active
+                                when :answered
+                                  "bg-secondary-light text-primary"
+                                when :skipped
+                                  "bg-white-light text-primary"
+                                else
+                                  "bg-primary-light-100 text-disabled_color" # Not answered
+                                end
+            %>
+            <%= button_to (item[:index] + 1), assessment_path(id: assessment.encoded_id), 
+                method: :patch, 
+                params: { jump_to_index: item[:index] },
+                class: "#{base_classes} #{status_classes}" %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="bg-primary-light-50 rounded-xl p-5 border border-primary-light-100">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="w-7 h-7 bg-secondary-light rounded border border-slate-grey-light main-text-sm-normal flex items-center justify-center text-primary"><%= @counts[:answered] %></span>
+          <span class="general-text-sm-medium text-letter-color-light">Answered</span>
+        </div>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="w-7 h-7 bg-white-light rounded border border-slate-grey-light main-text-sm-normal flex items-center justify-center text-primary"><%= @counts[:skipped] %></span>
+          <span class="general-text-sm-medium text-letter-color-light">Skipped</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-7 h-7 bg-primary-light-100 rounded border border-disabled-color main-text-sm-normal flex items-center justify-center text-disabled-color"><%= @counts[:not_answered] %></span>
+          <span class="general-text-sm-medium text-letter-color-light">Not Answered</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="flex-1 pl-7 pr-16 py-5 overflow-y-auto">
+      <div class="">
+        
+        <div class="flex items-center gap-2 mb-4">
+          <%= icon('question-mark-circle', css: "h5- w-5")%>
+          <span class="main-text-sm-medium">Question <%= @current_index + 1 %> of <%= assessment.questions.count %></span>
+        </div>
+
+        <h2 class="main-text-lg-semibold mb-4">
+          <%= @question_data['content'] %>
+        </h2>
+        
+        <p class="main-text-sm-normal mb-4">Select all correct answers (Answers can be more than one)</p>
+
+        <%= form_with model: assessment, url: assessment_path(id: assessment.encoded_id), data: {turbo_method: :patch} do |f| %>
+          <%= f.hidden_field :question_id, value: @question_data['id'] %>
+
+          <div class="space-y-4 mb-7">
+            <% saved_answers = assessment.responses[@question_data['id'].to_s] || []%>
+            <% @question_data['options'].each do |option| %>
+              <label class="flex items-center mt-auto gap-6 p-3 rounded-xl bg-white border border-line-colour-light hover:bg-primary-light-50 cursor-pointer transition-all group">
+                <%= check_box_tag "assessment[answer][]",
+                  option,
+                  saved_answers.include?(option), 
+                  class: "h-5 w-5 rounded border-2 border-slate-grey-50 text-primary focus:ring-0" %>
+                <span class="main-text-sm-normal"><%= option %></span>
+              </label>
+            <% end %>
+          </div>
+
+          <div class="flex justify-between items-center flex-col md:flex-row gap-4">
+            <div class="flex gap-4 w-full">
+              <%= f.button type: :submit, name: "commit", value: "Previous", class: "w-full md:w-fit" do %>
+                <%= button_component text: "Previous", disabled: !@current_index.positive?, type: "outline" %>
+              <% end %>
+
+              <% if @current_index + 1 < assessment.questions.count %>
+                <%= f.button type: :submit, name: "commit", value: "Save and Next", class: "w-full md:w-fit" do %>
+                  <%= button_component text: "Save and Next" %>
+                <% end %>
+              <% else %>
+                <%= f.button type: :submit, name: "commit", value: "Save", class: "w-full md:w-fit" do %>
+                  <%= button_component text: "Save" %>
+                <% end %>
+              <% end %>
+            </div>
+            <% if @current_index + 1 < assessment.questions.count %>
+              <%= f.button type: :submit, name: "commit", value: "Skip and Next", class: "w-full md:w-fit" do %>
+                <%= button_component text: "Skip and Next", type: "outline" %>
+              <% end %>
+            <% else %>
+              <%= f.button type: :submit, name: "commit", value: "Save & Submit Assessment", class: "w-full md:w-fit" do %>
+                <%= button_component text: "Save & Submit Assessment", colorscheme: "secondary" %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
+    </main>
+  </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_07_204958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "assessments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "course_id", null: false
+    t.jsonb "questions", default: [], null: false
+    t.jsonb "responses", default: {}, null: false
+    t.integer "status", default: 0, null: false
+    t.integer "current_question_index", default: 0
+    t.integer "score", default: 0, null: false
+    t.integer "attempt", default: 1, null: false
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_assessments_on_course_id"
+    t.index ["questions"], name: "index_assessments_on_questions", using: :gin
+    t.index ["responses"], name: "index_assessments_on_responses", using: :gin
+    t.index ["user_id"], name: "index_assessments_on_user_id"
   end
 
   create_table "certificate_templates", force: :cascade do |t|
@@ -383,6 +402,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "assessments", "courses"
+  add_foreign_key "assessments", "users"
   add_foreign_key "certificate_templates", "learning_partners"
   add_foreign_key "course_certificates", "courses"
   add_foreign_key "course_certificates", "users"
