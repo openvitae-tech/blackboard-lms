@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    if user.privileged_user?
+    stored_location_for(:user) || if user.privileged_user?
       dashboards_path
     elsif user.is_admin?
       learning_partners_path

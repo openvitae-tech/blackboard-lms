@@ -2,6 +2,7 @@
 
 class Question < ApplicationRecord
   belongs_to :course
+  has_many :issues, dependent: :destroy
 
   paginates_per 5
 
@@ -12,6 +13,12 @@ class Question < ApplicationRecord
 
   scope :verified, -> { where(is_verified: true) }
   scope :unverified, -> { where(is_verified: false) }
+  scope :reported, -> { where(is_reported: true) }
+
+  def report!
+    self.is_reported = true
+    save(validate: false)
+  end
 
   def verify
     self.is_verified = true

@@ -69,6 +69,8 @@ class User < ApplicationRecord
   has_many :program_users, dependent: :destroy
   has_many :programs, through: :program_users
   has_many :course_certificates, dependent: :destroy
+  has_many :assessments, dependent: :destroy
+  has_many :issues, dependent: :destroy
 
   belongs_to :team, optional: true
 

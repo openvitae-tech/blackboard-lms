@@ -5,17 +5,19 @@
   <div class="grow flex items-center justify-center md:justify-start">
     <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-6 w-16 md:h-10 md:w-24' %>
   </div>
-  <div class="flex-none flex gap-5 items-center">
-    <% if impersonating? %>
-      <%= render 'shared/components/tooltip', tooltip_text: t("impersonation.stop_impersonation") do %>
-        <%= button_to impersonation_path, method: :delete, class: "flex" do %>
-          <span class="icon icon-stop icon-small md:icon-base bg-danger"></span>
+  <% if current_user %>
+    <div class="flex-none flex gap-5 items-center">
+      <% if impersonating? %>
+        <%= render 'shared/components/tooltip', tooltip_text: t("impersonation.stop_impersonation") do %>
+          <%= button_to impersonation_path, method: :delete, class: "flex" do %>
+            <span class="icon icon-stop icon-small md:icon-base bg-danger"></span>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
-    <%= render 'notifications/notification' %>
-    <%= link_to user_settings_path, class:"inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large" do %>
-      <%= render 'shared/components/profile_pic', letter: letter_avatar(current_user) %>
-    <% end %>
-  </div>
+      <%= render 'notifications/notification' %>
+      <%= link_to user_settings_path, class:"inline-block hover:pointer text-xs md:text-sm icon-medium md:icon-large" do %>
+        <%= render 'shared/components/profile_pic', letter: letter_avatar(current_user) %>
+      <% end %>
+    </div>
+  <% end %>
 </nav>

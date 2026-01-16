@@ -1,0 +1,107 @@
+  <div class="w-full">
+    
+    <div class="text-center mb-6">
+      <%= icon('clipboard-document-check-solid', css: "w-12 h-12 mb-6 text-secondary-dark")%>
+      
+      <h1 class="heading-2xl mb-2">
+        Course Assessment : <span class="text-letter-color-light"><%= @assessment.course.title %></span>
+      </h1>
+      <p class="main-text-sm-normal text-letter-color-light">
+        Please read the instructions carefully before starting the assessment
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div class="bg-primary-light-50 border border-line-color rounded-xl px-4 py-5 space-y-[10px]">
+        <p class="main-text-md-medium text-primary">Assessment Overview</p>
+        <p class="main-text-sm-normal text-primary-dark">This assessment contains <%= Assessment::QUESTIONS_COUNT %> multiple-choice questions.</p>
+        <p class="main-text-sm-normal text-primary-dark">You must score at least <%= Assessment::PASS_PERCENTAGE %>% to pass.</p>
+      </div>
+      <div class="bg-gold-light border border-line-color rounded-xl px-4 py-5 space-y-[10px]">
+        <p class="main-text-md-medium text-primary">Important Notes</p>
+        <ul class="list-disc main-text-sm-normal text-letter-color-light list-inside pl-2">
+          <li>Ensure you have a stable internet connection before starting</li>
+          <li>Do not refresh the page during the assessment</li>
+          <li>You can retake the assessment if you don't pass</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="relative py-8">
+      <div class="absolute inset-0 flex justify-around items-center" aria-hidden="true">
+        <div class="w-full border-t border-slate-grey-light max-w-[620px]"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <span class="bg-white-light px-6 main-text-lg-semibold text-primary">Assessment Rules</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
+      
+      <div class="flex gap-4">
+        <div class="flex-shrink-0">
+          <div class="h-10 w-10 bg-primary-light-100 text-primary rounded-lg flex items-center justify-center">
+            <%= icon("check-circle", css: "h-5 w-5") %>
+          </div>
+        </div>
+        <div>
+          <p class="main-text-md-semibold mb-3">Single & Multiple Choice Questions</p>
+          <p class="main-text-sm-normal text-letter-color-light">
+            Some questions may have multiple correct answers. Read each question carefully and select all answers that apply. Use checkboxes to make your selections.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex-shrink-0">
+          <div class="h-10 w-10 bg-primary-light-100 text-primary rounded-lg flex items-center justify-center">
+            <%= icon("arrow-uturn-left", css: "h-5 w-5") %>
+          </div>
+        </div>
+        <div>
+          <p class="main-text-md-semibold mb-3">Skip & Return to Questions</p>
+          <p class="main-text-sm-normal text-letter-color-light">
+            You can skip questions and return to them later while time permits. Use the question grid to navigate between questions. Questions you've answered, skipped, or left unanswered will be clearly marked.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex-shrink-0">
+          <div class="h-10 w-10 bg-primary-light-100 text-primary rounded-lg flex items-center justify-center">
+            <%= icon("clock", css: "h-5 w-5") %>
+          </div>
+        </div>
+        <div>
+          <p class="main-text-md-semibold mb-3">Time Limit: 20 Minutes</p>
+          <p class="main-text-sm-normal text-letter-color-light">
+            You have 20 mins to complete all questions. A countdown timer will be visible throughout the assessment. The assessment will automatically submit when time runs out.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex-shrink-0">
+          <div class="h-10 w-10 bg-primary-light-100 text-primary rounded-lg flex items-center justify-center">
+            <%= icon("clipboard-document-check", css: "h-5 w-5") %>
+          </div>
+        </div>
+        <div>
+          <p class="main-text-md-semibold mb-3">Submit Assessment</p>
+          <p class="main-text-sm-normal text-letter-color-light">
+            Click the <span class="text-green-600 font-semibold">"Submit Assessment"</span> button when you're ready to finish. You can submit before time runs out. Once submitted, you cannot change your answers.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pt-8 flex justify-center">
+      <%= link_to assessment_path(id: @assessment.encoded_id), class: "w-full max-w-[600px]" do %> 
+          <%= button_component text: start_btn_text(@assessment.attempt), size: "lg" %>
+      <% end %>
+    </div>
+
+  </div>

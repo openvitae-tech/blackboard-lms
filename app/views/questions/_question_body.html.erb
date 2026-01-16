@@ -27,8 +27,7 @@
       </div>
     <% end %>
   </div>
-
-  <div class="pt-6 flex justify-end">
+  <%= content_tag :div, class: "pt-6 flex justify-end" do %>
     <%= render "questions/verification_button", question: question %>
-  </div>
+  <% end unless params[:tab] == "reported" %>
 </div>

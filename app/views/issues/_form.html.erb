@@ -1,0 +1,21 @@
+<%= modal_box_component(title: t('question.issue.form.title')) do %>
+  <%= form_with id: "question-issue-form", url: question_issues_path(question: issue.question), method: :post, data: {turbo_frame: "modal"} do |form| %>
+    <div class="flex flex-col gap-7 w-full">
+      <%= textarea_component(
+        name: :description,
+        label: t('question.issue.form.desc_label'),
+        placeholder: t('question.issue.form.desc_placeholder'),
+        rows: 3,
+        value: issue.description,
+        error: issue.errors.messages[:description][0]) %>
+      <div class="flex gap-2">
+        <%= link_to "#", class: "w-full" do %>
+          <%= button_component text: t("button.cancel"), type: "outline" %>
+        <% end %>
+        <%= form.button class: "w-full" do %>
+          <%= button_component(text: t("question.issue.form.submit")) %>
+        <% end %>    
+      </div>
+    </div>
+  <% end %>
+<% end %>

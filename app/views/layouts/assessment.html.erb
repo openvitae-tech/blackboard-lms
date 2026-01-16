@@ -28,41 +28,9 @@
 
     <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>
-  <body>
-    <div class="flex flex-col min-h-screen">
-      <div class="sticky top-0 left-0 w-full z-50 flex flex-col">
-        <div class="w-full">
-          <% if @show_notification_bar %>
-            <%= notification_bar(
-              text: "Our #{link_to 'new feature', user_settings_path, class: 'underline'} is live!",
-              text_color: "text-letter-color",
-              icon_color: "bg-letter-color",
-              bg_color: "bg-secondary"
-            ) %>
-          <% end %>
-
-          <div class="flex flex-grow">
-            <% if current_user %>
-              <%= render 'shared/components/sidebar' %>
-            <% end %>
-            <%= render 'shared/components/navbar' %>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col w-full overflow-y-auto h-[calc(100vh-80px)]">
-        <main class="flex flex-col p-5 md:px-16 max-w-[1360px] min-w-screen w-full mx-auto">
-          <% if content_for? :header %>
-            <div class="sticky top-0 z-40 bg-white -mt-5 pt-5 pb-3">
-              <%= yield :header %>
-            </div>
-          <% end %>
-
-          <%= yield %>
-        </main>
-      </div>
+  <body >
+    <div class="flex flex-col min-h-screen bg-white-light">
+    <%= yield %>
     </div>
-    <%= render "shared/components/flash" %>
-    <%= turbo_frame_tag "modal" %>
-
   </body>
 </html>

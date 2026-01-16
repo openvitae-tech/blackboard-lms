@@ -6,7 +6,7 @@
         <%= image_tag "instruo_logo_blue.png", alt: "Instruo", class: "mx-auto mb-12 h-10" %>
         <div class="rounded-lg p-8 box-shadow-large">
           <h1 class="my-8 heading page-heading">OTP</h1>
-          <%= form_with url: login_path, scope: :login, method: :post, data: { controller: "otp", action: "input->otp#updateHiddenOtp" } do |form| %>
+          <%= form_with url: login_path, scope: :login, method: :post, data: { turbo: false, controller: "otp", action: "input->otp#updateHiddenOtp" } do |form| %>
             <div class="flex flex-col gap-8 border border-danger p-4" data-otp-target="container">
               <div class="input-group">
                 <label for="" class="label-text">Please enter the verification code sent to</label>

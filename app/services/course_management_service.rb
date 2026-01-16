@@ -212,6 +212,7 @@ class CourseManagementService
   end
 
   def run_course_completed_hook(user, enrollment, course_module)
+    assessment = Assessment.create(user:, course: enrollment.course)
     EVENT_LOGGER.publish_course_completed(user, enrollment.course_id)
     UserMailer.course_completed(user, course_module.course).deliver_later
     NotificationService.notify(
@@ -221,7 +222,7 @@ class CourseManagementService
       link: course_path(course_module.course)
     )
 
-    return if user.learning_partner.active_certificate_template.blank?
+    return if assessment.persisted? || user.learning_partner.active_certificate_template.blank?
 
     key = "GenerateCertificate:#{course_module.course.id}:#{user.id}"
 
