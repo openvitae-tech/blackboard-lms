@@ -203,7 +203,7 @@ module ViewComponent
       form: nil,
       label: nil,
       value: nil,
-      rows: 5,
+      rows: 1,
       size: 'md',
       support_text: nil,
       error: nil,

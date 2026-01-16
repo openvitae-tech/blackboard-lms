@@ -1,58 +1,37 @@
 <div class="w-auto md:max-w-3xl">
-  <%= form_with(model: course) do |form| %>
-    <%= render "shared/components/form_errors", resource: course %>
-    <div class="mb-8 text-sm">
-      <%= input_field(form:, field_name: :title, label: "Title", placeholder: "Enter the Title",type: "text",width:"w-full") %>
-    </div>
-    <div class="my-8 text-sm">
-      <div class="flex justify-between">
-        <%= form.label :banner, class: "text-sm font-medium text-letter-color-light" %>
-      </div>
-      <div class="relative mt-2">
-        <%= render "shared/components/file_select", hidden_file_field: form.file_field(:banner,
-                                                                                        class: "hidden", data: { forms_target: "fileInput" }), preview: "logo" %>
+  <%= form_with(model: course, id: "course-form") do |form| %>
+    <div class="flex justify-center sticky top-2 z-40 bg-white mb-7">
+      <div class="flex items-center">
+        <span data-multistep-form-target="indicator" class="bg-primary-light-100 rounded-full h-5 w-5"></span>
+        <div class="flex grow"><div class="w-[201px] h-1 bg-primary-light-100"></div></div>
+        <span data-multistep-form-target="indicator" class="bg-primary-light-100 rounded-full h-5 w-5"></span>
       </div>
     </div>
-    <div class="my-8 text-sm flex flex-col">
-      <%= input_dropdown(form:, field_name: :category_id, label: "Category", options: @categories.pluck(:name, :id), value: @category&.id) %>
-    </div>
-    <div class="my-8 text-sm flex flex-col">
-      <%= input_dropdown(form:, field_name: :level_id, label: "Level", options: @levels.pluck(:name, :id), value: @level&.id) %>
+    <div data-multistep-form-target="step" class="flex flex-col gap-4">
+      <%= input_text_component(form:, name: :title, label: "Title", placeholder: "Enter the Title") %>    
+      <%= dropdown_component(form:, name: :category_id, label: "Category", options: @categories.pluck(:name, :id)) %>
+      <%= dropdown_component(form:, name: :level_id, label: "Level", options: @levels.pluck(:name, :id)) %>
     </div>
 
-    <div>
-      <label class="text-letter-color-light text-sm md:text-base leading-tight">
-          Set course visibility
-      </label>
-      <% course_visibility.each do |item| %>
-        <div class="mt-3">
-          <%= input_radio(
-                field_name: "course[visibility]",
-                option: item.capitalize,
-                value: item,
-                html_options: {
-                  checked: course&.visibility == item
-                }
-              ) %>
+    <div data-multistep-form-target="step" class="flex flex-col gap-4 hidden">
+      <%= textarea_component(form:, name: :description, label: "Description", placeholder: "Enter description", rows: 4 ) %>
+      <%= file_selector_component(form:, name: :banner, label: "banner", type: "image" ) %>
+      <div class="flex flex-col gap-3 mt-1">
+        <label class="main-text-sm-medium">Set course visibility</label>
+        <div class="flex flex-wrap gap-7">
+          <% course_visibility.each do |item| %>
+            <%= input_radio_component( 
+                  name: "course[visibility]", 
+                  label: item.capitalize, 
+                  value: item, 
+                  html_options: { 
+                    checked: form.object.visibility.present? ?
+                        form.object.visibility == item :
+                        item == 'private'
+                    }
+                  ) %>
+          <% end %>
         </div>
-      <% end %>
-    </div>
-
-    <div class="my-8 text-sm">
-      <%= input_textarea_component(form:, field_name: :description, label: "Description", placeholder: "Enter description") %>
-    </div>
-    <div class="my-8 flex items-center gap-6 text-sm">
-      <div class="my-8">
-        <% if @course.persisted? %>
-          <%= link_to "Cancel", course_path(@course), class: "nav-link" %>
-        <% else %>
-          <%= link_to "Cancel", courses_path, class: "nav-link" %>
-        <% end %>
-      </div>
-      <div>
-        <%= form.submit class: "btn-primary" do %>
-          <span><%= submit_label_for(course) %></span>
-        <% end %>
       </div>
     </div>
   <% end %>
