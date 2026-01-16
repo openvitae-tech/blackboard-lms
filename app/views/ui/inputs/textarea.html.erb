@@ -46,6 +46,16 @@
   ) %>
 <% end %>
 
+<%= doc_section_component(title: "Textarea with configurable rows (example: 5 rows)") do %>
+  <%= textarea_component(
+    name: :description,
+    label: "Description",
+    placeholder: "Enter description",
+    support_text: "Supporting Description here",
+    rows: 5
+  ) %>
+<% end %>
+
 <%= doc_section_component(title: "Textarea with error state") do %>
   <%= textarea_component(
     name: :description,

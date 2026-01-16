@@ -58,7 +58,12 @@ class CoursesController < ApplicationController
     @course = Course.new(updated_params)
 
     if @course.save
-      redirect_to course_url(@course), notice: I18n.t('course.created')
+      flash[:notice] = I18n.t('course.created')
+
+      respond_to do |format|
+        format.html { redirect_to course_url(@course) }
+        format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(course_url(@course)) }
+      end
     else
        render :new, status: :unprocessable_entity
     end
@@ -68,7 +73,12 @@ class CoursesController < ApplicationController
   def update
     authorize @course
     if @course.update(updated_params)
-      redirect_to course_url(@course), notice: I18n.t('course.updated')
+      flash[:notice] = I18n.t('course.updated')
+
+      respond_to do |format|
+        format.html { redirect_to course_url(@course) }
+        format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(course_url(@course)) }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
