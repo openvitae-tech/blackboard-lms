@@ -9,8 +9,8 @@
         <span class="hidden md:inline">Final Course Assessment</span>
       </div>
       <div class="flex items-center gap-2" data-controller="timer" data-timer-minutes-value="<%= 20 - @assessment.time_taken %>">
-        <%= icon("clock", css: "h-5 w-5 text-primary") %>
-        <span class="text-letter-color-light general-text-lg-normal">Time left :</span>
+        <%= icon("clock", css: "h-5 w-5 text-primary hidden md:block") %>
+        <span class="text-letter-color-light general-text-lg-normal hidden md:block">Time left :</span>
         <div class="relative">
           <div class="flex items-center gap-1 main-text-lg-semibold">
             <div class="relative flex items-center relative gap-1">

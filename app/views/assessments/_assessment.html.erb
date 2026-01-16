@@ -1,6 +1,6 @@
-  <div id="<%= dom_id(assessment) %>" class="flex flex-1 overflow-hidden">
+  <div id="<%= dom_id(assessment) %>" class="flex flex-1 overflow-hidden" data-controller="expandable-nav">
     
-    <aside class="py-5 pl-16 pr-7 overflow-y-auto flex flex-col gap-6 hidden md:block">      
+    <aside class="py-5 pl-16 pr-7 flex flex-col space-y-6 hidden md:block">      
       <div>
         <h3 class="main-text-md-semibold mb-4">Navigation</h3>
         <div class="grid grid-cols-4 gap-2 bg-primary-light-50 rounded-xl p-5 border border-primary-light-100">
@@ -42,7 +42,7 @@
       </div>
     </aside>
 
-    <main class="flex-1 pl-7 pr-16 py-5 overflow-y-auto">
+    <main class="flex-1 pl-7 pr-16 py-5 pb-16 overflow-y-auto h-[calc(100vh-120px)]">
       <div class="">
         
         <div class="flex items-center gap-2 mb-4">
@@ -102,4 +102,47 @@
 
       </div>
     </main>
+    <div class="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white border-t border-slate-grey-light transition-all duration-300">
+      
+      <div class="flex justify-center -mt-3">
+        <button data-action="click->expandable-nav#toggle" class="bg-primary-light-50 border border-slate-grey-light h-6 w-6 rounded-full flex items-center justify-center" data-expandable-nav-target="icon">
+          <%= icon("chevron-up", css: "h-4 w-4 text-primary")%>
+        </button>
+      </div>
+
+      <div data-expandable-nav-target="collapsed" class="px-6 pb-3 pt-1 flex justify-between gap-2 overflow-hidden">
+        <% 
+          mobile_cols = 5
+          start_idx = (@current_index / mobile_cols) * mobile_cols
+          end_idx = [start_idx + mobile_cols - 1, assessment.questions.count - 1].min
+          current_row_items = @question_statuses[start_idx..end_idx]
+        %>
+        <% current_row_items.each do |item| %>
+          <%= render_nav_button(item, assessment) %>
+        <% end %>
+      </div>
+
+      <div data-expandable-nav-target="expanded" class="hidden px-6 pb-8 pt-2 overflow-y-auto max-h-[60vh]">
+        <div class="grid grid-cols-5 gap-2 mb-8">
+          <% @question_statuses.each do |item| %>
+            <%= render_nav_button(item, assessment) %>
+          <% end %>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-7 h-7 bg-secondary-light rounded border border-slate-grey-light main-text-sm-normal flex items-center justify-center text-primary"><%= @counts[:answered] %></span>
+            <span class="general-text-sm-medium text-letter-color-light">Answered</span>
+          </div>
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-7 h-7 bg-white-light rounded border border-slate-grey-light main-text-sm-normal flex items-center justify-center text-primary"><%= @counts[:skipped] %></span>
+            <span class="general-text-sm-medium text-letter-color-light">Skipped</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 bg-primary-light-100 rounded border border-disabled-color main-text-sm-normal flex items-center justify-center text-disabled-color"><%= @counts[:not_answered] %></span>
+            <span class="general-text-sm-medium text-letter-color-light">Not Answered</span>
+          </div>
+        </div>
+      </div>
+    </div>    
   </div>

@@ -13,7 +13,7 @@
 
   <% style = result_styles(@assessment.pass?) %>
   <div class="<%= style[:grid_bg] %> rounded-xl p-5">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
       
       <div class="<%= style[:grid_item_bg] %> backdrop-blur rounded-xl p-5 flex flex-col justify-center text-primary gap-2">
         <span class="main-text-md-semibold uppercase">Score</span>
@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <div class="flex justify-center gap-6">
+  <div class="flex flex-col md:flex-row justify-center gap-2">
     <% if @assessment.pass? %>
       <%= link_to rails_blob_path(@certificate.file, disposition: "attachment")  do %>
         <%= button_component text: "Download Certificate", icon_name: "arrow-down-tray" %>        
