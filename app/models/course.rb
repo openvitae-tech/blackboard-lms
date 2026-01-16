@@ -11,7 +11,6 @@ class Course < ApplicationRecord
   has_many :course_modules, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :assessments, dependent: :destroy
-  has_many :issues, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments
   has_and_belongs_to_many :tags # rubocop:disable Rails/HasAndBelongsToMany
