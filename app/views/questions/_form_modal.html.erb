@@ -16,7 +16,7 @@
         label: "Question",
         placeholder: "",
         html_options: {class: "field-sizing-content"},
-        rows: 3,
+        rows: 1,
         value: question.content,
         error: question.errors.messages[:content][0]) %>
       <div class="space-y-5">
@@ -26,7 +26,7 @@
             <%= textarea_component(
               name: "options[]",
               placeholder: "",
-              rows: 2,
+              rows: 1,
               value: option,
               error: option.blank? && index < 2 && question.errors[:options][0]) %>
             <%= input_checkbox_component(

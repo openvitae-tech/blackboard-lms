@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_07_204958) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_15_233648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -170,6 +170,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_07_204958) do
     t.jsonb "data", default: {}, null: false
   end
 
+  create_table "issues", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "question_id", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_issues_on_question_id"
+    t.index ["user_id"], name: "index_issues_on_user_id"
+  end
+
   create_table "learning_partners", force: :cascade do |t|
     t.string "name"
     t.text "about"
@@ -261,6 +271,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_07_204958) do
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_reported", default: false
     t.index ["course_id"], name: "index_questions_on_course_id"
   end
 
@@ -411,6 +422,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_07_204958) do
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"
   add_foreign_key "enrollments", "users", column: "assigned_by_id"
+  add_foreign_key "issues", "questions"
+  add_foreign_key "issues", "users"
   add_foreign_key "lessons", "course_modules"
   add_foreign_key "local_contents", "lessons"
   add_foreign_key "payment_plans", "learning_partners"

@@ -136,6 +136,11 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :questions, only: [] do
+    resources :issues, only: %i[new create destroy]
+  end
+
   resources :assessments, only: %i[show update] do
     member do
       get :intro

@@ -49,7 +49,7 @@
     Have an Issue with the Question?
   </p>
   
-    <%= link_to "#" do %>
+    <%= link_to new_question_issue_path(question_id: question.id), data: {turbo_frame: "modal"} do %>
       <div class="flex gap-1 items-center text-primary">
         <%= icon "flag", css: "h-5 w-5 text-primary", stroke_width: "1.0" %>
         <span class="underline">Report Issue</span>
