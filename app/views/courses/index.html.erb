@@ -4,7 +4,7 @@
     <div class="flex flex-row justify-between">
       <h1 class="heading-xl">My Courses</h1>
       <% if policy(:course).new? %>
-        <%= link_to new_course_path, class: "nav-link" do %>
+        <%= link_to new_course_path, data: { turbo_frame: "modal" }, class: "nav-link" do %>
           <%= button_component(text: 'Add course', icon_name: "plus") %>
         <% end %>
       <% end %>

@@ -14,8 +14,8 @@
     <% end %>
     <div class="flex justify-end w-full gap-4 text-right">
       <% if policy(@course_module).edit? %>
-        <%= link_to edit_course_module_path(@course, @course_module) do %>
-          <%= button(label: t("button.edit"), type: "secondary", icon_name: "pencil") %>
+        <%= link_to edit_course_module_path(@course, @course_module), data: { turbo_frame: "modal" } do %>
+          <%= button_component(text: t("button.edit"), size:"sm", type:"outline", icon_name: "pencil") %>
         <% end %>
       <% end %>
     </div>
