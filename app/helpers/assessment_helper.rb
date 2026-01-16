@@ -14,7 +14,8 @@ module AssessmentHelper
   end
 
   def render_nav_button(item, assessment)
-    base_classes = 'h-10 w-10 flex items-center justify-center rounded-lg main-text-sm-normal transition-colors border border-slate-grey-light'
+    base_classes = 'h-10 w-10 flex items-center justify-center rounded-lg main-text-sm-normal \
+                    transition-colors border border-slate-grey-light'
     status_classes = case item[:status]
                      when :current then 'bg-primary text-white shadow-md'
                      when :answered then 'bg-secondary-light text-primary'
