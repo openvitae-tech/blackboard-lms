@@ -6,7 +6,7 @@
       <% else %>
         <%= icon("x-circle-solid", css: "h-5 w-5 cursor-pointer text-danger-dark") %>
       <% end %>
-      <span>Question <%= index+1 %> of 20</span>
+      <span>Question <%= index+1 %> of <%= Assessment::QUESTIONS_COUNT %></span>
     </div>
   </div>
 
@@ -16,8 +16,6 @@
 
   <div class="space-y-4">  
     <% question.options.each do |option| %>
-      
-      <% is_correct_answer = false %>
       
       <div class="flex items-center p-4 rounded-lg bg-white main-text-sm-normal border
                     <%= question.correct_selection?(option) ? 'border-secondary-dark' :

@@ -11,8 +11,9 @@ class IssuesController < ApplicationController
   def create
     authorize @issue
     @issue.description = params[:description]    
-    @issue.save && @issue.question.report!
-    flash[:success] = I18n.t('question.issue.created')
+    if @issue.save && @issue.question.report!
+      flash[:success] = I18n.t('question.issue.created')
+    end
   end
 
   private

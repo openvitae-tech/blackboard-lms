@@ -7,7 +7,7 @@
   <% else %>
     <%= icon("exclaimation-circle-solid", css: "w-16 h-16 text-danger mb-2")%>
     <p class="heading-2xl mb-2">Assessment NOT Passed</p>
-    <p class="main-text-sm-normal text-letter-color-light">You need at least 70% to pass. Please try again.</p>
+    <p class="main-text-sm-normal text-letter-color-light">You need at least <%= Assessment::PASS_PERCENTAGE %>% to pass. Please try again.</p>
   <% end %>
   </div>
 
@@ -23,7 +23,7 @@
 
       <div class="<%= style[:grid_item_bg] %> backdrop-blur rounded-xl p-5 flex flex-col justify-center text-primary gap-2">
         <span class="main-text-md-semibold uppercase">Time Taken</span>
-        <div class="heading-3xl"><%= @assessment.time_taken %></div>
+        <div class="heading-3xl"><%= format("%s.%s", @assessment.time_taken.to_i, (@assessment.time_taken*60%60).to_i) %></div>
         <span class="general-text-sm-normal">Minutes</span>
       </div>
 

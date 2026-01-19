@@ -138,7 +138,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, only: [] do
-    resources :issues, only: %i[new create destroy]
+    resources :issues, only: %i[new create]
   end
 
   resources :assessments, only: %i[show update] do
