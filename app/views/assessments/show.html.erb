@@ -8,7 +8,7 @@
       <div class="grow flex items-center justify-center md:justify-start main-text-lg-semibold">
         <span class="hidden md:inline">Final Course Assessment</span>
       </div>
-      <div class="flex items-center gap-2" data-controller="timer" data-timer-minutes-value="<%= 20 - @assessment.time_taken %>">
+      <div class="flex items-center gap-2" data-controller="timer" data-timer-minutes-value="<%= @presenter.time_remaining %>">
         <%= icon("clock", css: "h-5 w-5 text-primary hidden md:block") %>
         <span class="text-letter-color-light general-text-lg-normal hidden md:block">Time left :</span>
         <div class="relative">
@@ -17,21 +17,21 @@
               <div class="absolute general-text-sm-normal text-letter-color-light bottom-8 w-full text-center">
                 Mins
               </div>
-              <span class="bg-primary-light-50 text-primary p-2 w-10 rounded-xl border-slate-grey-light text-center leading-none" data-timer-target="minute1">2</span>
-              <span class="bg-primary-light-50 text-primary p-2 w-10 rounded-xl border-slate-grey-light text-center leading-none" data-timer-target="minute2">0</span>
+              <span class="bg-primary-light-50 text-primary p-2 w-10 rounded-xl border border-slate-grey-light text-center leading-none" data-timer-target="minute1">2</span>
+              <span class="bg-primary-light-50 text-primary p-2 w-10 rounded-xl border border-slate-grey-light text-center leading-none" data-timer-target="minute2">0</span>
             </div>
             <span class="text-primary">:</span>
             <div class="relative flex items-center relative gap-1">
               <div class="absolute general-text-sm-normal text-letter-color-light bottom-8 w-full text-center">
                 Sec
               </div>
-              <span class="bg-primary-light-50 text-primary p-2 w-10 rounded-xl border-slate-grey-light text-center leading-none" data-timer-target="second1">0</span>
-              <span class="bg-primary-light-50 text-primary p-2 w-10 rounded-xl border-slate-grey-light text-center leading-none" data-timer-target="second2">0</span>
+              <span class="bg-primary-light-50 text-primary p-2 w-10 rounded-xl border border-slate-grey-light text-center leading-none" data-timer-target="second1">0</span>
+              <span class="bg-primary-light-50 text-primary p-2 w-10 rounded-xl border border-slate-grey-light text-center leading-none" data-timer-target="second2">0</span>
             </div>
           </div>
         </div>
       </div>
     </nav>
   </div>
-  <%= render "assessments/assessment", assessment: @assessment %>
+  <%= render "assessments/assessment", presenter: @presenter %>
 </div>

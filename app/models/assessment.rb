@@ -15,7 +15,7 @@ class Assessment < ApplicationRecord
   before_validation :build_questions, on: :create
 
   def encoded_id
-    Base64.encode64("#{created_at.to_i}-#{id}")
+    Base64.strict_encode64("#{created_at.to_i}-#{id}")
   end
 
   def retry!

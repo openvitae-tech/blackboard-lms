@@ -14,64 +14,21 @@ class AssessmentsController < ApplicationController
     authorize @assessment
     @assessment.start! if @assessment.pending?
 
-    @current_index = @assessment.current_question_index
-    @question_data = @assessment.questions[@current_index]
-    
-    @question_statuses = @assessment.questions.map.with_index do |q_data, index|
-      q_id = q_data['id'].to_s
-      answer = @assessment.responses[q_id]
+    @presenter = Assessments::PresenterService.new(@assessment)
 
-      status = if index == @current_index
-                 :current
-               elsif answer.present?
-                 :answered
-               elsif @assessment.responses.key?(q_id) && answer.blank?
-                 :skipped
-               else
-                 :not_answered
-               end
-      { index: index, status: status }
-    end
-
-    @counts = {
-      answered: @question_statuses.count { |s| s[:status] == :answered },
-      skipped: @question_statuses.count { |s| s[:status] == :skipped },
-      not_answered: @question_statuses.count { |s| s[:status] == :not_answered }
-    }
     render layout: "assessment"
   end
 
   def update
     authorize @assessment
-    action = params[:commit] || ""
-    if action.include?("Save")
-      q_id = params[:assessment][:question_id].to_s
-      answers = params[:assessment][:answer] || [] 
-      @assessment.responses[q_id] = Array.wrap(answers)
-    elsif action == "Skip and Next"
-      q_id = params[:assessment][:question_id].to_s
-      @assessment.responses[q_id] = [] unless @assessment.responses.key?(q_id)
-    end
 
-    new_index = @assessment.current_question_index
-    
-    if action.include?("Next")
-      new_index += 1 if new_index < @assessment.questions.count - 1
-    elsif action == "Previous"
-      new_index -= 1 if new_index > 0
-    elsif params[:jump_to_index]
-      new_index = params[:jump_to_index].to_i
-    end
+    service = Assessments::UpdateService.new(@assessment, params).call
 
-    @assessment.current_question_index = new_index
-    @assessment.save(validate: false)
-
-    if action == "Save & Submit Assessment"
+    if service.submit?
       redirect_to result_assessment_path(id: @assessment.encoded_id)
     else
       redirect_to assessment_path(id: @assessment.encoded_id)
-    end
-
+    end    
   end
 
   def result
