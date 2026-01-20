@@ -1,15 +1,40 @@
-<div class="my-8 text-left md:max-w-3xl" data-controller="lessons-form" data-lessons-form-action-name="<%= action_name %>">
+<div class="mt-8 text-left md:max-w-3xl bg-primary-light-50 p-8 rounded-xl" data-controller="lessons-form" data-lessons-form-action-name="<%= action_name %>">
   <% url = lesson.persisted? ? course_module_lesson_path(course, course_module, lesson) : course_module_lessons_path(course, course_module, lesson) %>
-  <%= form_with(model: lesson, url: url) do |form| %>
-    <%= form.hidden_field :has_error, value: @lesson.errors.any?, data: { lessons_form_target: "hasError" } %>
-    <%= render "shared/components/form_errors", resource: lesson %>
-    <div class="my-8 text-sm" >
-      <%= input_field(form:, field_name: :title, label: "Title", placeholder: "Title for lesson eg: Wine serving",type: "text",width:"w-full") %>     
+  <%= form_with(model: lesson, url: url, data: { turbo: false }) do |form| %>
+    <%= form.hidden_field :has_error, value:@lesson.errors.to_hash.to_json, data: { lessons_form_target: "hasError" } %>
+    <div class="text-sm" >
+      <%= input_text_component(
+            form:,
+            name: :title,
+            label: "Title",
+            placeholder: "Title for lesson eg: Wine serving",
+            html_options: {
+              data: {
+                lessons_form_target: "titleInput",
+                action: "input->lessons-form#titleChanged"
+              }
+            }
+      ) %>
     </div>
-    <div class="my-8 text-sm flex flex-col gap-2" >
-      <%= form.label :rich_description, 'Description', class: "text-sm font-medium" %>
-      <%= form.rich_text_area :rich_description, class: "input-text mt-2", placeholder: "A short description about the lesson." %>
+    <div class="my-6 text-sm flex flex-col gap-2" >
+      <%= form.label :rich_description, 'Description', class: "general-text-sm-normal" %>
+      <%= form.rich_text_area :rich_description, class: "input-text mt-2", placeholder: "A short description about the lesson."  %>
     </div>
+    <div class="border border-line-colour rounded-xl flex justify-center py-5">
+      <%= button_tag type: "button", id: "add-new-lang", data: { action: "click->lessons-form#openFilePicker" } do %>
+        <%= button_component( text: "Upload video" ) %>
+      <% end %>
+    </div>
+    <div class="mt-4">
+      <% if lesson.errors[:base].present? %>
+        <ul>
+          <% lesson.errors[:base].each do |message| %>
+            <li class="text-danger"><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <input type="file" accept="video/*" class="hidden"data-lessons-form-target="videoInput" data-action="change->lessons-form#videoSelected" />
     <template data-lessons-form-target="nestedRecordTemplate">
       <%= form.fields_for :local_contents, LocalContent.new, { child_index: "new-index" } do |f| %>
         <%= render "lessons/add_edit/add_local_content", builder: f %>
@@ -24,13 +49,19 @@
         <% end %>
       <%end %>
     </div>
-    <a href="javascript:void(0);" id="add-new-lang" data-action="click->lessons-form#addRecord" class="link bg-primary-light-50 text-white p-2 flex items-center gap-2 rounded px-4 py-2 w-60">
-      <span class="icon icon-plus bg-primary icon-small"></span>
-      <span class="text-xs text-primary heading">Add another language</span>
-    </a>
-    <div class="my-8 text-sm flex gap-4 items-center" >
-      <%= link_to "Cancel", course_module_path(@course, @course_module), class: "nav-link" %>
-      <%= form.submit submit_label_for(lesson), class: "btn-primary", id: "submit-button", data: { lessons_form_target: "uploadButton" } %>
+    <div class="mt-6 flex justify-center">
+      <div class="flex gap-4 w-3/4">
+        <%= link_to course_module_path(@course, @course_module), class: "flex-1" do %>
+          <%= button_component(type: "outline", text: "Cancel") %>
+        <% end %>
+
+        <%= button_tag type: "submit",
+              id: "submit-button",
+              data: { lessons_form_target: "uploadButton" },
+              class: "flex-1" do %>
+          <%= button_component(text: submit_label_for(lesson)) %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>

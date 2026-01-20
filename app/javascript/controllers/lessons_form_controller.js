@@ -7,6 +7,8 @@ export default class extends Controller {
     "nestedRecordTemplate",
     "uploadButton",
     "hasError",
+    "videoInput",
+    "titleInput"
   ];
 
   initialize() {
@@ -19,41 +21,58 @@ export default class extends Controller {
   connect() {
     this.nestedRecordTemplate = this.nestedRecordTemplateTarget;
     this.nestedRecordContainer = this.nestedRecordContainerTarget;
-
     this.element.addEventListener("upload:changed", (event) => {
-      event.detail.shouldDecreaseCount && this.videoFieldCount--;
       this.updateButtonState();
     });
+    this.updateButtonState();
 
-    this.isValidForAddRecord && this.addRecord();
   }
 
-  addRecord() {
+  titleChanged() {
+    this.updateButtonState();
+  }
+
+  openFilePicker() {
+    this.videoInputTarget.click();
+  }
+
+  videoSelected(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
     const newNode = this.nestedRecordTemplate.content.cloneNode(true);
     this.replaceNewIndex(newNode);
     this.nestedRecordContainer.appendChild(newNode);
+
+    const record = this.nestedRecordContainer.lastElementChild;
+    const videoUploadElement = record.querySelector(
+      '[data-controller="video-upload"]'
+    );
+
+    requestAnimationFrame(() => {
+      const controller =
+        this.application.getControllerForElementAndIdentifier(
+          videoUploadElement,
+          "video-upload"
+        );
+
+      controller.setFile(file);
+    });
+
+    this.videoInputTarget.value = "";
     this.videoFieldCount++;
-    this.resetButtonState();
+    this.updateButtonState();
   }
 
   replaceNewIndex(obj) {
     const timestamp = new Date().getTime();
 
     obj.querySelectorAll("input, select, textarea").forEach((field) => {
-      field.id = new Date().getTime();
+      field.id = timestamp;
       field.name = field.name.replace("new-index", timestamp);
     });
   }
 
-  resetButtonState() {
-    this.uploadButtonTarget.classList.add("disabled");
-  }
-
-  setButtonState() {
-    if (this.videoFieldCount === 0) {
-      this.uploadButtonTarget.classList.remove("disabled");
-    }
-  }
 
   removeRecord(event) {
     event.preventDefault();
@@ -66,17 +85,22 @@ export default class extends Controller {
       this.videoFieldCount--;
     }
 
-    this.setButtonState();
     store.removeUpload();
     this.updateButtonState();
   }
 
   updateButtonState() {
-    if (store.hasPendingUploads()) {
-      this.uploadButtonTarget.classList.add("disabled");
-    } else {
-      this.videoFieldCount === 0 &&
-        this.uploadButtonTarget.classList.remove("disabled");
-    }
+    const hasTitle =
+      this.titleInputTarget &&
+      this.titleInputTarget.value.trim().length > 0;
+
+    const hasVideo = this.videoFieldCount > 0;
+    const hasPendingUploads = store.hasPendingUploads();
+
+    const shouldDisable =
+      !hasTitle || !hasVideo || hasPendingUploads;
+
+    this.uploadButtonTarget.classList.toggle("disabled", shouldDisable);
+    this.uploadButtonTarget.disabled = shouldDisable;
   }
 }

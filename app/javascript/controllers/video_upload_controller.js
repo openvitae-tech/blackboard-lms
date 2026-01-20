@@ -11,12 +11,8 @@ export default class extends Controller {
     "videoPlayer",
     "fileSize",
     "duration",
-    "progressBar",
-    "progressText",
     "hiddenBlobId",
-    "hideCancelUploadButton",
     "durationField",
-    "uploadControls",
     "failedUploadMessage",
   ];
 
@@ -25,7 +21,28 @@ export default class extends Controller {
       "change",
       this.handleFileSelect.bind(this)
     );
+    if (this.hiddenBlobIdTarget.value) {
+      this.restoreUploadedVideo();
+    }
   }
+  restoreUploadedVideo() {
+    const blobId = this.hiddenBlobIdTarget.value;
+    if (!blobId) return;
+
+    const url = this.hiddenBlobIdTarget.dataset.blobUrl;
+    if (!url) return;
+
+    this.videoPlayerTarget.src = url;
+    this.videoUploaderTarget.classList.remove("hidden");
+
+    if (this.durationFieldTarget.value) {
+      this.durationTarget.textContent =
+        this.formatTime(this.durationFieldTarget.value);
+    }
+  }
+
+
+
 
   handleFileSelect(event) {
     const file = event.target.files[0];
@@ -44,6 +61,16 @@ export default class extends Controller {
       return name.slice(0, maxLength) + "...";
     }
     return name;
+  }
+  setFile(file) {
+    this.fileInputTarget.files = this.buildFileList(file);
+    this.handleFileSelect({ target: { files: [file] } });
+  }
+
+  buildFileList(file) {
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    return dataTransfer.files;
   }
 
   loadVideo(file) {
@@ -71,18 +98,11 @@ export default class extends Controller {
     return `${minutes}:${secs < 10 ? "0" + secs : secs}`;
   }
 
-  toggleCancelUploadButtons(hidden) {
-    this.hideCancelUploadButtonTargets.forEach((item) => {
-      item.hidden = hidden;
-    });
-  }
-
   removeVideoNameAttribute() {
     this.fileInputTarget.removeAttribute("name");
   }
 
   uploadFile(file) {
-    this.toggleCancelUploadButtons(false);
     store.addUpload();
 
     const upload = new DirectUpload(
@@ -95,10 +115,8 @@ export default class extends Controller {
       store.removeUpload();
       if (error) {
         this.failedUploadMessageTarget.classList.remove("hidden");
-        this.uploadControlsTarget.classList.add("hidden");
       } else {
         this.hiddenBlobIdTarget.value = blob.id;
-        this.toggleCancelUploadButtons(true);
       }
       this.dispatchUploadEvent();
     });
@@ -106,35 +124,6 @@ export default class extends Controller {
 
   directUploadWillStoreFileWithXHR(request) {
     this.currentXHR = request;
-
-    request.upload.addEventListener("progress", (event) =>
-      this.directUploadDidProgress(event)
-    );
-  }
-
-  directUploadDidProgress(event) {
-    const progress = (event.loaded / event.total) * 100;
-    this.progressBarTarget.style.width = `${progress}%`;
-    this.progressTextTarget.textContent = `${Math.round(progress)}%`;
-  }
-
-  abortUpload(event) {
-    event.preventDefault();
-
-    if (this.currentXHR) {
-      this.currentXHR.abort();
-      this.currentXHR = null;
-      this.resetUploader();
-      store.removeUpload();
-      this.dispatchUploadEvent(false);
-    }
-  }
-
-  resetUploader() {
-    this.videoUploaderTarget.classList.add("hidden");
-    this.fileLabelTarget.textContent = "No file chosen";
-    this.hiddenBlobIdTarget.value = "";
-    this.fileInputTarget.value = "";
   }
 
   dispatchUploadEvent(shouldDecreaseCount = true) {
