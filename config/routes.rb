@@ -137,6 +137,18 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :questions, only: [] do
+    resources :issues, only: %i[new create]
+  end
+
+  resources :assessments, only: %i[show update] do
+    member do
+      get :intro
+      get :result
+      get :retry
+    end
+  end
+
   resources :local_contents do
     member do
       put :retry

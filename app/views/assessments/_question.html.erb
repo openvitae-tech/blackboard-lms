@@ -1,0 +1,57 @@
+<div class="text-left bg-primary-light-50 p-6 rounded-xl border border-slate-grey-light" id="<%= question.dom_id%>">  
+  <div class="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
+    <div class="flex items-center gap-1 main-text-sm-medium">
+      <% if question.correct? %>
+        <%= icon("check-circle-solid", css: "h-5 w-5 cursor-pointer text-secondary-dark") %>
+      <% else %>
+        <%= icon("x-circle-solid", css: "h-5 w-5 cursor-pointer text-danger-dark") %>
+      <% end %>
+      <span>Question <%= index+1 %> of <%= Assessment::QUESTIONS_COUNT %></span>
+    </div>
+  </div>
+
+  <p class="main-text-lg-semibold my-4">
+    <%= question.content %>
+  </p>
+
+  <div class="space-y-4">  
+    <% question.options.each do |option| %>
+      
+      <div class="flex items-center p-4 rounded-lg bg-white main-text-sm-normal border
+                    <%= question.correct_selection?(option) ? 'border-secondary-dark' :
+                        question.skipped_selection?(option) ? 'border-line-colour-light' : 'border-danger-dark' %>">
+        
+        <div class="mr-4 flex-shrink-0">
+          <% if question.correct_selection?(option) %>
+            <div class="h-5 w-5 rounded bg-secondary-dark flex items-center justify-center">
+              <%= icon("check", css: "h-4 w-4 text-white") %>
+            </div>
+          <% elsif !question.skipped_selection?(option) %>
+            <div class="h-5 w-5 rounded bg-danger-dark flex items-center justify-center">
+              <%= icon("x-mark", css: "h-4 w-4 text-white") %>
+            </div>
+          <% else %>
+            <div class="h-5 w-5 rounded border-2 border-disabled-color bg-white"></div>
+          <% end %>
+        </div>
+
+        <span class="main-text-sm-normal text-letter-color-light flex-grow">
+          <%= option %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="flex gap-2 mt-6">
+  <p class="main-font-sm-normal">
+    Have an Issue with the Question?
+  </p>
+  
+    <%= link_to new_question_issue_path(question_id: question.id), data: {turbo_frame: "modal"} do %>
+      <div class="flex gap-1 items-center text-primary">
+        <%= icon "flag", css: "h-5 w-5 text-primary", stroke_width: "1.0" %>
+        <span class="underline">Report Issue</span>
+      </div>
+    <% end %>
+  </div>  
+</div>

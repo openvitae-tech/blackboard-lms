@@ -1,0 +1,157 @@
+  <div id="<%= dom_id(presenter.assessment) %>" class="flex flex-1 overflow-hidden" data-controller="expandable-nav">
+    
+    <aside class="py-5 pl-16 pr-7 flex flex-col space-y-6 hidden md:block">      
+      <div>
+        <h3 class="main-text-md-semibold mb-4">Navigation</h3>
+        <div class="grid grid-cols-4 gap-2 bg-primary-light-50 rounded-xl p-5 border border-primary-light-100">
+          <% presenter.question_statuses.each do |item| %>
+            <% 
+               base_classes = "h-10 w-10 flex items-center justify-center rounded-lg main-text-sm-normal transition-colors border hover:bg-disabled-color border-slate-grey-light"
+               status_classes = case item[:status]
+                                when Assessments::PresenterService::STATUS[:current]
+                                  "bg-primary text-white-light shadow-md" # Active
+                                when Assessments::PresenterService::STATUS[:answered]
+                                  "bg-secondary-light text-primary"
+                                when Assessments::PresenterService::STATUS[:skipped]
+                                  "bg-white-light text-primary"
+                                else
+                                  "bg-primary-light-100 text-disabled_color" # Not answered
+                                end
+            %>
+            <%= button_to (item[:index] + 1), assessment_path(id: presenter.assessment.encoded_id), 
+                method: :patch, 
+                params: { jump_to_index: item[:index] },
+                class: "#{base_classes} #{status_classes}" %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="bg-primary-light-50 rounded-xl p-5 border border-primary-light-100">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="w-7 h-7 bg-secondary-light rounded border border-slate-grey-light main-text-sm-normal flex items-center justify-center text-primary"><%= presenter.counts[:answered] %></span>
+          <span class="general-text-sm-medium text-letter-color-light">Answered</span>
+        </div>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="w-7 h-7 bg-white-light rounded border border-slate-grey-light main-text-sm-normal flex items-center justify-center text-primary"><%= presenter.counts[:skipped] %></span>
+          <span class="general-text-sm-medium text-letter-color-light">Skipped</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-7 h-7 bg-primary-light-100 rounded border border-disabled-color main-text-sm-normal flex items-center justify-center text-disabled-color"><%= presenter.counts[:not_answered] %></span>
+          <span class="general-text-sm-medium text-letter-color-light">Not Answered</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="flex-1 pl-7 pr-16 py-5 pb-16 overflow-y-auto h-[calc(100vh-120px)]">
+      <div class="">
+        
+        <div class="flex items-center gap-2 mb-4">
+          <%= icon('question-mark-circle', css: "h-5 w-5")%>
+          <span class="main-text-sm-medium">Question <%= presenter.current_index + 1 %> of <%= presenter.questions_count %></span>
+        </div>
+
+        <h2 class="main-text-lg-semibold mb-4">
+          <%= presenter.current_question_data['content'] %>
+        </h2>
+        
+        <p class="main-text-sm-normal mb-4">Select all correct answers (Answers can be more than one)</p>
+
+        <%= form_with model: presenter.assessment, url: assessment_path(id: presenter.assessment.encoded_id), data: {turbo_method: :patch} do |f| %>
+          <%= f.hidden_field :question_id, value: presenter.current_question_data['id'] %>
+
+          <div class="space-y-4 mb-7">
+            <% saved_answers = presenter.assessment.responses[presenter.current_question_data['id'].to_s] || []%>
+            <% presenter.current_question_data['options'].each do |option| %>
+              <label class="flex items-center mt-auto gap-6 p-3 rounded-xl bg-white border border-line-colour-light hover:bg-primary-light-50 cursor-pointer transition-all group">
+                <%= check_box_tag "assessment[answer][]",
+                  option,
+                  saved_answers.include?(option), 
+                  class: "h-5 w-5 rounded border-2 border-slate-grey-50 text-primary focus:ring-0" %>
+                <span class="main-text-sm-normal"><%= option %></span>
+              </label>
+            <% end %>
+          </div>
+
+          <div class="flex justify-between items-center flex-col md:flex-row gap-4">
+            <div class="flex gap-4 w-full">
+              <%= f.button type: :submit,
+                           name: "commit",
+                           value: Assessments::UpdateService::ACTIONS[:previous],
+                           class: "w-full md:w-fit" do %>
+                <%= button_component text: "Previous", disabled: !presenter.current_index.positive?, type: "outline" %>
+              <% end %>
+
+              <% if presenter.current_index + 1 < presenter.questions_count %>
+                <%= f.button type: :submit,
+                             name: "commit",
+                             value: Assessments::UpdateService::ACTIONS[:save_and_next],
+                             class: "w-full md:w-fit" do %>
+                  <%= button_component text: "Save and Next" %>
+                <% end %>
+              <% else %>
+                <%= f.button type: :submit,
+                             name: "commit",
+                             value: Assessments::UpdateService::ACTIONS[:save],
+                             class: "w-full md:w-fit" do %>
+                  <%= button_component text: "Save" %>
+                <% end %>
+              <% end %>
+            </div>
+            <% if presenter.current_index + 1 < presenter.questions_count %>
+              <%= f.button type: :submit,
+                           name: "commit",
+                           value: Assessments::UpdateService::ACTIONS[:skip_and_next],
+                           class: "w-full md:w-fit" do %>
+                <%= button_component text: "Skip and Next", type: "outline" %>
+              <% end %>
+            <% else %>
+              <%= f.button type: :submit,
+                           name: "commit",
+                           value: Assessments::UpdateService::ACTIONS[:save_and_submit],
+                           class: "w-full md:w-fit" do %>
+                <%= button_component text: "Save & Submit Assessment", colorscheme: "secondary" %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
+    </main>
+    <div class="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white border-t border-slate-grey-light transition-all duration-300">
+      
+      <div class="flex justify-center -mt-3">
+        <button data-action="click->expandable-nav#toggle" class="bg-primary-light-50 border border-slate-grey-light h-6 w-6 rounded-full flex items-center justify-center" data-expandable-nav-target="icon">
+          <%= icon("chevron-up", css: "h-4 w-4 text-primary")%>
+        </button>
+      </div>
+
+      <div data-expandable-nav-target="collapsed" class="px-6 pb-3 pt-1 flex justify-between gap-2 overflow-hidden">
+        <% presenter.question_selections.each do |item| %>
+          <%= render_nav_button(item, presenter.assessment) %>
+        <% end %>
+      </div>
+
+      <div data-expandable-nav-target="expanded" class="hidden px-6 pb-8 pt-2 overflow-y-auto max-h-[60vh]">
+        <div class="grid grid-cols-5 gap-2 mb-8">
+          <% presenter.question_statuses.each do |item| %>
+            <%= render_nav_button(item, presenter.assessment) %>
+          <% end %>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-7 h-7 bg-secondary-light rounded border border-slate-grey-light main-text-sm-normal flex items-center justify-center text-primary"><%= presenter.counts[:answered] %></span>
+            <span class="general-text-sm-medium text-letter-color-light">Answered</span>
+          </div>
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-7 h-7 bg-white-light rounded border border-slate-grey-light main-text-sm-normal flex items-center justify-center text-primary"><%= presenter.counts[:skipped] %></span>
+            <span class="general-text-sm-medium text-letter-color-light">Skipped</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 bg-primary-light-100 rounded border border-disabled-color main-text-sm-normal flex items-center justify-center text-disabled-color"><%= presenter.counts[:not_answered] %></span>
+            <span class="general-text-sm-medium text-letter-color-light">Not Answered</span>
+          </div>
+        </div>
+      </div>
+    </div>    
+  </div>

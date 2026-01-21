@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_19_040807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "assessments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "course_id", null: false
+    t.jsonb "questions", default: [], null: false
+    t.jsonb "responses", default: {}, null: false
+    t.integer "status", default: 0, null: false
+    t.integer "current_question_index", default: 0, null: false
+    t.integer "score", default: 0, null: false
+    t.integer "attempt", default: 1, null: false
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_assessments_on_course_id"
+    t.index ["questions"], name: "index_assessments_on_questions", using: :gin
+    t.index ["responses"], name: "index_assessments_on_responses", using: :gin
+    t.index ["user_id"], name: "index_assessments_on_user_id"
   end
 
   create_table "certificate_templates", force: :cascade do |t|
@@ -151,6 +170,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
     t.jsonb "data", default: {}, null: false
   end
 
+  create_table "issues", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "question_id", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_issues_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_issues_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_issues_on_user_id"
+  end
+
   create_table "learning_partners", force: :cascade do |t|
     t.string "name"
     t.text "about"
@@ -242,6 +272,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_reported", default: false
     t.index ["course_id"], name: "index_questions_on_course_id"
   end
 
@@ -383,6 +414,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "assessments", "courses"
+  add_foreign_key "assessments", "users"
   add_foreign_key "certificate_templates", "learning_partners"
   add_foreign_key "course_certificates", "courses"
   add_foreign_key "course_certificates", "users"
@@ -390,6 +423,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_12_022139) do
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"
   add_foreign_key "enrollments", "users", column: "assigned_by_id"
+  add_foreign_key "issues", "questions"
+  add_foreign_key "issues", "users"
   add_foreign_key "lessons", "course_modules"
   add_foreign_key "local_contents", "lessons"
   add_foreign_key "payment_plans", "learning_partners"

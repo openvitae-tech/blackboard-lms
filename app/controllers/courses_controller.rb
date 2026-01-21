@@ -35,6 +35,7 @@ class CoursesController < ApplicationController
 
     if @enrollment.present?
       EVENT_LOGGER.publish_course_viewed(current_user, @course.id)
+      @assessment = Assessment.find_by(user: current_user, course: @course)
     end
   end
 
