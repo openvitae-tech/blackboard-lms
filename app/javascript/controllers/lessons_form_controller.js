@@ -89,12 +89,26 @@ export default class extends Controller {
     this.updateButtonState();
   }
 
+  hasVideo() {
+    const existingVideo = this.nestedRecordContainerTarget.querySelector(
+      '.field-group video[src]'
+    );
+
+    if (existingVideo) return true;
+
+    const uploadedVideo = this.nestedRecordContainerTarget.querySelector(
+      '[data-video-upload-target="hiddenBlobId"][value]'
+    );
+
+    return !!uploadedVideo;
+  }
+
   updateButtonState() {
     const hasTitle =
       this.titleInputTarget &&
       this.titleInputTarget.value.trim().length > 0;
 
-    const hasVideo = this.videoFieldCount > 0;
+    const hasVideo = this.hasVideo();
     const hasPendingUploads = store.hasPendingUploads();
 
     const shouldDisable =

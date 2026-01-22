@@ -35,10 +35,6 @@ export default class extends Controller {
     this.videoPlayerTarget.src = url;
     this.videoUploaderTarget.classList.remove("hidden");
 
-    if (this.durationFieldTarget.value) {
-      this.durationTarget.textContent =
-        this.formatTime(this.durationFieldTarget.value);
-    }
   }
 
 
@@ -80,7 +76,6 @@ export default class extends Controller {
     const videoElement = this.videoPlayerTarget;
     videoElement.addEventListener("loadedmetadata", () => {
       const duration = videoElement.duration;
-      this.durationTarget.textContent = this.formatTime(duration);
       this.durationFieldTarget.value = duration;
     });
   }
