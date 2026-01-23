@@ -67,7 +67,7 @@
             <% end %>
           </div>  
           
-          <div class="flex flex-wrap gap-2 h-[24px]">
+          <div class="flex flex-wrap gap-2 h-[24px] overflow-x-auto overflow-y-hidden whitespace-nowrap">
             <% course.tags.each do |tag| %>
               <% if tag.tag_type == "category" %>
                 <%= chip_component(text: tag.name , colorscheme: 'primary', icon_name: 'check') %>
@@ -75,7 +75,7 @@
             <% end %>
           </div>
         </div> 
-        <div class="flex flex-wrap justify-center md:justify-end md:items-end gap-4">
+        <div class="flex justify-center md:justify-end md:items-end gap-4">
           <% if policy(course).unenroll? %>
             <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
               <%= button(label: "Drop", type: "secondary", icon_name: "minus") %>
