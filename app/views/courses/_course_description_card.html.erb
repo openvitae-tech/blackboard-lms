@@ -67,7 +67,7 @@
             <% end %>
           </div>  
           
-          <div class="flex flex-wrap gap-2 h-[24px] overflow-x-auto overflow-y-hidden whitespace-nowrap">
+          <div class="flex flex-wrap gap-2 md:h-[24px] overflow-x-hidden overflow-y-auto whitespace-nowrap">
             <% course.tags.each do |tag| %>
               <% if tag.tag_type == "category" %>
                 <%= chip_component(text: tag.name , colorscheme: 'primary', icon_name: 'check') %>
