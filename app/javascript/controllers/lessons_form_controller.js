@@ -21,11 +21,12 @@ export default class extends Controller {
   connect() {
     this.nestedRecordTemplate = this.nestedRecordTemplateTarget;
     this.nestedRecordContainer = this.nestedRecordContainerTarget;
-    this.element.addEventListener("upload:changed", (event) => {
+
+    this.element.addEventListener("upload:changed", () => {
       this.updateButtonState();
     });
-    this.updateButtonState();
 
+    this.updateButtonState();
   }
 
   titleChanged() {
@@ -49,15 +50,24 @@ export default class extends Controller {
       '[data-controller="video-upload"]'
     );
 
-    requestAnimationFrame(() => {
+    const tryAttachFile = (attempts = 5) => {
       const controller =
         this.application.getControllerForElementAndIdentifier(
           videoUploadElement,
           "video-upload"
         );
 
-      controller.setFile(file);
-    });
+      if (controller) {
+        controller.setFile(file);
+        return;
+      }
+
+      if (attempts > 0) {
+        requestAnimationFrame(() => tryAttachFile(attempts - 1));
+      }
+    };
+
+    tryAttachFile();
 
     this.videoInputTarget.value = "";
     this.videoFieldCount++;
@@ -65,10 +75,10 @@ export default class extends Controller {
   }
 
   replaceNewIndex(obj) {
-    const timestamp = new Date().getTime();
+    const timestamp = Date.now();
 
-    obj.querySelectorAll("input, select, textarea").forEach((field) => {
-      field.id = timestamp;
+    obj.querySelectorAll("input, select, textarea").forEach((field, index) => {
+      field.id = `${timestamp}-${index}`;
       field.name = field.name.replace("new-index", timestamp);
     });
   }
@@ -93,7 +103,6 @@ export default class extends Controller {
     const existingVideo = this.nestedRecordContainerTarget.querySelector(
       '.field-group video[src]'
     );
-
     if (existingVideo) return true;
 
     const uploadedVideo = this.nestedRecordContainerTarget.querySelector(
@@ -111,8 +120,7 @@ export default class extends Controller {
     const hasVideo = this.hasVideo();
     const hasPendingUploads = store.hasPendingUploads();
 
-    const shouldDisable =
-      !hasTitle || !hasVideo || hasPendingUploads;
+    const shouldDisable = !hasTitle || !hasVideo || hasPendingUploads;
 
     this.uploadButtonTarget.classList.toggle("disabled", shouldDisable);
     this.uploadButtonTarget.disabled = shouldDisable;

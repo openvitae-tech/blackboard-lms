@@ -1,7 +1,7 @@
 <div class="mt-2 text-left w-full md:max-w-[818px] md:bg-white md:border border-line-colour-light p-1 md:p-8 rounded-xl" data-controller="lessons-form" data-lessons-form-action-name="<%= action_name %>">
   <% url = lesson.persisted? ? course_module_lesson_path(course, course_module, lesson) : course_module_lessons_path(course, course_module, lesson) %>
   <%= form_with(model: lesson, url: url, data: { turbo: false }) do |form| %>
-    <%= form.hidden_field :has_error, value:@lesson.errors.to_hash.to_json, data: { lessons_form_target: "hasError" } %>
+    <%= form.hidden_field :has_error, value:lesson.errors.to_hash.to_json, data: { lessons_form_target: "hasError" } %>
     <div class="text-sm" >
       <%= input_text_component(
             form:,
@@ -20,7 +20,7 @@
       <%= form.label :rich_description, 'Description', class: "general-text-sm-normal" %>
       <%= form.rich_text_area :rich_description, class: "input-text main-text-md-normal h-36", placeholder: "A short description about the lesson."  %>
     </div>
-    <input type="file" accept="video/*" class="hidden"data-lessons-form-target="videoInput" data-action="change->lessons-form#videoSelected" />
+    <input type="file" accept="video/*" class="hidden" data-lessons-form-target="videoInput" data-action="change->lessons-form#videoSelected" />
     <template data-lessons-form-target="nestedRecordTemplate">
       <%= form.fields_for :local_contents, LocalContent.new, { child_index: "new-index" } do |f| %>
         <%= render "lessons/add_edit/add_local_content", builder: f %>
@@ -51,7 +51,7 @@
     <% end %>
     <div class="mt-6 flex justify-center">
       <div class="flex gap-4 w-full">
-        <%= link_to course_module_path(@course, @course_module), class: "flex-1" do %>
+        <%= link_to course_module_path(course, course_module), class: "flex-1" do %>
           <%= button_component(type: "outline", text: "Cancel") %>
         <% end %>
 

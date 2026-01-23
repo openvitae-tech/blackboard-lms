@@ -6,5 +6,6 @@
         <%= render 'shared/components/back_button', back_link:  course_module_path(@course, @course_module), text: "Edit Lesson" %>
       </div>
     </div>
-  <% end %>  <%= render "form", course: @course, course_module: @course_module, lesson: @lesson %>
+  <% end %>  
+  <%= render "form", course: @course, course_module: @course_module, lesson: @lesson %>
 </div>
