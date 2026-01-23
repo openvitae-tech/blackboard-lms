@@ -9,7 +9,7 @@
         <% end %>
       <% end %>
     </div>
-    <div class="relative h-[140px] w-full md:w-[240px] md:h-[132px]">
+    <div class="relative h-[140px] w-full md:w-[240px] md:h-[136px]">
       <%= image_tag course_banner(course, :vertical), class: "h-full w-full object-cover rounded-t-xl md:rounded-tr-none md:rounded-l-xl" %>
       <span class="absolute bottom-0 right-4 z-10 flex rounded-t-md bg-primary-light-100 general-text-sm-normal py-0.5 px-1 text-primary-dark">
           <%= course_duration(course) %>
@@ -31,45 +31,51 @@
           <%= chip_component(text: "Public" , colorscheme: 'primary') %>
         <% end %>
       </div>
-      <% if local_assigns[:enrollment].present? %>
-        <div class="w-full md:w-80">
-          <%= render "shared/components/progress_bar", progress: enrollment.progress %>
-        </div>
-        <% if enrollment.deadline_present? %>
-          <div class="text-sm">
-            <%= pluralize(days_remaining(enrollment.deadline_at), "day") %> left
-          </div>
-        <% end %>
-      <% end %>
-      <div class="flex gap-3 md:gap-4">
-        <% if course.rating.present? %>
-        <div class="flex items-center">
-          <%= icon("star-transparent", css: "h-4 w-4 text-primary fill-primary") %>
-          <span class="ml-2 general-text-sm-normal"><%= course.rating %></span>
-        </div>
-        <div class="w-px h-full bg-slate-grey-light md:hidden"></div>
-        <% end %>
-        <div class="flex items-center">
-          <%= icon("book", css: "h-4 w-4 text-primary") %>
-          <span class="ml-2 general-text-sm-normal font-medium"><%= pluralize(modules_count(course), 'module') %></span>
-        </div>
-        <div class="w-px h-full bg-slate-grey-light"></div>
-        <%= render 'shared/components/tooltip', tooltip_text: pluralize(enroll_count(course), t("course.enroll.user")) do %>
-          <div class="flex items-center">
-            <%= icon("user", css: "h-4 w-4 text-primary") %>
-            <span class="ml-2 general-text-sm-normal font-medium"><%= enroll_count(course) %></span>
-          </div>
-        <% end %>
-      </div>
-      <div class="flex flex-col md:flex-row justify-between gap-6">
-        <div class="flex flex-wrap gap-2 h-[24px]">
-          <% course.tags.each do |tag| %>
-            <% if tag.tag_type == "category" %>
-              <%= chip_component(text: tag.name , colorscheme: 'primary', icon_name: 'check') %>
+      
+      <div class="flex flex-col md:flex-row justify-between">
+        <div class="flex flex-col gap-3">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="flex gap-3 md:gap-4">
+              <% if course.rating.present? %>
+              <div class="flex items-center">
+                <%= icon("star-transparent", css: "h-4 w-4 text-primary fill-primary") %>
+                <span class="ml-2 general-text-sm-normal"><%= course.rating %></span>
+              </div>
+              <div class="w-px h-full bg-slate-grey-light md:hidden"></div>
+              <% end %>
+              <div class="flex items-center">
+                <%= icon("book", css: "h-4 w-4 text-primary") %>
+                <span class="ml-2 general-text-sm-normal font-medium"><%= pluralize(modules_count(course), 'module') %></span>
+              </div>
+              <div class="w-px h-full bg-slate-grey-light"></div>
+              <%= render 'shared/components/tooltip', tooltip_text: pluralize(enroll_count(course), t("course.enroll.user")) do %>
+                <div class="flex items-center">
+                  <%= icon("user", css: "h-4 w-4 text-primary") %>
+                  <span class="ml-2 general-text-sm-normal font-medium"><%= enroll_count(course) %></span>
+                </div>
+              <% end %>
+            </div>
+            <% if local_assigns[:enrollment].present? %>
+              <div class="w-full md:w-[151px]">
+                <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+              </div>
+              <% if enrollment.deadline_present? %>
+                <div class="text-sm">
+                  <%= pluralize(days_remaining(enrollment.deadline_at), "day") %> left
+                </div>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
-        <div class="flex flex-wrap justify-center md:justify-end  gap-4">
+          </div>  
+          
+          <div class="flex flex-wrap gap-2 h-[24px]">
+            <% course.tags.each do |tag| %>
+              <% if tag.tag_type == "category" %>
+                <%= chip_component(text: tag.name , colorscheme: 'primary', icon_name: 'check') %>
+              <% end %>
+            <% end %>
+          </div>
+        </div> 
+        <div class="flex flex-wrap justify-center md:justify-end md:items-end gap-4">
           <% if policy(course).unenroll? %>
             <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
               <%= button(label: "Drop", type: "secondary", icon_name: "minus") %>
@@ -85,8 +91,8 @@
               <%= button(label: "Continue", icon_name: "chevron-double-right", icon_position: "right") %>
             <% end %>
           <% end %>
-        </div>
-      </div>  
+        </div> 
+      </div>
     </div>
   </div>
 </div>
