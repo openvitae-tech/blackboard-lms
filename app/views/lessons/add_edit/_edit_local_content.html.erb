@@ -18,8 +18,18 @@
             name: :lang,
             options: language_options,
             value: builder.object.lang,
-            prompt: "Language"
+
+            html_options: {
+              data: {
+                lessons_form_target: "languageSelect",
+                action: "change->lessons-form#languageChanged"
+              }
+            }
       ) %>
+      <p class="text-danger text-sm hidden"
+        data-lessons-form-target="languageError">
+        This language is already used for another content.
+      </p>
       <%= builder.hidden_field :_destroy %>
 
       <%= button_tag type: "button",

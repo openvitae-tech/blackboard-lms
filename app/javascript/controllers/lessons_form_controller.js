@@ -8,11 +8,14 @@ export default class extends Controller {
     "uploadButton",
     "hasError",
     "videoInput",
-    "titleInput"
+    "titleInput",
+    "languageSelect",
+    "languageError"
   ];
 
   initialize() {
     this.videoFieldCount = 0;
+    this.hasLanguageConflict = false;
     this.isValidForAddRecord =
       this.hasErrorTarget.value === "false" &&
       this.data.get("actionName") !== "edit";
@@ -26,7 +29,22 @@ export default class extends Controller {
       this.updateButtonState();
     });
 
+    this.updateLanguageOptions();
     this.updateButtonState();
+  }
+
+  getSelectedLanguages(exceptSelect = null) {
+    return this.languageSelectTargets
+      .filter(select => {
+        if (select === exceptSelect) return false;
+
+        const fieldGroup = select.closest(".field-group");
+        const destroyInput = fieldGroup?.querySelector('[name*="_destroy"]');
+
+        return destroyInput?.value !== "1";
+      })
+      .map(select => select.value)
+      .filter(Boolean);
   }
 
   titleChanged() {
@@ -46,6 +64,7 @@ export default class extends Controller {
     this.nestedRecordContainer.appendChild(newNode);
 
     const record = this.nestedRecordContainer.lastElementChild;
+    this.setDefaultLanguageFor(record);
     const videoUploadElement = record.querySelector(
       '[data-controller="video-upload"]'
     );
@@ -71,18 +90,13 @@ export default class extends Controller {
 
     this.videoInputTarget.value = "";
     this.videoFieldCount++;
+    this.updateLanguageOptions();
     this.updateButtonState();
   }
 
-  replaceNewIndex(obj) {
-    const timestamp = Date.now();
-
-    obj.querySelectorAll("input, select, textarea").forEach((field, index) => {
-      field.id = `${timestamp}-${index}`;
-      field.name = field.name.replace("new-index", timestamp);
-    });
+  languageChanged() {
+    this.updateLanguageOptions();
   }
-
 
   removeRecord(event) {
     event.preventDefault();
@@ -96,6 +110,59 @@ export default class extends Controller {
     }
 
     store.removeUpload();
+    this.updateLanguageOptions();
+    this.updateButtonState();
+  }
+
+  setDefaultLanguageFor(record) {
+    const select = record.querySelector(
+      '[data-lessons-form-target="languageSelect"]'
+    );
+    if (!select) return;
+
+    const usedLanguages = new Set(this.getSelectedLanguages(select));
+
+    if (!usedLanguages.has("english")) {
+      select.value = "english";
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+      return;
+    }
+
+    const availableOption = Array.from(select.options).find(
+      opt => opt.value && !usedLanguages.has(opt.value)
+    );
+
+    if (availableOption) {
+      select.value = availableOption.value;
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+
+    }
+  }
+
+
+  updateLanguageOptions() {
+    const selectedLanguages = this.getSelectedLanguages();
+    const counts = {};
+
+    selectedLanguages.forEach(lang => {
+      counts[lang] = (counts[lang] || 0) + 1;
+    });
+
+    let hasConflict = false;
+
+    this.languageSelectTargets.forEach((select, index) => {
+      const lang = select.value;
+      const errorEl = this.languageErrorTargets[index];
+
+      if (lang && counts[lang] > 1) {
+        errorEl.classList.remove("hidden");
+        hasConflict = true;
+      } else {
+        errorEl.classList.add("hidden");
+      }
+    });
+
+    this.hasLanguageConflict = hasConflict;
     this.updateButtonState();
   }
 
@@ -120,9 +187,21 @@ export default class extends Controller {
     const hasVideo = this.hasVideo();
     const hasPendingUploads = store.hasPendingUploads();
 
-    const shouldDisable = !hasTitle || !hasVideo || hasPendingUploads;
+    const shouldDisable =
+      !hasTitle ||
+      !hasVideo ||
+      hasPendingUploads ||
+      this.hasLanguageConflict;
 
     this.uploadButtonTarget.classList.toggle("disabled", shouldDisable);
     this.uploadButtonTarget.disabled = shouldDisable;
+  }
+
+  replaceNewIndex(obj) {
+    const timestamp = Date.now();
+    obj.querySelectorAll("input, select, textarea").forEach((field, index) => {
+      field.id = `${timestamp}-${index}`;
+      field.name = field.name.replace("new-index", timestamp);
+    });
   }
 }
