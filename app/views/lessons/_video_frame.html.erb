@@ -1,7 +1,7 @@
-<div id="video-frame" class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
+<div id="video-frame" class="embed-container bg-line-colour rounded-xl xl:h-[226px]">
   <% if local_content.video.attached? %>
     <% if APP_CONFIG.external_video_hosting? && vimeo_upload_timed_out?(local_content) && current_user.is_admin? %>
-      <div class="absolute inset-0 flex justify-center items-center">
+      <div class="absolute inset-0 flex justify-center items-center rounded-xl">
         <%= link_to retry_local_content_path(local_content),
                 data: { turbo_method: :put, turbo_frame: "video-frame" } do %>
           <%= button(label: "Retry upload", icon_name: "arrow-uturn-right") %>
