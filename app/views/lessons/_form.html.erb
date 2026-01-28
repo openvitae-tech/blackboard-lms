@@ -1,4 +1,4 @@
-<div class="mt-2 text-left w-full md:max-w-[818px] md:bg-white md:border border-line-colour-light p-1 md:p-8 rounded-xl" data-controller="lessons-form" data-lessons-form-action-name="<%= action_name %>">
+<div class="mt-2 text-left w-full md:max-w-[818px] md:bg-white md:border-2 border-line-colour-light p-1 md:p-8 rounded-xl" data-controller="lessons-form" data-lessons-form-action-name="<%= action_name %>">
   <% url = lesson.persisted? ? course_module_lesson_path(course, course_module, lesson) : course_module_lessons_path(course, course_module, lesson) %>
   <%= form_with(model: lesson, url: url, data: { turbo: false }) do |form| %>
     <%= form.hidden_field :has_error, value:lesson.errors.to_hash.to_json, data: { lessons_form_target: "hasError" } %>
@@ -18,7 +18,7 @@
     </div>
     <div class="my-6 text-sm flex flex-col gap-2" >
       <%= form.label :rich_description, 'Description', class: "general-text-sm-normal" %>
-      <%= form.rich_text_area :rich_description, class: "input-text main-text-md-normal h-36", placeholder: "A short description about the lesson."  %>
+      <%= form.rich_text_area :rich_description, class: "input-text main-text-md-normal h-36 border-2 border-line-colour-light", placeholder: "A short description about the lesson."  %>
     </div>
     <input type="file" accept="video/*" class="hidden" data-lessons-form-target="videoInput" data-action="change->lessons-form#videoSelected" />
     <template data-lessons-form-target="nestedRecordTemplate">
@@ -35,7 +35,7 @@
         <% end %>
       <%end %>
     </div>
-    <div class="border border-line-colour rounded-xl flex justify-center px-5 py-3 md:p-5">
+    <div class="border-2 border-line-colour rounded-xl flex justify-center px-5 py-3 md:p-5">
       <%= button_tag type: "button", id: "add-new-lang", data: { action: "click->lessons-form#openFilePicker" }, class:"w-full md:w-fit" do %>
         <%= button_component( text: "Choose video",colorscheme:"secondary" ) %>
       <% end %>

@@ -1,5 +1,5 @@
 <div class="field-group">
-  <div data-controller="video-upload"  class="my-6 flex flex-col md:flex-row gap-4 md:items-center border border-line-colour-light rounded-xl py-5 px-7">
+  <div data-controller="video-upload"  class="my-6 flex flex-col md:flex-row gap-4 md:items-center border-2 border-line-colour-light rounded-xl py-5 px-7">
     <div class="flex flex-col flex-1">
       <div class="flex flex-row items-center gap-4 justify-between hidden">
         <div class="flex justify-between">
@@ -29,21 +29,24 @@
           <label class="main-text-sm-medium">File size: <span data-video-upload-target="fileSize"></span></label>
         </div>
       </div> 
-      <%= dropdown_component(
-            form: builder,
-            name: :lang,
-            options: language_options,
-            html_options: {
-              data: {
-                lessons_form_target: "languageSelect",
-                action: "change->lessons-form#languageChanged"
+      <div class="flex flex-col gap-1">
+        <%= dropdown_component(
+              form: builder,
+              name: :lang,
+              options: language_options,
+              html_options: {
+                data: {
+                  lessons_form_target: "languageSelect",
+                  action: "change->lessons-form#languageChanged"
+                }
               }
-            }
-      ) %>
-      <p class="text-danger text-sm hidden"
-        data-lessons-form-target="languageError">
-        This language is already used for another content.
-      </p>
+        ) %>
+        
+        <p class="text-danger general-text-sm-normal hidden"
+          data-lessons-form-target="languageError">
+          This language is already used for another content.
+        </p>
+      </div>
 
 
       <%= builder.hidden_field :_destroy %>
