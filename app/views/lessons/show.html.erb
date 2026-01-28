@@ -1,33 +1,36 @@
-<div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-  <div>
-    <%= render "shared/components/bread_crumbs", links: [[I18n.t('course.label'), courses_path], [@course.title, course_path(@course)], [@course_module.title, nil]] %>
-  </div>
-  <% if current_user.is_admin? %>
-    <div class="flex justify-end items-center gap-4">
-      <% if policy(@lesson).edit? %>
-        <%= link_to edit_course_module_lesson_path(@course, @course_module, @lesson) do %>
-          <%= button(label: "Edit", type: "secondary", icon_name: "pencil", icon_position: "right") %>
+<% content_for :header do %>
+  <div class="flex flex-col gap-4 mb-3">
+    <%= breadcrumbs_component links: breadcrumbs_links(@lesson, current_user.is_admin?) %>
+    <div class="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
+      <div class="flex gap-2 items-center">
+        <%= render 'shared/components/back_button', back_link: course_module_path(@course, @course_module) %>
+        <p class="main-text-lg-semibold"><%= @lesson.title %></p>
+      </div>
+      <%= content_tag :div, class: "flex gap-3 items-center" do %>
+        <% if policy(@lesson).edit? %>
+          <%= link_to edit_course_module_lesson_path(@course, @course_module, @lesson), class: "w-full" do %>
+            <%= button_component(text: "Edit Lesson", size:"sm", type: "outline", icon_name: "pencil") %>
+          <% end %>
         <% end %>
-      <% end %>
-      <% if policy(@lesson).destroy? %>
-        <%= link_to alert_modal_path(
-                    title: t("alert.title", resource_name: "lesson"),
-                    description: t("alert.description", label: @lesson.title, resource_name: "lesson"),
-                    action_path: course_module_lesson_path(@course, @course_module, @lesson),
-                    method: :delete,
-                  ), data: { turbo_frame: "modal" } do %>
-          <%= button(label: "Delete", type: "danger") %>
+        <% if policy(@lesson).destroy? %>
+          <%= link_to alert_modal_path(
+                      title: t("alert.title", resource_name: "lesson"),
+                      description: t("alert.description", label: @lesson.title, resource_name: "lesson"),
+                      action_path: course_module_lesson_path(@course, @course_module, @lesson),
+                      method: :delete,
+                      class: "w-full",
+                    ), data: { turbo_frame: "modal" } do %>
+            <%= button_component(text: "Delete Lesson", size:"sm", type: "outline", icon_name: "trash", colorscheme: "danger") %>
+          <% end %>
+        <% else %>
+          <%= button_component(text: "Delete Lesson", size:"sm", type: "outline", icon_name: "trash", colorscheme: "danger", disabled: true) %>
         <% end %>
-      <% else %>
-        <%= button(label: "Delete", type: "danger",  tooltip_text: lesson_delete_tooltip_message(@course), disabled: true) %>
-      <% end %>
+      <% end if current_user.is_admin? %>
     </div>
-  <% end %>
-</div>
-<p class="text-primary mb-1 overflow-hidden text-ellipsis text-2xl font-extrabold py-6">
-  <%= @lesson.title %>
-</p>
-<div class="flex flex-col md:flex-row gap-6">
+  </div>
+<% end %>
+
+<div class="flex flex-col md:flex-row gap-7 mt-3">
   <%= render "lessons/lesson", course: @course, course_module: @course_module, lesson: @lesson, enrollment: @enrollment %>
-  <%= render "lessons/play_list", course: @course, enrollment: @enrollment %>
+  <%= render "lessons/play_list", course: @course, course_module: @course_module, enrollment: @enrollment %>
 </div>
