@@ -201,7 +201,7 @@ export default class extends Controller {
       this.uploadButtonDisabledTarget.classList.add("hidden");
       this.uploadButtonEnabledTarget.classList.remove("hidden");
     }
-    }
+  }
 
   replaceNewIndex(obj) {
     const timestamp = Date.now();
