@@ -5,7 +5,8 @@ export default class extends Controller {
   static targets = [
     "nestedRecordContainer",
     "nestedRecordTemplate",
-    "uploadButton",
+    "uploadButtonDisabled",
+    "uploadButtonEnabled",
     "hasError",
     "videoInput",
     "titleInput",
@@ -193,9 +194,14 @@ export default class extends Controller {
       hasPendingUploads ||
       this.hasLanguageConflict;
 
-    this.uploadButtonTarget.classList.toggle("disabled", shouldDisable);
-    this.uploadButtonTarget.disabled = shouldDisable;
-  }
+    if (shouldDisable) {
+      this.uploadButtonEnabledTarget.classList.add("hidden");
+      this.uploadButtonDisabledTarget.classList.remove("hidden");
+    } else {
+      this.uploadButtonDisabledTarget.classList.add("hidden");
+      this.uploadButtonEnabledTarget.classList.remove("hidden");
+    }
+    }
 
   replaceNewIndex(obj) {
     const timestamp = Date.now();

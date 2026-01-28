@@ -55,12 +55,14 @@
           <%= button_component(type: "outline", text: "Cancel") %>
         <% end %>
 
-        <%= button_tag type: "submit",
-              id: "submit-button",
-              data: { lessons_form_target: "uploadButton" },
-              class: "flex-1" do %>
-          <%= button_component(text: submit_label_for(lesson)) %>
-        <% end %>
+        <div class="flex-1 hidden" data-lessons-form-target="uploadButtonDisabled">
+          <%= button_component(text: submit_label_for(lesson), disabled: true ) %>
+        </div>
+        
+        <div class="flex-1 hidden" data-lessons-form-target="uploadButtonEnabled">
+          <%= button_component(text: submit_label_for(lesson), disabled: false ) %>
+        </div>
+                 
       </div>
     </div>
   <% end %>
