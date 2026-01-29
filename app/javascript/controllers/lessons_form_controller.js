@@ -57,7 +57,6 @@ export default class extends Controller {
     );
   }
 
-
   titleChanged() {
     this.updateButtonState();
   }
@@ -133,7 +132,6 @@ export default class extends Controller {
 
     }
   }
-
 
   updateLanguageOptions() {
     const selectedLanguages = this.getSelectedLanguages();
