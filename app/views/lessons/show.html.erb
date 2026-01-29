@@ -18,8 +18,7 @@
                       description: t("alert.description", label: @lesson.title, resource_name: "lesson"),
                       action_path: course_module_lesson_path(@course, @course_module, @lesson),
                       method: :delete,
-                      class: "w-full",
-                    ), data: { turbo_frame: "modal" } do %>
+                    ), class: "w-full", data: { turbo_frame: "modal" } do %>
             <%= button_component(text: "Delete Lesson", size:"sm", type: "outline", icon_name: "trash", colorscheme: "danger") %>
           <% end %>
         <% else %>
