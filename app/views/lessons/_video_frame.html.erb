@@ -4,7 +4,7 @@
       <div class="absolute inset-0 flex justify-center items-center rounded-xl">
         <%= link_to retry_local_content_path(local_content),
                 data: { turbo_method: :put, turbo_frame: "video-frame" } do %>
-          <%= button(label: "Retry upload", icon_name: "arrow-uturn-right") %>
+          <%= button_component(text: "Retry upload", size: "sm", icon_name: "arrow-uturn-right") %>
         <% end %>
       </div>
     <% else %>
