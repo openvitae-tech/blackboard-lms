@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module LessonsHelper
+  def lesson_back_link(lesson, is_admin)
+    course_module = lesson.course_module
+    course = course_module.course
+
+    is_admin ? course_module_path(course, course_module) : course_path(course)
+  end
+
   def breadcrumbs_links(lesson, is_admin)
     course_module = lesson.course_module
     course = course_module.course
