@@ -41,7 +41,7 @@
               </div>
               <div class="flex gap-4 heading">
                 <div class="<%= lesson_accessible?(lesson, course, enrollment) ? 'bg-primary-light-50' : 'bg-line-colour-light' %> rounded-full p-1 md:p-2 flex items-center justify-center">
-                  <span class="<%= lesson_accessible?(lesson, course, enrollment) ? 'bg-primary' : 'bg-disabled-color' %> icon icon-play bg-primary h-4 w-4 md:h-5 md:w-5"></span>
+                  <span class="<%= lesson_accessible?(lesson, course, enrollment) ? 'bg-primary' : 'bg-disabled-color' %> icon icon-play h-4 w-4 md:h-5 md:w-5"></span>
                 </div>
               </div>
             <% end %>
