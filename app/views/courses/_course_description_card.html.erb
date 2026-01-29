@@ -96,14 +96,14 @@
     </div>
   </div>
 </div>
-<div class="p-3 md:p-4 flex flex-col gap-2 bg-primary-light-50 rounded-lg main-text-sm-normal" data-controller="course-description"
-      data-course-description-clamp-class-value="line-clamp-2">
+<div class="p-3 md:p-4 flex flex-col gap-2 bg-primary-light-50 rounded-lg main-text-sm-normal" data-controller="text-clamp"
+      data-text-clamp-css-value="line-clamp-2">
   <p class="main-text-sm-medium">
     Course Description
   </p>
-  <div class="line-clamp-2" data-course-description-target="courseDescription">
+  <div class="line-clamp-2" data-text-clamp-target="longText">
     <%= course_description(course) %>
   </div>
-  <div class="text-primary underline main-text-sm-normal cursor-pointer hover:text-primary-light" data-course-description-target="showMoretoggle"
-        data-action="click->course-description#showMoretoggle">Show more</div>
+  <div class="text-primary underline main-text-sm-normal cursor-pointer hover:text-primary-light" data-text-clamp-target="showMoretoggle"
+        data-action="click->text-clamp#showMoretoggle">Show more</div>
 </div>
