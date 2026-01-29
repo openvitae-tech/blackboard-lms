@@ -1,33 +1,23 @@
 <% content_for :header do %>
   <div class="flex flex-col gap-4">
     <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]]%>
-    <div class="flex flex-col md:flex-row justify-between gap-4 w-full">
+    <div class="flex <%= current_user.is_admin? ? 'flex-col' : 'flex-row items-center'%> md:flex-row justify-between gap-4 w-full">
       <%= render 'shared/components/back_button', back_link: courses_path %>
       <div class="flex flex-nowrap w-full md:w-fit gap-4">
-        <% if policy(:course_module).new? %>
-          <%= link_to new_course_module_path(@course), data: { turbo_frame: "modal" }, class:"flex-1 md:w-fit" do %>
-            <%= button_component(text: "Add module", size:"sm", icon_name: "plus") %>
-          <% end %>
-        <% end %>
-        <% if policy(@course).publish? %>
-          <%= link_to publish_course_path(@course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
-            <%= button_component(type: 'outline', text: "Publish", size:"sm") %>
-          <% end %>
-        <% end %>
-        <% if policy(@course).unpublish? %>
-          <%= link_to unpublish_course_path(@course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
-            <%= button_component(type: 'outline', text: "Unpublish", size:"sm",) %>
-          <% end %>
+        <% if current_user.is_admin? %>
+          <%= render 'courses/admin_actions', course: @course %>
+        <% else %>
+          <%= render 'courses/non_admin_actions', course: @course, assessment: @assessment, enrollment: @enrollment %>
         <% end %>
       </div>
     </div>
   </div>
 <% end %>
-<div class="flex flex-col rounded gap-4 md:gap-6">
+<div class="flex flex-col rounded gap-5 mt-3">
   <%= render 'courses/course_description_card', course: @course, enrollment: @enrollment %>
 </div>
 <% if current_user.is_admin? %>
-  <div class="flex gap-4 mt-4">
+  <div class="flex gap-4 my-5">
     <%= link_to course_materials_path(@course) do %>
       <%= button_component text: "Course Materials", type: "outline", size: "sm" %>
     <% end %>
@@ -37,7 +27,7 @@
   </div>
 <% end %>
 <% if @course.course_modules.present? %>
-  <div class="flex flex-col mt-4">
+  <div class="flex flex-col gap-5 mt-5">
     <% if course_completed?(@enrollment) %>
       <%= render "courses/course_stats", course: @course, enrollment: @enrollment, assessment: @assessment %>
     <% end %>

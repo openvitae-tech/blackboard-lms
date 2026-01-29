@@ -1,0 +1,26 @@
+<% if policy(course).unenroll? %>
+  <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
+    <%= button_component(text: "Drop", size:"sm", type: "outline", icon_name: "minus") %>
+  <% end %>
+<% end %>
+<% if policy(course).enroll? %>
+  <%= link_to enroll_course_path(course), data: { turbo_method: :put }  do %>
+    <%= button_component(text: I18n.t('course.enroll.label'), size:"sm") %>
+  <% end %>
+<% end %>
+<% if policy(course).proceed? %>
+  <%= link_to proceed_course_path(course) do %>
+    <%= button_component(text: t('btn.continue'), size:"sm", icon_name: "chevron-double-right", icon_position: "right") %>
+  <% end %>
+<% end %>
+<% if course_completed?(enrollment) && assessment %>
+  <% if assessment.completed? %>
+    <%= link_to result_assessment_path(id: assessment.encoded_id) do %>
+      <%= button_component text: t('assessment.view_result'), colorscheme: "secondary", size: "sm" %>
+    <% end %>
+  <% else %>
+    <%= link_to intro_assessment_path(id: assessment.encoded_id) do %>
+      <%= button_component text: t('assessment.take'), colorscheme: "secondary", size: "sm" %>
+    <% end %>
+  <% end %>
+<% end %>
