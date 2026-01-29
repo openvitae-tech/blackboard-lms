@@ -1,4 +1,11 @@
-<div class="w-full mx-auto text-left my-4">
-  <%= render 'shared/components/back_button', back_link: course_module_path(@course, @course_module) %>
+<div class="w-full mx-auto text-left flex justify-center">
+  <% content_for :header do %>
+    <div class="flex flex-col gap-4">
+      <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, course_path(@course)], [@course_module.title, course_module_path(@course, @course_module)], [@lesson.title,nil]]%>
+      <div class="flex flex-col md:flex-row justify-between gap-4 w-full">
+        <%= render 'shared/components/back_button', back_link:  course_module_path(@course, @course_module), text: "Add Lesson" %>
+      </div>
+    </div>
+  <% end %>
   <%= render "form", course: @course, course_module: @course_module, lesson: @lesson %>
 </div>
