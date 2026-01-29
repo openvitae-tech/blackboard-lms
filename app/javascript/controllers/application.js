@@ -23,6 +23,13 @@ document.addEventListener("turbo:load", (event) => {
 
     gtag("config", ga_id);
   }
+
+  document.querySelectorAll("trix-editor").forEach((editor) => {
+    if (!editor.dataset.trixInitialized) {
+      editor.dataset.trixInitialized = "true";
+    }
+  });
+
 });
 
 Turbo.StreamActions.redirect_to = function () {

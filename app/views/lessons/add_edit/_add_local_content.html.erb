@@ -1,55 +1,69 @@
 <div class="field-group">
-  <div class="my-8 text-sm flex items-center">
-    <div class="grow">
-      <%= builder.select :lang, options_for_select(language_options), class: "input-select mt-2 rounded box-shadow-medium" %>
-    </div>
-    <%= builder.hidden_field :_destroy, label: "Delete" %>
-    <a href="javascript:void(0);" class="link flex items-center gap-2 rounded" data-action="click->lessons-form#removeRecord">
-      <%= button(label: 'Remove', type: "secondary",size:"lg", icon_name: "trash",icon_position: "right") %>
-    </a>
-  </div>
-  <div data-controller="video-upload" class="my-8 flex flex-col">
-    <div class="text-sm flex flex-row items-center gap-4 justify-between">
-      <div class="w-[373px]">
+  <div class="my-6 flex flex-col md:flex-row gap-4 md:items-center border-2 border-line-colour-light rounded-xl py-5 px-7" data-controller="video-upload" data-lessons-form-video-upload-outlet >
+    <div class="flex flex-col flex-1">
+      <div class="flex flex-row items-center gap-4 justify-between hidden">
         <div class="flex justify-between">
-          <%= builder.label :video, "Upload Video", class: "text-sm font-medium" %>
-          <label data-video-upload-target="fileLabel" class="text-sm text-[#E0E0E0">No file chosen</label>
-          <%= builder.hidden_field :blob_id, data: { video_upload_target: "hiddenBlobId" }%>
+          <%= builder.hidden_field :blob_id,
+                data: {
+                  video_upload_target: "hiddenBlobId",
+                  blob_url: (builder.object.video.attached? ? url_for(builder.object.video) : nil)
+                } 
+          %>
           <input name="lesson[duration]" type="hidden" data-video-upload-target="durationField"/>
         </div>
         <div class="relative mt-2">
-          <%= builder.file_field :video, accept: 'video/*', class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer", data: { video_upload_target: "fileInput", action: "change->video-upload#removeVideoNameAttribute" } %>
-          <div class="file-input bg-white border border-dashed border-primary-light rounded-md p-4 text-center flex items-center justify-center">
-            <span class="icon icon-upload bg-primary icon-small"></span>
-            <span class="file-label text-primary">Choose File</span>
-          </div>
+          <%= builder.file_field :video, accept: 'video/*', class: "input-file opacity-0 absolute inset-0 z-50 w-full h-full cursor-pointer", data: { video_upload_target: "fileInput" } %>
+        </div>
+      </div>
+      <div class="flex flex-col gap-4" data-video-upload-target="videoUploader">
+        <h3 class="flex justify-center hidden text-danger" data-video-upload-target="failedUploadMessage">Upload failed</h3>  
+        <div class="border border-line-colour-light rounded">
+          <video data-video-upload-target="videoPlayer" id="video" class="w-full" controls></video>
         </div>
       </div>
     </div>
-    <div class="my-4 flex flex-col gap-4 hidden" data-video-upload-target="videoUploader">
-      <div class="flex justify-end" data-video-upload-target="uploadControls">
-        <div class="flex items-center gap-3">
-          <button data-action="video-upload#abortUpload" data-video-upload-target="hideCancelUploadButton">
-            Cancel Upload
-          </button>
-          <div class="bg-primary-light h-2 w-[198px] ">
-            <div class="bg-primary h-2" data-video-upload-target="progressBar" style="width: 0%"></div>
-          </div>
-          <span class="text-slate-grey-50 text-xs font-medium" data-video-upload-target="progressText">0%</span>
+    <div  class="flex flex-col gap-4 flex-1" >     
+      <div class="flex flex-col gap-1">
+        <label class="main-text-sm-medium">File name: <span data-video-upload-target="fileLabel">No file chosen</span></label>
+        <div class="flex gap-4">
+          <label class="main-text-sm-medium">File size: <span data-video-upload-target="fileSize"></span></label>
         </div>
+      </div> 
+      <div class="flex flex-col gap-1">
+        <%= dropdown_component(
+              form: builder,
+              name: :lang,
+              options: language_options,
+              html_options: {
+                data: {
+                  lessons_form_target: "languageSelect",
+                  action: "change->lessons-form#languageChanged"
+                }
+              }
+        ) %>
+
+        <p class="text-danger general-text-sm-normal pl-3 hidden"
+          data-lessons-form-target="languageError">
+          This language is already used for another content.
+        </p>
       </div>
-      <h3 class="flex justify-end hidden text-danger" data-video-upload-target="failedUploadMessage">Upload failed</h3>
-      <div class="flex items-center justify-center">
-        <div class="w-4/6 flex flex-col gap-4">
-          <div class="border border-line-colour-light rounded p-2">
-            <video data-video-upload-target="videoPlayer" id="video" class="w-full" controls></video>
-          </div>
-          <div class="flex gap-4">
-            <label class="text-sm">File size: <span data-video-upload-target="fileSize"></span></label>
-            <label class="text-sm">Duration: <span data-video-upload-target="duration"></span></label>
-          </div>
-        </div>
-      </div>
+
+
+      <%= builder.hidden_field :_destroy, data: { lessons_form_target: "destroyField" } %>
+
+      <%= button_tag type: "button",
+                    data: { action: "click->lessons-form#removeRecord" },
+                    class: "w-full" do %>
+      <%= button_component(
+            text: "Remove",
+            type:"outline",
+            icon_name: "trash",
+            icon_position: "left",
+            colorscheme:"danger"
+          ) %>
+
+      <% end %>
+
     </div>
   </div>
 </div>

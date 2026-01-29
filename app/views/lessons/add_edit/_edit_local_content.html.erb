@@ -1,26 +1,51 @@
 <% if builder.object.video.attached? %>
-  <div class="field-group mb-5">
-    <div class="my-8 text-sm flex items-center">
-      <div class="grow text-slate-grey" style="pointer-events: none;">
-        <%= builder.select :lang, options_for_select(language_options, selected: builder.object.lang) %>
+  <div class="field-group my-6 flex flex-col md:flex-row gap-4 border-2 border-line-colour-light rounded-xl py-5 px-7">
+    <div class="flex flex-col gap-4 flex-1">
+      <div class="embed-container">
+        <% if APP_CONFIG.external_video_hosting? && vimeo_upload_timed_out?(builder.object) %>
+          <div class="absolute inset-0 flex justify-center items-center">
+            <span class="text-center"><%= t("local_content.video_not_available") %></span>
+          </div>
+        <% else %>
+          <%= render "video_player", video_iframe: get_video_iframe(builder.object), local_content: builder.object %>
+        <% end %>
       </div>
-      <%= builder.hidden_field :_destroy, label: "Delete" %>
-      <a href="javascript:void(0);" class="link flex items-center gap-2 rounded" data-action="click->lessons-form#removeRecord">
-        <%= button(label: 'Remove', type: "secondary",size:"lg", icon_name: "trash",icon_position: "right") %>
-      </a>
     </div>
-    <div class="flex items-center justify-center">
-      <div class="w-4/6 flex flex-col gap-4">
-        <div class="embed-container border-line-colour-light rounded border p-2 xl:h-[226px]">
-          <% if APP_CONFIG.external_video_hosting? && vimeo_upload_timed_out?(builder.object) %>
-            <div class="absolute inset-0 flex justify-center items-center">
-              <span class="text-center"><%= t("local_content.video_not_available") %></span>
-            </div>
-          <% else %>
-            <%= render "video_player", video_iframe: get_video_iframe(builder.object), local_content: builder.object %>
-          <% end %>
-        </div>
-      </div>
+    
+    <div class="my-8  flex flex-col  gap-4 justify-center flex-1">
+      <div class="flex flex-col gap-1">
+        <%= dropdown_component(
+              form: builder,
+              name: :lang,
+              options: language_options,
+              value: builder.object.lang,
+              html_options: {
+                data: {
+                  lessons_form_target: "languageSelect",
+                  action: "change->lessons-form#languageChanged"
+                }
+              }
+        ) %>
+
+        <p class="text-danger general-text-sm-normal pl-3 hidden"
+          data-lessons-form-target="languageError">
+          This language is already used for another content.
+        </p>
+      </div>  
+      <%= builder.hidden_field :_destroy, data: { lessons_form_target: "destroyField" } %>
+
+      <%= button_tag type: "button",
+                    data: { action: "click->lessons-form#removeRecord" },
+                    class: "w-full" do %>
+      <%= button_component(
+            text: "Remove",
+            type:"outline",
+            icon_name: "trash",
+            icon_position: "left",
+            colorscheme:"danger"
+          ) %>
+
+      <% end %>
     </div>
   </div>
 <% end %>
