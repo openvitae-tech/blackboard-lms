@@ -32,7 +32,7 @@
           This language is already used for another content.
         </p>
       </div>  
-      <%= builder.hidden_field :_destroy %>
+      <%= builder.hidden_field :_destroy, data: { lessons_form_target: "destroyField" } %>
 
       <%= button_tag type: "button",
                     data: { action: "click->lessons-form#removeRecord" },

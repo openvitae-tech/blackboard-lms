@@ -37,8 +37,9 @@ export default class extends Controller {
 
   }
 
-
-
+  hasVideo() {
+    return !!this.hiddenBlobIdTarget?.value || !!this.videoPlayerTarget?.src;
+  }
 
   handleFileSelect(event) {
     const file = event.target.files[0];

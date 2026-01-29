@@ -2,6 +2,8 @@ import { Controller } from "@hotwired/stimulus";
 import store from "store";
 
 export default class extends Controller {
+  static outlets = ["video-upload"];
+
   static targets = [
     "nestedRecordContainer",
     "nestedRecordTemplate",
@@ -11,7 +13,8 @@ export default class extends Controller {
     "videoInput",
     "titleInput",
     "languageSelect",
-    "languageError"
+    "languageError",
+    "destroyField"
   ];
 
   initialize() {
@@ -40,13 +43,20 @@ export default class extends Controller {
         if (select === exceptSelect) return false;
 
         const fieldGroup = select.closest(".field-group");
-        const destroyInput = fieldGroup?.querySelector('[name*="_destroy"]');
 
+        const destroyInput = this.getDestroyFieldFor(fieldGroup);
         return destroyInput?.value !== "1";
       })
       .map(select => select.value)
       .filter(Boolean);
   }
+
+  getDestroyFieldFor(group) {
+    return this.destroyFieldTargets.find(input =>
+      group.contains(input)
+    );
+  }
+
 
   titleChanged() {
     this.updateButtonState();
@@ -66,28 +76,11 @@ export default class extends Controller {
 
     const record = this.nestedRecordContainer.lastElementChild;
     this.setDefaultLanguageFor(record);
-    const videoUploadElement = record.querySelector(
-      '[data-controller="video-upload"]'
+    const outlet = this.videoUploadOutlets.find(outlet =>
+      record.contains(outlet.element)
     );
 
-    const tryAttachFile = (attempts = 5) => {
-      const controller =
-        this.application.getControllerForElementAndIdentifier(
-          videoUploadElement,
-          "video-upload"
-        );
-
-      if (controller) {
-        controller.setFile(file);
-        return;
-      }
-
-      if (attempts > 0) {
-        requestAnimationFrame(() => tryAttachFile(attempts - 1));
-      }
-    };
-
-    tryAttachFile();
+    outlet?.setFile(file);
 
     this.videoInputTarget.value = "";
     this.videoFieldCount++;
@@ -103,7 +96,8 @@ export default class extends Controller {
     event.preventDefault();
 
     const languageSection = event.target.closest(".field-group");
-    languageSection.querySelector('[name*="_destroy"]').value = "1";
+    const destroyInput = this.getDestroyFieldFor(languageSection);
+    destroyInput.value = "1";
     languageSection.style.display = "none";
 
     if (this.videoFieldCount > 0) {
@@ -168,16 +162,18 @@ export default class extends Controller {
   }
 
   hasVideo() {
-    const existingVideo = this.nestedRecordContainerTarget.querySelector(
-      '.field-group video[src]'
-    );
-    if (existingVideo) return true;
+    return Array.from(this.nestedRecordContainerTarget.children).some(group => {
+      const destroyInput = this.getDestroyFieldFor(group);
+      if (destroyInput?.value === "1") return false;
 
-    const uploadedVideo = this.nestedRecordContainerTarget.querySelector(
-      '[data-video-upload-target="hiddenBlobId"][value]'
-    );
+      const outlet = this.videoUploadOutlets.find(o =>
+        group.contains(o.element)
+      );
 
-    return !!uploadedVideo;
+      if (outlet) return outlet.hasVideo();
+
+      return !!group.querySelector("iframe, video");
+    });
   }
 
   updateButtonState() {
