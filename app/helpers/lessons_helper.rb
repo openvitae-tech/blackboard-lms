@@ -1,6 +1,32 @@
 # frozen_string_literal: true
 
 module LessonsHelper
+  def lesson_back_link(lesson, is_admin)
+    course_module = lesson.course_module
+    course = course_module.course
+
+    is_admin ? course_module_path(course, course_module) : course_path(course)
+  end
+
+  def breadcrumbs_links(lesson, is_admin)
+    course_module = lesson.course_module
+    course = course_module.course
+    if is_admin
+      [
+        [I18n.t('course.label'), courses_path],
+        [course.title, course_path(course)],
+        [course_module.title, course_module_path(course, course_module)],
+        [lesson.title]
+      ]
+    else
+      [
+        [I18n.t('course.label'), courses_path],
+        [course.title, course_path(course)],
+        [course_module.title]
+      ]
+    end
+  end
+
   def get_video_iframe(local_content)
     video_url = local_content.video.blob.metadata['url']
 

@@ -1,83 +1,72 @@
 <div class="md:basis-2/5">
-  <div class="md:border md:border-line-colour md:rounded md:overflow-auto md:max-h-screen flex flex-col gap-4 md:py-2">
-    <% modules_in_order(course).each do |course_module| %>
-      <details
-        <% if lesson_in_course_module?(course_module, params[:id]) %>
-          class="border border-line-colour md:mx-2 rounded  highlighted"
-          open="open"
-        <% else %>
-          class="border border-line-colour md:mx-2 rounded"
-        <% end %>
-      >
-        <summary class="flex cursor-pointer items-center justify-between p-4 focus:outline-none">
-          <div class="flex flex-col justify-start heading heading-semibold">
-            <span class=""><%= course_module.title %></span>
-            <div class="md:flex md:items-center md:gap-4">
-              <% if enrollment.present? && enrollment.module_progress(course_module) > 0 %>
-                <div class="bg-primary-light-100 h-1 w-[252px] rounded-full">
-                  <div class="bg-slate-grey-50 h-1 rounded-full" style="width: <%= enrollment.module_progress(course_module) %>%"></div>
-                </div>
-                <span class="text-slate-grey-50 label-small"><%= enrollment.module_progress(course_module) %>%</span>
-              <% else %>
-                <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
-              <% end %>
-            </div>
+  <div class="md:border md:border-line-colour md:rounded-xl md:max-h-screen flex flex-col gap-4 md:py-2">
+    <details class="border border-line-colour md:mx-2 rounded-xl md:overflow-auto" open="open">
+      <summary class="flex cursor-pointer items-center justify-between p-4 focus:outline-none bg-primary-light-50 sticky top-0 z-20">
+        <div class="flex flex-col justify-start main-text-md-semibold main-text-md-semibold">
+          <span><%= course_module.title %></span>
+          <div class="md:flex md:items-center md:gap-4 main-text-sm-normal">
+            <% if enrollment.present? && enrollment.module_progress(course_module) > 0 %>
+              <div class="bg-primary-light-100 h-1 w-[252px] rounded-full">
+                <div class="bg-primary h-full" style="width: <%= enrollment.module_progress(course_module) %>%"></div>
+              </div>
+              <span class=""><%= enrollment.module_progress(course_module) %>%</span>
+            <% else %>
+              <span class="text-primary">(<%= lessons_count(course_module) %>)</span>
+            <% end %>
           </div>
-          <div class="flex items-center">
-            <span class="icon icon-down icon-small bg-letter-color"></span>
-            <span class="icon icon-up icon-small bg-letter-color hidden"></span>
-          </div>
-        </summary>
-        <ul>
-          <% lessons_in_order(course_module).each do |lesson| %>
-            <%= content_tag :li, class:
-              class_names("flex gap-4 items-center justify-between border-t border-line-colour px-4 py-4 text-sm",
-                          'highlighted': active_lesson?(lesson.id, params[:id]),
-                          'disabled': !lesson_accessible?(lesson, course, enrollment)) do %>
+        </div>
+        <div class="flex items-center">
+          <span class="icon icon-down icon-small bg-letter-color"></span>
+          <span class="icon icon-up icon-small bg-letter-color hidden"></span>
+        </div>
+      </summary>
+      <ul>
+        <% lessons_in_order(course_module).each do |lesson| %>
+          <%= content_tag :li, class: "gap-4 border-t border-line-colour px-5 py-4 main-text-sm-normal" do %>
+            <%= link_to course_module_lesson_path(course, course_module, lesson),
+                        class: class_names("flex items-center justify-between",
+                        'highlighted': active_lesson?(lesson.id, params[:id]),
+                        'disabled': !current_user.is_admin? && !lesson_accessible?(lesson, course, enrollment)) do %>
               <div class="flex items-center gap-4">
                 <% if enrollment && lesson_completed?(enrollment, lesson) %>
-                  <div class="flex items-center bg-primary-light-50 border border-primary-light p-1">
+                  <div class="flex items-center bg-primary-light-50 border border-primary-light p-1 rounded">
                     <span class="icon icon-check h-[14px] w-[14px] bg-primary"></span>
                   </div>
                 <% end %>
                 <p class="flex flex-col md:flex-row md:gap-4 items-start">
                   <span class="text-letter-color-light text-sm md:text-base">
-                    <%= lesson.title %> <span class="text-primary-light text-xs">(<%= duration_in_words(lesson.duration) %>)</span>
+                    <%= lesson.title %> <span class="text-primary-light general-text-sm-normal">(<%= duration_in_words(lesson.duration) %>)</span>
                   </span>
                 </p>
               </div>
               <div class="flex gap-4 heading">
-                <%= link_to course_module_lesson_path(course, course_module, lesson) do %>
-                  <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center">
-                    <span class="icon icon-play bg-primary h-2 w-2 md:h-3 md:w-3"></span>
-                  </div>
-                <% end %>
+                <div class="<%= lesson_accessible?(lesson, course, enrollment) ? 'bg-primary-light-50' : 'bg-line-colour-light' %> rounded-full p-1 md:p-2 flex items-center justify-center">
+                  <span class="<%= lesson_accessible?(lesson, course, enrollment) ? 'bg-primary' : 'bg-disabled-color' %> icon icon-play h-4 w-4 md:h-5 md:w-5"></span>
+                </div>
               </div>
             <% end %>
           <% end %>
-        </ul>
-      </details>
-      <% if module_completed?(enrollment, course_module) && course_module.quiz_present? %>
-        <% if enrollment.quiz_completed_for?(course_module) %>
-          <%= link_to redo_quiz_course_module_path(course, course_module), data: { turbo_method: :delete },class: "px-2" do %>
-            <%= button(
-            size: "lg",
-            label: "Retry quiz",
-            icon_name: "arrow-uturn-right",
-            type: "secondary",
-            icon_position: "right"
-            ) %>
-          <% end %>
-        <% else %>
-          <%= link_to course_module_quiz_path(course, course_module,course_module.first_quiz), class: "px-2" do %>
-            <%= button(
-            size: "lg",
-            label: "Resume quiz",
-            icon_name: "arrow-uturn-right",
-            type: "secondary",
-            icon_position: "right"
-            ) %>
-          <% end %>
+        <% end %>
+      </ul>
+    </details>
+    <% if module_completed?(enrollment, course_module) && course_module.quiz_present? %>
+      <% if enrollment.quiz_completed_for?(course_module) %>
+        <%= link_to redo_quiz_course_module_path(course, course_module), data: { turbo_method: :delete },class: "px-2" do %>
+          <%= button_component(
+          text: "Retry quiz",
+          icon_name: "arrow-uturn-right",
+          type: "outline",
+          icon_position: "right"
+          ) %>
+        <% end %>
+      <% else %>
+        <%= link_to course_module_quiz_path(course, course_module,course_module.first_quiz), class: "px-2" do %>
+          <%= button_component(
+          text: "Resume quiz",
+          icon_name: "arrow-uturn-right",
+          type: "outline",
+          icon_position: "right"
+          ) %>
         <% end %>
       <% end %>
     <% end %>
