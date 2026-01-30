@@ -75,23 +75,6 @@
             <% end %>
           </div>
         </div> 
-        <div class="flex justify-center md:justify-end md:items-end gap-4">
-          <% if policy(course).unenroll? %>
-            <%= link_to unenroll_course_path(course), data: { turbo_method: :put, turbo_confirm: t("course.drop_warning") } do %>
-              <%= button(label: "Drop", type: "secondary", icon_name: "minus") %>
-            <% end %>
-          <% end %>
-          <% if policy(course).enroll? %>
-            <%= link_to enroll_course_path(course), data: { turbo_method: :put }  do %>
-              <%= button(label: I18n.t('course.enroll.label')) %>
-            <% end %>
-          <% end %>
-          <% if policy(course).proceed? %>
-            <%= link_to proceed_course_path(course) do %>
-              <%= button(label: "Continue", icon_name: "chevron-double-right", icon_position: "right") %>
-            <% end %>
-          <% end %>
-        </div> 
       </div>
     </div>
   </div>

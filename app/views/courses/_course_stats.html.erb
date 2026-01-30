@@ -1,35 +1,27 @@
-<div class="flex flex-col md:items-center gap-6 md:justify-center bg-primary p-4 md:p-6 mx-4 rounded">
-  <h2 class="flex items-center md:justify-center gap-2">
-    <div class="flex items-center justify-center bg-white rounded-full px-[2px] pt-[2px] w-6 h-6">
-      <span class="icon icon-check icon-small bg-primary"></span>
+<div class="flex items-center justify-around md:justify-center bg-primary-light p-4 md:p-5 rounded-lg md:rounded-xl text-white-light gap-4 md:gap-10">
+  <div class="flex flex-col md:flex-row items-center justify-center md:gap-2">
+    <%= icon 'check-badge-solid', css: 'w-5 h-5' %>
+    <span class="main-text-md-semibold">Course</span>
+    <span class="main-text-md-semibold">Completed</span>
+  </div>
+  <div class="flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-5 justify-center general-text-sm-medium">
+    <div class="flex items-center space-x-1">
+      <%= icon 'clock', css: 'w-4 h-4' %>
+      <span class="">Total time spent : <%= duration_in_words(enrollment.time_spent) %></span>
     </div>
-    <span class="text-white heading page-heading-medium">Course completed</span>
-  </h2>
-  <div class="flex flex-col md:flex-row md:flex-wrap gap-6 md:justify-center md:w-[715px]">
-    <div class="flex items-center space-x-2">
-      <span class="icon-small icon icon-clock bg-white"></span>
-      <span class="ml-2 text-xs font-medium text-white">Total time spent : <%= duration_in_words(enrollment.time_spent) %></span>
+    <div class="flex items-center space-x-1">
+      <%= icon 'circle-stack', css: 'w-4 h-4' %>
+      <span class="">Total points : <%= enrollment.score %></span>
     </div>
-    <div class="flex items-center space-x-2">
-      <span class="icon-small icon icon-quiz-score bg-white"></span>
-      <span class="ml-2 text-xs font-medium text-white">Total points : <%= enrollment.score %></span>
-    </div>
-    <div class="flex items-center space-x-2">
-      <span class="icon-small icon icon-calendar bg-white"></span>
-      <span class="ml-2 text-xs font-medium text-white">Completion date : NA</span>
+    <div class="flex items-center space-x-1">
+      <%= icon 'calendar', css: 'w-4 h-4' %>
+      <span class="">Completion date : NA</span>
     </div>
     <% if enrollment.assigned_by.present? %>
-      <div class="flex items-center space-x-2">
-        <span class="icon-small icon icon-user bg-white"></span>
-        <span class="ml-2 text-xs font-medium text-white">Assigned by : <%= enrollment.assigned_by.display_name %></span>
+      <div class="flex items-center space-x-1">
+        <%= icon 'user', css: 'w-4 h-4' %>
+        <span class="">Assigned by : <%= enrollment.assigned_by.display_name %></span>
       </div>
     <% end %>
   </div>
-  <%= link_to intro_assessment_path(id: assessment.encoded_id) do %>
-    <%= button_component text: t('assessment.take'), type: 'solid', colorscheme: "secondary" %>
-  <% end if assessment && !assessment.completed? %>
-  <%= link_to result_assessment_path(id: assessment.encoded_id) do %>
-    <%= button_component text: t('assessment.view_result'), type: 'solid', colorscheme: "secondary" %>
-  <% end if assessment && assessment.completed? %>
-
 </div>

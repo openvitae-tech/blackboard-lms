@@ -16,9 +16,7 @@
               <span class="icon icon-up h-6 w-6 icon-small bg-primary hidden up-arrow"></span>
             </div>
             <% if module_completed?(enrollment, course_module) %>
-              <div class="flex items-center justify-center bg-primary rounded-full px-[2px] pt-[2px] w-5 h-5">
-                <span class="icon icon-check icon-small bg-white"></span>
-              </div>
+              <%= icon 'check-circle-solid', css: 'text-primary w-6 h-6'%>
             <% end %>
             <div class="flex flex-col gap-1 md:gap-3 md:flex-row items-start md:items-center">
               <div class="flex items-center gap-2 main-text-lg-normal w-44 md:w-fit">

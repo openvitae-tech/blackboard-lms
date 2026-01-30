@@ -1,0 +1,15 @@
+<% if policy(:course_module).new? %>
+  <%= link_to new_course_module_path(course), data: { turbo_frame: "modal" }, class:"flex-1 md:w-fit" do %>
+    <%= button_component(text: "Add module", size:"sm", icon_name: "plus") %>
+  <% end %>
+<% end %>
+<% if policy(course).publish? %>
+  <%= link_to publish_course_path(course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
+    <%= button_component(type: 'outline', text: "Publish", size:"sm") %>
+  <% end %>
+<% end %>
+<% if policy(course).unpublish? %>
+  <%= link_to unpublish_course_path(course), class:"flex-1 md:w-fit", data: { turbo_method: "put" } do %>
+    <%= button_component(type: 'outline', text: "Unpublish", size:"sm",) %>
+  <% end %>
+<% end %>
