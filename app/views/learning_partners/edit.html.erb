@@ -1,4 +1,34 @@
-<div class="mb-8 mx-auto w-full text-left pt-2">
-  <%= render "shared/components/back_button", back_link: learning_partner_path(@learning_partner) %>
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white w-full">
+
+    <div class="hidden flex-1" data-multistep-form-target="cancelButton" data-action="click->modals#closeModal">
+      <%= button_component(text: "Cancel", type:"outline") %>
+    </div>
+    <div class="hidden flex-1" data-multistep-form-target="prevButton" data-action="click->multistep-form#previous">
+      <%= button_component(text: "Previous", type:"outline") %>
+    </div>
+
+    <div class="flex-1"  data-multistep-form-target="nextButton" data-action="click->multistep-form#next">
+      <%= button_component(text: "Next") %>
+    </div>
+    <%= button_tag form: "partner-form", class: "flex-1 hidden", data: { multistep_form_target: "submitButton" } do %>
+      <%= button_component(text: "Update") %>
+    <% end %>    
+  </div>
+<% end %>
+
+<%= modal_box_component(
+      title: "Edit partner",
+      html_options: { data: { controller: "multistep-form" } }, modal_footer:
+    ) do %>
+  <div class="flex justify-center sticky top-2 z-40 bg-white mb-7">
+    <div class="flex items-center">
+      <span data-multistep-form-target="indicator" class="bg-primary-light-100 rounded-full h-5 w-5"></span>
+      <div class="flex grow"><div class="w-[88px] h-1 bg-primary-light-100"></div></div>
+      <span data-multistep-form-target="indicator" class="bg-primary-light-100 rounded-full h-5 w-5"></span>
+      <div class="flex grow"><div class="w-[88px] h-1 bg-primary-light-100"></div></div>
+      <span data-multistep-form-target="indicator" class="bg-primary-light-100 rounded-full h-5 w-5"></span>
+    </div>
+  </div> 
   <%= render "form", learning_partner: @learning_partner %>
-</div>
+<% end %>

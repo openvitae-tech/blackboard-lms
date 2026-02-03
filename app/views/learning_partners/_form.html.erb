@@ -1,56 +1,66 @@
-<div class="md:max-w-3xl"  data-controller="file-upload">
-  <%= form_with(model: learning_partner) do |form| %>
-    <%= render "shared/components/form_errors", resource: learning_partner %>
-    <div class="my-8 text-sm">
-      <%= input_field(form:, field_name: :name, label: "Name", placeholder: "Enter Name",type: "text",width:"w-full") %>
+<div class="w-auto md:max-w-3xl">
+  <%= form_with(model: learning_partner, id: "partner-form") do |form| %>
+    <div data-multistep-form-target="step" class="flex flex-col gap-4">
+      <%= input_text_component(form:, name: :name, label: "Name", placeholder: "Enter Name") %> 
+      <%= textarea_component(form:, name: :about, label: "About", placeholder: "Enter about", rows: 4 ) %>
+      <%= dropdown_component(
+        name: "learning_partner[supported_countries][]",
+        label: "Country",
+        options: country_dropdown_options,
+        value: learning_partner&.supported_countries&.first,
+        
+      ) %>
+      <%= dropdown_component(       
+        name: "organisation_type",
+        label: "Organisation type",
+        options: [
+          ["Private", "private"],
+          ["Public", "public"]
+        ]
+      ) %>
     </div>
-    <div>
-      <%= input_textarea_component(form:, field_name: :about, label: "About", placeholder: "Enter about") %>
+
+    <div data-multistep-form-target="step" class="flex flex-col gap-4 hidden">
+      <%= file_selector_component(form:, name: :logo, label: "Logo", type: "image" ) %>
+      <%= file_selector_component(form:, name: :banner, label: "banner", type: "image" ) %>
     </div>
-    <div class="my-8">
-      <label class="text-letter-color-light text-sm md:text-base leading-tight">
-        Select supported countries
-      </label>
-      <% AVAILABLE_COUNTRIES.each do |_, country| %>
-        <div class="mt-3">
-          <%= input_radio(
-                field_name: "learning_partner[supported_countries][]",
-                option: country[:label],
-                value: country[:value],
-                html_options: {
-                  checked: learning_partner&.supported_countries.first == country[:value]
-                }
-              ) %>
+    <div data-multistep-form-target="step" class="hidden">
+      <%= form.fields_for :payment_plan do |payment_plan_form| %>
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-row space-x-5 justify-between">
+            <%= date_picker_component( 
+                form: payment_plan_form,           
+                name: :start_date,
+                label: "Subscription Start Date",
+                support_text:"choose a date",
+                placeholder:"choose a date"
+                )
+              %>   
+              <%= date_picker_component(
+                form: payment_plan_form,
+                name: :end_date,
+                label: "Subscription End Date",
+                support_text:"choose a date",
+                placeholder:"choose a date"
+                )
+              %>  
+          </div>
+
+          <%= input_text_component(
+            form: payment_plan_form,
+            name: :total_seats,
+            label: "User Limit",
+            placeholder: "Enter Limit"
+          ) %>
+
+          <%= input_text_component(
+            form: payment_plan_form,
+            name: :per_seat_cost,
+            label: "Per user amount (₹)",
+            placeholder: "Enter amount"
+          ) %>
         </div>
       <% end %>
-    </div>
-    <div class="my-8 text-sm">
-      <div class="flex justify-between text-letter-color-light">
-        <%= form.label :logo, style: "display: block" %>
-      </div>
-      <div class="relative mt-2">
-        <%= render "shared/components/file_select",
-                   hidden_file_field: form.file_field(:logo, class: "hidden", data: { forms_target: "fileInput" }),
-                   preview: "logo" %>
-      </div>
-    </div>
-    <div class="my-8 text-sm">
-      <div class="flex justify-between text-letter-color-light">
-        <%= form.label :banner, style: "display: block" %>
-      </div>
-      <div class="relative mt-2">
-        <%= render "shared/components/file_select",
-                   hidden_file_field: form.file_field(:banner, class: "hidden", data: { forms_target: "fileInput" }),
-                   preview: "banner" %>
-      </div>
-    </div>
-    <div class="my-8 flex items-center gap-4 text-sm">
-      <div class="mx-4 my-8">
-        <%= link_to "Cancel", learning_partners_path, class: "nav-link" %>
-      </div>
-      <div>
-        <%= form.submit submit_label_for(learning_partner), class: "btn-primary" %>
-      </div>
     </div>
   <% end %>
 </div>

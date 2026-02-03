@@ -1,11 +1,16 @@
 <div class="relative flex w-full items-center">
 
   <% if date_picker.form.present? %>
-    <%= date_picker.form.text_field date_picker.name,
-          value: date_picker.value,
-          class: date_picker.html_options[:class],
-          data: { date_picker_target: "dateSelector" },
-          disabled: date_picker.disabled %>
+    <% field_options = {
+      class: date_picker.html_options[:class],
+      placeholder: date_picker.placeholder,
+      data: { date_picker_target: "dateSelector" },
+      disabled: date_picker.disabled
+    } %>
+
+    <% field_options[:value] = date_picker.value if date_picker.value.present? %>
+
+    <%= date_picker.form.text_field date_picker.name, **field_options %>
   <% else %>
     <%= text_field_tag date_picker.name,
           date_picker.value,
