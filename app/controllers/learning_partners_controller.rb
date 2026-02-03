@@ -31,7 +31,7 @@ class LearningPartnersController < ApplicationController
   # GET /learning_partners/1/edit
   def edit
     authorize :learning_partner
-    @learning_partner.build_payment_plan
+    @learning_partner.build_payment_plan unless @learning_partner.payment_plan
   end
 
   # POST /learning_partners or /learning_partners.json
@@ -117,6 +117,7 @@ class LearningPartnersController < ApplicationController
       :banner,
       supported_countries: [],
       payment_plan_attributes: [
+        :id,  
         :start_date,
         :end_date,
         :total_seats,
