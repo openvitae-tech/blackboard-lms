@@ -1,16 +1,36 @@
 <% modal_footer = capture do %>
   <div class="flex gap-2 sticky bottom-0 bg-white w-full">
 
-    <div class="hidden flex-1" data-multistep-form-target="cancelButton" data-action="click->modals#closeModal">
+    <%= button_tag "Cancel",
+        type: "button",
+        class: "hidden flex-1",
+        data: {
+          multistep_form_target: "cancelButton",
+          action: "click->modals#closeModal"
+        } do %>
       <%= button_component(text: "Cancel", type:"outline") %>
-    </div>
-    <div class="hidden flex-1" data-multistep-form-target="prevButton" data-action="click->multistep-form#previous">
-      <%= button_component(text: "Previous", type:"outline") %>
-    </div>
+    <% end %>       
 
-    <div class="flex-1"  data-multistep-form-target="nextButton" data-action="click->multistep-form#next">
-      <%= button_component(text: "Next") %>
-    </div>
+    <%= button_tag "Previous",
+        type: "button",
+        class: "hidden flex-1",
+        data: {
+          multistep_form_target: "prevButton",
+          action: "click->multistep-form#previous"
+        } do%>
+      <%= button_component(text: "Previous", type:"outline") %>    
+    <% end %>       
+
+    <%= button_tag "Next",
+        type: "button",
+        class: "flex-1",
+        data: {
+          multistep_form_target: "nextButton",
+          action: "click->multistep-form#next"
+        } do %>
+      <%= button_component(text: "Next") %>    
+    <% end %> 
+
     <%= button_tag form: "partner-form", class: "flex-1 hidden", data: { multistep_form_target: "submitButton" } do %>
       <%= button_component(text: "Create") %>
     <% end %>    
