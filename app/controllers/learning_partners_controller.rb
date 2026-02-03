@@ -43,7 +43,7 @@ class LearningPartnersController < ApplicationController
     service = PartnerOnboardingService.instance
     status = service.create_partner(@learning_partner)
 
-    flash[:notice] = 'Learning partner was successfully updated.'
+    flash[:notice] = t("resource.created", resource_name: "Learning Partner")
 
     respond_to do |format|
       if status == 'ok'
