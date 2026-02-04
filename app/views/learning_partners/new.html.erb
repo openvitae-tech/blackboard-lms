@@ -39,7 +39,7 @@
 
 <%= modal_box_component(
       title: "Add partner",
-      html_options: { data: { controller: "multistep-form" } }, modal_footer:
+      html_options: { data: { controller: "multistep-form", "multistep-form-current-step-value": (local_assigns[:error_step] || 1) } }, modal_footer:
     ) do %>
     <div class="flex justify-center sticky top-2 z-40 bg-white mb-7">
       <div class="flex items-center">

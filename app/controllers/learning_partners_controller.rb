@@ -52,7 +52,9 @@ class LearningPartnersController < ApplicationController
         format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(learning_partner_path(@learning_partner)) }
         format.json { render :show, status: :ok, location: @learning_partner }
       else
-        format.html { render :new, status: :bad_request }
+        @error_step = error_step_for(@learning_partner)
+
+        format.html { render :new, status: :bad_request, locals: { error_step: @error_step } }
         format.json { render json: @learning_partner.errors, status: :bad_request }
       end
     end
@@ -69,11 +71,29 @@ class LearningPartnersController < ApplicationController
         format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(learning_partner_path(@learning_partner)) }
         format.json { render :show, status: :ok, location: @learning_partner }
       else
-        format.html { render :edit, status: :bad_request }
+        @error_step = error_step_for(@learning_partner)
+
+        format.html { render :edit, status: :bad_request, locals: { error_step: @error_step } }
         format.json { render json: @learning_partner.errors, status: :bad_request }
       end
     end
   end
+
+  def error_step_for(learning_partner)
+    step1_fields = %i[name about supported_countries organisation_type]
+    step2_fields = %i[logo banner]
+
+    return 1 if step1_fields.any? { |field| learning_partner.errors.key?(field) }
+
+    return 2 if step2_fields.any? { |field| learning_partner.errors.key?(field) }
+
+    if learning_partner.payment_plan
+      return 3 if learning_partner.payment_plan.errors.any?
+    end
+
+    1
+  end
+
 
   # DELETE /learning_partners/1 or /learning_partners/1.json
   def destroy
