@@ -52,7 +52,6 @@ docker-build
 
 /config/credentials/development.key
 .idea/*
-*.md
 .vscode
 .DS_STORE
 .vscode
