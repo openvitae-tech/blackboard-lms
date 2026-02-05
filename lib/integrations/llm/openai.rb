@@ -57,7 +57,7 @@ module Integrations
               }
             ],
             tool_choice: 'required',
-            instructions: hospitality_instructions
+            instructions: Instructions::ChatbotInstruction::INSTRUCTION
           }
         )
 
@@ -78,11 +78,6 @@ module Integrations
         output.flat_map do |item|
           (item['content'] || []).map { |c| c['text'] }
         end.compact.join("\n")
-      end
-
-      def hospitality_instructions
-        @hospitality_instructions ||=
-          Rails.root.join('lib/integrations/llm/instructions/hospitality_instructions.md').read
       end
     end
   end
