@@ -3,7 +3,7 @@
 module Integrations
   module Llm
     module Instructions
-      module ChatbotInstruction
+      module Chatbot
         INSTRUCTION = <<~INSTRUCTION
           You are a Hospitality Knowledge Assistant.
 

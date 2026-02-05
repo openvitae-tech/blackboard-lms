@@ -57,7 +57,7 @@ module Integrations
               }
             ],
             tool_choice: 'required',
-            instructions: Instructions::ChatbotInstruction::INSTRUCTION
+            instructions: Instructions::Chatbot::INSTRUCTION
           }
         )
 
