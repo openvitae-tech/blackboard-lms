@@ -57,15 +57,7 @@ module Integrations
               }
             ],
             tool_choice: 'required',
-            instructions: <<~SYS
-              You are an AI assistant. Please answer the questions as per the following instruction.
-              RULES (these are strict, do not break them):
-
-              1. If the answer is found in the vector store then respond using that information.
-              2. If the answer is NOT found in the vector store AND the question is related to hospitality then use your own hospitality-domain knowledge.
-              3. If the answer is NOT found in the vector store AND the question is NOT related to hospitality then reply exactly: #{I18n.t('llm.response.idontknow')}"
-              4. You can answer to any greetings.
-            SYS
+            instructions: Instructions::Chatbot::INSTRUCTION
           }
         )
 
