@@ -15,6 +15,7 @@
     <%= text_field_tag date_picker.name,
           date_picker.value,
           class: date_picker.html_options[:class],
+          placeholder: date_picker.placeholder,
           data: { date_picker_target: "dateSelector" },
           disabled: date_picker.disabled %>
   <% end %>
