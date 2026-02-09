@@ -43,16 +43,17 @@ class LearningPartnersController < ApplicationController
     service = PartnerOnboardingService.instance
     status = service.create_partner(@learning_partner)
 
-    flash[:notice] = t("resource.created", resource_name: "Learning Partner")
 
     respond_to do |format|
       if status == 'ok'
+        flash[:notice] = t("resource.created", resource_name: "Learning Partner")
+
         EVENT_LOGGER.publish_onboarding_initiated(current_user, @learning_partner)
         format.html { redirect_to learning_partner_path(@learning_partner) }
         format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(learning_partner_path(@learning_partner)) }
         format.json { render :show, status: :ok, location: @learning_partner }
       else
-        @error_step = error_step_for(@learning_partner)
+        @error_step = LearningPartners::LearningPartnerFormSteps.error_step_for(@learning_partner)
 
         format.html { render :new, status: :bad_request, locals: { error_step: @error_step } }
         format.json { render json: @learning_partner.errors, status: :bad_request }
@@ -63,37 +64,22 @@ class LearningPartnersController < ApplicationController
   # PATCH/PUT /learning_partners/1 or /learning_partners/1.json
   def update
     authorize :learning_partner
-    flash[:notice] = 'Learning partner was successfully updated.'
 
     respond_to do |format|
       if @learning_partner.update(learning_partner_params)
+        flash[:notice] = 'Learning partner was successfully updated.'
+
         format.html { redirect_to learning_partner_path(@learning_partner) }
         format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(learning_partner_path(@learning_partner)) }
         format.json { render :show, status: :ok, location: @learning_partner }
       else
-        @error_step = error_step_for(@learning_partner)
+        @error_step = LearningPartners::LearningPartnerFormSteps.error_step_for(@learning_partner)
 
         format.html { render :edit, status: :bad_request, locals: { error_step: @error_step } }
         format.json { render json: @learning_partner.errors, status: :bad_request }
       end
     end
   end
-
-  def error_step_for(learning_partner)
-    step1_fields = %i[name about supported_countries organisation_type]
-    step2_fields = %i[logo banner]
-
-    return 1 if step1_fields.any? { |field| learning_partner.errors.key?(field) }
-
-    return 2 if step2_fields.any? { |field| learning_partner.errors.key?(field) }
-
-    if learning_partner.payment_plan
-      return 3 if learning_partner.payment_plan.errors.any?
-    end
-
-    1
-  end
-
 
   # DELETE /learning_partners/1 or /learning_partners/1.json
   def destroy

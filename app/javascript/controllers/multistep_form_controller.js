@@ -5,9 +5,6 @@ export default class extends Controller {
   static values = { currentStep: Number }
 
   connect() {
-    if (!this.hasCurrentStepValue) {
-      this.currentStepValue = 1
-    }
     this.updateView()
   }
 
