@@ -1,41 +1,49 @@
-<div class="flex justify-between items-center mb-4 pt-2">
-  <%= heading_component(text: "Courses") %>
-  <% if !courses.blank? %>
-    <%= link_to add_courses_program_path(program) do %>
-      <%= button(label: 'Add courses', icon_name: "plus") %>
-    <% end %>
-  <% end %>
+<div class="flex flex-col gap-3 bg-primary-light-100 px-6 md:px-16  py-5 -mx-5 md:-mx-16">
+  <p class="main-text-lg-semibold"><%= program.name %></p>
+  <div class="flex gap-3 md:gap-1">
+    <div class="flex items-center">
+      <%= icon("book", css: "h-4 w-4 text-primary") %>
+      <span class="ml-2 general-text-sm-normal"  data-programs-target="coursesCount"><%= pluralize(program.courses_count, 'course') %></span>
+    </div>
+    <div class="w-px h-full bg-slate-grey-light"></div>
+    <div class="flex items-center">
+      <%= icon("user", css: "h-4 w-4 text-primary") %>
+      <span class="ml-2 general-text-sm-normal"></span>
+    </div>
+  </div>
 </div>
-<h3 class="text-sm mb-4 font-bold" data-programs-target="coursesCount">
-  <%= pluralize(program.courses_count, 'course') %>
-</h3>
-<div data-programs-target="deleteButton" class="hidden">
-  <div class="flex items-center mb-4">
-    <h3 class="text-sm font-bold">
-      <span data-programs-target="selectedCoursesCount"></span> selected of
-      <%= pluralize(program.courses_count, 'course') %>
-    </h3>
-    <div class="pl-2 cursor-pointer">
-      <%= button(label: "Delete", size: "sm", type: "danger",
-          html_options: {
-            data: {
-              action: "click->programs#bulkDelete",
-              url: confirm_bulk_destroy_courses_program_path(program, page: params[:page])
-            }})
-      %>
+<div class="flex flex-col md:flex-row gap-4 md:justify-between mt-4 md:mt-6">
+  <p class="main-text-lg-semibold">Courses included in the Programme</p>
+
+  <div data-programs-target="deleteButton" class="hidden">
+    <div class="flex items-center">
+      <h3 class="text-sm font-bold">
+        <span data-programs-target="selectedCoursesCount"></span> selected of
+        <%= pluralize(program.courses_count, 'course') %>
+      </h3>
+      <div class="pl-2 cursor-pointer">
+
+        <%= button_component(text: "Delete", size: "sm", type: "outline", colorscheme: "danger",
+            html_options: {
+              data: {
+                action: "click->programs#bulkDelete",
+                url: confirm_bulk_destroy_courses_program_path(program, page: params[:page])
+              }})
+        %>
+      </div>
     </div>
   </div>
 </div>
 
 <% if courses.any? %>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-6">
+  <div class="flex flex-col gap-4 mt-4 md:mt-5">
     <% courses.each do |course| %>
       <div class="relative">
         <%= check_box_tag 'course_ids[]',
             course.id,
             false,
             id: dom_id(course, "course_ids"),
-            class: 'absolute top-2 right-2 w-5 h-5 z-50 border-2 rounded checked:bg-primary checked:border-primary focus:ring-0',
+            class: 'absolute top-4 right-4 w-5 h-5 z-50 border-2 rounded checked:bg-primary checked:border-primary focus:ring-0',
             data: {
               programs_target: "courseCheckbox",
               action: "programs#toggleDeleteButton"
@@ -43,7 +51,7 @@
         %>
         <div class="relative">
           <%= link_to course_path(course) do %>
-            <%= course_card_component(course: course) %>
+            <%= long_course_card_component(course: course, program:program) %>
           <% end %>
         </div>
       </div>
