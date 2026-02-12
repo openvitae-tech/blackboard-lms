@@ -34,35 +34,36 @@
     </div>
   </div>
 </div>
-
-<% if courses.any? %>
-  <div class="flex flex-col gap-4 mt-4 md:mt-5">
-    <% courses.each do |course| %>
-      <div class="relative">
-        <%= check_box_tag 'course_ids[]',
-            course.id,
-            false,
-            id: dom_id(course, "course_ids"),
-            class: 'absolute top-4 right-4 w-5 h-5 z-50 border-2 rounded checked:bg-primary checked:border-primary focus:ring-0',
-            data: {
-              programs_target: "courseCheckbox",
-              action: "programs#toggleDeleteButton"
-            }
-        %>
+<% if current_user.privileged_user? %>
+  <% if courses.any? %>
+    <div class="flex flex-col gap-4 mt-4 md:mt-5">
+      <% courses.each do |course| %>
         <div class="relative">
-          <%= link_to course_path(course) do %>
-            <%= long_course_card_component(course: course, program:program) %>
-          <% end %>
+          <%= check_box_tag 'course_ids[]',
+              course.id,
+              false,
+              id: dom_id(course, "course_ids"),
+              class: 'absolute top-4 right-4 w-5 h-5 z-50 border-2 rounded checked:bg-primary checked:border-primary focus:ring-0',
+              data: {
+                programs_target: "courseCheckbox",
+                action: "programs#toggleDeleteButton"
+              }
+          %>
+          <div class="relative">
+            <%= link_to course_path(course) do %>
+              <%= long_course_card_component(course: course, program:program) %>
+            <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <div class="flex flex-col items-center justify-center">
-    <p class="text-gray-500 mb-4">No courses present</p>
-    <%= link_to add_courses_program_path(program) do %>
-      <%= button(label: 'Add courses', icon_name: "plus") %>
-    <% end %>
-  </div>
-<% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="flex flex-col items-center justify-center">
+      <p class="text-gray-500 mb-4">No courses present</p>
+      <%= link_to add_courses_program_path(program) do %>
+        <%= button(label: 'Add courses', icon_name: "plus") %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>  
 <%= paginate courses %>
