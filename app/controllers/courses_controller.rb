@@ -65,7 +65,11 @@ class CoursesController < ApplicationController
         format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(course_url(@course)) }
       end
     else
-       render :new, status: :unprocessable_entity
+      @error_step = Courses::CourseFormSteps.error_step_for(@course)
+
+      render :new,
+            status: :unprocessable_entity,
+            locals: { error_step: @error_step }
     end
   end
 
@@ -80,7 +84,11 @@ class CoursesController < ApplicationController
         format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(course_url(@course)) }
       end
     else
-      render :edit, status: :unprocessable_entity
+      @error_step = Courses::CourseFormSteps.error_step_for(@course)
+
+      render :edit,
+            status: :unprocessable_entity,
+            locals: { error_step: @error_step }
     end
   end
 

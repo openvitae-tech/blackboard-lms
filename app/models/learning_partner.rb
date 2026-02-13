@@ -8,6 +8,7 @@ class LearningPartner < ApplicationRecord
   has_many :certificate_templates, dependent: :destroy
   has_one :scorm, dependent: :destroy
   has_one :payment_plan, dependent: :destroy
+  accepts_nested_attributes_for :payment_plan
   has_many :programs, dependent: :destroy
 
   validates :name, presence: true, length: { in: 2..255 }

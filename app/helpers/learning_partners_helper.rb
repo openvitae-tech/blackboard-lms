@@ -18,7 +18,10 @@ module LearningPartnersHelper
     ViewComponent::MenuComponent::MenuItem.new(
       label: t('button.edit'),
       url: edit_learning_partner_path(learning_partner),
-      type: :link
+      type: :link,
+      options: {
+        data: { turbo_frame: 'modal' }
+      }
     )
   end
 
