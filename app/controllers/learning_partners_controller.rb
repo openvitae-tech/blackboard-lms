@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class LearningPartnersController < ApplicationController
+  helper_method :country_dropdown_options
+
   before_action :set_learning_partner, only: %i[show edit update destroy activate deactivate]
 
   # GET /learning_partners or /learning_partners.json
@@ -23,11 +25,13 @@ class LearningPartnersController < ApplicationController
   def new
     authorize :learning_partner
     @learning_partner = LearningPartner.new
+    @learning_partner.build_payment_plan
   end
 
   # GET /learning_partners/1/edit
   def edit
     authorize :learning_partner
+    @learning_partner.build_payment_plan unless @learning_partner.payment_plan
   end
 
   # POST /learning_partners or /learning_partners.json
@@ -39,15 +43,19 @@ class LearningPartnersController < ApplicationController
     service = PartnerOnboardingService.instance
     status = service.create_partner(@learning_partner)
 
+
     respond_to do |format|
       if status == 'ok'
+        flash[:notice] = t("resource.created", resource_name: "Learning Partner")
+
         EVENT_LOGGER.publish_onboarding_initiated(current_user, @learning_partner)
-        format.html do
-          redirect_to new_learning_partner_payment_plan_path(@learning_partner), notice: t("resource.created", resource_name: "Learning Partner")
-        end
-        format.json { render :show, status: :created, location: @learning_partner }
+        format.html { redirect_to learning_partner_path(@learning_partner) }
+        format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(learning_partner_path(@learning_partner)) }
+        format.json { render :show, status: :ok, location: @learning_partner }
       else
-        format.html { render :new, status: :bad_request }
+        @error_step = LearningPartners::LearningPartnerFormSteps.error_step_for(@learning_partner)
+
+        format.html { render :new, status: :bad_request, locals: { error_step: @error_step } }
         format.json { render json: @learning_partner.errors, status: :bad_request }
       end
     end
@@ -59,12 +67,15 @@ class LearningPartnersController < ApplicationController
 
     respond_to do |format|
       if @learning_partner.update(learning_partner_params)
-        format.html do
-          redirect_to learning_partner_path(@learning_partner), notice: 'Learning partner was successfully updated.'
-        end
+        flash[:notice] = 'Learning partner was successfully updated.'
+
+        format.html { redirect_to learning_partner_path(@learning_partner) }
+        format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(learning_partner_path(@learning_partner)) }
         format.json { render :show, status: :ok, location: @learning_partner }
       else
-        format.html { render :edit, status: :bad_request }
+        @error_step = LearningPartners::LearningPartnerFormSteps.error_step_for(@learning_partner)
+
+        format.html { render :edit, status: :bad_request, locals: { error_step: @error_step } }
         format.json { render json: @learning_partner.errors, status: :bad_request }
       end
     end
@@ -105,11 +116,30 @@ class LearningPartnersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def learning_partner_params
-    params.require(:learning_partner).permit(:name, :about, :logo, :banner, :max_user_count, supported_countries: [])
+    params.require(:learning_partner).permit(
+      :name,
+      :about,
+      :logo,
+      :banner,
+      supported_countries: [],
+      payment_plan_attributes: [
+        :id,  
+        :start_date,
+        :end_date,
+        :total_seats,
+        :per_seat_cost
+      ]
+    )
   end
 
   def authorize_admin!
     authorize :learning_partner
+  end
+
+  def country_dropdown_options
+    AVAILABLE_COUNTRIES.map do |_, country|
+      [country[:label], country[:value]]
+    end
   end
 
   def terminate_impersonation

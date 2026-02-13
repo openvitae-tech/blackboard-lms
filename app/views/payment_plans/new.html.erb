@@ -1,5 +1,4 @@
-<div class="box">
-  <h1 class="heading page-heading-medium"><%= t("learning_partner.payment_plan.create") %></h1>
-</div>
-<%= render "form", learning_partner: @learning_partner, payment_plan: @payment_plan,
+<%= modal_box_component( title: t("learning_partner.payment_plan.create")) do %>
+  <%= render "form", learning_partner: @learning_partner, payment_plan: @payment_plan,
     url:  learning_partner_payment_plan_path, method: :post, cancel_path: learning_partner_path(@learning_partner) %>
+<% end %>

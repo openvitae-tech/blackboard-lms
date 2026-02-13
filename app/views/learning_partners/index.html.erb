@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-4 mt-4 md:mt-5 mb-5 md:mb-6">
   <div class="flex justify-between items-center ">
     <%= h3_component(text: "Partner List") %>
-    <%= link_to new_learning_partner_path, class: 'inline-block' do %>
+    <%= link_to new_learning_partner_path, data: { turbo_frame: "modal" }, class: 'inline-block' do %>
       <%= button_component(text: 'Add Partner', icon_name: "plus") %>
     <% end %>
   </div>

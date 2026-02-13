@@ -5,7 +5,6 @@ export default class extends Controller {
   static values = { currentStep: Number }
 
   connect() {
-    this.currentStepValue = 1
     this.updateView()
   }
 
@@ -31,6 +30,8 @@ export default class extends Controller {
     this.submitButtonTarget.classList.toggle("hidden", this.currentStepValue !== this.stepTargets.length)
 
     this.updateIndicators()
+    const firstError = this.element.querySelector(".field_with_errors")
+    firstError?.scrollIntoView({ behavior: "smooth", block: "center" })
   }
 
   updateIndicators() {
