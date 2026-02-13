@@ -27,4 +27,5 @@ module UiHelper
   include ViewComponent::ChipComponent
   include ViewComponent::ProgressComponent
   include ViewComponent::ProfileIconComponent
+  include ViewComponent::AccordionComponent
 end
