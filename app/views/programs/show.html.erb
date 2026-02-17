@@ -9,8 +9,7 @@
         <% end %>
       <% end %>   
     <% else %>
-      <%# TODO: Add proper route/link for "Join program" %>
-      <%= link_to "javascript:void(0);" do %>
+      <%= button_to choose_programs_path(program_id: @program.id), method: :post do %>
         <%= button_component(text: 'Join program') %>
       <% end %>
     <% end %>  

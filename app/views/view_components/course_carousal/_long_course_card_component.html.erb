@@ -59,7 +59,8 @@
        
      </div>
      <% unless program.present? %>
-        <div class="border border-primary rounded-full min-w-8 md:min-w-10 h-8 md:h-10 flex justify-center">
+        <%# TODO: Bookmark is temporarily hidden. Enable once the feature is finalized. %>
+        <div class="border border-primary rounded-full min-w-8 md:min-w-10 h-8 md:h-10 flex justify-center hidden">
           <%= icon("bookmark", css: "h-5 w-5 text-primary") %>
         </div>
       <% end %>  
