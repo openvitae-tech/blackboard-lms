@@ -1,5 +1,19 @@
 <div data-controller="programs">
   <%= render "shared/components/bread_crumbs", links: [["Programs", programs_path], [@program.name, nil]] %>
+  <div class="flex justify-between mb-4">
+    <%= render 'shared/components/back_button', back_link: programs_path %>
+    <% if current_user.privileged_user? %>
+      <% if !@courses.blank? %>
+        <%= link_to add_courses_program_path(@program) do %>
+          <%= button_component(text: 'Add courses', icon_name: "plus") %>
+        <% end %>
+      <% end %>   
+    <% else %>
+      <%= button_to choose_programs_path(program_id: @program.id), method: :post do %>
+        <%= button_component(text: 'Join program') %>
+      <% end %>
+    <% end %>  
+  </div>
   <div id="program-courses">
     <%= render "course_list", program: @program, courses: @courses %>
   </div>
