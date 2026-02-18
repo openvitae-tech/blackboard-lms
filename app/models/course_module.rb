@@ -73,4 +73,12 @@ class CourseModule < ApplicationRecord
 
     quizzes.find(quizzes_in_order[index - 1])
   end
+
+  def module_lessons
+    @module_lessons ||= RecordOrdering.records_in_order(lessons, lessons_in_order)
+  end
+
+  def module_quizzess
+    @module_quizzess ||= RecordOrdering.records_in_order(quizzes, quizzes_in_order)
+  end
 end

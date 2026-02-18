@@ -4,19 +4,19 @@ module CourseJson
   extend ActiveSupport::Concern
 
   def to_json_data
-    course_data = set_course_data_attributes
+    course_data = fill_course_data_attributes
     course_data['modules'] = []
 
     modules_in_order.each do |course_module|
-      module_data = set_module_data_attributes(course_module)
+      module_data = fill_module_data_attributes(course_module)
       module_data['lessons'] = []
 
-      course_module.lessons_in_order.each do |lesson|
-        lesson_data = set_lesson_data_attributes(lesson)
+      course_module.module_lessons.each do |lesson|
+        lesson_data = fill_lesson_data_attributes(lesson)
         lesson_data['local_contents'] = []
 
         lesson.local_contents.each do |local_content|
-          local_content_data = set_local_content_data_attributes(local_content)
+          local_content_data = fill_local_content_data_attributes(local_content)
           lesson_data['local_contents'].push(local_content_data)
         end
 
@@ -31,7 +31,7 @@ module CourseJson
 
   private
 
-  def set_course_data_attributes
+  def fill_course_data_attributes
     course_data = {}
     course_data['id'] = id
     course_data['categories'] = tags.filter { |t| t.tag_type == 'category' }.map(&:name)
@@ -52,7 +52,7 @@ module CourseJson
     course_data
   end
 
-  def set_module_data_attributes(course_module)
+  def fill_module_data_attributes(course_module)
     module_data = {}
     module_data['id'] = course_module.id
     module_data['created_at'] = course_module.created_at
@@ -63,7 +63,7 @@ module CourseJson
     module_data
   end
 
-  def set_lesson_data_attributes(lesson)
+  def fill_lesson_data_attributes(lesson)
     lesson_data = {}
     lesson_data['id'] = lesson.id
     lesson_data['created_at'] = lesson.created_at
@@ -78,13 +78,14 @@ module CourseJson
     lesson_data
   end
 
-  def set_local_content_data_attributes(local_content)
+  def fill_local_content_data_attributes(local_content)
     local_content_data = {}
     local_content_data['id'] = local_content.id
     local_content_data['lang'] = local_content.lang
     local_content_data['status'] = local_content.status
     local_content_data['video_published_at'] = local_content.video_published_at
     local_content_data['video_url'] = local_content.video_url
+    local_content_data['scenes'] = [] # sequence of scenes data to be filled later
     local_content_data
   end
 end

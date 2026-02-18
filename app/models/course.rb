@@ -104,6 +104,10 @@ class Course < ApplicationRecord
     save!
   end
 
+  def modules_in_order
+    @modules_in_order ||= RecordOrdering.records_in_order(course_modules.includes(:lessons), course_modules_in_order)
+  end
+
   private
 
   def unique_tags

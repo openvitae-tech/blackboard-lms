@@ -195,7 +195,7 @@ RSpec.describe Course, type: :model do
       lesson_data = module_data['lessons'][0]
       expect(lesson_data.keys.sort).to eq(lesson_attributes)
       local_content_data = lesson_data['local_contents'][0]
-      local_content_attributes = %w[lang status video_published_at video_url]
+      local_content_attributes = %w[id lang scenes status video_published_at video_url]
       expect(local_content_data.keys.sort).to eq(local_content_attributes)
     end
   end
