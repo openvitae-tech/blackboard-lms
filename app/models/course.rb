@@ -2,6 +2,7 @@
 
 class Course < ApplicationRecord
   include CustomValidations
+  include CourseJson
 
   ENROLLED_COURSES_LIMIT = 4
   PER_PAGE_LIMIT = 12
