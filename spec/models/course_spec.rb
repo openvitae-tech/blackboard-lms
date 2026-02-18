@@ -186,8 +186,8 @@ RSpec.describe Course, type: :model do
       course_data = JSON.parse(json)
       course_attributes = %w[banner categories course_modules_count created_at description duration enrollments_count id
                              is_published levels modules rating team_enrollments_count title updated_at visibility]
-      module_attributes = %w[created_at lessons lessons_count quizzes_count title updated_at]
-      lesson_attributes = %w[created_at description duration last_rated_at lesson_type local_contents rating title
+      module_attributes = %w[created_at id lessons lessons_count quizzes_count title updated_at]
+      lesson_attributes = %w[created_at description duration id last_rated_at lesson_type local_contents rating title
                              updated_at video_streaming_source]
       expect(course_data.keys.sort).to eq(course_attributes)
       module_data = course_data['modules'][0]
