@@ -278,8 +278,8 @@ body {
   }
 }
 
-details.highlighted summary {
-  @apply bg-primary-light-50;
+.highlight{
+  @apply bg-secondary-light;
 }
 
 li.highlighted {
