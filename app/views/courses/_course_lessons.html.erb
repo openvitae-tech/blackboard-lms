@@ -4,136 +4,16 @@
     <li class="first:rounded-t-lg first:md:rounded-t-xl last:rounded-b-lg last:md:rounded-b-xl border border-line-colour border-b-0 border-t-2 first:border-t last:border-b">
 
       <% header_content = capture do %>
-
-        <div class="flex w-full items-center justify-between">
-
-          <h2 class="flex flex-row gap-2 md:gap-3 items-center justify-start md:text-base">
-            <div class="flex flex-col gap-1 md:gap-3 md:flex-row items-start md:items-center">
-              <div class="flex items-center gap-2 main-text-lg-normal w-44 md:w-fit">
-
-                <span class="main-text-lg-medium whitespace-nowrap">
-                  Module <%= index + 1 %>:
-                </span>
-
-                <% if policy(course_module).show? %>
-                  <%= link_to course_module.title,
-                        course_module_path(course, course_module),
-                        class: "truncate md:whitespace-normal md:overflow-visible md:text-clip" %>
-                <% else %>
-                  <span class="truncate md:whitespace-normal md:overflow-visible md:text-clip">
-                    <%= course_module.title %>
-                  </span>
-                <% end %>
-
-              </div>
-            </div>
-          </h2>
-
-          <div class="flex gap-4 items-center">
-
-            <% if policy(course).edit? %>
-              <%= link_to course_module_path(course, course_module), class:"hidden md:block" do %>
-                <%= button_component text: "View module", type: "outline", size: "sm", icon_name: "eye" %>
-              <% end %>
-
-              <%= link_to course_module_path(course, course_module), class:"md:hidden" do %>
-                <%= button_component type: "outline", size: "sm", icon_name: "eye" %>
-              <% end %>
-            <% end %>
-
-            <div class="flex flex-col items-center gap-2">
-              <% if policy(:course_module).moveup? %>
-                <%= link_to moveup_course_module_path(course, course_module), data: { turbo_method: :put } do %>
-                  <div class="h-4 w-4 rounded border border-slate-grey-light">
-                    <%= icon("arrow-long-up", css: "h-4 w-4 text-primary") %>
-                  </div>
-                <% end %>
-              <% end %>
-
-              <% if policy(:course_module).movedown? %>
-                <%= link_to movedown_course_module_path(course, course_module), data: { turbo_method: :put } do %>
-                  <div class="h-4 w-4 rounded border border-slate-grey-light">
-                    <%= icon("arrow-long-down", css: "h-4 w-4 text-primary") %>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-            <% if module_completed?(enrollment, course_module) %>
-              <%= icon 'solid-check-badge', css: 'text-secondary-dark w-6 h-6' %>
-            <% end %>
-            <% if score_earned_for_module(enrollment, course_module) != 0 %>
-              <div class="flex flex-row gap-6">
-                <div class="flex items-center justify-center">
-                  <p class="flex items-center justify-center gap-1">
-                    <span class="hidden md:block">Points :</span>
-                    <%= enrollment.score_earned_for(course_module) %>
-                    <%= image_tag 'coin.png', alt: 'coin', class: 'h-4' %>
-                  </p>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
+        <%= render 'courses/accordion_header', course: @course, enrollment: @enrollment, course_module: course_module, index: index %>
       <% end %>
 
       <%= accordion_component(
-            title: header_content,
+            header: header_content,
             icon_position: "left",
             open: current_module?(course_module, enrollment),
             wrapper_class: ('highlight' if current_module?(course_module, enrollment))
           ) do %>
-        <ul>
-          <% lessons = lessons_in_order(course_module) %>
-          <% if lessons.empty? %>
-            <li class="flex items-center justify-between border-t border-line-colour main-text-lg-normal">
-              <span class=" px-4 py-4 md:px-6"><%= t("lesson.empty") %></span>
-            </li>
-          <% else %>
-            <% lessons.each_with_index do |lesson, lesson_index| %>
-              <%= content_tag :li, class:
-                class_names("flex items-center justify-between border-t border-line-colour main-text-lg-normal",
-                            'highlighted': current_lesson?(lesson, enrollment),
-                            'disabled': !lesson_accessible?(lesson, course, enrollment)) do %>
-
-                <div class="flex items-center gap-4 px-4 py-4 md:px-6">
-                  <% if enrollment %>
-                      <% if lesson_completed?(enrollment, lesson) %>
-                        <%= icon 'check-circle-solid', css: 'text-primary w-6 h-6' %>
-                      <% else %>
-                      <div class="w-4 h-4 border border-r-primary-light-100 rounded-full"></div>
-                      <% end %>             
-                  <% end %>
-                  <div class="flex items-center gap-2 w-44 md:w-fit">
-                    <div class="flex gap-1 main-text-lg-medium whitespace-nowrap">
-                     <span class="hidden md:block">Lesson</span> <%= lesson_index + 1 %>:
-                    </div>
-
-                    <span class="main-text-lg-normal truncate md:whitespace-normal md:overflow-visible md:text-clip">
-                      <%= lesson.title %>
-                    </span>
-                  </div>
-                </div>
-                <div class="flex gap-6 items-center px-4 py-4 md:px-6">
-                  <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
-                    <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center">
-                      <span class="icon icon-play bg-primary h-2 w-2 md:h-3 md:w-3"></span>
-                    </div>
-                  <% end %>
-                </div>
-            <% end %>
-            <% end %>
-          <% end %>
-          <% if policy(course).edit? %>
-            <li class="flex items-center space-x-5 border-t border-line-colour px-4 py-4 text-sm md:px-6">
-              <%= link_to new_course_module_lesson_path(course, course_module), class: "nav-link" do %>
-                <%= button_component(text: 'Add lesson', icon_name: "plus" ) %>
-              <% end %>
-              <%= link_to new_course_module_quiz_path(course, course_module), class: "nav-link" do %>
-                <%= button_component(text: 'Add quiz', icon_name: "plus" ) %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
+          <%= render 'courses/accordion_content', course: @course, enrollment: @enrollment, course_module: course_module, index: index %>
       <% end %>
     </li>
   <% end %>

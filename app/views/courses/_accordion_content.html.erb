@@ -1,0 +1,52 @@
+<ul>
+  <% lessons = lessons_in_order(course_module) %>
+  <% if lessons.empty? %>
+    <li class="flex items-center justify-between border-t border-line-colour main-text-lg-normal">
+      <span class=" px-4 py-4 md:px-6"><%= t("lesson.empty") %></span>
+    </li>
+  <% else %>
+    <% lessons.each_with_index do |lesson, lesson_index| %>
+      <%= content_tag :li, class:
+        class_names("flex items-center justify-between border-t border-line-colour main-text-lg-normal",
+                    'highlighted': current_lesson?(lesson, enrollment),
+                    'disabled': !lesson_accessible?(lesson, course, enrollment)) do %>
+
+        <div class="flex items-center gap-4 px-4 py-4 md:px-6">
+          <% if enrollment %>
+              <% if lesson_completed?(enrollment, lesson) %>
+                <%= icon 'check-circle-solid', css: 'text-primary w-6 h-6' %>
+              <% else %>
+              <div class="w-4 h-4 border border-r-primary-light-100 rounded-full"></div>
+              <% end %>             
+          <% end %>
+          <div class="flex items-center gap-2 w-44 md:w-fit">
+            <div class="flex gap-1 main-text-lg-medium whitespace-nowrap">
+              <span class="hidden md:block">Lesson</span> <%= lesson_index + 1 %>:
+            </div>
+
+            <span class="main-text-lg-normal truncate md:whitespace-normal md:overflow-visible md:text-clip">
+              <%= lesson.title %>
+            </span>
+          </div>
+        </div>
+        <div class="flex gap-6 items-center px-4 py-4 md:px-6">
+          <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
+            <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center">
+              <span class="icon icon-play bg-primary h-2 w-2 md:h-3 md:w-3"></span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if policy(course).edit? %>
+    <li class="flex items-center space-x-5 border-t border-line-colour px-4 py-4 text-sm md:px-6">
+      <%= link_to new_course_module_lesson_path(course, course_module), class: "nav-link" do %>
+        <%= button_component(text: 'Add lesson', icon_name: "plus" ) %>
+      <% end %>
+      <%= link_to new_course_module_quiz_path(course, course_module), class: "nav-link" do %>
+        <%= button_component(text: 'Add quiz', icon_name: "plus" ) %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

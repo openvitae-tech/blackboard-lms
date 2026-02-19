@@ -39,13 +39,13 @@
         <div class="flex gap-3 md:gap-2">
           <div class="flex items-center">
             <%= icon("book", css: "h-4 w-4 text-primary") %>
-            <span class="ml-2 general-text-sm-normal" ><%= modules_count(course)%> Module</span>
+            <span class="ml-2 general-text-sm-normal" ><%= pluralize(modules_count(course), 'Module') %></span>
           </div>
           <div class="w-px h-4 bg-slate-grey-50"></div>
 
           <div class="flex items-center">
             <%= icon("user", css: "h-4 w-4 text-primary") %>
-            <span class="ml-2 general-text-sm-normal"><%= enroll_count(course) %> Enrolled</span>
+            <span class="ml-2 general-text-sm-normal"><%= pluralize(enroll_count(course),'Enrolled') %> </span>
           </div>
           
           <div class="hidden md:block">
