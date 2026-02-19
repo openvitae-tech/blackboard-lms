@@ -12,7 +12,8 @@ export default class extends Controller {
     }
   }
 
-  toggle() {
+  toggle(event) {
+    if (event.target.closest("a, button")) return
     this.openValue = !this.openValue
   }
 

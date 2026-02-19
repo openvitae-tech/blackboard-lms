@@ -1,13 +1,10 @@
-<div class="border-b border-line-colour last:border-0 py-4" 
-     data-controller="collapsible" 
-     data-collapsible-open-value="false">
-  <div class="px-4 space-y-4">
+<div class="border-b border-line-colour last:border-0"
+     data-controller="collapsible"
+     data-collapsible-open-value="<%= open %>">
+  <div class="">
     <div data-action="click->collapsible#toggle"
-            class="flex items-center <%= icon_position_style %> w-full group cursor-pointer">
-      
-      <span class="main-text-lg-medium truncate">
-        <%= title %>
-      </span>
+            class="flex gap-2 items-center  py-4 px-5  <%= icon_position_style %> w-full group cursor-pointer hover:bg-primary-light-50  <%= wrapper_class %>">
+      <%= title %>
 
       <div data-collapsible-target="icon" class="text-primary transition-transform duration-300 ease-in-out transform">
         <%= icon 'chevron-down', css: 'w-5 h-5' %>

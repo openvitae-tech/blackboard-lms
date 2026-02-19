@@ -1,0 +1,81 @@
+<div class="relative">
+  <div class="flex flex-col md:flex-row gap-3 md:gap-5 bg-primary-light-100 h-[360px] md:h-52 px-6 md:px-16 py-5 -mx-5 md:-mx-16 relative">
+    <div class="relative w-full md:w-60 self-stretch h-36 md:h-32">
+      <div class="absolute top-0 left-0 z-10 flex flex-wrap justify-start gap-2 heading">
+        <% course.tags.each do |tag| %>
+          <% if tag.tag_type == "level" %>
+            <span class="px-2 py-1 text-xs font-medium bg-secondary text-primary-dark rounded-tl-xl rounded-br-xl">
+              <%= tag.name %>
+            </span>
+          <% end %>
+        <% end %>
+      </div>
+      <%= image_tag course_banner(course, :vertical), class: "h-full w-full object-cover rounded-xl outline outline-1 outline-primary " %>
+      <span class="absolute bottom-0 right-4 z-10 flex rounded-t-md bg-primary-light-100 general-text-sm-normal py-0.5 px-1 text-primary-dark">
+        <%= course_duration(course) %>
+      </span>
+    </div>  
+    <% if current_user.is_admin? %>
+      <div class="absolute top-8 md:top-4 right-8 md:right-16 flex">
+      <%= menu_component(menu_items: course_menu_items(course)) %>      
+      </div> 
+    <% end %>
+    <div class="md:hidden">
+      <% if local_assigns[:enrollment].present? %>
+        <div class="w-full md:w-[151px] pl-2">
+          <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+        </div>
+      <% end %>
+    </div>  
+    <div class="flex flex-col gap-3 px-3 md:py-5">
+      <p class="main-text-lg-semibold"><%= course.title %></p>
+      <div class="flex gap-4 justify-between md:justify-start">
+        <% if course.rating.present? %>
+          <div class="flex items-center">
+            <%= icon("star-transparent", css: "h-4 w-4 text-primary fill-primary") %>
+            <span class="ml-2 general-text-sm-normal"><%= course.rating %></span>
+          </div>
+        <% end %>
+        <div class="flex gap-3 md:gap-2">
+          <div class="flex items-center">
+            <%= icon("book", css: "h-4 w-4 text-primary") %>
+            <span class="ml-2 general-text-sm-normal" ><%= modules_count(course)%> Module</span>
+          </div>
+          <div class="w-px h-4 bg-slate-grey-50"></div>
+
+          <div class="flex items-center">
+            <%= icon("user", css: "h-4 w-4 text-primary") %>
+            <span class="ml-2 general-text-sm-normal"><%= enroll_count(course) %> Enrolled</span>
+          </div>
+          
+          <div class="hidden md:block">
+            <% if local_assigns[:enrollment].present? %>
+              <div class="w-full md:w-[151px] pl-2">
+                <%= render "shared/components/progress_bar", progress: enrollment.progress %>
+              </div>
+            <% end %>
+          </div> 
+        </div>   
+      </div>
+       <div class="flex flex-wrap gap-2 md:h-[24px] overflow-x-hidden overflow-y-auto whitespace-nowrap">
+          <% course.tags.each do |tag| %>
+              <% if tag.tag_type == "category" %>
+              <%= chip_component(text: tag.name , colorscheme: 'primary_lite', icon_name: 'check') %>
+              <% end %>
+          <% end %>
+        </div>
+    </div>
+  </div>
+
+  <div class="relative -top-10 flex flex-col gap-2 rounded-lg main-text-sm-normal outline outline-1 outline-line-colour bg-white w-full p-4" data-controller="text-clamp"
+        data-text-clamp-css-value="line-clamp-2">
+    <p class="main-text-sm-medium">
+      Course Description
+    </p>
+    <div class="line-clamp-2" data-text-clamp-target="longText">
+      <%= course_description(course) %>
+    </div>
+    <div class="text-primary underline main-text-sm-normal cursor-pointer hover:text-primary-light" data-text-clamp-target="showMoretoggle"
+          data-action="click->text-clamp#showMoretoggle">Show more</div>
+  </div>  
+</div>

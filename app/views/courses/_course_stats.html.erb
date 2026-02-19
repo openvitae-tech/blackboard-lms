@@ -1,17 +1,17 @@
-<div class="flex items-center justify-around md:justify-center bg-primary-light p-4 md:p-5 rounded-lg md:rounded-xl text-white-light gap-4 md:gap-10">
+<div class="flex items-center justify-around md:justify-center bg-secondary-dark p-4 md:p-5 rounded-lg md:rounded-xl text-white-light gap-4 md:gap-10">
   <div class="flex flex-col md:flex-row items-center justify-center md:gap-2">
-    <%= icon 'check-badge-solid', css: 'w-5 h-5' %>
+    <%= icon 'solid-check-badge', css: 'w-5 h-5 text-white-light' %>
     <span class="main-text-md-semibold">Course</span>
     <span class="main-text-md-semibold">Completed</span>
   </div>
   <div class="flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-5 justify-center general-text-sm-medium">
     <div class="flex items-center space-x-1">
       <%= icon 'clock', css: 'w-4 h-4' %>
-      <span class="">Total time spent : <%= duration_in_words(enrollment.time_spent) %></span>
+      <span class="">Time taken : <%= duration_in_words(enrollment.time_spent) %></span>
     </div>
     <div class="flex items-center space-x-1">
       <%= icon 'circle-stack', css: 'w-4 h-4' %>
-      <span class="">Total points : <%= enrollment.score %></span>
+      <span class="">Points earned : <%= enrollment.score %></span>
     </div>
     <div class="flex items-center space-x-1">
       <%= icon 'calendar', css: 'w-4 h-4' %>
