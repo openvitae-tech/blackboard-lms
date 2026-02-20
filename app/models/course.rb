@@ -2,6 +2,7 @@
 
 class Course < ApplicationRecord
   include CustomValidations
+  include CourseJson
 
   ENROLLED_COURSES_LIMIT = 4
   PER_PAGE_LIMIT = 12
@@ -101,6 +102,10 @@ class Course < ApplicationRecord
   def recalculate_course_duration!
     self.duration = course_modules.includes(:lessons).map(&:duration).reduce(&:+) || 0
     save!
+  end
+
+  def modules_in_order
+    @modules_in_order ||= RecordOrdering.records_in_order(course_modules.includes(:lessons), course_modules_in_order)
   end
 
   private

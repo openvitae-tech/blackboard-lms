@@ -124,15 +124,15 @@ module CoursesHelper
   end
 
   def lessons_in_order(course_module)
-    records_in_order(course_module.lessons, course_module.lessons_in_order)
+    course_module.module_lessons
   end
 
   def quizzes_in_order(course_module)
-    records_in_order(course_module.quizzes, course_module.quizzes_in_order)
+    course_module.module_quizzess
   end
 
   def modules_in_order(course)
-    records_in_order(course.course_modules.includes(:lessons), course.course_modules_in_order)
+    course.modules_in_order
   end
 
   def options_for_duration

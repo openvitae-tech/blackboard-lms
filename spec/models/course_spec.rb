@@ -178,4 +178,25 @@ RSpec.describe Course, type: :model do
       expect(new_course.errors.full_messages.to_sentence).to include(t('course.unique_tags'))
     end
   end
+
+  describe '#to_json_data' do
+    it 'creates a json representation of course object' do
+      course = course_with_associations
+      json = course.to_json_data
+      course_data = JSON.parse(json)
+      course_attributes = %w[banner categories course_modules_count created_at description duration enrollments_count id
+                             is_published levels modules rating team_enrollments_count title updated_at visibility]
+      module_attributes = %w[created_at id lessons lessons_count quizzes_count title updated_at]
+      lesson_attributes = %w[created_at description duration id last_rated_at lesson_type local_contents rating title
+                             updated_at video_streaming_source]
+      expect(course_data.keys.sort).to eq(course_attributes)
+      module_data = course_data['modules'][0]
+      expect(module_data.keys.sort).to eq(module_attributes)
+      lesson_data = module_data['lessons'][0]
+      expect(lesson_data.keys.sort).to eq(lesson_attributes)
+      local_content_data = lesson_data['local_contents'][0]
+      local_content_attributes = %w[id lang scenes status video_published_at video_url]
+      expect(local_content_data.keys.sort).to eq(local_content_attributes)
+    end
+  end
 end

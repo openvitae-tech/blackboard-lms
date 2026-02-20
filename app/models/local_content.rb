@@ -38,6 +38,10 @@ class LocalContent < ApplicationRecord
     lang.downcase == SUPPORTED_LANGUAGES[:english].downcase
   end
 
+  def video_url
+    video&.blob ? video.blob.metadata&.[]('url') : ''
+  end
+
   private
 
   def presence_of_blob_id
