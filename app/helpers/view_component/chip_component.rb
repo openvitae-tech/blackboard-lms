@@ -10,6 +10,13 @@ module ViewComponent
         text-primary
         border-0
       ],
+      'primary_lite' => %w[
+        bg-primary-light-50
+        text-primary-dark
+        text-primary
+        text-primary
+        border-0
+      ],
       'danger' => %w[
         bg-danger-light
         text-primary-dark
