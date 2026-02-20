@@ -11,19 +11,15 @@
                     'highlighted': current_lesson?(lesson, enrollment),
                     'disabled': !lesson_accessible?(lesson, course, enrollment)) do %>
 
-        <div class="flex items-center gap-4 px-4 py-4 md:px-6">
+        <div class="flex items-center gap-4 pl-8 pr-4 py-4 md:pr-6 md:pl-10">
           <% if enrollment %>
               <% if lesson_completed?(enrollment, lesson) %>
-                <%= icon 'check-circle-solid', css: 'text-primary w-6 h-6' %>
+                <%= icon 'check-circle-solid', css: 'text-secondary-dark w-6 h-6' %>
               <% else %>
-              <div class="w-4 h-4 border border-r-primary-light-100 rounded-full"></div>
+                <%= icon 'check-circle', css: 'text-disabled-color w-6 h-6' %>
               <% end %>             
           <% end %>
           <div class="flex items-center gap-2 w-44 md:w-fit">
-            <div class="flex gap-1 main-text-lg-medium whitespace-nowrap">
-              <span class="hidden md:block">Lesson</span> <%= lesson_index + 1 %>:
-            </div>
-
             <span class="main-text-lg-normal truncate md:whitespace-normal md:overflow-visible md:text-clip">
               <%= lesson.title %>
             </span>
@@ -31,8 +27,8 @@
         </div>
         <div class="flex gap-6 items-center px-4 py-4 md:px-6">
           <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
-            <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center">
-              <span class="icon icon-play bg-primary h-2 w-2 md:h-3 md:w-3"></span>
+            <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center border border-slate-grey-light">
+              <%= icon 'play', css: 'text-primary h-3 w-3 md:h-4 md:w-4' %>
             </div>
           <% end %>
         </div>
