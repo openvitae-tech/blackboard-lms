@@ -1,4 +1,4 @@
-<% if APP_CONFIG.chatwoot_enabled? %>
+<% if APP_CONFIG.chatwoot_enabled? && user_signed_in? %>
   <script>
     (function(d,t) {
       var BASE_URL="https://app.chatwoot.com";

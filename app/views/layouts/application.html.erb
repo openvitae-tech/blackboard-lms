@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-prefetch" content="false">
     <%= tag :meta, name: :rails_env, content: Rails.env %>
+    <% if user_signed_in? %>
+      <meta name="user-signed-in" content="true">
+    <% end %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link rel="icon" type="image/png" sizes="32x32" href="/instruo.png" />
