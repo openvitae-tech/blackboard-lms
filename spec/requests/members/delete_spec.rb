@@ -58,7 +58,7 @@ RSpec.describe 'Delete users', type: :request do
 
     it 'deletes any of the team enrolled courses' do
       course = create :course, :published
-      CourseManagementService.instance.assign_team_to_courses(@team, [course], @manager)
+      Courses::ManagementService.instance.assign_team_to_courses(@team, [course], @manager)
       expect do
         delete member_path(@learner)
       end.to change(Enrollment, :count).by(-1)

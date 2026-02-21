@@ -27,7 +27,7 @@ class QuizzesController < ApplicationController
   def create
     authorize Quiz
     @quiz = @course_module.quizzes.new(quiz_params)
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
 
     if @quiz.save
       service.update_quiz_ordering!(@course_module, @quiz, :create)
@@ -56,7 +56,7 @@ class QuizzesController < ApplicationController
       return
     end
 
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     saved_count = 0
     quizzes.each do |quiz_data|
       quiz = @course_module.quizzes.new build_quiz_attributes(quiz_data)
@@ -75,7 +75,7 @@ class QuizzesController < ApplicationController
     authorize @quiz
 
     @quiz.destroy!
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     service.update_quiz_ordering!(@course_module, @quiz, :destroy)
     redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully destroyed.'
   end
@@ -83,7 +83,7 @@ class QuizzesController < ApplicationController
   def submit_answer
     authorize @quiz
     enrollment = current_user.get_enrollment_for(@course)
-    CourseManagementService.instance.record_answer!(enrollment, @quiz, answer_params[:answer].downcase)
+    Courses::ManagementService.instance.record_answer!(enrollment, @quiz, answer_params[:answer].downcase)
     next_quiz = @course_module.next_quiz(@quiz)
     next_path = if next_quiz.blank?
                   summary_course_module_path(@course, @course_module)
@@ -96,14 +96,14 @@ class QuizzesController < ApplicationController
 
   def moveup
     authorize @quiz
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     service.update_quiz_ordering!(@course_module, @quiz, :up)
     redirect_to course_module_path(@course, @course_module)
   end
 
   def movedown
     authorize @quiz
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     service.update_quiz_ordering!(@course_module, @quiz, :down)
     redirect_to course_module_path(@course, @course_module)
   end

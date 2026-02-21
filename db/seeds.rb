@@ -152,7 +152,7 @@ class DevelopmentSeed
                    course_module:, local_contents_attributes: [{
                     lang: "english", blob_id: video_blob.id
                   }])
-    CourseManagementService.instance.set_lesson_attributes(course_module, lesson)
+    Courses::ManagementService.instance.set_lesson_attributes(course_module, lesson)
     lesson.save!
     lesson
   end
