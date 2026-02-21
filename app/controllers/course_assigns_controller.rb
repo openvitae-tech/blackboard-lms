@@ -28,7 +28,7 @@ class CourseAssignsController < ApplicationController
     courses = Course.find(course_ids)
 
     @courses_with_deadline = courses.zip(deadlines)
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
 
     if @team_assign
       service.assign_team_to_courses(@team, @courses_with_deadline, current_user)

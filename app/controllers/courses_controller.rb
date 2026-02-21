@@ -102,7 +102,7 @@ class CoursesController < ApplicationController
   def enroll
     authorize @course
 
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     result = service.enroll!(current_user, @course)
 
     if result == :duplicate
@@ -117,7 +117,7 @@ class CoursesController < ApplicationController
   def unenroll
     authorize @course
 
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     result = service.undo_enroll!(current_user, @course)
 
     if result == :not_enrolled
@@ -132,7 +132,7 @@ class CoursesController < ApplicationController
   def proceed
     authorize @course
 
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     enrollment = service.proceed(current_user, @course)
     if enrollment.course_started_at.blank?
       EVENT_LOGGER.publish_course_started(current_user, @course.id)
@@ -146,7 +146,7 @@ class CoursesController < ApplicationController
   def publish
     authorize @course
 
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     result = service.publish!(@course)
 
     if result == :duplicate
@@ -161,7 +161,7 @@ class CoursesController < ApplicationController
   def unpublish
     authorize @course
 
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     result = service.undo_publish!(@course)
 
     if result == :duplicate

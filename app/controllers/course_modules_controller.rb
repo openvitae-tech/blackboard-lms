@@ -27,7 +27,7 @@ class CourseModulesController < ApplicationController
   def create
     authorize :course_module
     @course_module = @course.course_modules.new(course_module_params)
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
 
     if @course_module.save
       service.update_module_ordering(@course, @course_module, :create)
@@ -61,7 +61,7 @@ class CourseModulesController < ApplicationController
   def destroy
     authorize @course_module
     @course_module.destroy!
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     service.update_module_ordering(@course, @course_module, :destroy)
 
     redirect_to course_url(@course), notice: I18n.t('course.module_deleted')
@@ -69,7 +69,7 @@ class CourseModulesController < ApplicationController
 
   def moveup
     authorize @course_module
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     service.update_module_ordering(@course, @course_module, :up)
 
     redirect_to course_url(@course)
@@ -77,7 +77,7 @@ class CourseModulesController < ApplicationController
 
   def movedown
     authorize @course_module
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     service.update_module_ordering(@course, @course_module, :down)
 
     redirect_to course_url(@course)
@@ -91,7 +91,7 @@ class CourseModulesController < ApplicationController
   def redo_quiz
     authorize @course_module
     @enrollment = current_user.get_enrollment_for(@course)
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     service.redo_quiz(@course_module, @enrollment)
     redirect_to course_module_quiz_path(@course, @course_module, @course_module.first_quiz)
   end

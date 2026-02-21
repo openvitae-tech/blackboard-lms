@@ -8,7 +8,7 @@ module Courses
     end
 
     def enroll!
-      service = CourseManagementService.instance
+      service = Courses::ManagementService.instance
 
       ActiveRecord::Base.transaction do
         @program.program_users.create!(user: @user) unless already_enrolled?

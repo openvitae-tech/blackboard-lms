@@ -81,7 +81,7 @@ class LessonsController < ApplicationController
 
   def destroy
     authorize @lesson
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     @lesson.destroy!
     service.update_lesson_ordering!(@course_module, @lesson, :destroy)
 
@@ -96,7 +96,7 @@ class LessonsController < ApplicationController
   def complete
     authorize @lesson
 
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     time_spent_in_seconds = [(params[:time_spent] || 0).to_i, @lesson.duration].min
 
     service.set_progress!(current_user, @enrollment, @course_module, @lesson, time_spent_in_seconds)
@@ -116,7 +116,7 @@ class LessonsController < ApplicationController
   def moveup
     authorize @lesson
 
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     service.update_lesson_ordering!(@course_module, @lesson, :up)
 
     respond_to do |format|
@@ -128,7 +128,7 @@ class LessonsController < ApplicationController
   def movedown
     authorize @lesson
 
-    service = CourseManagementService.instance
+    service = Courses::ManagementService.instance
     service.update_lesson_ordering!(@course_module, @lesson, :down)
 
     respond_to do |format|
