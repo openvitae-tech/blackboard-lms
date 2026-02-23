@@ -1,0 +1,62 @@
+<div class="flex w-full items-center justify-between">
+
+  <h2 class="flex flex-row gap-2 md:gap-3 items-center justify-start md:text-base">
+    <div class="flex flex-col gap-1 md:gap-3 md:flex-row items-start md:items-center">
+      <div class="flex items-center gap-2 main-text-lg-medium  w-44 md:w-fit">
+        <% if policy(course_module).show? %>
+          <%= link_to course_module.title,
+              course_module_path(course, course_module),
+              class: "truncate md:whitespace-normal md:overflow-visible md:text-clip" %>
+        <% else %>
+          <span class="truncate md:whitespace-normal md:overflow-visible md:text-clip">
+            <%= course_module.title %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </h2>
+
+  <div class="flex gap-4 items-center">
+    <% if policy(course).edit? %>
+      <%= link_to course_module_path(course, course_module), class:"hidden md:block" do %>
+        <%= button_component text: "View module", type: "outline", size: "sm", icon_name: "eye" %>
+      <% end %>
+
+      <%= link_to course_module_path(course, course_module), class:"md:hidden" do %>
+        <%= button_component type: "outline", size: "sm", icon_name: "eye" %>
+      <% end %>
+    <% end %>
+
+    <div class="flex flex-col items-center gap-2">
+      <% if policy(:course_module).moveup? %>
+        <%= link_to moveup_course_module_path(course, course_module), data: { turbo_method: :put } do %>
+          <div class="h-4 w-4 rounded border border-slate-grey-light">
+          <%= icon("arrow-long-up", css: "h-4 w-4 text-primary") %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if policy(:course_module).movedown? %>
+        <%= link_to movedown_course_module_path(course, course_module), data: { turbo_method: :put } do %>
+          <div class="h-4 w-4 rounded border border-slate-grey-light">
+          <%= icon("arrow-long-down", css: "h-4 w-4 text-primary") %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <% if module_completed?(enrollment, course_module) %>
+      <%= icon 'check-badge-solid', css: 'text-secondary-dark w-6 h-6' %>
+    <% end %>
+    <% if score_earned_for_module(enrollment, course_module) != 0 %>
+      <div class="flex flex-row gap-6">
+        <div class="flex items-center justify-center">
+          <p class="flex items-center justify-center gap-1">
+          <span class="hidden md:block">Points :</span>
+          <%= enrollment.score_earned_for(course_module) %>
+          <%= image_tag 'coin.png', alt: 'coin', class: 'h-4' %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
