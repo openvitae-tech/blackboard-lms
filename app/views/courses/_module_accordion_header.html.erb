@@ -45,7 +45,7 @@
       <% end %>
     </div>
     <% if module_completed?(enrollment, course_module) %>
-      <%= icon 'solid-check-badge', css: 'text-secondary-dark w-6 h-6' %>
+      <%= icon 'check-badge-solid', css: 'text-secondary-dark w-6 h-6' %>
     <% end %>
     <% if score_earned_for_module(enrollment, course_module) != 0 %>
       <div class="flex flex-row gap-6">

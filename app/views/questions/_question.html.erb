@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
     <div class="flex items-center gap-1 main-text-sm-medium">
       <% if question.is_verified %>
-        <%= icon("solid-check-badge", css: "h-5 w-5 cursor-pointer text-secondary") %>
+        <%= icon("check-badge-solid", css: "h-5 w-5 cursor-pointer text-secondary") %>
       <% end %>
       <span>Question <%= ((params[:page]||'1').to_i-1)*5 + index+1 %> of <%= count %></span>
     </div>

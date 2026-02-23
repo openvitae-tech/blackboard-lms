@@ -4,7 +4,7 @@
     <li class="first:rounded-t-lg first:md:rounded-t-xl last:rounded-b-lg last:md:rounded-b-xl border border-line-colour border-b-0 border-t-2 first:border-t last:border-b">
 
       <% header_content = capture do %>
-        <%= render 'courses/accordion_header', course: @course, enrollment: @enrollment, course_module: course_module, index: index %>
+        <%= render 'courses/module_accordion_header', course: @course, enrollment: @enrollment, course_module: course_module, index: index %>
       <% end %>
 
       <%= accordion_component(
@@ -13,7 +13,7 @@
             open: current_module?(course_module, enrollment),
             wrapper_class: ('highlight' if current_module?(course_module, enrollment))
           ) do %>
-          <%= render 'courses/accordion_content', course: @course, enrollment: @enrollment, course_module: course_module, index: index %>
+          <%= render 'courses/module_accordion_content', course: @course, enrollment: @enrollment, course_module: course_module, index: index %>
       <% end %>
     </li>
   <% end %>
