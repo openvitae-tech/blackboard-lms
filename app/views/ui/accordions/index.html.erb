@@ -1,27 +1,27 @@
 <%= doc_section_component(title: "Accordion with icon positioned right") do %>
   <section class="w-full md:w-[50vw]">
-    <%= accordion_component(title: "Title 1") do %>
-      <p>This is a collapsible content</p>
+    <%= accordion_component(header: "Title 1") do %>
+      <p class="p-4">This is a collapsible content</p>
     <% end %>
-    <%= accordion_component(title: "Title 2") do %>
-      <p>This is a collapsible content</p>
+    <%= accordion_component(header: "Title 2") do %>
+      <p class="p-4">This is a collapsible content</p>
     <% end %>
-    <%= accordion_component(title: "Title 3") do %>
-      <p>This is a collapsible content</p>
+    <%= accordion_component(header: "Title 3") do %>
+      <p class="p-4">This is a collapsible content</p>
     <% end %>
   </section>
 <% end %>
 
 <%= doc_section_component(title: "Accordion with icon positioned left") do %>
   <section class="w-full md:w-[50vw] border border-slate-grey-light rounded-xl">
-    <%= accordion_component(title: "Title 1", icon_position: "left") do %>
-      <p>This is a collapsible content</p>
+    <%= accordion_component(header: "Title 1", icon_position: "left") do %>
+      <p class="p-4">This is a collapsible content</p>
     <% end %>
-    <%= accordion_component(title: "Title 2", icon_position: "left") do %>
-      <p>This is a collapsible content</p>
+    <%= accordion_component(header: "Title 2", icon_position: "left") do %>
+      <p class="p-4">This is a collapsible content</p>
     <% end %>
-    <%= accordion_component(title: "Title 3", icon_position: "left") do %>
-      <p>This is a collapsible content</p>
+    <%= accordion_component(header: "Title 3", icon_position: "left") do %>
+      <p class="p-4">This is a collapsible content</p>
     <% end %>
   </section>
 <% end %>
