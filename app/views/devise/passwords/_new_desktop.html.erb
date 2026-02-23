@@ -2,21 +2,20 @@
   <div class="h-full columns-2 size-full">
     <%= render "devise/shared/left_side_desktop" %>
     <div class="flex h-full items-center justify-center right-side">
-      <div class="bg-white w-[528px]">
-        <%= image_tag "instruo_logo_blue.png", alt: "Instruo", class: "mx-auto mb-12 h-10" %>
+      <div class="bg-white w-[528px] mr-4 my-10">
+        <%= image_tag "instruo_logo_blue.png", alt: "Instruo", class: "mx-auto mb-6 h-10 block" %>
         <div class="rounded-lg px-8 pt-8 pb-24 box-shadow-large">
-          <h1 class="my-8 text-3xl heading page-heading">Forgot password?</h1>
+          <h1 class="pb-8 text-3xl heading page-heading">Forgot password?</h1>
           <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-            <%= render "devise/shared/error_messages", resource: resource %>
-            <div class="flex flex-col gap-14">
-              <div class="input-group">
+            <div class="flex flex-col gap-12">
+              <%= content_tag :div, class: "input-group" do %>
                 <label for="" class="label-text">No worries. We&apos;ll send you reset instructions.</label>
-              </div>
+              <% end unless resource.errors.any? %>
               <div class="input-group">
-                <%= input_field(form:f, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email",width:"w-full", html_options: { autofocus: true, autocomplete: "email"}) %>
-
+                <%= input_field(form:f, field_name: :email, label: "Email", placeholder: "Enter your email", type: "email", width:"w-full", html_options: { autofocus: true, autocomplete: "email", required: true}) %>
+                <p class="text-danger general-text-md-normal py-1"><%= reset_password_error_msg(resource.errors) %><p>
               </div>
-              <div class="my-4 actions">
+              <div class="actions">
                 <%= f.button class: "btn-primary w-full" do %>
                   <span>Reset password</span>
                 <% end %>
@@ -30,7 +29,6 @@
             <%= link_text_component "Login with email and password", new_session_path(resource_name) %><br/>
           </div>
         </div>
-        <hr class="mt-1 border-y-2 border-primary"/>
       </div>
     </div>
   </div>
