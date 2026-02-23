@@ -1,5 +1,7 @@
 <%= mobile_view do %>
-  <%= render "devise/shared/top_mobile" %>
+  <div>
+    <%= render "devise/shared/top_mobile" %>
+  </div>
   <div class="px-4 py-6">
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <div class="mb-4">
