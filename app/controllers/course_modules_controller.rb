@@ -6,7 +6,7 @@ class CourseModulesController < ApplicationController
 
   def show
     authorize @course_module
-    @lessons = helpers.lessons_in_order(@course_module)
+    @lessons = @course_module.lessons_in_order
     @quizzes = helpers.quizzes_in_order(@course_module)
     @enrollment = current_user.get_enrollment_for(@course) if current_user.enrolled_for_course?(@course)
     @quiz_generation_service = Quizzes::GenerationService.new(@course_module)
