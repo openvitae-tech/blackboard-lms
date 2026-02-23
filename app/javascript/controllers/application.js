@@ -30,6 +30,11 @@ document.addEventListener("turbo:load", (event) => {
     }
   });
 
+  if (window.$chatwoot) {
+    const userSignedIn = document.querySelector("meta[name='user-signed-in']");
+    window.$chatwoot.toggleBubbleVisibility(userSignedIn ? "show" : "hide");
+  }
+
 });
 
 Turbo.StreamActions.redirect_to = function () {
