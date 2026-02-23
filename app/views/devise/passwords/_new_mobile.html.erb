@@ -13,7 +13,7 @@
 
         <div class="input-group">
           <%= input_field(form:f, field_name: :email, label: "Email", placeholder: "Enter your email", type: "email", width:"w-full", html_options: { autofocus: true, autocomplete: "email", required: true }) %>
-          <p class="text-danger general-text-md-normal py-1"><%= reset_password_error_msg(resource.errors) %><p>
+          <p class="text-danger general-text-md-normal py-1"><%= reset_password_error_msg(resource.errors) %></p>
         </div>
 
         <div class="mt-4">

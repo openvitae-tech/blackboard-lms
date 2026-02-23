@@ -186,7 +186,7 @@ en:
     password_updated: "Password updated successfully, you can login with your new password."
     password_change: "After changing the password you will be logged out and need to login with new password."
     email_not_found: "No account found with this email"
-    error: "Something went wrong. Please try after sometime."
+    error: "Something went wrong. Please try again after sometime."
   settings:
     label: "Settings"
     description: "Create and manage tags"
