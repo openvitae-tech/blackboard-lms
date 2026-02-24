@@ -33,7 +33,7 @@ class QuizzesController < ApplicationController
       service.update_quiz_ordering!(@course_module, @quiz, :create)
       redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully created.'
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -43,7 +43,7 @@ class QuizzesController < ApplicationController
     if @quiz.update(quiz_params)
         redirect_to course_module_path(@course, @course_module), notice: 'Quiz was successfully updated.'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

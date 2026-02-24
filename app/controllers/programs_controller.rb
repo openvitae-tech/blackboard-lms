@@ -29,7 +29,7 @@ class ProgramsController < ApplicationController
     if @program.save
       flash[:success] = t("resource.created", resource_name: "Program")
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
     flash.discard
   end
@@ -43,7 +43,7 @@ class ProgramsController < ApplicationController
     if @program.update(program_params)
       flash[:success] = t("resource.updated", resource_name: "Program")
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
     flash.discard
   end

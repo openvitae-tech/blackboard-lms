@@ -38,7 +38,7 @@ class CourseModulesController < ApplicationController
         format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(course_url(@course)) }
       end
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -53,7 +53,7 @@ class CourseModulesController < ApplicationController
         format.turbo_stream { render turbo_stream: turbo_stream.redirect_to(course_module_url(@course, @course_module)) }
       end
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
