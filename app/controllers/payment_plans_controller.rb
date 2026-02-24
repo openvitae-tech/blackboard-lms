@@ -17,7 +17,7 @@ class PaymentPlansController < ApplicationController
       EVENT_LOGGER.publish_payment_plan_modified(current_user, @learning_partner)
       redirect_to learning_partner_path(@learning_partner), notice: t("resource.created", resource_name: "Payment plan")
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -37,7 +37,7 @@ class PaymentPlansController < ApplicationController
       EVENT_LOGGER.publish_payment_plan_modified(current_user, @learning_partner)
       flash.now[:success] = t("resource.updated", resource_name: "Payment plan")
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

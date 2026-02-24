@@ -45,8 +45,8 @@ class LessonsController < ApplicationController
     rescue ActiveRecord::RecordInvalid => exception
       @lesson = exception.record
       respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @lesson.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @lesson.errors, status: :unprocessable_content }
       end
     end
   end
@@ -73,8 +73,8 @@ class LessonsController < ApplicationController
     rescue ActiveRecord::RecordInvalid => exception
       @lesson = exception.record
       respond_to do |format|
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @lesson.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @lesson.errors, status: :unprocessable_content }
       end
     end
   end

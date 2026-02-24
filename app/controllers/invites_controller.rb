@@ -31,7 +31,7 @@ class InvitesController < ApplicationController
       @partner.reload
       flash.now[:success] = @bulk_invite ? I18n.t('invite.bulk') : I18n.t('invite.single')
     else
-      render 'new', status: :unprocessable_entity
+      render 'new', status: :unprocessable_content
     end
   end
 
@@ -61,7 +61,7 @@ class InvitesController < ApplicationController
     if @user.save
       redirect_to team_settings_path, notice: 'Invitation sent to user'
     else
-      render :new_admin, status: :unprocessable_entity
+      render :new_admin, status: :unprocessable_content
     end
   end
 

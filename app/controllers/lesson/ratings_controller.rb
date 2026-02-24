@@ -14,7 +14,7 @@ class Lesson::RatingsController < ApplicationController
     service.rate_lesson!(current_user, @lesson, rating_params[:value].to_f)
   rescue StandardError => error
     flash[:error] = error.full_messages.to_sentence
-    render :new, status: :unprocessable_entity
+    render :new, status: :unprocessable_content
   end
 
   private
