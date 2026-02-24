@@ -105,7 +105,7 @@ class Course < ApplicationRecord
   end
 
   def modules_in_order
-    @modules_in_order ||= RecordOrdering.records_in_order(course_modules.includes(:lessons), course_modules_in_order)
+    @modules_in_order ||= RecordOrdering.records_in_order(course_modules, course_modules_in_order)
   end
 
   private
