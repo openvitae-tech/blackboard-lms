@@ -24,13 +24,13 @@ module ApplicationHelper
   end
 
   def mobile_view(&block)
-    content_tag 'div', class: 'block md:hidden h-screen w-full', name: 'mobile-view' do
+    content_tag 'div', class: 'block md:hidden h-screen w-full overflow-auto', name: 'mobile-view' do
       yield block
     end
   end
 
   def desktop_view(&block)
-    content_tag 'div', class: 'hidden md:block h-screen w-full', name: 'desktop-view' do
+    content_tag 'div', class: 'hidden md:block h-screen w-full overflow-auto', name: 'desktop-view' do
       yield block
     end
   end

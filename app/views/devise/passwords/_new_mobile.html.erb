@@ -1,22 +1,21 @@
 <%= mobile_view do %>
-  <%= render "devise/shared/top_mobile" %>
+  <div>
+    <%= render "devise/shared/top_mobile" %>
+  </div>
   <div class="px-4 py-6">
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-      <div class="mb-6">
+      <div class="mb-4">
         <h1 class="heading page-heading">Forgot password?</h1>
       </div>
 
-      <div class="text-sm text-gray-700">
-        <%= render "devise/shared/error_messages", resource: resource %>
-      </div>
-
       <div class="flex flex-col gap-8">
-        <div class="input-group">
+        <%= content_tag :div, class: "input-group" do %>
           <label for="" class="label-text">No worries. We&apos;ll send you confirmation instructions.</label>
-        </div>
+        <% end unless resource.errors.any? %>
 
         <div class="input-group">
-          <%= input_field(form:f, field_name: :email, label: "Email", placeholder: "Enter your email",type: "email",width:"w-full",html_options: { autofocus: true, autocomplete: "email"}) %>
+          <%= input_field(form:f, field_name: :email, label: "Email", placeholder: "Enter your email", type: "email", width:"w-full", html_options: { autofocus: true, autocomplete: "email", required: true }) %>
+          <p class="text-danger general-text-md-normal py-1"><%= reset_password_error_msg(resource.errors) %></p>
         </div>
 
         <div class="mt-4">

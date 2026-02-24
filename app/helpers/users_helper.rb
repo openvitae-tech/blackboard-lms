@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 module UsersHelper
+  def reset_password_error_msg(errors)
+    if errors[:email].any?
+      t('user_settings.email_not_found')
+    elsif errors.any?
+      t('user_settings.error')
+    end
+  end
+
   def role_text(role)
     User::USER_ROLE_MAPPING[role.to_sym]
   end
