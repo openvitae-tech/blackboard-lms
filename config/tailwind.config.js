@@ -1,12 +1,29 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const { execSync } = require("child_process");
+
+const neoComponentsRoot = execSync("bundle exec gem contents neo_components --show-install-dir")
+  .toString()
+  .trim();
 
 module.exports = {
+  safelist: [
+    // group-has-[input:checked] classes used in neo_components checkbox/radio components
+    'group-has-[input:checked]:text-primary',
+    'group-has-[input:checked]:border-primary',
+    'group-has-[input:checked]:flex',
+    'group-has-[input:checked]:text-danger-dark',
+    'group-has-[input:checked]:bg-danger-dark',
+    'group-has-[input:checked]:bg-primary',
+  ],
   content: [
     "./public/*.html",
     "./app/helpers/**/*.rb",
     "./app/javascript/**/*.js",
     "./app/views/**/*.{erb,haml,html,slim}",
     // "./node_modules/flowbite/**/*.js",
+    `${neoComponentsRoot}/app/helpers/**/*.rb`,
+    `${neoComponentsRoot}/app/views/**/*.{erb,haml,html,slim}`,
+    `${neoComponentsRoot}/app/javascript/**/*.js`,
   ],
   theme: {
     extend: {
