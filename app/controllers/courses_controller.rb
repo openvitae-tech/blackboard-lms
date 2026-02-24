@@ -30,7 +30,7 @@ class CoursesController < ApplicationController
   # GET /courses/1 or /courses/1.json
   def show
     authorize @course
-    @course_modules = helpers.modules_in_order(@course)
+    @course_modules = @course.modules_in_order
     @enrollment = current_user.get_enrollment_for(@course)
 
     if @enrollment.present?

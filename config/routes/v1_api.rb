@@ -14,6 +14,7 @@ Rails.application.routes.draw do
           post :run_tasks
         end
       end
+      resources :courses, only: [:show]
     end
   end
 end
