@@ -26,7 +26,7 @@ class HomePageService
   def self.build_banner; end
 
   def self.build_programs
-    @user.learning_partner.programs
+    @user.learning_partner.programs.includes(:program_courses, :program_users)
   end
 
   def self.build_continue
@@ -36,11 +36,13 @@ class HomePageService
 
   def self.build_categories
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, tags: CONFIG[:categories][:tags])
-    courses_in_categories = Courses::FilterService.new(@user, ctx).filter.records
+    courses_in_categories = Courses::FilterService.new(@user, ctx).filter.records.includes(:tags, :banner_attachment)
     courses = {}
 
     courses_in_categories.each do |course|
       category_tag = course.tags.find { |tag| tag.tag_type == 'category' }
+      next unless category_tag
+
       courses[category_tag.name] ||= []
       courses[category_tag.name] << course
     end

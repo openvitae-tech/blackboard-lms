@@ -13,7 +13,7 @@ class CoursesController < ApplicationController
     authorize :course
     if current_user.is_admin?
       search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term], type: params[:type])
-      @courses = Courses::FilterService.new(current_user, search_context).filter.records
+      @courses = Courses::FilterService.new(current_user, search_context).filter.records.includes(:tags, :banner_attachment)
       @courses = @courses.page(filter_params[:page])
     else
       @data = HomePageService.build_data_for(current_user)
