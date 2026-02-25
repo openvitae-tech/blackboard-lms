@@ -1,0 +1,114 @@
+<div class="bg-white space-y-5 md:space-y-6">
+  <section class="flex justify-between items-center">
+    <p class="heading-2xl">Hi <%= current_user.display_name %> !</p>
+    <div class="flex justify-center items-center gap-1 rounded p-3 md:p-4">
+      <%= image_tag 'points.png', alt: 'coin', class: 'h-3 w-3 md:h-4 md:w-4' %>
+      <p class="main-text-md-semibold"><%= current_user.score %></p>
+    </div>
+  </section>
+
+  <% data.each do |section_key, section_data| %>
+    <% case section_key %>
+    <% when :programs %>
+      <section class="bg-primary-light-100 py-5 md:px-5 md:pt-4 md:rounded-xl md:border-2 md:border-line-colour-light space-y-5 -mx-5 md:mx-0">
+        <div class="flex items-center justify-center gap-3 md:justify-between">
+          <h2 class="main-text-lg-semibold">Explore Our Programmes</h2>
+
+          <%= link_to explore_programs_path do %>
+            <div class="hidden md:inline">
+            <%= button_component text: "View More",
+                                 size: 'sm',
+                                 type: 'outline',
+                                 icon_name: 'chevron-right',
+                                 icon_position: 'right' %>
+            </div>
+            <div class="md:hidden bg-primary-light-50 rounded-full p-1 border border-slate-grey-light">
+              <%= icon 'chevron-right', css: 'w-4 h-4 text-primary' %>
+            </div>
+          <% end %>
+        </div>
+        <%= carousel_component cards: program_cards(section_data), loop: true %>
+      </section>
+
+    <% when :continue %>
+      <section class="bg-white p-5 pr-0 md:pr-5 md:pt-4 md:rounded-xl md:border-2 md:border-line-colour-light space-y-5 -mx-5 md:mx-0">
+        <div class="flex items-center gap-3 justify-between">
+          <h2 class="main-text-lg-semibold">Continue Your Learning</h2>
+
+          <%= link_to continue_courses_path do %>
+            <div class="hidden md:inline">
+              <%= button_component text: 'View More',
+                                   size: 'sm',
+                                   type: 'outline',
+                                   icon_name: 'chevron-right',
+                                   icon_position: 'right' %>
+            </div>
+            <div class="md:hidden bg-primary-light-50 rounded-full p-1 border border-slate-grey-light mr-5">
+              <%= icon 'chevron-right', css: 'w-4 h-4 text-primary' %>
+            </div>
+          <% end %>
+        </div>
+        <%= carousel_component cards: course_cards(section_data), loop: false %>
+      </section>
+
+    <% when :categories %>
+      <section class="space-y-2">
+        <p class="heading-xl px-2 text-primary">Explore based on Categories</p>
+        <section class="hidden md:block bg-white p-5 pr-0 md:pr-5 md:pt-4 md:rounded-xl md:border-2 md:border-line-colour-light space-y-4">
+          <div data-controller="auto-click">
+            <div class="flex flex-col gap-4 tabs-list"
+                  data-controller="tabs"
+                  data-tabs-active-class="text-letter-color border-b border-letter-color">
+              <%= content_tag :div, class: "flex gap-3 md:gap-4 main-text-md-semibold border-b border-line-colour" do %>
+                <% section_data.keys.each_with_index do |tab_key, idx| %>
+                  <div class="p-1 cursor-pointer"
+                        data-auto-click-target="tabItem"
+                        data-tabs-target="tabItem"
+                        data-action="click->tabs#select">
+                    <%= tab_key.to_s.camelize %>
+                  </div>
+                <% end %>
+              <% end %>
+              <div class="tab-panels-container">
+                <% section_data.each do |name, courses| %>
+                  <div data-tabs-target="panelItem" class="space-y-4">
+                    <%= carousel_component cards: course_cards(courses), loop: false, enable_in_small_devices: false %>
+                    <%= link_to explore_courses_path("tags[]": name), class: 'block w-fit' do %>
+                      <%= button_component text: "Show all Courses on #{name}",
+                                          size: 'sm',
+                                          type: 'outline',
+                                          icon_name: 'chevron-right',
+                                          icon_position: 'right' %>
+                    <% end %>
+
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="md:hidden rounded-xl">
+          <% section_data.each do |name, courses| %>
+            <%= accordion_component header: name do %>
+              <div class="flex flex-col w-full gap-3 pb-5">
+                <% course_cards(courses.take(3)).each do |card_html| %>
+                  <div class="w-full">
+                  <%= card_html %>
+                  </div>
+                <% end %>
+                <%= link_to explore_courses_path(tags: name), class: 'block w-fit mx-auto' do %>
+                  <%= button_component text: "View More",
+                                      size: 'sm',
+                                      type: 'outline',
+                                      icon_name: 'chevron-right',
+                                      icon_position: 'right' %>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </section>
+      </section>
+
+    <% end %>
+  <% end %>
+</div>

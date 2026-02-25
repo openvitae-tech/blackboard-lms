@@ -77,4 +77,8 @@ class CoursePolicy
   def search?
     user.present?
   end
+
+  def explore?
+    user.present?
+  end
 end

@@ -12,8 +12,6 @@ module UiHelper
   include ViewComponent::InputComponent
   include ViewComponent::TableComponent
   include ViewComponent::ModalComponent
-  include ViewComponent::CourseCardComponent
-  include ViewComponent::LongCourseCardComponent
   include ViewComponent::CourseCarousalComponent
   include ViewComponent::CourseSelectComponent
   include ViewComponent::MemberListComponent
@@ -28,4 +26,9 @@ module UiHelper
   include ViewComponent::ProgressComponent
   include ViewComponent::ProfileIconComponent
   include ViewComponent::AccordionComponent
+  include ViewComponent::CarouselComponent
+  include ViewComponent::Card::ProgramCardComponent
+  include ViewComponent::Card::LongProgramCardComponent
+  include ViewComponent::Card::CourseCardComponent
+  include ViewComponent::Card::LongCourseCardComponent
 end

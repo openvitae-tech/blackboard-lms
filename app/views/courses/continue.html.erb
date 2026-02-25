@@ -1,0 +1,21 @@
+<% content_for :header do %>
+  <div data-controller="courses">
+    <%= render 'filters', tags: @tags %>
+    <div class="flex justify-between items-center">
+      <%= breadcrumbs_component links: [['Home', courses_path], ['Continue your Learning', nil]]%>
+    </div>
+  <div>
+<% end %>
+<div class="space-y-6 mt-3">
+  <section class="space-y-6">
+    <div class="flex gap-2 items-center">
+      <%= render 'shared/components/back_button', back_link: courses_path %>
+      <p class="main-text-lg-semibold">Continue your Learning</p>
+    </div>
+    <% @courses.each do |course| %>
+      <%= link_to course_path(course), class: "block" do %>
+        <%= long_course_card_component course: %>
+      <% end %>
+    <% end %>
+  </section>  
+</div>

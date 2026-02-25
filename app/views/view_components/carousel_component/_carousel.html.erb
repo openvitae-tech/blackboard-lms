@@ -1,0 +1,28 @@
+  <div class="relative group z-40"
+       data-controller="carousel"
+       data-carousel-is-loop-value="<%= loop %>"
+       data-carousel-enable-in-small-devices="<%= enable_in_small_devices %>">
+    <%# Previous Arrow - Only visible after scrolling %>
+    <div data-carousel-target="prev" 
+         class="absolute -left-4 top-1/2 -translate-y-1/2 z-10 opacity-80 bg-primary-light-50 p-2 rounded-full invisible md:visible transition-opacity cursor-pointer border border-slate-grey-light">
+      <%= icon 'chevron-left', css: 'w-4 h-4 text-primary'%>
+    </div>
+
+    <%# Next Arrow %>
+    <div data-carousel-target="next" 
+         class="absolute -right-4 top-1/2 -translate-y-1/2 z-10 opacity-80 bg-primary-light-50 p-2 rounded-full invisible md:visible transition-opacity cursor-pointer border border-slate-grey-light">
+        <%= icon 'chevron-right', css: 'w-4 h-4 text-primary'%>
+    </div>
+
+
+    <%# Scrolling Container %>
+    <div data-carousel-target="container" class="<%= loop ? 'swiper-loop': '' %> flex swiper w-full">
+         <div class="swiper-wrapper flex items-stretch">
+      <% cards.each do |card_html| %>
+        <div class="swiper-slide w-auto self-stretch">
+          <%= card_html %>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>

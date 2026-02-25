@@ -1,0 +1,79 @@
+<% content_for :header do %>
+  <div data-controller="courses">
+    <%= render 'filters', tags: @tags %>
+    <div class="flex justify-between items-center">
+      <%= breadcrumbs_component links: [['Home', courses_path], [explore_title(params[:tags]), nil]]%>
+      <div class="flex flex-col gap-1 grow">
+        <div class="flex gap-2 md:gap-3 items-center justify-end">
+          <div class="flex flex-col gap-1 w-full md:max-w-xs">
+            <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
+              <div class="flex gap-1 items-center">
+                <div class="relative rounded-md border border-line-colour-light w-full">      
+                  <%= input_text_component( 
+                    name: :term,
+                    placeholder: 'Search courses', 
+                    icon_name: 'magnifying-glass', 
+                    icon_position: 'left', 
+                    value: params[:term], 
+                    html_options: {
+                      data: {
+                        courses_target: 'searchInput'
+                      },
+                      id: 'course-search'
+                      }
+                  ) %>
+                  <% if params[:term].present? %>
+                    <div class="absolute inset-y-0 right-2 flex items-center cursor-pointer" data-action="click->courses#clearSearch">
+                      <%= icon 'x-circle', css: 'w-5 h-5 text-primary'%>
+                    </div>
+                  <% end %>
+                </div>
+              </div> 
+            <% end %>
+          </div>            
+          <div data-action="click->courses#openFilter" class="cursor-pointer">
+            <%= button_component(text: 'Filter', type: "outline", icon_name: "funnel", icon_position: 'right', hide_label_in_mobile: true) %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="space-x-2 flex flex-row mt-3 md:mt-4">
+      <% params[:tags]&.each do |tag| %>
+        <%= link_to updated_tags_query_params(tag), method: :get do %>
+          <%= chip_component(text: tag , colorscheme: 'input', close: true) %>
+        <% end %>
+      <% end %>
+    </div>
+
+  <div>
+<% end %>
+<div class="space-y-6 mt-3">
+  <section class="space-y-6">
+  <div class="flex gap-2 items-center">
+    <%= render 'shared/components/back_button', back_link: :back %>
+    <p class="main-text-lg-semibold"><%= explore_title(params[:tags]) %></p>
+  </div>
+  <% @courses[:explore].each do |course| %>
+    <%= long_course_card_component course: %>
+  <% end %>
+  </section>  
+  <section class="bg-white p-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5 -mx-5 md:mx-0">
+    <div class="flex items-center gap-3 justify-between">
+      <h2 class="main-text-lg-semibold">Continue Your Learning</h2>
+      
+      <%= link_to continue_courses_path do %>
+        <div class="hidden md:inline">
+          <%= button_component text: 'View More',
+                               size: 'sm',
+                               type: 'outline',
+                               icon_name: 'chevron-right',
+                               icon_position: 'right' %>
+        </div>
+        <div class="md:hidden bg-primary-light-50 rounded-full p-1 border border-slate-grey-light mr-5">
+          <%= icon 'chevron-right', css: 'w-4 h-4 text-primary' %>
+        </div>
+      <% end %>
+    </div>
+    <%= carousel_component cards: course_cards(@courses[:continue]), loop: false %>
+  </section>
+</div>

@@ -5,7 +5,7 @@ class ProgramsController < ApplicationController
   include SearchContextHelper
 
   before_action :set_learning_partner
-  before_action :set_program, except: %i[new index create list choose]
+  before_action :set_program, except: %i[new index explore create list choose]
 
   def new
     authorize :program
@@ -15,6 +15,16 @@ class ProgramsController < ApplicationController
   def index
     authorize :program
     @programs = @learning_partner.programs
+  end
+
+  def explore
+    authorize :program
+    @programs = Program.all
+    unless params[:term].blank?
+      @programs = @programs.filter_by_name(params[:term])
+    end
+    search_context = SearchContext.new context: :home_page, type: SearchContext::INCOMPLETE
+    @courses = Courses::FilterService.new(current_user, search_context).filter.records
   end
 
   def show

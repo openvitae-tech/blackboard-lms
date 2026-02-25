@@ -12,4 +12,6 @@ class Program < ApplicationRecord
   has_many :users, through: :program_users
 
   belongs_to :learning_partner
+
+  scope :filter_by_name, ->(str) { where('name ILIKE ?', "%#{sanitize_sql_like(str)}%") }
 end
