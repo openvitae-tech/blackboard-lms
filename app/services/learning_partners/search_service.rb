@@ -12,7 +12,7 @@ module LearningPartners
       scope = LearningPartner.includes(%i[logo_attachment payment_plan]).order(:name)
       return scope if query.blank?
 
-      scope.where('name ILIKE ?', "#{query}%")
+      scope.where('name ILIKE ?', "#{LearningPartner.sanitize_sql_like(query)}%")
     end
   end
 end
