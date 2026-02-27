@@ -1,0 +1,82 @@
+<div data-controller="courses">
+  <div class="pt-4 md:pt-5 pb-3 flex flex-col gap-4 sticky top-0 w-full z-40 bg-white">
+    <%= render 'filters', tags: tags %>
+    <div class="flex flex-row justify-between">
+      <h1 class="heading-xl">My Courses</h1>
+      <% if policy(:course).new? %>
+        <%= link_to new_course_path, data: { turbo_frame: "modal" }, class: "nav-link" do %>
+          <%= button_component(text: 'Add course', icon_name: "plus") %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="flex flex-col gap-1">
+      <div class="flex gap-2 md:gap-3 items-center">
+        <div class="flex flex-col gap-1 w-full justify-start">
+          <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
+            <div class="flex gap-2 md:gap-3 items-center">
+              <div class="relative rounded-md border border-line-colour-light w-full">      
+                <%= input_text_component( 
+                  name: :term,
+                  placeholder: 'Search courses', 
+                  icon_name: 'magnifying-glass', 
+                  icon_position: 'left', 
+                  value: params[:term], 
+                  html_options: {
+                    data: {
+                      courses_target: 'searchInput'
+                    },
+                    id: 'course-search'
+                    }
+                ) %>
+                <% if params[:term].present? %>
+                  <div class="absolute inset-y-0 right-2 flex items-center cursor-pointer" data-action="click->courses#clearSearch">
+                    <%= icon 'x-circle', css: 'w-5 h-5 text-primary'%>
+                  </div>
+                <% end %>
+              </div>
+              <div class="cursor-pointer hidden md:block">
+                <%= button_component(text: 'Go', type: "outline", icon_name: "arrow-right", icon_position: 'right') %>
+              </div>
+              <div class="cursor-pointer md:hidden">
+                <%= button_component(type: "outline", icon_name: "arrow-right", icon_position: 'right') %>
+              </div>
+            </div> 
+          <% end %>
+        </div>            
+        <% if type.present? || policy(:course).new? %>
+          <div data-action="click->courses#openFilter" class="cursor-pointer hidden md:block">
+            <%= button_component(text: 'Filter', type: "outline", icon_name: "funnel",) %>
+          </div>
+          <div data-action="click->courses#openFilter" class="cursor-pointer md:hidden">
+            <%= button_component(type: "outline", icon_name: "funnel",) %>
+          </div>
+        <% end %>
+      </div>
+      <div class="space-x-2 flex flex-row">
+        <% params[:tags]&.each do |tag| %>
+          <%= link_to updated_tags_query_params(tag), method: :get do %>
+            <%= chip_component(text: tag , colorscheme: 'input', close: true) %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <% if courses.blank? %>
+    <%= render 'courses/not_found_msg', type: (params[:tags].present? && params[:term].present? ? 'search_and_tags' : params[:term].present? ? 'search' : 'tags') %>
+  <% else %>
+      <div class="flex flex-col gap-5 md:gap-6">
+        <div class="flex flex-col gap-4 mt-3">
+          <% courses.each do |course| %>
+            <%= link_to course_path(course) do %>
+              <%= long_course_card_component(course: course) %>
+            <% end %>
+          <% end %>
+        </div>  
+        <div class="flex justify-end gap-3">
+          <%= render 'shared/pagination/prev', items: courses %>
+          <%= render 'shared/pagination/next', items: courses %>
+        </div>
+      </div>  
+  <% end %>  
+</div>

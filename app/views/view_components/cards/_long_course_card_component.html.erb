@@ -1,0 +1,67 @@
+<div class="rounded-xl border border-line-colour relative max-h-[104px] md:max-h-[132px]">
+  <div class="w-full rounded relative flex gap-1">
+    <div class="absolute top-0 left-0 z-10 flex flex-wrap justify-start gap-2 heading">
+      <% course.tags.each do |tag| %>
+        <% if tag.tag_type == "level" %>
+          <span class="px-2 py-1 text-xs font-medium bg-secondary text-primary-dark rounded-tl-xl rounded-br-xl  border border-line-colour">
+            <%= tag.name %>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+    
+    <div class="relative">
+      <%= image_tag course_banner(course, :horizontal), class: 'w-[100px] md:w-[297px] h-[104px] md:h-[132px] rounded-l-xl object-cover' %>
+      <span class="absolute bottom-0 right-4 z-10 flex rounded-t-md bg-primary-light-100 general-text-sm-normal py-0.5 px-1 text-primary-dark">
+          <%= course_duration(course) %>
+      </span>
+    </div>
+    
+    <div class="flex justify-between flex-grow p-4 md:p-5 gap-3 ">
+      <div class="flex flex-col gap-3">
+        <div class="flex justify-between">
+          <div class="max-w-[148px] md:max-w-[716px]">
+            <p class="main-text-md-medium text-primary overflow-hidden md:whitespace-nowrap md:text-ellipsis line-clamp-2">
+              <%= course.title %>
+            </p>
+          </div>
+        </div>
+        
+        <div class="flex gap-3 md:gap-4">
+          <% if course.rating.present? %>
+            <div class="flex items-center">
+              <%= icon("star-transparent", css: "h-4 w-4 text-primary fill-primary") %>
+              <span class="ml-2 general-text-sm-normal"><%= course.rating %></span>
+            </div>
+            <div class="w-px h-full bg-slate-grey-light md:hidden"></div>
+
+          <% end %>
+          <div class="flex gap-3 md:gap-1">
+            <div class="flex items-center">
+              <%= icon("book", css: "h-4 w-4 text-primary") %>
+              <span class="ml-2 general-text-sm-normal"><%= modules_count(course) %></span>
+            </div>
+            <div class="w-px h-full bg-slate-grey-light"></div>
+            <div class="flex items-center">
+              <%= icon("user", css: "h-4 w-4 text-primary") %>
+              <span class="ml-2 general-text-sm-normal"><%= enroll_count(course) %></span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap gap-2 h-[24px] hidden md:block">
+          <% course.tags.each do |tag| %>
+            <% if tag.tag_type == "category" %>
+              <%= chip_component(text: tag.name , colorscheme: 'primary', icon_name: 'check') %>
+            <% end %>
+          <% end %>
+        </div>
+       
+     </div>
+      <div class="hidden border border-primary rounded-full min-w-8 md:min-w-10 h-8 md:h-10 flex justify-center">
+        <%= icon("bookmark", css: "h-5 w-5 text-primary") %>
+      </div>
+    </div>
+   
+  </div>
+</div>

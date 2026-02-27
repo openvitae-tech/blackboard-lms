@@ -81,12 +81,11 @@ RSpec.describe 'Request spec for Programs' do
       expect(assigns(:courses).pluck(:id)).to eq([course.id])
     end
 
-    it 'unauthorized for non-privileged user' do
+    it 'allows non-privileged user to view program details' do
       sign_in learner
 
       get program_path(program)
-      expect(response).to redirect_to(error_401_path)
-      expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      expect(response.status).to be(200)
     end
   end
 

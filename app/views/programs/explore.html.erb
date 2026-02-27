@@ -1,0 +1,69 @@
+<% content_for :header do %>
+  <div data-controller="courses">
+    <div class="flex justify-between items-center">
+      <%= breadcrumbs_component links: [['Home', courses_path], ['Explore our Programs', nil]]%>
+          <div class="flex flex-col gap-1 w-full md:w-fit justify-end">
+            <%= form_tag explore_programs_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
+              <div class="flex gap-1 items-center">
+                <div class="relative rounded-md border border-line-colour-light w-full">      
+                  <%= input_text_component( 
+                    name: :term,
+                    placeholder: 'Search programs', 
+                    icon_name: 'magnifying-glass', 
+                    icon_position: 'left', 
+                    value: params[:term], 
+                    html_options: {
+                      data: {
+                        courses_target: 'searchInput'
+                      },
+                      id: 'course-search'
+                      }
+                  ) %>
+                  <% if params[:term].present? %>
+                    <div class="absolute inset-y-0 right-2 flex items-center cursor-pointer" data-action="click->courses#clearSearch">
+                      <%= icon 'x-circle', css: 'w-5 h-5 text-primary'%>
+                    </div>
+                  <% end %>
+                </div>
+              </div> 
+            <% end %>
+          </div>            
+    </div>
+  </div>
+<% end %>
+<div class="space-y-5 md:space-y-6 mt-3">
+  <section class="space-y-5 md:space-y-6">
+  <div class="flex gap-2 items-center">
+    <%= render 'shared/components/back_button', back_link: courses_path %>
+    <p class="main-text-lg-semibold">Explore our Programs</p>
+  </div>
+  <% @programs.each do |program| %>
+    <%= link_to program_path(program), class: 'block' do %>
+      <%= long_program_card_component program:, user: current_user %>
+    <% end %>
+  <% end %>
+  <div class="flex justify-end gap-3">
+    <%= render 'shared/pagination/prev', items: @programs %>
+    <%= render 'shared/pagination/next', items: @programs %>
+  </div>  
+  </section>  
+  <section class="bg-white px-5 md:rounded-xl md:border md:border-line-colour-light space-y-5 -mx-5 md:mx-0">
+    <div class="flex items-center gap-3 justify-between">
+      <h2 class="main-text-lg-semibold">Continue Your Learning</h2>
+      
+      <%= link_to explore_courses_path do %>
+        <div class="hidden md:inline">
+          <%= button_component text: 'View More',
+                               size: 'sm',
+                               type: 'outline',
+                               icon_name: 'chevron-right',
+                               icon_position: 'right' %>
+        </div>
+        <div class="md:hidden bg-primary-light-50 rounded-full p-1 border border-slate-grey-light mr-5">
+          <%= icon 'chevron-right', css: 'w-4 h-4 text-primary' %>
+        </div>
+      <% end %>
+    </div>
+    <%= carousel_component cards: course_cards(@courses), loop: false %>
+  </section>
+</div>

@@ -2,7 +2,7 @@
   <%= heading_component(text: t("programs.label")) %>
   <%= link_to new_program_path, data: { turbo_frame: "modal" }, class: "nav-link" do %>
     <%= button(label: 'Add program', icon_name: "plus") %>
-  <% end %>
+  <% end if current_user.privileged_user? %>
 </div>
 <div id="programs-list">
   <h3 class="text-sm mb-4 font-bold"><%= pluralize(@programs.size, 'program') %></h3>

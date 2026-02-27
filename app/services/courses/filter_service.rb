@@ -72,6 +72,9 @@ module Courses
     def filter_scope_for(user, search_context)
       scope = if search_context.search_enrolled_courses?
                 user.courses
+              elsif search_context.search_incomplete_courses?
+                completed_courses_ids = user.enrollments.completed.pluck(:course_id)
+                user.courses.where.not(id: completed_courses_ids).order(:id)
               elsif search_context.search_unenrolled_courses?
                 Course.where.not(
                   id: Enrollment.where(user_id: user.id).select(:course_id)

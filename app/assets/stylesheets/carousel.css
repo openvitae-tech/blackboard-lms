@@ -1,0 +1,12 @@
+@media (max-width: 767px) {
+  .swiper-loop .swiper-slide-prev, .swiper-loop .swiper-slide-next {
+    opacity: 0.5; 
+    transition: opacity 0.3s, transform 0.3s;
+    transform: scale(0.9) !important;
+  }
+  .swiper-loop .swiper-slide-active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 10;
+  }
+}

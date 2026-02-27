@@ -11,20 +11,35 @@ class CoursesController < ApplicationController
   # GET /courses or /courses.json
   def index
     authorize :course
-    @search_context = build_search_context(context: :course_listing)
-
-    result = Courses::FilterAdapter.instance.filter_courses(current_user, params[:tags], params[:term], params[:type])
-
-    @available_courses = result[:available_courses]
-    @available_courses_count = result[:available_courses_count]
-    if !current_user.is_admin?
-      @enrolled_courses = result[:enrolled_courses]
-      @enrolled_courses_count = result[:enrolled_courses_count]
+    if current_user.is_admin?
+      search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term], type: params[:type])
+      @courses = Courses::FilterService.new(current_user, search_context).filter.records.includes(:tags, :banner_attachment)
+      @courses = @courses.page(filter_params[:page])
+    else
+      @data = HomePageService.instance.build_data_for(current_user)
     end
     @tags = Tag.load_tags
-    @type = permitted_type(params[:type])
-    apply_pagination
-    preload_course_associations
+  end
+   
+  def explore
+    authorize :course
+
+    @courses = {}
+    search_context = build_search_context type: SearchContext::INCOMPLETE
+    @courses[:continue] = Courses::FilterService.new(current_user, search_context).filter.records.limit(12)
+
+    search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term], type: params[:type])
+    @courses[:explore] = Courses::FilterService.new(current_user, search_context).filter.records.page(filter_params[:page])
+
+    @tags = Tag.load_tags
+  end
+
+  def continue
+    authorize :course
+    
+    search_context = build_search_context type: SearchContext::INCOMPLETE
+    @courses = Courses::FilterService.new(current_user, search_context).filter.records.page(filter_params[:page])
+    @tags = Tag.load_tags
   end
 
   # GET /courses/1 or /courses/1.json
@@ -189,20 +204,6 @@ class CoursesController < ApplicationController
     params.permit(:page)
   end
 
-  def apply_pagination
-    if @type.nil?
-      @available_courses = @available_courses.page(filter_params[:page])
-      @enrolled_courses = @enrolled_courses.page(filter_params[:page]) if !current_user.is_admin?
-      return
-    end
-
-    if @type == "all"
-      @available_courses = @available_courses.page(filter_params[:page])
-    else
-      @enrolled_courses = @enrolled_courses.page(filter_params[:page]) if !current_user.is_admin?
-    end
-  end
-
   def permitted_type(type)
     %w[all enrolled].include?(type) ? type : nil
   end
@@ -215,5 +216,11 @@ class CoursesController < ApplicationController
   def updated_params
     tag_ids = [course_params[:category_id], course_params[:level_id]].compact
     course_params.merge(tag_ids:).except(:category_id, :level_id)
+  end
+
+  def build_search_context(type: nil, tags: [])
+    SearchContext.new(context: SearchContext::HOME_PAGE,
+                      type:,
+                      tags:,)
   end
 end
