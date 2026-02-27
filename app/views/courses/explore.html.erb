@@ -6,7 +6,7 @@
       <div class="flex flex-col gap-1 grow">
         <div class="flex gap-2 md:gap-3 items-center justify-end">
           <div class="flex flex-col gap-1 w-full md:max-w-xs">
-            <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
+            <%= form_tag explore_courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
               <div class="flex gap-1 items-center">
                 <div class="relative rounded-md border border-line-colour-light w-full">      
                   <%= input_text_component( 
@@ -45,7 +45,7 @@
       <% end %>
     </div>
 
-  <div>
+  </div>
 <% end %>
 <div class="space-y-6 mt-3">
   <section class="space-y-6">
@@ -56,6 +56,11 @@
   <% @courses[:explore].each do |course| %>
     <%= long_course_card_component course: %>
   <% end %>
+  <div class="flex justify-end gap-3">
+    <%= render 'shared/pagination/prev', items: @courses[:explore] %>
+    <%= render 'shared/pagination/next', items: @courses[:explore] %>
+  </div>
+
   </section>  
   <section class="bg-white p-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5 -mx-5 md:mx-0">
     <div class="flex items-center gap-3 justify-between">

@@ -19,10 +19,9 @@ class ProgramsController < ApplicationController
 
   def explore
     authorize :program
-    @programs = Program.all
-    unless params[:term].blank?
-      @programs = @programs.filter_by_name(params[:term])
-    end
+    @programs = current_user.learning_partner.programs.includes(:program_users)
+    @programs = @programs.filter_by_name(params[:term]).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
+
     search_context = SearchContext.new context: :home_page, type: SearchContext::INCOMPLETE
     @courses = Courses::FilterService.new(current_user, search_context).filter.records
   end

@@ -4,7 +4,7 @@
     <div class="flex justify-between items-center">
       <%= breadcrumbs_component links: [['Home', courses_path], ['Continue your Learning', nil]]%>
     </div>
-  <div>
+  </div>
 <% end %>
 <div class="space-y-6 mt-3">
   <section class="space-y-6">
@@ -17,5 +17,9 @@
         <%= long_course_card_component course: %>
       <% end %>
     <% end %>
+    <div class="flex justify-end gap-3">
+      <%= render 'shared/pagination/prev', items: @courses %>
+      <%= render 'shared/pagination/next', items: @courses %>
+    </div>
   </section>  
 </div>

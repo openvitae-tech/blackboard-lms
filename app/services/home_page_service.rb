@@ -10,33 +10,32 @@ class HomePageService
     categories: { enabled: true, order: 3, tags: ['Front Office', 'Housekeeping'] }
   }.freeze
 
-  attr_reader :user
-
-  def self.build_data_for(user)
-    @user = user
+  def build_data_for(user)
     data = {}
     CONFIG.sort_by { |_, section| section[:order] }.each do |key, section|
       next unless section[:enabled]
 
-      data[key] = send("build_#{key}")
+      data[key] = send("build_#{key}", user)
     end
     data
   end
 
-  def self.build_banner; end
+  private
 
-  def self.build_programs
-    @user.learning_partner.programs.includes(:program_courses, :program_users)
+  def build_banner(user); end
+
+  def build_programs(user)
+    user.learning_partner.programs.includes(:program_courses, :program_users)
   end
 
-  def self.build_continue
+  def build_continue(user)
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, type: SearchContext::INCOMPLETE)
-    Courses::FilterService.new(@user, ctx).filter.records
+    Courses::FilterService.new(user, ctx).filter.records
   end
 
-  def self.build_categories
+  def build_categories(user)
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, tags: CONFIG[:categories][:tags])
-    courses_in_categories = Courses::FilterService.new(@user, ctx).filter.records.includes(:tags, :banner_attachment)
+    courses_in_categories = Courses::FilterService.new(user, ctx).filter.records.includes(:tags, :banner_attachment)
     courses = {}
 
     courses_in_categories.each do |course|

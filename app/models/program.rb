@@ -13,5 +13,8 @@ class Program < ApplicationRecord
 
   belongs_to :learning_partner
 
-  scope :filter_by_name, ->(str) { where('name ILIKE ?', "%#{sanitize_sql_like(str)}%") }
+  scope :filter_by_name, lambda { |str|
+    query = str.to_s.strip
+    query.present? ? where('name ILIKE ?', "%#{sanitize_sql_like(str)}%") : all
+  }
 end

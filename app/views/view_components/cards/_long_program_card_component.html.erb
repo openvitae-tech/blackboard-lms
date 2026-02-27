@@ -15,7 +15,7 @@
             <span class="ml-2 general-text-sm-normal"><%= pluralize(enroll_count, 'Enrolled') %></span>
           </div>
         </div>
-        <%= content_tag :dev, class: "bg-secondary text-primary-dark px-1 py-0.5 rounded general-text-sm-normal" do %>
+        <%= content_tag :div, class: "bg-secondary text-primary-dark px-1 py-0.5 rounded general-text-sm-normal" do %>
           Enrolled
         <% end if is_enrolled %>
       </div>

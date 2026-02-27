@@ -96,7 +96,7 @@
                   <%= card_html %>
                   </div>
                 <% end %>
-                <%= link_to explore_courses_path(tags: name), class: 'block w-fit mx-auto' do %>
+                <%= link_to explore_courses_path("tags[]": name), class: 'block w-fit mx-auto' do %>
                   <%= button_component text: "View More",
                                       size: 'sm',
                                       type: 'outline',

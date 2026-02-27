@@ -74,49 +74,8 @@
           <% end %>
         </div>  
         <div class="flex justify-end gap-3">
-          <% if (prev_path = path_to_previous_page(courses)) %>
-            <div class="w-fit">
-              <%= link_to prev_path do %>
-                <%= button_component(
-                      text: 'Previous',
-                      type: 'outline',
-                      icon_name: 'chevron-left'
-                    ) %>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="w-fit hidden md:block">
-              <%= button_component(
-                    text: 'Previous',
-                    type: 'outline',
-                    icon_name: 'chevron-left',
-                    disabled: true
-                  ) %>
-            </div>
-          <% end %>
-
-          <% if (next_path = path_to_next_page(courses)) %>
-            <div class="w-fit">
-              <%= link_to next_path do %>
-                <%= button_component(
-                      text: 'Next',
-                      type: 'outline',
-                      icon_name: 'chevron-right',
-                      icon_position: 'right',
-                    ) %>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="w-fit hidden md:block">
-              <%= button_component(
-                    text: 'Next',
-                    type: 'outline',
-                    icon_name: 'chevron-right',
-                    icon_position: 'right',
-                    disabled: true
-                  ) %>
-            </div>
-          <% end %>
+          <%= render 'shared/pagination/prev', items: courses %>
+          <%= render 'shared/pagination/next', items: courses %>
         </div>
       </div>  
   <% end %>  
