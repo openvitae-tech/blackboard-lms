@@ -8,7 +8,7 @@ class LearningPartnersController < ApplicationController
   # GET /learning_partners or /learning_partners.json
   def index
     authorize :learning_partner
-    @learning_partners = LearningPartner.includes([:logo_attachment, :payment_plan]).order(:name).page(params[:page])
+    @learning_partners = LearningPartners::SearchService.new(params[:query]).search.page(params[:page])
   end
 
   # GET /learning_partners/1 or /learning_partners/1.json
