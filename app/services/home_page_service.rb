@@ -34,6 +34,8 @@ class HomePageService
   end
 
   def build_categories(user)
+    return {} if CONFIG[:categories][:tags].blank?
+
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, tags: CONFIG[:categories][:tags])
     courses_in_categories = Courses::FilterService.new(user, ctx).filter.records.includes(:tags, :banner_attachment)
     courses = {}

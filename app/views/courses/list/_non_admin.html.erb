@@ -8,6 +8,7 @@
   </section>
 
   <% data.each do |section_key, section_data| %>
+    <% next if section_data.blank? %>
     <% case section_key %>
     <% when :programs %>
       <section class="bg-primary-light-100 py-5 md:px-5 md:pt-4 md:rounded-xl md:border-2 md:border-line-colour-light space-y-5 -mx-5 md:mx-0">
@@ -52,6 +53,8 @@
       </section>
 
     <% when :categories %>
+      <% section_data = section_data.reject { |_, courses| courses.blank? } %>
+      <% next if section_data.blank? %>
       <section class="space-y-2">
         <p class="heading-xl px-2 text-primary">Explore based on Categories</p>
         <section class="hidden md:block bg-white p-5 pr-0 md:pr-5 md:pt-4 md:rounded-xl md:border-2 md:border-line-colour-light space-y-4">
