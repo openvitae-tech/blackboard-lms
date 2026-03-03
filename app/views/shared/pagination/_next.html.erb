@@ -1,0 +1,22 @@
+<% if (next_path = path_to_next_page(items)) %>
+  <div class="w-fit">
+    <%= link_to next_path do %>
+      <%= button_component(
+            text: 'Next',
+            type: 'outline',
+            icon_name: 'chevron-right',
+            icon_position: 'right',
+          ) %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="w-fit hidden md:block">
+    <%= button_component(
+          text: 'Next',
+          type: 'outline',
+          icon_name: 'chevron-right',
+          icon_position: 'right',
+          disabled: true
+        ) %>
+  </div>
+<% end %>

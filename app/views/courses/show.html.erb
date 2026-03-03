@@ -1,8 +1,14 @@
 <% content_for :header do %>
   <div class="flex flex-col gap-4">
-    <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]]%>
+    <% if current_user.is_admin? %>
+      <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]]%>
+    <% else %>
+      <%= render "shared/components/bread_crumbs", links: [['Home', courses_path], ["Explore our Courses", explore_courses_path], [@course.title, nil]] %>
+    <% end %>
+
+    
     <div class="flex <%= current_user.is_admin? ? 'flex-col' : 'flex-row items-center'%> md:flex-row justify-between gap-4 w-full">
-      <%= render 'shared/components/back_button', back_link: courses_path %>
+      <%= render 'shared/components/back_button', back_link: :back %>
       <div class="flex flex-nowrap w-full md:w-fit gap-4 justify-end">
         <% if current_user.is_admin? %>
           <%= render 'courses/admin_actions', course: @course %>

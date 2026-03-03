@@ -28,5 +28,6 @@ Rails.application.routes.draw do
     get :progress, to: 'progress#index'
     get :profile_icon, to: 'profile_icon#index'
     get :accordions, to: 'accordions#index'
+    get :carousels, to: 'carousels#index'
   end
 end

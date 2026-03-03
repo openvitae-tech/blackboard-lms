@@ -8,6 +8,8 @@ class Enrollment < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :course_id }
 
+  scope :completed, -> { where(course_completed: true) }
+
   def complete_lesson!(module_id, lesson_id, time_spent_in_seconds)
     self.current_module_id = module_id
     self.current_lesson_id = lesson_id

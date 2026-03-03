@@ -81,6 +81,10 @@ Rails.application.routes.draw do
   resource :alert_modal, only: :show, controller: 'commons/alert_modal'
 
   resources :courses do
+    collection do
+      get :explore
+      get :continue
+    end
     member do
       put :enroll
       put :unenroll
@@ -170,6 +174,9 @@ Rails.application.routes.draw do
   end
 
   resources :programs, only: %i[new index show create edit update destroy] do
+    collection do
+      get :explore
+    end
     member do
       delete :bulk_destroy_courses
       get :confirm_bulk_destroy_courses

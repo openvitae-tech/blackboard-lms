@@ -76,6 +76,8 @@ en:
   event:
     invalid: "%{value} is not a valid event name."
   course:
+    explore: "Explore our Courses"
+    preposition_on: "on"
     label: "My Courses"
     course_assigned: "Course assigned"
     deadline_approaching: "Course deadline approaching"
