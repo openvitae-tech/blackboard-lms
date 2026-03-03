@@ -12,6 +12,10 @@ class ProgramPolicy
     user.privileged_user?
   end
 
+  def explore?
+    user.not_admin?
+  end
+
   def new?
     user.privileged_user?
   end
@@ -21,7 +25,7 @@ class ProgramPolicy
   end
 
   def show?
-    user.privileged_user?
+    user.present?
   end
 
   def edit?

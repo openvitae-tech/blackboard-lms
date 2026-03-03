@@ -4,7 +4,9 @@ export default class extends Controller {
 
   connect() {
     const url =  this.getUrl();
-    this.filterTarget.style.display = "none";
+    if (this.hasFilterTarget) {
+      this.filterTarget.style.display = "none";
+    }
 
     if (url.searchParams.has('clear_search')) {
       this.searchInputTarget.focus();

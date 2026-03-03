@@ -15,7 +15,8 @@ class SearchContext
   ANY = :all
   ENROLLED = :enrolled
   UNENROLLED = :unenrolled
-  VALID_TYPES = [ANY, ENROLLED, UNENROLLED].freeze
+  INCOMPLETE = :incomplete
+  VALID_TYPES = [ANY, ENROLLED, UNENROLLED, INCOMPLETE].freeze
 
   attr_reader :term, :tags, :context, :team, :user, :type, :program
 
@@ -50,6 +51,10 @@ class SearchContext
     end
 
     raise Errors::IllegalSearchContext, errors.full_messages.join('\n') unless valid?
+  end
+
+  def search_incomplete_courses?
+    type == INCOMPLETE
   end
 
   def search_enrolled_courses?

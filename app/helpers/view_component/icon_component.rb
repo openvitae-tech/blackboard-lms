@@ -3,7 +3,7 @@
 module ViewComponent
   module IconComponent
     def icon(icon_name, css: nil, span_css: nil, stroke_width: nil)
-      file = Rails.cache.fetch("icon:#{icon_name}") do
+      file = Rails.cache.fetch("icon:#{icon_name}", force: Rails.env.development?) do
         Rails.root.join('app', 'assets', 'icons', "#{icon_name}.svg").read
       end
 

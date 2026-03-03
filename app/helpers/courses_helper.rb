@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module CoursesHelper
+  def explore_title(tags)
+    title = t('course.explore')
+    return title unless tags && tags.count == 1
+
+    [title, t('course.preposition_on'), tags[0]].join(' ')
+  end
+
   def enrolled_courses?(courses)
     defined?(courses) && courses.present?
   end

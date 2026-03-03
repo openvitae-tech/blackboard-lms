@@ -14,6 +14,10 @@ class CoursePolicy
     user.present?
   end
 
+  def continue?
+    !user.is_admin?
+  end
+
   def new?
     user.is_admin?
   end
@@ -75,6 +79,10 @@ class CoursePolicy
   end
 
   def search?
+    user.present?
+  end
+
+  def explore?
     user.present?
   end
 end

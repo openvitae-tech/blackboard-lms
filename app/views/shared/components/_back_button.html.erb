@@ -1,12 +1,5 @@
-<%= link_to back_link, class: "nav-link" do %>
-  <div class="flex gap-1 items-center text-primary main-text-sm-normal">
-    <%= icon "arrow-left", css: "h-5 w-5 text-primary", stroke_width: "1.0" %>
-    <% if local_assigns[:text].present? %>
-      <span class="main-text-lg-semibold text-letter-color">
-        <%= text %>
-      </span>
-    <% else %>
-      <span class="underline hidden md:block">Back</span>
-    <% end %>
+<%= link_to back_link, class: "nav-link block w-fit", aria: { label: t('back') } do %>
+  <div class="flex gap-1 items-center text-primary main-text-sm-normal rounded-full border border-primary-light-100 p-1">
+    <%= icon "arrow-left", css: "h-4 w-4 text-primary", stroke_width: "1.0" %>
   </div>
 <% end %>
