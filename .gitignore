@@ -57,3 +57,4 @@ docker-build
 .vscode
 
 /config/credentials/staging.key
+.github/copilot-instructions.md

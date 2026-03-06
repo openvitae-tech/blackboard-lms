@@ -81,6 +81,24 @@ $ rails credentials:edit
 Replace the editor content with the copied content, edit and save then close the file.
 
 
+### Install Node.js 22.x
+
+Install Node.js using [nvm](https://github.com/nvm-sh/nvm) or the [official installer](https://nodejs.org/).
+
+```bash
+# Using nvm
+nvm install 22
+nvm use 22
+```
+
+### Install npm dependencies
+
+```bash
+npm install
+```
+
+This installs `postcss-import` and other front-end build dependencies required for the Tailwind CSS compilation step.
+
 ### Setup git hooks
 You can either install [husky](https://typicode.github.io/husky/get-started.html) or use the git command below to setup the git precommits hooks
 

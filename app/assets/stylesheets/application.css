@@ -11,6 +11,10 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
+ *= require icons
+ *= require tooltip
+ *= require custom
+ *= require course_progress
  *= require_self
  */
 

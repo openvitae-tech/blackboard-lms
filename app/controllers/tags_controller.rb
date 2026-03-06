@@ -23,7 +23,7 @@ class TagsController < ApplicationController
       @tags_count = Tag.count
       flash.now[:success] = t("resource.created", resource_name: "Tag")
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -37,7 +37,7 @@ class TagsController < ApplicationController
     if @tag.update(tag_params)
       flash.now[:success] = t("resource.updated", resource_name: "Tag")
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
