@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '3.3.0'
 
 gem 'connection_pool', '~> 2.5'
-gem 'neo_components', '~> 0.1.2'
+gem 'neo_components', '~> 0.2.0'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '8.0.2.1'
