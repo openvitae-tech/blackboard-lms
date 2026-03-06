@@ -260,7 +260,7 @@ GEM
     msgpack (1.7.2)
     multipart-post (2.4.1)
     nenv (0.3.0)
-    neo_components (0.2.0)
+    neo_components (0.3.0)
       importmap-rails (~> 2.0)
       nokogiri (~> 1.0)
       rails (>= 7.0, < 9)
@@ -564,7 +564,7 @@ DEPENDENCIES
   jbuilder (~> 2.13)
   kaminari
   letter_opener
-  neo_components (~> 0.2.0)
+  neo_components (~> 0.3.0)
   net-imap (= 0.5.7)
   newrelic_rpm
   nokogiri (= 1.19.1)
