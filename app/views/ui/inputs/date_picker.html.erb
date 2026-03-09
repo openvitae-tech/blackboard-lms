@@ -7,7 +7,8 @@
     <%= date_picker_component(
         name: :start_date,
         support_text:"choose a valid date",
-        placeholder:"choose a date"
+        placeholder:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
     %>
 <% end %>
@@ -16,7 +17,8 @@
         name: :start_date,
         label: "Subscription Start Date",
         support_text:"choose a valid date",
-        placeholder:"choose a date"
+        placeholder:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
     %>
 <% end %>
@@ -24,14 +26,16 @@
     <%= date_picker_component(
         name: :start_date,
         label: "Subscription Start Date",
-        placeholder:"choose a date"
+        placeholder:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
     %>
 <% end %>
 <%= doc_section_component(title: "Date picker without label and support text") do %>
     <%= date_picker_component(
         name: :start_date,
-        placeholder:"choose a date"
+        placeholder:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
     %>
 <% end %>
@@ -40,7 +44,8 @@
         name: :start_date,
         label: "Subscription Start Date",
         support_text:"choose a valid date",
-        placeholder:"choose a date"
+        placeholder:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
     %>
 <% end %>
@@ -50,7 +55,8 @@
         label: "Subscription Start Date",
         size: "lg",
         support_text:"choose a valid date",
-        placeholder:"choose a date"
+        placeholder:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
     %>
 <% end %>
@@ -61,6 +67,7 @@
         support_text:"choose a valid date",
         placeholder:"choose a date",
         disabled:true,
+        min: Date.today.strftime('%Y-%m-%d')
         )
     %>
 <% end %>
@@ -70,17 +77,19 @@
         label: "Subscription Start Date",
         support_text:"choose a valid date",
         placeholder:"choose a date",
-        error:"Invalid date"
+        error:"Invalid date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
     %>
 <% end %>
 <%= doc_section_component(title: "Medium Date picker without place holder") do %>
-    <%= date_picker_component( 
+    <%= date_picker_component(
         name: :start_date,
         label: "Subscription Start Date",
         support_text:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
-    %>  
+    %>
 <% end %>
 
 <%= h3_component(text: "Form with date picker") %>
@@ -92,8 +101,8 @@
         name: :start_date,
         label: "Subscription Start Date",
         support_text:"choose a valid date",
-        placeholder:"choose a date"
-
+        placeholder:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
     %>
   <% end %>

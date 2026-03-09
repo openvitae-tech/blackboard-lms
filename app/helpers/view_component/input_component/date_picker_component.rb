@@ -28,9 +28,9 @@ module ViewComponent
       }.freeze
 
       attr_accessor :form, :name, :label, :value, :placeholder, :size,
-                    :support_text, :error, :disabled, :html_options
+                    :support_text, :error, :disabled, :html_options, :min, :max
 
-      def initialize(form:, name:, label:, value:, placeholder:, size:, support_text:, error:, disabled:, html_options:)
+      def initialize(form:, name:, label:, value:, placeholder:, size:, support_text:, error:, disabled:, html_options:, min:, max:)
         raise "Incorrect date picker size: #{size}" unless DATE_PICKER_SIZES.include?(size)
 
         error_message = resolve_error(form, name, error)
@@ -48,6 +48,8 @@ module ViewComponent
 
         self.html_options[:disabled] = true if disabled
         self.html_options[:class] = date_picker_style
+        self.min = min
+        self.max = max
       end
 
       def date_picker_style

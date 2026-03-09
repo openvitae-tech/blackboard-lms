@@ -31,4 +31,24 @@ class UserSettingsPolicy
   def team?
     user.present?
   end
+
+  def change_profile_picture?
+    user.present?
+  end
+
+  def confirm_logout?
+    user.present?
+  end
+
+  def change_email?
+    user.present?
+  end
+
+  def change_phone_number?
+    user.present?
+  end
+
+  def verify_phone_number?
+    user.present?
+  end
 end

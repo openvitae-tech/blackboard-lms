@@ -25,6 +25,84 @@ class UserSettingsController < ApplicationController
   def change_password
     authorize :user_settings
   end
+
+  def change_profile_picture
+    authorize :user_settings
+    if request.post?
+      file = params.dig(:user, :profile_picture)
+      unless file.present?
+        @error = "Please select a profile picture"
+        render :change_profile_picture, status: :unprocessable_entity
+        return
+      end
+
+      if @user.update(profile_picture: file)
+        flash[:success] = "Profile picture updated successfully"
+        respond_to do |format|
+          format.turbo_stream
+          format.html { redirect_to user_settings_path }
+        end
+      else
+        @error = @user.errors[:profile_picture].first
+        render :change_profile_picture, status: :unprocessable_entity
+      end
+    end
+  end
+
+  def confirm_logout
+    authorize :user_settings
+  end
+
+  def change_email
+    authorize :user_settings
+    if request.post?
+      new_email = params.dig(:user, :email).to_s.strip
+
+      unless new_email.match?(User::EMAIL_REGEXP)
+        @error = "Please enter a valid email address"
+        render :change_email, status: :unprocessable_entity
+        return
+      end
+
+      if @user.update(email: new_email)
+        flash[:success] = I18n.t('user_settings.email_verification_sent', email: new_email)
+        respond_to do |format|
+          format.turbo_stream
+          format.html { redirect_to user_settings_path }
+        end
+      else
+        @error = @user.errors[:email].any? { |e| e.include?("taken") } ? "Email already taken" : @user.errors[:email].first
+        render :change_email, status: :unprocessable_entity
+      end
+    end
+  end
+
+  def change_phone_number
+    authorize :user_settings
+    if request.post?
+      session[:pending_phone] = params.dig(:user, :phone)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to change_phone_number_user_settings_path }
+      end
+    end
+  end
+
+  def verify_phone_number
+    authorize :user_settings
+    if params[:otp].to_s == User::TEST_OTP.to_s
+      @user.update!(phone: session.delete(:pending_phone))
+      flash[:success] = I18n.t('user_settings.phone_updated')
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to user_settings_path }
+      end
+    else
+      @error = I18n.t('user_settings.invalid_otp')
+      render :verify_phone_number, status: :unprocessable_entity
+    end
+  end
+
   def update_password
     authorize :user_settings
 
@@ -39,7 +117,7 @@ class UserSettingsController < ApplicationController
   private
 
   def profile_params
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :dob, :gender, :preferred_local_language)
   end
 
   def password_params

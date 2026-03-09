@@ -1,0 +1,19 @@
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white w-full">
+    <div class="flex-1" data-action="click->modals#closeModal">
+      <%= button_component(text: "Cancel", type:"outline") %>
+    </div>
+    <%= button_tag form: "phone-form", class: "flex-1" do %>
+      <%= button_component(text: "Send OTP") %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= modal_box_component(title: "Change Phone number", modal_footer:) do %>
+  <%= form_with(url: change_phone_number_user_settings_path, method: :post, scope: :user, id: "phone-form", class: "flex flex-col gap-6") do |form| %>
+    <div class="flex flex-col gap-4">
+      <%= input_text_component(form:, name: :phone, label: "Phone Number",
+          placeholder: @user.phone.presence || "Enter your phone number") %>
+    </div>
+  <% end %>
+<% end %>

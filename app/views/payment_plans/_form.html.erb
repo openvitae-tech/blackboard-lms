@@ -1,19 +1,21 @@
 <%= form_with(url:, model: payment_plan, method:, data: { turbo_frame: "_top" }, class: "flex flex-col gap-6 p-6") do |form| %>
   <div class="flex flex-row space-x-5 justify-between">
-     <%= date_picker_component( 
-        form: form,           
+     <%= date_picker_component(
+        form: form,
         name: :start_date,
         label: "Subscription Start Date",
         support_text:"choose a date",
-        placeholder:"choose a date"
+        placeholder:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
-      %>   
+      %>
       <%= date_picker_component(
         form: form,
         name: :end_date,
         label: "Subscription End Date",
         support_text:"choose a date",
-        placeholder:"choose a date"
+        placeholder:"choose a date",
+        min: Date.today.strftime('%Y-%m-%d')
         )
       %>  
   </div>

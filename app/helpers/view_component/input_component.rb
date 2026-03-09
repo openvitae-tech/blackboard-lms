@@ -268,7 +268,9 @@ module ViewComponent
       support_text: nil,
       error: nil,
       disabled: false,
-      html_options: {}
+      html_options: {},
+      min: nil,
+      max: nil
     )
       date_picker = DatePickerComponent.new(
         form:,
@@ -280,7 +282,9 @@ module ViewComponent
         support_text:,
         error:,
         disabled:,
-        html_options:
+        html_options:,
+        min:,
+        max:
       )
 
       render partial: 'view_components/inputs/date_picker_component/date_picker',

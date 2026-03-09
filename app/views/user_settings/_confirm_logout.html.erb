@@ -1,0 +1,16 @@
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white w-full">
+    <div class="flex-1" data-action="click->modals#closeModal">
+      <%= button_component(text: "Cancel", type: "outline") %>
+    </div>
+    <div class="flex-1">
+      <%= button_to destroy_user_session_path, method: :delete, data: { turbo: "false" }, class: "w-full" do %>
+        <%= button_component(text: "Logout", colorscheme: "danger") %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%= modal_box_component(title: "Leaving too soon?", modal_footer:) do %>
+  <p class="text-sm text-letter-color-light">Are you sure you want to Logout?</p>
+<% end %>

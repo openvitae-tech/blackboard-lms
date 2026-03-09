@@ -1,0 +1,22 @@
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white w-full">
+    <div class="flex-1" data-action="click->modals#closeModal">
+      <%= button_component(text: "Cancel", type: "outline") %>
+    </div>
+    <%= button_tag form: "change-email-form", class: "flex-1" do %>
+      <%= button_component(text: "Send Verification") %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= modal_box_component(title: @user.email.present? ? "Change Email" : "Add Email", modal_footer:) do %>
+  <%= form_with(url: change_email_user_settings_path, method: :post, scope: :user, id: "change-email-form", class: "flex flex-col gap-6") do |form| %>
+    <div class="flex flex-col gap-4">
+      <% if @error.present? %>
+        <p class="text-sm text-danger"><%= @error %></p>
+      <% end %>
+      <%= input_text_component(form:, name: :email, label: "Email",
+            placeholder: @user.email.presence || "Enter your email address") %>
+    </div>
+  <% end %>
+<% end %>
