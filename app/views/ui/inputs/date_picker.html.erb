@@ -60,7 +60,7 @@
         label: "Subscription Start Date",
         support_text:"choose a valid date",
         placeholder:"choose a date",
-        disabled:true
+        disabled:true,
         )
     %>
 <% end %>
@@ -75,12 +75,12 @@
     %>
 <% end %>
 <%= doc_section_component(title: "Medium Date picker without place holder") do %>
-    <%= date_picker_component(
+    <%= date_picker_component( 
         name: :start_date,
         label: "Subscription Start Date",
-        support_text:"choose a date"
+        support_text:"choose a date",
         )
-    %>
+    %>  
 <% end %>
 
 <%= h3_component(text: "Form with date picker") %>
@@ -93,6 +93,7 @@
         label: "Subscription Start Date",
         support_text:"choose a valid date",
         placeholder:"choose a date"
+
         )
     %>
   <% end %>

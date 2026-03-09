@@ -10,8 +10,6 @@
     @apply bg-primary border-primary text-white-light hover:bg-primary-light hover:border-primary-light hover:text-white;
 }
 
-
-
 .btn-solid-primary-disabled {
     @apply bg-primary-light-50 border-disabled-color text-disabled-color;
 }
