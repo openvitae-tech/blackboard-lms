@@ -21,8 +21,7 @@
       <% unless current_user.is_admin?%>
         <div class="flex gap-4">
           <%= date_picker_component(form:, name: :dob, label: "Date of Birth",
-              placeholder: (Date.today - 16.years).strftime('%Y-%m-%d'),
-              min: nil, max: (Date.today - 16.years).strftime('%Y-%m-%d')) %>
+              placeholder: (Date.today - 16.years).strftime('%Y-%m-%d')) %>
           <%= dropdown_component(form:, name: :gender, label: "Gender", options: User::GENDERS.map { |g| [g, g] }, prompt: "Select gender") %>
         </div>
         <%= dropdown_component(form:, name: :preferred_local_language, label: "Preferred Language", options: language_options, prompt: "Select language") %>

@@ -23,8 +23,7 @@
         class="invisible p-0 w-[2px]"
         data-date-picker-target="datePicker"
         data-action="change->date-picker#datePicked"
-        <% if date_picker.min.present? %>min="<%= date_picker.min %>"<% end %>
-        <% if date_picker.max.present? %>max="<%= date_picker.max %>"<% end %> />
+        min="<%= Date.today.strftime('%Y-%m-%d') %>" />
 
 
   <div class="<%= date_picker.icon_wrapper_style %>" data-action="click->date-picker#openDatePicker">
