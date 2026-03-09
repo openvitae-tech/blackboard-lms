@@ -100,27 +100,19 @@ class UserSettingsController < ApplicationController
 
   def verify_phone_number
     authorize :user_settings
-
-    if Rails.env.production?
-      phone = MobileNumber.new(value: session[:pending_phone], country_code: session[:pending_country_code])
-      otp_service = Auth::OtpService.new(phone)
-      otp_verified = otp_service.verify_otp(params[:otp])
-    else
-      otp_verified = params[:otp].to_s == User::TEST_OTP.to_s
-    end
-
-    if otp_verified
-      if @user.update(phone: session.delete(:pending_phone), country_code: session.delete(:pending_country_code))
-        flash[:success] = I18n.t('user_settings.phone_updated')
-        respond_to do |format|
-          format.turbo_stream
-          format.html { redirect_to user_settings_path }
-        end
+    otp_valid =
+      if Rails.env.production?
+        Auth::OtpService.new(session[:pending_phone]).verify_otp(params[:otp])
       else
-        session.delete(:pending_phone)
-        session.delete(:pending_country_code)
-        @error = @user.errors.full_messages.first
-        render :verify_phone_number, status: :unprocessable_entity
+        params[:otp].to_s == User::TEST_OTP.to_s
+      end
+
+    if otp_valid
+      @user.update!(phone: session.delete(:pending_phone), country_code: session.delete(:pending_country_code))
+      flash[:success] = I18n.t('user_settings.phone_updated')
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to user_settings_path }
       end
     else
       @error = I18n.t('user_settings.invalid_otp')
