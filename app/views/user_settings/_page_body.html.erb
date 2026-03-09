@@ -6,66 +6,67 @@
           <%= button_component(text: 'Edit', type: "outline", size: "sm", icon_name: "pencil") %>
         <% end %>
     </div>
-    <div class="p-4 md:p-6 flex flex-row w-full">
-      <div class="w-[28%] flex items-center">
+    <div class="p-4 md:p-6 flex flex-col md:flex-row w-full gap-8">
+      <div class="w-full md:w-[20%] flex justify-center md:justify-start items-center">
         <div class="relative inline-block rounded-xl border border-line-colour">
           <%= image_tag user.profile_picture.attached? ? user.profile_picture.variant(resize_to_limit: [current_user.is_admin? ? 112 : 160, current_user.is_admin? ? 112 : 160]) : "user_image.png", class: "#{current_user.is_admin? ? 'w-28 h-28' : 'w-40 h-40'} rounded-xl object-cover", alt: user.display_name %>
-          <%= link_to change_profile_picture_user_settings_path, data: { turbo_frame: 'modal' }, class: "absolute bottom-0 right-0 bg-white rounded-full p-1.5 border border-line-colour-light shadow-sm cursor-pointer" do %>
+          <%= link_to change_profile_picture_user_settings_path, data: { turbo_frame: 'modal' }, class: "absolute bottom-2 right-2 bg-white rounded-full p-1.5 border border-line-colour-light shadow-sm cursor-pointer" do %>
             <%= icon("camera", css: "h-5 w-5") %>
           <% end %>
         </div>
       </div>
-
-      <div class="w-[43%] flex flex-col gap-4">
-        <div>
-          <div class="general-text-sm-normal text-letter-color-light">Name</div>
-          <div class="mt-1 main-text-sm-medium"><%= user.name %></div>
-        </div>
-        <% unless current_user.is_admin?%>
+      <div class="flex flex-col md:flex-row w-full md:w-[80%] gap-3 md:gap-4">
+        <div class="w-full md:w-[70%] flex flex-col gap-3 md:gap-4">
           <div>
-            <div class="general-text-sm-normal text-letter-color-light">Date of Birth</div>
-            <div class="mt-1 main-text-sm-medium"><%= user.dob&.strftime('%B %d, %Y') || '-' %></div>
+            <div class="general-text-sm-normal text-letter-color-light">Name</div>
+            <div class="mt-1 main-text-sm-medium"><%= user.name %></div>
           </div>
-        <% end %>
-        <div>
-          <div class="general-text-sm-normal text-letter-color-light">Email</div>
-          <div class="mt-1 main-text-sm-medium flex items-center gap-2">
-            <%= email(user) %>
-            <% if user.confirmed? %>
-              <%= icon("check-badge-solid", css: "h-5 w-5 text-secondary flex-none") %>
+          <% unless current_user.is_admin?%>
+            <div>
+              <div class="general-text-sm-normal text-letter-color-light">Date of Birth</div>
+              <div class="mt-1 main-text-sm-medium"><%= user.dob&.strftime('%B %d, %Y') || '-' %></div>
+            </div>
+          <% end %>
+          <div>
+            <div class="general-text-sm-normal text-letter-color-light">Email</div>
+            <div class="mt-1 main-text-sm-medium flex items-center gap-2">
+              <%= email(user) %>
+              <% if user.confirmed? %>
+                <%= icon("check-badge-solid", css: "h-5 w-5 text-secondary flex-none") %>
+              <% else %>
+                <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
+                <%= link_to "Verify", change_email_user_settings_path, data: { turbo_frame: "modal" }, class: "text-sm text-primary font-medium" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full md:w-[30%] flex flex-col gap-3 md:gap-4">
+          <% if current_user.is_admin?%>
+            <div>
+              <div class="general-text-sm-normal text-letter-color-light">Role</div>
+              <div class="mt-1 main-text-sm-medium">Admin</div>
+            </div>
+          <% else %>
+            <div>
+              <div class="general-text-sm-normal text-letter-color-light">Gender</div>
+              <div class="mt-1 main-text-sm-medium"><%= user.gender.presence || '-' %></div>
+            </div>
+        
+            <div>
+              <div class="general-text-sm-normal text-letter-color-light">Preferred Language</div>
+              <div class="mt-1 main-text-sm-medium"><%= user.preferred_local_language.presence || '-' %></div>
+            </div>
+          <% end %>
+
+          <div>
+            <div class="general-text-sm-normal text-letter-color-light">Phone</div>
+            <% if user.phone.present? %>
+              <div class="mt-1 main-text-sm-medium"><%= user.country_code %><%= user.phone %></div>
             <% else %>
-              <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
-              <%= link_to "Verify", change_email_user_settings_path, data: { turbo_frame: "modal" }, class: "text-sm text-primary font-medium" %>
+              <div class="mt-1 main-text-sm-medium">-</div>
             <% end %>
           </div>
-        </div>
-      </div>
-
-      <div class="w-[29%] flex flex-col gap-4">
-        <% if current_user.is_admin?%>
-          <div>
-            <div class="general-text-sm-normal text-letter-color-light">Role</div>
-            <div class="mt-1 main-text-sm-medium">Admin</div>
-          </div>
-        <% else %>
-          <div>
-            <div class="general-text-sm-normal text-letter-color-light">Gender</div>
-            <div class="mt-1 main-text-sm-medium"><%= user.gender.presence || '-' %></div>
-          </div>
-       
-          <div>
-            <div class="general-text-sm-normal text-letter-color-light">Preferred Language</div>
-            <div class="mt-1 main-text-sm-medium"><%= user.preferred_local_language.presence || '-' %></div>
-          </div>
-        <% end %>
-
-        <div>
-          <div class="general-text-sm-normal text-letter-color-light">Phone</div>
-          <% if user.phone.present? %>
-            <div class="mt-1 main-text-sm-medium"><%= user.country_code %><%= user.phone %></div>
-          <% else %>
-            <div class="mt-1 main-text-sm-medium">-</div>
-          <% end %>
         </div>
       </div>
     </div>
