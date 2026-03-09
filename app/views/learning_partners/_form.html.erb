@@ -32,18 +32,18 @@
                 form: payment_plan_form,
                 name: :start_date,
                 label: "Subscription Start Date",
-                support_text:"choose a date",
-                placeholder:"choose a date",
-                min: Date.today.strftime('%Y-%m-%d')
+                support_text: "choose a date",
+                placeholder: "choose a date",
+                min: payment_plan_form.object.persisted? ? payment_plan_form.object.start_date&.strftime('%Y-%m-%d') : Date.today.strftime('%Y-%m-%d')
                 )
               %>
               <%= date_picker_component(
                 form: payment_plan_form,
                 name: :end_date,
                 label: "Subscription End Date",
-                support_text:"choose a date",
-                placeholder:"choose a date",
-                min: Date.today.strftime('%Y-%m-%d')
+                support_text: "choose a date",
+                placeholder: "choose a date",
+                min: payment_plan_form.object.persisted? ? payment_plan_form.object.end_date&.strftime('%Y-%m-%d') : Date.today.strftime('%Y-%m-%d')
                 )
               %>  
           </div>

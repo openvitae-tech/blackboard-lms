@@ -9,7 +9,7 @@
     <div class="p-4 md:p-6 flex flex-row w-full">
       <div class="w-[28%] flex items-center">
         <div class="relative inline-block rounded-xl border border-line-colour">
-          <%= image_tag user.profile_picture.attached? ? user.profile_picture : "user_image.png", class: "#{current_user.is_admin? ? 'w-28 h-28' : 'w-40 h-40'} rounded-xl object-cover", alt: user.display_name %>
+          <%= image_tag user.profile_picture.attached? ? user.profile_picture.variant(resize_to_limit: [current_user.is_admin? ? 112 : 160, current_user.is_admin? ? 112 : 160]) : "user_image.png", class: "#{current_user.is_admin? ? 'w-28 h-28' : 'w-40 h-40'} rounded-xl object-cover", alt: user.display_name %>
           <%= link_to change_profile_picture_user_settings_path, data: { turbo_frame: 'modal' }, class: "absolute bottom-0 right-0 bg-white rounded-full p-1.5 border border-line-colour-light shadow-sm cursor-pointer" do %>
             <%= icon("camera", css: "h-5 w-5") %>
           <% end %>

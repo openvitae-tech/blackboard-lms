@@ -15,7 +15,7 @@
       <% if @error.present? %>
         <p class="text-sm text-danger"><%= @error %></p>
       <% end %>
-      <%= input_text_component(form:, name: :email, label: "Email",
+      <%= input_text_component(form:, name: :email, label: "Email", type: "email",
             placeholder: @user.email.presence || "Enter your email address") %>
     </div>
   <% end %>

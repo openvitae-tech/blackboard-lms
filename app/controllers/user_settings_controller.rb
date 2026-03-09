@@ -90,7 +90,16 @@ class UserSettingsController < ApplicationController
 
   def verify_phone_number
     authorize :user_settings
-    if params[:otp].to_s == User::TEST_OTP.to_s
+
+    if Rails.env.production?
+      phone = MobileNumber.new(value: session[:pending_phone], country_code: AVAILABLE_COUNTRIES[:india][:code])
+      otp_service = Auth::OtpService.new(phone)
+      otp_verified = otp_service.verify_otp(params[:otp])
+    else
+      otp_verified = params[:otp].to_s == User::TEST_OTP.to_s
+    end
+
+    if otp_verified
       @user.update!(phone: session.delete(:pending_phone))
       flash[:success] = I18n.t('user_settings.phone_updated')
       respond_to do |format|
