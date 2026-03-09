@@ -23,9 +23,9 @@ module CustomValidations
         errors.add(:profile_picture, 'must be a JPEG, JPG or PNG')
       end
 
-      if profile_picture.blob.byte_size > 10.megabytes
-        errors.add(:profile_picture, 'must be less than 10MB')
-      end
+      return unless profile_picture.blob.byte_size > 10.megabytes
+
+      errors.add(:profile_picture, 'must be less than 10MB')
     end
 
     def acceptable_materials
