@@ -13,7 +13,7 @@ module SettingsHelper
         label: t('components.title'),
         description: t('components.label'),
         icon: 'icon-list',
-        path: ui_components_path
+        path: neo_components.ui_components_path
       }
     ]
   end
