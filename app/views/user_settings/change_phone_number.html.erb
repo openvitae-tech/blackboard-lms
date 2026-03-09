@@ -12,8 +12,9 @@
 <%= modal_box_component(title: "Change Phone number", modal_footer:) do %>
   <%= form_with(url: change_phone_number_user_settings_path, method: :post, scope: :user, id: "phone-form", class: "flex flex-col gap-6") do |form| %>
     <div class="flex flex-col gap-4">
-      <%= input_text_component(form:, name: :phone, label: "Phone Number",
-          placeholder: @user.phone.presence || "Enter your phone number") %>
+      <%= input_mobile_component(form:, name: :phone, label: "Phone Number",
+          placeholder: "Enter your phone number",
+          country_code: @user.country_code.presence) %>
     </div>
   <% end %>
 <% end %>

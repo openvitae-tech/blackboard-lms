@@ -80,7 +80,17 @@ class UserSettingsController < ApplicationController
   def change_phone_number
     authorize :user_settings
     if request.post?
-      session[:pending_phone] = params.dig(:user, :phone)
+      phone = params.dig(:user, :phone)
+      country_code = params.dig(:user, :phone_code)
+
+      if User.where.not(id: @user.id).exists?(phone:)
+        @error = "Phone has already been taken"
+        render :change_phone_number, status: :unprocessable_entity
+        return
+      end
+
+      session[:pending_phone] = phone
+      session[:pending_country_code] = country_code
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to change_phone_number_user_settings_path }
@@ -92,7 +102,7 @@ class UserSettingsController < ApplicationController
     authorize :user_settings
 
     if Rails.env.production?
-      phone = MobileNumber.new(value: session[:pending_phone], country_code: AVAILABLE_COUNTRIES[:india][:code])
+      phone = MobileNumber.new(value: session[:pending_phone], country_code: session[:pending_country_code])
       otp_service = Auth::OtpService.new(phone)
       otp_verified = otp_service.verify_otp(params[:otp])
     else
@@ -100,11 +110,17 @@ class UserSettingsController < ApplicationController
     end
 
     if otp_verified
-      @user.update!(phone: session.delete(:pending_phone))
-      flash[:success] = I18n.t('user_settings.phone_updated')
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to user_settings_path }
+      if @user.update(phone: session.delete(:pending_phone), country_code: session.delete(:pending_country_code))
+        flash[:success] = I18n.t('user_settings.phone_updated')
+        respond_to do |format|
+          format.turbo_stream
+          format.html { redirect_to user_settings_path }
+        end
+      else
+        session.delete(:pending_phone)
+        session.delete(:pending_country_code)
+        @error = @user.errors.full_messages.first
+        render :verify_phone_number, status: :unprocessable_entity
       end
     else
       @error = I18n.t('user_settings.invalid_otp')
