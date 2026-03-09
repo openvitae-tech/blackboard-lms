@@ -35,7 +35,7 @@
               <%= icon("check-badge-solid", css: "h-5 w-5 text-secondary flex-none") %>
             <% else %>
               <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
-              <%= link_to "Verify", change_email_user_settings_path, data: { turbo_frame: "modal" }, class: "text-sm text-danger font-medium" %>
+              <%= link_to "Verify", change_email_user_settings_path, data: { turbo_frame: "modal" }, class: "text-sm text-primary font-medium" %>
             <% end %>
           </div>
         </div>
