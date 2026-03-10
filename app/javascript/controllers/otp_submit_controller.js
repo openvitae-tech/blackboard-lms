@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["input", "submitButton", "hiddenOtp", "container", "innerButton"];
+  static targets = ["input", "submitButton", "hiddenOtp", "container", "innerButton", "phoneInput"];
 
   connect() {
     if (this.hasContainerTarget) {
@@ -89,8 +89,18 @@ export default class extends Controller {
     if (nextEmpty) nextEmpty.focus();
   }
 
+  checkPhoneInput() {
+    this.updateButtonState();
+  }
+
   updateButtonState() {
-    const allFilled = this.inputTargets.length === 4 && this.inputTargets.every((input) => input.value.length === 1);
+    let allFilled = false;
+    if (this.hasPhoneInputTarget) {
+      const phoneField = document.querySelector("input[name='user[phone]']");
+      allFilled = phoneField && phoneField.value.trim().length > 0;
+    } else if (this.hasInputTarget) {
+      allFilled = this.inputTargets.length === 4 && this.inputTargets.every((input) => input.value.length === 1);
+    }
     if (this.hasSubmitButtonTarget) {
       if (allFilled) {
         this.submitButtonTarget.removeAttribute("disabled");

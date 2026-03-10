@@ -3,15 +3,16 @@
     <div class="flex-1" data-action="click->modals#closeModal">
       <%= button_component(text: "Cancel", type:"outline") %>
     </div>
-    <%= button_tag form: "phone-form", class: "flex-1" do %>
-      <%= button_component(text: "Send OTP") %>
+    <%= button_tag form: "phone-form", class: "flex-1", disabled: true, data: { otp_submit_target: "submitButton" } do %>
+    
+      <%= button_component(text: "Send OTP", disabled: true, html_options: { data: { otp_submit_target: "innerButton" } }) %>
     <% end %>
   </div>
 <% end %>
 
-<%= modal_box_component(title: "Change Phone number", modal_footer:) do %>
+<%= modal_box_component(title: "Change Phone number", modal_footer:, html_options: { data: { controller: "otp-submit" } }) do %>
   <%= form_with(url: change_phone_number_user_settings_path, method: :post, scope: :user, id: "phone-form", class: "flex flex-col gap-6") do |form| %>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4" data-otp-submit-target="phoneInput" data-action="input->otp-submit#checkPhoneInput">
       <%= input_mobile_component(form:, name: :phone, label: "Phone Number",
           placeholder: "Enter your phone number",
           country_code: @user.country_code.presence) %>
