@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/openvitae-tech/neo_components.git
-  revision: e070bdb4997e1c14a86d6f65fa060414c37f9048
+  revision: ab8f67d09006e49fd9f94a98dfb62a3f6c6bcc2a
   specs:
     neo_components (0.3.0)
       importmap-rails (~> 2.0)
@@ -503,7 +503,7 @@ GEM
     tailwindcss-rails (2.6.5-x86_64-linux)
       railties (>= 7.0.0)
     thor (1.5.0)
-    timeout (0.6.0)
+    timeout (0.6.1)
     tsort (0.2.0)
     turbo-rails (2.0.20)
       actionpack (>= 7.1.0)
