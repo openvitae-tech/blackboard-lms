@@ -58,21 +58,30 @@ class UserSettingsController < ApplicationController
     if request.post?
       new_email = params.dig(:user, :email).to_s.strip
 
-      unless new_email.match?(User::EMAIL_REGEXP)
-        @error = "Please enter a valid email address"
+      if new_email.blank?
+        @user.errors.add(:email, "can't be blank")
         render :change_email, status: :unprocessable_entity
         return
       end
 
-      if @user.update(email: new_email)
-        flash[:success] = I18n.t('user_settings.email_verification_sent', email: new_email)
-        respond_to do |format|
-          format.turbo_stream
-          format.html { redirect_to user_settings_path }
-        end
-      else
-        @error = @user.errors[:email].any? { |e| e.include?("taken") } ? "Email already taken" : @user.errors[:email].first
+      unless new_email.match?(User::EMAIL_REGEXP)
+        @user.errors.add(:email, "is invalid")
         render :change_email, status: :unprocessable_entity
+        return
+      end
+
+      if User.where.not(id: @user.id).exists?(email: new_email)
+        @user.errors.add(:email, "has already been taken")
+        render :change_email, status: :unprocessable_entity
+        return
+      end
+
+      session[:pending_email] = new_email
+      @user.update(email: new_email)
+      flash[:success] = I18n.t('user_settings.email_verification_sent', email: new_email)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to user_settings_path }
       end
     end
   end
@@ -117,6 +126,16 @@ class UserSettingsController < ApplicationController
     else
       @error = I18n.t('user_settings.invalid_otp')
       render :verify_phone_number, status: :unprocessable_entity
+    end
+  end
+
+  def send_verification_email
+    authorize :user_settings
+    @user.send_confirmation_instructions
+    flash[:success] = I18n.t('user_settings.email_verification_sent', email: @user.email)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to user_settings_path }
     end
   end
 

@@ -51,4 +51,8 @@ class UserSettingsPolicy
   def verify_phone_number?
     user.present?
   end
+
+  def send_verification_email?
+    user.present?
+  end
 end

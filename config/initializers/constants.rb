@@ -16,7 +16,8 @@ STATIC_ASSETS = {
   hotel_logo: 'hotel_logo_placeholder.jpg',
   banner_desktop: 'banner_placeholder.png',
   banner_mobile: 'banner_placeholder_mobile.png',
-  logo: 'logo_place_holder.png'
+  logo: 'logo_place_holder.png',
+  user_image: 'user.png'
 }.freeze
 
 FLAG_LOGIN_WITH_OTP = true

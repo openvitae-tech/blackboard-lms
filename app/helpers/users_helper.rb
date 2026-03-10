@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 module UsersHelper
+  def user_image(user)
+    return STATIC_ASSETS[:user_image] unless user.profile_picture.attached?
+    # HACK: for local testing with production dump data
+    return STATIC_ASSETS[:user_image] if Rails.env.local? && user.profile_picture.blob.service_name.start_with?('s3')
+
+    user.profile_picture
+  end
+
   def reset_password_error_msg(errors)
     if errors[:email].any?
       t('user_settings.email_not_found')

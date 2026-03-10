@@ -9,14 +9,11 @@
   </div>
 <% end %>
 
-<%= modal_box_component(title: @user.email.present? ? "Change Email" : "Add Email", modal_footer:) do %>
-  <%= form_with(url: change_email_user_settings_path, method: :post, scope: :user, id: "change-email-form", class: "flex flex-col gap-6") do |form| %>
+<%= modal_box_component(title: "Change Email", modal_footer:) do %>
+  <%= form_with(model: @user, url: change_email_user_settings_path, method: :post, id: "change-email-form", class: "flex flex-col gap-6") do |form| %>
     <div class="flex flex-col gap-4">
-      <% if @error.present? %>
-        <p class="text-sm text-danger"><%= @error %></p>
-      <% end %>
       <%= input_text_component(form:, name: :email, label: "Email", type: "email",
-            placeholder: @user.email.presence || "Enter your email address") %>
+            placeholder: "Enter your email address", subtext: 'Example: deepak@example.com') %>
     </div>
   <% end %>
 <% end %>

@@ -1,5 +1,9 @@
-<%= turbo_stream.replace "user-settings-page-body", partial: "user_settings/page_body", locals: { user: @user } %>
-<%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
-<%= turbo_stream.replace "modal" do %>
-  <%= turbo_frame_tag "modal" %>
+<% if @error.present? %>
+  <%= turbo_stream.replace "modal", partial: "user_settings/change_profile_picture" %>
+<% else %>
+  <%= turbo_stream.replace "user-settings-page-body", partial: "user_settings/page_body", locals: { user: @user } %>
+  <%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
+  <%= turbo_stream.replace "modal" do %>
+    <%= turbo_frame_tag "modal" %>
+  <% end %>
 <% end %>

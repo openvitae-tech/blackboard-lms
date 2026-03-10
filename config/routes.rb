@@ -72,6 +72,7 @@ Rails.application.routes.draw do
       get :change_phone_number
       post :change_phone_number
       post :verify_phone_number
+      post :send_verification_email
     end
   end
 
