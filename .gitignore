@@ -58,3 +58,4 @@ docker-build
 
 /config/credentials/staging.key
 .github/copilot-instructions.md
+/vendor/bundle
