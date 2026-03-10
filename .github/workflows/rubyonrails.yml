@@ -58,10 +58,6 @@ jobs:
       # Add or replace database setup steps here
       - name: Set up database schema
         run: bin/rails db:schema:load
-      # Expose gem stylesheet path for postcss-import resolution
-      - name: Set PostCSS gem stylesheet path
-        run: |
-          echo "NEO_COMPONENTS_STYLESHEETS=$(bundle show neo_components)/app/assets/stylesheets" >> $GITHUB_ENV
       # Run assets precompile to avoid test failure
       - name: Run assets precompile
         run: bundle exec rake assets:precompile
