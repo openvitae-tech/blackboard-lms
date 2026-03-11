@@ -16,16 +16,7 @@ module CustomValidations
     end
 
     def acceptable_profile_picture
-      return unless profile_picture.attached?
-
-      acceptable_types = %w[image/jpeg image/png image/jpg]
-      unless acceptable_types.include?(profile_picture.content_type)
-        errors.add(:profile_picture, 'must be a JPEG, JPG or PNG')
-      end
-
-      return unless profile_picture.blob.byte_size > 10.megabytes
-
-      errors.add(:profile_picture, 'must be less than 10MB')
+      acceptable_image('profile_picture')
     end
 
     def acceptable_materials
