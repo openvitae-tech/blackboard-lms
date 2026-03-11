@@ -247,7 +247,7 @@ Rails.application.routes.draw do
     end
   end
 
-  draw :ui
+  mount NeoComponents::Engine, at: '/'
   draw :sidekiq_web
   draw :v1_api
   draw :catch_all

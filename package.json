@@ -1,7 +1,8 @@
 {
   "name": "blackboard-lms",
   "devDependencies": {
-    "husky": "^9.1.6"
+    "husky": "^9.1.6",
+    "postcss-import": "^15.1.0"
   },
   "engines": {
     "node": "22.19.0"

@@ -83,7 +83,7 @@ class CoursesController < ApplicationController
       @error_step = Courses::CourseFormSteps.error_step_for(@course)
 
       render :new,
-            status: :unprocessable_entity,
+            status: :unprocessable_content,
             locals: { error_step: @error_step }
     end
   end
@@ -102,7 +102,7 @@ class CoursesController < ApplicationController
       @error_step = Courses::CourseFormSteps.error_step_for(@course)
 
       render :edit,
-            status: :unprocessable_entity,
+            status: :unprocessable_content,
             locals: { error_step: @error_step }
     end
   end
