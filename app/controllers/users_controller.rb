@@ -113,7 +113,7 @@ class UsersController < ApplicationController
     def handle_missing_team_id
       @user.errors.add(:team_id, "must be selected")
       @teams = current_user.team.sub_teams
-      render :change_team, status: :unprocessable_entity
+      render :change_team, status: :unprocessable_content
     end
 
     def update_team_member_counts(prev_team)

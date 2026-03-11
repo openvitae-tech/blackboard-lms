@@ -19,12 +19,24 @@ ENV BUNDLE_PATH="/usr/local/bundle"
 ENV BUNDLE_WITHOUT="development:test"
 ENV RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
 
+# ------------------------------
+# Node.js stage – official multi-arch image (replaces arm64-specific manual download)
+# ------------------------------
+FROM node:22-bookworm-slim AS node-fetch
+
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
-# Install packages needed to build gems
+# Install packages needed to build gems (npm removed – Node comes from node-fetch stage)
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential npm libpq-dev libvips pkg-config
+    apt-get install --no-install-recommends -y build-essential libpq-dev libvips pkg-config && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy Node.js from node-fetch into the build stage
+COPY --from=node-fetch /usr/local/bin/node /usr/local/bin/node
+COPY --from=node-fetch /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -sf /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+    ln -sf /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -32,40 +44,24 @@ RUN bundle install
 RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 RUN bundle exec bootsnap precompile --gemfile
 
-# The following steps are no longer needed with importmap
-# COPY package.json package-lock.json ./
+# Install Node.js dependencies (copied before app code for better layer caching)
+COPY package.json package-lock.json ./
+ENV HUSKY=0
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+RUN npm ci
 
 # Copy application code
 COPY . .
 
-# Skip Husky installation
-ENV HUSKY=0
-# Skip Chromium download
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-# Install Node.js dependencies
-RUN npm install
-
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
-#
+
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
-# ------------------------------
-# Node fetch stage – pulls official Node ARM64 binary
-# ------------------------------
-
-FROM debian:bookworm-slim AS node-fetch
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl ca-certificates xz-utils && \
-    curl -fsSLO https://nodejs.org/dist/v22.19.0/node-v22.19.0-linux-arm64.tar.xz && \
-    tar -xJf node-v22.19.0-linux-arm64.tar.xz -C /usr/local --strip-components=1 && \
-    rm node-v22.19.0-linux-arm64.tar.xz && \
-    rm -rf /var/lib/apt/lists/*
-
 # -------------------------------------------------------------------
-# # Final stage for app image
+# Final stage for app image
 # -------------------------------------------------------------------
 
 FROM base
@@ -75,16 +71,20 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy Node from node-fetch stage
-COPY --from=node-fetch /usr/local /usr/local
+COPY --from=node-fetch /usr/local/bin/node /usr/local/bin/node
+COPY --from=node-fetch /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -sf /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+    ln -sf /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 # Set environment variables for Puppeteer/Grover to use system Chromium
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
-#Run Grover in no-sandbox mode
+# Run Grover in no-sandbox mode
 ENV GROVER_NO_SANDBOX=true
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /deploy /deploy
+
 #
 # Run and own only the runtime files as a non-root user for security
 ## Note:

@@ -1,12 +1,53 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+const path = require("path");
+const fs = require("fs");
+
+function findGemRoot(gemName) {
+  const gemPaths = (process.env.GEM_PATH || process.env.GEM_HOME || "").split(":");
+  for (const gemPath of gemPaths) {
+    const gemsDir = path.join(gemPath, "gems");
+    if (!fs.existsSync(gemsDir)) continue;
+    const match = fs.readdirSync(gemsDir)
+      .filter(e => e.startsWith(`${gemName}-`))
+      .sort()
+      .pop();
+    if (match) return path.join(gemsDir, match);
+  }
+  return null;
+}
+
+const neoComponentsRoot = findGemRoot("neo_components");
 
 module.exports = {
+  safelist: [
+    // group-has-[input:checked] classes used in neo_components checkbox/radio components
+    'group-has-[input:checked]:text-primary',
+    'group-has-[input:checked]:border-primary',
+    'group-has-[input:checked]:flex',
+    'group-has-[input:checked]:text-danger-dark',
+    'group-has-[input:checked]:bg-danger-dark',
+    'group-has-[input:checked]:bg-primary',
+    // Arbitrary-value classes used in neo_components gem ERB views.
+    // These are hardcoded in gem templates but Tailwind's standalone binary
+    // cannot scan installed gem paths, so they must be safelisted explicitly.
+    'max-h-[298px]', 'md:max-w-[310px]', 'h-[120px]',
+    'max-h-[104px]', 'md:max-h-[132px]',
+    'w-[100px]', 'md:w-[297px]', 'h-[104px]', 'md:h-[132px]',
+    'max-w-[148px]', 'md:max-w-[716px]',
+    'w-[83px]', 'h-[6px]', 'h-[700px]',
+    'max-h-[20px]', 'max-h-[calc(100vh-220px)]',
+    'w-[52px]', 'w-[96px]', 'md:w-[120px]',
+    'w-[2px]', 'w-[326px]',
+    "font-['Poppins']",
+  ],
   content: [
     "./public/*.html",
     "./app/helpers/**/*.rb",
     "./app/javascript/**/*.js",
     "./app/views/**/*.{erb,haml,html,slim}",
     // "./node_modules/flowbite/**/*.js",
+    `${neoComponentsRoot}/app/helpers/**/*.rb`,
+    `${neoComponentsRoot}/app/views/**/*.{erb,haml,html,slim}`,
+    `${neoComponentsRoot}/app/javascript/**/*.js`,
   ],
   theme: {
     extend: {
