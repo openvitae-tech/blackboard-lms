@@ -42,21 +42,16 @@ class UserSettingsController < ApplicationController
 
   def update_profile_picture
     authorize :user_settings
-    file = params.dig(:user, :profile_picture)
-    unless file.present?
-      @error = "Please select a profile picture"
-      render :edit_profile_picture, status: :unprocessable_entity
-      return
-    end
+    @user.profile_picture = params.dig(:user, :profile_picture)
 
-    if @user.update(profile_picture: file)
+    if @user.valid?
+      @user.save
       flash[:success] = "Profile picture updated successfully"
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to user_settings_path }
       end
     else
-      @error = @user.errors[:profile_picture].first
       render :edit_profile_picture, status: :unprocessable_entity
     end
   end
@@ -72,30 +67,17 @@ class UserSettingsController < ApplicationController
   def update_email
     authorize :user_settings
     new_email = params.dig(:user, :email).to_s.strip
+    @user.email = new_email
 
-    if new_email.blank?
-      @user.errors.add(:email, "can't be blank")
+    if @user.valid?
+      @user.save
+      flash[:success] = I18n.t('user_settings.email_verification_sent', email: new_email)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to user_settings_path }
+      end
+    else
       render :edit_email, status: :unprocessable_entity
-      return
-    end
-
-    unless new_email.match?(User::EMAIL_REGEXP)
-      @user.errors.add(:email, "is invalid")
-      render :edit_email, status: :unprocessable_entity
-      return
-    end
-
-    if User.where.not(id: @user.id).exists?(email: new_email)
-      @user.errors.add(:email, "has already been taken")
-      render :edit_email, status: :unprocessable_entity
-      return
-    end
-    session[:pending_email] = new_email
-    @user.update(email: new_email)
-    flash[:success] = I18n.t('user_settings.email_verification_sent', email: new_email)
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to user_settings_path }
     end
   end
 

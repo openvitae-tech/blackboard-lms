@@ -44,6 +44,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   validates :name, presence: true, length: { minimum: 2, maximum: 64 }
+  validates :email, presence: true, format: { with: EMAIL_REGEXP }, if: :email_changed?
 
   validates :role,
             inclusion: { in: USER_ROLES,
@@ -60,6 +61,7 @@ class User < ApplicationRecord
   validate :validate_phone_number
 
   has_one_attached :profile_picture
+  validates :profile_picture, presence: true
   validate :acceptable_profile_picture
 
   belongs_to :learning_partner, optional: true, counter_cache: true
