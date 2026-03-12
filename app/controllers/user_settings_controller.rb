@@ -25,27 +25,39 @@ class UserSettingsController < ApplicationController
   def change_password
     authorize :user_settings
   end
-
-  def change_profile_picture
+  
+  def update_password
     authorize :user_settings
-    if request.post?
-      file = params.dig(:user, :profile_picture)
-      unless file.present?
-        @error = "Please select a profile picture"
-        render :change_profile_picture, status: :unprocessable_entity
-        return
-      end
 
-      if @user.update(profile_picture: file)
-        flash[:success] = "Profile picture updated successfully"
-        respond_to do |format|
-          format.turbo_stream
-          format.html { redirect_to user_settings_path }
-        end
-      else
-        @error = @user.errors[:profile_picture].first
-        render :change_profile_picture, status: :unprocessable_entity
+    if @user.update(password_params)
+      bypass_sign_in(@user)
+      redirect_to user_settings_path, notice: I18n.t('user_settings.password_updated')
+    else
+      render 'change_password'
+    end
+  end
+  def edit_profile_picture
+    authorize :user_settings
+  end
+
+  def update_profile_picture
+    authorize :user_settings
+    file = params.dig(:user, :profile_picture)
+    unless file.present?
+      @error = "Please select a profile picture"
+      render :edit_profile_picture, status: :unprocessable_entity
+      return
+    end
+
+    if @user.update(profile_picture: file)
+      flash[:success] = "Profile picture updated successfully"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to user_settings_path }
       end
+    else
+      @error = @user.errors[:profile_picture].first
+      render :edit_profile_picture, status: :unprocessable_entity
     end
   end
 
@@ -53,57 +65,66 @@ class UserSettingsController < ApplicationController
     authorize :user_settings
   end
 
-  def change_email
+  def edit_email
     authorize :user_settings
-    if request.post?
-      new_email = params.dig(:user, :email).to_s.strip
+  end
 
-      if new_email.blank?
-        @user.errors.add(:email, "can't be blank")
-        render :change_email, status: :unprocessable_entity
-        return
-      end
+  def update_email
+    authorize :user_settings
+    new_email = params.dig(:user, :email).to_s.strip
 
-      unless new_email.match?(User::EMAIL_REGEXP)
-        @user.errors.add(:email, "is invalid")
-        render :change_email, status: :unprocessable_entity
-        return
-      end
+    if new_email.blank?
+      @user.errors.add(:email, "can't be blank")
+      render :edit_email, status: :unprocessable_entity
+      return
+    end
 
-      if User.where.not(id: @user.id).exists?(email: new_email)
-        @user.errors.add(:email, "has already been taken")
-        render :change_email, status: :unprocessable_entity
-        return
-      end
+    unless new_email.match?(User::EMAIL_REGEXP)
+      @user.errors.add(:email, "is invalid")
+      render :edit_email, status: :unprocessable_entity
+      return
+    end
 
-      session[:pending_email] = new_email
-      @user.update(email: new_email)
-      flash[:success] = I18n.t('user_settings.email_verification_sent', email: new_email)
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to user_settings_path }
-      end
+    if User.where.not(id: @user.id).exists?(email: new_email)
+      @user.errors.add(:email, "has already been taken")
+      render :edit_email, status: :unprocessable_entity
+      return
+    end
+    session[:pending_email] = new_email
+    @user.update(email: new_email)
+    flash[:success] = I18n.t('user_settings.email_verification_sent', email: new_email)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to user_settings_path }
     end
   end
 
-  def change_phone_number
+  def edit_phone_number
     authorize :user_settings
-    if request.post?
-      phone = params.dig(:user, :phone)
-      country_code = params.dig(:user, :phone_code)
+  end
 
-      if User.where.not(id: @user.id).exists?(phone:)
-        @error = "Phone has already been taken"
-        render :change_phone_number, status: :unprocessable_entity
-        return
-      end
+  def update_phone_number
+    authorize :user_settings
+    phone = params.dig(:user, :phone)
+    country_code = params.dig(:user, :phone_code)
 
-      session[:pending_phone] = phone
-      session[:pending_country_code] = country_code
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to change_phone_number_user_settings_path }
-      end
+    if User.where.not(id: @user.id).exists?(phone:)
+      @user.errors.add(:phone, "has already been taken")
+      render :edit_phone_number, status: :unprocessable_entity
+      return
+    end
+
+    session[:pending_phone] = phone
+    session[:pending_country_code] = country_code
+
+    if Rails.env.production?
+      mobile_number = MobileNumber.new(value: phone, country_code: country_code)
+      Auth::OtpService.new(mobile_number, name: @user.name).generate_otp
+    end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to edit_phone_number_user_settings_path }
     end
   end
 
@@ -111,7 +132,8 @@ class UserSettingsController < ApplicationController
     authorize :user_settings
     otp_valid =
       if Rails.env.production?
-        Auth::OtpService.new(session[:pending_phone]).verify_otp(params[:otp])
+        mobile_number = MobileNumber.new(value: session[:pending_phone], country_code: session[:pending_country_code])
+        Auth::OtpService.new(mobile_number).verify_otp(params[:otp])
       else
         params[:otp].to_s == User::TEST_OTP.to_s
       end
@@ -139,16 +161,6 @@ class UserSettingsController < ApplicationController
     end
   end
 
-  def update_password
-    authorize :user_settings
-
-    if @user.update(password_params)
-      bypass_sign_in(@user)
-      redirect_to user_settings_path, notice: I18n.t('user_settings.password_updated')
-    else
-      render 'change_password'
-    end
-  end
 
   private
 

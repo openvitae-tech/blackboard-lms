@@ -32,7 +32,11 @@ class UserSettingsPolicy
     user.present?
   end
 
-  def change_profile_picture?
+  def edit_profile_picture?
+    user.present?
+  end
+
+  def update_profile_picture?
     user.present?
   end
 
@@ -40,11 +44,19 @@ class UserSettingsPolicy
     user.present?
   end
 
-  def change_email?
+  def edit_email?
     user.present?
   end
 
-  def change_phone_number?
+  def update_email?
+    user.present?
+  end
+
+  def edit_phone_number?
+    user.present?
+  end
+
+  def update_phone_number?
     user.present?
   end
 

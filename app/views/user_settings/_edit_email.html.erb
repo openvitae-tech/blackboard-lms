@@ -10,7 +10,7 @@
 <% end %>
 
 <%= modal_box_component(title: "Change Email", modal_footer:) do %>
-  <%= form_with(model: @user, url: change_email_user_settings_path, method: :post, id: "change-email-form", class: "flex flex-col gap-6") do |form| %>
+  <%= form_with(model: @user, url: update_email_user_settings_path, method: :post, id: "change-email-form", class: "flex flex-col gap-6") do |form| %>
     <div class="flex flex-col gap-4">
       <%= input_text_component(form:, name: :email, label: "Email", type: "email",
             placeholder: "Enter your email address", subtext: 'Example: deepak@example.com') %>

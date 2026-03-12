@@ -10,7 +10,7 @@
 <% end %>
 
 <%= modal_box_component(title: "Upload/Change photo", modal_footer:) do %>
-  <%= form_with(url: change_profile_picture_user_settings_path, method: :post, scope: :user, id: "change-profile-picture-form", class: "flex flex-col gap-6") do |form| %>
+  <%= form_with(url: update_profile_picture_user_settings_path, method: :post, scope: :user, id: "change-profile-picture-form", class: "flex flex-col gap-6") do |form| %>
     <div class="flex flex-col gap-4">
       <% if @error.present? %>
         <p class="text-sm text-danger"><%= @error %></p>

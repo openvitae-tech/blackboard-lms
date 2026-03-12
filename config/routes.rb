@@ -65,12 +65,12 @@ Rails.application.routes.draw do
       get :change_password
       put :update_password
       get :confirm_logout
-      get :change_profile_picture
-      post :change_profile_picture
-      get :change_email
-      post :change_email
-      get :change_phone_number
-      post :change_phone_number
+      get :edit_profile_picture
+      post :update_profile_picture
+      get :edit_email
+      post :update_email
+      get :edit_phone_number
+      post :update_phone_number
       post :verify_phone_number
       post :send_verification_email
     end
