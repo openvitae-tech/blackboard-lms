@@ -61,7 +61,7 @@ class User < ApplicationRecord
   validate :validate_phone_number
 
   has_one_attached :profile_picture
-  validates :profile_picture, presence: true
+  validates :profile_picture, presence: true, on: :update_profile_picture
   validate :acceptable_profile_picture
 
   belongs_to :learning_partner, optional: true, counter_cache: true

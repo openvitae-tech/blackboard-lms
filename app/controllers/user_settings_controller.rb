@@ -44,7 +44,7 @@ class UserSettingsController < ApplicationController
     authorize :user_settings
     @user.profile_picture = params.dig(:user, :profile_picture)
 
-    if @user.valid?
+    if @user.valid?(:update_profile_picture)
       @user.save
       flash[:success] = "Profile picture updated successfully"
       respond_to do |format|
