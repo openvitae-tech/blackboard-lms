@@ -15,6 +15,13 @@ Sidekiq.configure_server do |config|
   config.redis = { url: Rails.application.credentials.dig(:redis, :url), size: 9, reconnect_attempts: 2,
                    network_timeout: 10 }
 
+  # Rails 8 uses LazyRouteSet in development — routes are never drawn in Sidekiq
+  # because it never handles HTTP requests. This causes Devise.mappings to be empty,
+  # breaking any job that calls Devise mailer (e.g. forgot password email).
+  config.on(:startup) do
+    Rails.application.routes_reloader.execute_unless_loaded
+  end
+
   schedule_file = 'config/scheduled_jobs.yml'
   if File.exist?(schedule_file)
     jobs_hash = YAML.load_file(schedule_file, aliases: true)
