@@ -9,8 +9,13 @@ function findGemRoot(gemName) {
       { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }
     ).trim();
     if (result) return result;
-  } catch (_) {}
-  return null;
+    throw new Error(`gem dir for '${gemName}' was empty`);
+  } catch (err) {
+    throw new Error(
+      `[tailwind.config.js] Could not locate ${gemName} gem: ${err.message}\n` +
+      "Run `bundle install` and ensure the gem is present in your bundle."
+    );
+  }
 }
 
 const neoComponentsRoot = findGemRoot("neo_components");
