@@ -44,7 +44,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   validates :name, presence: true, length: { minimum: 2, maximum: 64 }
-  validates :email, presence: true, format: { with: EMAIL_REGEXP }, if: :email_changed?
+  validates :email, presence: true, format: { with: EMAIL_REGEXP }, on: :update_email
 
   validates :role,
             inclusion: { in: USER_ROLES,

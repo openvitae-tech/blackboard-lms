@@ -69,7 +69,7 @@ class UserSettingsController < ApplicationController
     new_email = params.dig(:user, :email).to_s.strip
     @user.email = new_email
 
-    if @user.valid?
+    if @user.valid?(:update_email)
       @user.save
       flash[:success] = I18n.t('user_settings.email_verification_sent', email: new_email)
       respond_to do |format|
