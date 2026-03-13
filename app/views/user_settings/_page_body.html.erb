@@ -7,23 +7,23 @@
         <% end %>
     </div>
     <div class="p-4 md:p-6 flex flex-col md:flex-row  w-full gap-8 items-stretch">
-      <div class="w-full md:max-w-[164px] md:min-w-[112px] max-h-[164px] min-h-[112px] flex justify-center">
-        <div class="relative inline-block rounded-xl border border-line-colour w-[120px] md:max-w-[164px] md:min-w-[112px]"">
+      <div class="w-full md:w-[164px] h-[112px] md:h-[164px] flex justify-center">
+        <div class="relative inline-block rounded-xl border border-line-colour w-[120px] md:w-full">
 
           <%= image_tag(
             user_image(user),
-            class: "w-full max-h-[164px] min-h-[112px] object-cover rounded-xl",
+            class: "w-full h-[112px] md:h-[164px] object-cover rounded-xl",
             alt: user.display_name
           ) %>
 
           <%= link_to edit_profile_picture_user_settings_path,
             data: { turbo_frame: 'modal' },
-            class: "absolute bottom-2 right-2 bg-white rounded-full p-1.5 border border-line-colour-light shadow-sm cursor-pointer" do %>
-            <%= icon("camera", css: "h-5 w-5") %>
+            class: "absolute bottom-2 right-2 bg-white rounded-full p-1.5 border border-letter-color cursor-pointer opacity-70" do %>
+            <%= icon("camera", css: "h-3 w-3 text-letter-color") %>
           <% end %>
         </div>
       </div>
-      <div class="flex flex-col md:flex-row w-full md:w-[80%] gap-3 md:gap-4">
+      <div class="flex flex-col md:flex-row w-full md:w-[80%] gap-3 md:gap-4 opa">
         <div class="w-full md:w-[70%] flex flex-col gap-3 md:gap-4 justify-center">
           <div>
             <div class="general-text-sm-normal text-letter-color-light">Name</div>
