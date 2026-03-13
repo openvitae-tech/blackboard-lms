@@ -37,17 +37,12 @@
           <% end %>
           <div>
             <div class="general-text-sm-normal text-letter-color-light">Email</div>
-            <% display_email = user.unconfirmed_email.present? ? user.unconfirmed_email : user.email %>
             <div class="mt-1 main-text-sm-medium flex items-center gap-2">
-              <%= display_email %>
-              <% if user.unconfirmed_email.present? %>
-                <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
-                <%= link_to "Verify", send_verification_email_user_settings_path, data: { turbo_method: :post }, class: "text-sm text-primary font-medium" %>
-              <% elsif user.confirmed? %>
+              <%= email(user) %>
+              <% if user.confirmed? %>
                 <%= icon("check-badge-solid", css: "h-5 w-5 text-secondary flex-none") %>
               <% else %>
                 <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
-                <%= link_to "Verify", send_verification_email_user_settings_path, data: { turbo_method: :post }, class: "text-sm text-primary font-medium" %>
               <% end %>
             </div>
           </div>
@@ -84,3 +79,28 @@
     </div>
    </div> 
 </div>
+<% if user.unconfirmed_email.present? %>
+  <%= link_to send_verification_email_user_settings_path, 
+      data: { turbo_method: :post }, class: "w-full text-left bg-white" do %>
+    <div class="flex items-center gap-3 p-5 rounded-xl border-2 border-line-colour-light w-full bg-danger-light">
+      <div class="w-8 h-8 bg-white-light rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
+        <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
+      </div>
+      <div>
+        <div class="main-text-sm-normal text-primary">Verify New mail id</div>
+        <div class="text-sm text-letter-color-light mt-0.5">
+          <% if user.confirmed? %>
+            New mail id : 
+            <span class="inline-flex items-center gap-1 flex-wrap">
+              <%= user.unconfirmed_email %>
+            </span>
+          <% else %>
+            Verify your email to keep your account safe
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>  
+
+
