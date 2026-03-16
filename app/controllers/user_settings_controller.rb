@@ -42,7 +42,7 @@ class UserSettingsController < ApplicationController
 
   def update_profile_picture
     authorize :user_settings
-    @user.profile_picture = params.dig(:user, :profile_picture)
+    @user.profile_picture = profile_picture_params[:profile_picture]
 
     if @user.valid?(:update_profile_picture)
       @user.save
@@ -66,7 +66,7 @@ class UserSettingsController < ApplicationController
 
   def update_email
     authorize :user_settings
-    new_email = params.dig(:user, :email).to_s.strip
+    new_email = email_params[:email].to_s.strip
     @user.email = new_email
 
     if @user.valid?(:update_email)
@@ -87,11 +87,11 @@ class UserSettingsController < ApplicationController
 
   def update_phone_number
     authorize :user_settings
-    phone = params.dig(:user, :phone)
-    country_code = params.dig(:user, :phone_code)
+    phone = phone_params[:phone]
+    country_code = phone_params[:phone_code]
 
-    if User.where.not(id: @user.id).exists?(phone:)
-      @user.errors.add(:phone, "has already been taken")
+    @user.phone = phone
+    unless @user.valid?
       render :edit_phone_number, status: :unprocessable_entity
       return
     end
@@ -152,6 +152,18 @@ class UserSettingsController < ApplicationController
 
   def password_params
     params.require(:user).permit(:password, :password_confirmation)
+  end
+
+  def phone_params
+    params.require(:user).permit(:phone, :phone_code)
+  end
+
+  def email_params
+    params.require(:user).permit(:email)
+  end
+
+  def profile_picture_params
+    params.fetch(:user, {}).permit(:profile_picture)
   end
 
   def set_learning_partner
