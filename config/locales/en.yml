@@ -195,6 +195,8 @@ en:
   settings:
     label: "Settings"
     description: "Create and manage tags"
+  program_course:
+    already_added: "has already been added to this program"
   programs:
     label: "Programs"
     choose_learning_program: "Choose learning program"
