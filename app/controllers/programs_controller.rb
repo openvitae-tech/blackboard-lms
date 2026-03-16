@@ -67,7 +67,7 @@ class ProgramsController < ApplicationController
     authorize @program
 
     selected_courses.each do |course|
-      @program.program_courses.create!(course: course)
+      @program.program_courses.find_or_create_by!(course: course)
     end
 
     respond_to do |format|
