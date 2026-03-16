@@ -12,7 +12,7 @@ RSpec.describe ProgramCourse, type: :model do
     it 'is invalid when the same course is added to the same program twice' do
       duplicate = build(:program_course, program: program, course: course)
       expect(duplicate).not_to be_valid
-      expect(duplicate.errors[:course_id]).to include('has already been added to this program')
+      expect(duplicate.errors[:course_id]).to eq(["#{course.title} has already been added to this program"])
     end
 
     it 'is valid when the same course is added to a different program' do

@@ -66,13 +66,20 @@ class ProgramsController < ApplicationController
   def create_courses
     authorize @program
 
+    errors = []
+
     selected_courses.each do |course|
       program_course = @program.program_courses.build(course: course)
-      if program_course.save
-        flash[:success] = t("resource.updated", resource_name: "Program")
-      else
-        flash[:alert] = program_course.errors.full_messages.to_sentence
+
+      unless program_course.save
+        errors << program_course.errors.full_messages.to_sentence
       end
+    end
+
+    if errors.empty?
+      flash[:success] = t("resource.updated", resource_name: "Program")
+    else
+      flash[:error] = errors.join(", ")
     end
 
     respond_to do |format|
