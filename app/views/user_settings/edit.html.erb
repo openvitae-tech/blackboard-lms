@@ -1,15 +1,31 @@
-<%= render "shared/components/modal", modalTitle: "Settings" do %>
-  <%= form_with(url: user_settings_path, method: :put, model: @user, class: "flex flex-col gap-6 p-6") do |form| %>
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white w-full">
 
-    <%= render "shared/components/form_errors", resource: @user %>
+    <div class="flex-1" data-action="click->modals#closeModal">
+      <%= button_component(text: "Cancel", type:"outline") %>
+    </div>
+    <%= button_tag form: "settings-form", class: "flex-1 " do %>
+      <%= button_component(text: "Update") %>
+    <% end %>    
+  </div>
+<% end %>
+
+<%= modal_box_component(
+      title: "Edit Personal Info",
+      modal_footer:
+    ) do %>
+  <%= form_with(url: user_settings_path, method: :put, model: @user, id: "settings-form", class: "flex flex-col gap-6") do |form| %>
 
     <div class="flex flex-col gap-4">
-      <%= input_field(form: form, field_name: :name, label: "Name", placeholder: "Set your name", type: "text", width: "w-full") %>
-    </div>
-
-    <div class="flex flex-col justify-between">
-      <%= form.button "Save settings", class: "bg-primary text-white px-4 py-2 rounded" %>
-      <%= form.button "Cancel", class: "px-4 py-2", data: { action: "click->modals#closeModal" } %>
+      <%= input_text_component(form:, name: :name, label: "Name", placeholder: "Set your name") %>
+      <% unless current_user.is_admin?%>
+        <div class="flex gap-4">
+          <%= date_picker_component(form:, name: :dob, label: "Date of Birth",
+              placeholder: (Date.today - 16.years).strftime('%Y-%m-%d')) %>
+          <%= dropdown_component(form:, name: :gender, label: "Gender", options: User::GENDERS.map { |g| [g, g] }, prompt: "Select gender") %>
+        </div>
+        <%= dropdown_component(form:, name: :preferred_local_language, label: "Preferred Language", options: language_options, prompt: "Select language") %>
+      <% end %>  
     </div>
   <% end %>
 <% end %>

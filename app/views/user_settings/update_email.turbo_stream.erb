@@ -1,0 +1,9 @@
+<% if @user.errors.any? %>
+  <%= turbo_stream.replace "modal", partial: "user_settings/edit_email" %>
+<% else %>
+  <%= turbo_stream.replace "user-settings-page-body", partial: "user_settings/page_body", locals: { user: @user } %>
+  <%= turbo_stream.replace "flash", partial: "shared/components/flash" %>
+  <%= turbo_stream.replace "modal" do %>
+    <%= turbo_frame_tag "modal" %>
+  <% end %>
+<% end %>

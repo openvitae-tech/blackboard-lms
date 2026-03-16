@@ -64,6 +64,15 @@ Rails.application.routes.draw do
     collection do
       get :change_password
       put :update_password
+      get :confirm_logout
+      get :edit_profile_picture
+      post :update_profile_picture
+      get :edit_email
+      post :update_email
+      get :edit_phone_number
+      post :update_phone_number
+      post :verify_phone_number
+      post :send_verification_email
     end
   end
 

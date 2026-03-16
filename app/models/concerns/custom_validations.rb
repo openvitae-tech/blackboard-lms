@@ -15,6 +15,10 @@ module CustomValidations
       acceptable_image('banner')
     end
 
+    def acceptable_profile_picture
+      acceptable_image('profile_picture')
+    end
+
     def acceptable_materials
       materials.each do |material|
         unless material.content_type.in?(MATERIAL_CONTENT_TYPES)

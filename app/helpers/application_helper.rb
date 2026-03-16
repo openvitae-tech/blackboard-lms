@@ -108,7 +108,11 @@ module ApplicationHelper
   def email(user)
     return user.email if user.email.present?
 
-    user.unconfirmed_email.present? ? "#{user.unconfirmed_email} (Unverified)" : 'NA'
+    user.unconfirmed_email.presence || 'NA'
+  end
+
+  def email_unverified?(user)
+    (user.email.present? || user.unconfirmed_email.present?) && !user.confirmed?
   end
 
   def query_url(path, query)

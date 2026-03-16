@@ -1,32 +1,106 @@
 <div id="user-settings-page-body">
-  <div class="flex border-b p-4 md:p-6  border-line-colour ">
-    <div class="flex w-full flex-col gap-4 md:gap-8">
-      <div class="flex justify-between">
-        <h1 class="text-semibold">Personal information</h1>
-        <%= link_to edit_user_settings_path, data: { turbo_frame: "modal" }, class: "flex items-center" do %>
-          <%= button(label: 'Edit', type: "secondary", size:"sm", icon_name: "pencil") %>
+  <div class="flex flex-col rounded-xl border-2 border-line-colour-light bg-white">
+    <div class="flex justify-between p-5">
+      <h2 class="text-semibold mb-3">Personal Info</h2>
+      <%= link_to edit_user_settings_path, data: { turbo_frame: "modal" }, class: "flex items-center" do %>
+          <%= button_component(text: 'Edit', type: "outline", size: "sm", icon_name: "pencil") %>
         <% end %>
+    </div>
+    <div class="p-4 md:p-6 flex flex-col md:flex-row  w-full gap-8 items-stretch">
+      <div class="w-full md:w-[164px] h-[112px] md:h-[164px] flex justify-center">
+        <div class="relative inline-block rounded-xl border border-line-colour w-[120px] md:w-full">
+
+          <%= image_tag(
+            user_image(user),
+            class: "w-full h-[112px] md:h-[164px] object-cover rounded-xl",
+            alt: user.display_name
+          ) %>
+
+          <%= link_to edit_profile_picture_user_settings_path,
+            data: { turbo_frame: 'modal' },
+            class: "absolute bottom-2 right-2 bg-white rounded-full p-1.5 border border-letter-color cursor-pointer opacity-70" do %>
+            <%= icon("camera", css: "h-3 w-3 text-letter-color") %>
+          <% end %>
+        </div>
       </div>
-      <div>
-        <div class="text-sm font-normal text-letter-color-light">Organization</div>
-        <div class="mt-2 text-medium"><%= org_name(user.learning_partner) %></div>
-      </div>
-      <div>
-        <div class="text-sm font-normal text-letter-color-light">Role</div>
-        <div class="mt-2 text-medium"><%= role_text(user.role) %></div>
-      </div>
-      <div>
-        <div class="text-sm font-normal text-letter-color-light">Email</div>
-        <div class="mt-2 text-medium"><%= email(user) %></div>
-      </div>
-      <div>
-        <div class="text-sm font-normal text-letter-color-light">Phone</div>
-        <% if user.phone.present? %>
-          <div class="mt-2 text-medium"><%= user.country_code %><%= user.phone %></div>
-        <% else %>
-          <div class="mt-2 text-medium">-</div>
-        <% end %>
+      <div class="flex flex-col md:flex-row w-full md:w-[80%] gap-3 md:gap-4 opa">
+        <div class="w-full md:w-[70%] flex flex-col gap-3 md:gap-4 justify-center">
+          <div>
+            <div class="general-text-sm-normal text-letter-color-light">Name</div>
+            <div class="mt-1 main-text-sm-medium"><%= user.name %></div>
+          </div>
+          <% unless current_user.is_admin?%>
+            <div>
+              <div class="general-text-sm-normal text-letter-color-light">Date of Birth</div>
+              <div class="mt-1 main-text-sm-medium"><%= user.dob&.strftime('%B %d, %Y') || '-' %></div>
+            </div>
+          <% end %>
+          <div>
+            <div class="general-text-sm-normal text-letter-color-light">Email</div>
+            <div class="mt-1 main-text-sm-medium flex items-center gap-2">
+              <%= email(user) %>
+              <% if user.confirmed? %>
+                <%= icon("check-badge-solid", css: "h-5 w-5 text-secondary flex-none") %>
+              <% else %>
+                <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full md:w-[30%] flex flex-col gap-3 md:gap-4 justify-center">
+          <% if current_user.is_admin?%>
+            <div>
+              <div class="general-text-sm-normal text-letter-color-light">Role</div>
+              <div class="mt-1 main-text-sm-medium">Admin</div>
+            </div>
+          <% else %>
+            <div>
+              <div class="general-text-sm-normal text-letter-color-light">Gender</div>
+              <div class="mt-1 main-text-sm-medium"><%= user.gender.presence || '-' %></div>
+            </div>
+        
+            <div>
+              <div class="general-text-sm-normal text-letter-color-light">Preferred Language</div>
+              <div class="mt-1 main-text-sm-medium"><%= user.preferred_local_language.presence || '-' %></div>
+            </div>
+          <% end %>
+
+          <div>
+            <div class="general-text-sm-normal text-letter-color-light">Phone</div>
+            <% if user.phone.present? %>
+              <div class="mt-1 main-text-sm-medium"><%= user.country_code %><%= user.phone %></div>
+            <% else %>
+              <div class="mt-1 main-text-sm-medium">-</div>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+   </div> 
 </div>
+<% if user.unconfirmed_email.present? %>
+  <%= link_to send_verification_email_user_settings_path, 
+      data: { turbo_method: :post }, class: "w-full text-left bg-white" do %>
+    <div class="flex items-center gap-3 p-5 rounded-xl border-2 border-line-colour-light w-full bg-danger-light">
+      <div class="w-8 h-8 bg-white-light rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
+        <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
+      </div>
+      <div>
+        <div class="main-text-sm-normal text-primary">Verify New mail id</div>
+        <div class="text-sm text-letter-color-light mt-0.5">
+          <% if user.confirmed? %>
+            New mail id : 
+            <span class="inline-flex items-center gap-1 flex-wrap">
+              <%= user.unconfirmed_email %>
+            </span>
+          <% else %>
+            Verify your email to keep your account safe
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>  
+
+

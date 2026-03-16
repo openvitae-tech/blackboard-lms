@@ -25,6 +25,7 @@ class UserSettingsController < ApplicationController
   def change_password
     authorize :user_settings
   end
+  
   def update_password
     authorize :user_settings
 
@@ -35,11 +36,118 @@ class UserSettingsController < ApplicationController
       render 'change_password'
     end
   end
+  def edit_profile_picture
+    authorize :user_settings
+  end
+
+  def update_profile_picture
+    authorize :user_settings
+    @user.profile_picture = params.dig(:user, :profile_picture)
+
+    if @user.valid?(:update_profile_picture)
+      @user.save
+      flash[:success] = "Profile picture updated successfully"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to user_settings_path }
+      end
+    else
+      render :edit_profile_picture, status: :unprocessable_entity
+    end
+  end
+
+  def confirm_logout
+    authorize :user_settings
+  end
+
+  def edit_email
+    authorize :user_settings
+  end
+
+  def update_email
+    authorize :user_settings
+    new_email = params.dig(:user, :email).to_s.strip
+    @user.email = new_email
+
+    if @user.valid?(:update_email)
+      @user.save
+      flash[:success] = I18n.t('user_settings.email_verification_sent', email: new_email)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to user_settings_path }
+      end
+    else
+      render :edit_email, status: :unprocessable_entity
+    end
+  end
+
+  def edit_phone_number
+    authorize :user_settings
+  end
+
+  def update_phone_number
+    authorize :user_settings
+    phone = params.dig(:user, :phone)
+    country_code = params.dig(:user, :phone_code)
+
+    if User.where.not(id: @user.id).exists?(phone:)
+      @user.errors.add(:phone, "has already been taken")
+      render :edit_phone_number, status: :unprocessable_entity
+      return
+    end
+
+    session[:pending_phone] = phone
+    session[:pending_country_code] = country_code
+
+    if Rails.env.production?
+      mobile_number = MobileNumber.new(value: phone, country_code: country_code)
+      Auth::OtpService.new(mobile_number, name: @user.name).generate_otp
+    end
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to edit_phone_number_user_settings_path }
+    end
+  end
+
+  def verify_phone_number
+    authorize :user_settings
+    otp_valid =
+      if Rails.env.production?
+        mobile_number = MobileNumber.new(value: session[:pending_phone], country_code: session[:pending_country_code])
+        Auth::OtpService.new(mobile_number).verify_otp(params[:otp])
+      else
+        params[:otp].to_s == User::TEST_OTP.to_s
+      end
+
+    if otp_valid
+      @user.update!(phone: session.delete(:pending_phone), country_code: session.delete(:pending_country_code))
+      flash[:success] = I18n.t('user_settings.phone_updated')
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to user_settings_path }
+      end
+    else
+      @error = I18n.t('user_settings.invalid_otp')
+      render :verify_phone_number, status: :unprocessable_entity
+    end
+  end
+
+  def send_verification_email
+    authorize :user_settings
+    @user.send_confirmation_instructions
+    flash[:success] = I18n.t('user_settings.email_verification_sent', email: @user.email)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to user_settings_path }
+    end
+  end
+
 
   private
 
   def profile_params
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :dob, :gender, :preferred_local_language)
   end
 
   def password_params

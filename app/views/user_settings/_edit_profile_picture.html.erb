@@ -1,0 +1,24 @@
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white w-full">
+    <div class="flex-1" data-action="click->modals#closeModal">
+      <%= button_component(text: "Cancel", type: "outline") %>
+    </div>
+    <%= button_tag form: "change-profile-picture-form", class: "flex-1" do %>
+      <%= button_component(text: "Save") %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= modal_box_component(title: "Upload/Change photo", modal_footer:) do %>
+  <%= form_with(model: @user, url: update_profile_picture_user_settings_path, method: :post, id: "change-profile-picture-form", class: "flex flex-col gap-6") do |form| %>
+    <div class="flex flex-col gap-4">
+      <%= file_selector_component(
+            form:,
+            name: :profile_picture,
+            type: "image",
+            support_text: "Max file size is 10MB",
+            support_text_two: "Supporting files are .jpg, .png, .jpeg"
+          ) %>
+    </div>
+  <% end %>
+<% end %>
