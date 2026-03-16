@@ -90,8 +90,8 @@ class UserSettingsController < ApplicationController
     phone = params.dig(:user, :phone)
     country_code = params.dig(:user, :phone_code)
 
-    if User.where.not(id: @user.id).exists?(phone:)
-      @user.errors.add(:phone, "has already been taken")
+    @user.phone = phone
+    unless @user.valid?
       render :edit_phone_number, status: :unprocessable_entity
       return
     end
