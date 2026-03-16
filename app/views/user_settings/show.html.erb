@@ -1,58 +1,60 @@
 <h1 class="mb-4 heading page-heading-medium">User settings</h1>
 
-<div class="flex flex-col gap-3 md:gap-4">   
-  <%= render 'user_settings/page_body', user: @user %>
+<div class="flex w-full justify-center">   
+  <div class="flex flex-col gap-3 md:gap-4 md:w-[865px]">
+    <%= render 'user_settings/page_body', user: @user %>
 
-  <div class="rounded-xl border-2 border-line-colour-light px-4 md:px-6 bg-white">
-    <h2 class="main-text-md-semibold mt-5">Account Security</h2>
-    <div class="divide-y-2 divide-line-colour-light">
-      <%= link_to change_password_user_settings_path, data: { turbo_frame: 'modal' }, class: "flex items-center justify-between py-5 w-full cursor-pointer " do %>
-        <div class="flex items-center gap-4">
-          <div class="w-8 h-8 bg-primary-light-50 rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
-           <%= icon("lock-closed", css: "h-5 w-5 flex-none") %>
+    <div class="rounded-xl border-2 border-line-colour-light px-4 md:px-6 bg-white">
+      <h2 class="main-text-md-semibold mt-5">Account Security</h2>
+      <div class="divide-y-2 divide-line-colour-light">
+        <%= link_to change_password_user_settings_path, data: { turbo_frame: 'modal' }, class: "flex items-center justify-between py-5 w-full cursor-pointer " do %>
+          <div class="flex items-center gap-4">
+            <div class="w-8 h-8 bg-primary-light-50 rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
+            <%= icon("lock-closed", css: "h-5 w-5 flex-none") %>
+            </div>
+            <div>
+              <div class="main-text-sm-normal text-primary">Change Password</div>
+              <div class="general-text-sm-normal text-letter-color-light mt-0.5">Set a strong Password for your account</div>
+            </div>
           </div>
-          <div>
-            <div class="main-text-sm-normal text-primary">Change Password</div>
-            <div class="general-text-sm-normal text-letter-color-light mt-0.5">Set a strong Password for your account</div>
-          </div>
-        </div>
-      <% end %>
+        <% end %>
 
-      <%= link_to edit_phone_number_user_settings_path, data: { turbo_frame: 'modal' }, class: "flex items-center justify-between py-5 w-full cursor-pointer" do %>
-        <div class="flex items-center gap-4">
-          <div class="w-8 h-8 bg-primary-light-50 rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
-            <%= icon("phone", css: "h-5 w-5 flex-none") %>
+        <%= link_to edit_phone_number_user_settings_path, data: { turbo_frame: 'modal' }, class: "flex items-center justify-between py-5 w-full cursor-pointer" do %>
+          <div class="flex items-center gap-4">
+            <div class="w-8 h-8 bg-primary-light-50 rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
+              <%= icon("phone", css: "h-5 w-5 flex-none") %>
+            </div>
+            <div>
+              <div class="main-text-sm-normal text-primary">Change Phone Number</div>
+              <div class="general-text-sm-normal text-letter-color-light mt-0.5">Update your contact number</div>
+            </div>
           </div>
-          <div>
-            <div class="main-text-sm-normal text-primary">Change Phone Number</div>
-            <div class="general-text-sm-normal text-letter-color-light mt-0.5">Update your contact number</div>
-          </div>
-        </div>
-      <% end %>
+        <% end %>
 
-      <%= link_to edit_email_user_settings_path, data: { turbo_frame: 'modal' }, class: "flex items-center justify-between py-5 w-full cursor-pointer" do %>
-        <div class="flex items-center gap-4">
-          <div class="w-8 h-8 bg-primary-light-50 rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
-            <%= icon("envelop-open", css: "h-5 w-5 flex-none") %>
+        <%= link_to edit_email_user_settings_path, data: { turbo_frame: 'modal' }, class: "flex items-center justify-between py-5 w-full cursor-pointer" do %>
+          <div class="flex items-center gap-4">
+            <div class="w-8 h-8 bg-primary-light-50 rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
+              <%= icon("envelop-open", css: "h-5 w-5 flex-none") %>
+            </div>
+            <div>
+              <div class="main-text-sm-normal text-primary">Change Email</div>
+              <div class="general-text-sm-normal text-letter-color-light mt-0.5">Update to an active email address</div>
+            </div>
           </div>
-          <div>
-            <div class="main-text-sm-normal text-primary">Change Email</div>
-            <div class="general-text-sm-normal text-letter-color-light mt-0.5">Update to an active email address</div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
-
-  <%= link_to confirm_logout_user_settings_path, data: { turbo_frame: 'modal' }, class: "w-full text-left bg-white" do %>
-    <div class="flex items-center gap-3 p-5 rounded-xl border-2 border-line-colour-light w-full">
-      <div class="w-8 h-8 bg-danger-light rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
-        <%= icon("arrow-right-start-on-rectangle", css: "h-5 w-5 text-danger flex-none") %>
-      </div>
-      <div>
-        <div class="main-text-sm-normal text-danger">Logout</div>
-        <div class="general-text-sm-normal text-letter-color-light mt-0.5">Logout from your instruo account</div>
+        <% end %>
       </div>
     </div>
-  <% end %>
+
+    <%= link_to confirm_logout_user_settings_path, data: { turbo_frame: 'modal' }, class: "w-full text-left bg-white" do %>
+      <div class="flex items-center gap-3 p-5 rounded-xl border-2 border-line-colour-light w-full">
+        <div class="w-8 h-8 bg-danger-light rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
+          <%= icon("arrow-right-start-on-rectangle", css: "h-5 w-5 text-danger flex-none") %>
+        </div>
+        <div>
+          <div class="main-text-sm-normal text-danger">Logout</div>
+          <div class="general-text-sm-normal text-letter-color-light mt-0.5">Logout from your instruo account</div>
+        </div>
+      </div>
+    <% end %>
+  </div>  
 </div>
