@@ -35,7 +35,8 @@ class HomePageService
 
   def build_categories(user)
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, tags: CONFIG[:categories][:tags])
-    courses_in_categories = Courses::FilterService.new(user, ctx).filter.records.includes(:tags, banner_attachment: :blob)
+    courses_in_categories = Courses::FilterService.new(user, ctx).filter.records
+                                                  .includes(:tags, banner_attachment: :blob)
     courses = {}
 
     courses_in_categories.each do |course|
