@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   namespace :webhooks do
     resources :chatwoot, only: :create, defaults: { format: :json }
+    resources :neo_ai, only: :create, defaults: { format: :json }
   end
 
   resources :searches, only: [:index] do
