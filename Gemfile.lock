@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/openvitae-tech/neo_components.git
-  revision: 80eb9edbe493e89e9c98320d3fe2ce66ee19a854
+  revision: e37c77a5748ca0f758cd03bc6ce1f87e56de3638
   specs:
     neo_components (0.3.0)
       importmap-rails (~> 2.0)
@@ -105,7 +105,7 @@ GEM
     aws-sigv4 (1.12.1)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
-    bcrypt (3.1.20)
+    bcrypt (3.1.21)
     benchmark (0.5.0)
     bigdecimal (4.0.1)
     bindex (0.8.1)
@@ -150,10 +150,10 @@ GEM
     debug (1.9.1)
       irb (~> 1.10)
       reline (>= 0.3.8)
-    devise (4.9.3)
+    devise (5.0.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 4.1.0)
+      railties (>= 7.0)
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.1)
@@ -248,7 +248,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.7.0)
-    loofah (2.25.0)
+    loofah (2.25.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     lumberjack (1.2.10)
@@ -382,9 +382,9 @@ GEM
     regexp_parser (2.10.0)
     reline (0.6.3)
       io-console (~> 0.5)
-    responders (3.1.1)
-      actionpack (>= 5.2)
-      railties (>= 5.2)
+    responders (3.2.0)
+      actionpack (>= 7.0)
+      railties (>= 7.0)
     rexml (3.4.2)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -558,7 +558,7 @@ DEPENDENCIES
   connection_pool (~> 2.5)
   database_cleaner
   debug
-  devise (~> 4.9.2)
+  devise (~> 5.0.3)
   factory_bot_rails
   faker
   groupdate

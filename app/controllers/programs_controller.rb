@@ -66,13 +66,24 @@ class ProgramsController < ApplicationController
   def create_courses
     authorize @program
 
+    errors = []
+
     selected_courses.each do |course|
-      @program.program_courses.create!(course: course)
+      program_course = @program.program_courses.build(course: course)
+
+      unless program_course.save
+        errors << program_course.errors.full_messages.to_sentence
+      end
+    end
+
+    if errors.empty?
+      flash[:success] = t("resource.updated", resource_name: "Program")
+    else
+      flash[:error] = errors.join(", ")
     end
 
     respond_to do |format|
       format.turbo_stream do
-        flash[:success] = t("resource.updated", resource_name: "Program")
         render turbo_stream: turbo_stream.redirect_to(program_path(@program))
       end
     end
