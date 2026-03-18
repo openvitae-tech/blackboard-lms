@@ -7,7 +7,7 @@ class HomePageService
     banner: { enabled: false, order: 0 },
     programs: { enabled: true, order: 1 },
     continue: { enabled: true, order: 2 },
-    categories: { enabled: true, order: 3, tags: ['Front Office', 'Housekeeping'] }
+    categories: { enabled: true, order: 3, tags: [] }
   }.freeze
 
   def build_data_for(user)
@@ -34,8 +34,6 @@ class HomePageService
   end
 
   def build_categories(user)
-    return {} if CONFIG[:categories][:tags].blank?
-
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, tags: CONFIG[:categories][:tags])
     courses_in_categories = Courses::FilterService.new(user, ctx).filter.records.includes(:tags, :banner_attachment)
     courses = {}

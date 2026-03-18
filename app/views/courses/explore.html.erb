@@ -50,11 +50,13 @@
 <div class="space-y-6 mt-3">
   <section class="space-y-6">
   <div class="flex gap-2 items-center">
-    <%= render 'shared/components/back_button', back_link: :back %>
+    <%= render 'shared/components/back_button', back_link: courses_path %>
     <p class="main-text-lg-semibold"><%= explore_title(params[:tags]) %></p>
   </div>
   <% @courses[:explore].each do |course| %>
-    <%= long_course_card_component course: %>
+    <%= link_to course_path(course), class: 'block' do %>
+      <%= long_course_card_component course: %>
+    <% end %>
   <% end %>
   <div class="flex justify-end gap-3">
     <%= render 'shared/pagination/prev', items: @courses[:explore] %>
@@ -62,7 +64,7 @@
   </div>
 
   </section>  
-  <section class="bg-white p-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5 -mx-5 md:mx-0">
+  <%= content_tag :section, class: "bg-white p-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5 -mx-5 md:mx-0" do %>
     <div class="flex items-center gap-3 justify-between">
       <h2 class="main-text-lg-semibold">Continue Your Learning</h2>
       
@@ -80,5 +82,5 @@
       <% end %>
     </div>
     <%= carousel_component cards: course_cards(@courses[:continue]), loop: false %>
-  </section>
+  <% end unless @courses[:continue].blank? %>
 </div>
