@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/openvitae-tech/neo_components.git
-  revision: 80eb9edbe493e89e9c98320d3fe2ce66ee19a854
+  revision: e37c77a5748ca0f758cd03bc6ce1f87e56de3638
   specs:
     neo_components (0.3.0)
       importmap-rails (~> 2.0)
@@ -248,7 +248,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.7.0)
-    loofah (2.25.0)
+    loofah (2.25.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     lumberjack (1.2.10)
