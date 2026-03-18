@@ -25,9 +25,12 @@ module CardsHelper
 
   def course_cards(courses)
     courses ||= []
+    course_ids = courses.map(&:id)
+    enrollments = current_user.enrollments.where(course_id: course_ids).index_by(&:course_id)
+
     courses.map do |course|
       link_to course_path(course) do
-        course_card_component(course:, enrollment: current_user.get_enrollment_for(course))
+        course_card_component(course:, enrollment: enrollments[course.id])
       end
     end
   end
