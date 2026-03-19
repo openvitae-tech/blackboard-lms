@@ -25,7 +25,7 @@ class HomePageService
   def build_banner(user); end
 
   def build_programs(user)
-    user.learning_partner.programs
+    Program.where(learning_partner_id: user.learning_partner_id)
   end
 
   def build_continue(user)
