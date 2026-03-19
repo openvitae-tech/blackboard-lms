@@ -25,18 +25,18 @@ class HomePageService
   def build_banner(user); end
 
   def build_programs(user)
-    user.learning_partner.programs.includes(:program_users)
+    user.learning_partner.programs
   end
 
   def build_continue(user)
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, type: SearchContext::INCOMPLETE)
-    Courses::FilterService.new(user, ctx).filter.records.includes(:tags, banner_attachment: :blob)
+    Courses::FilterService.new(user, ctx).filter.records.preload(:tags, :banner_attachment)
   end
 
   def build_categories(user)
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, tags: CONFIG[:categories][:tags])
     courses_in_categories = Courses::FilterService.new(user, ctx).filter.records
-                                                  .includes(:tags, banner_attachment: :blob)
+                                                  .preload(:tags, :banner_attachment)
     courses = {}
 
     courses_in_categories.each do |course|
