@@ -117,6 +117,25 @@ Start the server by executing following command.
 bin/dev
 ```
 
+## Working on neo_components locally
+
+`neo_components` is a gem extracted from this project hosted at [openvitae-tech/neo_components](https://github.com/openvitae-tech/neo_components). By default it is installed from GitHub.
+
+If you are actively developing `neo_components` alongside this app, you can point Bundler to your local checkout so changes are picked up immediately without pushing to GitHub:
+
+```bash
+bundle config local.neo_components /path/to/neo_components
+bundle config disable_local_branch_check true
+bundle install
+```
+
+To revert back to the GitHub version:
+
+```bash
+bundle config --delete local.neo_components
+bundle install
+```
+
 ## Testing
 Make sure you have setup the test environment as mentioned in the earlier section
 
