@@ -37,9 +37,10 @@
     <%= render 'shared/components/back_button', back_link: courses_path %>
     <p class="main-text-lg-semibold">Explore our Programs</p>
   </div>
+  <% enrolled_program_ids = current_user.program_ids.to_set %>
   <% @programs.each do |program| %>
     <%= link_to program_path(program), class: 'block' do %>
-      <%= long_program_card_component program:, user: current_user %>
+      <%= long_program_card_component program:, enrolled_program_ids: %>
     <% end %>
   <% end %>
   <div class="flex justify-end gap-3">
