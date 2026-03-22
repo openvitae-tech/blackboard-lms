@@ -26,10 +26,12 @@ class CoursesController < ApplicationController
 
     @courses = {}
     search_context = build_search_context type: SearchContext::INCOMPLETE
-    @courses[:continue] = Courses::FilterService.new(current_user, search_context).filter.records.limit(12)
+    @courses[:continue] = Courses::FilterService.new(current_user, search_context).filter.records
+                                               .preload(:tags, :banner_attachment).limit(12)
 
     search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term], type: params[:type])
-    @courses[:explore] = Courses::FilterService.new(current_user, search_context).filter.records.page(filter_params[:page])
+    @courses[:explore] = Courses::FilterService.new(current_user, search_context).filter.records
+                                               .preload(:tags, :banner_attachment).page(filter_params[:page])
 
     @tags = Tag.load_tags
   end
@@ -38,7 +40,8 @@ class CoursesController < ApplicationController
     authorize :course
     
     search_context = build_search_context type: SearchContext::INCOMPLETE
-    @courses = Courses::FilterService.new(current_user, search_context).filter.records.page(filter_params[:page])
+    @courses = Courses::FilterService.new(current_user, search_context).filter.records
+                                    .preload(:tags, :banner_attachment).page(filter_params[:page])
     @tags = Tag.load_tags
   end
 
