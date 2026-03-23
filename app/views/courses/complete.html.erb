@@ -4,9 +4,9 @@
     <%= render 'filters', tags: @tags %>
     <div class="flex justify-between items-center">
       <% if from_profile %>
-        <%= breadcrumbs_component links: [['My Profile', profile_path], ['Continue your Learning', nil]] %>
+        <%= breadcrumbs_component links: [['My Profile', profile_path], ['Completed Courses', nil]] %>
       <% else %>
-        <%= breadcrumbs_component links: [['Home', courses_path], ['Continue your Learning', nil]] %>
+        <%= breadcrumbs_component links: [['Home', courses_path], ['Completed Courses', nil]] %>
       <% end %>
     </div>
   </div>
@@ -15,7 +15,7 @@
   <section class="space-y-6">
     <div class="flex gap-2 items-center">
       <%= render 'shared/components/back_button', back_link: from_profile ? profile_path : courses_path %>
-      <p class="main-text-lg-semibold">Continue your Learning</p>
+      <p class="main-text-lg-semibold">Completed Courses</p>
     </div>
     <% @courses.each do |course| %>
       <%= link_to course_path(course), class: "block" do %>
@@ -26,5 +26,5 @@
       <%= render 'shared/pagination/prev', items: @courses %>
       <%= render 'shared/pagination/next', items: @courses %>
     </div>
-  </section>  
+  </section>
 </div>

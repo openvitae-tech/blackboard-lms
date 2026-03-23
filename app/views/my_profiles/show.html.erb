@@ -1,67 +1,106 @@
-<% any_rendered = false %>
-
 <div class="mt-2 flex flex-col gap-3 md:gap-4">
   <%= heading_component(text: t("my_profile.label"), size: 'md') %>
   <%= render "my_profiles/profile_header" , team: @team%>
 </div>
-<div class="mt-5 md:mt-7">
-  <%= heading_component(text: t("my_profile.my_certificates.label"), size: 'sm') %>
-</div>
-<div class="mt-3 md:mt-4">
-  <div class="border border-line-colour divide-y divide-line-colour rounded-lg md:rounded-xl">
-    <% if @course_certificates.present? %>
-      <% @course_certificates.each do |course_certificate| %>
-        <% any_rendered = true %>
-
-        <div class="px-4 md:px-5 py-3 md:py-4">
-          <div class="flex flex-col md:flex-row gap-3 justify-between">
-            <h2 class="main-text-lg-normal flex items-center"><%= course_certificate.course.title %></h2>
-
-            <div class="flex gap-4 md:gap-[10px]">
-              <div class="flex-grow md:flex-none">
-                <%= link_to rails_blob_path(course_certificate.file, disposition: "attachment") do %>
-                  <%= button_component(text: t("button.download"), type: "outline", size: "sm",
-                      icon_name: "arrow-down-tray", icon_position: "right") %>
-                <% end %>
-              </div>
-              
-              <div class="flex-grow md:flex-none">
-                <%= link_to share_certificate_profile_path(certificate_id: course_certificate.id),
-                            data: { turbo_frame: "modal" } do %>
-                  <%= button_component(text: t("button.share"), size: "sm", icon_name: "share", icon_position: "right") %>
-                <% end %>
-              </div>
-            </div>
+<% cert_cards = certificate_cards(@course_certificates, @completed_enrollments, @active_template) %>
+<% if cert_cards.any? %>
+  <div class="mt-5 md:mt-7">
+    <section class="bg-white p-5 pr-0 md:pr-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5">
+      <div class="flex items-center gap-3 justify-between mr-5">
+        <h2 class="main-text-lg-semibold"><%= t("my_profile.my_certificates.label") %></h2>
+        <%= link_to certificates_profile_path do %>
+          <div class="hidden md:inline">
+            <%= button_component text: t("button.view_more"),
+                                 size: 'sm',
+                                 type: 'outline',
+                                 icon_name: 'chevron-right',
+                                 icon_position: 'right' %>
           </div>
-        </div>
-      <% end %>
-    <% end %>
-    <% @completed_enrollments.each do |enrollment| %>
-      <% course = enrollment.course %>
-      <% certificate = get_certificate(current_user, course.id) %>
-
-      <% next if certificate.present? || @active_template.blank? %>
-      <% any_rendered = true %>
-
-      <div class="px-4 md:px-5 py-3 md:py-4">
-        <div class="flex flex-col md:flex-row gap-3 justify-between">
-          <h2 class="main-text-lg-normal flex items-center"><%= course.title %></h2>
-          <div class="flex gap-2">
-            <%= button_to generate_certificate_profile_path(enrollment_id: enrollment.id),
-              method: :post,
-              data: { turbo_frame: "modal" } do %>
-              <%= button_component(text: t("my_profile.my_certificates.request_certificate"), size: "sm") %>
-            <% end %>
+          <div class="md:hidden bg-primary-light-50 rounded-full p-1 border border-slate-grey-light">
+            <%= icon 'chevron-right', css: 'w-4 h-4 text-primary' %>
           </div>
-        </div>
+        <% end %>
       </div>
-    <% end %>
-    <% unless any_rendered %>
+      <%= carousel_component cards: cert_cards, loop: true %>
+    </section>
+  </div>
+<% else %>
+  <div class="mt-5 md:mt-7">
+    <%= heading_component(text: t("my_profile.my_certificates.label"), size: 'sm') %>
+  </div>
+  <div class="mt-3 md:mt-4">
+    <div class="border border-line-colour rounded-lg md:rounded-xl">
       <div class="flex flex-col items-center justify-center mt-10 mb-5">
         <h2 class="text-semibold pb-4">
           <%= t("record.empty", resource: t("my_profile.my_certificates.certificates")) %>
         </h2>
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
+<% if @enrolled_courses_by_status.present? %>
+  <% ongoing_label = t("my_profile.my_courses.ongoing") %>
+  <div class="mt-5 md:mt-7">
+    <section class="space-y-2">
+      <p class="heading-xl px-2"><%= t("my_profile.my_courses.label") %></p>
+
+      <%# Desktop - tabs with carousel %>
+      <section class="hidden md:block bg-white p-5 pr-0 md:pr-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-4">
+        <div data-controller="auto-click">
+          <div class="flex flex-col gap-4 tabs-list"
+               data-controller="tabs"
+               data-tabs-active-class="text-letter-color border-b border-letter-color">
+            <%= content_tag :div, class: "flex gap-3 md:gap-4 main-text-md-semibold border-b border-line-colour" do %>
+              <% @enrolled_courses_by_status.keys.each do |tab_key| %>
+                <div class="p-1 cursor-pointer"
+                     data-auto-click-target="tabItem"
+                     data-tabs-target="tabItem"
+                     data-action="click->tabs#select">
+                  <%= tab_key %>
+                </div>
+              <% end %>
+            <% end %>
+            <div class="tab-panels-container">
+              <% @enrolled_courses_by_status.each do |status, courses| %>
+                <% view_all_path = status == ongoing_label ? continue_courses_path(from: 'my_profile') : complete_courses_path(from: 'my_profile') %>
+                <div data-tabs-target="panelItem" class="space-y-4">
+                  <%= carousel_component cards: course_cards(courses), loop: false, enable_in_small_devices: false %>
+                  <%= link_to view_all_path, class: 'block w-fit' do %>
+                    <%= button_component text: t("my_profile.my_courses.show_all", status: status),
+                                        size: 'sm',
+                                        type: 'outline',
+                                        icon_name: 'chevron-right',
+                                        icon_position: 'right' %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <%# Mobile - accordion %>
+      <section class="md:hidden rounded-xl">
+        <% @enrolled_courses_by_status.each do |status, courses| %>
+          <% view_all_path = status == ongoing_label ? continue_courses_path : complete_courses_path %>
+          <%= accordion_component header: status do %>
+            <div class="flex flex-col w-full gap-3 pb-5">
+              <% course_cards(courses.take(3)).each do |card_html| %>
+                <div class="w-full">
+                  <%= card_html %>
+                </div>
+              <% end %>
+              <%= link_to view_all_path, class: 'block w-fit mx-auto' do %>
+                <%= button_component text: t("my_profile.my_courses.show_all", status: status),
+                                     size: 'sm',
+                                     type: 'outline',
+                                     icon_name: 'chevron-right',
+                                     icon_position: 'right' %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </section>
+    </section>
+  </div>
+<% end %>

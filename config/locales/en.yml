@@ -49,6 +49,7 @@ en:
     ok: "Ok"
     submit: "Submit"
     cancel: "Cancel"
+    view_more: "View More"
     download: "Download"
     generate: "Generate"
     update: "Update"
@@ -215,6 +216,12 @@ en:
       enter_certificate_name: "Enter certificate name"
   my_profile:
     label: "My Profile"
+    my_courses:
+      label: "My Courses"
+      other: "Other"
+      ongoing: "Ongoing"
+      completed: "Completed"
+      show_all: "Show all %{status} Courses"
     my_certificates:
       label: "My Certificates"
       certificates: "certificates"

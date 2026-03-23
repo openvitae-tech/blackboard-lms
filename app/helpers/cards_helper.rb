@@ -38,4 +38,21 @@ module CardsHelper
       end
     end
   end
+
+  def certificate_cards(course_certificates, completed_enrollments = [], active_template = nil)
+    cards = []
+
+    completed_enrollments.each do |enrollment|
+      certificate = course_certificates.find { |c| c.course_id == enrollment.course_id }
+
+      if certificate
+        # Already has certificate → show certificate card
+        cards << render(partial: 'my_profiles/certificate_card', locals: { certificate: })
+      elsif active_template.present?
+        # No certificate yet → show request certificate card
+        cards << render(partial: 'my_profiles/request_certificate_card', locals: { enrollment: })
+      end
+    end
+    cards
+  end
 end

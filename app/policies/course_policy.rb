@@ -18,6 +18,10 @@ class CoursePolicy
     !user.is_admin?
   end
 
+  def complete?
+    !user.is_admin?
+  end
+
   def new?
     user.is_admin?
   end

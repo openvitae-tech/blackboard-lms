@@ -1,0 +1,39 @@
+<div class="relative w-[280px] h-[135px] flex-none cursor-pointer border border-line-colour rounded-xl"
+     data-controller="certificate-card"
+     data-action="click->certificate-card#toggle">
+
+  <%# Base: certificate thumbnail shown at rest %>
+  <% if certificate.certificate_thumbnail.attached? %>
+    <%= image_tag certificate.certificate_thumbnail,
+                  class: "w-full h-full object-fit rounded-xl",
+                  alt: certificate.course.title %>
+  <% else %>
+    <div class="w-full h-full bg-primary-light-50 flex items-center justify-center rounded-xl">
+      <%= icon("document-text", css: "h-10 w-10 text-primary-light") %>
+    </div>
+  <% end %>
+
+  <%# Overlay: shown on hover (desktop) or click (mobile) %>
+  <div class="absolute inset-0 rounded-xl opacity-0 pointer-events-none transition-all duration-200 flex flex-col overflow-hidden"
+       data-certificate-card-target="overlay">
+
+    <%# Top: certificate preview (truncated) %>
+    <div class="flex-1 overflow-hidden bg-black opacity-20 ">
+      
+    </div>
+
+    <%# Course name %>
+    <p class="general-text-lg-normal px-3 py-1 truncate text-letter-color-light bg-white"><%= certificate.course.title %></p>
+
+    <%# Action buttons %>
+    <div class="flex gap-2 px-3 pb-3 bg-white">
+      <%= link_to rails_blob_path(certificate.file, disposition: "attachment"), class:"flex-1" do %>
+        <%= button_component(text: t("button.download"), type: "outline", icon_name: "arrow-down-tray", icon_position:"right", size: "sm") %>
+      <% end %>
+      <%= link_to share_certificate_profile_path(certificate_id: certificate.id),
+                  data: { turbo_frame: "modal" }, class:"flex-1" do %>
+        <%= button_component(text: t("button.share"), icon_name: "share", icon_position:"right", size: "sm") %>
+      <% end %>
+    </div>
+  </div>
+</div>
