@@ -300,6 +300,10 @@ en:
       deactivate: "Are you sure want to de-activate this partner?"
     user:
       delete: "Are you sure you want to delete?"
+  neo_ai:
+    course_fetch_failed: "Neo AI course fetch failed (%{status}): %{body}"
+    token_request_failed: "Neo AI token request failed (%{status}): %{body}"
+    token_missing_access_token: "Neo AI token response missing access_token"
   llm:
     response:
       idontknow: "I'm unable to provide a response as the question appears outside the current scope."

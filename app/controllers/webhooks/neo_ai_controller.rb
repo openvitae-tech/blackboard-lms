@@ -21,7 +21,7 @@ class Webhooks::NeoAiController < ApplicationController
   def authorize_webhook
     client_secret = Rails.application.credentials.dig(:neo_ai, :api_access_token)
 
-    if request.headers['x-client-secret'] != client_secret
+    if client_secret.blank? || !ActiveSupport::SecurityUtils.secure_compare(request.headers['x-client-secret'].to_s, client_secret)
       head :unauthorized
     end
   end
