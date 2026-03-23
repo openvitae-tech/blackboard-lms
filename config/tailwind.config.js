@@ -38,6 +38,7 @@ module.exports = {
         roboto: ['Roboto'],
       },
       colors: {
+        // NOTE: disabled-color and line-colour share the same value intentionally; both are kept to avoid refactoring.
         "black":"#000000",
         "black-light":"#121212",
         "danger":"#FF6A6A",
