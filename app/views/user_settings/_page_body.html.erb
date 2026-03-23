@@ -1,5 +1,5 @@
 <div id="user-settings-page-body" class="flex flex-col gap-3 md:gap-4">
-  <div class="flex flex-col rounded-xl border-2 border-line-colour-light bg-white">
+  <div class="flex flex-col rounded-xl border border-line-colour-light bg-white">
     <div class="flex justify-between p-5">
       <h2 class="text-semibold mb-3">Personal Info</h2>
       <%= link_to edit_user_settings_path, data: { turbo_frame: "modal" }, class: "flex items-center" do %>
@@ -81,7 +81,7 @@
   <% if user.unconfirmed_email.present? %>
     <%= link_to send_verification_email_user_settings_path,
         data: { turbo_method: :post }, class: "w-full text-left bg-white" do %>
-      <div class="flex items-center gap-3 p-5 rounded-xl border-2 border-line-colour-light w-full bg-danger-light">
+      <div class="flex items-center gap-3 p-5 rounded-xl border border-line-colour-light w-full bg-danger-light">
         <div class="w-8 h-8 bg-white-light rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
           <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
         </div>
