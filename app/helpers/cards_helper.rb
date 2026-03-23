@@ -39,20 +39,37 @@ module CardsHelper
     end
   end
 
-  def certificate_cards(course_certificates, completed_enrollments = [], active_template = nil)
-    cards = []
+  MIN_CERTIFICATE_CARDS = 5
 
-    completed_enrollments.each do |enrollment|
-      certificate = course_certificates.find { |c| c.course_id == enrollment.course_id }
+  def certificate_cards(course_certificates, completed_enrollments = [])
+    return [] if completed_enrollments.empty?
 
-      if certificate
-        # Already has certificate → show certificate card
-        cards << render(partial: 'my_profiles/certificate_card', locals: { certificate: })
-      elsif active_template.present?
-        # No certificate yet → show request certificate card
-        cards << render(partial: 'my_profiles/request_certificate_card', locals: { enrollment: })
+    cards = build_certificate_cards(course_certificates, completed_enrollments)
+    pad_certificate_cards(cards, course_certificates, completed_enrollments)
+    cards
+  end
+
+  private
+
+  def build_certificate_cards(course_certificates, completed_enrollments)
+    completed_enrollments.filter_map do |enrollment|
+      certificate = find_certificate(course_certificates, enrollment)
+      certificate_card_component(certificate:) if certificate
+    end
+  end
+
+  def pad_certificate_cards(cards, course_certificates, completed_enrollments)
+    until cards.size >= MIN_CERTIFICATE_CARDS
+      completed_enrollments.each do |enrollment|
+        certificate = find_certificate(course_certificates, enrollment)
+        next unless certificate
+
+        cards << content_tag(:div, certificate_card_component(certificate:), class: 'md:hidden pl-2')
       end
     end
-    cards
+  end
+
+  def find_certificate(course_certificates, enrollment)
+    course_certificates.find { |c| c.course_id == enrollment.course_id }
   end
 end

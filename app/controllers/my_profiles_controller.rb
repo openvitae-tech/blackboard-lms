@@ -21,12 +21,28 @@ class MyProfilesController < ApplicationController
     }.reject { |_, courses| courses.blank? }
   end
 
-  def certificates
-    authorize :my_profile
-    @course_certificates = @course_certificates.includes([:course, :file_attachment])
-    @completed_enrollments = current_user.enrollments.where(course_completed: true).includes(:course)
-    @active_template = current_user.learning_partner.active_certificate_template
+def certificates
+  authorize :my_profile
+  
+  course_certificates = @course_certificates.includes([:course, :file_attachment])
+  completed_enrollments = current_user.enrollments
+                                      .where(course_completed: true)
+                                      .includes(:course)
+  @active_template = current_user.learning_partner.active_certificate_template
+
+  # Combine into a single list: [{type:, data:}, ...]
+  combined = course_certificates.map { |c| { type: :certificate, data: c } }
+
+  if @active_template.present?
+    certified_course_ids = course_certificates.map(&:course_id).to_set
+    completed_enrollments.each do |enrollment|
+      next if certified_course_ids.include?(enrollment.course_id)
+      combined << { type: :request, data: enrollment }
+    end
   end
+
+  @combined_items = Kaminari.paginate_array(combined).page(params[:page]).per(10)
+end
 
   def share_certificate
     authorize :my_profile
