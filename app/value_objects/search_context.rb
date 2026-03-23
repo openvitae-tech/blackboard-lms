@@ -16,7 +16,8 @@ class SearchContext
   ENROLLED = :enrolled
   UNENROLLED = :unenrolled
   INCOMPLETE = :incomplete
-  VALID_TYPES = [ANY, ENROLLED, UNENROLLED, INCOMPLETE].freeze
+  COMPLETE = :complete
+  VALID_TYPES = [ANY, ENROLLED, UNENROLLED, INCOMPLETE, COMPLETE].freeze
 
   attr_reader :term, :tags, :context, :team, :user, :type, :program
 
@@ -55,6 +56,10 @@ class SearchContext
 
   def search_incomplete_courses?
     type == INCOMPLETE
+  end
+
+  def search_complete_courses?
+    type == COMPLETE
   end
 
   def search_enrolled_courses?

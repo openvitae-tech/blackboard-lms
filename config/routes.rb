@@ -82,6 +82,7 @@ Rails.application.routes.draw do
     collection do
       get :share_certificate
       post :generate_certificate
+      get :certificates
     end
   end
 
@@ -93,6 +94,7 @@ Rails.application.routes.draw do
     collection do
       get :explore
       get :continue
+      get :complete
     end
     member do
       put :enroll
