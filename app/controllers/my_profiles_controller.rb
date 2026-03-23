@@ -13,8 +13,8 @@ class MyProfilesController < ApplicationController
     @completed_enrollments = current_user.enrollments.where(course_completed: true).includes(:course)
     @active_template = current_user.learning_partner.active_certificate_template
     @team = Team.includes(:banner_attachment).find(current_user.team_id)
-    ongoing_courses = current_user.enrollments.where(course_completed: false).includes(course: :banner_attachment).map(&:course)
-    completed_courses = current_user.enrollments.completed.includes(course: :banner_attachment).map(&:course)
+    ongoing_courses = current_user.enrollments.where(course_completed: false).includes(course: [:banner_attachment, :tags]).map(&:course)
+    completed_courses = current_user.enrollments.completed.includes(course: [:banner_attachment, :tags]).map(&:course)
     @enrolled_courses_by_status = {
       t('my_profile.my_courses.ongoing') => ongoing_courses,
       t('my_profile.my_courses.completed') => completed_courses

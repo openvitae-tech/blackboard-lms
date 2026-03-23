@@ -80,7 +80,7 @@
       </section>
 
       <%# Mobile - accordion %>
-      <section class="md:hidden rounded-xl">
+      <section class="md:hidden border-y border-line-colour">
         <% @enrolled_courses_by_status.each do |status, courses| %>
           <% view_all_path = status == ongoing_label ? continue_courses_path : complete_courses_path %>
           <%= accordion_component header: status do %>

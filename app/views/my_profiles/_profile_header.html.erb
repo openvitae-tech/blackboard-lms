@@ -2,7 +2,7 @@
   <div class="border border-line-colour rounded-lg md:rounded-xl flex justify-between p-3 md:p-4 flex-1 bg-primary-light-50">
     <div class="flex items-center gap-2 md:gap-3">
       <%= profile_icon_component(letter: current_user.display_name.first, size: 'lg' ) %>
-      <span class="flex items-center main-text-lg-semibold"><%= current_user.display_name %></span>
+      <span class="flex items-center main-text-lg-semibold text-primary-dark"><%= current_user.display_name %></span>
     </div>
 
     <div class="flex flex-col bg-gold rounded-lg md:rounded-xl p-2 md:p-3 gap-1 md:gap-2">
@@ -17,8 +17,8 @@
 
   <div class="border border-line-colour rounded-lg md:rounded-xl flex flex-col md:flex-row gap-2 md:gap-4 justify-between p-3 md:p-4 bg-primary-light-50">
     <div class="flex flex-col gap-2 justify-center main-text-lg-normal">
-      <div class="flex gap-1"><span class="flex items-center text-primary">Team:</span><span class="text-letter-color-light"><%= team.name %></span></div>
-      <div class="flex gap-1"><span class="flex items-center text-primary"> Role:</span><span class="text-letter-color-light"><%= current_user.role %></span></div>
+      <div class="flex gap-1"><span class="flex items-center text-primary-dark main-text-lg-medium">Team:</span><span class="text-letter-color"><%= team.name %></span></div>
+      <div class="flex gap-1"><span class="flex items-center text-primary-dark main-text-lg-medium"> Role:</span><span class="text-letter-color"><%= current_user.role %></span></div>
     </div>
     <%= image_tag team_banner(team, 'desktop'), class: 'w-full h-36 md:h-20 md:w-44 rounded-lg object-cover' %>
   </div>
