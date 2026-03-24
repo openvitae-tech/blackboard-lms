@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/openvitae-tech/neo_components.git
-  revision: 1d0a9d0d0dee59ee24aa2ad190b7fb522838359d
+  revision: ef3a81ff72ffc7ddf97e01ef0da6af5de3faa54a
   specs:
     neo_components (0.3.0)
       importmap-rails (~> 2.0)
