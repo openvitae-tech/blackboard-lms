@@ -2,7 +2,7 @@
   <%= heading_component(text: t("my_profile.label"), size: 'md') %>
   <%= render "my_profiles/profile_header" , team: @team%>
 </div>
-<% cert_cards = certificate_cards(@course_certificates, @completed_enrollments) %>
+<% cert_cards = certificate_cards(@course_certificates) %>
 <% if cert_cards.any? %>
   <div class="mt-5 md:mt-6">
     <section class="bg-white py-5 md:px-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5 -mx-5 md:mx-0">

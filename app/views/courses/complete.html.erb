@@ -17,14 +17,24 @@
       <%= render 'shared/components/back_button', back_link: from_profile ? profile_path : courses_path %>
       <p class="main-text-lg-semibold">Completed Courses</p>
     </div>
-    <% @courses.each do |course| %>
-      <%= link_to course_path(course), class: "block" do %>
-        <%= long_course_card_component course: %>
+    <% if @courses.empty? %>
+      <div class="border border-line-colour rounded-lg md:rounded-xl">
+        <div class="flex flex-col items-center justify-center mt-10 mb-5">
+          <h2 class="main-text-lg-normal pb-4">
+            <%= t("record.empty", resource: t("my_profile.my_courses.completed")) %>
+          </h2>
+        </div>
+      </div>
+    <% else %>
+      <% @courses.each do |course| %>
+        <%= link_to course_path(course), class: "block" do %>
+          <%= long_course_card_component course: %>
+        <% end %>
       <% end %>
+      <div class="flex justify-end gap-3">
+        <%= render 'shared/pagination/prev', items: @courses %>
+        <%= render 'shared/pagination/next', items: @courses %>
+      </div>
     <% end %>
-    <div class="flex justify-end gap-3">
-      <%= render 'shared/pagination/prev', items: @courses %>
-      <%= render 'shared/pagination/next', items: @courses %>
-    </div>
   </section>
 </div>

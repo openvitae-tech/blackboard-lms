@@ -71,8 +71,12 @@ module Courses
 
     def filter_scope_for(user, search_context)
       scope = base_course_scope(user, search_context)
-      scope = scope.published unless user.is_admin?
-      scope = scope.where(visibility: :public) if !user.is_admin? && user.learning_partner.is_public?
+
+      unless search_context.search_complete_courses?
+        scope = scope.published unless user.is_admin?
+        scope = scope.where(visibility: :public) if !user.is_admin? && user.learning_partner.is_public?
+      end
+
       scope.order(created_at: :desc)
     end
 

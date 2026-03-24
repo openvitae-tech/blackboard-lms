@@ -41,35 +41,30 @@ module CardsHelper
 
   MIN_CERTIFICATE_CARDS = 5
 
-  def certificate_cards(course_certificates, completed_enrollments = [])
-    return [] if completed_enrollments.empty?
+  def certificate_cards(course_certificates)
+    return [] if course_certificates.empty?
 
-    cards = build_certificate_cards(course_certificates, completed_enrollments)
-    pad_certificate_cards(cards, course_certificates, completed_enrollments)
+    cards = build_certificate_cards(course_certificates)
+    pad_certificate_cards(cards, course_certificates)
     cards
   end
 
   private
 
-  def build_certificate_cards(course_certificates, completed_enrollments)
-    completed_enrollments.filter_map do |enrollment|
-      certificate = find_certificate(course_certificates, enrollment)
-      certificate_card_component(certificate:) if certificate
+  def build_certificate_cards(course_certificates)
+    course_certificates.map do |certificate|
+      certificate_card_component(certificate:)
     end
   end
 
-  def pad_certificate_cards(cards, course_certificates, completed_enrollments)
+  def pad_certificate_cards(cards, course_certificates)
     until cards.size >= MIN_CERTIFICATE_CARDS
-      completed_enrollments.each do |enrollment|
-        certificate = find_certificate(course_certificates, enrollment)
-        next unless certificate
-
+      added = false
+      course_certificates.each do |certificate|
         cards << content_tag(:div, certificate_card_component(certificate:), class: 'md:hidden pl-2')
+        added = true
       end
+      break unless added
     end
-  end
-
-  def find_certificate(course_certificates, enrollment)
-    course_certificates.find { |c| c.course_id == enrollment.course_id }
   end
 end
