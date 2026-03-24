@@ -8,7 +8,7 @@ class MyProfilesController < ApplicationController
   def show
     authorize :my_profile
     @course_certificates = @course_certificates.includes(
-      [:course, { file_attachment: :blob }, { certificate_thumbnail_attachment: :blob }]
+      [:course, :file_attachment, :certificate_thumbnail_attachment]
     )
     @completed_enrollments = current_user.enrollments.where(course_completed: true).includes(:course)
     @active_template = current_user.learning_partner.active_certificate_template
