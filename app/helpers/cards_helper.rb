@@ -44,8 +44,6 @@ module CardsHelper
   def certificate_cards(course_certificates)
     return [] if course_certificates.empty?
 
-    course_certificates = course_certificates.with_attached_file
-
     cards = build_certificate_cards(course_certificates)
     pad_certificate_cards(cards, course_certificates)
     cards
