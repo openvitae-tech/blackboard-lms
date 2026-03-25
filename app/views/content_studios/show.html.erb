@@ -1,0 +1,80 @@
+<%# app/views/content_studios/show.html.erb %>
+<div class="flex flex-col gap-7 items-center px-16 py-3 w-full min-h-screen bg-white">
+  <div class="flex gap-7 items-center w-full">
+    <%= render 'view_components/cards/stat_card_component', icon_name: 'document', title: '24 Courses', subtitle: 'Created' %>
+    <%= render 'view_components/cards/stat_card_component', icon_name: 'check-circle', title: '12 Courses', subtitle: 'Published' %>
+    <%= render 'view_components/cards/stat_card_component', icon_name: 'clock', title: '8 Courses', subtitle: 'In Progress' %>
+  </div>
+
+  <%= render 'view_components/cards/action_banner_component', 
+        image_path: 'http://localhost:3845/assets/ece298d0ec2c16f10310d45724b276a6035cb503.png', 
+        icon_name: 'rocket', 
+        title: 'Transform Documents into engaging Courses', 
+        subtitle: 'Upload Documents → Configure Video style → Finalize Course Structure',
+        button_text: 'Create New Course',
+        button_url: '#' %>
+
+  <div class="flex flex-col gap-3 items-start w-full">
+    <div class="flex items-center justify-center px-2 w-full">
+      <p class="flex-1 font-semibold text-xl text-primary">Your Creations</p>
+    </div>
+    
+    <div class="bg-white border-2 border-line-colour-light border-solid flex flex-col gap-4 items-start pb-5 pt-4 px-5 relative rounded-2xl w-full">
+      <div class="border-b border-line-colour border-solid flex gap-5 items-center w-full">
+        <div class="border-b-2 border-slate-grey border-solid flex items-center justify-center py-1 px-1">
+          <p class="font-medium text-sm text-letter-color whitespace-nowrap">To be Verified</p>
+        </div>
+        <div class="flex items-center justify-center py-1 px-1">
+          <p class="font-medium text-sm text-letter-color-light whitespace-nowrap">Verified</p>
+        </div>
+        <div class="flex items-center justify-center py-1 px-1">
+          <p class="font-medium text-sm text-letter-color-light whitespace-nowrap">Published</p>
+        </div>
+      </div>
+      
+      <div class="flex gap-6 items-start w-full overflow-hidden pb-2">
+        <%= render 'view_components/cards/content_studio_course_card_component',
+              bg_image: 'http://localhost:3845/assets/7f12ea1300756f144a0fb5daaf68dbfc01103a46.png',
+              tag_text: 'Verified',
+              tag_text_color: 'var(--blue-blue-dark, #001d53)',
+              tag_bg_color: 'var(--green-green-secondary, #a9d500)',
+              title: 'Banking and Basic Strategies in Banking sector',
+              duration: '23 mins',
+              modules_count: 2,
+              labels: ['F&B Service', 'Housekeeping'],
+              extra_labels_count: 1
+        %>
+
+        <%= render 'view_components/cards/content_studio_course_card_component',
+              bg_image: 'http://localhost:3845/assets/7f12ea1300756f144a0fb5daaf68dbfc01103a46.png',
+              tag_text: 'Pending',
+              tag_text_color: '#fdfdfd',
+              tag_bg_color: 'var(--red-red-50, #ff6a6a)',
+              progress_width: '30%',
+              title: 'Certified Banking Operations & Customer Service',
+              duration: '55 mins',
+              modules_count: 6,
+              labels: ['F&B Service', 'Housekeeping'],
+              extra_labels_count: 1
+        %>
+
+        <%= render 'view_components/cards/content_studio_course_card_component',
+              bg_image: 'http://localhost:3845/assets/7f12ea1300756f144a0fb5daaf68dbfc01103a46.png',
+              tag_text: 'Verified',
+              tag_text_color: 'var(--blue-blue-dark, #001d53)',
+              tag_bg_color: 'var(--green-green-secondary, #a9d500)',
+              title: 'Retail Banking Essentials for Frontline Staff',
+              duration: '2 hr 34 mins',
+              modules_count: 5,
+              labels: ['F&B Service', 'Housekeeping'],
+              extra_labels_count: 1
+        %>
+      </div>
+
+      <div class="border border-primary border-solid flex gap-2 h-9 items-center justify-center px-4 py-2 rounded-md">
+        <p class="font-medium text-sm text-primary-dark whitespace-nowrap">Show all Creations</p>
+        <%= icon("chevron-right", css: "h-3.5 w-3.5 text-primary-dark") %>
+      </div>
+    </div>
+  </div>
+</div>

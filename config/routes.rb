@@ -246,6 +246,8 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
+  resource :content_studio, only: [:show]
+  
   devise_scope :user do
     authenticated do
       root 'home#index', as: :authenticated_root
