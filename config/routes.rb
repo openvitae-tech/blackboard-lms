@@ -247,7 +247,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   resource :content_studio, only: [:show]
-  
+
   devise_scope :user do
     authenticated do
       root 'home#index', as: :authenticated_root
