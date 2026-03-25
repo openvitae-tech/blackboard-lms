@@ -226,8 +226,14 @@ en:
       label: "My Certificates"
       certificates: "certificates"
       share_on_linkedin: "Share on LinkedIn"
-      request_certificate: "Request certificate"
+      request_certificate: "Request"
       certificate_available_soon: "Certificate will be available soon"
+      pending_label: "Pending Certificates"
+      request_pending_certificates: "Request pending certificates"
+      certificates_available: "%{count} certificates available"
+
+
+
   user:
     role_updated: "Role updated successfully."
     role_update_failed: "Failed to update role."

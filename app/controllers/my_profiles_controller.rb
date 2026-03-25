@@ -25,22 +25,22 @@ class MyProfilesController < ApplicationController
     authorize :my_profile
     
     course_certificates = @course_certificates.includes([:course, :file_attachment])
-    completed_enrollments = current_user.enrollments
+    combined = course_certificates.map { |c| { type: :certificate, data: c } }
+    @combined_items = Kaminari.paginate_array(combined).page(params[:page]).per(10)
+    @active_template = current_user.learning_partner.active_certificate_template
+    @pending_count = current_user.enrollments.where(course_completed: true)
+                                .count - course_certificates.count
+  end
+
+  def pending_certificates
+    authorize :my_profile
+    @completed_enrollments = current_user.enrollments
                                         .where(course_completed: true)
                                         .includes(:course)
     @active_template = current_user.learning_partner.active_certificate_template
-
-    combined = course_certificates.map { |c| { type: :certificate, data: c } }
-
-    if @active_template.present?
-      certified_course_ids = course_certificates.map(&:course_id).to_set
-      completed_enrollments.each do |enrollment|
-        next if certified_course_ids.include?(enrollment.course_id)
-        combined << { type: :request, data: enrollment }
-      end
-    end
-
-    @combined_items = Kaminari.paginate_array(combined).page(params[:page]).per(10)
+    certified_course_ids = current_user.course_certificates.pluck(:course_id).to_set
+    pending = @completed_enrollments.reject { |e| certified_course_ids.include?(e.course_id) }
+    @pending_items = Kaminari.paginate_array(pending).page(params[:page]).per(10)
   end
 
   def share_certificate

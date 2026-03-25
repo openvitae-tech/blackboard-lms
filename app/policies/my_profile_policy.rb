@@ -23,4 +23,8 @@ class MyProfilePolicy
   def certificates?
     show?
   end
+
+  def pending_certificates?
+    show?
+  end
 end

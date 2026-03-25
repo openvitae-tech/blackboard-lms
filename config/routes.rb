@@ -83,6 +83,7 @@ Rails.application.routes.draw do
       get :share_certificate
       post :generate_certificate
       get :certificates
+      get :pending_certificates
     end
   end
 

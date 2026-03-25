@@ -1,19 +1,35 @@
-<% any_rendered = false %>
-
-<div class="flex items-center gap-3 mb-5">
+<div class="flex items-center gap-3 mb-6">
   <div class="flex gap-2 items-center">
     <%= render 'shared/components/back_button', back_link: profile_path %>
     <p class="main-text-lg-semibold"><%= t("my_profile.my_certificates.label") %></p>
   </div>
 </div>
 
-<div class="mt-3 md:mt-4">
+<% if @pending_count > 0 %>
+  <%= link_to pending_certificates_profile_path do %>
+    <div class="flex items-center justify-between bg-danger-light border border-line-colour rounded-xl p-5">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-white-light rounded-lg outline outline-1 outline-line-colour-light inline-flex justify-center items-center gap-2.5">
+            <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
+        </div>        
+        <div>
+          <p class="main-text-md-semibold"><%= t("my_profile.my_certificates.request_pending_certificates") %></p>
+          <p class="general-text-sm-normal"><%= t("my_profile.my_certificates.certificates_available", count: @pending_count) %></p>
+        </div>
+      </div>
+      <div class="bg-primary-light-50 rounded-full p-1 border border-slate-grey-light">
+        <%= icon 'chevron-right', css: 'w-4 h-4 text-primary' %>
+      </div>    
+      </div>
+  <% end %>
+<% end %>
+
+<div class="mt-4">
   <div class="border border-line-colour divide-y divide-line-colour rounded-lg md:rounded-xl">
-    <% @combined_items.each do |item| %>
-      <% any_rendered = true %>
-      <% if item[:type] == :certificate %>
+    <% if @combined_items.any? %>
+      <% @combined_items.each do |item| %>
         <% course_certificate = item[:data] %>
-        <div class="px-4 py-2">
+        <div class="px-4 md:px-5 py-3 md:py-4">
           <div class="flex flex-col md:flex-row gap-2 justify-between">
             <h2 class="main-text-lg-normal flex items-center"><%= course_certificate.course.title %></h2>
             <div class="flex gap-3 md:gap-[10px]">
@@ -32,23 +48,8 @@
             </div>
           </div>
         </div>
-      <% else %>
-        <% enrollment = item[:data] %>
-        <div class="px-4 md:px-5 py-3 md:py-4">
-          <div class="flex flex-col md:flex-row gap-3 justify-between">
-            <h2 class="main-text-lg-normal flex items-center"><%= enrollment.course.title %></h2>
-            <div class="flex gap-2">
-              <%= button_to generate_certificate_profile_path(enrollment_id: enrollment.id),
-                            method: :post do %>
-                <%= button_component(text: t("my_profile.my_certificates.request_certificate"), size: "sm") %>
-              <% end %>
-            </div>
-          </div>
-        </div>
       <% end %>
-    <% end %>
-
-    <% unless any_rendered %>
+    <% else %>
       <div class="flex flex-col items-center justify-center mt-10 mb-5">
         <h2 class="text-semibold pb-4">
           <%= t("record.empty", resource: t("my_profile.my_certificates.certificates")) %>
