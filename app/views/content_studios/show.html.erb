@@ -1,18 +1,18 @@
 <%# app/views/content_studios/show.html.erb %>
 <div class="flex flex-col gap-7 items-center px-16 py-3 w-full min-h-screen bg-white">
   <div class="flex gap-7 items-center w-full">
-    <%= render 'view_components/cards/stat_card_component', icon_name: 'document', title: '24 Courses', subtitle: 'Created' %>
-    <%= render 'view_components/cards/stat_card_component', icon_name: 'check-circle', title: '12 Courses', subtitle: 'Published' %>
-    <%= render 'view_components/cards/stat_card_component', icon_name: 'clock', title: '8 Courses', subtitle: 'In Progress' %>
+    <%= stat_card_component(icon_name: 'document', title: '24 Courses', subtitle: 'Created') %>
+    <%= stat_card_component(icon_name: 'check-circle', title: '12 Courses', subtitle: 'Published') %>
+    <%= stat_card_component(icon_name: 'clock', title: '8 Courses', subtitle: 'In Progress') %>
   </div>
 
-  <%= render 'view_components/cards/action_banner_component', 
+  <%= action_banner_component(
         image_path: 'http://localhost:3845/assets/ece298d0ec2c16f10310d45724b276a6035cb503.png', 
         icon_name: 'rocket', 
         title: 'Transform Documents into engaging Courses', 
         subtitle: 'Upload Documents → Configure Video style → Finalize Course Structure',
         button_text: 'Create New Course',
-        button_url: '#' %>
+        button_url: '#') %>
 
   <div class="flex flex-col gap-3 items-start w-full">
     <div class="flex items-center justify-center px-2 w-full">
@@ -33,7 +33,7 @@
       </div>
       
       <div class="flex gap-6 items-start w-full overflow-hidden pb-2">
-        <%= render 'view_components/cards/content_studio_course_card_component',
+        <%= content_studio_course_card_component(
               bg_image: 'http://localhost:3845/assets/7f12ea1300756f144a0fb5daaf68dbfc01103a46.png',
               tag_text: 'Verified',
               tag_text_color: 'var(--blue-blue-dark, #001d53)',
@@ -42,10 +42,10 @@
               duration: '23 mins',
               modules_count: 2,
               labels: ['F&B Service', 'Housekeeping'],
-              extra_labels_count: 1
+              extra_labels_count: 1)
         %>
 
-        <%= render 'view_components/cards/content_studio_course_card_component',
+        <%= content_studio_course_card_component(
               bg_image: 'http://localhost:3845/assets/7f12ea1300756f144a0fb5daaf68dbfc01103a46.png',
               tag_text: 'Pending',
               tag_text_color: '#fdfdfd',
@@ -55,10 +55,10 @@
               duration: '55 mins',
               modules_count: 6,
               labels: ['F&B Service', 'Housekeeping'],
-              extra_labels_count: 1
+              extra_labels_count: 1)
         %>
 
-        <%= render 'view_components/cards/content_studio_course_card_component',
+        <%= content_studio_course_card_component(
               bg_image: 'http://localhost:3845/assets/7f12ea1300756f144a0fb5daaf68dbfc01103a46.png',
               tag_text: 'Verified',
               tag_text_color: 'var(--blue-blue-dark, #001d53)',
@@ -67,7 +67,7 @@
               duration: '2 hr 34 mins',
               modules_count: 5,
               labels: ['F&B Service', 'Housekeeping'],
-              extra_labels_count: 1
+              extra_labels_count: 1)
         %>
       </div>
 
