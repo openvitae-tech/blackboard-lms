@@ -4,9 +4,9 @@
     <%= render 'filters', tags: @tags %>
     <div class="flex justify-between items-center">
       <% if from_profile %>
-        <%= breadcrumbs_component links: [[t("my_profile.label"), profile_path], [t("my_profile.my_courses.ongoing"), nil]] %>
+        <%= breadcrumbs_component links: [[t("my_profile.label"), profile_path], [t("my_profile.my_courses.ongoing_courses"), nil]] %>
       <% else %>
-        <%= breadcrumbs_component links: [['Home', courses_path], [t("my_profile.my_courses.ongoing"), nil]] %>
+        <%= breadcrumbs_component links: [['Home', courses_path], [t("my_profile.my_courses.ongoing_courses"), nil]] %>
       <% end %>
     </div>
   </div>
