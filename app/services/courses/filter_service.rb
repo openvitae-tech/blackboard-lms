@@ -70,24 +70,29 @@ module Courses
     end
 
     def filter_scope_for(user, search_context)
-      scope = if search_context.search_enrolled_courses?
-                user.courses
-              elsif search_context.search_incomplete_courses?
-                completed_courses_ids = user.enrollments.completed.pluck(:course_id)
-                user.courses.where.not(id: completed_courses_ids).order(:id)
-              elsif search_context.search_unenrolled_courses?
-                Course.where.not(
-                  id: Enrollment.where(user_id: user.id).select(:course_id)
-                )
-              else
-                Course.all
-              end
+      scope = base_course_scope(user, search_context)
 
-      scope = scope.published unless user.is_admin?
-
-      scope = scope.where(visibility: :public) if !user.is_admin? && user.learning_partner.is_public?
+      unless search_context.search_complete_courses?
+        scope = scope.published unless user.is_admin?
+        scope = scope.where(visibility: :public) if !user.is_admin? && user.learning_partner.is_public?
+      end
 
       scope.order(created_at: :desc)
+    end
+
+    def base_course_scope(user, search_context)
+      if search_context.search_enrolled_courses?
+        user.courses
+      elsif search_context.search_incomplete_courses?
+        completed_courses_ids = user.enrollments.completed.pluck(:course_id)
+        user.courses.where.not(id: completed_courses_ids).order(:id)
+      elsif search_context.search_complete_courses?
+        user.courses.where(id: user.enrollments.completed.select(:course_id)).order(:id)
+      elsif search_context.search_unenrolled_courses?
+        Course.where.not(id: Enrollment.where(user_id: user.id).select(:course_id))
+      else
+        Course.all
+      end
     end
 
     def fetch_levels_and_categories_for(tags)

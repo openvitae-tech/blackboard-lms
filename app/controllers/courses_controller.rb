@@ -45,6 +45,15 @@ class CoursesController < ApplicationController
     @tags = Tag.load_tags
   end
 
+  def complete
+    authorize :course
+    search_context = build_search_context type: SearchContext::COMPLETE
+    @courses = Courses::FilterService.new(current_user, search_context).filter.records
+                                    .preload(:tags, :banner_attachment)
+                                    .page(filter_params[:page])
+    @tags = Tag.load_tags
+  end
+
   # GET /courses/1 or /courses/1.json
   def show
     authorize @course

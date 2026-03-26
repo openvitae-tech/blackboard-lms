@@ -19,4 +19,12 @@ class MyProfilePolicy
   def generate_certificate?
     user.is_learner?
   end
+
+  def certificates?
+    show?
+  end
+
+  def pending_certificates?
+    show?
+  end
 end
