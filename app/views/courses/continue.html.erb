@@ -15,7 +15,7 @@
   <section class="space-y-6">
     <div class="flex gap-2 items-center">
       <%= render 'shared/components/back_button', back_link: from_profile ? profile_path : courses_path %>
-      <p class="main-text-lg-semibold"><%= t("my_profile.my_courses.ongoing") %></p>
+      <p class="main-text-lg-semibold"><%= t("my_profile.my_courses.ongoing_courses") %></p>
     </div>
     <% if @courses.empty? %>
       <div class="border border-line-colour rounded-lg md:rounded-xl">

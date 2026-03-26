@@ -221,6 +221,8 @@ en:
       other: "Other"
       ongoing: "Ongoing"
       completed: "Completed"
+      ongoing_courses: "Continue your Learning"
+      completed_courses: "Completed Courses"
       show_all: "Show all %{status} Courses"
     my_certificates:
       label: "My Certificates"
