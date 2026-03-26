@@ -14,7 +14,7 @@ class MyProfilesController < ApplicationController
     @active_template = current_user.learning_partner.active_certificate_template
     @team = Team.includes(:banner_attachment).find(current_user.team_id)
     ongoing_courses = current_user.enrollments.where(course_completed: false).includes(course: [:banner_attachment, :tags]).map(&:course)
-    completed_courses = current_user.enrollments.completed.includes(course: [:banner_attachment, :tags]).map(&:course)
+    completed_courses = current_user.enrollments.completed.includes(course: [:banner_attachment, :tags]).first(12).map(&:course)
     @enrolled_courses_by_status = {
       t('my_profile.my_courses.ongoing') => ongoing_courses,
       t('my_profile.my_courses.completed') => completed_courses
@@ -28,8 +28,8 @@ class MyProfilesController < ApplicationController
     combined = course_certificates.map { |c| { type: :certificate, data: c } }
     @combined_items = Kaminari.paginate_array(combined).page(params[:page]).per(10)
     @active_template = current_user.learning_partner.active_certificate_template
-    @pending_count = current_user.enrollments.where(course_completed: true)
-                                .count - course_certificates.count
+    @pending_count = [current_user.enrollments.where(course_completed: true)
+                              .count - course_certificates.count, 0].max
   end
 
   def pending_certificates

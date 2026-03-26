@@ -39,32 +39,11 @@ module CardsHelper
     end
   end
 
-  MIN_CERTIFICATE_CARDS = 5
-
   def certificate_cards(course_certificates)
     return [] if course_certificates.empty?
 
-    cards = build_certificate_cards(course_certificates)
-    pad_certificate_cards(cards, course_certificates)
-    cards
-  end
-
-  private
-
-  def build_certificate_cards(course_certificates)
     course_certificates.map do |certificate|
       certificate_card_component(certificate:)
-    end
-  end
-
-  def pad_certificate_cards(cards, course_certificates)
-    until cards.size >= MIN_CERTIFICATE_CARDS
-      added = false
-      course_certificates.each do |certificate|
-        cards << content_tag(:div, certificate_card_component(certificate:), class: 'md:hidden pl-2')
-        added = true
-      end
-      break unless added
     end
   end
 end

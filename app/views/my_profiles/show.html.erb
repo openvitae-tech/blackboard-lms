@@ -5,8 +5,8 @@
 <% cert_cards = certificate_cards(@course_certificates) %>
 <% if cert_cards.any? %>
   <div class="mt-5 md:mt-6">
-    <section class="bg-white py-5 md:px-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5 -mx-5 md:mx-0">
-      <div class="flex items-center gap-3 px-5 justify-between">
+    <section class="bg-white py-5 md:px-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5">
+      <div class="flex items-center gap-3 justify-between">
         <h2 class="main-text-lg-semibold"><%= t("my_profile.my_certificates.label") %></h2>
         <%= link_to certificates_profile_path do %>
           <div class="hidden md:inline">
@@ -21,7 +21,7 @@
           </div>
         <% end %>
       </div>
-      <%= carousel_component cards: cert_cards, loop: true %>
+        <%= carousel_component cards: cert_cards, loop: false %>
     </section>
   </div>
 <% else %>
@@ -40,6 +40,7 @@
 <% end %>
 <% if @enrolled_courses_by_status.present? %>
   <% ongoing_label = t("my_profile.my_courses.ongoing") %>
+  <% status_cards = @enrolled_courses_by_status.transform_values { |courses| course_cards(courses) } %>
   <div class="my-5 md:mt-6">
     <section class="space-y-2">
       <p class="heading-xl px-2"><%= t("my_profile.my_courses.label") %></p>
@@ -61,10 +62,10 @@
               <% end %>
             <% end %>
             <div class="tab-panels-container">
-              <% @enrolled_courses_by_status.each do |status, courses| %>
+              <% status_cards.each do |status, all_cards| %>
                 <% view_all_path = status == ongoing_label ? continue_courses_path(from: 'my_profile') : complete_courses_path(from: 'my_profile') %>
                 <div data-tabs-target="panelItem" class="space-y-4">
-                  <%= carousel_component cards: course_cards(courses), loop: false, enable_in_small_devices: false %>
+                  <%= carousel_component cards: all_cards, loop: false, enable_in_small_devices: false %>
                   <%= link_to view_all_path, class: 'block w-fit' do %>
                     <%= button_component text: t("my_profile.my_courses.show_all", status: status),
                                         size: 'sm',
@@ -81,11 +82,11 @@
 
       <%# Mobile - accordion %>
       <section class="md:hidden border-y border-line-colour">
-        <% @enrolled_courses_by_status.each do |status, courses| %>
+        <% status_cards.each do |status, all_cards| %>
           <% view_all_path = status == ongoing_label ? continue_courses_path(from: 'my_profile') : complete_courses_path(from: 'my_profile') %>
           <%= accordion_component header: status do %>
             <div class="flex flex-col w-full gap-3 pb-5">
-              <% course_cards(courses.take(3)).each do |card_html| %>
+              <% all_cards.take(3).each do |card_html| %>
                 <div class="w-full">
                   <%= card_html %>
                 </div>

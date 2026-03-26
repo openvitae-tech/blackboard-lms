@@ -20,7 +20,7 @@
       <div class="bg-primary-light-50 rounded-full p-1 border border-slate-grey-light">
         <%= icon 'chevron-right', css: 'w-4 h-4 text-primary' %>
       </div>    
-      </div>
+  </div>
   <% end %>
 <% end %>
 
@@ -34,9 +34,11 @@
             <h2 class="main-text-lg-normal flex items-center"><%= course_certificate.course.title %></h2>
             <div class="flex gap-3 md:gap-[10px]">
               <div class="flex-grow md:flex-none">
-                <%= link_to rails_blob_path(course_certificate.file, disposition: "attachment") do %>
-                  <%= button_component(text: t("button.download"), type: "outline", size: "sm",
-                                       icon_name: "arrow-down-tray", icon_position: "right") %>
+                <% if course_certificate.file.attached? %>
+                  <%= link_to rails_blob_path(course_certificate.file, disposition: "attachment") do %>
+                    <%= button_component(text: t("button.download"), type: "outline", size: "sm",
+                        icon_name: "arrow-down-tray", icon_position: "right") %>
+                  <% end %>
                 <% end %>
               </div>
               <div class="flex-grow md:flex-none">
