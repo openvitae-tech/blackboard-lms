@@ -1,0 +1,56 @@
+# .rubocop.yml
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+AllCops:
+  TargetRubyVersion: "3.3.0"
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude:
+    - "bin/*"
+    - "spec/spec_helper.rb"
+    - "tmp/*"
+    - "vendor/**/*"
+    - "app/controllers/**/*"
+    - "app/javascript/**/*"
+    - "app/views/**/*"
+
+Style/Documentation:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/ClassLength:
+  Max: 250
+Metrics/MethodLength:
+  Max: 30
+Metrics/AbcSize:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/InstanceVariable:
+  Enabled: false
+RSpec/ExampleLength:
+  Max: 30
+RSpec/SubjectStub:
+  Enabled: false
+RSpec/AnyInstance:
+  Enabled: false
+RSpec/BeforeAfterAll:
+  Enabled: false
+RSpec/DescribedClass:
+  Enabled: false
+Naming/PredicateMethod:
+  Enabled: false
+
+Rails/ActiveSupportOnLoad:
+  Enabled: false
+RSpec/NestedGroups:
+  Max: 10
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
