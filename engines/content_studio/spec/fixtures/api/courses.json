@@ -1,0 +1,213 @@
+[
+  {
+    "id": 1,
+    "title": "Front Desk Operations Excellence",
+    "description": "Master the core skills of hotel front desk operations including check-in, check-out, reservation management, and delivering exceptional guest experiences.",
+    "visibility": "public",
+    "is_published": true,
+    "duration": 7200,
+    "rating": 4.7,
+    "banner": null,
+    "categories": ["Front Office"],
+    "levels": ["Beginner"],
+    "course_modules_count": 2,
+    "enrollments_count": 240,
+    "team_enrollments_count": 12,
+    "modules": [
+      {
+        "id": 1,
+        "title": "Guest Check-In & Check-Out",
+        "lessons_count": 2,
+        "quizzes_count": 1,
+        "lessons": [
+          {
+            "id": 1,
+            "title": "The Perfect Check-In Experience",
+            "description": "Step-by-step guide to welcoming guests, verifying reservations, assigning rooms, and creating a memorable first impression.",
+            "duration": 1800,
+            "lesson_type": "video",
+            "rating": 4.8,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 1, "lang": "en", "status": "published", "video_url": null, "video_published_at": null }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Smooth Check-Out & Billing",
+            "description": "Handling check-outs efficiently, resolving billing queries, and leaving guests with a positive final impression.",
+            "duration": 1800,
+            "lesson_type": "video",
+            "rating": 4.6,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 2, "lang": "en", "status": "published", "video_url": null, "video_published_at": null }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Reservation Management",
+        "lessons_count": 2,
+        "quizzes_count": 1,
+        "lessons": [
+          {
+            "id": 3,
+            "title": "Handling Reservations and Cancellations",
+            "description": "Best practices for managing bookings, modifications, cancellations, and no-shows using PMS systems.",
+            "duration": 1800,
+            "lesson_type": "video",
+            "rating": 4.7,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 3, "lang": "en", "status": "published", "video_url": null, "video_published_at": null }
+            ]
+          },
+          {
+            "id": 4,
+            "title": "Upselling Rooms and Services",
+            "description": "Techniques for upselling room upgrades, packages, and ancillary services at check-in to increase revenue.",
+            "duration": 1800,
+            "lesson_type": "video",
+            "rating": 4.5,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 4, "lang": "en", "status": "published", "video_url": null, "video_published_at": null }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Food & Beverage Service Fundamentals",
+    "description": "Comprehensive training on restaurant and banquet service standards, menu knowledge, table etiquette, and handling guest dietary requirements in a hospitality setting.",
+    "visibility": "public",
+    "is_published": true,
+    "duration": 9000,
+    "rating": 4.5,
+    "banner": null,
+    "categories": ["Food & Beverage"],
+    "levels": ["Beginner"],
+    "course_modules_count": 2,
+    "enrollments_count": 185,
+    "team_enrollments_count": 8,
+    "modules": [
+      {
+        "id": 3,
+        "title": "Restaurant Service Standards",
+        "lessons_count": 2,
+        "quizzes_count": 1,
+        "lessons": [
+          {
+            "id": 5,
+            "title": "Table Setup and Service Sequence",
+            "description": "Learn proper table setup, cover layouts, and the correct sequence of service for fine dining and casual restaurants.",
+            "duration": 2700,
+            "lesson_type": "video",
+            "rating": 4.6,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 5, "lang": "en", "status": "published", "video_url": null, "video_published_at": null }
+            ]
+          },
+          {
+            "id": 6,
+            "title": "Handling Guest Dietary Requirements",
+            "description": "How to identify, communicate, and accommodate allergies, intolerances, and special dietary preferences safely.",
+            "duration": 2700,
+            "lesson_type": "video",
+            "rating": 4.4,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 6, "lang": "en", "status": "published", "video_url": null, "video_published_at": null }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Banquet and Events Service",
+        "lessons_count": 2,
+        "quizzes_count": 0,
+        "lessons": [
+          {
+            "id": 7,
+            "title": "Setting Up for Banquet Events",
+            "description": "Room layout, linen setup, buffet arrangement, and coordination with kitchen and events team for large-scale functions.",
+            "duration": 1800,
+            "lesson_type": "video",
+            "rating": 4.5,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 7, "lang": "en", "status": "published", "video_url": null, "video_published_at": null }
+            ]
+          },
+          {
+            "id": 8,
+            "title": "Managing Service During Peak Hours",
+            "description": "Strategies for maintaining service quality, managing queues, and coordinating teams during high-volume service periods.",
+            "duration": 1800,
+            "lesson_type": "video",
+            "rating": 4.3,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 8, "lang": "en", "status": "published", "video_url": null, "video_published_at": null }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Housekeeping Standards and Procedures",
+    "description": "Professional housekeeping training covering room cleaning procedures, linen management, guest privacy, lost and found, and maintaining brand cleanliness standards.",
+    "visibility": "public",
+    "is_published": false,
+    "duration": 5400,
+    "rating": 4.3,
+    "banner": null,
+    "categories": ["Housekeeping"],
+    "levels": ["Intermediate"],
+    "course_modules_count": 1,
+    "enrollments_count": 95,
+    "team_enrollments_count": 6,
+    "modules": [
+      {
+        "id": 5,
+        "title": "Room Cleaning and Turndown",
+        "lessons_count": 2,
+        "quizzes_count": 1,
+        "lessons": [
+          {
+            "id": 9,
+            "title": "Standard Room Cleaning Procedure",
+            "description": "Step-by-step room cleaning sequence including bed making, bathroom sanitation, amenity replenishment, and quality checks.",
+            "duration": 2700,
+            "lesson_type": "video",
+            "rating": 4.4,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 9, "lang": "en", "status": "draft", "video_url": null, "video_published_at": null }
+            ]
+          },
+          {
+            "id": 10,
+            "title": "Turndown Service and Guest Preferences",
+            "description": "Evening turndown procedures, personalising the guest experience, and respecting do-not-disturb requests.",
+            "duration": 2700,
+            "lesson_type": "video",
+            "rating": 4.2,
+            "video_streaming_source": "youtube",
+            "local_contents": [
+              { "id": 10, "lang": "en", "status": "draft", "video_url": null, "video_published_at": null }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
