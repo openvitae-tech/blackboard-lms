@@ -2,6 +2,7 @@ PATH
   remote: engines/content_studio
   specs:
     content_studio (0.1.0)
+      faraday (~> 2.0)
       rails (>= 8.0.2.1)
 
 PATH
