@@ -138,3 +138,5 @@ gem 'ruby_llm-schema'
 gem 'ruby-openai'
 gem 'rubyzip'
 gem 'uri', '>= 1.0.4'
+
+gem 'content_studio', path: 'engines/content_studio'
