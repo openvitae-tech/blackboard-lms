@@ -1,0 +1,26 @@
+<%= doc_section_component(title: "Certificate Card with thumbnail") do %>
+  <div class="flex gap-4">
+    <%= certificate_card_component(
+          certificate: OpenStruct.new(
+            id: nil,
+            file: nil,
+            certificate_thumbnail: OpenStruct.new(attached?: false),
+            course: OpenStruct.new(title: "Introduction to Ruby on Rails")
+          ),
+          thumbnail_url: "https://placehold.co/280x135"
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Certificate Card without thumbnail") do %>
+  <div class="flex gap-4">
+    <%= certificate_card_component(
+          certificate: OpenStruct.new(
+            id: nil,
+            file: nil,
+            certificate_thumbnail: OpenStruct.new(attached?: false),
+            course: OpenStruct.new(title: "Advanced JavaScript")
+          )
+        ) %>
+  </div>
+<% end %>

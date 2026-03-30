@@ -1,0 +1,10 @@
+<% if dropdown.form.present? %>
+  <%= dropdown.form.select dropdown.name,
+      options_for_select(dropdown.options, dropdown.value),
+      { prompt: dropdown.prompt },  
+      dropdown.html_options %>
+<% else %>
+  <%= select_tag dropdown.name,
+      options_for_select(dropdown.options, dropdown.value),
+      dropdown.html_options.merge(include_blank: dropdown.prompt) %>
+<% end %>

@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3.0"
+          bundler-cache: true
+
+      - name: Security audit dependencies
+        run: bundle exec bundler-audit --update
+
+      - name: Security audit application code
+        run: bundle exec brakeman -q -w2 --no-exit-on-warn
+
+      - name: Lint Ruby files
+        run: bundle exec rubocop

@@ -1,0 +1,29 @@
+
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+<%= h3_component(text: "Breadcrumbs Component") %>
+
+<%= doc_section_component(title: "Breadcrumbs with lengthy titles") do %>
+  <%= breadcrumbs_component(
+      links: [
+          ["courses", "javascript:void(0)"],
+          ["House keeping and guest relation", "javascript:void(0)"],
+          ["Essential Housekeeping Training Topics for Enhanced Hotel Cleanliness and Efficiency", "javascript:void(0)"],
+          ["Essential Housekeeping Training Topics for Enhanced Hotel Cleanliness and Efficiency", "javascript:void(0)"]
+
+      ]
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Breadcrumbs with smaller titles") do %>
+  <%= breadcrumbs_component(
+      links: [
+          ["courses", "javascript:void(0)"],
+          ["House keeping", "javascript:void(0)"],
+          ["Essential Housekeeping ", "javascript:void(0)"],
+          [" Enhanced Hotel Cleanliness", "javascript:void(0)"]
+
+      ]
+      ) %>
+<% end %>

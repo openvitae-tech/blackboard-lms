@@ -1,0 +1,16 @@
+<% sample_cards = (1..6).map do |i|
+  content_tag(:div, "Card #{i}",
+    class: "w-[300px] h-32 bg-gold rounded-xl flex items-center justify-center border border-line-colour main-text-md-semibold")
+end %>
+
+<%= doc_section_component(title: "Carousel — Loop enabled in small devices") do %>
+  <div class="w-full">
+    <%= carousel_component cards: sample_cards, loop: true %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Carousel — No loop in small device") do %>
+  <div class="w-full">
+    <%= carousel_component cards: sample_cards, loop: false %>
+  </div>
+<% end %>

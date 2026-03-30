@@ -1,0 +1,13 @@
+  <% if input.form.present? %>
+    <% if input.code_selectable? %>
+      <%= input.form.select input.code_name, options_for_select(available_country_codes_list, input.code_value), {}, input.html_options.merge(class: input.code_wrapper_style) %>
+    <% else %>
+      <%= input.form.text_field input.code_name, input.html_options.merge(class: input.code_wrapper_style, readOnly: true, value: input.code_value) %>
+    <% end %>
+  <% else %>
+    <% if input.code_selectable? %>
+      <%= select_tag input.code_name, options_for_select(available_country_codes_list, input.code_value), input.html_options.merge(class: input.code_wrapper_style) %>      
+    <% else %>
+      <%= text_field_tag input.code_name, input.code_value, input.html_options.merge(class: input.code_wrapper_style, readOnly: true) %>      
+    <% end %>
+  <% end %>
