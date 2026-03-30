@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount ContentStudio::Engine, at: '/content-studio' if defined?(ContentStudio)
   resources :user_searches, only: %i[index create]
   resources :reports, only: %i[new create show]
 
