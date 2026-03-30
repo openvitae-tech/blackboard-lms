@@ -2,11 +2,11 @@
 
 module ContentStudio
   # Single entry point for all data access within Content Studio.
-  # Delegates to MockClient during development (Phase 1 & 2).
-  # Swap to RealClient in Phase 3 by implementing the same interface.
+  # Always delegates to BlackboardClient which calls the BlackboardLMS internal API.
+  # In development, internal API requests are intercepted by the stub controller
+  # which serves fixture JSON from spec/fixtures/api/.
   #
-  # Never call MockClient or RealClient directly from views or controllers —
-  # always go through ApiClient.
+  # Never call BlackboardClient directly from views or controllers — always go through ApiClient.
   class ApiClient
     class << self
       def list_courses # rubocop:disable Rails/Delegate
@@ -24,7 +24,7 @@ module ContentStudio
       private
 
       def client
-        @client ||= MockClient.new
+        @client ||= BlackboardClient.new
       end
     end
   end
