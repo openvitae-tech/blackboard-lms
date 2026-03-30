@@ -1,4 +1,10 @@
 PATH
+  remote: engines/content_studio
+  specs:
+    content_studio (0.1.0)
+      rails (>= 8.0.2.1)
+
+PATH
   remote: engines/neo_component
   specs:
     neo_components (0.3.0)
@@ -555,6 +561,7 @@ DEPENDENCIES
   chartkick
   combine_pdf
   connection_pool (~> 2.5)
+  content_studio!
   database_cleaner
   debug
   devise (~> 5.0.3)

@@ -25,6 +25,8 @@ AllCops:
     - "engines/*/app/controllers/**/*"
     - "engines/*/app/javascript/**/*"
     - "engines/*/app/views/**/*"
+    - "engines/*/bin/**/*"
+    - "engines/*/spec/dummy/**/*"
 
 Style/Documentation:
   Enabled: false
