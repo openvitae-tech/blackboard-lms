@@ -1,4 +1,7 @@
 # .rubocop.yml
+require:
+  - ./lib/rubocop/cop/no_direct_model_access
+
 plugins:
   - rubocop-rails
   - rubocop-rspec
