@@ -53,15 +53,97 @@ This project uses AI agents (Claude Code and Antigravity) as primary development
 | **Worker Agents** | Execute specific sub-tasks (UI updates, feature dev, spec writing) |
 | **Claude Code** | Used for direct, in-session coding tasks and codebase queries |
 
-### Typical Flow
+### Agent-Driven Workflow (Antigravity)
 
-1. Developer creates a GitHub issue with clear requirements and a Figma URL (if UI work is involved).
-2. Open Antigravity locally and assign the issue to the Manager Agent.
-3. The Manager Agent posts a **Plan Artifact** — review and approve before it proceeds.
-4. Worker agents execute sub-tasks in parallel and open a PR into the integration branch.
-5. Developer reviews the PR, checks Visual Diffs included in the PR description, and comments feedback.
-6. If changes are needed, comment on the PR — the Manager Agent interprets feedback and delegates fixes.
-7. Once approved, merge into the integration branch.
+This is the primary workflow for Content Studio and NeoComponent work.
+
+```
+Developer                          Antigravity Agents
+─────────────────────────────────────────────────────────────────
+1. Create GitHub issue
+   - Use the correct issue template
+   - Include Figma URL if UI work is involved
+   - Be specific and atomic — one screen or feature per issue
+
+2. Open Antigravity, run:
+   /feature <issue-number>
+                                   3. @manager reads the issue in full
+                                      - Fetches Figma URL via Figma MCP
+                                      - Posts an Implementation Plan
+                                        as a comment on the issue
+                                      - Waits for approval
+
+4. Review the plan, comment
+   approval or feedback
+                                   5. If UI changes needed:
+                                      @ui-librarian runs ui-audit skill
+                                      - Audits Figma vs ui_manifest.md
+                                      - Posts gap analysis on the issue
+                                      - Waits for approval
+
+6. Review gap analysis, approve
+   or request changes
+                                   7. @ui-librarian extends NeoComponent
+                                      helpers as approved
+                                      - Updates ui_manifest.md
+                                      - Runs NeoComponent specs
+
+                                   8. @feature-dev implements the feature
+                                      - Creates task/<feature-name> branch
+                                      - Builds controllers, views, specs
+                                      - All data via ApiClient
+
+                                   9. @qa-agent runs full suite
+                                      - bundle exec rspec
+                                      - bundle exec rubocop
+                                      - Reports failures back to agents
+
+                                  10. @manager opens PR
+                                      - From task/<feature-name>
+                                      - Into feature/content-studio-v1
+                                      - Includes visual diffs for UI changes
+
+11. Review PR
+    - Check code diff
+    - Check visual diffs
+    - Comment feedback if needed
+                                  12. Agents pick up PR comments,
+                                      fix and push to the same branch
+
+13. Approve and merge into
+    feature/content-studio-v1
+```
+
+---
+
+### Manual Workflow (Developer / Claude Code)
+
+For direct coding tasks without full agent orchestration.
+
+```
+1. Pick up a GitHub issue
+2. Create a branch:
+   git checkout -b task/<short-description>
+
+3. If UI work — read ui_manifest.md first:
+   engines/neo_component/ui_manifest.md
+
+4. Build in this order:
+   a. ApiClient method(s) if new data is needed
+   b. Controller action(s)
+   c. Route(s)
+   d. View(s) using NeoComponent helpers only
+   e. View spec(s)
+   f. System spec(s)
+
+5. Verify:
+   bundle exec rspec engines/content_studio
+   bundle exec rubocop
+
+6. Open PR from task/<name> into feature/content-studio-v1
+   - Fill in the PR template
+   - Include screenshots for any UI changes
+```
 
 ### Setting Up Antigravity
 
