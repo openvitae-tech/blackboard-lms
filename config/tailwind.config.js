@@ -1,24 +1,6 @@
 const path = require("path");
-const fs = require("fs");
 
-function findGemRoot(gemName) {
-  const { execSync } = require("child_process");
-  try {
-    const result = execSync(
-      `bundle exec ruby -e "puts Gem.loaded_specs['${gemName}']&.gem_dir"`,
-      { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }
-    ).trim();
-    if (result) return result;
-    throw new Error(`gem dir for '${gemName}' was empty`);
-  } catch (err) {
-    throw new Error(
-      `[tailwind.config.js] Could not locate ${gemName} gem: ${err.message}\n` +
-      "Run `bundle install` and ensure the gem is present in your bundle."
-    );
-  }
-}
-
-const neoComponentsRoot = findGemRoot("neo_components");
+const neoComponentsRoot = path.resolve(__dirname, "../engines/neo_component");
 
 module.exports = {
   content: [
