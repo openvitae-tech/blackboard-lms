@@ -1,0 +1,2 @@
+ignore:
+  - CVE-2026-33658 # Rails Active Storage DoS via multi-range requests — tracked for fix via Dependabot
