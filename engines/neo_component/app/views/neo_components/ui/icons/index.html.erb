@@ -1,0 +1,20 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_components_path %>
+</div>
+
+<div class="heading heading-medium">Icons</div>
+<p>Icons sizes icon-tiny(8x8), icon-mini(12x12), icon-small(16x16), icon-base(24x24), icon-medium(32x32), icon-large(40x40)</p>
+
+<div class="grid grid-cols-4 gap-4 my-6">
+  <% @icons.each do |icon_name| %>
+    <div>
+      <p><%= icon_name %></p>
+      <%= icon(icon_name, css: "icon-tiny") %>
+      <%= icon(icon_name, css: "icon-mini") %>
+      <%= icon(icon_name, css: "icon-small") %>
+      <%= icon(icon_name, css: "icon-base") %>
+      <%= icon(icon_name, css: "icon-medium") %>
+      <%= icon(icon_name, css: "icon-large") %>
+    </div>
+  <% end %>
+</div>

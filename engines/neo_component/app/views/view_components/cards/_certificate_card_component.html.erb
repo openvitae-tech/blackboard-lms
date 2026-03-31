@@ -1,0 +1,31 @@
+<div class="relative w-[260px] md:w-[280px] h-[135px] flex-none cursor-pointer border border-line-colour rounded-xl"
+     data-controller="certificate-card"
+     data-action="click->certificate-card#toggle">
+
+  <% if has_thumbnail %>
+    <%= image_tag thumbnail_url,
+                  class: "w-full h-full object-fit rounded-xl",
+                  alt: course_title %>
+  <% else %>
+    <div class="w-full h-full bg-primary-light-50 flex items-center justify-center rounded-xl">
+      <%= icon("document-text", css: "h-10 w-10 text-primary-light") %>
+    </div>
+  <% end %>
+
+  <div class="absolute inset-0 rounded-xl opacity-0 pointer-events-none transition-all duration-200 flex flex-col overflow-hidden"
+       data-certificate-card-target="overlay">
+    <div class="flex-1 overflow-hidden bg-black opacity-20 h-[50px]"></div>
+    <div class="flex flex-col">
+      <p class="general-text-lg-normal px-4 py-2 truncate text-letter-color-light bg-white"><%= course_title %></p>
+
+      <div class="flex gap-2  px-4 pb-2 bg-white">
+        <%= link_to download_path, class: "flex-1" do %>
+          <%= button_component(text: t("button.download"), type: "outline", icon_name: "arrow-down-tray", icon_position: "right", size: "sm") %>
+        <% end %>
+        <%= link_to share_path, data: { turbo_frame: "modal" }, class: "flex-1" do %>
+          <%= button_component(text: t("button.share"), icon_name: "share", icon_position: "right", size: "sm") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
