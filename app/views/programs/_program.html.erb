@@ -17,7 +17,7 @@
               <div class="w-px h-full bg-slate-grey-light"></div>
               <div class="flex items-center">
                 <%= icon("user", css: "h-4 w-4 text-primary") %>
-                <span class="ml-2 general-text-sm-normal"><%= pluralize(program.users_count, 'Enrolled') %></span>
+                <span class="ml-2 general-text-sm-normal"><%= "#{program.users_count} Enrolled" %></span>
               </div>
             </div>
           </div>
