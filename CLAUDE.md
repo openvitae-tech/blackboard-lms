@@ -247,6 +247,13 @@ bundle exec rubocop                        # lint + custom cops
 - All Content Studio work lives on `feature/content-studio-v1`
 - Task branches: `task/<short-description>` — PR into `feature/content-studio-v1`
 - Never PR directly into `main` during active Content Studio development
+- **Before starting any task**, sync `feature/content-studio-v1` with `main`:
+  ```bash
+  git checkout feature/content-studio-v1
+  git pull origin main
+  git push origin feature/content-studio-v1
+  ```
+  Then create the task branch from the updated integration branch.
 - PR descriptions must include Visual Diffs for any NeoComponent changes
 - Always run `bundle exec rspec` and `bundle exec rubocop` before pushing. Fix all failures before pushing — do not push a broken build.
 - PRs require passing RSpec + RuboCop before merge
