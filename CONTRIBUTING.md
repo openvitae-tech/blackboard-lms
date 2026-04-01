@@ -1,6 +1,6 @@
 # Contributing to BlackboardLMS
 
-This guide covers how to contribute to this monorepo, which includes **BlackboardLMS**, **NeoComponent**, and the **Content Studio** engine. It also explains how to work with the AI-assisted development setup using Claude Code and Antigravity.
+This guide covers how to contribute to this monorepo, which includes **BlackboardLMS**, **NeoComponent**, and the **Content Studio** engine. It also explains how to work with the AI-assisted development setup using Claude Code.
 
 ---
 
@@ -23,7 +23,6 @@ blackboard-lms/
 - Ruby (see `.ruby-version`)
 - PostgreSQL
 - Node.js + Yarn
-- [Antigravity](https://antigravity.google/) — agent-first IDE for AI-assisted development
 - Claude Code CLI — `npm install -g @anthropic-ai/claude-code`
 
 ---
@@ -42,47 +41,45 @@ bin/rails db:setup
 
 ## AI-Assisted Development Workflow
 
-This project uses AI agents (Claude Code and Antigravity) as primary development tools. Here is how the workflow operates:
+This project uses Claude Code as the primary AI development tool. Here is how the workflow operates:
 
 ### Roles
 
 | Role | Responsibility |
 |------|---------------|
-| **Developer** | Creates GitHub issues, reviews PRs, approves plans, merges code |
-| **Manager Agent** (Antigravity) | Reads issues, decomposes tasks, spawns worker agents, opens PRs |
-| **Worker Agents** | Execute specific sub-tasks (UI updates, feature dev, spec writing) |
-| **Claude Code** | Used for direct, in-session coding tasks and codebase queries |
+| **Developer** | Creates GitHub issues, reviews output visually, approves plans, merges PRs |
+| **@manager** | Reads issues, decomposes tasks, delegates to worker agents, opens PRs |
+| **@ui-librarian** | Audits Figma vs ui_manifest, extends NeoComponent helpers |
+| **@feature-dev** | Builds Content Studio views, controllers, routes, and specs |
+| **@qa-agent** | Runs RSpec and RuboCop, reports failures |
 
-### Agent-Driven Workflow (Antigravity)
+### Agent-Driven Workflow (Claude Code)
 
 This is the primary workflow for Content Studio and NeoComponent work.
 
 ```
-Developer                          Antigravity Agents
+Developer                          Claude Code Agents
 ─────────────────────────────────────────────────────────────────
 1. Create GitHub issue
    - Use the correct issue template
    - Include Figma URL if UI work is involved
    - Be specific and atomic — one screen or feature per issue
 
-2. Open Antigravity, run:
-   /feature <issue-number>
+2. Run: /feature <issue-number>
                                    3. @manager reads the issue in full
-                                      - Fetches Figma URL via Figma MCP
-                                      - Posts an Implementation Plan
-                                        as a comment on the issue
+                                      - Fetches Figma design via Figma MCP
+                                      - Presents implementation plan
+                                        in the session
                                       - Waits for approval
 
-4. Review the plan, comment
-   approval or feedback
+4. Review and approve the plan
                                    5. If UI changes needed:
                                       @ui-librarian runs ui-audit skill
                                       - Audits Figma vs ui_manifest.md
-                                      - Posts gap analysis on the issue
+                                      - Presents gap analysis in session
                                       - Waits for approval
 
-6. Review gap analysis, approve
-   or request changes
+6. Review and approve gap analysis
                                    7. @ui-librarian extends NeoComponent
                                       helpers as approved
                                       - Updates ui_manifest.md
@@ -93,25 +90,25 @@ Developer                          Antigravity Agents
                                       - Builds controllers, views, specs
                                       - All data via ApiClient
 
-                                   9. @qa-agent runs full suite
+9. Boot dummy app, review visually
+   Give feedback directly in the
+   session — not via PR comments
+                                  10. Agent fixes immediately in session
+                                      Repeat until output matches Figma
+
+                                  11. @qa-agent runs full suite
                                       - bundle exec rspec
                                       - bundle exec rubocop
                                       - Reports failures back to agents
 
-                                  10. @manager opens PR
+12. Confirm feature is ready
+    for final review
+                                  13. @manager opens PR
                                       - From task/<feature-name>
                                       - Into feature/content-studio-v1
-                                      - Includes visual diffs for UI changes
+                                      - Includes screenshots of final output
 
-11. Review PR
-    - Check code diff
-    - Check visual diffs
-    - Comment feedback if needed
-                                  12. Agents pick up PR comments,
-                                      fix and push to the same branch
-
-13. Approve and merge into
-    feature/content-studio-v1
+14. Final code review and merge
 ```
 
 ---
@@ -144,13 +141,6 @@ For direct coding tasks without full agent orchestration.
    - Fill in the PR template
    - Include screenshots for any UI changes
 ```
-
-### Setting Up Antigravity
-
-1. Download and install Antigravity from [https://antigravity.google/](https://antigravity.google/).
-2. Open this repository in Antigravity.
-3. Antigravity will automatically read `CLAUDE.md` at session start to align with project standards.
-4. Connect your GitHub account so the Manager Agent can read issues and open PRs.
 
 ### Setting Up Claude Code
 
