@@ -1,6 +1,6 @@
 # CLAUDE.md — AI Agent Constitution
 
-This file is the source of truth for all AI agents (Claude Code, Antigravity) working in this repository. Read it at the start of every session. All rules here are mandatory — they are not suggestions.
+This file is the source of truth for all AI agents working in this repository. Read it at the start of every session. All rules here are mandatory — they are not suggestions.
 
 ---
 
