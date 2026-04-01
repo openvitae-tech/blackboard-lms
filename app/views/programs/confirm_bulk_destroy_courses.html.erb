@@ -1,8 +1,8 @@
 <% modal_footer = capture do %>
   <div class="flex gap-2 sticky bottom-0 bg-white w-full">
-    <div class="flex-1" data-action="click->modals#closeModal">
+    <%= button_tag type: "button", class: "flex-1", data: { action: "click->modals#closeModal" } do %>
       <%= button_component(text: "Cancel", type: "outline") %>
-    </div>
+    <% end %>
     <%= button_tag form: "bulk-destroy-courses-form", class: "flex-1" do %>
       <%= button_component(text: "Delete", colorscheme: "danger") %>
     <% end %>
