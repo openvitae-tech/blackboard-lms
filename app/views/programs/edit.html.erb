@@ -10,7 +10,7 @@
 <% end %>
 
 <%= modal_box_component(title: t("programs.edit"), modal_footer:) do %>
-  <%= form_with(url: program_path(@program), method: :patch, model: @program, scope: :program, id: "edit-program-form", class: "flex flex-col gap-6") do |form| %>
+  <%= form_with(url: program_path(@program, mode: params[:mode]), method: :patch, model: @program, scope: :program, id: "edit-program-form", class: "flex flex-col gap-6") do |form| %>
     <div class="flex flex-col gap-4">
       <%= render "shared/components/form_errors", resource: @program %>
       <%= input_text_component(form:, name: :name, label: "Name", placeholder: "Enter the program name") %>
