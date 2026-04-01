@@ -65,6 +65,6 @@ class ProgramPolicy
   end
 
   def choose?
-    user.is_learner? && user.learning_partner.programs.exists?
+    !user.is_admin?
   end
 end
