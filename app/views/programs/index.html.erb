@@ -1,7 +1,7 @@
 <div class="flex flex-col-reverse md:flex-row md:items-center justify-between mb-4 gap-3">
   <%= heading_component(text: t("programs.label")) %>
   <div class="flex gap-3 items-center w-full md:w-auto">
-    <div class="w-full md:w-[340px]">
+    <div class="w-full md:w-[340px] relative">
       <%= form_tag programs_path, method: :get do %>
         <%= input_text_component(
               name: :term,
@@ -10,6 +10,11 @@
               icon_position: 'left',
               value: params[:term]
             ) %>
+      <% end %>
+      <% if params[:term].present? %>
+        <%= link_to programs_path, class: "absolute right-3 top-1/2 -translate-y-1/2" do %>
+          <%= icon("x-mark", css: "h-4 w-4 text-letter-color-light hover:text-letter-color") %>
+        <% end %>
       <% end %>
     </div>
     <%= link_to new_program_path, data: { turbo_frame: "modal" }, class: "nav-link flex-none" do %>

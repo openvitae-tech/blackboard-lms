@@ -10,7 +10,7 @@
 <% end %>
 
 <%= modal_box_component(title: "Delete Program", modal_footer:) do %>
-  <%= form_with(url: program_path(@program), method: :delete, id: "destroy-program-form") do |form| %>
+  <%= form_with(url: program_path(@program, term: params[:term]), method: :delete, id: "destroy-program-form") do |form| %>
     <p class="text-sm text-letter-color-light">Are you sure you want to delete <span class="font-medium text-letter-color"><%= @program.name %></span>? This action cannot be undone.</p>
   <% end %>
 <% end %>
