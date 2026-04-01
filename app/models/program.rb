@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Program < ApplicationRecord
-  DEFAULT_PER_PAGE_SIZE = 10
+  DEFAULT_PER_PAGE_SIZE = 6
 
   validates :name, presence: true
 

@@ -1,22 +1,26 @@
-<div class="rounded-2xl border border-gray-200 h-full">
-  <div class="p-4 flex flex-col justify-between h-full">
-    <div class="flex justify-between items-start gap-2">
-      <%= link_to program_path(program), class: "hover:cursor-pointer" do %>
-        <p class="overflow-hidden text-ellipsis heading heading-semibold text-primary min-h-[3rem]">
-          <%= program.name %>
-        </p>
-      <% end %>
-      <%= menu_component_old(menu_items: program_menu_items(program)) %>
-    </div>
-    <div class="flex mt-3 justify-between items-center">
-      <div class="flex items-center gap-2">
-        <span class="icon icon-lessons h-3.5 w-3.5 bg-primary"></span>
-        <span class="text-xs font-medium"><%= pluralize(program.courses_count, 'course') %></span>
+<div class="flex items-center justify-between p-4 md:p-5 bg-white border border-line-colour rounded-xl">
+        <div class="w-full flex flex-col gap-3">
+          <div class="flex justify-between w-full">
+            <%= link_to program_path(program, mode: local_assigns[:mode]) do %>
+              <p class="main-text-lg-medium text-letter-color"><%= program.name %></p>
+            <% end %>
+            <div class="h-7 w-7 flex items-center justify-center">
+              <%= menu_component(menu_items: program_menu_items(program)) %> 
+            </div>
+          </div>
+          <div class="flex justify-between">
+            <div class="flex gap-3 md:gap-1">
+              <div class="flex items-center">
+                <%= icon("book", css: "h-4 w-4 text-primary") %>
+                <span class="ml-2 general-text-sm-normal"><%= pluralize(program.courses_count, 'Course') %></span>
+              </div>
+              <div class="w-px h-full bg-slate-grey-light"></div>
+              <div class="flex items-center">
+                <%= icon("user", css: "h-4 w-4 text-primary") %>
+                <span class="ml-2 general-text-sm-normal"><%= pluralize(program.users_count, 'Enrolled') %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+             
       </div>
-      <div class="flex items-center gap-2">
-        <span class="icon icon-clock h-3.5 w-3.5 bg-primary"></span>
-        <span class="text-xs font-medium"><%= pluralize(program.users_count, 'user') %></span>
-      </div>
-    </div>
-    </div>
-</div>

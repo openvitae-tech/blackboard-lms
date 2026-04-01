@@ -3,10 +3,5 @@
   <%= turbo_frame_tag "modal" %>
 <% end %>
 <%= turbo_stream.update "programs-list" do %>
-  <h3 class="text-sm mb-4 font-bold"><%= pluralize(@learning_partner.programs.size, 'program') %></h3>
-  <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-    <% @learning_partner.programs.each do |program| %>
-      <%= render "program", program: program %>
-    <% end %>
-  </div>
+  <%= render 'programs_list', programs: @learning_partner.programs.page(1).per(Program::DEFAULT_PER_PAGE_SIZE) %>
 <% end %>

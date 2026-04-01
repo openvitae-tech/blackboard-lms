@@ -1,5 +1,5 @@
 <div class="my-4 mx-auto w-full text-left">
-  <%= render 'shared/components/back_button', back_link: program_path(@program) %>
+  <%= render 'shared/components/back_button', back_link: program_path(@program, mode: 'manager') %>
   <div class="box">
     <%= heading_component(text: "Add courses") %>
   </div>

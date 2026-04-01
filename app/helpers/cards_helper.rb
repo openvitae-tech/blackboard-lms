@@ -9,14 +9,14 @@ module CardsHelper
     enrolled_program_ids = current_user.program_ids.to_set
 
     cards = programs.map do |program|
-      link_to program_path(program) do
+      link_to program_path(program, mode: 'learner') do
         program_card_component(program:, enrolled_program_ids:)
       end
     end
 
     until cards.size >= MIN_PROGRAM_CARDS
       programs.each do |program|
-        cards << (link_to program_path(program), class: 'md:hidden' do
+        cards << (link_to program_path(program, mode: 'learner'), class: 'md:hidden' do
           program_card_component(program:, enrolled_program_ids:)
         end)
       end

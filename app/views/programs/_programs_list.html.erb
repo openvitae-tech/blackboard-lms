@@ -1,0 +1,9 @@
+<div class="flex flex-col gap-3">
+  <% programs.each do |program| %>
+    <%= render "program", program: program, mode: 'manager' %>
+  <% end %>
+</div>
+<div class="flex justify-end gap-3 mt-4">
+  <%= render 'shared/pagination/prev', items: programs %>
+  <%= render 'shared/pagination/next', items: programs %>
+</div>

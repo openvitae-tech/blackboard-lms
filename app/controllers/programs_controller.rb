@@ -14,7 +14,7 @@ class ProgramsController < ApplicationController
 
   def index
     authorize :program
-    @programs = @learning_partner.programs
+    @programs = @learning_partner.programs.filter_by_name(params[:term]).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
   end
 
   def explore
@@ -29,6 +29,7 @@ class ProgramsController < ApplicationController
 
   def show
     authorize @program
+    @active_nav = 'courses' unless params[:mode] == 'manager'
     @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
   end
 
@@ -52,6 +53,7 @@ class ProgramsController < ApplicationController
     authorize @program
     if @program.update(program_params)
       flash[:success] = t("resource.updated", resource_name: "Program")
+      @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
       render :edit, status: :unprocessable_content
     end
@@ -98,6 +100,8 @@ class ProgramsController < ApplicationController
     authorize @program
     @program.destroy!
     flash[:success] = t("resource.deleted", resource_name: "Program")
+    page = get_current_page(record: @learning_partner.programs, page: params[:page], per_page_count: Program::DEFAULT_PER_PAGE_SIZE)
+    @programs = @learning_partner.programs.page(page).per(Program::DEFAULT_PER_PAGE_SIZE)
     flash.discard
   end
 
