@@ -3,7 +3,7 @@
     <p class="main-text-lg-semibold"><%= program.name %></p>
     <% unless learner_mode %>
       <div class="h-7 w-7">
-        <%= menu_component(menu_items: program_menu_items(program)) %>
+        <%= menu_component(menu_items: program_menu_items(program, show_delete: false)) %>
       </div>
     <% end %>
   </div>    
@@ -36,7 +36,7 @@
                 html_options: {
                   data: {
                     action: "click->programs#bulkDelete",
-                    url: confirm_bulk_destroy_courses_program_path(program, page: params[:page])
+                    url: confirm_bulk_destroy_courses_program_path(program, page: params[:page], mode: 'manager')
                   }})
             %>
           </div>

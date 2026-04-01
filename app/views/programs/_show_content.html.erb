@@ -1,4 +1,4 @@
-<% learner_mode = params[:mode].blank? || params[:mode] == 'learner' %>
+<% learner_mode = @learner_mode %>
 <div id="program-show-content">
   <div data-controller="programs">
     <div class="flex flex-col gap-4 mb-3">
@@ -25,11 +25,12 @@
           <% end %>
           <% if learner_mode %>
             <% unless program.program_users.exists?(user: current_user) %>
+              <% no_courses = @courses.empty? %>
               <%= button_to choose_programs_path(program_id: program.id), method: :post do %>
                 <%= button_component(
                       text: 'Join program',
-                      disabled: program.courses.empty?,
-                      tooltip_text: program.courses.empty? ? "No courses available. Will be enabled after courses are added." : "",
+                      disabled: no_courses,
+                      tooltip_text: no_courses ? "No courses available. Will be enabled after courses are added." : "",
                       tooltip_position: "top"
                     ) %>
               <% end %>

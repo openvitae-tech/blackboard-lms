@@ -29,7 +29,8 @@ class ProgramsController < ApplicationController
 
   def show
     authorize @program
-    @active_nav = 'courses' unless params[:mode] == 'manager'
+    @learner_mode = params[:mode].blank? || params[:mode] == 'learner'
+    @active_nav = 'courses' if @learner_mode
     @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
   end
 
@@ -53,6 +54,7 @@ class ProgramsController < ApplicationController
     authorize @program
     if @program.update(program_params)
       flash[:success] = t("resource.updated", resource_name: "Program")
+      @learner_mode = params[:mode].blank? || params[:mode] == 'learner'
       @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
       render :edit, status: :unprocessable_content
@@ -87,7 +89,7 @@ class ProgramsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.redirect_to(program_path(@program))
+        render turbo_stream: turbo_stream.redirect_to(program_path(@program, mode: 'manager'))
       end
     end
   end
@@ -100,9 +102,11 @@ class ProgramsController < ApplicationController
     authorize @program
     @program.destroy!
     flash[:success] = t("resource.deleted", resource_name: "Program")
-    page = get_current_page(record: @learning_partner.programs, page: params[:page], per_page_count: Program::DEFAULT_PER_PAGE_SIZE)
-    @programs = @learning_partner.programs.page(page).per(Program::DEFAULT_PER_PAGE_SIZE)
     flash.discard
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to programs_path }
+    end
   end
 
   def confirm_bulk_destroy_courses
@@ -123,7 +127,7 @@ class ProgramsController < ApplicationController
     flash.discard
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.redirect_to(program_path(@program, page: get_current_page(record: @program.courses, page: params[:page])))
+        render turbo_stream: turbo_stream.redirect_to(program_path(@program, page: get_current_page(record: @program.courses, page: params[:page]), mode: params[:mode]))
       end
     end
   end
