@@ -26,7 +26,9 @@
           <% if learner_mode %>
             <% unless program.program_users.exists?(user: current_user) %>
               <% no_courses = @courses.empty? %>
-              <%= button_to choose_programs_path(program_id: program.id), method: :post do %>
+              <%= button_to choose_programs_path(program_id: program.id),
+                    method: :post,
+                    disabled: no_courses do %>
                 <%= button_component(
                       text: 'Join program',
                       disabled: no_courses,
