@@ -18,12 +18,7 @@
       <% end %>
     </div>
     <%= link_to new_program_path, data: { turbo_frame: "modal" }, class: "nav-link flex-none" do %>
-      <div class="hidden md:block">
-        <%= button_component(text: t("programs.add"), icon_name: "plus") %>
-      </div>
-      <div class="md:hidden">
-        <%= button_component(text: "Add", icon_name: "plus") %>
-      </div>
+      <%= button_component(text: t("programs.add"), icon_name: "plus", hide_label_in_mobile: true) %>
     <% end if current_user.privileged_user? %>
   </div>
 </div>
