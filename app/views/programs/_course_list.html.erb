@@ -27,12 +27,12 @@
       <div data-programs-target="deleteButton" class="hidden">
         <div class="flex items-center">
           <h3 class="text-sm font-bold">
-            <span data-programs-target="selectedCoursesCount"></span> selected of
+            <span data-programs-target="selectedCoursesCount"></span> <%= t("programs.selected_of") %>
             <%= pluralize(program.courses_count, 'course') %>
           </h3>
           <div class="pl-2 cursor-pointer">
 
-            <%= button_component(text: "Delete", size: "sm", type: "outline", colorscheme: "danger",
+            <%= button_component(text: t("programs.bulk_remove_courses.button"), size: "sm", type: "outline", colorscheme: "danger",
                 html_options: {
                   data: {
                     action: "click->programs#bulkDelete",
@@ -78,7 +78,7 @@
     <% unless learner_mode %>
       <% if current_user.privileged_user? %>
         <%= link_to add_courses_program_path(program) do %>
-          <%= button_component(text: 'Add courses', icon_name: "plus") %>
+          <%= button_component(text: t("programs.add_courses"), icon_name: "plus") %>
         <% end %>
       <% end %>
     <% end %>

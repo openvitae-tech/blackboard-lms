@@ -206,6 +206,23 @@ en:
     search_placeholder: "Search programs"
     courses_included: "Courses included in the Programme"
     no_courses: "No courses present"
+    add_courses: "Add courses"
+    join: "Join program"
+    join_disabled_tooltip: "No courses available. Will be enabled after courses are added."
+    continue_learning: "Continue Your Learning"
+    name_placeholder: "Enter the program name"
+    selected_of: "selected of"
+    bulk_remove_courses:
+      title: "Remove Courses"
+      confirm: "Are you sure you want to remove the selected courses from this program?"
+      button: "Remove"
+    remove_course:
+      title: "Remove Course"
+      confirm: "Are you sure you want to remove this course from this program?"
+      button: "Remove"
+    delete:
+      title: "Delete Program"
+      confirm: "Are you sure you want to delete %{name}? This action cannot be undone."
     choose_learning_program: "Choose learning program"
     choose_success: "Courses in the selected program assigned successfully."
     choose_label: "Please choose your learning program"

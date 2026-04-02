@@ -1,16 +1,16 @@
 <% modal_footer = capture do %>
   <div class="flex gap-2 sticky bottom-0 bg-white w-full">
     <%= button_tag type: "button", class: "flex-1", data: { action: "click->modals#closeModal" } do %>
-      <%= button_component(text: "Cancel", type: "outline") %>
+      <%= button_component(text: t("button.cancel"), type: "outline") %>
     <% end %>
     <%= button_tag form: "destroy-program-form", class: "flex-1" do %>
-      <%= button_component(text: "Delete", colorscheme: "danger") %>
+      <%= button_component(text: t("button.delete"), colorscheme: "danger") %>
     <% end %>
   </div>
 <% end %>
 
-<%= modal_box_component(title: "Delete Program", modal_footer:) do %>
+<%= modal_box_component(title: t("programs.delete.title"), modal_footer:) do %>
   <%= form_with(url: program_path(@program, term: params[:term]), method: :delete, id: "destroy-program-form") do |form| %>
-    <p class="text-sm text-letter-color-light">Are you sure you want to delete <span class="font-medium text-letter-color"><%= @program.name %></span>? This action cannot be undone.</p>
+    <p class="text-sm text-letter-color-light"><%= t("programs.delete.confirm", name: @program.name) %></p>
   <% end %>
 <% end %>

@@ -53,11 +53,11 @@
   
   <%= content_tag :section,  class: "bg-white p-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5 -mx-5 md:mx-0" do %>
     <div class="flex items-center gap-3 justify-between">
-      <h2 class="main-text-lg-semibold">Continue Your Learning</h2>
+      <h2 class="main-text-lg-semibold"><%= t("programs.continue_learning") %></h2>
       
       <%= link_to explore_courses_path do %>
         <div class="hidden md:inline">
-          <%= button_component text: 'View More',
+          <%= button_component text: t("button.view_more"),
                                size: 'sm',
                                type: 'outline',
                                icon_name: 'chevron-right',

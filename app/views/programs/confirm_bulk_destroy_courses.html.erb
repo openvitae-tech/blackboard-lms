@@ -1,17 +1,17 @@
 <% modal_footer = capture do %>
   <div class="flex gap-2 sticky bottom-0 bg-white w-full">
     <%= button_tag type: "button", class: "flex-1", data: { action: "click->modals#closeModal" } do %>
-      <%= button_component(text: "Cancel", type: "outline") %>
+      <%= button_component(text: t("button.cancel"), type: "outline") %>
     <% end %>
     <%= button_tag form: "bulk-destroy-courses-form", class: "flex-1" do %>
-      <%= button_component(text: "Delete", colorscheme: "danger") %>
+      <%= button_component(text: t("programs.bulk_remove_courses.button"), colorscheme: "danger") %>
     <% end %>
   </div>
 <% end %>
 
-<%= modal_box_component(title: "Delete Courses", modal_footer:) do %>
+<%= modal_box_component(title: t("programs.bulk_remove_courses.title"), modal_footer:) do %>
   <%= form_with(url: bulk_destroy_courses_program_path(@program, page: params[:page], mode: params[:mode]), method: :delete, id: "bulk-destroy-courses-form") do |form| %>
-    <p class="text-sm text-letter-color-light">Are you sure you want to delete the selected courses from this program?</p>
+    <p class="text-sm text-letter-color-light"><%= t("programs.bulk_remove_courses.confirm") %></p>
     <% Array(params[:course_ids]).each do |id| %>
       <%= hidden_field_tag "course_ids[]", id %>
     <% end %>
