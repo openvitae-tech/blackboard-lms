@@ -1,0 +1,24 @@
+# Built gem artifacts
+*.gem
+
+# Ruby
+*.rbc
+/.bundle
+/vendor/bundle
+/tmp/
+
+# Rails
+/log/
+/storage/
+/public/assets/
+/public/packs/
+/node_modules/
+
+# Environment
+.env
+.env.*
+
+# Editor
+.DS_Store
+.idea/
+.vscode/

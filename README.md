@@ -117,23 +117,26 @@ Start the server by executing following command.
 bin/dev
 ```
 
-## Working on neo_components locally
+## Repository Structure
 
-`neo_components` is a gem extracted from this project hosted at [openvitae-tech/neo_components](https://github.com/openvitae-tech/neo_components). By default it is installed from GitHub.
+This is a monorepo containing three interconnected projects:
 
-If you are actively developing `neo_components` alongside this app, you can point Bundler to your local checkout so changes are picked up immediately without pushing to GitHub:
+| Project | Path | Purpose |
+|---------|------|---------|
+| **BlackboardLMS** | `app/` | Host Rails application |
+| **NeoComponent** | `engines/neo_component/` | UI component library (Rails engine) |
+| **Content Studio** | `engines/content_studio/` | Portable content creation engine _(upcoming)_ |
+
+## Working on NeoComponent
+
+NeoComponent is a local Rails engine inside this repo at `engines/neo_component/`. Changes to it are picked up immediately — no separate gem install or local override needed.
 
 ```bash
-bundle config set --local local.neo_components /path/to/neo_components
-bundle config set --local disable_local_branch_check true
-bundle install
-```
+# Run NeoComponent specs
+bundle exec rspec engines/neo_component
 
-To revert back to the GitHub version:
-
-```bash
-bundle config unset --local local.neo_components
-bundle install
+# Run full suite including all engines
+bundle exec rspec
 ```
 
 ## Testing

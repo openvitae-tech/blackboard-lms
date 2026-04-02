@@ -1,0 +1,38 @@
+<% content_for :header do %>
+  <%= breadcrumbs_component links: [['My Profile', profile_path], [t("my_profile.my_certificates.label"), certificates_profile_path], [t("my_profile.my_certificates.pending_label"), nil]] %>
+<% end %>
+
+<div class="flex items-center gap-4">
+  <div class="flex gap-2 items-center">
+    <%= render 'shared/components/back_button', back_link: certificates_profile_path %>
+    <p class="main-text-lg-semibold"><%= t("my_profile.my_certificates.pending_label") %></p>
+  </div>
+</div>
+
+<div class="mt-6">
+  <div class="border border-line-colour divide-y divide-line-colour rounded-lg md:rounded-xl bg-white">
+    <% if @pending_items.any? %>
+      <% @pending_items.each do |enrollment| %>
+        <div class="px-4 md:px-5 py-3 md:py-4">
+          <div class="flex flex-col md:flex-row gap-3 justify-between">
+            <h2 class="main-text-lg-normal flex items-center"><%= enrollment.course.title %></h2>
+            <%= link_component text: t("my_profile.my_certificates.request_certificate"),
+                               url: generate_certificate_profile_path(enrollment_id: enrollment.id),
+                               html_options: { data: { turbo_method: :post } } %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="flex flex-col items-center justify-center mt-10 mb-5">
+        <h2 class="text-semibold pb-4">
+          <%= t("record.empty", resource: t("my_profile.my_certificates.certificates")) %>
+        </h2>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="flex justify-end gap-3 mt-4">
+    <%= render 'shared/pagination/prev', items: @pending_items %>
+    <%= render 'shared/pagination/next', items: @pending_items %>
+  </div>
+</div>

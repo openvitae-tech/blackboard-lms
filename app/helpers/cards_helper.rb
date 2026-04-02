@@ -38,4 +38,12 @@ module CardsHelper
       end
     end
   end
+
+  def certificate_cards(course_certificates)
+    return [] if course_certificates.empty?
+
+    course_certificates.map do |certificate|
+      certificate_card_component(certificate:)
+    end
+  end
 end

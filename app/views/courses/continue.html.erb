@@ -1,25 +1,40 @@
+<% from_profile = params[:from] == 'my_profile' %>
 <% content_for :header do %>
   <div data-controller="courses">
     <%= render 'filters', tags: @tags %>
     <div class="flex justify-between items-center">
-      <%= breadcrumbs_component links: [['Home', courses_path], ['Continue your Learning', nil]]%>
+      <% if from_profile %>
+        <%= breadcrumbs_component links: [[t("my_profile.label"), profile_path], [t("my_profile.my_courses.ongoing_courses"), nil]] %>
+      <% else %>
+        <%= breadcrumbs_component links: [['Home', courses_path], [t("my_profile.my_courses.ongoing_courses"), nil]] %>
+      <% end %>
     </div>
   </div>
 <% end %>
 <div class="space-y-6 mt-3">
   <section class="space-y-6">
     <div class="flex gap-2 items-center">
-      <%= render 'shared/components/back_button', back_link: courses_path %>
-      <p class="main-text-lg-semibold">Continue your Learning</p>
+      <%= render 'shared/components/back_button', back_link: from_profile ? profile_path : courses_path %>
+      <p class="main-text-lg-semibold"><%= t("my_profile.my_courses.ongoing_courses") %></p>
     </div>
-    <% @courses.each do |course| %>
-      <%= link_to course_path(course), class: "block" do %>
-        <%= long_course_card_component course: %>
+    <% if @courses.empty? %>
+      <div class="border border-line-colour rounded-lg md:rounded-xl">
+        <div class="flex flex-col items-center justify-center mt-10 mb-5">
+          <h2 class="main-text-lg-normal pb-4">
+            <%= t("record.empty", resource: t("my_profile.my_courses.ongoing")) %>
+          </h2>
+        </div>
+      </div>
+    <% else %>
+      <% @courses.each do |course| %>
+        <%= link_to course_path(course), class: "block" do %>
+          <%= long_course_card_component course: %>
+        <% end %>
       <% end %>
+      <div class="flex justify-end gap-3">
+        <%= render 'shared/pagination/prev', items: @courses %>
+        <%= render 'shared/pagination/next', items: @courses %>
+      </div>
     <% end %>
-    <div class="flex justify-end gap-3">
-      <%= render 'shared/pagination/prev', items: @courses %>
-      <%= render 'shared/pagination/next', items: @courses %>
-    </div>
-  </section>  
+  </section>
 </div>
