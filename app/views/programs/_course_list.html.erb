@@ -21,7 +21,7 @@
   </div>
 </div>
 <div class="flex flex-col md:flex-row gap-4 md:justify-between mt-4 md:mt-6">
-  <p class="main-text-lg-semibold">Courses included in the Programme</p>
+  <p class="main-text-lg-semibold"><%= t("programs.courses_included") %></p>
   <% unless learner_mode %>
     <% if current_user.privileged_user? %>
       <div data-programs-target="deleteButton" class="hidden">
@@ -74,7 +74,7 @@
   </div>
 <% else %>
   <div class="flex flex-col items-center justify-center">
-    <p class="text-gray-500 mb-4">No courses present</p>
+    <p class="text-gray-500 mb-4"><%= t("programs.no_courses") %></p>
     <% unless learner_mode %>
       <% if current_user.privileged_user? %>
         <%= link_to add_courses_program_path(program) do %>

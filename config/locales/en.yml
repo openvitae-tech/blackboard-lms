@@ -204,6 +204,8 @@ en:
     add: "Add program"
     edit: "Edit program"
     search_placeholder: "Search programs"
+    courses_included: "Courses included in the Programme"
+    no_courses: "No courses present"
     choose_learning_program: "Choose learning program"
     choose_success: "Courses in the selected program assigned successfully."
     choose_label: "Please choose your learning program"
