@@ -15,7 +15,7 @@ class ProgramsController < ApplicationController
 
   def index
     authorize :program
-    @programs = @learning_partner.programs.filter_by_name(params[:term]).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
+    @programs = @learning_partner.programs.filter_by_name(params[:term]).order(created_at: :desc).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
   end
 
   def explore
@@ -40,7 +40,7 @@ class ProgramsController < ApplicationController
 
     if @program.save
       flash[:success] = t("resource.created", resource_name: "Program")
-      @programs = @learning_partner.programs.filter_by_name(params[:term]).page(1).per(Program::DEFAULT_PER_PAGE_SIZE)
+      @programs = @learning_partner.programs.filter_by_name(params[:term]).order(created_at: :desc).page(1).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
       render :new, status: :unprocessable_content
     end
@@ -56,7 +56,7 @@ class ProgramsController < ApplicationController
     if @program.update(program_params)
       flash[:success] = t("resource.updated", resource_name: "Program")
       @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
-      @programs = @learning_partner.programs.filter_by_name(params[:term]).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
+      @programs = @learning_partner.programs.filter_by_name(params[:term]).order(created_at: :desc).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
       render :edit, status: :unprocessable_content
     end
@@ -103,7 +103,7 @@ class ProgramsController < ApplicationController
     authorize @program
     @program.destroy!
     flash[:success] = t("resource.deleted", resource_name: "Program")
-    @programs = @learning_partner.programs.filter_by_name(params[:term]).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
+    @programs = @learning_partner.programs.filter_by_name(params[:term]).order(created_at: :desc).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
     flash.discard
     respond_to do |format|
       format.turbo_stream
