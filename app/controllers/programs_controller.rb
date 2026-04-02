@@ -100,11 +100,9 @@ class ProgramsController < ApplicationController
 
   def destroy
     authorize @program
-    Rails.logger.info "=== DESTROY PROGRAM === term: #{params[:term].inspect}, page: #{params[:page].inspect}"
     @program.destroy!
     flash[:success] = t("resource.deleted", resource_name: "Program")
     @programs = @learning_partner.programs.filter_by_name(params[:term]).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
-    Rails.logger.info "=== DESTROY PROGRAM === programs after filter: #{@programs.count}"
     flash.discard
     respond_to do |format|
       format.turbo_stream
