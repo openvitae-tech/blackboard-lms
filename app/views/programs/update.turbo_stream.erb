@@ -3,6 +3,6 @@
   <%= turbo_frame_tag "modal" %>
 <% end %>
 <%= turbo_stream.update "programs-list" do %>
-  <%= render 'programs_list', programs: @learning_partner.programs.page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE) %>
+  <%= render 'programs_list', programs: @programs %>
 <% end %>
 <%= turbo_stream.replace "program-show-content", partial: "programs/show_content", locals: { program: @program } %>

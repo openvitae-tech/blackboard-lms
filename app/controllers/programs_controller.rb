@@ -40,6 +40,7 @@ class ProgramsController < ApplicationController
 
     if @program.save
       flash[:success] = t("resource.created", resource_name: "Program")
+      @programs = @learning_partner.programs.filter_by_name(params[:term]).page(1).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
       render :new, status: :unprocessable_content
     end
@@ -56,6 +57,7 @@ class ProgramsController < ApplicationController
       flash[:success] = t("resource.updated", resource_name: "Program")
       @learner_mode = params[:mode].blank? || params[:mode] == 'learner'
       @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
+      @programs = @learning_partner.programs.filter_by_name(params[:term]).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
       render :edit, status: :unprocessable_content
     end
