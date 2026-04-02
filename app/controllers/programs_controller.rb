@@ -6,6 +6,7 @@ class ProgramsController < ApplicationController
 
   before_action :set_learning_partner
   before_action :set_program, except: %i[new index explore create list choose]
+  before_action :set_learner_mode, only: %i[show update add_courses create_courses bulk_destroy_courses]
 
   def new
     authorize :program
@@ -29,7 +30,6 @@ class ProgramsController < ApplicationController
 
   def show
     authorize @program
-    @learner_mode = params[:mode].blank? || params[:mode] == 'learner'
     @active_nav = 'courses' if @learner_mode
     @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
   end
@@ -55,7 +55,6 @@ class ProgramsController < ApplicationController
     authorize @program
     if @program.update(program_params)
       flash[:success] = t("resource.updated", resource_name: "Program")
-      @learner_mode = params[:mode].blank? || params[:mode] == 'learner'
       @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
       @programs = @learning_partner.programs.filter_by_name(params[:term]).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
@@ -158,6 +157,10 @@ class ProgramsController < ApplicationController
   end
 
   private
+
+  def set_learner_mode
+    @learner_mode = params[:mode].blank? || params[:mode] == 'learner'
+  end
 
   def set_learning_partner
     @learning_partner = LearningPartner.find(current_user.learning_partner_id)
