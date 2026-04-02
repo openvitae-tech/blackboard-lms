@@ -55,7 +55,26 @@ All views in Content Studio and BlackboardLMS must use **NeoComponent helpers** 
 
 Refer to `engines/neo_component/ui_manifest.md` for the full catalog of available helpers and their arguments.
 
-### 4. Prop Bloat Policy
+### 4. Colours — Tailwind Config is the Source of Truth
+
+All colours used in views must be defined in `config/tailwind.config.js` under `theme.extend.colors`. **Never use raw hex values directly in templates.**
+
+When implementing a design from Figma:
+1. Check whether the colour already exists in the config (by value, not just name).
+2. If it does not exist, **add it to the config first** before writing any view code.
+3. Use the config key in templates: `bg-primary-light-50`, not `bg-[#eff3fd]`.
+
+```js
+// config/tailwind.config.js — add new colours here before using them
+colors: {
+  "primary": "#0041B9",
+  "my-new-color": "#AABBCC",  // added before first use in a template
+}
+```
+
+Do not use Tailwind's arbitrary value syntax (`bg-[#aabbcc]`) as a shortcut — it bypasses the design system and makes colours invisible to future audits.
+
+### 5. Prop Bloat Policy
 
 If a view requires functionality that a NeoComponent helper does not support:
 
