@@ -3,5 +3,5 @@
   <%= turbo_frame_tag "modal" %>
 <% end %>
 <%= turbo_stream.update "programs-list" do %>
-  <%= render 'programs_list', programs: @learning_partner.programs.page(1).per(Program::DEFAULT_PER_PAGE_SIZE) %>
+  <%= render 'programs_list', programs: @learning_partner.programs.filter_by_name(params[:term]).page(1).per(Program::DEFAULT_PER_PAGE_SIZE) %>
 <% end %>
