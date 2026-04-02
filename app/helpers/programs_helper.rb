@@ -5,7 +5,7 @@ module ProgramsHelper
     items = [
       ViewComponent::MenuComponentHelper::MenuItem.new(
         label: t('button.edit'),
-        url: edit_program_path(program),
+        url: edit_program_path(program, mode: params[:mode]),
         type: :link,
         options: { data: { turbo_frame: 'modal' } }
       )
