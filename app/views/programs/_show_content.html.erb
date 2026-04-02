@@ -1,4 +1,4 @@
-<% learner_mode = @learner_mode %>
+<% learner_mode = local_assigns.fetch(:learner_mode, true) %>
 <div id="program-show-content">
   <div data-controller="programs">
     <div class="flex flex-col gap-4 mb-3">
