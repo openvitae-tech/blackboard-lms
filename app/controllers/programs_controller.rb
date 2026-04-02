@@ -90,7 +90,7 @@ class ProgramsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.redirect_to(program_path(@program, mode: 'manager'))
+        render turbo_stream: turbo_stream.redirect_to(program_path(@program, mode: Program::MANAGER_MODE))
       end
     end
   end
@@ -159,7 +159,7 @@ class ProgramsController < ApplicationController
   private
 
   def set_learner_mode
-    @learner_mode = params[:mode].blank? || params[:mode] == 'learner'
+    @learner_mode = params[:mode].blank? || params[:mode] == Program::LEARNER_MODE
   end
 
   def set_learning_partner

@@ -36,7 +36,7 @@
                 html_options: {
                   data: {
                     action: "click->programs#bulkDelete",
-                    url: confirm_bulk_destroy_courses_program_path(program, page: params[:page], mode: 'manager')
+                    url: confirm_bulk_destroy_courses_program_path(program, page: params[:page], mode: Program::MANAGER_MODE)
                   }})
             %>
           </div>
