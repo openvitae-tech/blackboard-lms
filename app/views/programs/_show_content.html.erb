@@ -1,0 +1,48 @@
+<% learner_mode = local_assigns.fetch(:learner_mode, true) %>
+<div id="program-show-content">
+  <div data-controller="programs">
+    <div class="flex flex-col gap-4 mb-3">
+      <% if learner_mode %>
+        <%= breadcrumbs_component links: [['Home', courses_path], [t('programs.explore_label'), explore_programs_path], [program.name, nil]] %>
+      <% else %>
+        <%= breadcrumbs_component links: [[t('programs.label'), programs_path], [program.name, nil]] %>
+      <% end %>
+      <div class="flex justify-between">
+        <% if learner_mode %>
+          <%= render 'shared/components/back_button', back_link: explore_programs_path %>
+        <% else %>
+          <%= render 'shared/components/back_button', back_link: programs_path %>
+        <% end %>
+        <div class="flex gap-4">
+          <% unless learner_mode %>
+            <% if current_user.privileged_user? %>
+              <% unless @courses.blank? %>
+                <%= link_to add_courses_program_path(program) do %>
+                  <%= button_component(text: t("programs.add_courses"), icon_name: "plus") %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+          <% if learner_mode %>
+            <% unless program.program_users.exists?(user: current_user) %>
+              <% no_courses = @courses.empty? %>
+              <%= button_to choose_programs_path(program_id: program.id),
+                    method: :post,
+                    disabled: no_courses do %>
+                <%= button_component(
+                      text: t("programs.join"),
+                      disabled: no_courses,
+                      tooltip_text: no_courses ? t("programs.join_disabled_tooltip") : "",
+                      tooltip_position: "top"
+                    ) %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div id="program-courses">
+      <%= render "course_list", program: program, courses: @courses, learner_mode: learner_mode %>
+    </div>
+  </div>
+</div>
