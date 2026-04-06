@@ -31,7 +31,7 @@ class ProgramsController < ApplicationController
   def show
     authorize @program
     @active_nav = 'courses' if @learner_mode
-    @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
+    @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Course::PER_PAGE_LIMIT)
   end
 
   def create
@@ -55,7 +55,7 @@ class ProgramsController < ApplicationController
     authorize @program
     if @program.update(program_params)
       flash[:success] = t("resource.updated", resource_name: "Program")
-      @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
+      @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Course::PER_PAGE_LIMIT)
       @programs = @learning_partner.programs.filter_by_name(params[:term]).order(created_at: :desc).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
       render :edit, status: :unprocessable_content
