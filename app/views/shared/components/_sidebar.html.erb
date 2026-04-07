@@ -9,7 +9,7 @@
     <div class="flex h-[calc(100vh-60px)] md:h-full flex-col justify-between mt-14 z-150">
       <ul class="flex flex-col gap-3">
         <% if policy(:dashboard).index? %>
-          <li class="side-bar-item <%= sidebar_active('dashboards') %>">
+          <li class="side-bar-item <%= sidebar_active('dashboards', @active_nav) %>">
             <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
               <span class="icon icon-home bg-letter-color icon-small"></span>
               <span>Home</span>
@@ -17,21 +17,21 @@
           </li>
         <% end %>
         <% if policy(:learning_partner).show? %>
-          <li class="side-bar-item <%= sidebar_active('learning_partners') %>">
+          <li class="side-bar-item <%= sidebar_active('learning_partners', @active_nav) %>">
             <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>
               <span class="icon icon-user-group bg-letter-color icon-small"></span>
               <span>Partners</span>
             <% end %>
           </li>
         <% end %>
-        <li class="side-bar-item <%= sidebar_active('courses') %>">
+        <li class="side-bar-item <%= sidebar_active('courses', @active_nav) || sidebar_active('my_courses', @active_nav) %>">
           <%= link_to courses_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-course bg-letter-color icon-small"></span>
             <span><%= t('course.label') %></span>
           <% end %>
         </li>
         <% if policy(current_user.team || :team).show? %>
-          <li class="side-bar-item <%= sidebar_active('teams') %>">
+          <li class="side-bar-item <%= sidebar_active('teams', @active_nav) %>">
             <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
               <span class="icon icon-team bg-letter-color icon-small"></span>
               <span><%= t('team.label') %></span>
@@ -39,7 +39,7 @@
           </li>
         <% end %>
         <% if current_user.is_admin? %>
-          <li class="side-bar-item <%= sidebar_active('settings') || sidebar_active('tags') %>">
+          <li class="side-bar-item <%= sidebar_active('settings', @active_nav) || sidebar_active('tags', @active_nav) %>">
             <%= link_to settings_path, class: "side-bar-item-inner" do %>
               <span class="icon icon-settings icon-small bg-letter-color"></span>
               <span><%= t("settings.label") %></span>
@@ -47,7 +47,7 @@
           </li>
         <% end %>
         <% if current_user.privileged_user? %>
-          <li class="side-bar-item <%= sidebar_active('programs') %>">
+          <li class="side-bar-item <%= sidebar_active('programs', @active_nav) %>">
             <%= link_to programs_path, class: "side-bar-item-inner" do %>
               <span class="icon icon-settings icon-small bg-letter-color"></span>
               <span>Programs</span>
@@ -55,14 +55,14 @@
           </li>
         <% end %>
         <% if policy(:my_profile).show? %>
-          <li class="side-bar-item <%= sidebar_active('my_profiles') %>">
+          <li class="side-bar-item <%= sidebar_active('my_profiles', @active_nav) %>">
               <%= link_to profile_path, class: "side-bar-item-inner" do %>
                 <span class="icon icon-user icon-small bg-letter-color"></span>
                 <span><%= t("my_profile.label") %></span>
               <% end %>
           </li>
         <% end %>
-        <li class="side-bar-item <%= sidebar_active('supports') %>">
+        <li class="side-bar-item <%= sidebar_active('supports', @active_nav) %>">
           <%= link_to supports_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-support bg-letter-color icon-small"></span>
             <span>Support</span>

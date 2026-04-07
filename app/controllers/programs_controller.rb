@@ -20,6 +20,8 @@ class ProgramsController < ApplicationController
 
   def explore
     authorize :program
+    session[:active_nav] = 'courses'
+    @active_nav = 'courses'
     @programs = current_user.learning_partner.programs
     @programs = @programs.filter_by_name(params[:term]).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
 
@@ -30,7 +32,8 @@ class ProgramsController < ApplicationController
 
   def show
     authorize @program
-    @active_nav = 'courses' if @learner_mode
+    session[:active_nav] = @learner_mode ? 'my_courses' : 'programs'
+    @active_nav = session[:active_nav]
     @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Course::PER_PAGE_LIMIT)
   end
 

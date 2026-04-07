@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :set_back_link
+  before_action :set_active_nav
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -47,5 +48,15 @@ class ApplicationController < ActionController::Base
 
   def set_back_link
     @back_link = params[:source_path].present? ? params[:source_path] : request.referer
+  end
+
+  def set_active_nav
+    top_level_controllers = %w[dashboards my_profiles programs teams supports learning_partners]
+
+    if top_level_controllers.include?(controller_name) || (controller_name == 'courses' && action_name == 'index')
+      session[:active_nav] = controller_name
+    end
+
+    @active_nav = session[:active_nav] || controller_name
   end
 end
