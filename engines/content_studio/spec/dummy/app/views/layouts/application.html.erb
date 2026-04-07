@@ -1,27 +1,39 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= content_for(:title) || "Dummy" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html lang="en">
+<head>
+  <title>Content Studio</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield :head %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=New+Amsterdam&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12.1.2/swiper-bundle.min.css" integrity="sha384-aA9/9f+9pk384YIQGQEi8EcU945NUJptUsdtffcit9wU/Z083tFDBRQn80B/NdoB" crossorigin="anonymous" />
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app %>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+  <%= action_cable_meta_tag %>
+</head>
+<body>
+  <div class="flex flex-col min-h-screen">
+    <div class="sticky top-0 left-0 w-full z-50">
+      <nav class="py-5 px-8 flex items-center justify-between w-full gap-4 bg-white navbar-box-shadow z-50">
+        <div class="flex items-center">
+          <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-6 w-16 md:h-10 md:w-24' %>
+        </div>
+        <div class="flex items-center gap-5">
+          <%= icon('bell', css: 'h-6 w-6 text-letter-color') %>
+          <%= icon('adjustments-horizontal', css: 'h-6 w-6 text-letter-color') %>
+        </div>
+      </nav>
+    </div>
+    <div class="flex flex-col w-full overflow-y-auto h-[calc(100vh-80px)] md:bg-white-light">
+      <main class="flex flex-col pt-5 pb-8 md:py-5 px-5 md:px-16 max-w-[1536px] min-w-screen w-full mx-auto">
+        <%= yield %>
+      </main>
+    </div>
+  </div>
+</body>
 </html>
