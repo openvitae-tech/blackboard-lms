@@ -1,4 +1,4 @@
 module ContentStudio
-  class ApplicationController < ActionController::Base
+  class ApplicationController < ContentStudio.parent_controller.constantize
   end
 end

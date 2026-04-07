@@ -8,4 +8,5 @@ require 'content_studio/api_client'
 
 module ContentStudio
   mattr_accessor :base_url, default: 'http://localhost:3000'
+  mattr_accessor :parent_controller, default: 'ActionController::Base'
 end
