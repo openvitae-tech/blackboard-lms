@@ -39,7 +39,9 @@ RUN ln -sf /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && 
     ln -sf /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 # Install application gems
+# engines/ must be copied first — neo_component and content_studio are local path gems
 COPY Gemfile Gemfile.lock ./
+COPY engines/ engines/
 RUN bundle install
 RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 RUN bundle exec bootsnap precompile --gemfile
