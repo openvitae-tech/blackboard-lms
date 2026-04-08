@@ -34,4 +34,24 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.query_url(path, query)).to eq('')
     end
   end
+
+  describe '#sidebar_active' do
+    it 'returns item-selected when page matches active_nav' do
+      expect(helper.sidebar_active('courses', 'courses')).to eq('item-selected')
+    end
+
+    it 'returns item-selected when page matches controller_name and active_nav is nil' do
+      allow(helper).to receive(:controller_name).and_return('courses')
+      expect(helper.sidebar_active('courses', nil)).to eq('item-selected')
+    end
+
+    it 'returns nil when page does not match active_nav' do
+      expect(helper.sidebar_active('programs', 'courses')).to be_nil
+    end
+
+    it 'returns nil when both active_nav and controller_name do not match' do
+      allow(helper).to receive(:controller_name).and_return('lessons')
+      expect(helper.sidebar_active('programs', nil)).to be_nil
+    end
+  end
 end

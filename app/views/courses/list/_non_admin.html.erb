@@ -15,7 +15,7 @@
         <div class="flex items-center justify-center gap-3 md:justify-between">
           <h2 class="main-text-lg-semibold">Explore Our Programmes</h2>
 
-          <%= link_to explore_programs_path do %>
+          <%= link_to explore_programs_path(active_nav: 'courses') do %>
             <div class="hidden md:inline">
             <%= button_component text: "View More",
                                  size: 'sm',

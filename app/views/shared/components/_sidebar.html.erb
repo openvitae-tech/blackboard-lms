@@ -24,6 +24,7 @@
             <% end %>
           </li>
         <% end %>
+        <%# 'my_courses' is a synthetic value set when accessing programs from the courses flow %>
         <li class="side-bar-item <%= sidebar_active('courses', @active_nav) || sidebar_active('my_courses', @active_nav) %>">
           <%= link_to courses_path, class: "side-bar-item-inner" do %>
             <span class="icon icon-course bg-letter-color icon-small"></span>
@@ -39,7 +40,7 @@
           </li>
         <% end %>
         <% if current_user.is_admin? %>
-          <li class="side-bar-item <%= sidebar_active('settings', @active_nav) || sidebar_active('tags', @active_nav) %>">
+          <li class="side-bar-item <%= sidebar_active('settings', @active_nav) %>">
             <%= link_to settings_path, class: "side-bar-item-inner" do %>
               <span class="icon icon-settings icon-small bg-letter-color"></span>
               <span><%= t("settings.label") %></span>

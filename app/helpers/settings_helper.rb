@@ -7,13 +7,13 @@ module SettingsHelper
         label: t('tags.label'),
         description: t('settings.description'),
         icon: 'icon-tag',
-        path: tags_path
+        path: tags_path(active_nav: 'settings')
       },
       {
         label: t('components.title'),
         description: t('components.label'),
         icon: 'icon-list',
-        path: neo_components.ui_components_path
+        path: neo_components.ui_components_path(active_nav: 'settings')
       }
     ]
   end
