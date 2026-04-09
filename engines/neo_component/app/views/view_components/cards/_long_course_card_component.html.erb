@@ -1,4 +1,4 @@
-<div class="group rounded-xl border border-line-colour relative max-h-[104px] md:max-h-[132px]">
+<div class="group rounded-xl border border-line-colour relative md:max-h-[132px]">
   <% if description.present? %>
     <div class="hidden md:group-hover:block absolute left-0 bottom-full z-50 mb-3 w-80">
       <div class="relative bg-primary-light-50 border border-primary-light rounded-lg p-4 shadow-md">
@@ -23,8 +23,8 @@
       </div>
     <% end %>
 
-    <div class="relative">
-      <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-[104px] md:h-[132px] rounded-l-xl object-cover' %>
+    <div class="relative self-stretch">
+      <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-full md:h-[132px] rounded-l-xl object-cover' %>
       <span class="absolute bottom-0 right-4 z-10 flex rounded-t-md bg-primary-light-100 general-text-sm-normal py-0.5 px-1 text-primary-dark">
           <%= duration %>
       </span>
@@ -61,15 +61,15 @@
             </div>
           </div>
           <% if progress.present? %>
-            <div class="h-1 w-[151px] hidden md:block bg-primary-light-100 rounded">
-              <div class="h-1 bg-primary rounded" style="width: <%= progress %>%"></div>
+            <div class="h-1 w-[151px] hidden md:block bg-primary-light-100 rounded-sm">
+              <div class="h-1 bg-primary rounded-sm" style="width: <%= progress %>%"></div>
             </div>
           <% end %>
         </div>
 
         <% if progress.present? %>
-          <div class="h-0.5 w-full md:hidden bg-primary-light-100 rounded">
-            <div class="h-0.5 bg-primary rounded" style="width: <%= progress %>%"></div>
+          <div class="h-0.5 w-full md:hidden bg-primary-light-100 rounded-sm">
+            <div class="h-0.5 bg-primary rounded-sm" style="width: <%= progress %>%"></div>
           </div>
         <% end %>
 
