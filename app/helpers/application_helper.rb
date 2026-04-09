@@ -56,8 +56,8 @@ module ApplicationHelper
     resource.persisted? ? 'Update' : 'Create'
   end
 
-  def sidebar_active(page, active_nav = nil)
-    'item-selected' if page == (active_nav.presence || controller_name)
+  def sidebar_active(page)
+    'item-selected' if active_nav == page
   end
 
   def duration_in_words(duration)

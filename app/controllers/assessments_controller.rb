@@ -1,4 +1,6 @@
 class AssessmentsController < ApplicationController
+  include CourseNavContext
+
   skip_before_action :authenticate_user!, only: :intro
   before_action :store_user_location!, only: :show 
   before_action :authenticate_user!, except: :intro

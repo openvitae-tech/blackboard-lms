@@ -36,22 +36,20 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe '#sidebar_active' do
-    it 'returns item-selected when page matches active_nav' do
-      expect(helper.sidebar_active('courses', 'courses')).to eq('item-selected')
+    before { helper.define_singleton_method(:active_nav) { @active_nav } }
+
+    it 'returns item-selected when active_nav matches page' do
+      assign(:active_nav, 'courses')
+      expect(helper.sidebar_active('courses')).to eq('item-selected')
     end
 
-    it 'returns item-selected when page matches controller_name and active_nav is nil' do
-      allow(helper).to receive(:controller_name).and_return('courses')
-      expect(helper.sidebar_active('courses', nil)).to eq('item-selected')
+    it 'returns nil when active_nav does not match page' do
+      assign(:active_nav, 'courses')
+      expect(helper.sidebar_active('programs')).to be_nil
     end
 
-    it 'returns nil when page does not match active_nav' do
-      expect(helper.sidebar_active('programs', 'courses')).to be_nil
-    end
-
-    it 'returns nil when both active_nav and controller_name do not match' do
-      allow(helper).to receive(:controller_name).and_return('lessons')
-      expect(helper.sidebar_active('programs', nil)).to be_nil
+    it 'returns nil when active_nav is not set' do
+      expect(helper.sidebar_active('courses')).to be_nil
     end
   end
 end

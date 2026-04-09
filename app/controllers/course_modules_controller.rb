@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CourseModulesController < ApplicationController
+  include CourseNavContext
+
   before_action :set_course, only: %i[new create show edit update destroy moveup movedown summary redo_quiz]
   before_action :set_course_module, only: %i[show edit update destroy moveup movedown summary redo_quiz]
 

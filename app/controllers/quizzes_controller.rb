@@ -2,6 +2,7 @@
 
 class QuizzesController < ApplicationController
   include CommonsHelper
+  include CourseNavContext
   
   before_action :set_course
   before_action :set_course_module

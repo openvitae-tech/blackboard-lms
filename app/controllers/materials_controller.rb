@@ -1,4 +1,6 @@
 class MaterialsController < ApplicationController
+  include CourseNavContext
+
   before_action :set_course
   def index
   end
