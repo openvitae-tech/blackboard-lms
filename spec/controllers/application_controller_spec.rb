@@ -102,6 +102,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
 
       it 'sets @active_nav to programs when mode is manager' do
+        allow(controller).to receive(:action_name).and_return('show')
         get :index, params: { mode: Program::MANAGER_MODE }
         expect(assigns(:active_nav)).to eq('programs')
       end
