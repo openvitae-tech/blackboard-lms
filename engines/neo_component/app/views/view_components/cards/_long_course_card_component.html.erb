@@ -4,7 +4,7 @@
       <div class="relative bg-primary-light-50 border border-primary-light rounded-lg p-4 shadow-md">
         <p class="main-text-lg-semibold"><%= title %></p>
         <p class="general-text-md-normal text-letter-color mt-1"><%= description %></p>
-        <% if highlights.any? %>
+        <% if highlights.present? %>
           <ul class="mt-2 space-y-1 list-disc ml-5">
             <% highlights.each do |highlight| %>
               <li class="general-text-md-normal"><%= highlight %></li>

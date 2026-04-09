@@ -54,7 +54,7 @@
         <div class="absolute top-8 -left-2 w-3 h-3 rotate-45 bg-primary-light-50 border-b border-r border-primary-light"></div>
         <p class="main-text-lg-semibold"><%= title %></p>
         <p class="general-text-md-normal text-letter-color mt-1"><%= description %></p>
-        <% if highlights.any? %>
+        <% if highlights.present? %>
           <ul class="mt-2 space-y-1 list-disc ml-5">
             <% highlights.each do |highlight| %>
               <li class="general-text-md-normal"><%= highlight %></li>
