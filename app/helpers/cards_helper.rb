@@ -44,8 +44,16 @@ module CardsHelper
   end
 
   def build_course_card(course, enrollment)
+    course_card_component(**course_card_params(course, enrollment))
+  end
+
+  def build_long_course_card(course, enrollment)
+    long_course_card_component(**course_card_params(course, enrollment))
+  end
+
+  def course_card_params(course, enrollment)
     level_tag = course.tags.find { |t| t.tag_type == 'level' }
-    course_card_component(
+    {
       title: course.title,
       banner_url: course_banner(course, :horizontal),
       duration: course_duration(course),
@@ -55,6 +63,6 @@ module CardsHelper
       badge: level_tag && { label: level_tag.name },
       rating: course.rating,
       progress: enrollment&.progress
-    )
+    }
   end
 end
