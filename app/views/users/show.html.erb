@@ -12,7 +12,6 @@
     </p>
     <div class="flex flex-wrap gap-4">
       <% @enrolled_courses.each do |course| %>
-        <% _enrollment = current_user.get_enrollment_for(course) %>
         <% _level_tag = course.tags.find { |t| t.tag_type == 'level' } %>
         <%= course_card_component(
           title: course.title,
@@ -23,7 +22,7 @@
           categories: course.tags.select { |t| t.tag_type == 'category' }.map(&:name),
           badge: _level_tag && { label: _level_tag.name },
           rating: course.rating,
-          progress: _enrollment&.progress
+          progress: @enrollments_by_course_id[course.id]&.progress
         ) %>
       <% end %>
     </div>
