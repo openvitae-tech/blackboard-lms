@@ -16,6 +16,7 @@ module ViewComponent
         description: nil,
         highlights: []
       )
+        badge = { bg_color: 'bg-secondary', text_color: 'text-primary-dark' }.merge(badge) if badge
         render partial: 'view_components/cards/course_card_component', locals: {
           title:,
           banner_url:,

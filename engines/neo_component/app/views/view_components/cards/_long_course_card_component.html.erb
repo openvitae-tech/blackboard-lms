@@ -18,7 +18,7 @@
 
   <div class="w-full rounded relative flex gap-1">
     <% if badge.present? %>
-      <div class="absolute top-0 left-0 z-10 px-2 py-1 general-text-sm-medium <%= badge.fetch(:bg_color, 'bg-secondary') %> <%= badge.fetch(:text_color, 'text-primary-dark') %> rounded-br-[8px] border-b border-r border-line-colour">
+      <div class="absolute top-0 left-0 z-10 px-2 py-1 general-text-sm-medium <%= badge[:bg_color] %> <%= badge[:text_color] %> rounded-tl-xl rounded-br-[8px] border-b border-r border-line-colour">
         <%= badge[:label] %>
       </div>
     <% end %>
