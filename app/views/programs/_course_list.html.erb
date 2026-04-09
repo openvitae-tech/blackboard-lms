@@ -67,7 +67,17 @@
         <% end %>   
         <div class="relative">
           <%= link_to course_path(course) do %>
-            <%= long_course_card_component(course: course, program:program) %>
+            <% _level_tag = course.tags.find { |t| t.tag_type == 'level' } %>
+            <%= long_course_card_component(
+              title: course.title,
+              banner_url: course_banner(course, :horizontal),
+              duration: course_duration(course),
+              modules_count: modules_count(course),
+              enroll_count: enroll_count(course),
+              categories: course.tags.select { |t| t.tag_type == 'category' }.map(&:name),
+              badge: _level_tag && { label: _level_tag.name },
+              rating: course.rating
+            ) %>
           <% end %>
         </div>
       </div>

@@ -3,9 +3,33 @@
 module ViewComponent
   module Card
     module LongCourseCardComponent
-      def long_course_card_component(course:, enrollment: nil, program: nil)
+      def long_course_card_component(
+        title:,
+        banner_url:,
+        duration:,
+        modules_count:,
+        enroll_count:,
+        categories: [],
+        rating: nil,
+        progress: nil,
+        badge: nil,
+        description: nil,
+        highlights: []
+      )
         render partial: 'view_components/cards/long_course_card_component',
-               locals: { course:, enrollment:, program: }
+               locals: {
+                 title:,
+                 banner_url:,
+                 duration:,
+                 modules_count:,
+                 enroll_count:,
+                 categories:,
+                 rating:,
+                 progress:,
+                 badge:,
+                 description:,
+                 highlights:
+               }
       end
     end
   end
