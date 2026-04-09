@@ -10,6 +10,11 @@ class Enrollment < ApplicationRecord
 
   scope :completed, -> { where(course_completed: true) }
 
+  def self.indexed_by_course(courses)
+    course_ids = courses.map(&:id)
+    where(course_id: course_ids).preload(:course).index_by(&:course_id)
+  end
+
   def complete_lesson!(module_id, lesson_id, time_spent_in_seconds)
     self.current_module_id = module_id
     self.current_lesson_id = lesson_id

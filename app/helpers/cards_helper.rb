@@ -27,7 +27,7 @@ module CardsHelper
 
   def course_cards(courses)
     courses ||= []
-    enrollments = enrollments_by_course_id(courses)
+    enrollments = current_user.enrollments.indexed_by_course(courses)
     courses.map do |course|
       link_to course_path(course) do
         build_course_card(course, enrollments[course.id])
@@ -35,13 +35,12 @@ module CardsHelper
     end
   end
 
-  private
+  def certificate_cards(course_certificates)
+    return [] if course_certificates.empty?
 
-  def enrollments_by_course_id(courses)
-    course_ids = courses.map(&:id)
-    current_user.enrollments.where(course_id: course_ids)
-                .preload(course: :course_modules)
-                .index_by(&:course_id)
+    course_certificates.map do |certificate|
+      certificate_card_component(certificate:)
+    end
   end
 
   def build_course_card(course, enrollment)
@@ -57,15 +56,5 @@ module CardsHelper
       rating: course.rating,
       progress: enrollment&.progress
     )
-  end
-
-  public
-
-  def certificate_cards(course_certificates)
-    return [] if course_certificates.empty?
-
-    course_certificates.map do |certificate|
-      certificate_card_component(certificate:)
-    end
   end
 end
