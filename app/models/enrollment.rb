@@ -11,7 +11,7 @@ class Enrollment < ApplicationRecord
   scope :completed, -> { where(course_completed: true) }
 
   def self.indexed_by_course(courses)
-    course_ids = courses.is_a?(Array) ? courses.map(&:id) : courses.pluck(:id)
+    course_ids = courses.pluck(:id)
     where(course_id: course_ids).preload(course: :course_modules).index_by(&:course_id)
   end
 
