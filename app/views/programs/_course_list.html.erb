@@ -67,7 +67,7 @@
         <% end %>   
         <div class="relative">
           <%= link_to course_path(course) do %>
-            <%= long_course_card_component(course: course, program:program) %>
+            <%= build_long_course_card(course, @enrollments_by_course_id[course.id]) %>
           <% end %>
         </div>
       </div>
