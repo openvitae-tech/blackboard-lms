@@ -55,7 +55,7 @@
     <div class="flex items-center gap-3 justify-between">
       <h2 class="main-text-lg-semibold"><%= t("programs.continue_learning") %></h2>
       
-      <%= link_to explore_courses_path do %>
+      <%= link_to explore_courses_path, data: { carousel_view_more: true } do %>
         <div class="hidden md:inline">
           <%= button_component text: t("button.view_more"),
                                size: 'sm',
