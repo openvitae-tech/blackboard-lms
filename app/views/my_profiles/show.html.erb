@@ -8,7 +8,7 @@
     <section class="bg-white py-5 md:px-5 md:pt-4 md:rounded-xl md:border md:border-line-colour-light space-y-5">
       <div class="flex items-center gap-3 justify-between">
         <h2 class="main-text-lg-semibold"><%= t("my_profile.my_certificates.label") %></h2>
-        <%= link_to certificates_profile_path do %>
+        <%= link_to certificates_profile_path, data: { carousel_view_more: true } do %>
           <div class="hidden md:inline">
             <%= button_component text: t("button.view_more"),
                                  size: 'sm',
@@ -66,7 +66,7 @@
                 <% view_all_path = status == ongoing_label ? continue_courses_path(from: 'my_profile') : complete_courses_path(from: 'my_profile') %>
                 <div data-tabs-target="panelItem" class="space-y-4">
                   <%= carousel_component cards: all_cards, loop: false, enable_in_small_devices: false %>
-                  <%= link_to view_all_path, class: 'block w-fit' do %>
+                  <%= link_to view_all_path, class: 'block w-fit', data: { carousel_view_more: true } do %>
                     <%= button_component text: t("my_profile.my_courses.show_all", status: status),
                                         size: 'sm',
                                         type: 'outline',
