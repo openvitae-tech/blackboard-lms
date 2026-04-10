@@ -41,7 +41,7 @@
   </div>
   <% enrolled_program_ids = current_user.program_ids.to_set %>
   <% @programs.each do |program| %>
-    <%= link_to program_path(program, mode: Program::LEARNER_MODE, active_nav: 'courses'), class: 'block' do %>
+    <%= link_to program_path(program, mode: Program::LEARNER_MODE), class: 'block' do %>
       <%= long_program_card_component program:, enrolled_program_ids: %>
     <% end %>
   <% end %>

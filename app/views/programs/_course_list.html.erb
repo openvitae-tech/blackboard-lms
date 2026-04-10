@@ -66,7 +66,7 @@
           <% end %>
         <% end %>   
         <div class="relative">
-          <%= link_to course_path(course, active_nav: learner_mode ? 'courses' : 'programs') do %>
+          <%= link_to course_path(course, mode: learner_mode ? Program::LEARNER_MODE : Program::MANAGER_MODE) do %>
             <%= long_course_card_component(course: course, program:program) %>
           <% end %>
         </div>
