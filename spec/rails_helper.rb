@@ -61,7 +61,7 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    FileUtils.rm_rf(Rails.root.join('tmp/storage'))
+    FileUtils.rm_rf(Rails.root.glob('tmp/storage/*') - [Rails.root.join('tmp/storage/.keep')])
   end
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
