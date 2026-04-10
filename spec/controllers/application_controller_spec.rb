@@ -14,14 +14,6 @@ RSpec.describe ApplicationController, type: :controller do
   before { sign_in user }
 
   describe '#set_active_nav' do
-    context 'when params[:active_nav] is present' do
-      it 'uses params[:active_nav] regardless of controller' do
-        allow(controller).to receive(:controller_name).and_return('lessons')
-        get :index, params: { active_nav: 'programs' }
-        expect(assigns(:active_nav)).to eq('programs')
-      end
-    end
-
     context 'when on a top-level controller' do
       it 'sets @active_nav to dashboards' do
         allow(controller).to receive(:controller_name).and_return('dashboards')

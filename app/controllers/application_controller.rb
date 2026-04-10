@@ -55,6 +55,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_active_nav
-    @active_nav = params[:active_nav].presence || controller_name
+    @active_nav = controller_name
   end
 end

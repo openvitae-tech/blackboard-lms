@@ -207,7 +207,7 @@ class CoursesController < ApplicationController
   private
 
   def set_course_active_nav
-    @active_nav = params[:mode] == Program::LEARNER_MODE ? 'courses' : 'programs'
+    @active_nav = params[:mode] == Program::MANAGER_MODE ? 'programs' : 'courses'
   end
 
   # Use callbacks to share common setup or constraints between actions.
