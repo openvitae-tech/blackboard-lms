@@ -1,7 +1,7 @@
 <div class="flex items-center justify-between p-4 md:p-5 bg-white border border-line-colour rounded-xl">
         <div class="w-full flex flex-col gap-3">
           <div class="flex justify-between w-full">
-            <%= link_to program_path(program, mode: local_assigns[:mode], active_nav: 'programs') do %>
+            <%= link_to program_path(program, mode: local_assigns[:mode]) do %>
               <p class="main-text-lg-medium text-letter-color"><%= program.name %></p>
             <% end %>
             <div class="h-7 w-7 flex items-center justify-center">

@@ -9,7 +9,7 @@ module CardsHelper
     enrolled_program_ids = current_user.program_ids.to_set
 
     cards = programs.map do |program|
-      link_to program_path(program, mode: Program::LEARNER_MODE, active_nav: 'courses') do
+      link_to program_path(program, mode: Program::LEARNER_MODE) do
         program_card_component(program:, enrolled_program_ids:)
       end
     end
@@ -17,7 +17,7 @@ module CardsHelper
     until cards.size >= MIN_PROGRAM_CARDS
       programs.each do |program|
         cards << link_to(
-          program_path(program, mode: Program::LEARNER_MODE, active_nav: 'courses'),
+          program_path(program, mode: Program::LEARNER_MODE),
           class: 'md:hidden'
         ) do
           program_card_component(program:, enrolled_program_ids:)
