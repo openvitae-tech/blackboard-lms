@@ -2,6 +2,7 @@
 
 class LessonsController < ApplicationController
   include LessonsHelper
+  include CourseNavContext
 
   before_action :set_course
   before_action :set_course_module

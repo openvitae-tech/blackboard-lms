@@ -7,6 +7,7 @@ class ProgramsController < ApplicationController
   before_action :set_learning_partner
   before_action :set_program, except: %i[new index explore create list choose]
   before_action :set_learner_mode, only: %i[show update add_courses create_courses bulk_destroy_courses]
+  before_action :set_programs_active_nav, only: %i[explore show]
 
   def new
     authorize :program
@@ -30,7 +31,6 @@ class ProgramsController < ApplicationController
 
   def show
     authorize @program
-    @active_nav = 'courses' if @learner_mode
     @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Course::PER_PAGE_LIMIT)
     @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses)
   end
@@ -162,6 +162,13 @@ class ProgramsController < ApplicationController
 
   def set_learner_mode
     @learner_mode = params[:mode].blank? || params[:mode] == Program::LEARNER_MODE
+  end
+
+  def set_programs_active_nav
+    @active_nav = case action_name
+    when 'explore' then 'courses'
+    when 'show' then @learner_mode ? 'courses' : 'programs'
+    end
   end
 
   def set_learning_partner

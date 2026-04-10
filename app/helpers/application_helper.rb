@@ -57,7 +57,7 @@ module ApplicationHelper
   end
 
   def sidebar_active(page)
-    'item-selected' if page == controller_name
+    'item-selected' if active_nav == page
   end
 
   def duration_in_words(duration)

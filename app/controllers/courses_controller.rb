@@ -4,6 +4,7 @@ class CoursesController < ApplicationController
   include CourseAssociationsPreloader
 
   before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
+  before_action :set_course_active_nav, only: %i[show]
   before_action :set_tags, only: %i[new create edit update]
 
   include SearchContextHelper
@@ -204,6 +205,10 @@ class CoursesController < ApplicationController
   end
 
   private
+
+  def set_course_active_nav
+    @active_nav = params[:mode] == Program::MANAGER_MODE ? 'programs' : 'courses'
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course

@@ -8,10 +8,11 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :set_back_link
+  before_action :set_active_nav
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  helper_method :impersonating?
+  helper_method :impersonating?, :active_nav
 
   protected
 
@@ -47,5 +48,13 @@ class ApplicationController < ActionController::Base
 
   def set_back_link
     @back_link = params[:source_path].present? ? params[:source_path] : request.referer
+  end
+
+  def active_nav
+    @active_nav
+  end
+
+  def set_active_nav
+    @active_nav = controller_name
   end
 end
