@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   def show
     authorize @user
     @enrolled_courses = @user.courses.includes(:tags, :banner_attachment)
+    @enrollments_by_course_id = @user.enrollments.indexed_by_course(@enrolled_courses)
     service = UserStatisticsService.instance
     @user_stats = service.build_stats_for(@user)
   end

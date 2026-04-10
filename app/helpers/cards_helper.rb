@@ -16,12 +16,9 @@ module CardsHelper
 
     until cards.size >= MIN_PROGRAM_CARDS
       programs.each do |program|
-        cards << link_to(
-          program_path(program, mode: Program::LEARNER_MODE),
-          class: 'md:hidden'
-        ) do
+        cards << (link_to program_path(program, mode: Program::LEARNER_MODE), class: 'md:hidden' do
           program_card_component(program:, enrolled_program_ids:)
-        end
+        end)
       end
     end
 
@@ -30,14 +27,10 @@ module CardsHelper
 
   def course_cards(courses)
     courses ||= []
-    course_ids = courses.map(&:id)
-    enrollments = current_user.enrollments.where(course_id: course_ids)
-                              .preload(course: :course_modules)
-                              .index_by(&:course_id)
-
+    enrollments = current_user.enrollments.indexed_by_course(courses)
     courses.map do |course|
       link_to course_path(course) do
-        course_card_component(course:, enrollment: enrollments[course.id])
+        build_course_card(course, enrollments[course.id])
       end
     end
   end
@@ -48,5 +41,28 @@ module CardsHelper
     course_certificates.map do |certificate|
       certificate_card_component(certificate:)
     end
+  end
+
+  def build_course_card(course, enrollment)
+    course_card_component(**course_card_params(course, enrollment))
+  end
+
+  def build_long_course_card(course, enrollment)
+    long_course_card_component(**course_card_params(course, enrollment))
+  end
+
+  def course_card_params(course, enrollment)
+    level_tag = course.tags.find { |t| t.tag_type == 'level' }
+    {
+      title: course.title,
+      banner_url: course_banner(course, :horizontal),
+      duration: course_duration(course),
+      modules_count: modules_count(course),
+      enroll_count: enroll_count(course),
+      categories: course.tags.select { |t| t.tag_type == 'category' }.map(&:name),
+      badge: level_tag && { label: level_tag.name },
+      rating: course.rating,
+      progress: enrollment&.progress
+    }
   end
 end

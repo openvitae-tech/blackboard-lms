@@ -55,7 +55,7 @@
   </div>
   <% @courses[:explore].each do |course| %>
     <%= link_to course_path(course), class: 'block' do %>
-      <%= long_course_card_component course: %>
+      <%= build_long_course_card(course, @enrollments_by_course_id[course.id]) %>
     <% end %>
   <% end %>
   <div class="flex justify-end gap-3">
