@@ -15,7 +15,7 @@
         <div class="flex items-center justify-center gap-3 md:justify-between">
           <h2 class="main-text-lg-semibold">Explore Our Programmes</h2>
 
-          <%= link_to explore_programs_path do %>
+          <%= link_to explore_programs_path, data: { carousel_view_more: true } do %>
             <div class="hidden md:inline">
             <%= button_component text: "View More",
                                  size: 'sm',
@@ -36,7 +36,7 @@
         <div class="flex items-center gap-3 justify-between">
           <h2 class="main-text-lg-semibold">Continue Your Learning</h2>
 
-          <%= link_to continue_courses_path do %>
+          <%= link_to continue_courses_path, data: { carousel_view_more: true } do %>
             <div class="hidden md:inline">
               <%= button_component text: 'View More',
                                    size: 'sm',
@@ -76,7 +76,7 @@
                 <% section_data.each do |name, courses| %>
                   <div data-tabs-target="panelItem" class="space-y-4">
                     <%= carousel_component cards: course_cards(courses), loop: false, enable_in_small_devices: false %>
-                    <%= link_to explore_courses_path("tags[]": name), class: 'block w-fit' do %>
+                    <%= link_to explore_courses_path("tags[]": name), class: 'block w-fit', data: { carousel_view_more: true } do %>
                       <%= button_component text: "Show all Courses on #{name}",
                                           size: 'sm',
                                           type: 'outline',
