@@ -14,6 +14,21 @@ module ContentStudio
       build_course(JSON.parse(response.body))
     end
 
+    def course_stats
+      response = connection.get("#{BASE_PATH}/courses/stats")
+      data = JSON.parse(response.body)
+      CourseStats.new(
+        created: data['created'],
+        published: data['published'],
+        in_progress: data['in_progress']
+      )
+    end
+
+    def list_courses_by_status(status)
+      response = connection.get("#{BASE_PATH}/courses", { studio_status: status, limit: 12 })
+      JSON.parse(response.body).map { |c| build_course(c) }
+    end
+
     def current_user
       response = connection.get("#{BASE_PATH}/users/me")
       build_user(JSON.parse(response.body))
@@ -43,7 +58,8 @@ module ContentStudio
         course_modules_count: data['course_modules_count'],
         enrollments_count: data['enrollments_count'],
         team_enrollments_count: data['team_enrollments_count'],
-        modules: (data['modules'] || []).map { |m| build_module(m) }
+        modules: (data['modules'] || []).map { |m| build_module(m) },
+        progress: data['progress']
       )
     end
 

@@ -1,0 +1,119 @@
+<div class="flex flex-col gap-7">
+
+    <%# Greeting %>
+    <p class="heading-2xl text-letter-color">Hey Creator !</p>
+
+    <%# ── Section 1: Stats Cards ── %>
+    <div class="flex gap-7 items-stretch">
+      <div class="bg-primary-light-50 border border-slate-grey-light rounded-2xl p-5 flex gap-4 items-center flex-1">
+        <%= icon('book-open', css: 'w-7 h-7 text-primary', span_css: 'bg-white rounded-xl w-14 h-14 shrink-0') %>
+        <div class="flex flex-col gap-1">
+          <p class="heading-xl text-letter-color"><%= @stats.created %> Courses</p>
+          <p class="general-text-lg-normal text-letter-color">Created</p>
+        </div>
+      </div>
+
+      <div class="bg-primary-light-50 border border-slate-grey-light rounded-2xl p-5 flex gap-4 items-center flex-1">
+        <%= icon('check-badge', css: 'w-7 h-7 text-primary', span_css: 'bg-white rounded-xl w-14 h-14 shrink-0') %>
+        <div class="flex flex-col gap-1">
+          <p class="heading-xl text-letter-color"><%= @stats.published %> Courses</p>
+          <p class="general-text-lg-normal text-letter-color">Published</p>
+        </div>
+      </div>
+
+      <div class="bg-primary-light-50 border border-slate-grey-light rounded-2xl p-5 flex gap-4 items-center flex-1">
+        <%= icon('clock', css: 'w-7 h-7 text-primary', span_css: 'bg-white rounded-xl w-14 h-14 shrink-0') %>
+        <div class="flex flex-col gap-1">
+          <p class="heading-xl text-letter-color"><%= @stats.in_progress %> Courses</p>
+          <p class="general-text-lg-normal text-letter-color">In Progress</p>
+        </div>
+      </div>
+    </div>
+
+    <%# ── Section 2: Main Action ── %>
+    <div class="bg-white border border-line-colour-light rounded-4xl p-8 flex gap-5 items-center">
+      <%# Image placeholder — to be replaced with animation/gif %>
+      <%= image_tag 'cta_placeholder.png', class: 'border border-line-colour-light rounded-2xl w-72 h-80 shrink-0 object-cover', alt: '' %>
+
+      <div class="flex flex-col gap-5 items-center flex-1">
+        <%= icon('rocket-launch', css: 'w-10 h-10 text-primary', span_css: 'bg-primary-light-50 rounded-2xl w-24 h-24') %>
+        <div class="flex flex-col gap-3 items-center text-center w-full">
+          <p class="heading-3xl text-primary">Transform Documents into engaging Courses</p>
+          <p class="general-text-lg-normal text-letter-color">
+            Upload Documents → Configure Video style → Finalize Course Structure
+          </p>
+        </div>
+        <div class="w-fit">
+          <%= button_component(text: 'Create New Course', colorscheme: 'primary', size: 'lg',
+                               html_options: { href: '#' }) %>
+        </div>
+      </div>
+    </div>
+
+    <%# ── Section 3: Your Creations ── %>
+    <div class="flex flex-col gap-3">
+      <p class="heading-xl text-primary px-2">Your Creations</p>
+
+      <div class="bg-white border-2 border-line-colour-light rounded-xl pt-4 pb-5 px-5 flex flex-col gap-4">
+        <div data-controller="tabs"
+             data-tabs-active-class="text-letter-color border-b-2 border-slate-grey">
+
+          <%# Tab headers %>
+          <div class="flex gap-5 border-b border-line-colour mb-4">
+            <div class="py-1 cursor-pointer general-text-md-medium text-letter-color-light"
+                 data-tabs-target="tabItem"
+                 data-action="click->tabs#select">
+              To be Verified
+            </div>
+            <div class="py-1 cursor-pointer general-text-md-medium text-letter-color-light"
+                 data-tabs-target="tabItem"
+                 data-action="click->tabs#select">
+              Verified
+            </div>
+            <div class="py-1 cursor-pointer general-text-md-medium text-letter-color-light"
+                 data-tabs-target="tabItem"
+                 data-action="click->tabs#select">
+              Published
+            </div>
+          </div>
+
+          <%# To be Verified panel %>
+          <div data-tabs-target="panelItem">
+            <% if @to_be_verified.any? %>
+              <% cards = @to_be_verified.map { |course| studio_course_card(course, 'to_be_verified') } %>
+              <%= carousel_component(cards: cards, loop: false) %>
+            <% else %>
+              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No courses to verify yet.</p>
+            <% end %>
+          </div>
+
+          <%# Verified panel %>
+          <div class="hidden" data-tabs-target="panelItem">
+            <% if @verified.any? %>
+              <% cards = @verified.map { |course| studio_course_card(course, 'verified') } %>
+              <%= carousel_component(cards: cards, loop: false) %>
+            <% else %>
+              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No verified courses yet.</p>
+            <% end %>
+          </div>
+
+          <%# Published panel %>
+          <div class="hidden" data-tabs-target="panelItem">
+            <% if @published.any? %>
+              <% cards = @published.map { |course| studio_course_card(course, 'published') } %>
+              <%= carousel_component(cards: cards, loop: false) %>
+            <% else %>
+              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No published courses yet.</p>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="w-fit">
+          <%= button_component(text: 'Show all Creations', type: 'outline', size: 'sm',
+                               icon_name: 'chevron-right', icon_position: 'right',
+                               html_options: { href: '#' }) %>
+        </div>
+      </div>
+    </div>
+
+</div>

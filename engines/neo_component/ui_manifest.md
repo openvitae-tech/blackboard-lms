@@ -231,12 +231,36 @@ chip_component(
 
 ### `course_card_component`
 ```ruby
-course_card_component(course:, enrollment: nil)
+course_card_component(
+  title:,
+  banner_url:,
+  duration:,
+  modules_count:,
+  enroll_count:,
+  categories: [],
+  rating: nil,
+  progress: nil,
+  badge: nil,              # nil or Hash with :text, optional :bg_color, :text_color
+  description: nil,
+  highlights: []
+)
 ```
 
 ### `long_course_card_component`
 ```ruby
-long_course_card_component(course:, enrollment: nil, program: nil)
+long_course_card_component(
+  title:,
+  banner_url:,
+  duration:,
+  modules_count:,
+  enroll_count:,
+  categories: [],
+  rating: nil,
+  progress: nil,
+  badge: nil,              # nil or Hash with :text, optional :bg_color, :text_color
+  description: nil,
+  highlights: []
+)
 ```
 
 ### `program_card_component`

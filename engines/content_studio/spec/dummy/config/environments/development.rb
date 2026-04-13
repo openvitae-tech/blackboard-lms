@@ -2,6 +2,7 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   config.enable_reloading = true
+  config.file_watcher = ActiveSupport::FileUpdateChecker
   config.assets.quiet = true
   config.assets.compile = true
   config.assets.debug = true
