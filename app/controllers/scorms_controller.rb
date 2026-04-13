@@ -1,4 +1,6 @@
 class ScormsController < ApplicationController
+  include CourseNavContext
+
   before_action :set_course
   before_action :set_learning_partners, only: :new
 

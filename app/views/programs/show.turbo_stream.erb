@@ -1,3 +1,3 @@
 <%= turbo_stream.update "program-courses" do %>
-  <%= render "course_list", program: @program, courses: @courses %>
+  <%= render "course_list", program: @program, courses: @courses, learner_mode: @learner_mode %>
 <% end %>

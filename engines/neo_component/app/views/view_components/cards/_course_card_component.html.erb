@@ -1,51 +1,67 @@
-<div class="items-stretch rounded-xl border border-line-colour bg-white h-full w-auto md:w-[312px]">
+<div class="group relative items-stretch rounded-xl border border-line-colour bg-white h-full w-auto md:w-[312px]">
   <div class="w-full relative">
-    <div class="absolute top-0 left-0 z-10 flex flex-wrap justify-start gap-2 heading">
-      <% course.tags.each do |tag| %>
-        <% if tag.tag_type == "level" %>
-          <span class="px-2 py-1 general-text-sm-medium bg-secondary text-primary-dark rounded-tl-xl rounded-br-xl border border-line-colour">
-            <%= tag.name %>
-          </span>
-        <% end %>
-      <% end %>
-    </div>
+    <% if badge.present? %>
+      <div class="absolute top-0 left-0 z-10 px-2 py-1 general-text-sm-medium <%= badge[:bg_color] %> <%= badge[:text_color] %> rounded-tl-xl rounded-br-[12px] border-b border-r border-line-colour">
+        <%= badge[:label] %>
+      </div>
+    <% end %>
     <div class="absolute bottom-0 right-4 z-10 px-1 py-0.5 bg-primary-light-100 rounded-t">
-      <span class="general-text-sm-normal"><%= course_duration(course) %></span>
+      <span class="general-text-sm-normal"><%= duration %></span>
     </div>
-    <%= image_tag course_banner(course, :horizontal), class: 'w-full h-[120px] rounded-t-xl object-cover' %>
+    <%= image_tag banner_url, class: 'w-full h-[120px] rounded-t-xl object-cover' %>
   </div>
-  <% if enrollment %>
-  <div class="h-1 bg-primary rounded-r mt-1" style="width: <%= enrollment.progress %>%"></div>
-  <% end %>
+  <div class="h-1 w-full <%= 'bg-primary-light-100' if progress.present? %>">
+    <% if progress.present? %>
+      <div class="h-1 bg-primary rounded-r" style="width: <%= progress %>%"></div>
+    <% end %>
+  </div>
   <div class="flex flex-col gap-4 px-4 pb-5 mt-2">
     <p class="overflow-hidden text-ellipsis line-clamp-2 main-text-lg-semibold h-12">
-      <%= course.title %>
+      <%= title %>
     </p>
     <div class="flex justify-between">
-      <% if course.rating.present? %>
+      <% if rating.present? %>
         <div class="flex items-center gap-0.5 p-0.5">
           <%= icon("star-transparent", css: "h-4 w-4 text-primary fill-primary") %>
-          <span class="general-text-sm-normal"><%= course.rating %></span>
+          <span class="general-text-sm-normal"><%= rating %></span>
         </div>
       <% end %>
       <div class="flex items-center gap-1">
         <div class="flex items-center gap-1 p-0.5">
           <%= icon("lessons", css: "h-4 w-4 text-primary") %>
-          <span class="general-text-sm-normal"><%= pluralize(modules_count(course), 'Lesson') %></span>
+          <span class="general-text-sm-normal"><%= pluralize(modules_count, 'Lesson') %></span>
         </div>
         <div class="w-[1px] h-4 bg-slate-grey-light"></div>
         <div class="flex items-center gap-1 p-0.5">
           <%= icon("user", css: "h-4 w-4 text-primary") %>
-          <span class="general-text-sm-normal"><%= enroll_count(course) %></span>
+          <span class="general-text-sm-normal"><%= enroll_count %></span>
         </div>
       </div>
     </div>
-    <div class="flex flex-wrap gap-2 md:h-[24px] overflow-x-hidden overflow-y-auto whitespace-nowrap">
-      <% course.tags.each do |tag| %>
-        <% if tag.tag_type == "category" %>
-          <%= chip_component(text: tag.name , colorscheme: 'primary', icon_name: 'check') %>
-        <% end %>
+    <div class="flex items-center gap-2">
+      <% categories.first(2).each do |category| %>
+        <%= chip_component(text: category, colorscheme: 'primary', icon_name: 'check') %>
+      <% end %>
+      <% overflow = categories.length - 2 %>
+      <% if overflow > 0 %>
+        <span class="general-text-sm-normal text-primary whitespace-nowrap">+<%= overflow %></span>
       <% end %>
     </div>
   </div>
+  <% if description.present? %>
+    <div class="hidden md:group-hover:block absolute left-full top-0 z-50 ml-3 w-56">
+      <div class="relative bg-primary-light-50 border border-primary-light rounded-lg p-4 shadow-md">
+        <div class="absolute top-8 -left-2 w-3 h-3 rotate-45 bg-primary-light-50 border-b border-r border-primary-light"></div>
+        <p class="main-text-lg-semibold"><%= title %></p>
+        <p class="general-text-md-normal text-letter-color mt-1"><%= description %></p>
+        <% if highlights.present? %>
+          <ul class="mt-2 space-y-1 list-disc ml-5">
+            <% highlights.each do |highlight| %>
+              <li class="general-text-md-normal"><%= highlight %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>

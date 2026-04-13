@@ -4,6 +4,7 @@ class CoursesController < ApplicationController
   include CourseAssociationsPreloader
 
   before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
+  before_action :set_course_active_nav, only: %i[show]
   before_action :set_tags, only: %i[new create edit update]
 
   include SearchContextHelper
@@ -32,16 +33,18 @@ class CoursesController < ApplicationController
     search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term], type: params[:type])
     @courses[:explore] = Courses::FilterService.new(current_user, search_context).filter.records
                                                .preload(:tags, :banner_attachment).page(filter_params[:page])
+    @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses[:explore])
 
     @tags = Tag.load_tags
   end
 
   def continue
     authorize :course
-    
+
     search_context = build_search_context type: SearchContext::INCOMPLETE
     @courses = Courses::FilterService.new(current_user, search_context).filter.records
                                     .preload(:tags, :banner_attachment).page(filter_params[:page])
+    @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses)
     @tags = Tag.load_tags
   end
 
@@ -51,6 +54,7 @@ class CoursesController < ApplicationController
     @courses = Courses::FilterService.new(current_user, search_context).filter.records
                                     .preload(:tags, :banner_attachment)
                                     .page(filter_params[:page])
+    @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses)
     @tags = Tag.load_tags
   end
 
@@ -201,6 +205,10 @@ class CoursesController < ApplicationController
   end
 
   private
+
+  def set_course_active_nav
+    @active_nav = params[:mode] == Program::MANAGER_MODE ? 'programs' : 'courses'
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course

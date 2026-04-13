@@ -1,7 +1,7 @@
 <ul class="w-full">
   <% modules_in_order(course).each_with_index do |course_module, index| %>
 
-    <li class="first:rounded-t-lg first:md:rounded-t-xl last:rounded-b-lg last:md:rounded-b-xl border border-line-colour border-b-0 border-t-2 first:border-t last:border-b">
+    <li class="first:rounded-t-lg first:md:rounded-t-xl last:rounded-b-lg last:md:rounded-b-xl border border-line-colour border-b-0 border-t first:border-t last:border-b">
 
       <% header_content = capture do %>
         <%= render 'courses/module_accordion_header', course: @course, enrollment: @enrollment, course_module: course_module, index: index %>

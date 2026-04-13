@@ -1,15 +1,16 @@
-<%= modal_component(title: 'Delete program?') do %>
-  <%= form_with(url: program_path(@program), method: :delete, class: "flex flex-col gap-6") do |form| %>
-    <div class="p-2">
-      <div class="pl-4 pt-2">
-        <p class="text-sm text-gray-700">
-          <%= t("alert.description", label: @program.name, resource_name: "program").html_safe %>
-        </p>
-      </div>
-    </div>
-    <div class="flex justify-end gap-4 border-t border-line-colour-light p-4">
-      <%= form.button "Cancel", class: "px-4 py-2 rounded text-sm", data: { action: "click->modals#closeModal" } %>
-      <%= form.button "Delete", class: "bg-danger text-white px-4 py-2 rounded text-sm" %>
-    </div>
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white w-full">
+    <%= button_tag type: "button", class: "flex-1", data: { action: "click->modals#closeModal" } do %>
+      <%= button_component(text: t("button.cancel"), type: "outline") %>
+    <% end %>
+    <%= button_tag form: "destroy-program-form", class: "flex-1" do %>
+      <%= button_component(text: t("button.delete"), colorscheme: "danger") %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= modal_box_component(title: t("programs.delete.title"), modal_footer:) do %>
+  <%= form_with(url: program_path(@program, term: params[:term]), method: :delete, id: "destroy-program-form") do |form| %>
+    <p class="text-sm text-letter-color-light"><%= t("programs.delete.confirm", name: @program.name) %></p>
   <% end %>
 <% end %>

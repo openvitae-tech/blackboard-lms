@@ -1,19 +1,32 @@
-<div class="rounded-xl border border-line-colour relative max-h-[104px] md:max-h-[132px]">
-  <div class="w-full rounded relative flex gap-1">
-    <div class="absolute top-0 left-0 z-10 flex flex-wrap justify-start gap-2 heading">
-      <% course.tags.each do |tag| %>
-        <% if tag.tag_type == "level" %>
-          <span class="px-2 py-1 text-xs font-medium bg-secondary text-primary-dark rounded-tl-xl rounded-br-xl  border border-line-colour">
-            <%= tag.name %>
-          </span>
+<div class="group rounded-xl border border-line-colour relative md:max-h-[132px]">
+  <% if description.present? %>
+    <div class="hidden md:group-hover:block absolute left-0 bottom-full z-50 mb-3 w-80">
+      <div class="relative bg-primary-light-50 border border-primary-light rounded-lg p-4 shadow-md">
+        <p class="main-text-lg-semibold"><%= title %></p>
+        <p class="general-text-md-normal text-letter-color mt-1"><%= description %></p>
+        <% if highlights.present? %>
+          <ul class="mt-2 space-y-1 list-disc ml-5">
+            <% highlights.each do |highlight| %>
+              <li class="general-text-md-normal"><%= highlight %></li>
+            <% end %>
+          </ul>
         <% end %>
-      <% end %>
+        <div class="absolute -bottom-2 left-8 w-3 h-3 rotate-45 bg-primary-light-50 border-b border-r border-primary-light"></div>
+      </div>
     </div>
+  <% end %>
 
-    <div class="relative">
-      <%= image_tag course_banner(course, :horizontal), class: 'w-[100px] md:w-[297px] h-[104px] md:h-[132px] rounded-l-xl object-cover' %>
+  <div class="w-full rounded relative flex gap-1">
+    <% if badge.present? %>
+      <div class="absolute top-0 left-0 z-10 px-2 py-1 general-text-sm-medium <%= badge[:bg_color] %> <%= badge[:text_color] %> rounded-tl-xl rounded-br-[8px] border-b border-r border-line-colour">
+        <%= badge[:label] %>
+      </div>
+    <% end %>
+
+    <div class="relative self-stretch">
+      <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-full md:h-[132px] rounded-l-xl object-cover' %>
       <span class="absolute bottom-0 right-4 z-10 flex rounded-t-md bg-primary-light-100 general-text-sm-normal py-0.5 px-1 text-primary-dark">
-          <%= course_duration(course) %>
+          <%= duration %>
       </span>
     </div>
 
@@ -22,16 +35,16 @@
         <div class="flex justify-between">
           <div class="max-w-[148px] md:max-w-[716px]">
             <p class="main-text-md-medium text-primary overflow-hidden md:whitespace-nowrap md:text-ellipsis line-clamp-2">
-              <%= course.title %>
+              <%= title %>
             </p>
           </div>
         </div>
 
-        <div class="flex gap-3 md:gap-4">
-          <% if course.rating.present? %>
+        <div class="flex gap-3 md:gap-4 items-center">
+          <% if rating.present? %>
             <div class="flex items-center">
               <%= icon("star-transparent", css: "h-4 w-4 text-primary fill-primary") %>
-              <span class="ml-2 general-text-sm-normal"><%= course.rating %></span>
+              <span class="ml-2 general-text-sm-normal"><%= rating %></span>
             </div>
             <div class="w-px h-full bg-slate-grey-light md:hidden"></div>
 
@@ -39,21 +52,34 @@
           <div class="flex gap-3 md:gap-1">
             <div class="flex items-center">
               <%= icon("book", css: "h-4 w-4 text-primary") %>
-              <span class="ml-2 general-text-sm-normal"><%= modules_count(course) %></span>
+              <span class="ml-2 general-text-sm-normal"><%= modules_count %></span>
             </div>
             <div class="w-px h-full bg-slate-grey-light"></div>
             <div class="flex items-center">
               <%= icon("user", css: "h-4 w-4 text-primary") %>
-              <span class="ml-2 general-text-sm-normal"><%= enroll_count(course) %></span>
+              <span class="ml-2 general-text-sm-normal"><%= enroll_count %></span>
             </div>
           </div>
+          <% if progress.present? %>
+            <div class="h-1 w-[151px] hidden md:block bg-primary-light-100 rounded-sm">
+              <div class="h-1 bg-primary rounded-sm" style="width: <%= progress %>%"></div>
+            </div>
+          <% end %>
         </div>
 
-        <div class="flex flex-wrap gap-2 h-[24px] hidden md:block">
-          <% course.tags.each do |tag| %>
-            <% if tag.tag_type == "category" %>
-              <%= chip_component(text: tag.name , colorscheme: 'primary', icon_name: 'check') %>
-            <% end %>
+        <% if progress.present? %>
+          <div class="h-0.5 w-full md:hidden bg-primary-light-100 rounded-sm">
+            <div class="h-0.5 bg-primary rounded-sm" style="width: <%= progress %>%"></div>
+          </div>
+        <% end %>
+
+        <div class="hidden md:flex items-center gap-2">
+          <% categories.first(2).each do |category| %>
+            <%= chip_component(text: category, colorscheme: 'primary', icon_name: 'check') %>
+          <% end %>
+          <% overflow = categories.length - 2 %>
+          <% if overflow > 0 %>
+            <span class="general-text-sm-normal text-primary whitespace-nowrap">+<%= overflow %></span>
           <% end %>
         </div>
 

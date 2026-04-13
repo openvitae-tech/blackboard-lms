@@ -2,6 +2,8 @@
 
 module NeoComponents
   class ApplicationController < ::ApplicationController
+    before_action -> { @active_nav = 'settings' }
+
     helper NeoComponents::Engine.routes.url_helpers
 
     helper do

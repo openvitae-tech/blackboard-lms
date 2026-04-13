@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CertificateTemplatesController < ApplicationController
+  before_action -> { @active_nav = 'learning_partners' }
   before_action :set_learning_partner
   before_action :set_certificate_template, only: %i[update confirm_destroy destroy]
 

@@ -34,4 +34,22 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.query_url(path, query)).to eq('')
     end
   end
+
+  describe '#sidebar_active' do
+    before { helper.define_singleton_method(:active_nav) { @active_nav } }
+
+    it 'returns item-selected when active_nav matches page' do
+      assign(:active_nav, 'courses')
+      expect(helper.sidebar_active('courses')).to eq('item-selected')
+    end
+
+    it 'returns nil when active_nav does not match page' do
+      assign(:active_nav, 'courses')
+      expect(helper.sidebar_active('programs')).to be_nil
+    end
+
+    it 'returns nil when active_nav is not set' do
+      expect(helper.sidebar_active('courses')).to be_nil
+    end
+  end
 end

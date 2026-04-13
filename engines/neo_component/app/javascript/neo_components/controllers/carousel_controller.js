@@ -33,6 +33,18 @@ export default class extends Controller {
         }
       },
     })
+
+    this.toggleControls()
+    this.swiper.on('resize', () => this.toggleControls())
+  }
+
+  toggleControls() {
+    const locked = this.swiper.isLocked
+    this.prevTarget.classList.toggle('hidden', locked)
+    this.nextTarget.classList.toggle('hidden', locked)
+
+    const viewMore = this.element.parentElement?.querySelector('[data-carousel-view-more]')
+    if (viewMore) viewMore.classList.toggle('hidden', locked)
   }
 
   disconnect() {

@@ -6,6 +6,8 @@ class ProgramsController < ApplicationController
 
   before_action :set_learning_partner
   before_action :set_program, except: %i[new index explore create list choose]
+  before_action :set_learner_mode, only: %i[show update add_courses create_courses bulk_destroy_courses]
+  before_action :set_programs_active_nav, only: %i[explore show]
 
   def new
     authorize :program
@@ -14,7 +16,7 @@ class ProgramsController < ApplicationController
 
   def index
     authorize :program
-    @programs = @learning_partner.programs
+    @programs = @learning_partner.programs.filter_by_name(params[:term]).order(created_at: :desc).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
   end
 
   def explore
@@ -29,7 +31,8 @@ class ProgramsController < ApplicationController
 
   def show
     authorize @program
-    @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
+    @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Course::PER_PAGE_LIMIT)
+    @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses)
   end
 
   def create
@@ -38,6 +41,7 @@ class ProgramsController < ApplicationController
 
     if @program.save
       flash[:success] = t("resource.created", resource_name: "Program")
+      @programs = @learning_partner.programs.filter_by_name(params[:term]).order(created_at: :desc).page(1).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
       render :new, status: :unprocessable_content
     end
@@ -52,6 +56,9 @@ class ProgramsController < ApplicationController
     authorize @program
     if @program.update(program_params)
       flash[:success] = t("resource.updated", resource_name: "Program")
+      @courses = @program.courses.includes(:tags, :banner_attachment).page(params[:page]).per(Course::PER_PAGE_LIMIT)
+      @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses)
+      @programs = @learning_partner.programs.filter_by_name(params[:term]).order(created_at: :desc).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
     else
       render :edit, status: :unprocessable_content
     end
@@ -85,7 +92,7 @@ class ProgramsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.redirect_to(program_path(@program))
+        render turbo_stream: turbo_stream.redirect_to(program_path(@program, mode: Program::MANAGER_MODE))
       end
     end
   end
@@ -98,7 +105,12 @@ class ProgramsController < ApplicationController
     authorize @program
     @program.destroy!
     flash[:success] = t("resource.deleted", resource_name: "Program")
+    @programs = @learning_partner.programs.filter_by_name(params[:term]).order(created_at: :desc).page(params[:page]).per(Program::DEFAULT_PER_PAGE_SIZE)
     flash.discard
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to programs_path }
+    end
   end
 
   def confirm_bulk_destroy_courses
@@ -119,7 +131,7 @@ class ProgramsController < ApplicationController
     flash.discard
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.redirect_to(program_path(@program, page: get_current_page(record: @program.courses, page: params[:page])))
+        render turbo_stream: turbo_stream.redirect_to(program_path(@program, page: get_current_page(record: @program.courses, page: params[:page]), mode: params[:mode]))
       end
     end
   end
@@ -147,6 +159,17 @@ class ProgramsController < ApplicationController
   end
 
   private
+
+  def set_learner_mode
+    @learner_mode = params[:mode].blank? || params[:mode] == Program::LEARNER_MODE
+  end
+
+  def set_programs_active_nav
+    @active_nav = case action_name
+    when 'explore' then 'courses'
+    when 'show' then @learner_mode ? 'courses' : 'programs'
+    end
+  end
 
   def set_learning_partner
     @learning_partner = LearningPartner.find(current_user.learning_partner_id)

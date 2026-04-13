@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CourseAssignsController < ApplicationController
+  before_action -> { @active_nav = 'teams' }
   before_action :authorize_actions
   before_action :set_user_or_team
 

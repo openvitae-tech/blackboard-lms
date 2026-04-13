@@ -12,7 +12,7 @@
     </p>
     <div class="flex flex-wrap gap-4">
       <% @enrolled_courses.each do |course| %>
-        <%= course_card_component(course: course, enrollment: current_user.get_enrollment_for(course)) %>
+        <%= build_course_card(course, @enrollments_by_course_id[course.id]) %>
       <% end %>
     </div>
   <% end %>

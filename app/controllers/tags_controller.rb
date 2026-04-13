@@ -3,6 +3,7 @@
 class TagsController < ApplicationController
   include PaginationConcern
 
+  before_action -> { @active_nav = 'settings' }
   before_action :set_tag, only: [:edit, :update, :destroy]
 
   def new

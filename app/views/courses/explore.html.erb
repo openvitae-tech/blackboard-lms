@@ -55,7 +55,7 @@
   </div>
   <% @courses[:explore].each do |course| %>
     <%= link_to course_path(course), class: 'block' do %>
-      <%= long_course_card_component course: %>
+      <%= build_long_course_card(course, @enrollments_by_course_id[course.id]) %>
     <% end %>
   <% end %>
   <div class="flex justify-end gap-3">
@@ -68,7 +68,7 @@
     <div class="flex items-center gap-3 justify-between">
       <h2 class="main-text-lg-semibold">Continue Your Learning</h2>
       
-      <%= link_to continue_courses_path do %>
+      <%= link_to continue_courses_path, data: { carousel_view_more: true } do %>
         <div class="hidden md:inline">
           <%= button_component text: 'View More',
                                size: 'sm',
