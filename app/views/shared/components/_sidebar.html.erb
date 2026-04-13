@@ -13,23 +13,21 @@
     <div class="flex h-[calc(100vh-60px)] md:h-full flex-col justify-between z-150 px-3 py-3">
       <ul class="flex flex-col gap-1">
         <% if policy(:dashboard).index? %>
-
-          <li class="flex items-center gap-1 pt-5 pb-1 px-5">
+          <li class="flex items-center gap-1 pt-5 pb-1 px-4 md:px-5">
             <span class="general-text-lg-normal text-letter-color-light">Managing</span>
             <div class="flex-1 h-px bg-letter-color-light"></div>
           </li>
           <li class="side-bar-item <%= sidebar_active('dashboards') %> relative">
-            <%= link_to dashboards_path, class: "side-bar-item-inner px-5 py-4" do %>
+            <%= link_to dashboards_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("chart-bar", css: "h-5 w-5 text-letter-color") %>
               <span class="main-text-lg-medium">Dashboard</span>
             <% end %>
             <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
-
           </li>
         <% end %>
         <% if current_user.privileged_user? %>
           <li class="side-bar-item <%= sidebar_active('programs') %> relative">
-            <%= link_to programs_path, class: "side-bar-item-inner px-5 py-4" do %>
+            <%= link_to programs_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("rectangle-group", css: "h-5 w-5 text-letter-color") %>
               <span class="main-text-lg-medium">Programs</span>
             <% end %>
@@ -38,7 +36,7 @@
         <% end %>
          <% if policy(current_user.team || :team).show? %>
           <li class="side-bar-item <%= sidebar_active('teams') %> relative">
-            <%= link_to team_path(current_user.team), class: "side-bar-item-inner px-5 py-4" do %>
+            <%= link_to team_path(current_user.team), class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("user-group", css: "h-5 w-5 text-letter-color") %>
               <span class="main-text-lg-medium"><%= t('team.label') %></span>
             <% end %>
@@ -47,7 +45,7 @@
         <% end %>
         <% if policy(:learning_partner).show? %>
           <li class="side-bar-item <%= sidebar_active('learning_partners') %> relative">
-            <%= link_to learning_partners_path, class: "side-bar-item-inner px-5 py-4" do %>
+            <%= link_to learning_partners_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("user-group", css: "h-5 w-5 text-letter-color") %>
               <span class="main-text-lg-medium">Partners</span>
             <% end %>
@@ -56,20 +54,20 @@
         <% end %>
         <% if current_user.is_admin? %>
           <li class="side-bar-item <%= sidebar_active('settings') %> relative">
-            <%= link_to settings_path, class: "side-bar-item-inner px-5 py-4" do %>
+            <%= link_to settings_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("rectangle-group", css: "h-5 w-5 text-letter-color") %>
               <span class="main-text-lg-medium">Assets</span>
             <% end %>
             <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
           </li>
         <% end %>
-        <%# 'my_courses' is a synthetic value set when accessing programs from the courses flow %>
         <li class="flex items-center gap-1 pt-5 pb-1 px-5">
           <span class="general-text-lg-normal text-letter-color-light">Learning</span>
           <div class="flex-1 h-px bg-letter-color-light"></div>
         </li>
+        <%# 'my_courses' is a synthetic value set when accessing programs from the courses flow %>
         <li class="side-bar-item <%= sidebar_active('courses') %> relative">
-          <%= link_to courses_path, class: "side-bar-item-inner px-5 py-4" do %>
+          <%= link_to courses_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
             <%= icon("book-open", css: "h-5 w-5 text-letter-color") %>
             <span class="main-text-lg-medium">Explore</span>
           <% end %>
@@ -77,7 +75,7 @@
         </li>
         <% if policy(:my_profile).show? %>
           <li class="side-bar-item <%= sidebar_active('my_profiles') %> relative">
-              <%= link_to profile_path, class: "side-bar-item-inner px-5 py-4" do %>
+              <%= link_to profile_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
                 <%= icon("user-circle", css: "h-5 w-5 text-letter-color") %>
                 <span class="main-text-lg-medium"><%= t("my_profile.label") %></span>
               <% end %>
@@ -90,7 +88,7 @@
             <div class="flex-1 h-px bg-letter-color-light"></div>
           </li>
         <li class="side-bar-item <%= sidebar_active('supports') %> relative">
-          <%= link_to supports_path, class: "side-bar-item-inner px-5 py-4 py-4" do %>
+          <%= link_to supports_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4 py-4" do %>
             <%= icon("question-mark-circle", css: "h-5 w-5 text-letter-color") %>
             <span class="main-text-lg-medium">Support</span>
           <% end %>
