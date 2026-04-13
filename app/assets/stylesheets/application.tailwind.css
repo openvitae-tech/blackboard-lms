@@ -158,24 +158,27 @@ body {
   }
 
   .side-bar-item {
-    @apply h-11 ps-8;
-
     span {
       @apply text-sm font-medium;
     }
   }
 
   .side-bar-item-inner:hover {
+    @apply bg-primary-light-50 rounded-2xl;
     span {
       @apply text-primary;
     }
-    .icon {
-      @apply bg-primary;
+    svg {
+      @apply text-primary;
     }
+
+  .sidebar-indicator{
+    @apply bg-primary-light-50;
+  }
   }
 
   .side-bar-item-inner {
-    @apply flex  w-full h-11 flex-row items-center gap-4 font-poppins;
+    @apply flex  w-full flex-row items-center gap-4 font-poppins;
   }
 
   .side-bar-footer {
@@ -257,24 +260,35 @@ body {
 }
 
 .item-selected {
-  @apply bg-primary text-white;
+  @apply bg-primary text-white  rounded-2xl;
 
   span {
     @apply text-white;
   }
 
-  .icon {
-    @apply bg-white;
+  svg {
+    @apply text-white;
+  }
+  
+  .sidebar-indicator{
+    @apply bg-secondary;
   }
 }
 
 .item-selected:hover {
+
+  .side-bar-item-inner {
+    @apply bg-primary text-white  rounded-2xl;
+  }
   span {
     @apply text-primary-light-50;
   }
 
-  .icon {
-    @apply bg-primary-light-50;
+  svg {
+    @apply text-primary-light-50;
+  }
+  .sidebar-indicator{
+    @apply bg-secondary;
   }
 }
 

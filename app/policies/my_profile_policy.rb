@@ -9,15 +9,15 @@ class MyProfilePolicy
   end
 
   def show?
-    user.is_learner?
+    !user.is_admin?
   end
 
   def share_certificate?
-    user.is_learner?
+    !user.is_admin?
   end
 
   def generate_certificate?
-    user.is_learner?
+    !user.is_admin?
   end
 
   def certificates?
