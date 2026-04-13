@@ -16,4 +16,12 @@ class AppConfigService
   def chatwoot_enabled?
     CONFIG[:enable_chatwoot]
   end
+
+  def neo_ai_get_course_url
+    CONFIG[:neo_ai_get_course_url]
+  end
+
+  def neo_ai_token_url
+    CONFIG[:neo_ai_token_url]
+  end
 end

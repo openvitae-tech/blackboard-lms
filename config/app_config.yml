@@ -17,6 +17,8 @@ staging:
 
 development:
   <<: *default
+  neo_ai_get_course_url: "http://127.0.0.1:8000/api/v1/course"
+  neo_ai_token_url: "http://127.0.0.1:8000/api/v1/token"
 
 test:
   <<: *default
