@@ -6,6 +6,7 @@ module Api
       skip_before_action :verify_authenticity_token
 
       FIXTURES_PATH = File.expand_path('../../../../../fixtures/api', __dir__)
+      ALLOWED_STATUSES = %w[to_be_verified verified published].freeze
 
       def stats
         render json: File.read(File.join(FIXTURES_PATH, 'course_stats.json'))
@@ -13,6 +14,8 @@ module Api
 
       def index
         status = params[:studio_status]
+        return render json: [] unless ALLOWED_STATUSES.include?(status)
+
         path = File.join(FIXTURES_PATH, 'courses', "#{status}.json")
         if File.exist?(path)
           render json: File.read(path)
