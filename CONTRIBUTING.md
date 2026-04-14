@@ -96,8 +96,9 @@ Developer                          Claude Code Agents
                                   10. Agent fixes immediately in session
                                       Repeat until output matches Figma
 
-                                  11. @qa-agent runs full suite
-                                      - bundle exec rspec
+                                  11. @qa-agent runs both suites separately
+                                      - bundle exec rspec engines/content_studio/spec/
+                                      - bundle exec rspec spec/
                                       - bundle exec rubocop
                                       - Reports failures back to agents
 
@@ -134,7 +135,7 @@ For direct coding tasks without full agent orchestration.
    f. System spec(s)
 
 5. Verify:
-   bundle exec rspec engines/content_studio
+   bundle exec rspec engines/content_studio/spec/
    bundle exec rubocop
 
 6. Open PR from task/<name> into feature/content-studio-v1
@@ -191,11 +192,24 @@ Merge `main` into your feature branch when a blocking upstream change lands. Avo
 
 ## Running Tests
 
+**Engine specs and host app specs must be run in separate processes.** Each suite boots a distinct Rails application — Content Studio specs use `Dummy::Application` (defined in `engines/content_studio/spec/dummy/`), while host app specs use `Blackboard::Application`. Ruby cannot initialize both in the same process; attempting to do so will raise `Application has been already initialized`.
+
 ```bash
-bundle exec rspec                  # Full suite
-bundle exec rspec engines/content_studio  # Content Studio only
-bundle exec rubocop                # Lint + custom cops
+# Host app specs
+bundle exec rspec spec/
+
+# Content Studio engine specs (boots Dummy::Application, not Blackboard)
+bundle exec rspec engines/content_studio/spec/
+
+# Lint — covers all files including engines
+bundle exec rubocop
 ```
+
+In CI, run the two suites sequentially as separate steps rather than as a single `bundle exec rspec` invocation.
+
+#### Why this separation exists
+
+`.rspec` uses `--require spec_helper` (lightweight, no Rails boot) instead of `--require rails_helper`. Each spec file carries an explicit `require 'rails_helper'` (host) or `require_relative '../../rails_helper'` (engine), so the correct application is booted for whichever suite is running. Adding `--require rails_helper` back to `.rspec` would cause Blackboard to boot first for every run, breaking engine spec isolation.
 
 ---
 

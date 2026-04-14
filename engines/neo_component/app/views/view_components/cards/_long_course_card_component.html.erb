@@ -24,7 +24,11 @@
     <% end %>
 
     <div class="relative self-stretch">
-      <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-full md:h-[132px] rounded-l-xl object-cover' %>
+      <% if banner_url.present? %>
+        <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-full md:h-[132px] rounded-l-xl object-cover' %>
+      <% else %>
+        <div class="w-[100px] md:w-[297px] h-full md:h-[132px] rounded-l-xl bg-primary-light-50"></div>
+      <% end %>
       <span class="absolute bottom-0 right-4 z-10 flex rounded-t-md bg-primary-light-100 general-text-sm-normal py-0.5 px-1 text-primary-dark">
           <%= duration %>
       </span>

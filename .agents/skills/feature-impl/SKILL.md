@@ -19,9 +19,10 @@ Build a complete, tested Content Studio feature from an approved plan.
    d. View(s) in `engines/content_studio/app/views/content_studio/` using NeoComponent helpers
    e. View spec(s) in `engines/content_studio/spec/views/`
    f. System spec(s) in `engines/content_studio/spec/system/`
-4. Run `bundle exec rspec engines/content_studio` — all specs must pass
-5. Run `bundle exec rubocop engines/content_studio` — no offenses
-6. Open a PR from `task/<feature-name>` into `feature/content-studio-v1`
+4. Run `bundle exec rspec engines/content_studio/spec/` — all engine specs must pass
+5. Run `bundle exec rspec spec/` — all host app specs must pass (separate process — do not combine with step 4)
+6. Run `bundle exec rubocop` — no offenses across the full repo
+7. Open a PR from `task/<feature-name>` into `feature/content-studio-v1`
 
 ## Constraints
 - No raw HTML for UI elements covered by NeoComponent

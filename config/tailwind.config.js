@@ -1,7 +1,3 @@
-const path = require("path");
-
-const neoComponentsRoot = path.resolve(__dirname, "../engines/neo_component");
-
 module.exports = {
   content: [
     "./public/*.html",
@@ -9,9 +5,9 @@ module.exports = {
     "./app/javascript/**/*.js",
     "./app/views/**/*.{erb,haml,html,slim}",
     // "./node_modules/flowbite/**/*.js",
-    `${neoComponentsRoot}/app/helpers/**/*.rb`,
-    `${neoComponentsRoot}/app/views/**/*.{erb,haml,html,slim}`,
-    `${neoComponentsRoot}/app/javascript/**/*.js`,
+    "./engines/*/app/helpers/**/*.rb",
+    "./engines/*/app/views/**/*.{erb,haml,html,slim}",
+    "./engines/*/app/javascript/**/*.js",
   ],
   theme: {
     extend: {
@@ -46,6 +42,9 @@ module.exports = {
         "slate-grey-light":"#D1D3D4",
         "white":"#FFFFFF",
         "white-light":"#FAFAFA"
+      },
+      borderRadius: {
+        '4xl': '2rem',
       },
       dropShadow: {
         small: "0px 2px 6px 0px #1018280F",

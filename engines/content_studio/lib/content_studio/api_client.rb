@@ -17,6 +17,14 @@ module ContentStudio
         client.find_course(id)
       end
 
+      def course_stats # rubocop:disable Rails/Delegate
+        client.course_stats
+      end
+
+      def list_courses_by_status(status) # rubocop:disable Rails/Delegate
+        client.list_courses_by_status(status)
+      end
+
       def current_user # rubocop:disable Rails/Delegate
         client.current_user
       end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Request spec for PUT /course/:id/unenroll' do
   describe 'Unenroll course by non admin user' do
     %i[owner manager learner].each do |role|

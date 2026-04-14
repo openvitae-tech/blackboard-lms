@@ -8,7 +8,11 @@
     <div class="absolute bottom-0 right-4 z-10 px-1 py-0.5 bg-primary-light-100 rounded-t">
       <span class="general-text-sm-normal"><%= duration %></span>
     </div>
-    <%= image_tag banner_url, class: 'w-full h-[120px] rounded-t-xl object-cover' %>
+    <% if banner_url.present? %>
+      <%= image_tag banner_url, class: 'w-full h-[120px] rounded-t-xl object-cover' %>
+    <% else %>
+      <div class="w-full h-[120px] rounded-t-xl bg-primary-light-50"></div>
+    <% end %>
   </div>
   <div class="h-1 w-full <%= 'bg-primary-light-100' if progress.present? %>">
     <% if progress.present? %>

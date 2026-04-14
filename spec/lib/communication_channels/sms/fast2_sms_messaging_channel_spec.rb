@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe CommunicationChannels::Sms::Fast2SmsMessagingChannel do
   subject { described_class.new }
 

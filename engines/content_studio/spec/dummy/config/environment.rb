@@ -2,4 +2,6 @@
 require_relative "application"
 
 # Initialize the Rails application.
-Rails.application.initialize!
+# Guard against double-initialization when the host application has already
+# booted (e.g. when running specs from the project root via --require rails_helper).
+Rails.application.initialize! unless Rails.application.initialized?
