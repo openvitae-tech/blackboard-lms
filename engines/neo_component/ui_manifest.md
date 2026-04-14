@@ -240,7 +240,7 @@ course_card_component(
   categories: [],
   rating: nil,
   progress: nil,
-  badge: nil,              # nil or Hash with :text, optional :bg_color, :text_color
+  badge: nil,              # nil or Hash with :label, optional :bg_color, :text_color
   description: nil,
   highlights: []
 )
@@ -257,7 +257,7 @@ long_course_card_component(
   categories: [],
   rating: nil,
   progress: nil,
-  badge: nil,              # nil or Hash with :text, optional :bg_color, :text_color
+  badge: nil,              # nil or Hash with :label, optional :bg_color, :text_color
   description: nil,
   highlights: []
 )
