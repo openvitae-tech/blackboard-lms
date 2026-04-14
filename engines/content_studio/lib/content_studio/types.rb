@@ -50,8 +50,11 @@ module ContentStudio
     :enrollments_count,
     :team_enrollments_count,
     :modules,         # Array<ContentStudio::CourseModule>
+    :progress,        # Integer 0–100 or nil
     keyword_init: true
   )
+
+  CourseStats = Struct.new(:created, :published, :in_progress, keyword_init: true)
 
   User = Struct.new(
     :id,

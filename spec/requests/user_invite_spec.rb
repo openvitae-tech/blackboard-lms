@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Request spec for user invites' do
   let(:team) { create(:team) }
   let(:learning_partner) { team.learning_partner }

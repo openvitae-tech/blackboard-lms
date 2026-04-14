@@ -1,4 +1,5 @@
 # frozen_string_literal: true
 
-ContentStudio::Engine.routes.draw do # rubocop:disable Lint/EmptyBlock
+ContentStudio::Engine.routes.draw do
+  root to: 'courses#index'
 end

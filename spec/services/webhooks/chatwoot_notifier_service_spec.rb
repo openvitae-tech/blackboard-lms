@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe Webhooks::ChatwootNotifierService, type: :service do
   subject(:service) { described_class.instance }
 

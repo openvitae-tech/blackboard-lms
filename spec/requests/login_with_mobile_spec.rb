@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Login with mobile number' do
   let(:user) { create :user, :learner, state: 'unverified' }
 
