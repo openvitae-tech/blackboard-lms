@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Request spec for feature teams' do
   before do
     @parent_team = create :team

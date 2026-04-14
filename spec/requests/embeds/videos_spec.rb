@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Request spec for Embeds Videos', type: :request do
   let(:lesson) { create :lesson }
   let(:learning_partner) { create :learning_partner }

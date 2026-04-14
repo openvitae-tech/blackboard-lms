@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Request spec for GET /courses' do
   let(:category_tags) { create_list(:tag, 3) }
   let(:level_tags) { create_list(:tag, 2, tag_type: :level) }
