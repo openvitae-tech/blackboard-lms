@@ -1,0 +1,18 @@
+<div class="w-full flex flex-col gap-1"
+     data-controller="multi-select"
+     data-multi-select-disabled-value="<%= multi_select.disabled %>">
+  <% if multi_select.label.present? %>
+    <label class="group">
+      <span class="<%= multi_select.label_style %> inline-block mb-1"><%= multi_select.label %></span>
+      <%= render 'view_components/inputs/multi_select_component/select_box', { multi_select: } %>
+    </label>
+  <% else %>
+    <%= render 'view_components/inputs/multi_select_component/select_box', { multi_select: } %>
+  <% end %>
+
+  <% if multi_select.support_text.present? %>
+    <span class="<%= multi_select.support_text_style %>">
+      <%= multi_select.support_text %>
+    </span>
+  <% end %>
+</div>
