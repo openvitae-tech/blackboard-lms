@@ -1,0 +1,22 @@
+<div class="flex items-center justify-center gap-[100px]" role="list" aria-label="Progress steps">
+  <% component.steps.each_with_index do |step, index| %>
+    <div class="relative flex flex-col items-center gap-2" role="listitem">
+      <% unless index == 0 %>
+        <div class="absolute top-5 right-[calc(100%+0px)] w-[100px] h-px bg-slate-grey-light -translate-y-1/2" aria-hidden="true"></div>
+      <% end %>
+
+      <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 <%= component.step_circle_class(step) %>"
+           data-wizard-steps-target="indicator"
+           data-action="click->wizard-steps#goToStep"
+           data-wizard-steps-step-param="<%= index %>">
+        <% if step.icon_name.present? %>
+          <%= icon(step.icon_name, css: 'w-5 h-5') %>
+        <% end %>
+      </div>
+
+      <span class="whitespace-nowrap <%= component.step_label_class(step) %>">
+        <%= step.label %>
+      </span>
+    </div>
+  <% end %>
+</div>

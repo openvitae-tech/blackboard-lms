@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+module NeoComponents
+  module Ui
+    class WizardStepsController < BaseController
+      def index; end
+    end
+  end
+end
