@@ -13,5 +13,5 @@ if Rails.env.local? && defined?(Bullet)
 
   # Locally courses have no banners so blob appears unused, but in production
   # all courses have banners and blob is accessed for the S3 service name check.
-  Bullet.add_safelist(type: :unused_eager_loading, class_name: "ActiveStorage::Attachment", association: :blob)
+  Bullet.add_safelist(type: :unused_eager_loading, class_name: 'ActiveStorage::Attachment', association: :blob)
 end
