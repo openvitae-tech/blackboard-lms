@@ -14,7 +14,7 @@ class CoursesController < ApplicationController
     authorize :course
     if current_user.is_admin?
       search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term], type: params[:type])
-      @courses = Courses::FilterService.new(current_user, search_context).filter.records.includes(:tags, :banner_attachment)
+      @courses = Courses::FilterService.new(current_user, search_context).filter.records.includes(:tags, banner_attachment: :blob)
       @courses = @courses.page(filter_params[:page])
     else
       @data = HomePageService.instance.build_data_for(current_user)
@@ -28,11 +28,11 @@ class CoursesController < ApplicationController
     @courses = {}
     search_context = build_search_context type: SearchContext::INCOMPLETE
     @courses[:continue] = Courses::FilterService.new(current_user, search_context).filter.records
-                                               .preload(:tags, :banner_attachment).limit(12)
+                                               .preload(:tags, banner_attachment: :blob).limit(12)
 
     search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term], type: params[:type])
     @courses[:explore] = Courses::FilterService.new(current_user, search_context).filter.records
-                                               .preload(:tags, :banner_attachment).page(filter_params[:page])
+                                               .preload(:tags, banner_attachment: :blob).page(filter_params[:page])
     @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses[:explore])
 
     @tags = Tag.load_tags
@@ -43,7 +43,7 @@ class CoursesController < ApplicationController
 
     search_context = build_search_context type: SearchContext::INCOMPLETE
     @courses = Courses::FilterService.new(current_user, search_context).filter.records
-                                    .preload(:tags, :banner_attachment).page(filter_params[:page])
+                                    .preload(:tags, banner_attachment: :blob).page(filter_params[:page])
     @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses)
     @tags = Tag.load_tags
   end
@@ -52,7 +52,7 @@ class CoursesController < ApplicationController
     authorize :course
     search_context = build_search_context type: SearchContext::COMPLETE
     @courses = Courses::FilterService.new(current_user, search_context).filter.records
-                                    .preload(:tags, :banner_attachment)
+                                    .preload(:tags, banner_attachment: :blob)
                                     .page(filter_params[:page])
     @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses)
     @tags = Tag.load_tags
