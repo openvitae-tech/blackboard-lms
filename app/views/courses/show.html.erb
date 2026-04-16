@@ -1,8 +1,6 @@
 <% content_for :header do %>
   <div class="flex flex-col gap-4">
-    <% if current_user.is_admin? %>
-      <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]] %>
-    <% elsif params[:mode] == Program::MANAGER_MODE && @program %>
+    <% if params[:mode] == Program::MANAGER_MODE && @program %>
       <%= breadcrumbs_component links: [
         [t('programs.label'), programs_path],
         [@program.name, program_path(@program, mode: Program::MANAGER_MODE)],
@@ -16,10 +14,8 @@
         [@course.title, nil]
       ] %>
     <% else %>
-      <%= breadcrumbs_component links: [
-        [t('course.label'), courses_path],
-        [@course.title, nil]
-      ] %>
+      <%# Generic breadcrumb for direct navigation (admin and non-program context) %>
+      <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]] %>
     <% end %>
 
     

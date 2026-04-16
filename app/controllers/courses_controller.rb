@@ -66,7 +66,12 @@ class CoursesController < ApplicationController
     authorize @course
     @course_modules = @course.modules_in_order
     @enrollment = current_user.get_enrollment_for(@course)
-    @program = Program.find(params[:program_id]) if params[:program_id].present?
+    if params[:program_id].present?
+      @program = current_user.learning_partner.programs
+                             .joins(:program_courses)
+                             .where(program_courses: { course_id: @course.id })
+                             .find_by(id: params[:program_id])
+    end
 
     return if @enrollment.blank?
 
