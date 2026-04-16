@@ -28,7 +28,6 @@ export default class extends Controller {
   selectOption(event) {
     event.stopPropagation();
     this._activate(event.currentTarget.dataset.value);
-    this.dropdownTarget.classList.add("hidden");
   }
 
   removeChip(event) {
