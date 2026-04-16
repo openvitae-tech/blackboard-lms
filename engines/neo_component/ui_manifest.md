@@ -177,6 +177,26 @@ date_picker_component(
 )
 ```
 
+### `multi_select_component`
+```ruby
+multi_select_component(
+  form: nil,
+  name: nil,
+  label: nil,
+  options: [],            # Array of [label, value] pairs
+  value: [],              # Array of selected values
+  placeholder: nil,
+  size: 'md',             # md | lg
+  support_text: nil,
+  error: nil,
+  disabled: false,
+  html_options: {}
+)
+```
+# Selected values render as removable chips (chip_component, colorscheme: 'input').
+# Dropdown lists only unselected options. Managed by the multi-select Stimulus controller.
+# Form submission sends selected values as an array param via hidden inputs.
+
 ### `file_selector_component`
 ```ruby
 file_selector_component(

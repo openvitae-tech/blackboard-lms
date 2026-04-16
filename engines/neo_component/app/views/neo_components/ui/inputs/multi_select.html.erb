@@ -1,0 +1,121 @@
+<div class="my-6">
+  <%= render "shared/components/back_button", back_link: ui_inputs_path %>
+</div>
+<%= h3_component(text: "Multi Select Component") %>
+
+<%= doc_section_component(title: "Multi select without label") do %>
+  <%= multi_select_component(
+      name: :categories,
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      placeholder: "Select categories",
+      support_text: "Pick one or more categories"
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Multi select medium size") do %>
+  <%= multi_select_component(
+      name: :categories,
+      label: "Categories",
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      placeholder: "Select categories",
+      support_text: "Pick one or more categories"
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Multi select large size") do %>
+  <%= multi_select_component(
+      name: :categories,
+      label: "Categories",
+      size: 'lg',
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      placeholder: "Select categories",
+      support_text: "Pick one or more categories"
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Multi select with pre-selected values") do %>
+  <%= multi_select_component(
+      name: :categories,
+      label: "Categories",
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      value: [1, 3],
+      placeholder: "Select categories"
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Multi select error") do %>
+  <%= multi_select_component(
+      name: :categories,
+      label: "Categories",
+      error: "Please select at least one category",
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      placeholder: "Select categories"
+      ) %>
+<% end %>
+
+<%= doc_section_component(title: "Multi select disabled") do %>
+  <%= multi_select_component(
+      name: :categories,
+      label: "Categories",
+      disabled: true,
+      options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+      value: [2],
+      placeholder: "Select categories"
+      ) %>
+<% end %>
+
+<%= h3_component(text: "Form with Multi Select") %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Multi select medium size") do %>
+    <%= multi_select_component(
+        form: form,
+        name: :category_ids,
+        label: "Categories",
+        options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+        placeholder: "Select categories",
+        support_text: "Pick one or more categories"
+        ) %>
+  <% end %>
+<% end %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Multi select large size") do %>
+    <%= multi_select_component(
+        form: form,
+        name: :category_ids,
+        label: "Categories",
+        size: 'lg',
+        options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+        placeholder: "Select categories",
+        support_text: "Pick one or more categories"
+        ) %>
+  <% end %>
+<% end %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Multi select error") do %>
+    <%= multi_select_component(
+        form: form,
+        name: :category_ids,
+        label: "Categories",
+        error: "Please select at least one category",
+        options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+        placeholder: "Select categories"
+        ) %>
+  <% end %>
+<% end %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Multi select disabled") do %>
+    <%= multi_select_component(
+        form: form,
+        name: :category_ids,
+        label: "Categories",
+        disabled: true,
+        options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+        value: [2],
+        placeholder: "Select categories"
+        ) %>
+  <% end %>
+<% end %>
