@@ -2,11 +2,9 @@
 <div class="flex flex-col gap-3 bg-primary-light-100 px-6 md:px-16  py-5 -mx-5 md:-mx-16">
   <div class="flex items-center justify-between mb-4">
     <p class="main-text-lg-semibold"><%= program.name %></p>
-    <% unless learner_mode %>
-      <div class="h-7 w-7">
-        <%= menu_component(menu_items: program_menu_items(program, show_delete: false)) %>
-      </div>
-    <% end %>
+    <div class="h-7 w-7">
+      <%= menu_component(menu_items: program_menu_items(program, show_delete: false, learner_mode: learner_mode)) %>
+    </div>
   </div>    
   <div class="flex gap-3 md:gap-2">
     <div class="flex items-center">
