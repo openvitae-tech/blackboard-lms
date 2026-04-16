@@ -30,13 +30,13 @@ class HomePageService
 
   def build_continue(user)
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, type: SearchContext::INCOMPLETE)
-    Courses::FilterService.new(user, ctx).filter.records.preload(:tags, :banner_attachment)
+    Courses::FilterService.new(user, ctx).filter.records.preload(:tags, banner_attachment: :blob)
   end
 
   def build_categories(user)
     ctx = SearchContext.new(context: SearchContext::HOME_PAGE, tags: CONFIG[:categories][:tags])
     courses_in_categories = Courses::FilterService.new(user, ctx).filter.records
-                                                  .preload(:tags, :banner_attachment)
+                                                  .preload(:tags, banner_attachment: :blob)
     courses = {}
 
     courses_in_categories.each do |course|

@@ -13,26 +13,29 @@ class CoursesController < ApplicationController
   def index
     authorize :course
     if current_user.is_admin?
-      search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term], type: params[:type])
-      @courses = Courses::FilterService.new(current_user, search_context).filter.records.includes(:tags, :banner_attachment)
+      search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term],
+                                         type: params[:type])
+      @courses = Courses::FilterService.new(current_user, search_context).filter.records
+                                       .includes(:tags, banner_attachment: :blob)
       @courses = @courses.page(filter_params[:page])
     else
       @data = HomePageService.instance.build_data_for(current_user)
     end
     @tags = Tag.load_tags
   end
-   
+
   def explore
     authorize :course
 
     @courses = {}
     search_context = build_search_context type: SearchContext::INCOMPLETE
     @courses[:continue] = Courses::FilterService.new(current_user, search_context).filter.records
-                                               .preload(:tags, :banner_attachment).limit(12)
+                                                .preload(:tags, banner_attachment: :blob).limit(12)
 
-    search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term], type: params[:type])
+    search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term],
+                                       type: params[:type])
     @courses[:explore] = Courses::FilterService.new(current_user, search_context).filter.records
-                                               .preload(:tags, :banner_attachment).page(filter_params[:page])
+                                               .preload(:tags, banner_attachment: :blob).page(filter_params[:page])
     @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses[:explore])
 
     @tags = Tag.load_tags
@@ -43,7 +46,7 @@ class CoursesController < ApplicationController
 
     search_context = build_search_context type: SearchContext::INCOMPLETE
     @courses = Courses::FilterService.new(current_user, search_context).filter.records
-                                    .preload(:tags, :banner_attachment).page(filter_params[:page])
+                                     .preload(:tags, banner_attachment: :blob).page(filter_params[:page])
     @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses)
     @tags = Tag.load_tags
   end
@@ -52,8 +55,8 @@ class CoursesController < ApplicationController
     authorize :course
     search_context = build_search_context type: SearchContext::COMPLETE
     @courses = Courses::FilterService.new(current_user, search_context).filter.records
-                                    .preload(:tags, :banner_attachment)
-                                    .page(filter_params[:page])
+                                     .preload(:tags, banner_attachment: :blob)
+                                     .page(filter_params[:page])
     @enrollments_by_course_id = current_user.enrollments.indexed_by_course(@courses)
     @tags = Tag.load_tags
   end
@@ -65,10 +68,10 @@ class CoursesController < ApplicationController
     @enrollment = current_user.get_enrollment_for(@course)
     @program = Program.find(params[:program_id]) if params[:program_id].present?
 
-    if @enrollment.present?
-      EVENT_LOGGER.publish_course_viewed(current_user, @course.id)
-      @assessment = Assessment.find_by(user: current_user, course: @course)
-    end
+    return if @enrollment.blank?
+
+    EVENT_LOGGER.publish_course_viewed(current_user, @course.id)
+    @assessment = Assessment.find_by(user: current_user, course: @course)
   end
 
   # GET /courses/new
@@ -100,8 +103,8 @@ class CoursesController < ApplicationController
       @error_step = Courses::CourseFormSteps.error_step_for(@course)
 
       render :new,
-            status: :unprocessable_content,
-            locals: { error_step: @error_step }
+             status: :unprocessable_content,
+             locals: { error_step: @error_step }
     end
   end
 
@@ -119,8 +122,8 @@ class CoursesController < ApplicationController
       @error_step = Courses::CourseFormSteps.error_step_for(@course)
 
       render :edit,
-            status: :unprocessable_content,
-            locals: { error_step: @error_step }
+             status: :unprocessable_content,
+             locals: { error_step: @error_step }
     end
   end
 
@@ -218,7 +221,7 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:title, :description, :banner, :category_id, :level_id, :visibility)
+    params.expect(course: %i[title description banner category_id level_id visibility])
   end
 
   def filter_params
@@ -242,6 +245,6 @@ class CoursesController < ApplicationController
   def build_search_context(type: nil, tags: [])
     SearchContext.new(context: SearchContext::HOME_PAGE,
                       type:,
-                      tags:,)
+                      tags:)
   end
 end
