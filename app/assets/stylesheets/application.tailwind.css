@@ -165,16 +165,18 @@ body {
 
   .side-bar-item-inner:hover {
     @apply bg-primary-light-50 rounded-2xl;
+
     span {
       @apply text-primary;
     }
+
     svg {
       @apply text-primary;
     }
 
-  .sidebar-indicator{
-    @apply bg-primary-light-50;
-  }
+    .sidebar-indicator {
+      @apply bg-primary-light-50;
+    }
   }
 
   .side-bar-item-inner {

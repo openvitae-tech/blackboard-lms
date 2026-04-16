@@ -14,24 +14,24 @@
       <ul class="flex flex-col gap-1">
         <% if policy(:dashboard).index? %>
           <li class="flex items-center gap-1 pt-5 pb-1 px-4 md:px-5">
-            <span class="general-text-lg-normal text-letter-color-light">Managing</span>
+            <span class="general-text-lg-normal text-letter-color-light"><%= t('sidebar.managing') %></span>
             <div class="flex-1 h-px bg-letter-color-light"></div>
           </li>
           <li class="side-bar-item <%= sidebar_active('dashboards') %> relative">
             <%= link_to dashboards_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("chart-bar", css: "h-5 w-5 text-letter-color") %>
-              <span class="main-text-lg-medium">Dashboard</span>
+              <span class="main-text-lg-medium"><%= t('sidebar.dashboard') %></span>
             <% end %>
-            <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
+            <div class="w-1 h-8 left-0 top-2.5 absolute sidebar-indicator rounded-r-2xl"></div>
           </li>
         <% end %>
         <% if current_user.privileged_user? %>
           <li class="side-bar-item <%= sidebar_active('programs') %> relative">
             <%= link_to programs_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("rectangle-group", css: "h-5 w-5 text-letter-color") %>
-              <span class="main-text-lg-medium">Programs</span>
+              <span class="main-text-lg-medium"><%= t('sidebar.programs') %></span>
             <% end %>
-            <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
+            <div class="w-1 h-8 left-0 top-2.5 absolute sidebar-indicator rounded-r-2xl"></div>
           </li>
         <% end %>
          <% if current_user.team.present? && policy(current_user.team).show? %>
@@ -40,38 +40,38 @@
               <%= icon("user-group", css: "h-5 w-5 text-letter-color") %>
               <span class="main-text-lg-medium"><%= t('team.label') %></span>
             <% end %>
-            <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
+            <div class="w-1 h-8 left-0 top-2.5 absolute sidebar-indicator rounded-r-2xl"></div>
           </li>
         <% end %>
         <% if policy(:learning_partner).show? %>
           <li class="side-bar-item <%= sidebar_active('learning_partners') %> relative">
             <%= link_to learning_partners_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("user-group", css: "h-5 w-5 text-letter-color") %>
-              <span class="main-text-lg-medium">Partners</span>
+              <span class="main-text-lg-medium"><%= t('sidebar.partners') %></span>
             <% end %>
-            <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
+            <div class="w-1 h-8 left-0 top-2.5 absolute sidebar-indicator rounded-r-2xl"></div>
           </li>
         <% end %>
         <% if current_user.is_admin? %>
           <li class="side-bar-item <%= sidebar_active('settings') %> relative">
             <%= link_to settings_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("rectangle-group", css: "h-5 w-5 text-letter-color") %>
-              <span class="main-text-lg-medium">Assets</span>
+              <span class="main-text-lg-medium"><%= t('sidebar.assets') %></span>
             <% end %>
-            <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
+            <div class="w-1 h-8 left-0 top-2.5 absolute sidebar-indicator rounded-r-2xl"></div>
           </li>
         <% end %>
         <li class="flex items-center gap-1 pt-5 pb-1 px-5">
-          <span class="general-text-lg-normal text-letter-color-light">Learning</span>
+          <span class="general-text-lg-normal text-letter-color-light"><%= t('sidebar.learning') %></span>
           <div class="flex-1 h-px bg-letter-color-light"></div>
         </li>
         <%# 'my_courses' is a synthetic value set when accessing programs from the courses flow %>
         <li class="side-bar-item <%= sidebar_active('courses') %> relative">
           <%= link_to courses_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
             <%= icon("book-open", css: "h-5 w-5 text-letter-color") %>
-            <span class="main-text-lg-medium">Explore</span>
+            <span class="main-text-lg-medium"><%= t('sidebar.explore') %></span>
           <% end %>
-          <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
+          <div class="w-1 h-8 left-0 top-2.5 absolute sidebar-indicator rounded-r-2xl"></div>
         </li>
         <% if policy(:my_profile).show? %>
           <li class="side-bar-item <%= sidebar_active('my_profiles') %> relative">
@@ -79,20 +79,20 @@
                 <%= icon("user-circle", css: "h-5 w-5 text-letter-color") %>
                 <span class="main-text-lg-medium"><%= t("my_profile.label") %></span>
               <% end %>
-              <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
+              <div class="w-1 h-8 left-0 top-2.5 absolute sidebar-indicator rounded-r-2xl"></div>
           </li>
         <% end %>       
        
         <li class="flex items-center gap-1 pt-5 pb-1 px-5">
-            <span class="general-text-lg-normal text-letter-color-light">Support</span>
+            <span class="general-text-lg-normal text-letter-color-light"><%= t('sidebar.support') %></span>
             <div class="flex-1 h-px bg-letter-color-light"></div>
           </li>
         <li class="side-bar-item <%= sidebar_active('supports') %> relative">
           <%= link_to supports_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
             <%= icon("question-mark-circle", css: "h-5 w-5 text-letter-color") %>
-            <span class="main-text-lg-medium">Support</span>
+            <span class="main-text-lg-medium"><%= t('sidebar.support') %></span>
           <% end %>
-          <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
+          <div class="w-1 h-8 left-0 top-2.5 absolute sidebar-indicator rounded-r-2xl"></div>
         </li>
       </ul>
     </div>
