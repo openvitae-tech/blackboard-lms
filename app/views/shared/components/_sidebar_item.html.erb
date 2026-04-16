@@ -1,0 +1,7 @@
+<li class="side-bar-item <%= sidebar_active(nav_key) %> relative">
+  <%= link_to url, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
+    <%= icon(icon_name, css: "h-5 w-5 text-letter-color") %>
+    <span class="main-text-lg-medium"><%= label %></span>
+  <% end %>
+  <div class="w-1 h-8 left-0 top-2.5 absolute sidebar-indicator rounded-r-2xl"></div>
+</li>
