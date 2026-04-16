@@ -27,11 +27,13 @@ export default class extends Controller {
 
   selectOption(event) {
     event.stopPropagation();
+    if (this.disabledValue) return;
     this._activate(event.currentTarget.dataset.value);
   }
 
   removeChip(event) {
     event.stopPropagation();
+    if (this.disabledValue) return;
     this._deactivate(event.currentTarget.dataset.value);
   }
 
