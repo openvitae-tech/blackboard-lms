@@ -161,6 +161,8 @@ class ProgramsController < ApplicationController
   private
 
   def set_learner_mode
+    raise ActiveRecord::RecordNotFound if params[:mode] == Program::MANAGER_MODE && !current_user.privileged_user?
+
     @learner_mode = params[:mode].blank? || params[:mode] == Program::LEARNER_MODE
   end
 

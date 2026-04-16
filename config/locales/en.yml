@@ -200,6 +200,7 @@ en:
     already_added: "%{course_name} has already been added to this program"
   programs:
     label: "All Programs"
+    edit_details: "Edit Program details"
     explore_label: "Explore our Programs"
     add: "Add program"
     edit: "Edit program"
