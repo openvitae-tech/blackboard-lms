@@ -1,18 +1,19 @@
 <%# Chips row — rendered above the trigger, hidden when no values selected %>
-<div class="flex flex-wrap gap-2 <%= 'hidden' if multi_select.value.empty? %>"
-     data-multi-select-target="chipsContainer">
-  <% multi_select.options.each do |opt_label, opt_value| %>
-    <div class="<%= 'hidden' unless multi_select.selected?(opt_value) %>"
-         data-multi-select-target="chip"
-         data-value="<%= opt_value %>"
-         data-action="click->multi-select#removeChip">
-      <%= chip_component(text: opt_label.to_s, close: true, colorscheme: 'input') %>
-    </div>
-  <% end %>
-</div>
+<div class="flex flex-col gap-3">
+  <div class="flex flex-wrap gap-2 <%= 'hidden' if multi_select.value.empty? %>"
+       data-multi-select-target="chipsContainer">
+    <% multi_select.options.each do |opt_label, opt_value| %>
+      <div class="<%= 'hidden' unless multi_select.selected?(opt_value) %>"
+           data-multi-select-target="chip"
+           data-value="<%= opt_value %>"
+           data-action="click->multi-select#removeChip">
+        <%= chip_component(text: opt_label.to_s, close: true, colorscheme: 'input') %>
+      </div>
+    <% end %>
+  </div>
 
-<%# Trigger button + dropdown positioned relative to it %>
-<div class="relative">
+  <%# Trigger button + dropdown positioned relative to it %>
+  <div class="relative">
   <div class="<%= multi_select.trigger_style %>"
        data-action="click->multi-select#toggleDropdown">
 
@@ -55,5 +56,6 @@
             data: { multi_select_target: 'hiddenInput', value: opt_value }
           ) %>
     <% end %>
+  </div>
   </div>
 </div>

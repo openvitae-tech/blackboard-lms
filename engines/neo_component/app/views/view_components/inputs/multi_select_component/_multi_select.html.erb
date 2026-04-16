@@ -3,7 +3,7 @@
      <%= tag.attributes(multi_select.html_options) %>>
   <% if multi_select.label.present? %>
     <label class="group">
-      <span class="<%= multi_select.label_style %> inline-block mb-1"><%= multi_select.label %></span>
+      <span class="<%= multi_select.label_style %> inline-block mb-3"><%= multi_select.label %></span>
       <%= render 'view_components/inputs/multi_select_component/select_box', { multi_select: } %>
     </label>
   <% else %>
