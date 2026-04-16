@@ -107,6 +107,28 @@ RSpec.describe UiHelper, type: :helper do
       end
     end
 
+    describe 'html_options' do
+      it 'applies the base wrapper class by default' do
+        doc = render_component
+        wrapper = doc.at_css('[data-controller="multi-select"]')
+        expect(wrapper['class']).to eq('w-full flex flex-col gap-1')
+      end
+
+      it 'merges a caller-supplied class with the base wrapper class' do
+        doc = render_component(html_options: { class: 'extra-class' })
+        wrapper = doc.at_css('[data-controller="multi-select"]')
+        expect(wrapper['class']).to include('w-full flex flex-col gap-1')
+        expect(wrapper['class']).to include('extra-class')
+      end
+
+      it 'applies extra attributes to the wrapper div' do
+        doc = render_component(html_options: { id: 'my-select', data: { foo: 'bar' } })
+        wrapper = doc.at_css('[data-controller="multi-select"]')
+        expect(wrapper['id']).to eq('my-select')
+        expect(wrapper['data-foo']).to eq('bar')
+      end
+    end
+
     context 'when disabled' do
       it 'sets the disabled value on the stimulus controller' do
         doc = render_component(disabled: true)

@@ -1,6 +1,6 @@
-<div class="w-full flex flex-col gap-1"
-     data-controller="multi-select"
-     data-multi-select-disabled-value="<%= multi_select.disabled %>">
+<div data-controller="multi-select"
+     data-multi-select-disabled-value="<%= multi_select.disabled %>"
+     <%= tag.attributes(multi_select.html_options) %>>
   <% if multi_select.label.present? %>
     <label class="group">
       <span class="<%= multi_select.label_style %> inline-block mb-1"><%= multi_select.label %></span>

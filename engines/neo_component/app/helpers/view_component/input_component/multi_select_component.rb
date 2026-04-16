@@ -42,6 +42,10 @@ module ViewComponent
         self.disabled = disabled
         self.placeholder = placeholder
         self.html_options = html_options
+        self.html_options[:class] = [
+          'w-full flex flex-col gap-1',
+          self.html_options[:class]
+        ].compact.join(' ')
       end
 
       def trigger_style

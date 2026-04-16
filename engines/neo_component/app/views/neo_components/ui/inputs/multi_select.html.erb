@@ -105,3 +105,17 @@
         ) %>
   <% end %>
 <% end %>
+
+<%= form_with url: "#", method: :post do |form| %>
+  <%= doc_section_component(title: "Multi select disabled") do %>
+    <%= multi_select_component(
+        form: form,
+        name: :category_ids,
+        label: "Categories",
+        disabled: true,
+        options: [["Option 1", 1], ["Option 2", 2], ["Option 3", 3]],
+        value: [2],
+        placeholder: "Select categories"
+        ) %>
+  <% end %>
+<% end %>
