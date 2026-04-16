@@ -34,7 +34,7 @@
             <div class="w-1 h-8 left-0 top-[10px] absolute sidebar-indicator rounded-r-2xl"></div>
           </li>
         <% end %>
-         <% if policy(current_user.team || :team).show? %>
+         <% if current_user.team.present? && policy(current_user.team).show? %>
           <li class="side-bar-item <%= sidebar_active('teams') %> relative">
             <%= link_to team_path(current_user.team), class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
               <%= icon("user-group", css: "h-5 w-5 text-letter-color") %>
@@ -88,7 +88,7 @@
             <div class="flex-1 h-px bg-letter-color-light"></div>
           </li>
         <li class="side-bar-item <%= sidebar_active('supports') %> relative">
-          <%= link_to supports_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4 py-4" do %>
+          <%= link_to supports_path, class: "side-bar-item-inner px-4 md:px-5 py-3 md:py-4" do %>
             <%= icon("question-mark-circle", css: "h-5 w-5 text-letter-color") %>
             <span class="main-text-lg-medium">Support</span>
           <% end %>
