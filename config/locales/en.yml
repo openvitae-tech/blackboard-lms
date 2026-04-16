@@ -237,6 +237,15 @@ en:
       no_file_chosen: "No file chosen"
       choose_file: "Choose File"
       enter_certificate_name: "Enter certificate name"
+  sidebar:
+    managing: "Managing"
+    learning: "Learning"
+    support: "Support"
+    dashboard: "Dashboard"
+    programs: "Programs"
+    partners: "Partners"
+    assets: "Assets"
+    explore: "Explore"
   my_profile:
     label: "My Profile"
     my_courses:

@@ -1,73 +1,83 @@
 <div data-controller="sidebar">
   <input type="checkbox" id="sidebar-toggle" class="peer hidden" data-sidebar-target="sidebarCheckbox"/>
   <div class="bg-black fixed inset-0 black-shield hidden bg-opacity-90 peer-checked:block md:peer-checked:hidden md:hidden" data-sidebar-target="overlay" data-action="click->sidebar#closeSidebar"></div>
-  <aside class="bg-primary-light-50 side-bar -translate-x-full transform transition-transform duration-300 ease-in-out peer-checked:translate-x-0" data-sidebar-target="sidebar">
-    <label for="sidebar-toggle" class="icon icon-close icon-base bg-letter-color absolute right-6 top-6 icon-small cursor-pointer"></label>
-    <div class="hidden md:mt-8 md:block">
-      <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-10 side-bar-item' %>
+  <aside class="bg-primary-light-100 side-bar -translate-x-full transform transition-transform duration-300 ease-in-out peer-checked:translate-x-0" data-sidebar-target="sidebar">
+    <div class="flex gap-5 items-center px-8 py-5 navbar-box-shadow">
+      <label for="sidebar-toggle" class="cursor-pointer mt-2">
+        <%= icon("x-circle", css: "h-6 w-6 text-primary") %>
+      </label>
+      <div class="">
+        <%= image_tag 'instruo_beta_logo.png', alt: 'Instruo', class: 'h-10 side-bar-item' %>
+      </div>
     </div>
-    <div class="flex h-[calc(100vh-60px)] md:h-full flex-col justify-between mt-14 z-150">
-      <ul class="flex flex-col gap-3">
-        <% if policy(:dashboard).index? %>
-          <li class="side-bar-item <%= sidebar_active('dashboards') %>">
-            <%= link_to dashboards_path, class: "side-bar-item-inner" do %>
-              <span class="icon icon-home bg-letter-color icon-small"></span>
-              <span>Home</span>
-            <% end %>
+    <div class="flex h-[calc(100vh-60px)] md:h-full flex-col justify-between z-150 px-3 py-3">
+      <ul class="flex flex-col gap-1">
+        <% if policy(:dashboard).index? || policy(:learning_partner).show? %>
+          <li class="flex items-center gap-1 pt-5 pb-1 px-4 md:px-5">
+            <span class="general-text-lg-normal text-letter-color-light"><%= t('sidebar.managing') %></span>
+            <div class="flex-1 h-px bg-letter-color-light"></div>
           </li>
+        <% end %>
+        <% if policy(:dashboard).index? %>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'dashboards',
+              url: dashboards_path,
+              icon_name: 'chart-bar',
+              label: t('sidebar.dashboard') %>
+        <% end %>
+        <% if policy(:program).index? %>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'programs',
+              url: programs_path,
+              icon_name: 'rectangle-group',
+              label: t('sidebar.programs') %>
+        <% end %>
+        <% if current_user.team.present? && policy(current_user.team).show? %>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'teams',
+              url: team_path(current_user.team),
+              icon_name: 'user-group',
+              label: t('team.label') %>
         <% end %>
         <% if policy(:learning_partner).show? %>
-          <li class="side-bar-item <%= sidebar_active('learning_partners') %>">
-            <%= link_to learning_partners_path, class: "side-bar-item-inner" do %>
-              <span class="icon icon-user-group bg-letter-color icon-small"></span>
-              <span>Partners</span>
-            <% end %>
-          </li>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'learning_partners',
+              url: learning_partners_path,
+              icon_name: 'user-group',
+              label: t('sidebar.partners') %>
         <% end %>
-        <li class="side-bar-item <%= sidebar_active('courses') %>">
-          <%= link_to courses_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-course bg-letter-color icon-small"></span>
-            <span><%= t('course.label') %></span>
-          <% end %>
+        <% if policy(:setting).index? %>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'settings',
+              url: settings_path,
+              icon_name: 'rectangle-group',
+              label: t('sidebar.assets') %>
+        <% end %>
+        <li class="flex items-center gap-1 pt-5 pb-1 px-5">
+          <span class="general-text-lg-normal text-letter-color-light"><%= t('sidebar.learning') %></span>
+          <div class="flex-1 h-px bg-letter-color-light"></div>
         </li>
-        <% if policy(current_user.team || :team).show? %>
-          <li class="side-bar-item <%= sidebar_active('teams') %>">
-            <%= link_to team_path(current_user.team), class: "side-bar-item-inner" do %>
-              <span class="icon icon-team bg-letter-color icon-small"></span>
-              <span><%= t('team.label') %></span>
-            <% end %>
-          </li>
-        <% end %>
-        <% if current_user.is_admin? %>
-          <li class="side-bar-item <%= sidebar_active('settings') %>">
-            <%= link_to settings_path, class: "side-bar-item-inner" do %>
-              <span class="icon icon-settings icon-small bg-letter-color"></span>
-              <span><%= t("settings.label") %></span>
-            <% end %>
-          </li>
-        <% end %>
-        <% if current_user.privileged_user? %>
-          <li class="side-bar-item <%= sidebar_active('programs') %>">
-            <%= link_to programs_path, class: "side-bar-item-inner" do %>
-              <span class="icon icon-settings icon-small bg-letter-color"></span>
-              <span>Programs</span>
-            <% end %>
-          </li>
-        <% end %>
+        <%= render 'shared/components/sidebar_item',
+            nav_key: 'courses',
+            url: courses_path,
+            icon_name: 'book-open',
+            label: t('sidebar.explore') %>
         <% if policy(:my_profile).show? %>
-          <li class="side-bar-item <%= sidebar_active('my_profiles') %>">
-              <%= link_to profile_path, class: "side-bar-item-inner" do %>
-                <span class="icon icon-user icon-small bg-letter-color"></span>
-                <span><%= t("my_profile.label") %></span>
-              <% end %>
-          </li>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'my_profiles',
+              url: profile_path,
+              icon_name: 'user-circle',
+              label: t('my_profile.label') %>
         <% end %>
-        <li class="side-bar-item <%= sidebar_active('supports') %>">
-          <%= link_to supports_path, class: "side-bar-item-inner" do %>
-            <span class="icon icon-support bg-letter-color icon-small"></span>
-            <span>Support</span>
-          <% end %>
+        <li class="flex items-center gap-1 pt-5 pb-1 px-5">
+          <span class="general-text-lg-normal text-letter-color-light"><%= t('sidebar.support') %></span>
+          <div class="flex-1 h-px bg-letter-color-light"></div>
         </li>
+        <%= render 'shared/components/sidebar_item',
+            nav_key: 'supports',
+            url: supports_path,
+            icon_name: 'question-mark-circle',
+            label: t('sidebar.support') %>
       </ul>
     </div>
   </aside>
