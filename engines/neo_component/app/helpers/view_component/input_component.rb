@@ -286,5 +286,36 @@ module ViewComponent
       render partial: 'view_components/inputs/date_picker_component/date_picker',
              locals: { date_picker: }
     end
+
+    def multi_select_component(
+      form: nil,
+      name: nil,
+      label: nil,
+      options: [],
+      value: [],
+      placeholder: nil,
+      size: 'md',
+      support_text: nil,
+      error: nil,
+      disabled: false,
+      html_options: {}
+    )
+      multi_select = MultiSelectComponent.new(
+        form:,
+        name:,
+        label:,
+        options:,
+        value:,
+        placeholder:,
+        size:,
+        support_text:,
+        error:,
+        disabled:,
+        html_options:
+      )
+
+      render partial: 'view_components/inputs/multi_select_component/multi_select',
+             locals: { multi_select: }
+    end
   end
 end
