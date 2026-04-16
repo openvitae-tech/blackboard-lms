@@ -15,6 +15,7 @@ NeoComponents::Engine.routes.draw do
     get 'inputs/textarea', to: 'inputs#textarea'
     get 'inputs/dropdown', to: 'inputs#dropdown'
     get 'inputs/date_picker', to: 'inputs#date_picker'
+    get 'inputs/multi_select', to: 'inputs#multi_select'
     get :tables, to: 'tables#index'
     get :notification_bars, to: 'notification_bars#index'
     get :menu_component, to: 'menu_component#index'

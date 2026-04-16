@@ -1,0 +1,61 @@
+<%# Chips row — rendered above the trigger, hidden when no values selected %>
+<div class="flex flex-col gap-3">
+  <div class="flex flex-wrap gap-2 <%= 'hidden' if multi_select.value.empty? %>"
+       data-multi-select-target="chipsContainer">
+    <% multi_select.options.each do |opt_label, opt_value| %>
+      <div class="<%= 'hidden' unless multi_select.selected?(opt_value) %>"
+           data-multi-select-target="chip"
+           data-value="<%= opt_value %>"
+           data-action="click->multi-select#removeChip">
+        <%= chip_component(text: opt_label.to_s, close: true, colorscheme: 'input') %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Trigger button + dropdown positioned relative to it %>
+  <div class="relative">
+  <div class="<%= multi_select.trigger_style %>"
+       data-action="click->multi-select#toggleDropdown">
+
+    <%# Placeholder — hidden once any value is selected %>
+    <% if multi_select.placeholder.present? %>
+      <span class="flex-1 text-disabled-color <%= 'hidden' if multi_select.value.any? %>"
+            data-multi-select-target="placeholder">
+        <%= multi_select.placeholder %>
+      </span>
+    <% end %>
+
+    <%# Chevron %>
+    <span class="ml-auto flex-shrink-0 flex items-center text-letter-color-light">
+      <%= icon('chevron-down', css: 'w-4 h-4') %>
+    </span>
+  </div>
+
+  <%# Options dropdown panel — hidden by default %>
+  <div class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-slate-grey-50 rounded shadow-lg z-50 max-h-48 overflow-y-auto"
+       data-multi-select-target="dropdown">
+    <% multi_select.options.each do |opt_label, opt_value| %>
+      <div class="<%= 'hidden' if multi_select.selected?(opt_value) %> px-3 py-2 cursor-pointer hover:bg-primary-light-50 text-letter-color-light main-text-md-normal"
+           data-multi-select-target="option"
+           data-value="<%= opt_value %>"
+           data-label="<%= opt_label %>"
+           data-action="click->multi-select#selectOption">
+        <%= opt_label %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Hidden inputs — enabled for selected values, disabled for unselected %>
+  <div>
+    <% multi_select.options.each do |_opt_label, opt_value| %>
+      <%= tag.input(
+            type: 'hidden',
+            name: multi_select.input_name,
+            value: opt_value,
+            disabled: !multi_select.selected?(opt_value),
+            data: { multi_select_target: 'hiddenInput', value: opt_value }
+          ) %>
+    <% end %>
+  </div>
+  </div>
+</div>
