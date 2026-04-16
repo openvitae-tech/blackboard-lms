@@ -56,15 +56,15 @@ export default class extends Controller {
   }
 
   _chip(value) {
-    return this.chipTargets.find((el) => el.dataset.value == value);
+    return this.chipTargets.find((el) => el.dataset.value === value);
   }
 
   _option(value) {
-    return this.optionTargets.find((el) => el.dataset.value == value);
+    return this.optionTargets.find((el) => el.dataset.value === value);
   }
 
   _hiddenInput(value) {
-    return this.hiddenInputTargets.find((el) => el.dataset.value == value);
+    return this.hiddenInputTargets.find((el) => el.dataset.value === value);
   }
 
   _syncChipsContainer() {
