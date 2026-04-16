@@ -23,7 +23,7 @@
               icon_name: 'chart-bar',
               label: t('sidebar.dashboard') %>
         <% end %>
-        <% if current_user.privileged_user? %>
+        <% if policy(:program).index? %>
           <%= render 'shared/components/sidebar_item',
               nav_key: 'programs',
               url: programs_path,
@@ -44,7 +44,7 @@
               icon_name: 'user-group',
               label: t('sidebar.partners') %>
         <% end %>
-        <% if current_user.is_admin? %>
+        <% if policy(:setting).index? %>
           <%= render 'shared/components/sidebar_item',
               nav_key: 'settings',
               url: settings_path,
