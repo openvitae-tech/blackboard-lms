@@ -44,8 +44,9 @@
           </p>
         </div>
         <div class="w-fit">
-          <%= button_component(text: 'Create New Course', colorscheme: 'primary', size: 'lg',
-                               html_options: { href: '#' }) %>
+          <%= link_to new_course_path do %>
+            <%= button_component(text: 'Create New Course', colorscheme: 'primary', size: 'lg') %>
+          <% end %>
         </div>
       </div>
     </div>

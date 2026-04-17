@@ -26,6 +26,7 @@ RSpec.describe 'content_studio/courses/index', type: :view do
   end
 
   before do
+    view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:stats, stats)
     assign(:to_be_verified, [sample_course])
     assign(:verified, [])
