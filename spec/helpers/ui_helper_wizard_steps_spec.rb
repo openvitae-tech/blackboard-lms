@@ -48,7 +48,8 @@ RSpec.describe UiHelper, type: :helper do
 
       it 'applies completed styling to the first step (blue bg, grey border, grey icon)' do
         first_circle = doc.css('[role="listitem"]').first.at_css('.rounded-full')
-        expect(first_circle['class']).to include('bg-primary-light-100', 'border-slate-grey-light', 'text-slate-grey-50')
+        expect(first_circle['class']).to include('bg-primary-light-100', 'border-slate-grey-light',
+                                                 'text-slate-grey-50')
         expect(first_circle['class']).not_to include('border-2', 'border-primary')
       end
 
