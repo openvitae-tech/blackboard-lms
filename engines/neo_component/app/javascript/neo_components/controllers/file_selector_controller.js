@@ -62,7 +62,7 @@ export default class extends Controller {
     }
 
     const item = template.querySelector(".file-selector-list-item");
-    item.dataset.fileName = file.name;
+    item.dataset.fileKey = `${file.name}:${file.size}`;
     item.querySelector(".file-selector-list-item-name").textContent = this.truncateFileName(file.name, 20);
 
     this.fileListTarget.appendChild(template);
@@ -70,11 +70,16 @@ export default class extends Controller {
 
   removeListItem(event) {
     const item = event.currentTarget.closest(".file-selector-list-item");
-    const fileName = item.dataset.fileName;
+    const fileKey = item.dataset.fileKey;
 
+    let removed = false;
     const updated = new DataTransfer();
     Array.from(this.multipleFiles.files).forEach(f => {
-      if (f.name !== fileName) updated.items.add(f);
+      if (!removed && `${f.name}:${f.size}` === fileKey) {
+        removed = true;
+      } else {
+        updated.items.add(f);
+      }
     });
     this.multipleFiles = updated;
     this.fileInputTarget.files = updated.files;
