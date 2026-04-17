@@ -1,0 +1,85 @@
+<div class="flex flex-col gap-6 py-3">
+
+  <%# Wizard steps header %>
+  <div class="flex justify-center py-3">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'document-text', label: 'Upload doc' },
+        { icon_name: 'camera',        label: 'Configure Video' },
+        { icon_name: 'numbered-list', label: 'Course Structure' }
+      ],
+      current_step: 0
+    ) %>
+  </div>
+
+  <%= form_with url: courses_path, method: :post, class: 'flex flex-col gap-6' do |form| %>
+
+    <%# Card 1: Document upload %>
+    <div class="bg-white border border-line-colour-light rounded-xl p-8 flex flex-col gap-3">
+      <p class="main-text-sm-medium text-letter-color">Choose Course Documents</p>
+      <%= file_selector_component(
+        form: form,
+        name: 'documents[]',
+        type: 'document',
+        multiple: true,
+        accept: '.pdf,.png,.jpeg,.doc',
+        support_text: 'File types : pdf, png, jpeg, doc',
+        support_text_two: 'File size : 10 mb/file'
+      ) %>
+    </div>
+
+    <%# Card 2: Course metadata %>
+    <div class="bg-white border border-line-colour-light rounded-xl p-8 flex flex-col gap-7">
+
+      <%= dropdown_component(
+        form: form,
+        name: :course_level,
+        label: 'Course Level',
+        options: [['Beginner', 'beginner'], ['Intermediate', 'intermediate'], ['Advanced', 'advanced']],
+        prompt: 'Choose Course difficulty level'
+      ) %>
+
+      <div class="flex gap-7 items-start">
+        <div class="flex-1 min-w-0">
+          <%= multi_select_component(
+            form: form,
+            name: :course_categories,
+            label: 'Course Category',
+            options: @metadata.categories.map { |c| [c, c] },
+            placeholder: 'Choose Categories'
+          ) %>
+        </div>
+        <div class="flex-1 min-w-0">
+          <%= multi_select_component(
+            form: form,
+            name: :languages,
+            label: 'Languages',
+            options: @metadata.languages.map { |l| [l, l] },
+            placeholder: 'Choose Languages'
+          ) %>
+        </div>
+      </div>
+
+      <%= textarea_component(
+        form: form,
+        name: :special_instructions,
+        label: 'Special Instructions if any',
+        placeholder: ''
+      ) %>
+
+    </div>
+
+    <%# Footer %>
+    <div class="flex gap-3">
+      <%= link_to root_path do %>
+        <%= button_component(text: 'Cancel', type: 'outline', colorscheme: 'primary') %>
+      <% end %>
+      <%= form.button class: 'flex-1' do %>
+        <%= button_component(text: 'Next : Configure Video Style', type: 'solid', colorscheme: 'primary',
+                             html_options: { class: 'w-full' }) %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+</div>
