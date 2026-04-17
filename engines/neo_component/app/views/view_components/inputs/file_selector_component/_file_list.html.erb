@@ -1,0 +1,37 @@
+<div data-file-selector-target="fileList" class="flex flex-col gap-3"></div>
+
+<template data-file-selector-target="imageItemTemplate">
+  <div class="file-selector-list-item">
+    <%= icon('photo', css: 'file-selector-list-icon') %>
+    <div class="flex-1 min-w-0 overflow-hidden">
+      <p class="file-selector-list-item-name"></p>
+    </div>
+    <button type="button" class="file-selector-list-remove" data-action="click->file-selector#removeListItem">
+      <%= icon('x-circle', css: 'file-selector-list-remove-icon') %>
+    </button>
+  </div>
+</template>
+
+<template data-file-selector-target="docItemTemplate">
+  <div class="file-selector-list-item">
+    <%= icon('document-text', css: 'file-selector-list-icon') %>
+    <div class="flex-1 min-w-0 overflow-hidden">
+      <p class="file-selector-list-item-name"></p>
+    </div>
+    <button type="button" class="file-selector-list-remove" data-action="click->file-selector#removeListItem">
+      <%= icon('x-circle', css: 'file-selector-list-remove-icon') %>
+    </button>
+  </div>
+</template>
+
+<template data-file-selector-target="mediaItemTemplate">
+  <div class="file-selector-list-item">
+    <%= icon('play-circle', css: 'file-selector-list-icon') %>
+    <div class="flex-1 min-w-0 overflow-hidden">
+      <p class="file-selector-list-item-name"></p>
+    </div>
+    <button type="button" class="file-selector-list-remove" data-action="click->file-selector#removeListItem">
+      <%= icon('x-circle', css: 'file-selector-list-remove-icon') %>
+    </button>
+  </div>
+</template>

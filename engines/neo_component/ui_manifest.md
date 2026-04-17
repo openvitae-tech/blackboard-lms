@@ -208,9 +208,16 @@ file_selector_component(
   support_text_two: nil,
   error: nil,
   disabled: false,
+  multiple: false,        # true enables multi-file selection with a removable file list below the drop zone
   html_options: {}
 )
 ```
+
+# When multiple: true, selected files appear as a removable list below the drop zone.
+# Icons: play-circle for video/audio files, document-text for all other types.
+# The drop zone remains visible so the user can keep adding files.
+# When using file_field_tag (no form:), suffix the name with [] (e.g. "docs[]") so
+# Rails receives an array param on submission.
 
 ### `input_mobile_component`
 ```ruby

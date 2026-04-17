@@ -80,6 +80,62 @@
   ) %>
 <% end %>
 
+<%= h3_component(text: "Multiple File Selector") %>
+
+<%= doc_section_component(title: "Multiple image selector") do %>
+  <%= file_selector_component(
+    name: "attachments[]",
+    label: "Attachments",
+    type: "image",
+    multiple: true,
+    support_text: "Max file size is 10MB",
+    support_text_two: "Supporting files are .jpg,.png,.jpeg"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "Multiple document selector") do %>
+  <%= file_selector_component(
+    name: "documents[]",
+    label: "Documents",
+    type: "document",
+    multiple: true,
+    support_text: "Max file size is 10MB",
+    support_text_two: "Supporting files are .pdf,.doc,.csv"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "Multiple video selector") do %>
+  <%= file_selector_component(
+    name: "videos[]",
+    label: "Videos",
+    type: "video",
+    multiple: true,
+    support_text: "Max file size is 500MB",
+    support_text_two: "Supporting files are .mp4,.mov,.avi,.mkv,.webm"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "Multiple selector with error") do %>
+  <%= file_selector_component(
+    name: "files[]",
+    label: "Files",
+    type: "document",
+    multiple: true,
+    error: "File format not supported"
+  ) %>
+<% end %>
+
+<%= doc_section_component(title: "Multiple selector disabled") do %>
+  <%= file_selector_component(
+    name: "files[]",
+    label: "Files",
+    type: "document",
+    multiple: true,
+    disabled: true,
+    support_text: "Max file size is 10MB"
+  ) %>
+<% end %>
+
 <%= h3_component(text: "Form with File Selector") %>
 
 <%= form_with url: "#", method: :post do |form| %>
