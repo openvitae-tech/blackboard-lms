@@ -56,6 +56,8 @@ module ContentStudio
 
   CourseStats = Struct.new(:created, :published, :in_progress, keyword_init: true)
 
+  CourseMetadata = Struct.new(:categories, :languages, keyword_init: true)
+
   User = Struct.new(
     :id,
     :name,

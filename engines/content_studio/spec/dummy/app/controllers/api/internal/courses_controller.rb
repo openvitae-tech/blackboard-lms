@@ -23,6 +23,10 @@ module Api
           render json: []
         end
       end
+
+      def metadata
+        render json: File.read(File.join(FIXTURES_PATH, 'course_metadata.json'))
+      end
     end
   end
 end

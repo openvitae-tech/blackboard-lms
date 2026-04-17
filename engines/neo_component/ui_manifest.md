@@ -209,6 +209,7 @@ file_selector_component(
   error: nil,
   disabled: false,
   multiple: false,        # true enables multi-file selection with a removable file list below the drop zone
+  accept: nil,            # overrides the default accepted MIME/extension list for the given type
   html_options: {}
 )
 ```

@@ -29,6 +29,10 @@ module ContentStudio
         client.current_user
       end
 
+      def course_metadata # rubocop:disable Rails/Delegate
+        client.course_metadata
+      end
+
       private
 
       def client
