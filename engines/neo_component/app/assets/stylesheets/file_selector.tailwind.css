@@ -45,3 +45,23 @@
 .file-selctor-error-text {
   @apply text-danger-dark mb-1 md:mb-2;
 }
+
+.file-selector-list-item {
+  @apply bg-white border border-line-colour flex gap-2 md:gap-3 items-center overflow-hidden px-4 py-3 md:px-5 md:py-4 rounded-lg md:rounded-xl w-full shrink-0;
+}
+
+.file-selector-list-icon {
+  @apply shrink-0 size-4 md:size-5 text-letter-color;
+}
+
+.file-selector-list-item-name {
+  @apply truncate main-text-md-normal text-letter-color;
+}
+
+.file-selector-list-remove {
+  @apply shrink-0 cursor-pointer opacity-50 bg-white relative overflow-hidden size-5 md:size-6 rounded-lg;
+}
+
+.file-selector-list-remove-icon {
+  @apply size-5 md:size-6 text-letter-color;
+}

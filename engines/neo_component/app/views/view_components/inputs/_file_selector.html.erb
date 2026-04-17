@@ -1,11 +1,18 @@
-<div class="file-selector-component-container">
+<div class="file-selector-component-container" data-controller="file-selector">
   <% if file_selector.label.present? %>
     <span class="<%= file_selector.label_style %>">
       <%= file_selector.label %>
     </span>
   <% end %>
 
-  <%= render 'view_components/inputs/file_selector_component/file_selector_box', { file_selector: } %>
+  <% if file_selector.multiple %>
+    <div class="flex flex-col gap-5 md:gap-6">
+      <%= render 'view_components/inputs/file_selector_component/file_selector_box', { file_selector: } %>
+      <%= render 'view_components/inputs/file_selector_component/file_list', { file_selector: } %>
+    </div>
+  <% else %>
+    <%= render 'view_components/inputs/file_selector_component/file_selector_box', { file_selector: } %>
+  <% end %>
 
   <% if file_selector.support_text.present? %>
     <div class="<%= file_selector.support_text_style %>">
