@@ -34,6 +34,15 @@ module ContentStudio
       build_user(JSON.parse(response.body))
     end
 
+    def course_metadata
+      response = connection.get("#{BASE_PATH}/courses/metadata")
+      data = JSON.parse(response.body)
+      CourseMetadata.new(
+        categories: data['categories'],
+        languages: data['languages']
+      )
+    end
+
     private
 
     def connection
