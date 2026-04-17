@@ -33,4 +33,5 @@ module UiHelper
   include ViewComponent::ProgressComponent
   include ViewComponent::ProfileIconComponent
   include ViewComponent::AccordionComponent
+  include ViewComponent::WizardStepsComponent
 end

@@ -397,6 +397,31 @@ course_carousal_component(courses:, title:, count:, load_path:)
 
 ---
 
+## Wizard Steps
+
+### `wizard_steps_component`
+```ruby
+wizard_steps_component(
+  steps:,        # Array of { icon_name: String, label: String }
+  current_step:  # Integer, 0-indexed
+)
+```
+Renders a multi-step progress header. Steps before `current_step` are styled as completed, the step at `current_step` is active, and remaining steps are upcoming. Circles are connected by horizontal lines.
+
+**Example — 3-step wizard, second step active:**
+```ruby
+wizard_steps_component(
+  steps: [
+    { icon_name: 'document-text', label: 'Upload doc' },
+    { icon_name: 'camera',        label: 'Configure Video' },
+    { icon_name: 'numbered-list', label: 'Course Structure' }
+  ],
+  current_step: 1   # 0-indexed — step 1 is active, step 0 is completed
+)
+```
+
+---
+
 ## Accordion
 
 ### `accordion_component`
