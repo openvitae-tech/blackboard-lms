@@ -34,7 +34,12 @@ export default class extends Controller {
   // ── Multiple-file mode ──────────────────────────────────────────────────
 
   handleMultipleFiles(newFiles) {
+    const existing = new Set(
+      Array.from(this.multipleFiles.files).map(f => `${f.name}:${f.size}`)
+    );
+
     Array.from(newFiles).forEach(file => {
+      if (existing.has(`${file.name}:${file.size}`)) return;
       this.multipleFiles.items.add(file);
       this.appendFileItem(file);
     });
