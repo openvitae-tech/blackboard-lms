@@ -8,7 +8,7 @@
       ] %>
     <% elsif params[:mode] == Program::LEARNER_MODE && @program %>
       <%= breadcrumbs_component links: [
-        ['Home', courses_path],
+        [t('home.label'), courses_path],
         [t('programs.explore_label'), explore_programs_path],
         [@program.name, program_path(@program, mode: Program::LEARNER_MODE)],
         [@course.title, nil]
