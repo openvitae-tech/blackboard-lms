@@ -40,6 +40,8 @@ en:
     not_found: "The %{resource_name} is not found."
   pundit:
     unauthorized: "Sorry you are not authorized to perform that action."
+  home:
+    label: "Home"
   labels:
     category: "Category"
     name: "Name"
