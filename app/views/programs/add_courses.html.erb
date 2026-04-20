@@ -49,7 +49,7 @@
 
 
 
-  <%= form_with url: create_courses_program_path(@program), method: :post, id: "add-courses-form" do |form| %>
+  <%= form_with url: create_courses_program_path(@program), method: :post, id: "add-courses-form", data: { controller: "course-selection" } do |form| %>
     <div class="mb-4">
       <% if @courses.empty? %>
         <div class="flex flex-col items-center justify-center mt-10 mb-5">
@@ -61,7 +61,8 @@
             <li class="relative">
               <%= check_box_tag 'course_ids[]', course.id, false,
                     id: dom_id(course, "course_ids"),
-                    class: 'absolute top-4 right-4 w-5 h-5 z-10 border rounded checked:bg-primary checked:border-primary focus:ring-0' %>
+                    class: 'absolute top-4 right-4 w-5 h-5 z-10 border rounded checked:bg-primary checked:border-primary focus:ring-0',
+                    data: { action: "change->course-selection#toggleSubmit" } %>
               <%= build_long_course_card(course, nil) %>
             </li>
           <% end %>
@@ -77,8 +78,8 @@
       <%= link_to program_path(@program, mode: Program::MANAGER_MODE) do %>
         <%= button_component(text: t("button.cancel"), type: "outline", size: "sm") %>
       <% end %>
-      <%= button_tag form: "add-courses-form", class: "flex-none" do %>
-        <%= button_component(text: t("programs.add_courses"), size: "sm") %>
+      <%= button_tag form: "add-courses-form", class: "flex-none", disabled: true, data: { course_selection_target: "submitButton" } do %>
+        <%= button_component(text: t("programs.add_courses"), size: "sm", disabled: true, html_options: { data: { course_selection_target: "innerButton" } }) %>
       <% end %>
     </div>
   <% end %>
