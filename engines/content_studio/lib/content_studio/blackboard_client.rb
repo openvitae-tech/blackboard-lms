@@ -57,6 +57,12 @@ module ContentStudio
       )
     end
 
+    def generation_status(course_id)
+      response = connection.get("#{BASE_PATH}/courses/#{course_id}/generation_status")
+      data = JSON.parse(response.body)
+      GenerationStatus.new(status: data['status'], redirect_url: data['redirect_url'])
+    end
+
     private
 
     def connection

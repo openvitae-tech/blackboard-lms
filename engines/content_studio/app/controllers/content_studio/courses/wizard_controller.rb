@@ -16,7 +16,16 @@ module ContentStudio
       end
 
       def update_video_config
-        redirect_to root_path
+        redirect_to generating_course_path(id: params[:id])
+      end
+
+      def generating
+        @course_id = params[:id]
+      end
+
+      def generation_status
+        status = ApiClient.generation_status(params[:id])
+        render json: { status: status.status, redirect_url: status.redirect_url }
       end
     end
   end
