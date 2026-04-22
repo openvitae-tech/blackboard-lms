@@ -29,6 +29,23 @@ module ContentStudio
       )
     end
 
+    def lesson_status_label(status)
+      case status
+      when 'verified'    then 'Verified'
+      when 'video_ready' then 'Video ready'
+      when 'in_process'  then 'In Process'
+      else status.to_s.humanize
+      end
+    end
+
+    def lesson_status_colorscheme(status)
+      case status
+      when 'verified'   then 'secondary'
+      when 'in_process' then 'gold'
+      else 'primary'
+      end
+    end
+
     def studio_badge(status)
       if status == 'to_be_verified'
         { label: 'Pending', bg_color: 'bg-danger', text_color: 'text-white' }

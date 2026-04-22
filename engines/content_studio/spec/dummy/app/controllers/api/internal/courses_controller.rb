@@ -39,6 +39,18 @@ module Api
       def generation_status
         render json: File.read(File.join(FIXTURES_PATH, 'generation_status.json'))
       end
+
+      def structure
+        render json: File.read(File.join(FIXTURES_PATH, 'course_structure.json'))
+      end
+
+      def save
+        render json: { status: 'ok' }
+      end
+
+      def discard
+        head :no_content
+      end
     end
   end
 end

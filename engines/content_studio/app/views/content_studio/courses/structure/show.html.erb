@@ -1,0 +1,130 @@
+<div class="flex flex-col gap-6 py-3">
+  <div class="flex justify-center py-3">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'document-text', label: 'Upload doc' },
+        { icon_name: 'camera',        label: 'Configure Video' },
+        { icon_name: 'numbered-list', label: 'Course Structure' }
+      ],
+      current_step: 2
+    ) %>
+  </div>
+
+  <div class="flex gap-6 px-4" data-controller="collapsible-group">
+    <div class="flex-1 flex flex-col gap-6">
+      <% @structure.modules.each do |mod| %>
+        <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4"
+             data-controller="collapsible"
+             data-collapsible-open-value="true"
+             data-action="collapsible:close-all@window->collapsible#close collapsible:open-all@window->collapsible#open">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer"
+                 data-action="click->collapsible#toggle">
+              <span class="text-primary flex-shrink-0" data-collapsible-target="icon"
+                    class="block rotate-180 transition-transform duration-200 ease-in-out">
+                <%= icon 'chevron-down', css: 'w-5 h-5' %>
+              </span>
+              <span class="main-text-md-semibold text-letter-color"><%= mod.title %></span>
+            </div>
+            <div>
+              <%= button_component(text: 'Select', type: 'outline', size: 'sm', colorscheme: 'primary') %>
+            </div>
+          </div>
+
+          <div data-collapsible-target="content" class="flex flex-col gap-3">
+            <% mod.lessons.each do |lesson| %>
+              <div class="flex items-center gap-3">
+                <span class="text-slate-grey-50 flex-shrink-0 cursor-grab">
+                  <%= icon 'grip-vertical', css: 'w-5 h-5' %>
+                </span>
+                <div class="flex-1 bg-white-light border border-line-colour-light rounded px-3 py-2.5 h-10 flex items-center overflow-hidden">
+                  <span class="main-text-sm-normal text-letter-color truncate"><%= lesson.title %></span>
+                </div>
+                <%= chip_component(
+                  text: lesson_status_label(lesson.status),
+                  icon_name: lesson.status == 'verified' ? 'check' : nil,
+                  colorscheme: lesson_status_colorscheme(lesson.status)
+                ) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <div data-collapsible-group-target="collapseBtn">
+        <%= button_component(
+          text: 'Collapse Modules',
+          type: 'outline',
+          size: 'md',
+          colorscheme: 'primary',
+          html_options: { data: { action: 'click->collapsible-group#collapseAll' } }
+        ) %>
+      </div>
+      <div data-collapsible-group-target="expandBtn" class="hidden">
+        <%= button_component(
+          text: 'Expand all Modules',
+          type: 'outline',
+          size: 'md',
+          colorscheme: 'primary',
+          html_options: { data: { action: 'click->collapsible-group#expandAll' } }
+        ) %>
+      </div>
+    </div>
+
+    <div class="w-96 flex-shrink-0">
+      <div class="bg-primary-light-50 border border-line-colour-light rounded-xl p-5 flex flex-col gap-5">
+        <span class="main-text-md-semibold text-letter-color">Course Overview</span>
+
+        <div class="flex flex-col gap-3">
+          <p class="main-text-sm-medium text-letter-color">Course Name : <%= @structure.title %></p>
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1 p-0.5">
+              <%= icon 'rectangle-group', css: 'w-4 h-4' %>
+              <span class="general-text-md-normal text-letter-color"><%= "#{@structure.modules.count} Modules" %></span>
+            </div>
+            <div class="flex items-center gap-1 p-0.5">
+              <%= icon 'clock', css: 'w-4 h-4' %>
+              <span class="general-text-md-normal text-letter-color"><%= format_duration(@structure.duration) %></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white-light rounded-lg p-3 flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="general-text-md-medium text-letter-color">Progress</span>
+            <div class="flex items-center gap-1">
+              <span class="general-text-md-medium text-letter-color"><%= "#{@structure.verified_modules_count}/#{@structure.modules.count} Modules" %></span>
+              <%= icon 'i-vector', css: 'w-4 h-4' %>
+            </div>
+          </div>
+          <%= progressbar_component(
+            numerator: @structure.verified_modules_count,
+            denominator: @structure.modules.count,
+            full_width: true
+          ) %>
+        </div>
+
+        <div class="bg-white-light rounded-lg p-3 flex flex-col gap-3">
+          <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
+          <div class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
+            <% if @structure.banner_url.present? %>
+              <img src="<%= @structure.banner_url %>" class="w-full h-full object-cover" alt="Course thumbnail">
+            <% end %>
+            <button type="button" class="absolute bottom-3 right-3 bg-white border border-letter-color rounded-full p-1.5 opacity-70">
+              <%= icon 'pencil', css: 'w-4 h-4' %>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <%= link_to save_course_path(id: @structure.id), data: { turbo_method: :patch }, class: 'block' do %>
+            <%= button_component(text: 'Save Course', type: 'solid', size: 'md', colorscheme: 'primary') %>
+          <% end %>
+          <%= link_to discard_course_path(id: @structure.id), data: { turbo_method: :delete }, class: 'block' do %>
+            <%= button_component(text: 'Discard Course', type: 'outline', size: 'md', colorscheme: 'danger') %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
