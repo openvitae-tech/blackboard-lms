@@ -8,6 +8,14 @@ module ContentStudio
       end
 
       def create
+        redirect_to configure_video_path(id: 1)
+      end
+
+      def configure_video
+        @course_id = params[:id]
+      end
+
+      def update_video_config
         redirect_to root_path
       end
     end
