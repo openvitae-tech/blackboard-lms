@@ -1,0 +1,84 @@
+<div class="flex flex-col gap-6 py-3">
+
+  <%# Wizard steps header %>
+  <div class="flex justify-center py-3">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'document-text', label: 'Upload doc' },
+        { icon_name: 'camera',        label: 'Configure Video' },
+        { icon_name: 'numbered-list', label: 'Course Structure' }
+      ],
+      current_step: 1
+    ) %>
+  </div>
+
+  <%= form_with url: configure_video_path(id: @course_id), method: :patch, class: 'flex flex-col gap-5' do |form| %>
+
+    <%# Card: Upload Logo %>
+    <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">
+      <p class="main-text-lg-semibold text-letter-color">Upload Logo</p>
+      <%= file_selector_component(
+        form: form,
+        name: :logo,
+        type: 'image',
+        accept: '.png,.jpeg,.jpg,.svg',
+        support_text: 'File types : png, jpeg, jpg, svg',
+        support_text_two: 'File size : 5 mb/file'
+      ) %>
+    </div>
+
+    <%# Card: Colour Branding %>
+    <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">
+      <p class="main-text-lg-semibold text-letter-color">Colour Branding</p>
+      <div class="flex gap-7">
+        <div class="flex gap-3 items-end flex-1" data-controller="colour-picker">
+          <input type="color" value="#ffffff"
+                 data-colour-picker-target="picker"
+                 data-action="input->colour-picker#syncToText change->colour-picker#syncToText"
+                 class="h-14 w-14 shrink-0 rounded-xl border border-line-colour-light cursor-pointer p-1">
+          <%= input_text_component(
+            form: form,
+            name: :background_colour,
+            label: 'Background Colour',
+            placeholder: 'hex#23445',
+            icon_name: 'pencil',
+            icon_position: 'right',
+            html_options: { value: '#ffffff',
+                            data: { colour_picker_target: 'text',
+                                    action: 'input->colour-picker#syncToPicker' } }
+          ) %>
+        </div>
+        <div class="flex gap-3 items-end flex-1" data-controller="colour-picker">
+          <input type="color" value="#000000"
+                 data-colour-picker-target="picker"
+                 data-action="input->colour-picker#syncToText change->colour-picker#syncToText"
+                 class="h-14 w-14 shrink-0 rounded-xl border border-line-colour-light cursor-pointer p-1">
+          <%= input_text_component(
+            form: form,
+            name: :text_colour,
+            label: 'Text Colour',
+            placeholder: 'hex#23445',
+            icon_name: 'pencil',
+            icon_position: 'right',
+            html_options: { value: '#000000',
+                            data: { colour_picker_target: 'text',
+                                    action: 'input->colour-picker#syncToPicker' } }
+          ) %>
+        </div>
+      </div>
+    </div>
+
+    <%# Footer %>
+    <div class="flex gap-3">
+      <%= link_to new_course_path do %>
+        <%= button_component(text: 'Back to Upload', type: 'outline', colorscheme: 'primary') %>
+      <% end %>
+      <%= form.button class: 'flex-1' do %>
+        <%= button_component(text: 'Generate Course', type: 'solid', colorscheme: 'primary',
+                             html_options: { class: 'w-full' }) %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+</div>
