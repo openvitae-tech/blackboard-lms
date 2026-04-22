@@ -249,7 +249,7 @@ chip_component(
   text: '',
   icon_name: nil,
   close: false,
-  colorscheme: 'primary'  # primary | primary_lite | danger | input
+  colorscheme: 'primary'  # primary | primary_lite | danger | input | secondary | gold
 )
 ```
 
@@ -370,7 +370,11 @@ notification_bar(
 
 ### `progressbar_component`
 ```ruby
-progressbar_component(numerator:, denominator:)
+progressbar_component(
+  numerator:,
+  denominator:,
+  full_width: false   # true stretches to w-full; default is w-[52px] md:w-[120px]
+)
 ```
 
 ---

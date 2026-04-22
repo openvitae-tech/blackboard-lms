@@ -1,0 +1,38 @@
+{
+  "id": 1,
+  "title": "Airport Services Management",
+  "duration": 9240,
+  "verified_modules_count": 2,
+  "banner_url": null,
+  "modules": [
+    {
+      "id": 1,
+      "title": "Airport Services",
+      "lessons": [
+        { "id": 1, "title": "Introduction", "status": "verified" },
+        { "id": 2, "title": "Airport arrival and Procedures", "status": "verified" },
+        { "id": 3, "title": "Rules and regulations", "status": "video_ready" },
+        { "id": 4, "title": "Arrival procedures", "status": "video_ready" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Food and Beverage Services",
+      "lessons": [
+        { "id": 5, "title": "Lesson name name", "status": "video_ready" },
+        { "id": 6, "title": "Lesson name", "status": "video_ready" },
+        { "id": 7, "title": "Lesson name", "status": "video_ready" }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Wine Serving",
+      "lessons": [
+        { "id": 8,  "title": "Lesson name name", "status": "in_process" },
+        { "id": 9,  "title": "Lesson name name", "status": "in_process" },
+        { "id": 10, "title": "Lesson name name", "status": "in_process" },
+        { "id": 11, "title": "Lesson name name", "status": "in_process" }
+      ]
+    }
+  ]
+}
