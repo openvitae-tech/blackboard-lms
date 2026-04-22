@@ -36,4 +36,31 @@ RSpec.describe 'ContentStudio::Courses::Wizard', type: :request do
       expect(response).to have_http_status(:redirect)
     end
   end
+
+  describe 'GET /content_studio/courses/:id/generating' do
+    it 'returns HTTP 200' do
+      get '/content_studio/courses/1/generating'
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  describe 'GET /content_studio/courses/:id/generation_status' do
+    before do
+      allow(ContentStudio::ApiClient).to receive(:generation_status).and_return(
+        ContentStudio::GenerationStatus.new(status: 'pending', redirect_url: nil)
+      )
+    end
+
+    it 'returns HTTP 200 with JSON' do
+      get '/content_studio/courses/1/generation_status'
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to include('application/json')
+    end
+
+    it 'includes status in the response body' do
+      get '/content_studio/courses/1/generation_status'
+      body = JSON.parse(response.body)
+      expect(body['status']).to eq('pending')
+    end
+  end
 end
