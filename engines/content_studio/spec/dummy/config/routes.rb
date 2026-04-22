@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get 'courses/avatars', to: 'courses#avatars'
       get 'courses/templates', to: 'courses#templates'
       get 'courses', to: 'courses#index'
+      get 'courses/:id/generation_status', to: 'courses#generation_status'
       get 'users/me', to: 'users#me'
     end
   end

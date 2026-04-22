@@ -41,6 +41,10 @@ module ContentStudio
         client.course_metadata
       end
 
+      def generation_status(course_id) # rubocop:disable Rails/Delegate
+        client.generation_status(course_id)
+      end
+
       private
 
       def client

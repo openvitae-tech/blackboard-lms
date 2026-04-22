@@ -35,6 +35,10 @@ module Api
       def templates
         render json: File.read(File.join(FIXTURES_PATH, 'templates.json'))
       end
+
+      def generation_status
+        render json: File.read(File.join(FIXTURES_PATH, 'generation_status.json'))
+      end
     end
   end
 end
