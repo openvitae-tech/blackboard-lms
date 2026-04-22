@@ -58,6 +58,10 @@ module ContentStudio
 
   CourseMetadata = Struct.new(:categories, :languages, keyword_init: true)
 
+  Avatar = Struct.new(:id, :name, :image_url, keyword_init: true)
+
+  VideoTemplate = Struct.new(:id, :name, :thumbnail_url, keyword_init: true)
+
   User = Struct.new(
     :id,
     :name,

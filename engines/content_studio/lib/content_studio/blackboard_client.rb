@@ -34,6 +34,20 @@ module ContentStudio
       build_user(JSON.parse(response.body))
     end
 
+    def list_avatars
+      response = connection.get("#{BASE_PATH}/courses/avatars")
+      JSON.parse(response.body).map do |a|
+        Avatar.new(id: a['id'], name: a['name'], image_url: a['image_url'])
+      end
+    end
+
+    def list_templates
+      response = connection.get("#{BASE_PATH}/courses/templates")
+      JSON.parse(response.body).map do |t|
+        VideoTemplate.new(id: t['id'], name: t['name'], thumbnail_url: t['thumbnail_url'])
+      end
+    end
+
     def course_metadata
       response = connection.get("#{BASE_PATH}/courses/metadata")
       data = JSON.parse(response.body)

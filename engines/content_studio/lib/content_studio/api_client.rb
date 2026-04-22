@@ -29,6 +29,14 @@ module ContentStudio
         client.current_user
       end
 
+      def list_avatars # rubocop:disable Rails/Delegate
+        client.list_avatars
+      end
+
+      def list_templates # rubocop:disable Rails/Delegate
+        client.list_templates
+      end
+
       def course_metadata # rubocop:disable Rails/Delegate
         client.course_metadata
       end

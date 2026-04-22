@@ -27,6 +27,14 @@ module Api
       def metadata
         render json: File.read(File.join(FIXTURES_PATH, 'course_metadata.json'))
       end
+
+      def avatars
+        render json: File.read(File.join(FIXTURES_PATH, 'avatars.json'))
+      end
+
+      def templates
+        render json: File.read(File.join(FIXTURES_PATH, 'templates.json'))
+      end
     end
   end
 end
