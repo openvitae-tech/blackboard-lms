@@ -30,6 +30,20 @@ module ViewComponent
         text-primary
         text-primary
         border-slate-grey-light
+      ],
+      'secondary' => %w[
+        bg-secondary
+        text-primary-dark
+        text-primary-dark
+        text-primary-dark
+        border-0
+      ],
+      'gold' => %w[
+        bg-gold-light
+        text-primary-dark
+        text-primary-dark
+        text-primary-dark
+        border-slate-grey-light
       ]
     }.freeze
 

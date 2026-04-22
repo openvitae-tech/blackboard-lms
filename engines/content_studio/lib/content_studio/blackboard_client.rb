@@ -63,6 +63,19 @@ module ContentStudio
       GenerationStatus.new(status: data['status'], redirect_url: data['redirect_url'])
     end
 
+    def course_structure(course_id)
+      response = connection.get("#{BASE_PATH}/courses/#{course_id}/structure")
+      build_course_structure(JSON.parse(response.body))
+    end
+
+    def save_course(course_id)
+      connection.patch("#{BASE_PATH}/courses/#{course_id}/save")
+    end
+
+    def discard_course(course_id)
+      connection.delete("#{BASE_PATH}/courses/#{course_id}")
+    end
+
     private
 
     def connection
@@ -132,6 +145,29 @@ module ContentStudio
         email: data['email'],
         role: data['role']
       )
+    end
+
+    def build_course_structure(data)
+      CourseStructure.new(
+        id: data['id'],
+        title: data['title'],
+        duration: data['duration'],
+        modules: (data['modules'] || []).map { |m| build_structure_module(m) },
+        verified_modules_count: data['verified_modules_count'].to_i,
+        banner_url: data['banner_url']
+      )
+    end
+
+    def build_structure_module(data)
+      StructureModule.new(
+        id: data['id'],
+        title: data['title'],
+        lessons: (data['lessons'] || []).map { |l| build_structure_lesson(l) }
+      )
+    end
+
+    def build_structure_lesson(data)
+      StructureLesson.new(id: data['id'], title: data['title'], status: data['status'])
     end
   end
 end

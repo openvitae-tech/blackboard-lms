@@ -45,6 +45,18 @@ module ContentStudio
         client.generation_status(course_id)
       end
 
+      def course_structure(course_id) # rubocop:disable Rails/Delegate
+        client.course_structure(course_id)
+      end
+
+      def save_course(course_id) # rubocop:disable Rails/Delegate
+        client.save_course(course_id)
+      end
+
+      def discard_course(course_id) # rubocop:disable Rails/Delegate
+        client.discard_course(course_id)
+      end
+
       private
 
       def client

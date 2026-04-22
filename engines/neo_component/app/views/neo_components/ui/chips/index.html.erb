@@ -5,3 +5,11 @@
 <%= doc_section_component(title: "Chip - danger") do %>
   <%= chip_component(text: 'Owner not joined', icon_name: 'x-mark', close: true, colorscheme: 'danger') %>
 <% end %>
+
+<%= doc_section_component(title: "Chip - secondary") do %>
+  <%= chip_component(text: 'Verified', icon_name: 'check-circle', colorscheme: 'secondary') %>
+<% end %>
+
+<%= doc_section_component(title: "Chip - gold") do %>
+  <%= chip_component(text: 'In Process', colorscheme: 'gold') %>
+<% end %>

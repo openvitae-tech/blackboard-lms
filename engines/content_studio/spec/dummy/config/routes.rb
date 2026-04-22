@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       get 'courses/templates', to: 'courses#templates'
       get 'courses', to: 'courses#index'
       get 'courses/:id/generation_status', to: 'courses#generation_status'
+      get 'courses/:id/structure', to: 'courses#structure'
+      patch 'courses/:id/save', to: 'courses#save'
+      delete 'courses/:id', to: 'courses#discard'
       get 'users/me', to: 'users#me'
     end
   end
