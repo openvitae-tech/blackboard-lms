@@ -76,6 +76,11 @@ module ContentStudio
       connection.delete("#{BASE_PATH}/courses/#{course_id}")
     end
 
+    def get_lesson(course_id, lesson_id)
+      response = connection.get("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}")
+      build_lesson(JSON.parse(response.body))
+    end
+
     private
 
     def connection

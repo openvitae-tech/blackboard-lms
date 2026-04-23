@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'courses/:id/structure', to: 'courses#structure'
       patch 'courses/:id/save', to: 'courses#save'
       delete 'courses/:id', to: 'courses#discard'
+      get 'courses/:course_id/lessons/:id', to: 'courses/lessons#show'
       get 'users/me', to: 'users#me'
     end
   end
