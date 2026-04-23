@@ -88,4 +88,20 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     render
     expect(rendered).to include('1/2 Modules')
   end
+
+  it 'wires the lesson-name Stimulus controller on each lesson pill' do
+    render
+    expect(rendered).to include('data-controller="lesson-name"')
+  end
+
+  it 'sets the href value to the lesson show path on each lesson pill' do
+    render
+    expect(rendered).to include('data-lesson-name-href-value="/content_studio/courses/1/lessons/1"')
+    expect(rendered).to include('data-lesson-name-href-value="/content_studio/courses/1/lessons/2"')
+  end
+
+  it 'renders the inline edit input alongside each lesson title' do
+    render
+    expect(rendered).to include('data-lesson-name-target="input"')
+  end
 end
