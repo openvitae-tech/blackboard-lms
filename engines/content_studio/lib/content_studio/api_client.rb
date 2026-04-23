@@ -57,6 +57,10 @@ module ContentStudio
         client.discard_course(course_id)
       end
 
+      def get_lesson(course_id, lesson_id) # rubocop:disable Rails/Delegate
+        client.get_lesson(course_id, lesson_id)
+      end
+
       private
 
       def client

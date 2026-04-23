@@ -37,8 +37,18 @@
                 <span class="text-slate-grey-50 flex-shrink-0 cursor-grab">
                   <%= icon 'grip-vertical', css: 'w-5 h-5' %>
                 </span>
-                <div class="flex-1 bg-white-light border border-line-colour-light rounded px-3 py-2.5 h-10 flex items-center overflow-hidden">
-                  <span class="main-text-sm-normal text-letter-color truncate"><%= lesson.title %></span>
+                <div class="flex-1 bg-white-light border border-line-colour-light rounded px-3 py-2.5 h-10 flex items-center overflow-hidden cursor-pointer"
+                     data-controller="lesson-name"
+                     data-lesson-name-href-value="<%= course_lesson_path(course_id: @structure.id, id: lesson.id) %>"
+                     data-action="click->lesson-name#click dblclick->lesson-name#dblclick">
+                  <span class="main-text-sm-normal text-letter-color truncate flex-1"
+                        data-lesson-name-target="display">
+                    <%= lesson.title %>
+                  </span>
+                  <input type="text"
+                         class="main-text-sm-normal text-letter-color w-full bg-transparent border-0 p-0 focus:ring-0 focus:outline-none hidden"
+                         data-lesson-name-target="input"
+                         data-action="blur->lesson-name#blur keydown->lesson-name#keydown">
                 </div>
                 <%= chip_component(
                   text: lesson_status_label(lesson.status),

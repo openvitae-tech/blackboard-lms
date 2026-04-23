@@ -1,0 +1,121 @@
+<div class="flex flex-col gap-6 py-3">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <%= link_to course_structure_path(id: @course_id) do %>
+        <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
+          <%= icon 'arrow-left', css: 'w-4 h-4 text-letter-color' %>
+        </span>
+      <% end %>
+      <span class="main-text-lg-semibold text-letter-color">Lesson Page</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <%= button_component(
+            text: 'Edit Video Style',
+            type: 'outline',
+            size: 'md',
+            colorscheme: 'primary',
+            icon_name: 'pencil'
+          ) %>
+      <%= button_component(
+            text: 'Delete Lesson',
+            type: 'outline',
+            size: 'md',
+            colorscheme: 'danger',
+            icon_name: 'trash'
+          ) %>
+    </div>
+  </div>
+
+  <div class="flex gap-6">
+    <div class="flex-1 flex flex-col gap-5 min-w-0">
+      <div class="flex flex-col gap-4">
+        <% local_content = @lesson.local_contents&.first %>
+        <div class="bg-letter-color rounded-lg overflow-hidden h-64 flex items-center justify-center">
+          <% if local_content&.video_url.present? %>
+            <video src="<%= local_content.video_url %>"
+                   controls
+                   class="w-full h-full"
+                   preload="metadata">
+            </video>
+          <% else %>
+            <%= icon 'play-circle', css: 'w-16 h-16 text-white opacity-40' %>
+          <% end %>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div class="w-40">
+            <%= dropdown_component(
+                  name: 'language',
+                  options: @lesson.local_contents.map { |lc| [lc.lang, lc.lang] },
+                  value: local_content&.lang,
+                  size: 'md'
+                ) %>
+          </div>
+          <div class="flex items-center gap-2">
+            <%= button_component(
+                  text: 'Previous',
+                  type: 'outline',
+                  size: 'md',
+                  colorscheme: 'primary',
+                  icon_name: 'chevron-left',
+                  icon_position: 'left',
+                  disabled: true
+                ) %>
+            <%= button_component(
+                  text: 'Next',
+                  type: 'outline',
+                  size: 'md',
+                  colorscheme: 'primary',
+                  icon_name: 'chevron-right',
+                  icon_position: 'right'
+                ) %>
+            <%= button_component(
+                  text: 'Verify & Next',
+                  type: 'solid',
+                  size: 'md',
+                  colorscheme: 'secondary',
+                  icon_name: 'chevron-right',
+                  icon_position: 'right'
+                ) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <%= textarea_component(
+              name: 'script',
+              label: 'Script',
+              placeholder: 'Script will appear here...',
+              rows: 8
+            ) %>
+        <%= button_component(
+              text: 'Regenerate Lesson',
+              type: 'solid',
+              size: 'md',
+              colorscheme: 'primary'
+            ) %>
+      </div>
+    </div>
+
+    <div class="w-96 flex-shrink-0 flex flex-col gap-5">
+      <div class="bg-primary-light-50 rounded-lg p-5 flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <span class="main-text-lg-semibold text-primary"><%= @lesson.title %></span>
+          <button type="button" class="p-3">
+            <%= icon 'pencil', css: 'w-4 h-4 text-letter-color' %>
+          </button>
+        </div>
+        <div class="flex flex-col gap-1">
+          <p class="main-text-sm-normal text-letter-color line-clamp-6" id="lesson-description">
+            <%= @lesson.description %>
+          </p>
+          <button type="button"
+                  class="main-text-sm-normal text-primary underline text-left"
+                  onclick="var d=document.getElementById('lesson-description');d.classList.toggle('line-clamp-6');this.textContent=d.classList.contains('line-clamp-6')?'Show more':'Show less';">
+            Show more
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
