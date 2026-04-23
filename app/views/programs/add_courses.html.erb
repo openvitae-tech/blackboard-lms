@@ -1,7 +1,86 @@
-<div class="my-4 mx-auto w-full text-left">
-  <%= render 'shared/components/back_button', back_link: program_path(@program, mode: Program::MANAGER_MODE) %>
-  <div class="box">
-    <%= heading_component(text: t("programs.add_courses")) %>
+<div class="my-4 mx-auto w-full text-left" data-controller="courses">
+  <%= render 'courses/filters', tags: @tags %>
+
+
+  <div class="mb-4">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <%= render 'shared/components/back_button', back_link: program_path(@program, mode: Program::MANAGER_MODE) %>
+        <%= heading_component(text: t("programs.add_courses")) %>
+      </div>
+      <div class="flex items-center gap-2">
+        <%= form_tag add_courses_program_path(@program), class: "w-full md:w-[340px]", method: :get, data: { action: "submit->courses#formSubmit" } do %>
+          <%= input_text_component(
+                name: :term,
+                placeholder: t("programs.search_placeholder"),
+                icon_name: "magnifying-glass",
+                icon_position: "left",
+                value: params[:term],
+                html_options: { data: { courses_target: "searchInput" }, id: "course-search" }
+              ) %>
+        <% end %>
+        <button type="button" data-action="click->courses#openFilter" class="hidden md:block">
+          <%= button_component(text: "Filter", type: "outline", icon_name: "funnel", icon_position: "right") %>
+        </button>
+        <button type="button" data-action="click->courses#openFilter" class="md:hidden">
+          <%= button_component(type: "outline", icon_name: "funnel") %>
+        </button>
+      </div>
+    </div>
+    <div class="flex flex-row justify-between items-center mt-3 md:mt-4">
+      <% if params[:tags].present? %>
+        <div class="flex flex-row flex-wrap gap-2">
+          <% params[:tags].each do |tag| %>
+            <%= link_to updated_tags_query_params(tag), method: :get do %>
+              <%= chip_component(text: tag, colorscheme: "input", close: true) %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+      <% if params[:term].present? || params[:tags].present? %>
+        <div class="flex justify-end">
+          <%= link_to add_courses_program_path(@program), class: "general-text-sm-normal text-primary" do %>
+            <%= t("button.clear_search") %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
-  <%= course_select_component(search_context: @search_context, submit_path: create_courses_program_path(@program), courses: @courses, tags: @tags) %>
+
+
+
+  <%= form_with url: create_courses_program_path(@program), method: :post, id: "add-courses-form", data: { controller: "course-selection" } do |form| %>
+    <div class="mb-4">
+      <% if @courses.empty? %>
+        <div class="flex flex-col items-center justify-center mt-10 mb-5">
+          <p class="text-sm text-letter-color-light"><%= t("programs.no_courses") %></p>
+        </div>
+      <% else %>
+        <ul class="flex flex-col gap-4">
+          <% @courses.each do |course| %>
+            <li class="relative">
+              <%= check_box_tag 'course_ids[]', course.id, false,
+                    id: dom_id(course, "course_ids"),
+                    class: 'absolute top-4 right-4 w-5 h-5 z-10 border rounded checked:bg-primary checked:border-primary focus:ring-0',
+                    data: { action: "change->course-selection#toggleSubmit" } %>
+              <%= build_long_course_card(course, nil) %>
+            </li>
+          <% end %>
+        </ul>
+        <div class="flex justify-end gap-3 mt-4">
+          <%= render 'shared/pagination/prev', items: @courses %>
+          <%= render 'shared/pagination/next', items: @courses %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="sticky bottom-0 flex gap-3 justify-center items-center bg-white py-5 -mx-5 md:-mx-16 px-5 md:px-16 border-t border-line-colour-light z-10">
+      <%= link_to program_path(@program, mode: Program::MANAGER_MODE) do %>
+        <%= button_component(text: t("button.cancel"), type: "outline", size: "sm") %>
+      <% end %>
+      <%= button_tag form: "add-courses-form", class: "flex-none", disabled: true, data: { course_selection_target: "submitButton" } do %>
+        <%= button_component(text: t("programs.add_courses"), size: "sm", disabled: true, html_options: { data: { course_selection_target: "innerButton" } }) %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
