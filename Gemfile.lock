@@ -157,7 +157,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.5.1)
     drb (2.2.3)
-    erb (6.0.2)
+    erb (6.0.4)
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
