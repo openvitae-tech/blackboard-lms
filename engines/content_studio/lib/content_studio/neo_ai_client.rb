@@ -225,7 +225,8 @@ module ContentStudio
         title: data['title'],
         modules: (data['modules'] || []).map { |m| build_structure_module(m) },
         verified_modules_count: 0,
-        thumbnail_url: data['thumbnail_url']
+        thumbnail_url: data['thumbnail_url'],
+        progress_text: data['progress_text']
       )
     end
 
