@@ -16,4 +16,8 @@ class AppConfigService
   def chatwoot_enabled?
     CONFIG[:enable_chatwoot]
   end
+
+  def content_studio_enabled?
+    CONFIG[:content_studio]
+  end
 end

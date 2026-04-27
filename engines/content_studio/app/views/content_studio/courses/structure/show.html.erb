@@ -131,8 +131,8 @@
         <div class="bg-white-light rounded-lg p-3 flex flex-col gap-3">
           <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
           <div class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
-            <img src="<%= @structure.thumbnail_url.presence || '/placeholder.gif' %>"
-                 class="w-full h-full object-cover" alt="Course thumbnail">
+            <%= image_tag @structure.thumbnail_url.presence || image_path('placeholder.gif'),
+                         class: 'w-full h-full object-cover', alt: 'Course thumbnail' %>
             <button type="button" class="absolute bottom-3 right-3 bg-white border border-letter-color rounded-full p-1.5 opacity-70">
               <%= icon 'pencil', css: 'w-4 h-4' %>
             </button>

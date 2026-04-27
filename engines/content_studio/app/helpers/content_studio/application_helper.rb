@@ -18,7 +18,7 @@ module ContentStudio
     def studio_course_card(course, status)
       course_card_component(
         title: course.title,
-        banner_url: course.thumbnail_url.presence || '/placeholder.gif',
+        banner_url: course.thumbnail_url.presence || image_path('placeholder.gif'),
         duration: format_duration(course.duration),
         modules_count: course.course_modules_count,
         enroll_count: course.enrollments_count || 0,
