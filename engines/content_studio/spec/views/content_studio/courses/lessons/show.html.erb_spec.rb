@@ -3,10 +3,27 @@
 require_relative '../../../../rails_helper'
 
 RSpec.describe 'content_studio/courses/lessons/show', type: :view do
-  let(:local_content) do
+  let(:local_content_no_video) do
     ContentStudio::LocalContent.new(
       id: 1, lang: 'en', status: 'published', video_url: nil, video_published_at: nil
     )
+  end
+
+  let(:local_content_with_video) do
+    ContentStudio::LocalContent.new(
+      id: 2, lang: 'en', status: 'published',
+      video_url: 'https://example-bucket.s3.amazonaws.com/lesson-1.mp4',
+      video_published_at: nil
+    )
+  end
+
+  let(:scenes) do
+    [
+      ContentStudio::Scene.new(id: 's1', timestamp: '0.00', narration: 'Scene one narration.', status: 'ready',
+                               video_url: nil),
+      ContentStudio::Scene.new(id: 's2', timestamp: '0.30', narration: 'Scene two narration.', status: 'ready',
+                               video_url: nil)
+    ]
   end
 
   let(:lesson) do
@@ -19,7 +36,8 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
       lesson_type: 'video',
       rating: 4.8,
       video_streaming_source: 'youtube',
-      local_contents: [local_content]
+      local_contents: [local_content_no_video],
+      scenes: scenes
     )
   end
 
@@ -27,6 +45,8 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:lesson, lesson)
     assign(:course_id, '1')
+    assign(:prev_lesson_id, nil)
+    assign(:next_lesson_id, '2')
   end
 
   it 'renders the Lesson Page heading' do
@@ -49,16 +69,6 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
     expect(rendered).to include('Show more')
   end
 
-  it 'renders the Edit Video Style button' do
-    render
-    expect(rendered).to include('Edit Video Style')
-  end
-
-  it 'renders the Delete Lesson button' do
-    render
-    expect(rendered).to include('Delete Lesson')
-  end
-
   it 'renders the Previous navigation button' do
     render
     expect(rendered).to include('Previous')
@@ -69,50 +79,30 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
     expect(rendered).to include('Next')
   end
 
-  it 'renders the Verify &amp; Next navigation button' do
+  it 'renders the language from the first local content' do
     render
-    expect(rendered).to include('Verify &amp; Next')
+    expect(rendered).to include('En')
   end
 
-  it 'renders the language dropdown with the current language' do
-    render
-    expect(rendered).to include('en')
-  end
-
-  it 'renders the Script textarea' do
+  it 'renders the Script label' do
     render
     expect(rendered).to include('Script')
   end
 
-  it 'renders the Regenerate Lesson button' do
+  it 'renders a scene card for each scene' do
     render
-    expect(rendered).to include('Regenerate Lesson')
+    expect(rendered).to include('Scene 1')
+    expect(rendered).to include('Scene 2')
   end
 
-  it 'renders the video placeholder when no video URL is present' do
+  it 'wires the scene-player Stimulus controller' do
     render
-    expect(rendered).to include('opacity-40')
-    expect(rendered).not_to include('<video')
+    expect(rendered).to include('data-controller="scene-player"')
   end
 
-  it 'renders a video element when a video URL is present' do
-    local_content_with_video = ContentStudio::LocalContent.new(
-      id: 1, lang: 'en', status: 'published',
-      video_url: 'https://example-bucket.s3.amazonaws.com/lesson-1.mp4',
-      video_published_at: nil
-    )
-    assign(:lesson, ContentStudio::Lesson.new(
-                      id: 1,
-                      title: 'Lesson with video',
-                      description: 'Description.',
-                      duration: 900,
-                      lesson_type: 'video',
-                      rating: 4.5,
-                      video_streaming_source: nil,
-                      local_contents: [local_content_with_video]
-                    ))
+  it 'renders the scene player video target and placeholder' do
     render
-    expect(rendered).to include('<video')
-    expect(rendered).to include('https://example-bucket.s3.amazonaws.com/lesson-1.mp4')
+    expect(rendered).to include('data-scene-player-target="video"')
+    expect(rendered).to include('data-scene-player-target="placeholder"')
   end
 end

@@ -18,7 +18,7 @@ module ContentStudio
     def studio_course_card(course, status)
       course_card_component(
         title: course.title,
-        banner_url: course.banner || '',
+        banner_url: course.thumbnail_url.presence || '/placeholder.gif',
         duration: format_duration(course.duration),
         modules_count: course.course_modules_count,
         enroll_count: course.enrollments_count || 0,
@@ -31,6 +31,7 @@ module ContentStudio
 
     def lesson_status_label(status)
       case status
+      when 'WAITING'     then 'Waiting'
       when 'verified'    then 'Verified'
       when 'video_ready' then 'Video ready'
       when 'in_process'  then 'In Process'

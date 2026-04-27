@@ -27,8 +27,7 @@ RSpec.describe 'content_studio/courses/wizard/generating', type: :view do
   it 'renders the waiting message' do
     render
     expect(rendered).to include("We're creating your course structure")
-    expect(rendered).to include('2')
-    expect(rendered).to include('5 minutes')
+    expect(rendered).to include('Please be patient')
   end
 
   it 'wires the generation-polling Stimulus controller' do

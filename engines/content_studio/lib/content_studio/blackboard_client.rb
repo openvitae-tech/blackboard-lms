@@ -159,7 +159,7 @@ module ContentStudio
         duration: data['duration'],
         modules: (data['modules'] || []).map { |m| build_structure_module(m) },
         verified_modules_count: data['verified_modules_count'].to_i,
-        banner_url: data['banner_url']
+        thumbnail_url: data['thumbnail_url']
       )
     end
 

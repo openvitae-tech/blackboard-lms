@@ -10,7 +10,12 @@
     ) %>
   </div>
 
-  <div class="flex gap-6 px-4" data-controller="collapsible-group">
+  <% failed = @structure.stage.to_s.end_with?('_failed') %>
+  <% has_pending = !failed && @structure.modules.flat_map(&:lessons).any? { |l| %w[PENDING WAITING].include?(l.status) } %>
+  <turbo-frame id="course-structure">
+  <div class="flex gap-6 px-4"
+       data-controller="collapsible-group structure-polling"
+       data-structure-polling-pending-value="<%= has_pending %>">
     <div class="flex-1 flex flex-col gap-6">
       <% @structure.modules.each do |mod| %>
         <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4"
@@ -25,9 +30,6 @@
                 <%= icon 'chevron-down', css: 'w-5 h-5' %>
               </span>
               <span class="main-text-md-semibold text-letter-color"><%= mod.title %></span>
-            </div>
-            <div>
-              <%= button_component(text: 'Select', type: 'outline', size: 'sm', colorscheme: 'primary') %>
             </div>
           </div>
 
@@ -50,11 +52,19 @@
                          data-lesson-name-target="input"
                          data-action="blur->lesson-name#blur keydown->lesson-name#keydown">
                 </div>
-                <%= chip_component(
-                  text: lesson_status_label(lesson.status),
-                  icon_name: lesson.status == 'verified' ? 'check' : nil,
-                  colorscheme: lesson_status_colorscheme(lesson.status)
-                ) %>
+                <% if lesson.status == 'PENDING' %>
+                  <div class="w-4 h-4 rounded-full border-2 border-primary-light-100 border-t-primary animate-spin flex-shrink-0"></div>
+                <% elsif lesson.status == 'WAITING' %>
+                  <%= icon 'clock', css: 'w-4 h-4 text-letter-color-light flex-shrink-0' %>
+                <% elsif lesson.status == 'COMPLETED' %>
+                  <%= icon 'check-circle', css: 'w-4 h-4 text-secondary flex-shrink-0' %>
+                <% else %>
+                  <%= chip_component(
+                    text: lesson_status_label(lesson.status),
+                    icon_name: lesson.status == 'verified' ? 'check' : nil,
+                    colorscheme: lesson_status_colorscheme(lesson.status)
+                  ) %>
+                <% end %>
               </div>
             <% end %>
           </div>
@@ -99,42 +109,39 @@
           </div>
         </div>
 
+        <% all_scenes = @structure.modules.flat_map(&:lessons).flat_map(&:scenes) %>
+        <% completed_scenes = all_scenes.count { |s| s.video_url.present? } %>
         <div class="bg-white-light rounded-lg p-3 flex flex-col gap-2">
           <div class="flex items-center justify-between">
             <span class="general-text-md-medium text-letter-color">Progress</span>
-            <div class="flex items-center gap-1">
-              <span class="general-text-md-medium text-letter-color"><%= "#{@structure.verified_modules_count}/#{@structure.modules.count} Modules" %></span>
-              <%= icon 'i-vector', css: 'w-4 h-4' %>
-            </div>
+            <%= icon 'i-vector', css: 'w-4 h-4' %>
           </div>
           <%= progressbar_component(
-            numerator: @structure.verified_modules_count,
-            denominator: @structure.modules.count,
+            numerator: completed_scenes,
+            denominator: [all_scenes.size, 1].max,
             full_width: true
           ) %>
+          <% if @structure.progress_text.present? %>
+            <p class="general-text-sm-normal text-letter-color-light">
+              <%= @structure.progress_text %><span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
+            </p>
+          <% end %>
         </div>
 
         <div class="bg-white-light rounded-lg p-3 flex flex-col gap-3">
           <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
           <div class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
-            <% if @structure.banner_url.present? %>
-              <img src="<%= @structure.banner_url %>" class="w-full h-full object-cover" alt="Course thumbnail">
-            <% end %>
+            <img src="<%= @structure.thumbnail_url.presence || '/placeholder.gif' %>"
+                 class="w-full h-full object-cover" alt="Course thumbnail">
             <button type="button" class="absolute bottom-3 right-3 bg-white border border-letter-color rounded-full p-1.5 opacity-70">
               <%= icon 'pencil', css: 'w-4 h-4' %>
             </button>
           </div>
         </div>
 
-        <div class="flex flex-col gap-3">
-          <%= link_to save_course_path(id: @structure.id), data: { turbo_method: :patch }, class: 'block' do %>
-            <%= button_component(text: 'Save Course', type: 'solid', size: 'md', colorscheme: 'primary') %>
-          <% end %>
-          <%= link_to discard_course_path(id: @structure.id), data: { turbo_method: :delete }, class: 'block' do %>
-            <%= button_component(text: 'Discard Course', type: 'outline', size: 'md', colorscheme: 'danger') %>
-          <% end %>
-        </div>
-      </div>
+
+</div>
     </div>
   </div>
+  </turbo-frame>
 </div>

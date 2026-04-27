@@ -44,6 +44,7 @@ export default class extends Controller {
       this.appendFileItem(file);
     });
     this.fileInputTarget.files = this.multipleFiles.files;
+    this.dispatch('change', { detail: { count: this.multipleFiles.files.length } });
   }
 
   appendFileItem(file) {
@@ -85,6 +86,7 @@ export default class extends Controller {
     this.fileInputTarget.files = updated.files;
 
     item.remove();
+    this.dispatch('change', { detail: { count: this.multipleFiles.files.length } });
   }
 
   // ── Single-file mode ────────────────────────────────────────────────────

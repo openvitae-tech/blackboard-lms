@@ -1,6 +1,8 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.active_storage.service = :local
+  config.hosts << 'kosher-alienable-confusing.ngrok-free.dev'
   config.enable_reloading = true
   config.file_watcher = ActiveSupport::FileUpdateChecker
   config.assets.quiet = true

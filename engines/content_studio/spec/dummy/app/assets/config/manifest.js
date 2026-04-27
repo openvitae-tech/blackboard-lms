@@ -5,3 +5,4 @@
 //= link tailwind.css
 //= link application.css
 //= link inter-font.css
+//= link content_studio/application.css

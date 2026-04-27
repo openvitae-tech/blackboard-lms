@@ -61,10 +61,18 @@ module ContentStudio
         client.get_lesson(course_id, lesson_id)
       end
 
+      def create_course(files:, branding:)
+        client.create_course(files: files, branding: branding)
+      end
+
+      def regenerate_scene(course_id, lesson_id, scene_id, narration:)
+        client.regenerate_scene(course_id, lesson_id, scene_id, narration: narration)
+      end
+
       private
 
       def client
-        @client ||= BlackboardClient.new
+        @client ||= NeoAiClient.new
       end
     end
   end
