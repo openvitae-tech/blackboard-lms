@@ -115,7 +115,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
   context 'when thumbnail_url is absent' do
     it 'renders the placeholder image in the thumbnail section' do
       render
-      expect(rendered).to include('/placeholder.gif')
+      expect(rendered).to include('placeholder')
     end
   end
 end

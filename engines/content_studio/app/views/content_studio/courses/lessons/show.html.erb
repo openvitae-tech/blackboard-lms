@@ -9,7 +9,7 @@
   <%# Header %>
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-2">
-      <%= link_to course_structure_path(id: @course_id) do %>
+      <%= link_to course_structure_path(id: @course_id), data: { turbo_frame: '_top' } do %>
         <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
           <%= icon 'arrow-left', css: 'w-4 h-4 text-letter-color' %>
         </span>
@@ -34,9 +34,9 @@
              data-video-url="<%= scene.video_url %>"
              data-narration="<%= scene.narration %>"
              data-action="click->scene-player#select">
-          <img src="<%= scene.thumbnail_url.presence || '/placeholder.gif' %>"
-               class="h-[64.68px] w-full rounded-lg object-cover"
-               alt="Scene <%= index + 1 %> thumbnail">
+          <%= image_tag scene.thumbnail_url.presence || image_path('placeholder.gif'),
+                       class: 'h-[64.68px] w-full rounded-lg object-cover',
+                       alt: "Scene #{index + 1} thumbnail" %>
           <div class="absolute bottom-0 left-0 right-0 bg-white/55 flex items-center justify-between px-2.5 py-0.5 h-[18px]">
             <span class="general-text-sm-normal text-black truncate">Scene <%= index + 1 %></span>
             <span class="general-text-sm-normal text-black"><%= scene.timestamp || '0.00' %></span>
@@ -60,7 +60,7 @@
           </video>
           <div class="absolute inset-0"
                data-scene-player-target="placeholder">
-            <img src="/placeholder.gif" class="w-full h-full object-cover" alt="No video available">
+            <%= image_tag image_path('placeholder.gif'), class: 'w-full h-full object-cover', alt: 'No video available' %>
           </div>
         </div>
 
@@ -145,9 +145,9 @@
       <div class="bg-white border border-line-colour rounded-lg p-3 flex flex-col gap-3">
         <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
         <div class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
-          <img src="<%= @banner_url.presence || '/placeholder.gif' %>"
-               class="w-full h-full object-cover"
-               alt="Course thumbnail">
+          <%= image_tag @banner_url.presence || image_path('placeholder.gif'),
+                       class: 'w-full h-full object-cover',
+                       alt: 'Course thumbnail' %>
         </div>
       </div>
 
