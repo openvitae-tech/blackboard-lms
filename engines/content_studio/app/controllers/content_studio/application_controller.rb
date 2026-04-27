@@ -11,5 +11,12 @@ module ContentStudio
 
   class ApplicationController < ContentStudio.parent_controller.constantize
     helper HostRoutesHelper
+    before_action :require_content_studio_access!
+
+    private
+
+    def require_content_studio_access!
+      redirect_to root_path unless ContentStudio.authorization_callback.call(try(:current_user))
+    end
   end
 end

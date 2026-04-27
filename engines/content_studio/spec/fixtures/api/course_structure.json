@@ -4,6 +4,8 @@
   "duration": 9240,
   "verified_modules_count": 2,
   "thumbnail_url": "https://placehold.co/600x400",
+  "stage": "video_generation",
+  "progress_text": "Generating videos for lesson 1",
   "modules": [
     {
       "id": 1,

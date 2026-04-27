@@ -51,7 +51,7 @@
       <%# Video player + nav bar %>
       <div class="flex flex-col gap-4">
         <%# Video player %>
-        <div class="bg-letter-color rounded-xl overflow-hidden h-[264px] relative shrink-0 w-full">
+        <div class="bg-letter-color rounded-xl overflow-hidden h-96 relative shrink-0 w-full">
           <video class="w-full h-full object-contain hidden"
                  data-scene-player-target="video"
                  data-action="ended->scene-player#ended"
@@ -134,11 +134,7 @@
           denominator: [@lesson.scenes.size, 1].max,
           full_width: true
         ) %>
-        <% if @progress_text.present? %>
-          <p class="general-text-sm-normal text-letter-color-light">
-            <%= @progress_text %><span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
-          </p>
-        <% end %>
+
       </div>
 
       <%# Course thumbnail %>
