@@ -1,4 +1,12 @@
-<div class="flex flex-col gap-6 py-3">
+<% failed = @stage.to_s.end_with?('_failed') %>
+<% scenes_with_video = @lesson.scenes.count { |s| s.video_url.present? } %>
+<% has_pending = !failed && scenes_with_video < @lesson.scenes.size %>
+<turbo-frame id="lesson-content">
+<div class="flex flex-col gap-6 py-3"
+     data-controller="lesson-polling"
+     data-lesson-polling-pending-value="<%= has_pending %>">
+
+  <%# Header %>
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-2">
       <%= link_to course_structure_path(id: @course_id) do %>
@@ -8,114 +16,163 @@
       <% end %>
       <span class="main-text-lg-semibold text-letter-color">Lesson Page</span>
     </div>
-    <div class="flex items-center gap-3">
-      <%= button_component(
-            text: 'Edit Video Style',
-            type: 'outline',
-            size: 'md',
-            colorscheme: 'primary',
-            icon_name: 'pencil'
-          ) %>
-      <%= button_component(
-            text: 'Delete Lesson',
-            type: 'outline',
-            size: 'md',
-            colorscheme: 'danger',
-            icon_name: 'trash'
-          ) %>
-    </div>
+    <div class="flex items-center gap-3"></div>
   </div>
 
-  <div class="flex gap-6">
-    <div class="flex-1 flex flex-col gap-5 min-w-0">
-      <div class="flex flex-col gap-4">
-        <% local_content = @lesson.local_contents&.first %>
-        <div class="bg-letter-color rounded-lg overflow-hidden h-64 flex items-center justify-center">
-          <% if local_content&.video_url.present? %>
-            <video src="<%= local_content.video_url %>"
-                   controls
-                   class="w-full h-full"
-                   preload="metadata">
-            </video>
-          <% else %>
-            <%= icon 'play-circle', css: 'w-16 h-16 text-white opacity-40' %>
-          <% end %>
-        </div>
+  <%# Three-column layout %>
+  <div class="flex gap-6 items-start" data-controller="scene-player">
 
-        <div class="flex items-center justify-between">
-          <div class="w-40">
-            <%= dropdown_component(
-                  name: 'language',
-                  options: @lesson.local_contents.map { |lc| [lc.lang, lc.lang] },
-                  value: local_content&.lang,
-                  size: 'md'
-                ) %>
-          </div>
-          <div class="flex items-center gap-2">
-            <%= button_component(
-                  text: 'Previous',
-                  type: 'outline',
-                  size: 'md',
-                  colorscheme: 'primary',
-                  icon_name: 'chevron-left',
-                  icon_position: 'left',
-                  disabled: true
-                ) %>
-            <%= button_component(
-                  text: 'Next',
-                  type: 'outline',
-                  size: 'md',
-                  colorscheme: 'primary',
-                  icon_name: 'chevron-right',
-                  icon_position: 'right'
-                ) %>
-            <%= button_component(
-                  text: 'Verify & Next',
-                  type: 'solid',
-                  size: 'md',
-                  colorscheme: 'secondary',
-                  icon_name: 'chevron-right',
-                  icon_position: 'right'
-                ) %>
+    <%# Left: Scene playlist %>
+    <div class="flex flex-col gap-3 bg-white border border-line-colour rounded-xl p-3 w-[181px] shrink-0 max-h-[612px] overflow-y-auto">
+      <span class="main-text-sm-medium text-letter-color px-1">Scenes</span>
+      <% scenes = @lesson.scenes.presence || [] %>
+      <% scenes.each_with_index do |scene, index| %>
+        <div class="relative overflow-hidden rounded-lg shrink-0 cursor-pointer transition-colors
+                    <%= index == 0 ? 'border-2 border-primary-light' : '' %>"
+             data-scene-player-target="item"
+             data-scene-index="<%= index %>"
+             data-video-url="<%= scene.video_url %>"
+             data-narration="<%= scene.narration %>"
+             data-action="click->scene-player#select">
+          <img src="<%= scene.thumbnail_url.presence || '/placeholder.gif' %>"
+               class="h-[64.68px] w-full rounded-lg object-cover"
+               alt="Scene <%= index + 1 %> thumbnail">
+          <div class="absolute bottom-0 left-0 right-0 bg-white/55 flex items-center justify-between px-2.5 py-0.5 h-[18px]">
+            <span class="general-text-sm-normal text-black truncate">Scene <%= index + 1 %></span>
+            <span class="general-text-sm-normal text-black"><%= scene.timestamp || '0.00' %></span>
           </div>
         </div>
-      </div>
-
-      <div class="flex flex-col gap-4">
-        <%= textarea_component(
-              name: 'script',
-              label: 'Script',
-              placeholder: 'Script will appear here...',
-              rows: 8
-            ) %>
-        <%= button_component(
-              text: 'Regenerate Lesson',
-              type: 'solid',
-              size: 'md',
-              colorscheme: 'primary'
-            ) %>
-      </div>
+      <% end %>
     </div>
 
-    <div class="w-96 flex-shrink-0 flex flex-col gap-5">
+    <%# Center: Video player + controls + script %>
+    <div class="flex flex-1 flex-col gap-5 min-w-0 min-h-[612px]">
+
+      <%# Video player + nav bar %>
+      <div class="flex flex-col gap-4">
+        <%# Video player %>
+        <div class="bg-letter-color rounded-xl overflow-hidden h-[264px] relative shrink-0 w-full">
+          <video class="w-full h-full object-contain hidden"
+                 data-scene-player-target="video"
+                 data-action="ended->scene-player#ended"
+                 preload="metadata"
+                 controls>
+          </video>
+          <div class="absolute inset-0"
+               data-scene-player-target="placeholder">
+            <img src="/placeholder.gif" class="w-full h-full object-cover" alt="No video available">
+          </div>
+        </div>
+
+        <%# Language + navigation buttons %>
+        <div class="flex items-center justify-between">
+          <%# Language selector %>
+          <div class="flex items-stretch self-stretch">
+            <div class="bg-white flex items-center gap-2 px-4 py-2 rounded-lg shadow-[1px_2px_4px_0px_rgba(0,0,0,0.1)]">
+              <%= icon 'chevron-down', css: 'w-4 h-4 text-letter-color-light' %>
+              <span class="main-text-sm-medium text-letter-color-light">English</span>
+            </div>
+          </div>
+
+          <%# Navigation buttons %>
+          <div class="flex items-center gap-2">
+            <%= link_to @prev_lesson_id ? course_lesson_path(@course_id, @prev_lesson_id) : '#' do %>
+              <%= button_component(
+                    text: 'Previous',
+                    type: 'outline',
+                    size: 'md',
+                    colorscheme: 'primary',
+                    icon_name: 'chevron-left',
+                    icon_position: 'left',
+                    disabled: @prev_lesson_id.nil?
+                  ) %>
+            <% end %>
+            <%= link_to @next_lesson_id ? course_lesson_path(@course_id, @next_lesson_id) : '#' do %>
+              <%= button_component(
+                    text: 'Next',
+                    type: 'outline',
+                    size: 'md',
+                    colorscheme: 'primary',
+                    icon_name: 'chevron-right',
+                    icon_position: 'right',
+                    disabled: @next_lesson_id.nil?
+                  ) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <%# Script + Regenerate %>
+      <div class="flex flex-1 flex-col gap-4 min-h-0">
+        <div class="flex flex-1 flex-col gap-2 min-h-0">
+          <span class="general-text-md-medium text-letter-color px-1">Script</span>
+          <%= textarea_component(
+                name: 'scene_script',
+                placeholder: 'Scene script will appear here…',
+                rows: 6,
+                size: 'md',
+                html_options: {
+                  data: { 'scene-player-target' => 'narration' }
+                }
+              ) %>
+        </div>
+      </div>
+
+    </div>
+
+    <%# Right: Lesson info + version history %>
+    <div class="flex flex-col gap-5 w-[325px] shrink-0">
+
+      <%# Scene generation progress %>
+      <div class="bg-white-light rounded-lg p-3 flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <span class="general-text-md-medium text-letter-color">Progress</span>
+          <span class="general-text-md-medium text-letter-color"><%= "#{scenes_with_video}/#{@lesson.scenes.size} Scenes" %></span>
+        </div>
+        <%= progressbar_component(
+          numerator: scenes_with_video,
+          denominator: [@lesson.scenes.size, 1].max,
+          full_width: true
+        ) %>
+        <% if @progress_text.present? %>
+          <p class="general-text-sm-normal text-letter-color-light">
+            <%= @progress_text %><span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
+          </p>
+        <% end %>
+      </div>
+
+      <%# Course thumbnail %>
+      <div class="bg-white border border-line-colour rounded-lg p-3 flex flex-col gap-3">
+        <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
+        <div class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
+          <img src="<%= @banner_url.presence || '/placeholder.gif' %>"
+               class="w-full h-full object-cover"
+               alt="Course thumbnail">
+        </div>
+      </div>
+
+      <%# Lesson info card %>
       <div class="bg-primary-light-50 rounded-lg p-5 flex flex-col gap-4">
         <div class="flex items-center justify-between">
           <span class="main-text-lg-semibold text-primary"><%= @lesson.title %></span>
-          <button type="button" class="p-3">
+          <button type="button" class="p-3 flex items-center">
             <%= icon 'pencil', css: 'w-4 h-4 text-letter-color' %>
           </button>
         </div>
-        <div class="flex flex-col gap-1">
-          <p class="main-text-sm-normal text-letter-color line-clamp-6" id="lesson-description">
+        <div class="flex flex-col gap-1" data-controller="show-more">
+          <p class="main-text-sm-normal text-letter-color line-clamp-6 overflow-hidden"
+             data-show-more-target="text">
             <%= @lesson.description %>
           </p>
-          <button type="button"
-                  class="main-text-sm-normal text-primary underline text-left"
-                  onclick="var d=document.getElementById('lesson-description');d.classList.toggle('line-clamp-6');this.textContent=d.classList.contains('line-clamp-6')?'Show more':'Show less';">
-            Show more
-          </button>
+          <a href="#" class="main-text-sm-normal text-primary underline"
+             data-action="click->show-more#toggle"
+             data-show-more-target="toggle">Show more</a>
         </div>
       </div>
+
     </div>
+
   </div>
+
 </div>
+</turbo-frame>

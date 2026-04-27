@@ -18,12 +18,34 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
       lesson_type: 'video',
       rating: 4.8,
       video_streaming_source: 'youtube',
-      local_contents: [local_content]
+      local_contents: [local_content],
+      scenes: []
+    )
+  end
+
+  let(:structure) do
+    ContentStudio::CourseStructure.new(
+      id: '1',
+      title: 'Test Course',
+      duration: 3600,
+      modules: [
+        ContentStudio::StructureModule.new(
+          id: 'm1',
+          title: 'Module 1',
+          lessons: [
+            ContentStudio::StructureLesson.new(id: '1', title: 'Introduction to Airport Services',
+                                               status: 'in_process'),
+            ContentStudio::StructureLesson.new(id: '2', title: 'Rules and Regulations', status: 'in_process')
+          ]
+        )
+      ],
+      verified_modules_count: 0,
+      thumbnail_url: nil
     )
   end
 
   before do
-    allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(lesson)
+    allow(ContentStudio::ApiClient).to receive_messages(get_lesson: lesson, course_structure: structure)
   end
 
   describe 'GET /content_studio/courses/:course_id/lessons/:id' do
@@ -41,22 +63,9 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
       expect(response.body).to include('Introduction to Airport Services')
     end
 
-    it 'renders the Edit Video Style button' do
-      expect(response.body).to include('Edit Video Style')
-    end
-
-    it 'renders the Delete Lesson button' do
-      expect(response.body).to include('Delete Lesson')
-    end
-
-    it 'renders the navigation buttons' do
+    it 'renders the Previous and Next navigation buttons' do
       expect(response.body).to include('Previous')
       expect(response.body).to include('Next')
-      expect(response.body).to include('Verify &amp; Next')
-    end
-
-    it 'renders the Regenerate Lesson button' do
-      expect(response.body).to include('Regenerate Lesson')
     end
 
     it 'renders the Show more toggle' do

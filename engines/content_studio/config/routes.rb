@@ -7,6 +7,7 @@ ContentStudio::Engine.routes.draw do
   get 'courses/:id/configure_video', to: 'courses/wizard#configure_video', as: :configure_video
   patch 'courses/:id/configure_video', to: 'courses/wizard#update_video_config'
   get 'courses/:id/generating', to: 'courses/wizard#generating', as: :generating_course
+  post 'courses/start_generation', to: 'courses/wizard#start_generation', as: :start_generation
   get 'courses/:id/generation_status', to: 'courses/wizard#generation_status', as: :generation_status
   get 'courses/:id/structure', to: 'courses/structure#show', as: :course_structure
   patch 'courses/:id/save', to: 'courses/structure#save', as: :save_course

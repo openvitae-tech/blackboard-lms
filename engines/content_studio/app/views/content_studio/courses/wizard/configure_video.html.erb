@@ -12,7 +12,7 @@
     ) %>
   </div>
 
-  <%= form_with url: configure_video_path(id: @course_id), method: :patch, class: 'flex flex-col gap-5' do |form| %>
+  <%= form_with url: configure_video_path(id: @course_id), method: :patch, multipart: true, class: 'flex flex-col gap-5' do |form| %>
 
     <%# Card: Upload Logo %>
     <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">

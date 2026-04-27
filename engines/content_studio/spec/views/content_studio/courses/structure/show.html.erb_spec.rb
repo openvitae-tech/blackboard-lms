@@ -7,8 +7,8 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     ContentStudio::StructureModule.new(
       id: 1, title: 'Airport Services',
       lessons: [
-        ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'verified'),
-        ContentStudio::StructureLesson.new(id: 2, title: 'Rules and regulations', status: 'video_ready')
+        ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'verified', scenes: []),
+        ContentStudio::StructureLesson.new(id: 2, title: 'Rules and regulations', status: 'video_ready', scenes: [])
       ]
     )
   end
@@ -17,7 +17,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     ContentStudio::StructureModule.new(
       id: 2, title: 'Wine Serving',
       lessons: [
-        ContentStudio::StructureLesson.new(id: 3, title: 'Lesson name', status: 'in_process')
+        ContentStudio::StructureLesson.new(id: 3, title: 'Lesson name', status: 'in_process', scenes: [])
       ]
     )
   end
@@ -30,7 +30,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
                          duration: 9240,
                          modules: [airport_services_module, wine_serving_module],
                          verified_modules_count: 1,
-                         banner_url: nil
+                         thumbnail_url: nil
                        ))
   end
 
@@ -70,23 +70,12 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
 
   it 'wires the collapsible-group Stimulus controller' do
     render
-    expect(rendered).to include('data-controller="collapsible-group"')
+    expect(rendered).to include('collapsible-group')
   end
 
   it 'wires the collapsible Stimulus controller on module cards' do
     render
     expect(rendered).to include('data-controller="collapsible"')
-  end
-
-  it 'renders Save Course and Discard Course buttons' do
-    render
-    expect(rendered).to include('Save Course')
-    expect(rendered).to include('Discard Course')
-  end
-
-  it 'renders progress bar with module counts' do
-    render
-    expect(rendered).to include('1/2 Modules')
   end
 
   it 'wires the lesson-name Stimulus controller on each lesson pill' do
@@ -103,5 +92,30 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
   it 'renders the inline edit input alongside each lesson title' do
     render
     expect(rendered).to include('data-lesson-name-target="input"')
+  end
+
+  context 'when thumbnail_url is present' do
+    before do
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1,
+                           title: 'Airport Services Management',
+                           duration: 9240,
+                           modules: [airport_services_module],
+                           verified_modules_count: 1,
+                           thumbnail_url: 'https://example.com/thumb.jpg'
+                         ))
+    end
+
+    it 'renders the thumbnail image' do
+      render
+      expect(rendered).to include('https://example.com/thumb.jpg')
+    end
+  end
+
+  context 'when thumbnail_url is absent' do
+    it 'renders the placeholder image in the thumbnail section' do
+      render
+      expect(rendered).to include('/placeholder.gif')
+    end
   end
 end

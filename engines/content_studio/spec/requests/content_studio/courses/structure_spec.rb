@@ -6,7 +6,7 @@ RSpec.describe 'ContentStudio::Courses::Structure', type: :request do
   let(:structure) do
     ContentStudio::CourseStructure.new(
       id: 1, title: 'Test Course', duration: 3600,
-      modules: [], verified_modules_count: 0, banner_url: nil
+      modules: [], verified_modules_count: 0, thumbnail_url: nil
     )
   end
 
