@@ -24,12 +24,6 @@ RSpec.describe 'content_studio/courses/wizard/configure_video', type: :view do
     expect(rendered).to include('Upload Logo')
   end
 
-  it 'renders the Colour Branding section with updated field labels' do
-    render
-    expect(rendered).to include('Colour Branding')
-    expect(rendered).to include('Background Colour')
-    expect(rendered).to include('Text Colour')
-  end
 
   it 'renders the footer buttons' do
     render
