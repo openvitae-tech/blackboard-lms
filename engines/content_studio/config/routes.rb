@@ -13,4 +13,7 @@ ContentStudio::Engine.routes.draw do
   patch 'courses/:id/save', to: 'courses/structure#save', as: :save_course
   delete 'courses/:id', to: 'courses/structure#discard', as: :discard_course
   get 'courses/:course_id/lessons/:id', to: 'courses/lessons#show', as: :course_lesson
+  post 'courses/:course_id/lessons/:lesson_id/scenes/:scene_id/regenerate',
+       to: 'courses/scenes#regenerate',
+       as: :regenerate_scene
 end

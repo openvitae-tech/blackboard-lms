@@ -105,4 +105,37 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
     expect(rendered).to include('data-scene-player-target="video"')
     expect(rendered).to include('data-scene-player-target="placeholder"')
   end
+
+  it 'renders the Regenerate Scene button' do
+    render
+    expect(rendered).to include('Regenerate Scene')
+  end
+
+  it 'wires the Regenerate Scene button to the scene-player controller' do
+    render
+    expect(rendered).to include('scene-player#regenerate')
+    expect(rendered).to include('data-scene-player-target="regenerateButton"')
+  end
+
+  it 'renders scene items with scene id, status, and regenerate url data attributes' do
+    render
+    expect(rendered).to include('data-scene-id="s1"')
+    expect(rendered).to include('data-scene-status="ready"')
+    expect(rendered).to include('data-regenerate-url=')
+  end
+
+  it 'renders the script textarea with a 512 character limit' do
+    render
+    expect(rendered).to include('maxlength="512"')
+  end
+
+  it 'renders the Maximum 512 characters support text' do
+    render
+    expect(rendered).to include('Maximum 512 characters')
+  end
+
+  it 'wires the textarea input event to the scene-player controller' do
+    render
+    expect(rendered).to include('scene-player#onNarrationInput')
+  end
 end
