@@ -24,7 +24,6 @@ RSpec.describe 'content_studio/courses/wizard/configure_video', type: :view do
     expect(rendered).to include('Upload Logo')
   end
 
-
   it 'renders the footer buttons' do
     render
     expect(rendered).to include('Back to Upload')

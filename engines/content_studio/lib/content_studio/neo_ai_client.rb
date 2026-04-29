@@ -87,11 +87,8 @@ module ContentStudio
       data['course_id'] || data['id']
     end
 
-    def regenerate_scene(course_id, lesson_id, scene_id, narration:)
-      post(
-        "/course/#{course_id}/lesson/#{lesson_id}/scene/#{scene_id}/regenerate",
-        { narration: narration }
-      )
+    def regenerate_scene(scene_id, narration:)
+      post('/course/regenerate-scene', { scene_id: scene_id, narration: narration })
     end
 
     # Stubs — no NeoAI equivalent for these BlackboardLMS-specific calls
