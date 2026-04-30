@@ -1,3 +1,4 @@
+<div data-controller="custom-date">
 <div class="flex items-center justify-between mb-4 px-1">
   <div class="heading heading-medium flex gap-1">
     <span class="">Team: </span><span class=""><%= @team.name %></span>
@@ -6,34 +7,105 @@
     <%= render 'shared/components/dropdown_menu', menu: duration_menu_for(@team), selected_item: selected_label(@duration) %>
   </div>
 </div>
-<%= render 'dashboards/average_time_spend_chart', dashboard: @dashboard %>
-<div class="p-6 bg-white rounded-lg box-shadow-medium mt-6">
-  <p class="text-lg md:text-xl font-semibold text-center heading">
-    Your team have spent in
-    <span class="text-primary "><%= duration_in_words(@dashboard.total_time_spent_metric) %></span> during this period
-  </p>
-  <div class="mt-6 flex flex-row justify-between text-start">
-    <div class="text-center">
-      <p class="text-primary text-xl md:text-2xl font-bold heading">
-        <%= duration_in_words(@dashboard.average_time_spent_metric) %>
-      </p>
-      <p class="pt-1 text-sm">AVG watch time per user</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+  <%# Active Learners %>
+  <div class="bg-white rounded-xl border border-line-colour-light p-5">
+    <div class="flex items-center gap-4">
+      <div class="bg-primary-light-100 p-4 rounded-lg">
+        <%= icon("user-group", css: "h-6 w-6 text-primary") %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="main-text-sm-normal text-primary">Active Learners</span>
+        <p class="main-text-lg-medium text-primary"><%= @dashboard.active_learners_count %></p>
+      </div>
     </div>
-    <div class="text-center">
-      <p class="text-primary text-xl md:text-2xl font-bold heading"><%= @dashboard.active_course_count_metric %></p>
-      <p class="pt-1 text-sm">Active courses</p>
+    <div class=" w-full h-[px] border border-line-colour-light my-3"></div>
+
+    <% delta = @dashboard.active_learners_delta %>
+    <p class="flex flex-row justify-center general-text-md-normal <%= delta >= 0 ? 'text-secondary' : 'text-danger' %>">
+      <%= delta >= 0 ? '↑' : '↓' %> <%= delta >= 0 ? '+' : '' %><%= delta %> learners <%= period_label(@dashboard.duration) %>
+    </p>
+  </div>
+
+  <%# Avg Completion %>
+  <div class="bg-white rounded-xl border border-line-colour-light p-5">
+    <div class="flex items-center gap-4">
+      <div class="bg-primary-light-100 p-4 rounded-lg">
+        <%= icon("check-badge", css: "h-6 w-6 text-primary") %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="main-text-sm-normal text-primary">Avg Completion</span>
+        <p class="main-text-lg-medium text-primary"><%= @dashboard.completion_percent_metric %>%</p>
+      </div>
     </div>
-    <div class="text-center">
-      <p class="text-primary text-xl md:text-2xl font-bold heading"><%= @dashboard.team_score_metric %></p>
-      <p class="pt-1 text-sm">Team points</p>
+    <div class=" w-full h-[px] border border-line-colour-light my-3"></div>
+
+    <% delta = @dashboard.completion_percent_delta %>
+    <p class="flex flex-row justify-center general-text-md-normal <%= delta >= 0 ? 'text-secondary' : 'text-danger' %>">
+      <%= delta >= 0 ? '↑' : '↓' %> <%= delta >= 0 ? '+' : '' %><%= delta %>% <%= period_label(@dashboard.duration) %>
+    </p>
+  </div>
+
+
+
+  <%# Avg Watch Time %>
+  <div class="bg-white rounded-xl border border-line-colour-light p-5">
+    <div class="flex items-center gap-4">
+      <div class="bg-primary-light-100 p-4 rounded-lg">
+        <%= icon("clock", css: "h-6 w-6 text-primary") %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="main-text-sm-normal text-primary">Avg Watch Time</span>
+        <p class="main-text-lg-medium text-primary"><%= duration_in_words(@dashboard.average_time_spent_metric) %></p>
+      </div>
     </div>
+    <div class=" w-full h-[px] border border-line-colour-light my-3"></div>
+
+    <% delta = @dashboard.average_time_spent_delta %>
+    <p class="flex flex-row justify-center general-text-md-normal <%= delta >= 0 ? 'text-secondary' : 'text-danger' %>">
+      <%= delta >= 0 ? '↑' : '↓' %> <%= delta >= 0 ? '+' : '' %><%= duration_in_words(delta.abs) %> <%= period_label(@dashboard.duration) %>
+    </p>
+  </div>
+
+  
+
+  <%# Certificates Earned %>
+   <div class="bg-white rounded-xl border border-line-colour-light p-5">
+    <div class="flex items-center gap-4">
+      <div class="bg-primary-light-100 p-4 rounded-lg">
+        <%= icon("document-text-outline", css: "h-6 w-6 text-primary") %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="main-text-sm-normal text-primary">Certificates Earned</span>
+        <p class="main-text-lg-medium text-primary"><%= @dashboard.certificates_count %></p>
+      </div>
+    </div>
+    <div class=" w-full h-[px] border border-line-colour-light my-3"></div>
+
+    <% delta = @dashboard.certificates_delta %>
+    <p class="flex flex-row justify-center general-text-md-normal <%= delta >= 0 ? 'text-secondary' : 'text-danger' %>">
+      <%= delta >= 0 ? '↑' : '↓' %> <%= delta >= 0 ? '+' : '' %><%= delta %> <%= period_label(@dashboard.duration) %>
+    </p>
+  </div>
+ 
+</div>
+
+<%= render 'dashboards/falling_behind' %>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+  <%# Left - Total Engagement + Deadlines %>
+  <div class="flex flex-col gap-4">
+    <%= render 'dashboards/total_engagement' %>
+    <%= render 'dashboards/deadlines' %>
+    <%= render 'dashboards/recent_activity' %>
+  </div>
+
+  <%# Right - Learning Activity + Self-Assigned %>
+  <div class="flex flex-col gap-4">
+    <%= render 'dashboards/learning_activity' %>
+    <%= render 'dashboards/self_assigned' %>
+    <%= render 'dashboards/started_vs_completed' %>
+    <%= render 'dashboards/team_progress' %>
   </div>
 </div>
-<div class="md:mb-6 mt-8 md:mx-1 flex md:flex-row flex-col md:gap-6 gap-4">
-  <%= render 'dashboards/watch_time_chart', dashboard: @dashboard %>
-  <%= render 'dashboards/total_views_chart', dashboard: @dashboard %>
-</div>
-<div class="mb-6 mt-4 md:mt-8 md:mx-1 flex md:flex-row flex-col md:gap-6 gap-4">
-  <%= render 'dashboards/users_enrolled', dashboard: @dashboard %>
-  <%= render 'dashboards/self_enrolled_vs_assigned_chart', dashboard: @dashboard %>
+<%= render 'dashboards/custom_date_modal', action_url: dashboards_path %>
 </div>

@@ -1,0 +1,99 @@
+<div data-custom-date-target="modal"
+     class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center"
+     data-action="click->custom-date#backdropClose">
+  <div class="bg-white rounded-xl p-6 w-full max-w-sm mx-4">
+
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="main-text-lg-semibold">Customise Date</h3>
+      <button type="button" data-action="click->custom-date#close">
+        <%= icon("x-mark", css: "h-5 w-5 text-letter-color-light") %>
+      </button>
+    </div>
+
+    <form action="<%= action_url %>" method="get" data-turbo="false">
+      <input type="hidden" name="duration" value="custom">
+      <input type="hidden" name="team_id" value="<%= @team&.id %>">
+      <% if local_assigns[:user_id] %>
+        <input type="hidden" name="user_id" value="<%= user_id %>">
+      <% end %>
+      <% if local_assigns[:origin] %>
+        <input type="hidden" name="origin" value="<%= origin %>">
+      <% end %>
+
+      <div class="flex gap-4 mb-5">
+
+        <%# From date — replicates date_picker_component pattern %>
+        <div class="w-full flex flex-col gap-1" data-controller="date-picker">
+          <label class="group">
+            <span class="input-text-label-md general-text-sm-normal text-letter-color-light group-focus-within:text-primary">From</span>
+            <div class="relative flex w-full items-center">
+              <input type="text"
+                     name="from_date"
+                     value="<%= params[:from_date] %>"
+                     placeholder="Select date"
+                     readonly
+                     class="w-full border input-text-div-base-md main-text-md-normal text-letter-color-light border-slate-grey-50 focus:ring-primary"
+                     data-date-picker-target="dateSelector"
+                     data-custom-date-target="fromDate">
+              <input type="date"
+                     class="invisible p-0 w-[2px]"
+                     max="<%= Date.today.strftime('%Y-%m-%d') %>"
+                     data-date-picker-target="datePicker"
+                     data-action="change->date-picker#datePicked change->custom-date#validate">
+              <div class="date-picker-icon-wrapper" data-action="click->date-picker#openDatePicker">
+                <%= icon("calendar", css: "input-text-icon-md text-letter-color-light hover:text-primary") %>
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <%# To date — same pattern %>
+        <div class="w-full flex flex-col gap-1" data-controller="date-picker">
+          <label class="group">
+            <span class="input-text-label-md general-text-sm-normal text-letter-color-light group-focus-within:text-primary">To</span>
+            <div class="relative flex w-full items-center">
+              <input type="text"
+                     name="to_date"
+                     value="<%= params[:to_date] %>"
+                     placeholder="Select date"
+                     readonly
+                     class="w-full border input-text-div-base-md main-text-md-normal text-letter-color-light border-slate-grey-50 focus:ring-primary"
+                     data-date-picker-target="dateSelector"
+                     data-custom-date-target="toDate">
+              <input type="date"
+                     class="invisible p-0 w-[2px]"
+                     max="<%= Date.today.strftime('%Y-%m-%d') %>"
+                     data-date-picker-target="datePicker"
+                     data-action="change->date-picker#datePicked change->custom-date#validate">
+              <div class="date-picker-icon-wrapper" data-action="click->date-picker#openDatePicker">
+                <%= icon("calendar", css: "input-text-icon-md text-letter-color-light hover:text-primary") %>
+              </div>
+            </div>
+          </label>
+        </div>
+
+      </div>
+
+      <p class="general-text-sm-normal text-letter-color-light mb-5">
+        Date range is limited to 6 months. Choose a start and end date to continue.
+      </p>
+
+      <p data-custom-date-target="error" class="hidden general-text-sm-normal text-danger mb-3"></p>
+
+      <div class="flex gap-2">
+        <button type="button"
+                data-action="click->custom-date#close"
+                class="flex-1 border border-line-colour-light rounded-lg py-2 main-text-sm-medium text-letter-color">
+          Cancel
+        </button>
+        <button type="submit"
+                disabled
+                class="flex-1 bg-primary text-white rounded-lg py-2 main-text-sm-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                data-custom-date-target="continueBtn">
+          Continue
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>

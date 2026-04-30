@@ -1,0 +1,41 @@
+<div class="box-shadow-medium rounded p-4 md:p-6 mx-1">
+  <div class="flex items-center justify-between mb-4">
+    <p class="heading heading-semibold">Total Engagement</p>
+  </div>
+
+  <div class="w-full bg-white py-4">
+    <%= column_chart [
+      { name: "Hours watched", data: @dashboard.daily_hours_series }
+    ], height: "200px",
+    dataset: { backgroundColor: '#D9E3F5', borderWidth: 0 },
+    library: {
+      plugins: { legend: { display: false } },
+      scales: { y: { min: 0, ticks: { stepSize: 1 } } }
+    } %>
+  </div>
+
+  <div class="grid grid-cols-3 gap-4 mt-4 text-center border-t border-line-colour-light pt-4">
+    <div>
+      <p class="main-text-lg-medium text-primary"><%= @dashboard.total_hours %> hrs</p>
+      <p class="general-text-sm-normal text-letter-color-light">Total hrs / <%= period_label(@dashboard.duration) %></p>
+    </div>
+    <div>
+      <p class="main-text-lg-medium text-primary"><%= @dashboard.daily_avg_hours %> hrs</p>
+      <p class="general-text-sm-normal text-letter-color-light">Daily avg</p>
+    </div>
+    <div>
+      <p class="main-text-lg-medium text-primary"><%= @dashboard.peak_day || '—' %></p>
+      <p class="general-text-sm-normal text-letter-color-light">Peak day</p>
+    </div>
+  </div>
+
+  <% drop_pct = @dashboard.weekend_engagement_drop_percent %>
+  <% if drop_pct > 0 %>
+    <div class="mt-4 bg-danger-light rounded-lg p-3 flex items-start gap-2">
+      <%= icon("arrow-down", css: "h-4 w-4 text-danger flex-none mt-0.5") %>
+      <p class="general-text-sm-normal text-letter-color-medium">
+        Engagement drops <span class="main-text-sm-medium"><%= drop_pct %>%</span> on weekends. Set Friday as deadline.
+      </p>
+    </div>
+  <% end %>
+</div>

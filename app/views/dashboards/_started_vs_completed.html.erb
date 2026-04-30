@@ -1,0 +1,61 @@
+<div class="bg-white rounded-xl border border-line-colour-light p-5">
+  <div class="flex items-center justify-between mb-4">
+    <div class="flex flex-col md:flex-row gap-1 md:gap-3">
+      <h2 class="main-text-lg-semibold">Started vs Completed</h2>
+      <div class="flex items-center gap-3 mt-1">
+        <div class="flex items-center gap-1">
+          <div class="w-3 h-3 rounded-full bg-secondary"></div>
+          <span class="general-text-sm-normal">Completed</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <div class="w-3 h-3 rounded-full bg-primary"></div>
+          <span class="general-text-sm-normal">Started</span>
+        </div>
+      </div>
+    </div>
+    <%= link_to started_vs_completed_dashboards_path(duration: params[:duration]), class: "main-text-sm-normal text-primary flex items-center gap-1" do %>
+      <span>View all</span>
+      <%= icon("arrow-right", css: "h-4 w-4") %>
+    <% end %>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <% @dashboard.started_vs_completed.each do |item| %>
+      <div class="mb-3">
+        <div class="flex justify-between gap-2">
+          <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
+          <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
+        </div> 
+        <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full overflow-hidden">
+          <div class="h-full flex">
+            <div class="h-full bg-secondary" style="width: <%= item[:completed_percent] %>%"></div>
+            <div class="h-full bg-primary" style="width: <%= item[:started_percent] %>%"></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% worst = @dashboard.started_vs_completed.max_by { |item| item[:total] - item[:completed] }
+     gap = worst ? (worst[:total] - worst[:completed]) : 0 %>
+  <% if gap > 0 %>
+    <div class="mt-4 bg-gold-light rounded-lg p-3 flex items-center justify-between gap-3">
+      <div class="flex items-start gap-2 min-w-0">
+        <%= icon("exclamation-circle-solid", css: "h-4 w-4 text-gold flex-none mt-0.5") %>
+        <p class="general-text-sm-normal text-letter-color-medium">
+          <span class="main-text-sm-medium"><%= worst[:course].title.truncate(30) %></span>
+          has the widest gap —
+          <% if worst[:started] == 0 %>
+            nobody has started yet (<%= worst[:total] %> assigned).
+          <% else %>
+            <%= worst[:started] %> started, <%= worst[:completed] %> completed out of <%= worst[:total] %> assigned.
+          <% end %>
+        </p>
+      </div>
+      <%= link_to nudge_all_dashboards_path(course_id: worst[:course].id), data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary flex-none" do %>
+        <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
+        <span class="main-text-sm-normal">Nudge</span>
+      <% end %>
+    </div>
+  <% end %>
+</div>

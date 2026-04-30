@@ -10,6 +10,8 @@ class Enrollment < ApplicationRecord
 
   scope :completed, -> { where(course_completed: true) }
 
+  after_commit :clear_dashboard_cache
+
   def self.indexed_by_course(courses)
     course_ids = courses.pluck(:id)
     where(course_id: course_ids).preload(course: :course_modules).index_by(&:course_id)
@@ -119,5 +121,12 @@ class Enrollment < ApplicationRecord
 
   def deadline_present?
     deadline_at.present?
+  end
+
+  private
+
+  def clear_dashboard_cache
+    team_id = User.where(id: user_id).pick(:team_id)
+    Rails.cache.delete_matched("dashboard/team_#{team_id}/*") if team_id
   end
 end

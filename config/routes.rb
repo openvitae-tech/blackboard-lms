@@ -203,7 +203,19 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :dashboards, only: :index
+  resources :dashboards, only: :index do
+    collection do
+      get  :nudge_all
+      post :nudge_all
+      post :nudge_user
+      get  :appreciate_member
+      post :appreciate_member
+      get  :team_progress
+      get  :team_member_profile
+      get  :started_vs_completed
+      get  :recent_activity
+    end
+  end
   resources :settings, only: :index
 
   resource :login, only: %i[new create] do

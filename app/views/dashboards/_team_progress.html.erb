@@ -1,0 +1,91 @@
+<div class="bg-white rounded-xl border border-line-colour-light p-5" data-controller="team-progress">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="main-text-lg-semibold">Team Progress</h2>
+    <div class="flex gap-2">
+      <button type="button"
+              data-action="click->team-progress#showSubTeams"
+              data-team-progress-target="subTeamsBtn">
+        <%= button_component(text: "Sub Teams", type: "outline", size: "sm") %>
+      </button>
+      <button type="button"
+              data-action="click->team-progress#showMembers"
+              data-team-progress-target="membersBtn">
+        <%= button_component(text: "Members", size: "sm") %>
+      </button>
+    </div>
+  </div>
+
+  <%# Members view %>
+  <div data-team-progress-target="membersView">
+    <div class="grid grid-cols-3 pb-2 border-b border-line-colour-light">
+      <span class="general-text-sm-normal text-letter-color-light">Member</span>
+      <span class="general-text-sm-normal text-letter-color-light">Courses</span>
+      <span class="general-text-sm-normal text-letter-color-light">Progress</span>
+    </div>
+    <div class="flex flex-col divide-y divide-line-colour-light">
+      <% @dashboard.team_members_progress.each do |member| %>
+        <%= link_to team_member_profile_dashboards_path(user_id: member[:user].id, duration: params[:duration], origin: request.path), class: "block", data: { turbo_frame: "_top" } do %>
+          <div class="grid grid-cols-3 py-3 items-center">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-primary-light-100 flex items-center justify-center flex-none">
+                <span class="general-text-xs-normal text-primary font-medium">
+                  <%= member[:user].name.split.first(2).map { |n| n[0] }.join.upcase %>
+                </span>
+              </div>
+              <span class="main-text-sm-medium line-clamp-1"><%= member[:user].display_name %></span>
+            </div>
+            <span class="general-text-sm-normal"><%= member[:completed] %>/<%= member[:courses] %></span>
+            <div class="flex items-center gap-2">
+              <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
+                <div class="h-1.5 bg-secondary rounded-full" style="width: <%= member[:progress] %>%"></div>
+              </div>
+              <span class="general-text-xs-normal text-letter-color-light w-8"><%= member[:progress] %>%</span>
+              <div class="w-14 flex items-center justify-center">
+                <% if member[:progress] == 100 %>
+                  <%= icon("check-circle-solid", css: "h-5 w-5 text-secondary") %>
+                <% elsif member[:progress] < 20 %>
+                  <div class="h-6 w-6 bg-primary-light-100 flex justify-center items-center rounded-full">
+                    <%= icon("chat-bubble-bottom-center-text", css: "h-3 w-3 text-primary") %>
+                  </div>
+                <% else %>
+                  <%= icon("clock", css: "h-4 w-4 text-primary") %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Sub Teams view - hidden by default %>
+  <div data-team-progress-target="subTeamsView" class="hidden">
+    <div class="grid grid-cols-3 pb-2 border-b border-line-colour-light">
+      <span class="general-text-sm-normal text-letter-color-light">Team</span>
+      <span class="general-text-sm-normal text-letter-color-light">Members</span>
+      <span class="general-text-sm-normal text-letter-color-light">Progress</span>
+    </div>
+    <div class="flex flex-col divide-y divide-line-colour-light">
+      <% @dashboard.sub_teams_progress.each do |sub_team| %>
+        <div class="grid grid-cols-3 py-3 items-center">
+          <p class="main-text-sm-medium line-clamp-1"><%= sub_team[:name] %></p>
+          <span class="general-text-sm-normal"><%= sub_team[:members_count] %> members</span>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
+              <div class="h-1.5 bg-primary rounded-full" style="width: <%= sub_team[:progress] %>%"></div>
+            </div>
+            <span class="general-text-xs-normal text-letter-color-light w-8"><%= sub_team[:progress] %>%</span>
+          </div>
+        </div>
+      <% end %>
+      <% if @dashboard.sub_teams_progress.empty? %>
+        <p class="general-text-sm-normal text-letter-color-light py-4 text-center">No sub teams</p>
+      <% end %>
+    </div>
+  </div>
+
+  <%= link_to team_progress_dashboards_path, class: "flex items-center justify-center gap-1 mt-4  main-text-sm-normal text-primary" do %>
+    <span>View all members</span>
+    <%= icon("arrow-right", css: "h-4 w-4") %>
+  <% end %>
+</div>
