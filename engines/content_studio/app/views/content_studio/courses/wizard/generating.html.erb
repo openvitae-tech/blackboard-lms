@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full"
+<div class="flex flex-col py-3 max-w-4xl mx-auto w-full"
      data-controller="generation-polling"
      data-generation-polling-status-url-value="<%= @course_id == 'pending' ? '' : generation_status_path(id: @course_id) %>"
      data-generation-polling-start-url-value="<%= @course_id == 'pending' ? start_generation_path : '' %>">
@@ -15,17 +15,8 @@
     ) %>
   </div>
 
-  <div class="flex flex-col items-center gap-5 py-10">
-    <div class="bg-primary-light-50 rounded-[344px] w-[552px] h-[282px] flex items-center justify-center overflow-hidden">
-      <lottie-player
-        src="<%= asset_path('waiting.json') %>"
-        background="transparent"
-        speed="1"
-        style="width: 251px; height: 251px;"
-        loop
-        autoplay>
-      </lottie-player>
-    </div>
+  <div class="flex flex-col items-center pb-10 -mt-12">
+    <%= image_tag 'waiting.gif', class: 'w-[406px] h-[406px]' %>
     <p class="main-text-md-medium text-letter-color text-center">
       We're creating your course structure !<br>
       It will take sometime.<br>

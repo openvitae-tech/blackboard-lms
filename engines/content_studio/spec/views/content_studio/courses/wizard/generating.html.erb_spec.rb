@@ -19,9 +19,9 @@ RSpec.describe 'content_studio/courses/wizard/generating', type: :view do
     expect(rendered).to include('Configure Video')
   end
 
-  it 'renders the lottie animation player' do
+  it 'renders the waiting gif' do
     render
-    expect(rendered).to include('lottie-player')
+    expect(rendered).to match(/src="[^"]*waiting[^"]*\.gif"/)
   end
 
   it 'renders the waiting message' do
