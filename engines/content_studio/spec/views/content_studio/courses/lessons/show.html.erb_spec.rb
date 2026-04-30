@@ -95,6 +95,11 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
     expect(rendered).to include('Scene 2')
   end
 
+  it 'renders video_film.gif for scenes that are not completed' do
+    render
+    expect(rendered).to match(/src="[^"]*video_film[^"]*\.gif"/)
+  end
+
   it 'wires the scene-player Stimulus controller' do
     render
     expect(rendered).to include('data-controller="scene-player"')
@@ -137,5 +142,27 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
   it 'wires the textarea input event to the scene-player controller' do
     render
     expect(rendered).to include('scene-player#onNarrationInput')
+  end
+
+  it 'renders play and pause icon targets in the control bar' do
+    render
+    expect(rendered).to include('data-scene-player-target="playIcon"')
+    expect(rendered).to include('data-scene-player-target="pauseIcon"')
+  end
+
+  it 'renders prev and next scene navigation buttons' do
+    render
+    expect(rendered).to include('scene-player#prev')
+    expect(rendered).to include('scene-player#next')
+  end
+
+  it 'wires the play/pause toggle to the scene-player controller' do
+    render
+    expect(rendered).to include('scene-player#togglePlay')
+  end
+
+  it 'renders the control bar with hover visibility class' do
+    render
+    expect(rendered).to include('group-hover:opacity-100')
   end
 end
