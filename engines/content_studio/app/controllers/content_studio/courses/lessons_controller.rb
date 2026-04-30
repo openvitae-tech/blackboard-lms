@@ -17,6 +17,8 @@ module ContentStudio
 
         @prev_lesson_id = current_index && current_index > 0 ? all_lessons[current_index - 1].id : nil
         @next_lesson_id = current_index && current_index < all_lessons.size - 1 ? all_lessons[current_index + 1].id : nil
+        @lesson_number = current_index ? current_index + 1 : nil
+        @total_lessons = all_lessons.size
       end
     end
   end
