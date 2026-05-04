@@ -26,10 +26,15 @@
           <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
           <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
         </div> 
-        <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full overflow-hidden">
-          <div class="h-full flex">
-            <div class="h-full bg-secondary" style="width: <%= item[:completed_percent] %>%"></div>
-            <div class="h-full bg-primary" style="width: <%= item[:started_percent] %>%"></div>
+        <div class="relative flex-1 h-1.5 bg-primary-light-100 rounded-full overflow-hidden">
+          <div
+            class="absolute left-0 top-0 h-full bg-primary rounded-r-full"
+            style="width: <%= item[:completed_percent] + item[:started_percent] %>%">
+          </div>
+
+          <div
+            class="absolute left-0 top-0 h-full bg-secondary rounded-r-full"
+            style="width: <%= item[:completed_percent] %>%">
           </div>
         </div>
       </div>

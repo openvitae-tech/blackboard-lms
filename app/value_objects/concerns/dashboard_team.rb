@@ -106,7 +106,9 @@ module DashboardTeam
     total = enrollments.size
     return 0 if total.zero?
 
-    current_pct = (enrollments.count { |e| e.course_completed && @duration.cover?(e.updated_at) }.to_f / total * 100).round
+    current_pct = (enrollments.count do |e|
+      e.course_completed && @duration.cover?(e.updated_at)
+    end.to_f / total * 100).round
     prev_pct = (enrollments.count { |e| e.course_completed && prev.cover?(e.updated_at) }.to_f / total * 100).round
     current_pct - prev_pct
   end
