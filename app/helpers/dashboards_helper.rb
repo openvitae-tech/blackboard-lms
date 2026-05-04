@@ -8,6 +8,34 @@ module DashboardsHelper
     end + [MenuItem.new('Custom date', '#', { action: 'click->custom-date#open' })]
   end
 
+  def duration_select_options(team, member: nil, origin: nil)
+    options = Dashboard::VALID_DURATIONS.map do |key, label|
+      path = if member
+               team_member_profile_dashboards_path(duration: key.to_s, team_id: team.id, user_id: member.id, origin:)
+             else
+               dashboard_path(duration: key.to_s, team_id: team.id)
+             end
+      [label, path]
+    end
+    options + [['Custom date', 'custom']]
+  end
+
+  def duration_select_value(team, member: nil, origin: nil)
+    return 'custom' if params[:duration] == 'custom'
+
+    key = params[:duration].presence || 'last_7_days'
+    key = 'last_7_days' unless Dashboard::VALID_DURATIONS.key?(key.to_sym)
+    if member
+      team_member_profile_dashboards_path(duration: key, team_id: team.id, user_id: member.id, origin:)
+    else
+      dashboard_path(duration: key, team_id: team.id)
+    end
+  end
+
+  def duration_select_html_options
+    { data: { action: "change->custom-date#handleDurationChange" }, class: "cursor-pointer" }
+  end
+
   def duration_menu_for_member(team, member, origin: nil)
     Dashboard::VALID_DURATIONS.map do |key, value|
       MenuItem.new(value,

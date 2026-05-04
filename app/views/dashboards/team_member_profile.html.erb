@@ -18,8 +18,13 @@
       </div>
     </div>
     <div class="z-20">
-      <%= render 'shared/components/dropdown_menu', menu: duration_menu_for_member(@team, @member, origin: params[:origin]), selected_item: selected_label(@duration) %>
-    </div> 
+      <%= dropdown_component(
+        name: "duration",
+        options: duration_select_options(@team, member: @member, origin: params[:origin]),
+        value: duration_select_value(@team, member: @member, origin: params[:origin]),
+        html_options: duration_select_html_options
+      ) %>
+    </div>
   </div>
 
   <div class="absolute top-20 w-full">

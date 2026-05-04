@@ -37,6 +37,7 @@
                      data-custom-date-target="fromDate">
               <input type="date"
                      class="invisible p-0 w-[2px]"
+                     min="<%= 6.months.ago.to_date.strftime('%Y-%m-%d') %>"
                      max="<%= Date.today.strftime('%Y-%m-%d') %>"
                      data-date-picker-target="datePicker"
                      data-action="change->date-picker#datePicked change->custom-date#validate">
@@ -62,6 +63,7 @@
                      data-custom-date-target="toDate">
               <input type="date"
                      class="invisible p-0 w-[2px]"
+                     min="<%= 6.months.ago.to_date.strftime('%Y-%m-%d') %>"
                      max="<%= Date.today.strftime('%Y-%m-%d') %>"
                      data-date-picker-target="datePicker"
                      data-action="change->date-picker#datePicked change->custom-date#validate">

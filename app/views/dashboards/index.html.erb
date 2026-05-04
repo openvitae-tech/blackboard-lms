@@ -6,8 +6,13 @@
     </div>
     <p class="general-text-sm-normal text-letter-color-light">Dashboard | <%= @team.users.active.count %> members</p>
   </div>
-  <div class="flex justify-between relative">
-    <%= render 'shared/components/dropdown_menu', menu: duration_menu_for(@team), selected_item: selected_label(@duration) %>
+  <div class="flex w-fit items-center gap-2">
+    <%= dropdown_component(
+      name: "duration",
+      options: duration_select_options(@team),
+      value: duration_select_value(@team),
+      html_options: duration_select_html_options
+    ) %>
   </div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
