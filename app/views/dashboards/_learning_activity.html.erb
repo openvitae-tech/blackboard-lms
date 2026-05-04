@@ -3,8 +3,8 @@
 
   <%# Quizzes Passed %>
   <div class="mb-4">
-    <div class="flex items-center justify-center gap-2">
-      <div class="bg-secondary-light h-10 w-10 p-4 rounded-lg flex items-center justify-center">
+    <div class="flex items-center gap-2">
+      <div class="bg-secondary-light h-10 w-10 p-4 rounded-lg flex items-center justify-center flex-none">
         <%= icon("puzzle-piece", css: "h-6 w-6 text-primary") %>
       </div>
       <div class="flex flex-col w-full gap-1">
@@ -13,13 +13,10 @@
           <span class="general-text-sm-normal"><%= @dashboard.quizzes_passed %>/<%= @dashboard.total_quizzes %></span>
         </div>
         <div class="h-1.5 w-full bg-primary-light-100 rounded-full">
-          <div class="h-1.5 bg-secondary rounded-full general-text-sm-normal" style="width: <%= @dashboard.quiz_pass_rate %>%"></div>
+          <div class="h-1.5 bg-secondary rounded-full" style="width: <%= @dashboard.quiz_pass_rate %>%"></div>
         </div>
         <p class="general-text-sm-normal text-letter-color-light mt-1"><%= @dashboard.quiz_pass_rate %>% Pass rate</p>
-
       </div>
-      
     </div>
-   
   </div>
 </div>

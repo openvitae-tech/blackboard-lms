@@ -23,15 +23,13 @@ module DashboardTeam
 
   def team_member_data(user)
     enrollments = user.enrollments.includes(:course).to_a
-    stats = enrollment_stats(enrollments)
-    quiz = user_quiz_stats(user)
-    certificates_count = CourseCertificate.where(user:, issued_at: @duration).count
-
-    stats.merge(quiz).merge(
-      certificates_count:,
-      self_assigned_enrollments: enrollments.select { |e| e.assigned_by_id.nil? && !e.course_completed }.first(3),
-      course_enrollments: enrollments.sort_by { |e| -e.progress }.first(5)
-    )
+    enrollment_stats(enrollments)
+      .merge(user_quiz_stats(user))
+      .merge(member_delta_stats(user, enrollments))
+      .merge(
+        self_assigned_enrollments: enrollments.select { |e| e.assigned_by_id.nil? && !e.course_completed }.first(3),
+        course_enrollments: enrollments.sort_by { |e| -e.progress }.first(5)
+      )
   end
 
   def team_members_progress
@@ -84,5 +82,45 @@ module DashboardTeam
       quizzes_passed: passed,
       total_quizzes: total
     }
+  end
+
+  def member_delta_stats(user, enrollments)
+    prev = previous_duration
+    certs = CourseCertificate.where(user:, issued_at: @duration).count
+    {
+      certificates_count: certs,
+      certificates_delta: certs - CourseCertificate.where(user:, issued_at: prev).count,
+      courses_delta: member_courses_delta(enrollments, prev),
+      avg_completion_delta: member_completion_delta(enrollments, prev),
+      self_assigned_count: member_self_assigned_count(enrollments),
+      watch_time_delta: member_watch_time_delta(user)
+    }
+  end
+
+  def member_courses_delta(enrollments, prev)
+    enrollments.count { |e| @duration.cover?(e.created_at) } -
+      enrollments.count { |e| prev.cover?(e.created_at) }
+  end
+
+  def member_completion_delta(enrollments, prev)
+    total = enrollments.size
+    return 0 if total.zero?
+
+    current_pct = (enrollments.count { |e| e.course_completed && @duration.cover?(e.updated_at) }.to_f / total * 100).round
+    prev_pct = (enrollments.count { |e| e.course_completed && prev.cover?(e.updated_at) }.to_f / total * 100).round
+    current_pct - prev_pct
+  end
+
+  def member_self_assigned_count(enrollments)
+    enrollments.count { |e| e.assigned_by_id.nil? && @duration.cover?(e.created_at) }
+  end
+
+  def member_watch_time_delta(user)
+    current = current_time_spent_events.select { |e| e.user_id == user.id }
+                                       .sum { |e| e.data['time_spent'].to_i }
+    previous = TimeSpentQuery.new(@team.learning_partner_id, previous_duration).call
+                             .select { |e| e.user_id == user.id }
+                             .sum { |e| e.data['time_spent'].to_i }
+    current - previous
   end
 end

@@ -6,7 +6,7 @@
     <span class="icon icon-down bg-primary icon-small"></span>
     <span class="icon-up bg-primary hidden icon-small"></span>
   </summary>
-  <ul class="absolute right-0 bg-white border border-line-colour-light mt-2 rounded-lg box-shadow-small  w-[178px] heading">
+  <ul class="absolute right-0 z-50 bg-white border border-line-colour-light mt-2 rounded-lg box-shadow-small w-[178px] heading">
     <% menu.each do |item| %>
       <li>
         <% if item.respond_to?(:link) %>

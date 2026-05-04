@@ -1,93 +1,47 @@
 <div data-controller="custom-date">
 <div class="flex items-center justify-between mb-4 px-1">
-  <div class="heading heading-medium flex gap-1">
-    <span class="">Team: </span><span class=""><%= @team.name %></span>
+  <div>
+    <div class="heading heading-medium flex gap-1">
+      <span class="">Team: </span><span class=""><%= @team.name %></span>
+    </div>
+    <p class="general-text-sm-normal text-letter-color-light">Dashboard | <%= @team.users.active.count %> members</p>
   </div>
   <div class="flex justify-between relative">
     <%= render 'shared/components/dropdown_menu', menu: duration_menu_for(@team), selected_item: selected_label(@duration) %>
   </div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-  <%# Active Learners %>
-  <div class="bg-white rounded-xl border border-line-colour-light p-5">
-    <div class="flex items-center gap-4">
-      <div class="bg-primary-light-100 p-4 rounded-lg">
-        <%= icon("user-group", css: "h-6 w-6 text-primary") %>
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="main-text-sm-normal text-primary">Active Learners</span>
-        <p class="main-text-lg-medium text-primary"><%= @dashboard.active_learners_count %></p>
-      </div>
-    </div>
-    <div class=" w-full h-[px] border border-line-colour-light my-3"></div>
+  <%= render 'stat_card',
+      title: 'Active Learners',
+      icon_name: 'user-group',
+      value: @dashboard.active_learners_count,
+      delta: @dashboard.active_learners_delta,
+      delta_label: "#{@dashboard.active_learners_delta} learners",
+      delta_suffix: period_label(@dashboard.duration) %>
 
-    <% delta = @dashboard.active_learners_delta %>
-    <p class="flex flex-row justify-center general-text-md-normal <%= delta >= 0 ? 'text-secondary' : 'text-danger' %>">
-      <%= delta >= 0 ? '↑' : '↓' %> <%= delta >= 0 ? '+' : '' %><%= delta %> learners <%= period_label(@dashboard.duration) %>
-    </p>
-  </div>
+  <%= render 'stat_card',
+      title: 'Avg Completion',
+      icon_name: 'check-badge',
+      value: "#{@dashboard.completion_percent_metric}%",
+      delta: @dashboard.completion_percent_delta,
+      delta_label: "#{@dashboard.completion_percent_delta}%",
+      delta_suffix: period_label(@dashboard.duration) %>
 
-  <%# Avg Completion %>
-  <div class="bg-white rounded-xl border border-line-colour-light p-5">
-    <div class="flex items-center gap-4">
-      <div class="bg-primary-light-100 p-4 rounded-lg">
-        <%= icon("check-badge", css: "h-6 w-6 text-primary") %>
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="main-text-sm-normal text-primary">Avg Completion</span>
-        <p class="main-text-lg-medium text-primary"><%= @dashboard.completion_percent_metric %>%</p>
-      </div>
-    </div>
-    <div class=" w-full h-[px] border border-line-colour-light my-3"></div>
+  <%= render 'stat_card',
+      title: 'Avg Watch Time',
+      icon_name: 'clock',
+      value: duration_in_words(@dashboard.average_time_spent_metric),
+      delta: @dashboard.average_time_spent_delta,
+      delta_label: "#{duration_in_words(@dashboard.average_time_spent_delta.abs)}",
+      delta_suffix: period_label(@dashboard.duration) %>
 
-    <% delta = @dashboard.completion_percent_delta %>
-    <p class="flex flex-row justify-center general-text-md-normal <%= delta >= 0 ? 'text-secondary' : 'text-danger' %>">
-      <%= delta >= 0 ? '↑' : '↓' %> <%= delta >= 0 ? '+' : '' %><%= delta %>% <%= period_label(@dashboard.duration) %>
-    </p>
-  </div>
-
-
-
-  <%# Avg Watch Time %>
-  <div class="bg-white rounded-xl border border-line-colour-light p-5">
-    <div class="flex items-center gap-4">
-      <div class="bg-primary-light-100 p-4 rounded-lg">
-        <%= icon("clock", css: "h-6 w-6 text-primary") %>
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="main-text-sm-normal text-primary">Avg Watch Time</span>
-        <p class="main-text-lg-medium text-primary"><%= duration_in_words(@dashboard.average_time_spent_metric) %></p>
-      </div>
-    </div>
-    <div class=" w-full h-[px] border border-line-colour-light my-3"></div>
-
-    <% delta = @dashboard.average_time_spent_delta %>
-    <p class="flex flex-row justify-center general-text-md-normal <%= delta >= 0 ? 'text-secondary' : 'text-danger' %>">
-      <%= delta >= 0 ? '↑' : '↓' %> <%= delta >= 0 ? '+' : '' %><%= duration_in_words(delta.abs) %> <%= period_label(@dashboard.duration) %>
-    </p>
-  </div>
-
-  
-
-  <%# Certificates Earned %>
-   <div class="bg-white rounded-xl border border-line-colour-light p-5">
-    <div class="flex items-center gap-4">
-      <div class="bg-primary-light-100 p-4 rounded-lg">
-        <%= icon("document-text-outline", css: "h-6 w-6 text-primary") %>
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="main-text-sm-normal text-primary">Certificates Earned</span>
-        <p class="main-text-lg-medium text-primary"><%= @dashboard.certificates_count %></p>
-      </div>
-    </div>
-    <div class=" w-full h-[px] border border-line-colour-light my-3"></div>
-
-    <% delta = @dashboard.certificates_delta %>
-    <p class="flex flex-row justify-center general-text-md-normal <%= delta >= 0 ? 'text-secondary' : 'text-danger' %>">
-      <%= delta >= 0 ? '↑' : '↓' %> <%= delta >= 0 ? '+' : '' %><%= delta %> <%= period_label(@dashboard.duration) %>
-    </p>
-  </div>
- 
+  <%= render 'stat_card',
+      title: 'Certificates Earned',
+      icon_name: 'document-text-outline',
+      value: @dashboard.certificates_count,
+      delta: @dashboard.certificates_delta,
+      delta_label: "#{@dashboard.certificates_delta}",
+      delta_suffix: period_label(@dashboard.duration) %>
 </div>
 
 <%= render 'dashboards/falling_behind' %>

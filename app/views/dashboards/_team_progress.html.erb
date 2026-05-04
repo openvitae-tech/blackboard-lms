@@ -32,7 +32,10 @@
                   <%= member[:user].name.split.first(2).map { |n| n[0] }.join.upcase %>
                 </span>
               </div>
-              <span class="main-text-sm-medium line-clamp-1"><%= member[:user].display_name %></span>
+              <div>
+                <p class="main-text-sm-medium line-clamp-1"><%= member[:user].display_name %></p>
+                <p class="general-text-xs-normal text-letter-color-light line-clamp-1"><%= member[:user].team.name %></p>
+              </div>
             </div>
             <span class="general-text-sm-normal"><%= member[:completed] %>/<%= member[:courses] %></span>
             <div class="flex items-center gap-2">

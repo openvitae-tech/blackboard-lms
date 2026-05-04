@@ -1,149 +1,170 @@
-<div data-controller="custom-date">
-<%= render 'shared/components/back_button', back_link: params[:origin].presence || dashboards_path %>
-
-<div class="flex items-center justify-between my-6 px-1">
-  <div class="flex items-center gap-4">
-    <div class="w-12 h-12 rounded-full bg-primary-light-100 flex items-center justify-center flex-none">
-      <span class="main-text-lg-semibold text-primary">
-        <%= @member.name.split.first(2).map { |n| n[0] }.join.upcase %>
-      </span>
-    </div>
-    <div>
-      <h2 class="main-text-lg-semibold"><%= @member.display_name %></h2>
-      <p class="general-text-sm-normal text-letter-color-light capitalize"><%= @member.role %></p>
-      <% if @member.last_sign_in_at %>
-        <p class="general-text-xs-normal text-letter-color-light">Last active: <%= time_ago_in_words(@member.last_sign_in_at) %> ago</p>
-      <% end %>
-    </div>
-  </div>
-  <%= render 'shared/components/dropdown_menu', menu: duration_menu_for_member(@team, @member, origin: params[:origin]), selected_item: selected_label(@duration) %>
-</div>
-
-<%# Stats cards %>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-  <div class="bg-white rounded-xl border border-line-colour-light p-5">
-    <p class="general-text-sm-normal text-letter-color-light mb-2">Courses</p>
-    <p class="main-text-lg-semibold"><%= @member_data[:completed_count] %>/<%= @member_data[:courses_count] %></p>
-  </div>
-  <div class="bg-white rounded-xl border border-line-colour-light p-5">
-    <p class="general-text-sm-normal text-letter-color-light mb-2">Avg Completion</p>
-    <p class="main-text-lg-semibold"><%= @member_data[:avg_completion_percent] %>%</p>
-  </div>
-  <div class="bg-white rounded-xl border border-line-colour-light p-5">
-    <p class="general-text-sm-normal text-letter-color-light mb-2">Watch Time</p>
-    <p class="main-text-lg-semibold"><%= (@member_data[:total_watch_seconds] / 3600.0).round(1) %> hrs</p>
-  </div>
-  <div class="bg-white rounded-xl border border-line-colour-light p-5">
-    <p class="general-text-sm-normal text-letter-color-light mb-2">Certificates</p>
-    <p class="main-text-lg-semibold"><%= @member_data[:certificates_count] %></p>
-  </div>
-</div>
-
-<%# Alert banner %>
-<% if @member_data[:avg_completion_percent] >= 80 && @member_data[:courses_count] > 0 %>
-  <div class="mb-6 bg-secondary-light rounded-lg p-4 flex items-center justify-between gap-3">
-    <div class="flex items-center gap-2">
-      <div class="w-6 h-6 border border-line-colour-light rounded-lg bg-white">
-        <%= icon("star-solid", css: "h-5 w-5 text-secondary-dark flex-none") %>
+<div class="relative" data-controller="custom-date">
+  <div class="relative -mx-5 md:-mx-16 px-5 md:px-16 py-5 bg-primary-light-100 -mt-5 h-[148px] flex items-start justify-between">
+    <div class="flex items-center gap-3">
+      <%= render 'shared/components/back_button', back_link: params[:origin].presence || dashboards_path %>
+      <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-none">
+        <span class="main-text-lg-semibold text-primary">
+          <%= @member.name.split.first(2).map { |n| n[0] }.join.upcase %>
+        </span>
       </div>
-      <p class="general-text-sm-normal"><span class="main-text-sm-medium"><%= @member.display_name %></span> is crushing it!</p>
-    </div>
-    <%= link_to appreciate_member_dashboards_path(user_id: @member.id, banner_type: 'crushing_it'),
-        data: { turbo_frame: 'modal' },
-        class: "flex items-center gap-1 text-primary flex-none" do %>
-      <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
-      <span class="main-text-sm-normal">Appreciate</span>
-    <% end %>
-  </div>
-<% elsif @member_data[:avg_completion_percent] < 20 && @member_data[:courses_count] > 0 %>
-  <div class="mb-6 bg-danger-light rounded-lg p-4 flex items-center justify-between gap-3">
-    <div class="flex items-center gap-2">
-      <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
-      <p class="general-text-sm-normal"><span class="main-text-sm-medium"><%= @member.display_name %></span> is falling behind.</p>
-    </div>
-    <%= link_to appreciate_member_dashboards_path(user_id: @member.id, banner_type: 'falling_behind'),
-        data: { turbo_frame: 'modal' },
-        class: "flex items-center gap-1 text-primary flex-none" do %>
-      <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
-      <span class="main-text-sm-normal">Nudge</span>
-    <% end %>
-  </div>
-<% end %>
-
-<%# Two-column layout %>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-  <%# Left column %>
-  <div class="flex flex-col gap-4">
-    <%# Self-Assigned %>
-    <div class="bg-white rounded-xl border border-line-colour-light p-5">
-      <h2 class="main-text-lg-semibold mb-1">Self-Assigned</h2>
-      <p class="general-text-sm-normal text-letter-color-light mb-4">Courses enrolled on own initiative</p>
-      <div class="flex flex-col gap-3">
-        <% if @member_data[:self_assigned_enrollments].any? %>
-          <% @member_data[:self_assigned_enrollments].each do |enrollment| %>
-            <div class="flex items-center justify-between">
-              <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
-              <div class="relative w-10 h-10 flex-none">
-                <svg viewBox="0 0 36 36" class="w-10 h-10 -rotate-90">
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#D9E3F5" stroke-width="3"/>
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#0041B9" stroke-width="3"
-                    stroke-dasharray="<%= enrollment.progress %>, 100"/>
-                </svg>
-                <span class="absolute inset-0 flex items-center justify-center general-text-xs-normal"><%= enrollment.progress %>%</span>
-              </div>
-            </div>
+      <div>
+        <h2 class="main-text-lg-semibold"><%= @member.display_name %></h2>
+        <p class="general-text-sm-normal text-letter-color-light">
+          <%= @member.team&.name %>
+          <% if @member.last_sign_in_at %>
+            &nbsp;|&nbsp;Last active: <%= time_ago_in_words(@member.last_sign_in_at) %> ago
           <% end %>
-        <% else %>
-          <p class="general-text-sm-normal text-letter-color-light">No self-assigned courses</p>
-        <% end %>
+        </p>
       </div>
     </div>
-
-    <%# Learning Activity %>
-    <div class="bg-white rounded-xl border border-line-colour-light p-5">
-      <h2 class="main-text-lg-semibold mb-4">Learning Activity</h2>
-      <div class="flex items-center gap-2">
-        <div class="bg-secondary-light h-10 w-10 p-4 rounded-lg flex items-center justify-center flex-none">
-          <%= icon("puzzle-piece", css: "h-6 w-6 text-primary") %>
-        </div>
-        <div class="flex flex-col w-full gap-1">
-          <div class="flex justify-between w-full">
-            <span class="general-text-md-medium">Quizzes Passed</span>
-            <span class="general-text-sm-normal"><%= @member_data[:quizzes_passed] %>/<%= @member_data[:total_quizzes] %></span>
-          </div>
-          <div class="h-1.5 w-full bg-primary-light-100 rounded-full">
-            <div class="h-1.5 bg-secondary rounded-full" style="width: <%= @member_data[:quiz_pass_rate] %>%"></div>
-          </div>
-          <p class="general-text-sm-normal text-letter-color-light mt-1"><%= @member_data[:quiz_pass_rate] %>% Pass rate</p>
-        </div>
-      </div>
-    </div>
+    <div class="z-20">
+      <%= render 'shared/components/dropdown_menu', menu: duration_menu_for_member(@team, @member, origin: params[:origin]), selected_item: selected_label(@duration) %>
+    </div> 
   </div>
 
-  <%# Right column %>
-  <div class="flex flex-col gap-4">
-    <%# Course Progress %>
-    <div class="bg-white rounded-xl border border-line-colour-light p-5">
-      <h2 class="main-text-lg-semibold mb-4">Course Progress</h2>
-      <div class="flex flex-col divide-y divide-line-colour-light">
-        <% @member_data[:course_enrollments].each do |enrollment| %>
-          <div class="py-3">
-            <div class="flex justify-between mb-1">
-              <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
-              <span class="general-text-sm-normal text-letter-color-light w-12 text-right"><%= enrollment.progress %>%</span>
-            </div>
-            <div class="h-1.5 bg-primary-light-100 rounded-full">
-              <div class="h-1.5 rounded-full <%= enrollment.course_completed ? 'bg-secondary' : 'bg-primary' %>"
-                   style="width: <%= enrollment.progress %>%"></div>
-            </div>
+  <div class="absolute top-20 w-full">
+    <%# Stats cards %>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <% self_assigned = @member_data[:self_assigned_count].to_i %>
+      <%= render 'stat_card',
+          title: 'Courses',
+          icon_name: 'book-open',
+          value: @member_data[:courses_count],
+          delta: self_assigned,
+          delta_label: "#{self_assigned.abs} #{self_assigned.abs == 1 ? 'course' : 'courses'} self assigned",
+          delta_suffix: period_label(@dashboard.duration) %>
+
+      <%= render 'stat_card',
+          title: 'Avg Completion',
+          icon_name: 'check-circle',
+          value: "#{@member_data[:avg_completion_percent]}%",
+          delta: @member_data[:avg_completion_delta].to_i,
+          delta_label: "#{@member_data[:avg_completion_delta].to_i.abs}%",
+          delta_suffix: period_label(@dashboard.duration) %>
+
+      <%= render 'stat_card',
+          title: 'Avg Watch Time',
+          icon_name: 'clock',
+          value: duration_in_words(@member_data[:total_watch_seconds].to_i),
+          delta: @member_data[:watch_time_delta].to_i,
+          delta_label: duration_in_words(@member_data[:watch_time_delta].to_i.abs),
+          delta_suffix: period_label(@dashboard.duration) %>
+
+      <%= render 'stat_card',
+          title: 'Certificates Earned',
+          icon_name: 'document-text-outline',
+          value: @member_data[:certificates_count].to_i,
+          delta: @member_data[:certificates_delta].to_i,
+          delta_label: "#{@member_data[:certificates_delta].to_i.abs}",
+          delta_suffix: period_label(@dashboard.duration) %>
+    </div>
+
+    <%# Alert banner %>
+    <% if @member_data[:avg_completion_percent] >= 80 && @member_data[:courses_count] > 0 %>
+      <div class="mb-6 bg-secondary-light rounded-lg p-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 border border-line-colour-light rounded-lg bg-white">
+            <%= icon("star-solid", css: "h-5 w-5 text-secondary-dark flex-none") %>
           </div>
-        <% end %>
-        <% if @member_data[:course_enrollments].empty? %>
-          <p class="general-text-sm-normal text-letter-color-light py-4">No courses enrolled</p>
+          <p class="general-text-sm-normal"><span class="main-text-sm-medium"><%= @member.display_name %></span> is crushing it!</p>
+        </div>
+        <%= link_to appreciate_member_dashboards_path(user_id: @member.id, banner_type: 'crushing_it'),
+            data: { turbo_frame: 'modal' },
+            class: "flex items-center gap-1 text-primary flex-none" do %>
+          <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
+          <span class="main-text-sm-normal">Appreciate</span>
         <% end %>
       </div>
+    <% elsif @member_data[:avg_completion_percent] < 20 && @member_data[:courses_count] > 0 %>
+      <div class="mb-6 bg-danger-light rounded-lg p-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
+          <p class="general-text-sm-normal"><span class="main-text-sm-medium"><%= @member.display_name %></span> is falling behind.</p>
+        </div>
+        <%= link_to appreciate_member_dashboards_path(user_id: @member.id, banner_type: 'falling_behind'),
+            data: { turbo_frame: 'modal' },
+            class: "flex items-center gap-1 text-primary flex-none" do %>
+          <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
+          <span class="main-text-sm-normal">Nudge</span>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# Two-column layout %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <%# Left column %>
+      <div class="flex flex-col gap-4">
+        <%# Self-Assigned %>
+        <div class="bg-white rounded-xl border border-line-colour-light p-5">
+          <h2 class="main-text-lg-semibold mb-1">Self-Assigned</h2>
+          <p class="general-text-sm-normal text-letter-color-light mb-4">Courses enrolled on own initiative</p>
+          <div class="flex flex-col gap-3">
+            <% if @member_data[:self_assigned_enrollments].any? %>
+              <% @member_data[:self_assigned_enrollments].each do |enrollment| %>
+                <div class="flex items-center justify-between">
+                  <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
+                  <div class="relative w-10 h-10 flex-none">
+                    <svg viewBox="0 0 36 36" class="w-10 h-10 -rotate-90">
+                      <circle cx="18" cy="18" r="15.9" fill="none" stroke="#D9E3F5" stroke-width="3"/>
+                      <circle cx="18" cy="18" r="15.9" fill="none" stroke="#0041B9" stroke-width="3"
+                        stroke-dasharray="<%= enrollment.progress %>, 100"/>
+                    </svg>
+                    <span class="absolute inset-0 flex items-center justify-center general-text-xs-normal"><%= enrollment.progress %>%</span>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <p class="general-text-sm-normal text-letter-color-light">No self-assigned courses</p>
+            <% end %>
+          </div>
+        </div>
+
+        <%# Learning Activity %>
+        <div class="bg-white rounded-xl border border-line-colour-light p-5">
+          <h2 class="main-text-lg-semibold mb-4">Learning Activity</h2>
+          <div class="flex items-center gap-2">
+            <div class="bg-secondary-light h-10 w-10 p-4 rounded-lg flex items-center justify-center flex-none">
+              <%= icon("puzzle-piece", css: "h-6 w-6 text-primary") %>
+            </div>
+            <div class="flex flex-col w-full gap-1">
+              <div class="flex justify-between w-full">
+                <span class="general-text-md-medium">Quizzes Passed</span>
+                <span class="general-text-sm-normal"><%= @member_data[:quizzes_passed] %>/<%= @member_data[:total_quizzes] %></span>
+              </div>
+              <div class="h-1.5 w-full bg-primary-light-100 rounded-full">
+                <div class="h-1.5 bg-secondary rounded-full" style="width: <%= @member_data[:quiz_pass_rate] %>%"></div>
+              </div>
+              <p class="general-text-sm-normal text-letter-color-light mt-1"><%= @member_data[:quiz_pass_rate] %>% Pass rate</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%# Right column %>
+      <div class="flex flex-col gap-4">
+        <%# Course Progress %>
+        <div class="bg-white rounded-xl border border-line-colour-light p-5">
+          <h2 class="main-text-lg-semibold mb-4">Course Progress</h2>
+          <div class="flex flex-col divide-y divide-line-colour-light">
+            <% @member_data[:course_enrollments].each do |enrollment| %>
+              <div class="py-3">
+                <div class="flex justify-between mb-1">
+                  <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
+                  <span class="general-text-sm-normal text-letter-color-light w-12 text-right"><%= enrollment.progress %>%</span>
+                </div>
+                <div class="h-1.5 bg-primary-light-100 rounded-full">
+                  <div class="h-1.5 rounded-full <%= enrollment.course_completed ? 'bg-secondary' : 'bg-primary' %>"
+                      style="width: <%= enrollment.progress %>%"></div>
+                </div>
+              </div>
+            <% end %>
+            <% if @member_data[:course_enrollments].empty? %>
+              <p class="general-text-sm-normal text-letter-color-light py-4">No courses enrolled</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
+    <%= render 'dashboards/custom_date_modal', action_url: team_member_profile_dashboards_path, user_id: @member.id, origin: params[:origin] %>
   </div>
-</div>
-<%= render 'dashboards/custom_date_modal', action_url: team_member_profile_dashboards_path, user_id: @member.id, origin: params[:origin] %>
 </div>
