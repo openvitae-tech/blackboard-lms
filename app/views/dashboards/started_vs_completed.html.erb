@@ -45,15 +45,10 @@
           <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
           <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
         </div>
-        <div class="flex items-center gap-3">
-          <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full overflow-hidden">
-            <div class="h-full flex">
-              <div class="h-full bg-secondary" style="width: <%= item[:completed_percent] %>%"></div>
-              <div class="h-full bg-primary" style="width: <%= item[:started_percent] %>%"></div>
-            </div>
-          </div>
-         
-        </div>
+        <%= progressbar_component(segments: [
+            { value: item[:completed_percent], color: :secondary },
+            { value: item[:started_percent], color: :primary }
+          ]) %>
       </div>
       <%= link_to nudge_all_dashboards_path(course_id: item[:course].id), data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary flex-none" do %>
         <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
@@ -73,12 +68,10 @@
             <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
             <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
           </div>
-          <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full overflow-hidden">
-            <div class="h-full flex">
-              <div class="h-full bg-secondary" style="width: <%= item[:completed_percent] %>%"></div>
-              <div class="h-full bg-primary" style="width: <%= item[:started_percent] %>%"></div>
-            </div>
-          </div>
+          <%= progressbar_component(segments: [
+            { value: item[:completed_percent], color: :secondary },
+            { value: item[:started_percent], color: :primary }
+          ]) %>
         </div>
       <% end %>
     </div>

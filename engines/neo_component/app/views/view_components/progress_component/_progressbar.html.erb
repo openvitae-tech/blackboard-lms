@@ -1,12 +1,22 @@
-<% color_class = { primary: 'bg-primary', secondary: 'bg-secondary', danger: 'bg-danger' }.fetch(color, 'bg-primary') %>
+<% color_map = { primary: 'bg-primary', secondary: 'bg-secondary', danger: 'bg-danger' } %>
+<% color_css = color_map.fetch(color, 'bg-primary') %>
 <% if full_width %>
-  <div class="h-1.5 w-full bg-primary-light-100 rounded-full">
-    <div class="h-1.5 <%= color_class %> rounded-full" style="width: <%= fill %>%"></div>
+  <div class="relative h-1.5 w-full bg-primary-light-100 rounded-full overflow-hidden">
+    <% if segments.present? %>
+      <% reversed = segments.reverse %>
+      <% reversed.each_with_index do |seg, index| %>
+        <% width = segments[0..(segments.size - 1 - index)].sum { |s| s[:value] } %>
+        <div class="absolute left-0 top-0 h-full <%= color_map.fetch(seg[:color], 'bg-primary') %> rounded-r-full"
+             style="width: <%= width %>%"></div>
+      <% end %>
+    <% else %>
+      <div class="h-full <%= color_css %> rounded-full" style="width: <%= fill %>%"></div>
+    <% end %>
   </div>
 <% else %>
   <div class="flex w-[52px] md:w-[120px] h-[6px] md:h-2 border-none">
-    <div class="h-1 grow bg-primary-light-100 w-full h-full border border-primary-light-100 rounded md:rounded-lg">
-      <div class="h-1 <%= color_class %> h-full border rounded-sm md:rounded" style="width: <%= fill %>%"></div>
+    <div class="h-1.5 grow bg-primary-light-100 w-full border border-primary-light-100 rounded md:rounded-lg">
+      <div class="h-1.5 <%= color_css %> border rounded-sm md:rounded" style="width: <%= fill %>%"></div>
     </div>
   </div>
 <% end %>
