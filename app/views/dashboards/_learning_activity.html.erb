@@ -12,9 +12,7 @@
           <span class="general-text-md-medium">Quizzes Passed</span>
           <span class="general-text-sm-normal"><%= @dashboard.quizzes_passed %>/<%= @dashboard.total_quizzes %></span>
         </div>
-        <div class="h-1.5 w-full bg-primary-light-100 rounded-full">
-          <div class="h-1.5 bg-secondary rounded-full" style="width: <%= @dashboard.quiz_pass_rate %>%"></div>
-        </div>
+        <%= progressbar_component(value: @dashboard.quiz_pass_rate, color: :secondary) %>
         <p class="general-text-sm-normal text-letter-color-light mt-1"><%= @dashboard.quiz_pass_rate %>% Pass rate</p>
       </div>
     </div>
