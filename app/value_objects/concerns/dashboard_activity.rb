@@ -77,6 +77,25 @@ module DashboardActivity
       end
   end
 
+  def overdue_deadlines
+    Enrollment
+      .joins(:user, :course)
+      .where(users: { team_id: team_and_subteam_ids(@team) })
+      .where(course_completed: false)
+      .where('deadline_at IS NOT NULL AND deadline_at < ?', Time.current.beginning_of_day)
+      .includes(:user, :course)
+      .order(:deadline_at)
+      .group_by(&:course)
+      .map do |course, enrollments|
+        {
+          course:,
+          deadline_at: enrollments.first.deadline_at,
+          incomplete_count: enrollments.count,
+          days_overdue: (Date.current - enrollments.first.deadline_at.to_date).to_i
+        }
+      end
+  end
+
   def self_assigned_enrollments
     Enrollment
       .joins(:user, :course)
