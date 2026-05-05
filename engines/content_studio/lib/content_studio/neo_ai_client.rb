@@ -58,10 +58,11 @@ module ContentStudio
     def generation_status(course_id)
       response = get("/course/#{course_id}")
       data = JSON.parse(response.body)
-      structure_ready = data.fetch('modules', []).any?
-      stage_text = data['progress_text'].presence || STAGE_LABELS.fetch(data['stage'], data['stage'])
+      stage = data['stage']
+      completed = data.fetch('modules', []).any? || stage == 'log_course_completed'
+      stage_text = data['progress_text'].presence || STAGE_LABELS.fetch(stage, stage)
       GenerationStatus.new(
-        status: structure_ready ? 'COMPLETED' : 'PENDING',
+        status: completed ? 'COMPLETED' : 'PENDING',
         stage: stage_text,
         redirect_url: nil
       )
