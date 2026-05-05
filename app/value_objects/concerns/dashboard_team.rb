@@ -26,6 +26,7 @@ module DashboardTeam
     enrollment_stats(enrollments)
       .merge(user_quiz_stats(user))
       .merge(member_delta_stats(user, enrollments))
+      .merge(member_engagement_data(user))
       .merge(
         self_assigned_enrollments: enrollments.select { |e| e.assigned_by_id.nil? && !e.course_completed }.first(3),
         course_enrollments: enrollments.sort_by { |e| -e.progress }.first(5)
@@ -144,5 +145,66 @@ module DashboardTeam
                              .select { |e| e.user_id == user.id }
                              .sum { |e| e.data['time_spent'].to_i }
     current - previous
+  end
+
+  def member_engagement_data(user)
+    events = current_time_spent_events.select { |e| e.user_id == user.id }
+    series = member_daily_series(events, user)
+    total_hrs = member_total_hours(events, series)
+    days = [(@duration.end.to_date - @duration.begin.to_date).to_i, 1].max
+
+    {
+      engagement_series: series,
+      total_watch_hours: total_hrs,
+      daily_avg_watch_hours: (total_hrs / days).round(1),
+      member_peak_day: member_peak_day(events, series)
+    }
+  end
+
+  def member_daily_series(events, user)
+    series = initialize_member_series
+    fill_member_series(series, events)
+    return sample_member_series(user) if Rails.env.development? && series.values.all?(&:zero?)
+
+    series
+  end
+
+  def member_total_hours(events, series)
+    total_secs = events.sum { |e| e.data['time_spent'].to_i }
+    total_hrs = (total_secs / 3600.0).round(1)
+    return series.values.sum.round(1) if Rails.env.development? && total_hrs.zero?
+
+    total_hrs
+  end
+
+  def member_peak_day(events, series)
+    by_day = events.group_by { |e| e.created_at.to_date }
+    return member_peak_day_from_series(series) if Rails.env.development? && by_day.empty?
+    return nil if by_day.empty?
+
+    by_day.max_by { |_, d| d.sum { |e| e.data['time_spent'].to_i } }.first.strftime('%A')
+  end
+
+  def initialize_member_series
+    (@duration.begin.to_date..@duration.end.to_date).each_with_object({}) { |d, h| h[date_key(d)] = 0 }
+  end
+
+  def fill_member_series(series, events)
+    events.group_by { |e| e.created_at.to_date }.each do |date, day_events|
+      series[date_key(date)] = (day_events.sum { |e| e.data['time_spent'].to_i } / 3600.0).round(1)
+    end
+  end
+
+  def sample_member_series(user)
+    series = initialize_member_series
+    offset = user.id % DashboardEngagement::SAMPLE_HOURS.size
+    sample = DashboardEngagement::SAMPLE_HOURS
+    series.each_with_index { |(k, _), i| series[k] = sample[(i + offset) % sample.size] }
+    series
+  end
+
+  def member_peak_day_from_series(series)
+    peak_key = series.max_by { |_, v| v }&.first
+    (@duration.begin.to_date..@duration.end.to_date).find { |d| date_key(d) == peak_key }&.strftime('%A')
   end
 end
