@@ -32,6 +32,25 @@ module DashboardTeam
       )
   end
 
+  def team_member_status_counts
+    all = Rails.cache.fetch("#{base_cache_key}/team_members_progress/", expires_in: 5.minutes) do
+      User.where(team_id: team_and_subteam_ids(@team))
+          .where(role: User::LEARNER)
+          .active
+          .includes(:enrollments)
+          .map do |user|
+            total = user.enrollments.size
+            completed = user.enrollments.count(&:course_completed)
+            progress = total.zero? ? 0 : (completed.to_f / total * 100).round
+            { user:, courses: total, completed:, progress: }
+          end
+    end
+    {
+      completed: all.count { |m| m[:progress] == 100 },
+      behind: all.count { |m| m[:progress] < 20 }
+    }
+  end
+
   def team_members_progress
     User
       .where(team_id: team_and_subteam_ids(@team))

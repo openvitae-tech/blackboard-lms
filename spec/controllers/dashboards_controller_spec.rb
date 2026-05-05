@@ -17,6 +17,7 @@ RSpec.describe DashboardsController, type: :controller do
   describe 'GET #team_progress' do
     before do
       allow(mock_dashboard).to receive(:all_team_members_progress).and_return([])
+      allow(mock_dashboard).to receive(:team_member_status_counts).and_return({ completed: 0, behind: 0 })
     end
 
     it 'assigns @team_members with paginated results' do
@@ -262,7 +263,7 @@ RSpec.describe DashboardsController, type: :controller do
   end
 
   describe 'set_dashboard_params' do
-    before { allow(mock_dashboard).to receive_messages(all_team_members_progress: []) }
+    before { allow(mock_dashboard).to receive_messages(all_team_members_progress: [], team_member_status_counts: { completed: 0, behind: 0 }) }
 
     it 'uses current_user team_id when no team_id param is given' do
       get :team_progress

@@ -35,6 +35,7 @@ class DashboardsController < ApplicationController
     authorize :dashboard
     @dashboard = DashboardService.instance.build_dashboard_for(@team, @duration)
     @team_members = @dashboard.all_team_members_progress(params[:page], query: params[:query])
+    @member_counts = @dashboard.team_member_status_counts
   end
 
   def nudge_all

@@ -19,10 +19,10 @@
   </div>  
   <div class="flex items-center gap-4">
     <div class="flex items-center gap-2 bg-secondary-light px-1 py-0.5 rounded-[4px]">
-      <span class="general-text-sm-normal">Completed</span>
+      <span class="general-text-sm-normal"><%= @member_counts[:completed] %> Completed</span>
     </div>
     <div class="flex items-center gap-2 bg-danger-light px-1 py-0.5 rounded-[4px]">
-      <span class="general-text-sm-normal">Behind</span>
+      <span class="general-text-sm-normal"><%= @member_counts[:behind] %> Behind</span>
     </div>
   </div>
 </div>
