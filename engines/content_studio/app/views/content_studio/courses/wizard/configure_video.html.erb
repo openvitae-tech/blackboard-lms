@@ -27,6 +27,17 @@
       ) %>
     </div>
 
+    <%# Card: Video Generation — hidden, remove 'hidden' class to expose %>
+    <div class="hidden bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">
+      <p class="main-text-lg-semibold text-letter-color">Video Generation</p>
+      <%= input_checkbox_component(
+        form: form,
+        name: :no_video,
+        label: 'Skip video generation',
+        value: '1'
+      ) %>
+    </div>
+
     <%# Footer %>
     <div class="flex gap-3">
       <%= link_to new_course_path do %>
