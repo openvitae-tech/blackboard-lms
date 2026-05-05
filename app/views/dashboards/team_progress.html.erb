@@ -37,7 +37,7 @@
 
   <div class="flex flex-col divide-y divide-line-colour-light">
     <% @team_members.each do |member| %>
-      <%= link_to team_member_profile_dashboards_path(user_id: member[:user].id, duration: params[:duration], origin: request.path), class: "block", data: { turbo_frame: "_top" } do %>
+      <%= link_to team_member_profile_dashboards_path(user_id: member[:user].id, origin: request.path), class: "block", data: { turbo_frame: "_top" } do %>
       <div class="grid grid-cols-3 px-5 py-4 items-center">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-full bg-primary-light-100 flex items-center justify-center flex-none">

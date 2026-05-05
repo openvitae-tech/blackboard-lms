@@ -33,7 +33,7 @@ module DashboardsHelper
   end
 
   def duration_select_html_options
-    { data: { action: "change->custom-date#handleDurationChange" }, class: "cursor-pointer" }
+    { data: { action: 'change->custom-date#handleDurationChange' }, class: 'cursor-pointer' }
   end
 
   def duration_menu_for_member(team, member, origin: nil)

@@ -86,10 +86,11 @@ module DashboardTeam
 
   def member_delta_stats(user, enrollments)
     prev = previous_duration
-    certs = CourseCertificate.where(user:, issued_at: @duration).count
+    current_certs = CourseCertificate.where(user:, issued_at: @duration).count
+    prev_certs = CourseCertificate.where(user:, issued_at: prev).count
     {
-      certificates_count: certs,
-      certificates_delta: certs - CourseCertificate.where(user:, issued_at: prev).count,
+      certificates_count: current_certs,
+      certificates_delta: current_certs - prev_certs,
       courses_delta: member_courses_delta(enrollments, prev),
       avg_completion_delta: member_completion_delta(enrollments, prev),
       self_assigned_count: member_self_assigned_count(enrollments),

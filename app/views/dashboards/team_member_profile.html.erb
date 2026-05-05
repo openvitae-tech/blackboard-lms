@@ -41,7 +41,7 @@
 
       <%= render 'stat_card',
           title: 'Avg Completion',
-          icon_name: 'check-circle',
+          icon_name: 'check-badge',
           value: "#{@member_data[:avg_completion_percent]}%",
           delta: @member_data[:avg_completion_delta].to_i,
           delta_label: "#{@member_data[:avg_completion_delta].to_i.abs}%",
