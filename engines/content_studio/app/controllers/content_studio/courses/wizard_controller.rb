@@ -32,16 +32,18 @@ module ContentStudio
           'logo_url' => upload_logo(params[:logo]),
           'languages' => session.delete(:wizard_languages)
         }.compact
+        session[:wizard_no_video] = params[:no_video] == '1'
         redirect_to generating_course_path(id: :pending)
       end
 
       def start_generation
         file_urls = session.delete(:wizard_file_urls) || []
         branding = (session.delete(:wizard_branding) || {}).transform_keys(&:to_sym)
+        no_video = session.delete(:wizard_no_video) || false
 
         Rails.logger.info("[ContentStudio] start_generation files=#{file_urls.inspect}")
 
-        course_id = ApiClient.create_course(files: file_urls, branding: branding)
+        course_id = ApiClient.create_course(files: file_urls, branding: branding, no_video: no_video)
         render json: { course_id:, status_url: generation_status_url(id: course_id) }
       rescue Faraday::Error => e
         Rails.logger.error("[ContentStudio] start_generation failed: #{e.message}")
@@ -104,7 +106,10 @@ module ContentStudio
       end
 
       def blob_url(blob)
-        main_app.rails_blob_url(blob, host: ContentStudio.public_host)
+        uri = URI.parse(ContentStudio.public_host)
+        default_port = uri.scheme == 'https' ? 443 : 80
+        port = uri.port == default_port ? nil : uri.port
+        main_app.rails_storage_proxy_url(blob, host: uri.host, protocol: uri.scheme, port: port)
       end
     end
   end

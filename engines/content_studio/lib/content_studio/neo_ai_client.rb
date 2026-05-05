@@ -81,8 +81,8 @@ module ContentStudio
       lesson_data ? build_structure_lesson(lesson_data) : nil
     end
 
-    def create_course(files:, branding:)
-      response = post('/course/create-course', { files: files, branding: branding })
+    def create_course(files:, branding:, no_video: false)
+      response = post('/course/create-course', { files: files, branding: branding }, no_video: no_video)
       data = JSON.parse(response.body)
       data['course_id'] || data['id']
     end
@@ -111,9 +111,10 @@ module ContentStudio
       build_connection.get("#{API_PREFIX}#{path}", { partner_id: partner_id })
     end
 
-    def post(path, body)
+    def post(path, body, no_video: false)
       build_connection.post("#{API_PREFIX}#{path}", body) do |req|
         req.params[:partner_id] = partner_id
+        req.headers['no_video'] = 'true' if no_video
       end
     end
 

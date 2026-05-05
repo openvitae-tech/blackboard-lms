@@ -61,8 +61,8 @@ module ContentStudio
         client.get_lesson(course_id, lesson_id)
       end
 
-      def create_course(files:, branding:)
-        client.create_course(files: files, branding: branding)
+      def create_course(files:, branding:, no_video: false)
+        client.create_course(files: files, branding: branding, no_video: no_video)
       end
 
       def regenerate_scene(scene_id, narration:)
