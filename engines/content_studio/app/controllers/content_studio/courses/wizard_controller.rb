@@ -104,9 +104,7 @@ module ContentStudio
       end
 
       def blob_url(blob)
-        ActiveStorage::Current.set(url_options: { host: ContentStudio.public_host }) do
-          rails_blob_url(blob)
-        end
+        main_app.rails_blob_url(blob, host: ContentStudio.public_host)
       end
     end
   end
