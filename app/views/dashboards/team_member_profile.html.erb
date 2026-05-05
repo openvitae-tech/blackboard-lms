@@ -99,74 +99,107 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <%# Left column %>
       <div class="flex flex-col gap-4">
-        <%# Self-Assigned %>
-        <div class="bg-white rounded-xl border border-line-colour-light p-5">
-          <h2 class="main-text-lg-semibold mb-1">Self-Assigned</h2>
-          <p class="general-text-sm-normal text-letter-color-light mb-4">Courses enrolled on own initiative</p>
-          <div class="flex flex-col gap-3">
-            <% if @member_data[:self_assigned_enrollments].any? %>
-              <% @member_data[:self_assigned_enrollments].each do |enrollment| %>
-                <div class="flex items-center justify-between">
-                  <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
-                  <div class="relative w-10 h-10 flex-none">
-                    <svg viewBox="0 0 36 36" class="w-10 h-10 -rotate-90">
-                      <circle cx="18" cy="18" r="15.9" fill="none" stroke="#D9E3F5" stroke-width="3"/>
-                      <circle cx="18" cy="18" r="15.9" fill="none" stroke="#0041B9" stroke-width="3"
-                        stroke-dasharray="<%= enrollment.progress %>, 100"/>
-                    </svg>
-                    <span class="absolute inset-0 flex items-center justify-center general-text-xs-normal"><%= enrollment.progress %>%</span>
-                  </div>
-                </div>
-              <% end %>
-            <% else %>
-              <p class="general-text-sm-normal text-letter-color-light">No self-assigned courses</p>
-            <% end %>
-          </div>
+        <%# Self-Assigned — open by default %>
+        <div class="bg-white rounded-xl border border-line-colour-light">
+          <% sa_header = capture do %>
+            <h2 class="main-text-lg-semibold">Self-Assigned</h2>
+          <% end %>
+          <%= accordion_component(
+                header: sa_header,
+                wrapper_class: "",
+                icon_class: "md:hidden",
+                content_class: "md:!block"
+              ) do %>
+            <div class="px-5 pb-5">
+              <p class="general-text-sm-normal text-letter-color-light mb-4">Courses enrolled on own initiative</p>
+              <div class="flex flex-col gap-3">
+                <% if @member_data[:self_assigned_enrollments].any? %>
+                  <% @member_data[:self_assigned_enrollments].each do |enrollment| %>
+                    <div class="flex items-center justify-between">
+                      <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
+                      <div class="relative w-10 h-10 flex-none">
+                        <svg viewBox="0 0 36 36" class="w-10 h-10 -rotate-90">
+                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="#D9E3F5" stroke-width="3"/>
+                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="#0041B9" stroke-width="3"
+                            stroke-dasharray="<%= enrollment.progress %>, 100"/>
+                        </svg>
+                        <span class="absolute inset-0 flex items-center justify-center general-text-xs-normal"><%= enrollment.progress %>%</span>
+                      </div>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <p class="general-text-sm-normal text-letter-color-light">No self-assigned courses</p>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
         </div>
 
         <%# Learning Activity %>
-        <div class="bg-white rounded-xl border border-line-colour-light p-5">
-          <h2 class="main-text-lg-semibold mb-4">Learning Activity</h2>
-          <div class="flex items-center gap-2">
-            <div class="bg-secondary-light h-10 w-10 p-4 rounded-lg flex items-center justify-center flex-none">
-              <%= icon("puzzle-piece", css: "h-6 w-6 text-primary") %>
-            </div>
-            <div class="flex flex-col w-full gap-1">
-              <div class="flex justify-between w-full">
-                <span class="general-text-md-medium">Quizzes Passed</span>
-                <span class="general-text-sm-normal"><%= @member_data[:quizzes_passed] %>/<%= @member_data[:total_quizzes] %></span>
+        <div class="bg-white rounded-xl border border-line-colour-light">
+          <% la_header = capture do %>
+            <h2 class="main-text-lg-semibold">Learning Activity</h2>
+          <% end %>
+          <%= accordion_component(
+                header: la_header,
+                wrapper_class: "",
+                icon_class: "md:hidden",
+                content_class: "md:!block"
+              ) do %>
+            <div class="px-5 pb-5">
+              <div class="flex items-center gap-2">
+                <div class="bg-secondary-light h-10 w-10 p-4 rounded-lg flex items-center justify-center flex-none">
+                  <%= icon("puzzle-piece", css: "h-6 w-6 text-primary") %>
+                </div>
+                <div class="flex flex-col w-full gap-1">
+                  <div class="flex justify-between w-full">
+                    <span class="general-text-md-medium">Quizzes Passed</span>
+                    <span class="general-text-sm-normal"><%= @member_data[:quizzes_passed] %>/<%= @member_data[:total_quizzes] %></span>
+                  </div>
+                  <div class="h-1.5 w-full bg-primary-light-100 rounded-full">
+                    <div class="h-1.5 bg-secondary rounded-full" style="width: <%= @member_data[:quiz_pass_rate] %>%"></div>
+                  </div>
+                  <p class="general-text-sm-normal text-letter-color-light mt-1"><%= @member_data[:quiz_pass_rate] %>% Pass rate</p>
+                </div>
               </div>
-              <div class="h-1.5 w-full bg-primary-light-100 rounded-full">
-                <div class="h-1.5 bg-secondary rounded-full" style="width: <%= @member_data[:quiz_pass_rate] %>%"></div>
-              </div>
-              <p class="general-text-sm-normal text-letter-color-light mt-1"><%= @member_data[:quiz_pass_rate] %>% Pass rate</p>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
 
       <%# Right column %>
       <div class="flex flex-col gap-4">
         <%# Course Progress %>
-        <div class="bg-white rounded-xl border border-line-colour-light p-5">
-          <h2 class="main-text-lg-semibold mb-4">Course Progress</h2>
-          <div class="flex flex-col divide-y divide-line-colour-light">
-            <% @member_data[:course_enrollments].each do |enrollment| %>
-              <div class="py-3">
-                <div class="flex justify-between mb-1">
-                  <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
-                  <span class="general-text-sm-normal text-letter-color-light w-12 text-right"><%= enrollment.progress %>%</span>
-                </div>
-                <div class="h-1.5 bg-primary-light-100 rounded-full">
-                  <div class="h-1.5 rounded-full <%= enrollment.course_completed ? 'bg-secondary' : 'bg-primary' %>"
-                      style="width: <%= enrollment.progress %>%"></div>
-                </div>
+        <div class="bg-white rounded-xl border border-line-colour-light">
+          <% cp_header = capture do %>
+            <h2 class="main-text-lg-semibold">Course Progress</h2>
+          <% end %>
+          <%= accordion_component(
+                header: cp_header,
+                wrapper_class: "",
+                icon_class: "md:hidden",
+                content_class: "md:!block"
+              ) do %>
+            <div class="px-5 pb-5">
+              <div class="flex flex-col divide-y divide-line-colour-light">
+                <% @member_data[:course_enrollments].each do |enrollment| %>
+                  <div class="py-3">
+                    <div class="flex justify-between mb-1">
+                      <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
+                      <span class="general-text-sm-normal text-letter-color-light w-12 text-right"><%= enrollment.progress %>%</span>
+                    </div>
+                    <div class="h-1.5 bg-primary-light-100 rounded-full">
+                      <div class="h-1.5 rounded-full <%= enrollment.course_completed ? 'bg-secondary' : 'bg-primary' %>"
+                          style="width: <%= enrollment.progress %>%"></div>
+                    </div>
+                  </div>
+                <% end %>
+                <% if @member_data[:course_enrollments].empty? %>
+                  <p class="general-text-sm-normal text-letter-color-light py-4">No courses enrolled</p>
+                <% end %>
               </div>
-            <% end %>
-            <% if @member_data[:course_enrollments].empty? %>
-              <p class="general-text-sm-normal text-letter-color-light py-4">No courses enrolled</p>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

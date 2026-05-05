@@ -51,14 +51,14 @@
 
 <%= render 'dashboards/falling_behind' %>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-  <%# Left - Total Engagement + Deadlines %>
+  <%# Left column — Total Engagement, Deadlines, Recent Activity %>
   <div class="flex flex-col gap-4">
     <%= render 'dashboards/total_engagement' %>
     <%= render 'dashboards/deadlines' %>
     <%= render 'dashboards/recent_activity' %>
   </div>
 
-  <%# Right - Learning Activity + Self-Assigned %>
+  <%# Right column — Learning Activity, Self-Assigned, Started vs Completed, Team Progress %>
   <div class="flex flex-col gap-4">
     <%= render 'dashboards/learning_activity' %>
     <%= render 'dashboards/self_assigned' %>
