@@ -15,6 +15,26 @@ export default class extends Controller {
     if (this.itemTargets.length > 0) {
       this.loadScene(0)
     }
+    this.element.addEventListener('scene-video-ready', this.onSceneVideoReady)
+  }
+
+  disconnect() {
+    this.element.removeEventListener('scene-video-ready', this.onSceneVideoReady)
+  }
+
+  onSceneVideoReady = (event) => {
+    const item = event.target
+    const index = parseInt(item.dataset.sceneIndex, 10)
+    if (index !== this.currentIndexValue) return
+
+    const videoUrl = item.dataset.videoUrl
+    if (!videoUrl || !this.hasVideoTarget) return
+
+    this.videoTarget.src = videoUrl
+    this.videoTarget.classList.remove('hidden')
+    if (this.hasPlaceholderTarget) this.placeholderTarget.classList.add('hidden')
+    if (this.hasControlBarTarget) this.controlBarTarget.classList.remove('hidden')
+    this.updateRegenerateButton()
   }
 
   select(event) {
