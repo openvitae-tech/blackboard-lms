@@ -15,6 +15,10 @@ module ContentStudio
 
     private
 
+    def authenticate_user!
+      redirect_to main_app.new_login_path unless user_signed_in?
+    end
+
     def require_content_studio_access!
       redirect_to root_path unless ContentStudio.authorization_callback.call(try(:current_user))
     end
