@@ -2,7 +2,7 @@
 
 module ViewComponent
   module ProgressComponent
-    def progressbar_component(numerator: nil, denominator: nil, value: nil, color: :primary, segments: nil, full_width: nil)
+    def progressbar_component(numerator: nil, denominator: nil, value: nil, color: :primary, segments: nil, full_width: nil, animated: false, thin: false)
       fill = if segments
                nil
              elsif value
@@ -14,7 +14,7 @@ module ViewComponent
              end
       resolved_full_width = full_width.nil? ? (value.present? || segments.present?) : full_width
       render partial: 'view_components/progress_component/progressbar',
-             locals: { numerator:, denominator:, fill:, color:, segments:, full_width: resolved_full_width }
+             locals: { numerator:, denominator:, fill:, color:, segments:, full_width: resolved_full_width, animated:, thin: }
     end
   end
 end

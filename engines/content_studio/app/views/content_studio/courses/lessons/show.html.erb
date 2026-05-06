@@ -37,7 +37,9 @@
         <%= progressbar_component(
               numerator: scenes_with_video,
               denominator: [@lesson.scenes.size, 1].max,
-              full_width: true
+              full_width: true,
+              thin: true,
+              animated: has_pending
             ) %>
       </div>
       <% scenes = @lesson.scenes.presence || [] %>

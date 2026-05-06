@@ -118,4 +118,60 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       expect(rendered).to match(/src="[^"]*video_film[^"]*\.gif"/)
     end
   end
+
+  context 'when there are pending lessons' do
+    it 'renders the status card below the stepper' do
+      render
+      expect(rendered).to include('border-secondary-dark')
+      expect(rendered).to include('Generating your course')
+    end
+
+    it 'renders the animated progress bar in the status card' do
+      render
+      expect(rendered).to include('progressbar-animated')
+    end
+  end
+
+  context 'when progress_text is present and no pending lessons' do
+    before do
+      all_verified = ContentStudio::StructureModule.new(
+        id: 1, title: 'Airport Services',
+        lessons: [
+          ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'VERIFIED', scenes: [])
+        ]
+      )
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1, title: 'Airport Services Management', duration: 9240,
+                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil,
+                           progress_text: 'Generating module 2 of 3'
+                         ))
+    end
+
+    it 'renders the status card with the progress text' do
+      render
+      expect(rendered).to include('border-secondary-dark')
+      expect(rendered).to include('Generating module 2 of 3')
+    end
+  end
+
+  context 'when no pending lessons and no progress_text' do
+    before do
+      all_verified = ContentStudio::StructureModule.new(
+        id: 1, title: 'Airport Services',
+        lessons: [
+          ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'VERIFIED', scenes: [])
+        ]
+      )
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1, title: 'Airport Services Management', duration: 9240,
+                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil
+                         ))
+    end
+
+    it 'does not render the status card' do
+      render
+      expect(rendered).not_to include('border-secondary-dark')
+      expect(rendered).not_to include('progressbar-animated')
+    end
+  end
 end

@@ -1,4 +1,5 @@
 @import "directives.tailwind.css";
+@import "progressbar.tailwind.css";
 @import "buttons.tailwind.css";
 @import "typography.tailwind.css";
 @import "inputs.tailwind.css";
