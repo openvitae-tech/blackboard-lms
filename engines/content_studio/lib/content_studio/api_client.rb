@@ -69,6 +69,10 @@ module ContentStudio
         client.regenerate_scene(scene_id, narration: narration)
       end
 
+      def verify_lesson(lesson_id) # rubocop:disable Rails/Delegate
+        client.verify_lesson(lesson_id)
+      end
+
       private
 
       def client

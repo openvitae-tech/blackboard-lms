@@ -3,40 +3,25 @@
 require_relative '../../../../rails_helper'
 
 RSpec.describe 'content_studio/courses/lessons/show', type: :view do
-  let(:local_content_no_video) do
-    ContentStudio::LocalContent.new(
-      id: 1, lang: 'en', status: 'published', video_url: nil, video_published_at: nil
-    )
-  end
-
-  let(:local_content_with_video) do
-    ContentStudio::LocalContent.new(
-      id: 2, lang: 'en', status: 'published',
-      video_url: 'https://example-bucket.s3.amazonaws.com/lesson-1.mp4',
-      video_published_at: nil
-    )
-  end
-
   let(:scenes) do
     [
-      ContentStudio::Scene.new(id: 's1', timestamp: '0.00', narration: 'Scene one narration.', status: 'ready',
+      ContentStudio::Scene.new(id: 's1', timestamp: '0.00', narration: 'Scene one narration.', status: 'APPROVED',
                                video_url: nil),
-      ContentStudio::Scene.new(id: 's2', timestamp: '0.30', narration: 'Scene two narration.', status: 'ready',
+      ContentStudio::Scene.new(id: 's2', timestamp: '0.30', narration: 'Scene two narration.', status: 'APPROVED',
                                video_url: nil)
     ]
   end
 
   let(:lesson) do
-    ContentStudio::Lesson.new(
-      id: 1,
+    ContentStudio::StructureLesson.new(
+      id: '1',
       title: 'Introduction to Airport Services',
       description: 'This lesson introduces the core concepts of airport services management ' \
                    'including check-in procedures and passenger assistance.',
-      duration: 1800,
-      lesson_type: 'video',
-      rating: 4.8,
-      video_streaming_source: 'youtube',
-      local_contents: [local_content_no_video],
+      estimated_duration: 1800,
+      status: 'PENDING',
+      video_url: nil,
+      verified: false,
       scenes: scenes
     )
   end
@@ -79,9 +64,9 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
     expect(rendered).to include('Next')
   end
 
-  it 'renders the language from the first local content' do
+  it 'renders the language selector' do
     render
-    expect(rendered).to include('En')
+    expect(rendered).to include('English')
   end
 
   it 'renders the Script label' do
@@ -125,7 +110,7 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
   it 'renders scene items with scene id, status, and regenerate url data attributes' do
     render
     expect(rendered).to include('data-scene-id="s1"')
-    expect(rendered).to include('data-scene-status="ready"')
+    expect(rendered).to include('data-scene-status="APPROVED"')
     expect(rendered).to include('data-regenerate-url=')
   end
 
@@ -164,5 +149,46 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
   it 'renders the control bar with hover visibility class' do
     render
     expect(rendered).to include('group-hover:opacity-100')
+  end
+
+  context 'when lesson status is VIDEO_READY' do
+    let(:lesson) do
+      ContentStudio::StructureLesson.new(
+        id: '1', title: 'Introduction to Airport Services',
+        description: 'Desc', estimated_duration: 1800,
+        status: 'VIDEO_READY', video_url: nil, verified: false, scenes: scenes
+      )
+    end
+
+    it 'renders the Verify & Next button' do
+      render
+      expect(rendered).to include('Verify &amp; Next')
+    end
+
+    it 'renders the verify form targeting _top turbo frame' do
+      render
+      expect(rendered).to include('data-turbo-frame="_top"')
+    end
+  end
+
+  context 'when lesson status is VERIFIED' do
+    let(:lesson) do
+      ContentStudio::StructureLesson.new(
+        id: '1', title: 'Introduction to Airport Services',
+        description: 'Desc', estimated_duration: 1800,
+        status: 'VERIFIED', video_url: 'https://example.com/lesson.mp4', verified: true, scenes: scenes
+      )
+    end
+
+    it 'renders the verified icon and text' do
+      render
+      expect(rendered).to include('text-secondary')
+      expect(rendered).to include('Verified')
+    end
+
+    it 'does not render the Verify & Next form' do
+      render
+      expect(rendered).not_to include('Verify &amp; Next')
+    end
   end
 end
