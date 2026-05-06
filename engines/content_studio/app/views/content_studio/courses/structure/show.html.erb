@@ -13,10 +13,40 @@
   <% failed = @structure.stage.to_s.end_with?('_failed') %>
   <% has_pending = !failed && @structure.modules.flat_map(&:lessons).any? { |l| %w[PENDING WAITING].include?(l.status) } %>
   <turbo-frame id="course-structure">
-  <div class="flex gap-6 px-4"
+  <div class="flex flex-col gap-6 px-4"
        data-controller="collapsible-group structure-polling"
        data-structure-polling-pending-value="<%= has_pending %>">
-    <div class="flex-1 flex flex-col gap-6">
+
+    <%# Status card — below stepper, above modules %>
+    <% all_scenes = @structure.modules.flat_map(&:lessons).flat_map(&:scenes) %>
+    <% completed_scenes = all_scenes.count { |s| s.video_url.present? } %>
+    <% fill_pct = all_scenes.size > 0 ? (completed_scenes.to_f / all_scenes.size * 100).to_i : 0 %>
+    <% if has_pending || @structure.progress_text.present? %>
+      <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden">
+        <div class="flex items-center justify-between p-3">
+          <div class="flex items-center gap-2 min-w-0">
+            <%= image_tag 'image ai .gif', class: 'w-7 h-7 shrink-0', alt: '' %>
+            <span class="general-text-sm-normal text-letter-color truncate">
+              <%= @structure.progress_text.presence || 'Generating your course…' %>
+            </span>
+          </div>
+          <div class="flex items-center gap-1 flex-shrink-0 pl-3">
+            <span class="general-text-md-medium text-primary"><%= fill_pct %>%</span>
+            <%= icon 'check-circle', css: 'w-4 h-4 text-primary' %>
+          </div>
+        </div>
+        <%= progressbar_component(
+              numerator: completed_scenes,
+              denominator: [all_scenes.size, 1].max,
+              full_width: true,
+              animated: has_pending,
+              thin: true
+            ) %>
+      </div>
+    <% end %>
+
+    <div class="flex gap-6">
+      <div class="flex-1 flex flex-col gap-6">
       <% @structure.modules.each do |mod| %>
         <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4"
              data-controller="collapsible"
@@ -87,7 +117,7 @@
       </div>
     </div>
 
-    <div class="w-96 flex-shrink-0">
+      <div class="w-96 flex-shrink-0">
       <div class="bg-primary-light-50 border border-line-colour-light rounded-xl p-5 flex flex-col gap-5">
         <span class="main-text-md-semibold text-letter-color">Course Overview</span>
 
@@ -105,25 +135,6 @@
           </div>
         </div>
 
-        <% all_scenes = @structure.modules.flat_map(&:lessons).flat_map(&:scenes) %>
-        <% completed_scenes = all_scenes.count { |s| s.video_url.present? } %>
-        <div class="bg-white-light rounded-lg p-3 flex flex-col gap-2">
-          <div class="flex items-center justify-between">
-            <span class="general-text-md-medium text-letter-color">Progress</span>
-            <%= icon 'i-vector', css: 'w-4 h-4' %>
-          </div>
-          <%= progressbar_component(
-            numerator: completed_scenes,
-            denominator: [all_scenes.size, 1].max,
-            full_width: true
-          ) %>
-          <% if @structure.progress_text.present? %>
-            <p class="general-text-sm-medium text-letter-color">
-              <%= @structure.progress_text %><span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
-            </p>
-          <% end %>
-        </div>
-
         <div class="bg-white-light rounded-lg p-3 flex flex-col gap-3">
           <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
           <div class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
@@ -135,9 +146,8 @@
             </button>
           </div>
         </div>
-
-
-</div>
+      </div>
+      </div>
     </div>
   </div>
   </turbo-frame>
