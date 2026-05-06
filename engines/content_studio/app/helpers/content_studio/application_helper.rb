@@ -16,7 +16,7 @@ module ContentStudio
     end
 
     def studio_course_card(course, status)
-      course_card_component(
+      card = course_card_component(
         title: course.title,
         banner_url: course.thumbnail_url.presence,
         duration: format_duration(course.duration),
@@ -27,6 +27,7 @@ module ContentStudio
         progress: course.progress,
         badge: studio_badge(status)
       )
+      link_to(card, course_structure_path(id: course.id), class: 'block')
     end
 
     def lesson_status_label(status)

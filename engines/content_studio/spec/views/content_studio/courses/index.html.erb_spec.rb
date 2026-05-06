@@ -68,6 +68,11 @@ RSpec.describe 'content_studio/courses/index', type: :view do
     expect(rendered).to include('Pending')
   end
 
+  it 'wraps each course card in a link to its structure page' do
+    render
+    expect(rendered).to include('href="/content_studio/courses/1/structure"')
+  end
+
   context 'when a tab has no courses' do
     before do
       assign(:verified, [])

@@ -146,6 +146,21 @@
             </button>
           </div>
         </div>
+
+        <div class="flex gap-3">
+          <%= form_with url: discard_course_path(id: @structure.id), method: :delete, class: 'flex-1', data: { turbo_frame: '_top' } do |f| %>
+            <%= f.button class: 'w-full' do %>
+              <%= button_component(text: 'Discard Course', type: 'outline', colorscheme: 'danger',
+                                   html_options: { class: 'w-full' }) %>
+            <% end %>
+          <% end %>
+          <%= form_with url: save_course_path(id: @structure.id), method: :patch, class: 'flex-1' do |f| %>
+            <%= f.button class: 'w-full' do %>
+              <%= button_component(text: 'Save Course', type: 'solid', colorscheme: 'primary',
+                                   html_options: { class: 'w-full' }) %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
       </div>
     </div>
