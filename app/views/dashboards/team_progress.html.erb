@@ -44,21 +44,25 @@
         <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.progress") %></span>
       </div>
       <div class="flex flex-col divide-y divide-line-colour-light">
-        <% @sub_teams.each do |sub_team| %>
-          <%= link_to dashboard_path(team_id: sub_team[:id], duration: params[:duration]),
-              class: "block px-5",
-              data: { turbo_frame: "_top" } do %>
-            <div class="grid grid-cols-3 py-4 items-center">
-              <p class="main-text-sm-medium line-clamp-1"><%= sub_team[:name] %></p>
-              <span class="general-text-sm-normal"><%= t("dashboard.team_progress.members_count", count: sub_team[:members_count]) %></span>
-              <div class="flex items-center gap-3">
-                <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
-                  <div class="h-1.5 bg-primary rounded-full" style="width: <%= sub_team[:progress] %>%"></div>
+        <% if @sub_teams.any? %>
+          <% @sub_teams.each do |sub_team| %>
+            <%= link_to dashboard_path(team_id: sub_team[:id], duration: params[:duration]),
+                class: "block px-5",
+                data: { turbo_frame: "_top" } do %>
+              <div class="grid grid-cols-3 py-4 items-center">
+                <p class="main-text-sm-medium line-clamp-1"><%= sub_team[:name] %></p>
+                <span class="general-text-sm-normal"><%= t("dashboard.team_progress.members_count", count: sub_team[:members_count]) %></span>
+                <div class="flex items-center gap-3">
+                  <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
+                    <div class="h-1.5 bg-primary rounded-full" style="width: <%= sub_team[:progress] %>%"></div>
+                  </div>
+                  <span class="general-text-xs-normal text-letter-color-light w-8"><%= sub_team[:progress] %>%</span>
                 </div>
-                <span class="general-text-xs-normal text-letter-color-light w-8"><%= sub_team[:progress] %>%</span>
               </div>
-            </div>
+            <% end %>
           <% end %>
+        <% else %>
+          <p class="general-text-sm-normal text-letter-color-light text-center py-8"><%= t("dashboard.team_progress.no_teams_found") %></p>
         <% end %>
       </div>
     </div>
@@ -71,6 +75,9 @@
         <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.progress") %></span>
       </div>
       <div class="flex flex-col divide-y divide-line-colour-light">
+        <% if @team_members.empty? %>
+          <p class="general-text-sm-normal text-letter-color-light text-center py-8"><%= t("dashboard.team_progress.no_members_found", query: params[:query]) %></p>
+        <% end %>
         <% @team_members.each do |member| %>
           <%= link_to team_member_profile_dashboards_path(user_id: member[:user].id, origin: request.fullpath), class: "block", data: { turbo_frame: "_top" } do %>
             <div class="grid grid-cols-3 px-5 py-4 items-center">

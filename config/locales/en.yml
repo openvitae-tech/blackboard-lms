@@ -334,6 +334,8 @@ en:
         progress: "Progress"
         team: "Team"
         members: "Members"
+      no_members_found: "No members found for \"%{query}\"."
+      no_teams_found: "No teams found."
     course_progress:
       title: "Course Progress"
       empty: "No courses enrolled"
