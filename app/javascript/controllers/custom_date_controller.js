@@ -28,11 +28,18 @@ export default class extends Controller {
 
     // Track value before user opens the dropdown so we know the "previous" state
     this._previousSelectValue = select.value
-    select.addEventListener("mousedown", () => {
+    this._onDurationSelectMouseDown = () => {
       this._previousSelectValue = this._durationSelect.value
-    })
+    }
+    select.addEventListener("mousedown", this._onDurationSelectMouseDown)
 
     this._cancelRestoreValue = select.value
+  }
+
+  disconnect() {
+    if (this._durationSelect && this._onDurationSelectMouseDown) {
+      this._durationSelect.removeEventListener("mousedown", this._onDurationSelectMouseDown)
+    }
   }
 
   open(event) {

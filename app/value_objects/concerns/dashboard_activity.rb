@@ -122,7 +122,7 @@ module DashboardActivity
   def enrollment_row(course, course_enrollments)
     total     = course_enrollments.count
     completed = course_enrollments.count { |e| e.course_completed && @duration.cover?(e.updated_at) }
-    started   = course_enrollments.count { |e| e.course_started_at.present? && !e.course_completed }
+    started   = course_enrollments.count { |e| e.course_started_at.present? && !e.course_completed && @duration.cover?(e.course_started_at) }
     {
       course:, total:, completed:, started:,
       last_activity_at: last_activity_for(course_enrollments),

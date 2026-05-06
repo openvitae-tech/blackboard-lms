@@ -164,7 +164,7 @@ RSpec.describe DashboardsController, type: :controller do
 
       it 'sends notifications only to that course incomplete learners' do
         post :nudge_all, params: { team_id: team.id, course_id: course.id }
-        expect(NotificationService).to have_received(:notify).with(target_learner, anything, anything, anything)
+        expect(NotificationService).to have_received(:notify).with(target_learner, anything, anything, link: anything)
       end
 
       it 'sends deadline reminder mail to each learner' do
@@ -195,7 +195,7 @@ RSpec.describe DashboardsController, type: :controller do
         allow(mock_dashboard).to receive(:falling_behind_learners)
           .and_return([falling_behind_enrollment])
         post :nudge_all, params: { team_id: team.id }
-        expect(NotificationService).to have_received(:notify).with(target_learner, anything, anything, anything)
+        expect(NotificationService).to have_received(:notify).with(target_learner, anything, anything, link: anything)
       end
 
       it 'redirects to dashboards_path with a success flash' do

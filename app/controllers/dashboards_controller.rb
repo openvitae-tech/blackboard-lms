@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DashboardsController < ApplicationController
-  before_action :set_dashboard_params, only: %i[index nudge_all appreciate_member team_progress team_member_profile started_vs_completed recent_activity]
+  before_action :set_dashboard_params, only: %i[index nudge_all appreciate_member team_progress team_member_profile started_vs_completed recent_activity nudge_user]
 
   def index
     authorize :dashboard
@@ -12,7 +12,7 @@ class DashboardsController < ApplicationController
 
   def team_member_profile
     authorize :dashboard
-    @member = User.find(params[:user_id])
+    @member = User.where(team_id: @team.team_hierarchy_ids).find(params[:user_id])
     @dashboard = DashboardService.instance.build_dashboard_for(@team, @duration)
     @member_data = @dashboard.team_member_data(@member)
   end
@@ -73,7 +73,7 @@ class DashboardsController < ApplicationController
 
   def appreciate_member
     authorize :dashboard
-    @member = User.find(params[:user_id])
+    @member = User.where(team_id: @team.team_hierarchy_ids).find(params[:user_id])
     @banner_type = params[:banner_type]
 
     return unless request.post?
@@ -88,7 +88,9 @@ class DashboardsController < ApplicationController
   def nudge_user
     authorize :dashboard
 
-    enrollment = Enrollment.find(params[:enrollment_id])
+    enrollment = Enrollment.joins(:user)
+                           .where(users: { team_id: @team.team_hierarchy_ids })
+                           .find(params[:enrollment_id])
     UserMailer.course_deadline_reminder(enrollment.user, enrollment.course, enrollment.deadline_at).deliver_later
     NotificationService.notify(
       enrollment.user,
@@ -103,12 +105,27 @@ class DashboardsController < ApplicationController
 
   private
 
+  def accessible_teams_for(user)
+    if user.is_admin?
+      Team.all
+    else
+      Team.where(id: user.team.team_hierarchy_ids)
+    end
+  end
+
   def set_dashboard_params
     team_id = params[:team_id].present? ? params[:team_id] : current_user.team_id
-    @team = Team.includes(sub_teams: :sub_teams).find(team_id)
+    @team = accessible_teams_for(current_user).includes(sub_teams: :sub_teams).find(team_id)
 
     @duration = if params[:duration] == 'custom' && params[:from_date].present? && params[:to_date].present?
-                  Date.parse(params[:from_date]).beginning_of_day..Date.parse(params[:to_date]).end_of_day
+                  begin
+                    parsed_from = Date.parse(params[:from_date])
+                    parsed_to   = Date.parse(params[:to_date])
+                    parsed_from, parsed_to = parsed_to, parsed_from if parsed_from > parsed_to
+                    parsed_from.beginning_of_day..parsed_to.end_of_day
+                  rescue ArgumentError
+                    ::Dashboard::VALID_DURATIONS.first[0]
+                  end
                 elsif params[:duration].present?
                   params[:duration]
                 else

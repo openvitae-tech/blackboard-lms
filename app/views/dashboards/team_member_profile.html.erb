@@ -1,12 +1,8 @@
+<% safe_origin = safe_origin_path(params[:origin]) %>
 <div class="relative" data-controller="custom-date">
   <div class="relative -mx-5 md:-mx-16 px-5 md:px-16 py-5 bg-primary-light-100 -mt-5 h-[148px] flex items-start justify-between">
     <div class="flex items-center gap-3">
-      <%= render 'shared/components/back_button', back_link: params[:origin].presence || dashboards_path %>
-      <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-none">
-        <span class="main-text-lg-semibold text-primary">
-          <%= @member.name.split.first(2).map { |n| n[0] }.join.upcase %>
-        </span>
-      </div>
+      <%= render 'shared/components/back_button', back_link: safe_origin || dashboards_path %>
       <div>
         <h2 class="main-text-lg-semibold"><%= @member.display_name %></h2>
         <p class="general-text-sm-normal text-letter-color-light">
@@ -20,8 +16,8 @@
     <div class="z-20">
       <%= dropdown_component(
         name: "duration",
-        options: duration_select_options(@team, member: @member, origin: params[:origin]),
-        value: duration_select_value(@team, member: @member, origin: params[:origin]),
+        options: duration_select_options(@team, member: @member, origin: safe_origin),
+        value: duration_select_value(@team, member: @member, origin: safe_origin),
         html_options: duration_select_html_options
       ) %>
     </div>
@@ -245,6 +241,6 @@
         </div>
       </div>
     </div>
-    <%= render 'dashboards/custom_date_modal', action_url: team_member_profile_dashboards_path, user_id: @member.id, origin: params[:origin] %>
+    <%= render 'dashboards/custom_date_modal', action_url: team_member_profile_dashboards_path, user_id: @member.id, origin: safe_origin %>
   </div>
 </div>

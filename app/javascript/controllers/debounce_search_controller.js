@@ -5,6 +5,11 @@ export default class extends Controller {
     this.timeout = null
   }
 
+  disconnect() {
+    clearTimeout(this.timeout)
+    this.timeout = null
+  }
+
   search() {
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
