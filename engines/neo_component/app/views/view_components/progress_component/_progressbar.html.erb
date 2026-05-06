@@ -1,5 +1,12 @@
-<div class="flex h-[6px] md:h-2 border-none <%= full_width ? 'w-full' : 'w-[52px] md:w-[120px]' %>">
-  <div class="h-1 grow bg-primary-light-100 w-full h-full border border-primary-light-100 rounded md:rounded-lg">
-    <div class="h-1 bg-primary h-full border rounded-sm md:rounded" style="width: <%= fill %>%"></div>
+<% if thin %>
+  <div class="h-[3px] bg-primary-light-100 <%= full_width ? 'w-full' : 'w-[52px] md:w-[120px]' %>">
+    <div class="h-full rounded <%= animated ? 'progressbar-animated' : 'bg-primary' %>"
+         style="width: <%= fill %>%"></div>
   </div>
-</div>
+<% else %>
+  <div class="flex h-[6px] md:h-2 border-none <%= full_width ? 'w-full' : 'w-[52px] md:w-[120px]' %>">
+    <div class="h-1 grow bg-primary-light-100 w-full h-full border border-primary-light-100 rounded md:rounded-lg">
+      <div class="h-1 h-full border rounded-sm md:rounded <%= animated ? 'progressbar-animated' : 'bg-primary' %>" style="width: <%= fill %>%"></div>
+    </div>
+  </div>
+<% end %>

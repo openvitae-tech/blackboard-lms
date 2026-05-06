@@ -373,8 +373,25 @@ notification_bar(
 progressbar_component(
   numerator:,
   denominator:,
-  full_width: false   # true stretches to w-full; default is w-[52px] md:w-[120px]
+  full_width: false,  # true stretches to w-full; default is w-[52px] md:w-[120px]
+  thin: false,        # true renders a 3px bar (no border); default is 6-8px with border
+  animated: false     # true applies a flowing blue→cyan→teal→green gradient; width still reflects fill %
 )
+```
+
+**Variants**
+```ruby
+# Standard
+progressbar_component(numerator: 30, denominator: 100)
+
+# Full width
+progressbar_component(numerator: 30, denominator: 100, full_width: true)
+
+# Thin (3 px, no border) — use inside cards or compact layouts
+progressbar_component(numerator: 30, denominator: 100, full_width: true, thin: true)
+
+# Thin + animated gradient — use while generation is in progress
+progressbar_component(numerator: 30, denominator: 100, full_width: true, thin: true, animated: true)
 ```
 
 ---
