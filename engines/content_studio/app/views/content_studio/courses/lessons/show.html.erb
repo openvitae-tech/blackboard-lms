@@ -245,15 +245,27 @@
               disabled: @next_lesson_id.nil?
             ) %>
       <% end %>
-      <%= link_to @next_lesson_id ? course_lesson_path(@course_id, @next_lesson_id) : '#' do %>
-        <%= button_component(
-              text: 'Verify & Next',
-              type: 'solid',
-              size: 'md',
-              colorscheme: 'secondary',
-              icon_name: 'chevron-right',
-              icon_position: 'right'
-            ) %>
+      <% if @lesson.status == 'VERIFIED' %>
+        <div class="flex items-center gap-2">
+          <%= icon 'check-badge-solid', css: 'w-8 h-8 text-secondary' %>
+          <span class="main-text-lg-semibold text-secondary">Verified</span>
+        </div>
+      <% else %>
+        <%= form_with url: verify_lesson_path(@course_id, @lesson.id), method: :post,
+                      data: { turbo_frame: '_top' } do |f| %>
+          <%= f.hidden_field :next_lesson_id, value: @next_lesson_id %>
+          <%= f.button disabled: @lesson.status != 'VIDEO_READY' do %>
+            <%= button_component(
+                  text: 'Verify & Next',
+                  type: 'solid',
+                  size: 'md',
+                  colorscheme: 'secondary',
+                  icon_name: 'chevron-right',
+                  icon_position: 'right',
+                  disabled: @lesson.status != 'VIDEO_READY'
+                ) %>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
     <span></span>

@@ -7,8 +7,8 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     ContentStudio::StructureModule.new(
       id: 1, title: 'Airport Services',
       lessons: [
-        ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'verified', scenes: []),
-        ContentStudio::StructureLesson.new(id: 2, title: 'Rules and regulations', status: 'video_ready', scenes: [])
+        ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'VERIFIED', scenes: []),
+        ContentStudio::StructureLesson.new(id: 2, title: 'Rules and regulations', status: 'VIDEO_READY', scenes: [])
       ]
     )
   end
@@ -17,7 +17,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     ContentStudio::StructureModule.new(
       id: 2, title: 'Wine Serving',
       lessons: [
-        ContentStudio::StructureLesson.new(id: 3, title: 'Lesson name', status: 'in_process', scenes: [])
+        ContentStudio::StructureLesson.new(id: 3, title: 'Lesson name', status: 'PENDING', scenes: [])
       ]
     )
   end
@@ -56,11 +56,11 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('Rules and regulations')
   end
 
-  it 'renders lesson status chips' do
+  it 'renders lesson status icons' do
     render
-    expect(rendered).to include('Verified')
-    expect(rendered).to include('Video ready')
-    expect(rendered).to include('In Process')
+    expect(rendered).to include('w-6 h-6 text-secondary flex-shrink-0')
+    expect(rendered).to include('w-6 h-6 text-primary flex-shrink-0')
+    expect(rendered).to include('animate-spin')
   end
 
   it 'renders course name in sidebar' do
@@ -113,9 +113,9 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
   end
 
   context 'when thumbnail_url is absent' do
-    it 'renders the placeholder image in the thumbnail section' do
+    it 'renders the video_film gif as fallback in the thumbnail section' do
       render
-      expect(rendered).to include('placeholder')
+      expect(rendered).to match(/src="[^"]*video_film[^"]*\.gif"/)
     end
   end
 end

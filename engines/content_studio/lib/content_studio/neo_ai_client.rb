@@ -92,6 +92,13 @@ module ContentStudio
       post('/course/regenerate-scene', { scene_id: scene_id, narration: narration })
     end
 
+    def verify_lesson(lesson_id)
+      build_connection.post("#{API_PREFIX}/course/verify-lesson") do |req|
+        req.params[:lesson_id] = lesson_id
+        req.params[:partner_id] = partner_id
+      end
+    end
+
     # Stubs — no NeoAI equivalent for these BlackboardLMS-specific calls
     def current_user = User.new(id: nil, name: nil, email: nil, role: nil)
     def list_avatars = []
@@ -239,24 +246,27 @@ module ContentStudio
 
     def build_structure_lesson(data)
       scenes = (data['scenes'] || []).map { |s| build_scene(s) }
+      verified = data['verified'] == true
+      video_url = data['video_url']
       StructureLesson.new(
         id: data['id'],
         title: data['title'],
         description: data['description'],
         summary: data['summary'],
         estimated_duration: data['estimated_duration'],
-        status: derive_lesson_status(scenes),
-        video_url: data['video_url'],
+        status: derive_lesson_status(scenes, video_url: video_url, verified: verified),
+        video_url: video_url,
+        verified: verified,
         scenes: scenes
       )
     end
 
-    def derive_lesson_status(scenes)
+    def derive_lesson_status(scenes, video_url:, verified:)
       return 'WAITING' if scenes.empty?
-      return 'COMPLETED' if scenes.all? { |s| s.video_url.present? }
-      return 'PENDING' if scenes.any? { |s| s.video_url.blank? && s.status == 'PENDING' }
+      return 'VERIFIED' if verified && video_url.present?
+      return 'VIDEO_READY' if scenes.all? { |s| s.video_url.present? }
 
-      'WAITING'
+      'PENDING'
     end
   end
 end

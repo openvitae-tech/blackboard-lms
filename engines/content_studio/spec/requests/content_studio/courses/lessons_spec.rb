@@ -3,22 +3,15 @@
 require_relative '../../../rails_helper'
 
 RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
-  let(:local_content) do
-    ContentStudio::LocalContent.new(
-      id: 1, lang: 'en', status: 'published', video_url: nil, video_published_at: nil
-    )
-  end
-
   let(:lesson) do
-    ContentStudio::Lesson.new(
-      id: 1,
+    ContentStudio::StructureLesson.new(
+      id: '1',
       title: 'Introduction to Airport Services',
       description: 'This lesson introduces the core concepts of airport services management.',
-      duration: 1800,
-      lesson_type: 'video',
-      rating: 4.8,
-      video_streaming_source: 'youtube',
-      local_contents: [local_content],
+      estimated_duration: 1800,
+      status: 'PENDING',
+      video_url: nil,
+      verified: false,
       scenes: []
     )
   end
@@ -27,15 +20,15 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
     ContentStudio::CourseStructure.new(
       id: '1',
       title: 'Test Course',
-      duration: 3600,
       modules: [
         ContentStudio::StructureModule.new(
           id: 'm1',
           title: 'Module 1',
           lessons: [
             ContentStudio::StructureLesson.new(id: '1', title: 'Introduction to Airport Services',
-                                               status: 'in_process'),
-            ContentStudio::StructureLesson.new(id: '2', title: 'Rules and Regulations', status: 'in_process')
+                                               status: 'PENDING', scenes: []),
+            ContentStudio::StructureLesson.new(id: '2', title: 'Rules and Regulations',
+                                               status: 'PENDING', scenes: [])
           ]
         )
       ],
