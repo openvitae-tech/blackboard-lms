@@ -61,7 +61,7 @@ module DashboardsHelper
   end
 
   def safe_origin_path(origin)
-    return nil unless origin.present?
+    return nil if origin.blank?
     return nil unless origin.start_with?('/') && !origin.start_with?('//')
     return nil if origin.include?(':')
 

@@ -1,82 +1,118 @@
+<% safe_origin = safe_origin_path(params[:origin]) %>
 <div class="flex justify-between">
   <%= render 'shared/components/bread_crumbs', links: [['Dashboard', dashboards_path], [t("dashboard.team_progress.title"), nil]] %>
-  <%= form_with url: team_progress_dashboards_path, method: :get,
-                data: { controller: "debounce-search", turbo_frame: "team_members_results" } do |f| %>
-    <%= hidden_field_tag :duration, params[:duration] %>
-    <div class="relative">
-      <%= icon("magnifying-glass", css: "h-5 w-5 text-letter-color-light absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none") %>
-      <%= f.text_field :query, value: params[:query], placeholder: t("dashboard.team_progress.search_placeholder"),
-          class: "border border-line-colour-light rounded-lg pl-9 pr-3 py-2 main-text-md-normal focus:outline-none focus:border-primary w-[340px]",
-          data: { action: "input->debounce-search#search" } %>
-    </div>
+  <% if @tab == 'members' %>
+    <%= form_with url: team_progress_dashboards_path, method: :get,
+                  data: { controller: "debounce-search", turbo_frame: "team_progress_results" } do |f| %>
+      <%= hidden_field_tag :duration, params[:duration] %>
+      <%= hidden_field_tag :team_id, params[:team_id] if params[:team_id].present? %>
+      <%= hidden_field_tag :origin, params[:origin] if params[:origin].present? %>
+      <%= hidden_field_tag :tab, 'members' %>
+      <div class="relative">
+        <%= icon("magnifying-glass", css: "h-5 w-5 text-letter-color-light absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none") %>
+        <%= f.text_field :query, value: params[:query], placeholder: t("dashboard.team_progress.search_placeholder"),
+            class: "border border-line-colour-light rounded-lg pl-9 pr-3 py-2 main-text-md-normal focus:outline-none focus:border-primary w-[340px]",
+            data: { action: "input->debounce-search#search" } %>
+      </div>
+    <% end %>
   <% end %>
 </div>
 
 <div class="flex items-center justify-between my-6 px-1">
   <div class="flex flex-row gap-3">
-    <%= render 'shared/components/back_button', back_link: dashboards_path %>
+    <%= render 'shared/components/back_button', back_link: safe_origin || dashboards_path %>
     <h2 class="main-text-lg-semibold"><%= t("dashboard.team_progress.title") %></h2>
   </div>
-  <div class="flex items-center gap-4">
-    <div class="flex items-center gap-2 bg-secondary-light px-1 py-0.5 rounded-[4px]">
-      <span class="general-text-sm-normal"><%= t("dashboard.team_progress.member_counts.completed", count: @member_counts[:completed]) %></span>
-    </div>
-    <div class="flex items-center gap-2 bg-danger-light px-1 py-0.5 rounded-[4px]">
-      <span class="general-text-sm-normal"><%= t("dashboard.team_progress.member_counts.behind", count: @member_counts[:behind]) %></span>
-    </div>
-  </div>
-</div>
-
-<%= turbo_frame_tag "team_members_results", data: { turbo_action: "advance" } do %>
-<div class="bg-white rounded-xl border border-line-colour-light">
-  <div class="grid grid-cols-3 px-5 py-3 border-b border-line-colour-light">
-    <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.member") %></span>
-    <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.courses") %></span>
-    <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.progress") %></span>
-  </div>
-
-  <div class="flex flex-col divide-y divide-line-colour-light">
-    <% @team_members.each do |member| %>
-      <%= link_to team_member_profile_dashboards_path(user_id: member[:user].id, origin: request.path), class: "block", data: { turbo_frame: "_top" } do %>
-      <div class="grid grid-cols-3 px-5 py-4 items-center">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-primary-light-100 flex items-center justify-center flex-none">
-            <span class="general-text-xs-normal text-primary font-medium">
-              <%= member[:user].name.split.first(2).map { |n| n[0] }.join.upcase %>
-            </span>
-          </div>
-          <div>
-            <p class="main-text-sm-medium"><%= member[:user].display_name %></p>
-            <p class="general-text-xs-normal text-letter-color-light"><%= member[:user].team&.name %></p>
-          </div>
-        </div>
-        <span class="general-text-sm-normal"><%= member[:completed] %>/<%= member[:courses] %></span>
-        <div class="flex items-center gap-3">
-          <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
-            <div class="h-1.5 rounded-full <%= member[:progress] == 100 ? 'bg-secondary' : member[:progress] < 20 ? 'bg-danger' : 'bg-primary' %>"
-                 style="width: <%= member[:progress] %>%"></div>
-          </div>
-          <span class="general-text-xs-normal text-letter-color-light w-8"><%= member[:progress] %>%</span>
-          <div class="w-14 flex items-center justify-center">
-            <% if member[:progress] == 100 %>
-              <%= icon("check-circle-solid", css: "h-5 w-5 text-secondary") %>
-            <% elsif member[:progress] < 20 %>
-              <div class="h-6 w-6 bg-primary-light-100 flex justify-center items-center rounded-full ">
-                <%= icon("chat-bubble-bottom-center-text", css: "h-3 w-3 text-primary") %>
-              </div>
-            <% else %>
-              <%= icon("clock", css: "h-4 w-4 text-primary") %>
-            <% end %>
-          </div>
-        </div>
+  <% if @tab != 'teams' %>
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 bg-secondary-light px-1 py-0.5 rounded-[4px]">
+        <span class="general-text-sm-normal"><%= t("dashboard.team_progress.member_counts.completed", count: @member_counts[:completed]) %></span>
       </div>
-      <% end %>
-    <% end %>
-  </div>
+      <div class="flex items-center gap-2 bg-danger-light px-1 py-0.5 rounded-[4px]">
+        <span class="general-text-sm-normal"><%= t("dashboard.team_progress.member_counts.behind", count: @member_counts[:behind]) %></span>
+      </div>
+    </div>
+  <% end %>
 </div>
 
-<div class="flex justify-end gap-3 mt-4">
-  <%= render 'shared/pagination/prev', items: @team_members %>
-  <%= render 'shared/pagination/next', items: @team_members %>
-</div>
+<%= turbo_frame_tag "team_progress_results", data: { turbo_action: "advance" } do %>
+  <% if @tab == 'teams' %>
+    <div class="bg-white rounded-xl border border-line-colour-light">
+      <div class="grid grid-cols-3 px-5 py-3 border-b border-line-colour-light">
+        <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.team") %></span>
+        <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.members") %></span>
+        <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.progress") %></span>
+      </div>
+      <div class="flex flex-col divide-y divide-line-colour-light">
+        <% @sub_teams.each do |sub_team| %>
+          <%= link_to dashboard_path(team_id: sub_team[:id], duration: params[:duration]),
+              class: "block px-5",
+              data: { turbo_frame: "_top" } do %>
+            <div class="grid grid-cols-3 py-4 items-center">
+              <p class="main-text-sm-medium line-clamp-1"><%= sub_team[:name] %></p>
+              <span class="general-text-sm-normal"><%= t("dashboard.team_progress.members_count", count: sub_team[:members_count]) %></span>
+              <div class="flex items-center gap-3">
+                <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
+                  <div class="h-1.5 bg-primary rounded-full" style="width: <%= sub_team[:progress] %>%"></div>
+                </div>
+                <span class="general-text-xs-normal text-letter-color-light w-8"><%= sub_team[:progress] %>%</span>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+  <% else %>
+    <div class="bg-white rounded-xl border border-line-colour-light">
+      <div class="grid grid-cols-3 px-5 py-3 border-b border-line-colour-light">
+        <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.member") %></span>
+        <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.courses") %></span>
+        <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.progress") %></span>
+      </div>
+      <div class="flex flex-col divide-y divide-line-colour-light">
+        <% @team_members.each do |member| %>
+          <%= link_to team_member_profile_dashboards_path(user_id: member[:user].id, origin: request.fullpath), class: "block", data: { turbo_frame: "_top" } do %>
+            <div class="grid grid-cols-3 px-5 py-4 items-center">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-primary-light-100 flex items-center justify-center flex-none">
+                  <span class="general-text-xs-normal text-primary font-medium">
+                    <%= member[:user].name.split.first(2).map { |n| n[0] }.join.upcase %>
+                  </span>
+                </div>
+                <div>
+                  <p class="main-text-sm-medium"><%= member[:user].display_name %></p>
+                  <p class="general-text-xs-normal text-letter-color-light"><%= member[:user].team&.name %></p>
+                </div>
+              </div>
+              <span class="general-text-sm-normal"><%= member[:completed] %>/<%= member[:courses] %></span>
+              <div class="flex items-center gap-3">
+                <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
+                  <div class="h-1.5 rounded-full <%= member[:progress] == 100 ? 'bg-secondary' : member[:progress] < 20 ? 'bg-danger' : 'bg-primary' %>"
+                       style="width: <%= member[:progress] %>%"></div>
+                </div>
+                <span class="general-text-xs-normal text-letter-color-light w-8"><%= member[:progress] %>%</span>
+                <div class="w-14 flex items-center justify-center">
+                  <% if member[:progress] == 100 %>
+                    <%= icon("check-circle-solid", css: "h-5 w-5 text-secondary") %>
+                  <% elsif member[:progress] < 20 %>
+                    <div class="h-6 w-6 bg-primary-light-100 flex justify-center items-center rounded-full">
+                      <%= icon("chat-bubble-bottom-center-text", css: "h-3 w-3 text-primary") %>
+                    </div>
+                  <% else %>
+                    <%= icon("clock", css: "h-4 w-4 text-primary") %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-4">
+      <%= render 'shared/pagination/prev', items: @team_members %>
+      <%= render 'shared/pagination/next', items: @team_members %>
+    </div>
+  <% end %>
 <% end %>

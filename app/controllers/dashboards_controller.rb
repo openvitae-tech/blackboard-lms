@@ -34,6 +34,8 @@ class DashboardsController < ApplicationController
   def team_progress
     authorize :dashboard
     @dashboard = DashboardService.instance.build_dashboard_for(@team, @duration)
+    @sub_teams = @dashboard.sub_teams_progress
+    @tab = @sub_teams.any? && params[:tab] == 'teams' ? 'teams' : 'members'
     @team_members = @dashboard.all_team_members_progress(params[:page], query: params[:query])
     @member_counts = @dashboard.team_member_status_counts
   end

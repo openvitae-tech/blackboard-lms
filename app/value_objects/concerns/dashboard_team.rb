@@ -2,7 +2,8 @@
 
 module DashboardTeam
   def all_team_members_progress(page, query: nil)
-    all = Rails.cache.fetch("#{base_cache_key}/team_members_progress/#{Digest::SHA1.hexdigest(query.to_s)}", expires_in: 5.minutes) do
+    all = Rails.cache.fetch("#{base_cache_key}/team_members_progress/#{Digest::SHA1.hexdigest(query.to_s)}",
+                            expires_in: 5.minutes) do
       users = User
               .where(team_id: team_and_subteam_ids(@team))
               .where(role: User::LEARNER)
@@ -69,11 +70,13 @@ module DashboardTeam
 
   def sub_teams_progress
     @team.sub_teams.map do |sub_team|
-      total = Enrollment.joins(:user).where(users: { team_id: sub_team.id, role: User::LEARNER }).merge(User.active).count
-      completed = Enrollment.joins(:user).where(users: { team_id: sub_team.id, role: User::LEARNER }, course_completed: true).merge(User.active).count
+      total = Enrollment.joins(:user).where(users: { team_id: sub_team.id,
+                                                     role: User::LEARNER }).merge(User.active).count
+      completed = Enrollment.joins(:user).where(users: { team_id: sub_team.id, role: User::LEARNER },
+                                                course_completed: true).merge(User.active).count
       members_count = User.where(team_id: sub_team.id).active.count
       progress = total.zero? ? 0 : (completed.to_f / total * 100).round
-      { name: sub_team.name, members_count:, progress: }
+      { id: sub_team.id, name: sub_team.name, members_count:, progress: }
     end
   end
 
