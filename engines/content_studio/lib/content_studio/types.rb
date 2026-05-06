@@ -77,8 +77,8 @@ module ContentStudio
 
   StructureModule = Struct.new(:id, :title, :lessons, keyword_init: true)
 
-  StructureLesson = Struct.new(:id, :title, :description, :summary, :estimated_duration, :status, :video_url, :scenes,
-                               keyword_init: true)
+  StructureLesson = Struct.new(:id, :title, :description, :summary, :estimated_duration, :status, :video_url, :verified,
+                               :scenes, keyword_init: true)
 
   GenerationStatus = Struct.new(:status, :stage, :redirect_url, keyword_init: true)
 

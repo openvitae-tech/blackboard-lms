@@ -3,6 +3,16 @@
 module ContentStudio
   module Courses
     class LessonsController < ApplicationController
+      def verify
+        ApiClient.verify_lesson(params[:id])
+        next_id = params[:next_lesson_id]
+        if next_id.present?
+          redirect_to course_lesson_path(params[:course_id], next_id)
+        else
+          redirect_to course_structure_path(id: params[:course_id])
+        end
+      end
+
       def scene_status
         lesson = ApiClient.get_lesson(params[:course_id], params[:id])
         scenes = lesson.scenes.map do |s|
