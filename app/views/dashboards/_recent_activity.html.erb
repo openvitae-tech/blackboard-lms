@@ -1,7 +1,7 @@
 <div class="bg-white rounded-xl border border-line-colour-light">
 
   <% header_content = capture do %>
-    <h2 class="main-text-lg-semibold">Recent Activity</h2>
+    <h2 class="main-text-lg-semibold"><%= t("dashboard.recent_activity.title") %></h2>
   <% end %>
 
   <%= accordion_component(
@@ -35,7 +35,7 @@
             <% if activity[:type] == 'certificate' %>
               <%= link_to "#", class: "flex items-center gap-1 text-primary general-text-sm-normal flex-none" do %>
                 <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
-                <span class="main-text-sm-normal">Congrats</span>
+                <span class="main-text-sm-normal"><%= t("dashboard.actions.congrats") %></span>
               <% end %>
             <% end %>
           </div>
@@ -45,22 +45,22 @@
       <div class="flex gap-3 mt-4">
         <div class="flex-1 bg-secondary-light rounded-lg p-3 text-center">
           <p class="main-text-lg-semibold text-secondary"><%= @dashboard.completions_count %></p>
-          <p class="general-text-sm-normal text-letter-color-light">Completions</p>
+          <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.recent_activity.completions") %></p>
         </div>
         <div class="flex-1 bg-gold-light rounded-lg p-3 text-center">
           <p class="main-text-lg-semibold text-gold"><%= @dashboard.certificates_count %></p>
-          <p class="general-text-sm-normal text-letter-color-light">Certificates</p>
+          <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.recent_activity.certificates") %></p>
         </div>
         <div class="flex-1 bg-primary-light-100 rounded-lg p-3 text-center">
           <p class="main-text-lg-semibold text-primary"><%= @dashboard.new_starts_count %></p>
-          <p class="general-text-sm-normal text-letter-color-light">New Starts</p>
+          <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.recent_activity.new_starts") %></p>
         </div>
       </div>
 
       <%= link_to recent_activity_dashboards_path(duration: params[:duration]), class: "flex items-center justify-center gap-1 mt-4 main-text-sm-normal text-primary" do %>
-        <span>View all activity</span>
+        <span><%= t("dashboard.actions.view_all_activity") %></span>
         <%= icon("arrow-right", css: "h-4 w-4") %>
       <% end %>
     </div>
   <% end %>
-</div>  
+</div>

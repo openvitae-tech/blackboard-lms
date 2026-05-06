@@ -1,11 +1,11 @@
 <div class="flex justify-between">
-  <%= render 'shared/components/bread_crumbs', links: [['Dashboard', dashboards_path], ['Team Progress', nil]] %>
+  <%= render 'shared/components/bread_crumbs', links: [['Dashboard', dashboards_path], [t("dashboard.team_progress.title"), nil]] %>
   <%= form_with url: team_progress_dashboards_path, method: :get,
                 data: { controller: "debounce-search", turbo_frame: "team_members_results" } do |f| %>
     <%= hidden_field_tag :duration, params[:duration] %>
     <div class="relative">
       <%= icon("magnifying-glass", css: "h-5 w-5 text-letter-color-light absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none") %>
-      <%= f.text_field :query, value: params[:query], placeholder: "Search Members...",
+      <%= f.text_field :query, value: params[:query], placeholder: t("dashboard.team_progress.search_placeholder"),
           class: "border border-line-colour-light rounded-lg pl-9 pr-3 py-2 main-text-md-normal focus:outline-none focus:border-primary w-[340px]",
           data: { action: "input->debounce-search#search" } %>
     </div>
@@ -15,14 +15,14 @@
 <div class="flex items-center justify-between my-6 px-1">
   <div class="flex flex-row gap-3">
     <%= render 'shared/components/back_button', back_link: dashboards_path %>
-    <h2 class="main-text-lg-semibold">Team Progress</h2>
-  </div>  
+    <h2 class="main-text-lg-semibold"><%= t("dashboard.team_progress.title") %></h2>
+  </div>
   <div class="flex items-center gap-4">
     <div class="flex items-center gap-2 bg-secondary-light px-1 py-0.5 rounded-[4px]">
-      <span class="general-text-sm-normal"><%= @member_counts[:completed] %> Completed</span>
+      <span class="general-text-sm-normal"><%= t("dashboard.team_progress.member_counts.completed", count: @member_counts[:completed]) %></span>
     </div>
     <div class="flex items-center gap-2 bg-danger-light px-1 py-0.5 rounded-[4px]">
-      <span class="general-text-sm-normal"><%= @member_counts[:behind] %> Behind</span>
+      <span class="general-text-sm-normal"><%= t("dashboard.team_progress.member_counts.behind", count: @member_counts[:behind]) %></span>
     </div>
   </div>
 </div>
@@ -30,9 +30,9 @@
 <%= turbo_frame_tag "team_members_results", data: { turbo_action: "advance" } do %>
 <div class="bg-white rounded-xl border border-line-colour-light">
   <div class="grid grid-cols-3 px-5 py-3 border-b border-line-colour-light">
-    <span class="general-text-sm-normal text-letter-color-light">Member</span>
-    <span class="general-text-sm-normal text-letter-color-light">Courses</span>
-    <span class="general-text-sm-normal text-letter-color-light">Progress</span>
+    <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.member") %></span>
+    <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.courses") %></span>
+    <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.progress") %></span>
   </div>
 
   <div class="flex flex-col divide-y divide-line-colour-light">
@@ -63,7 +63,7 @@
             <% elsif member[:progress] < 20 %>
               <div class="h-6 w-6 bg-primary-light-100 flex justify-center items-center rounded-full ">
                 <%= icon("chat-bubble-bottom-center-text", css: "h-3 w-3 text-primary") %>
-              </div>  
+              </div>
             <% else %>
               <%= icon("clock", css: "h-4 w-4 text-primary") %>
             <% end %>

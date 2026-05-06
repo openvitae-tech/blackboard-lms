@@ -2,9 +2,9 @@
 <div class="flex items-center justify-between mb-4 px-1">
   <div>
     <div class="heading heading-medium flex gap-1">
-      <span class="">Team: </span><span class=""><%= @team.name %></span>
+      <span class=""><%= t("dashboard.index.team_label") %> </span><span class=""><%= @team.name %></span>
     </div>
-    <p class="general-text-sm-normal text-letter-color-light">Dashboard | <%= @team.users.active.count %> members</p>
+    <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.index.subtitle", count: @team.users.active.count) %></p>
   </div>
   <div class="flex w-fit items-center gap-2">
     <%= dropdown_component(
@@ -17,15 +17,15 @@
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
   <%= render 'stat_card',
-      title: 'Active Learners',
+      title: t("dashboard.stats.active_learners"),
       icon_name: 'user-group',
       value: @dashboard.active_learners_count,
       delta: @dashboard.active_learners_delta,
-      delta_label: "#{@dashboard.active_learners_delta} learners",
+      delta_label: t("dashboard.index.active_learners_delta", count: @dashboard.active_learners_delta),
       delta_suffix: period_label(@dashboard.duration) %>
 
   <%= render 'stat_card',
-      title: 'Avg Completion',
+      title: t("dashboard.stats.avg_completion"),
       icon_name: 'check-badge',
       value: "#{@dashboard.completion_percent_metric}%",
       delta: @dashboard.completion_percent_delta,
@@ -33,7 +33,7 @@
       delta_suffix: period_label(@dashboard.duration) %>
 
   <%= render 'stat_card',
-      title: 'Avg Watch Time',
+      title: t("dashboard.stats.avg_watch_time"),
       icon_name: 'clock',
       value: duration_in_words(@dashboard.average_time_spent_metric),
       delta: @dashboard.average_time_spent_delta,
@@ -41,7 +41,7 @@
       delta_suffix: period_label(@dashboard.duration) %>
 
   <%= render 'stat_card',
-      title: 'Certificates Earned',
+      title: t("dashboard.stats.certificates_earned"),
       icon_name: 'document-text-outline',
       value: @dashboard.certificates_count,
       delta: @dashboard.certificates_delta,

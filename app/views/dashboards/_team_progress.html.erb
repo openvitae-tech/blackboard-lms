@@ -1,16 +1,16 @@
 <div class="bg-white rounded-xl border border-line-colour-light" data-controller="team-progress">
   <% header_content = capture do %>
-    <h2 class="main-text-lg-semibold">Team Progress</h2>
+    <h2 class="main-text-lg-semibold"><%= t("dashboard.team_progress.title") %></h2>
     <div class="hidden md:flex gap-2">
       <button type="button"
               data-action="click->team-progress#showSubTeams"
               data-team-progress-target="subTeamsBtn">
-        <%= button_component(text: "Sub Teams", type: "outline", size: "sm") %>
+        <%= button_component(text: t("dashboard.team_progress.sub_teams"), type: "outline", size: "sm") %>
       </button>
       <button type="button"
               data-action="click->team-progress#showMembers"
               data-team-progress-target="membersBtn">
-        <%= button_component(text: "Members", size: "sm") %>
+        <%= button_component(text: t("dashboard.team_progress.columns.members"), size: "sm") %>
       </button>
     </div>
   <% end %>
@@ -26,20 +26,20 @@
         <button type="button"
                 data-action="click->team-progress#showSubTeams"
                 data-team-progress-target="subTeamsBtn">
-          <%= button_component(text: "Sub Teams", type: "outline", size: "sm") %>
+          <%= button_component(text: t("dashboard.team_progress.sub_teams"), type: "outline", size: "sm") %>
         </button>
         <button type="button"
                 data-action="click->team-progress#showMembers"
                 data-team-progress-target="membersBtn">
-          <%= button_component(text: "Members", size: "sm") %>
+          <%= button_component(text: t("dashboard.team_progress.columns.members"), size: "sm") %>
         </button>
       </div>
       <%# Members view %>
       <div data-team-progress-target="membersView">
         <div class="grid grid-cols-3 pb-2 border-b border-line-colour-light">
-          <span class="general-text-sm-normal text-letter-color-light">Member</span>
-          <span class="general-text-sm-normal text-letter-color-light">Courses</span>
-          <span class="general-text-sm-normal text-letter-color-light">Progress</span>
+          <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.member") %></span>
+          <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.courses") %></span>
+          <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.progress") %></span>
         </div>
         <div class="flex flex-col divide-y divide-line-colour-light">
           <% @dashboard.team_members_progress.each do |member| %>
@@ -83,15 +83,15 @@
       <%# Sub Teams view - hidden by default %>
       <div data-team-progress-target="subTeamsView" class="hidden">
         <div class="grid grid-cols-3 pb-2 border-b border-line-colour-light">
-          <span class="general-text-sm-normal text-letter-color-light">Team</span>
-          <span class="general-text-sm-normal text-letter-color-light">Members</span>
-          <span class="general-text-sm-normal text-letter-color-light">Progress</span>
+          <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.team") %></span>
+          <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.members") %></span>
+          <span class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.team_progress.columns.progress") %></span>
         </div>
         <div class="flex flex-col divide-y divide-line-colour-light">
           <% @dashboard.sub_teams_progress.each do |sub_team| %>
             <div class="grid grid-cols-3 py-3 items-center">
               <p class="main-text-sm-medium line-clamp-1"><%= sub_team[:name] %></p>
-              <span class="general-text-sm-normal"><%= sub_team[:members_count] %> members</span>
+              <span class="general-text-sm-normal"><%= t("dashboard.team_progress.members_count", count: sub_team[:members_count]) %></span>
               <div class="flex items-center gap-2">
                 <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
                   <div class="h-1.5 bg-primary rounded-full" style="width: <%= sub_team[:progress] %>%"></div>
@@ -101,13 +101,13 @@
             </div>
           <% end %>
           <% if @dashboard.sub_teams_progress.empty? %>
-            <p class="general-text-sm-normal text-letter-color-light py-4 text-center">No sub teams</p>
+            <p class="general-text-sm-normal text-letter-color-light py-4 text-center"><%= t("dashboard.team_progress.no_sub_teams") %></p>
           <% end %>
         </div>
       </div>
 
       <%= link_to team_progress_dashboards_path, class: "flex items-center justify-center gap-1 mt-4 main-text-sm-normal text-primary" do %>
-        <span>View all members</span>
+        <span><%= t("dashboard.actions.view_all_members") %></span>
         <%= icon("arrow-right", css: "h-4 w-4") %>
       <% end %>
     </div>

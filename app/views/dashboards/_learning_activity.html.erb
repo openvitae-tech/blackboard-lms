@@ -1,7 +1,7 @@
 <div class="bg-white rounded-xl border border-line-colour-light">
 
   <% header_content = capture do %>
-    <h2 class="main-text-lg-semibold">Learning Activity</h2>
+    <h2 class="main-text-lg-semibold"><%= t("dashboard.learning_activity.title") %></h2>
   <% end %>
 
   <%= accordion_component(
@@ -17,13 +17,13 @@
         </div>
         <div class="flex flex-col w-full gap-1">
           <div class="flex justify-between w-full">
-            <span class="general-text-md-medium">Quizzes Passed</span>
+            <span class="general-text-md-medium"><%= t("dashboard.learning_activity.quizzes_passed") %></span>
             <span class="general-text-sm-normal"><%= @dashboard.quizzes_passed %>/<%= @dashboard.total_quizzes %></span>
           </div>
           <%= progressbar_component(value: @dashboard.quiz_pass_rate, color: :secondary) %>
-          <p class="general-text-sm-normal text-letter-color-light mt-1"><%= @dashboard.quiz_pass_rate %>% Pass rate</p>
+          <p class="general-text-sm-normal text-letter-color-light mt-1"><%= t("dashboard.learning_activity.pass_rate", rate: @dashboard.quiz_pass_rate) %></p>
         </div>
       </div>
     </div>
   <% end %>
-</div>  
+</div>
