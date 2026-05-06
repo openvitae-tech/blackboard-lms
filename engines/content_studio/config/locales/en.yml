@@ -1,0 +1,5 @@
+en:
+  content_studio:
+    courses:
+      discard:
+        locked: "Course is currently being processed. Please wait before deleting."

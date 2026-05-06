@@ -11,11 +11,25 @@ RSpec.describe 'ContentStudio::Courses::Structure', type: :request do
   end
 
   describe 'GET /content_studio/courses/:id/structure' do
-    before { allow(ContentStudio::ApiClient).to receive(:course_structure).and_return(structure) }
+    context 'when the course exists' do
+      before { allow(ContentStudio::ApiClient).to receive(:course_structure).and_return(structure) }
 
-    it 'returns HTTP 200' do
-      get '/content_studio/courses/1/structure'
-      expect(response).to have_http_status(:ok)
+      it 'returns HTTP 200' do
+        get '/content_studio/courses/1/structure'
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when the course is not found' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:course_structure)
+          .and_raise(Faraday::ResourceNotFound.new(nil))
+      end
+
+      it 'redirects to the content studio root' do
+        get '/content_studio/courses/missing/structure'
+        expect(response).to redirect_to('/content_studio/')
+      end
     end
   end
 
@@ -29,11 +43,30 @@ RSpec.describe 'ContentStudio::Courses::Structure', type: :request do
   end
 
   describe 'DELETE /content_studio/courses/:id' do
-    before { allow(ContentStudio::ApiClient).to receive(:discard_course) }
+    context 'when the course is discarded successfully' do
+      before { allow(ContentStudio::ApiClient).to receive(:discard_course) }
 
-    it 'redirects after discard' do
-      delete '/content_studio/courses/1'
-      expect(response).to have_http_status(:redirect)
+      it 'redirects to the content studio root' do
+        delete '/content_studio/courses/1'
+        expect(response).to redirect_to('/content_studio/')
+      end
+    end
+
+    context 'when the course is locked' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:discard_course)
+          .and_raise(Faraday::BadRequestError.new(nil))
+      end
+
+      it 'redirects back to the structure page' do
+        delete '/content_studio/courses/1'
+        expect(response).to redirect_to('/content_studio/courses/1/structure')
+      end
+
+      it 'sets a flash alert' do
+        delete '/content_studio/courses/1'
+        expect(flash[:alert]).to eq(I18n.t('content_studio.courses.discard.locked'))
+      end
     end
   end
 end

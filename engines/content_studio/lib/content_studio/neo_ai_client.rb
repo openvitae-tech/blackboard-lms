@@ -111,7 +111,10 @@ module ContentStudio
     end
 
     def save_course(_course_id) = nil
-    def discard_course(_course_id) = nil
+
+    def discard_course(course_id)
+      delete("/course/#{course_id}")
+    end
 
     private
 
@@ -124,6 +127,10 @@ module ContentStudio
         req.params[:partner_id] = partner_id
         req.headers['no_video'] = 'true' if no_video
       end
+    end
+
+    def delete(path)
+      build_connection.delete("#{API_PREFIX}#{path}", { partner_id: partner_id })
     end
 
     def build_connection

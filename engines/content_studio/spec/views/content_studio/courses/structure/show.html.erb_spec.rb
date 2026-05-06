@@ -154,6 +154,27 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     end
   end
 
+  it 'renders the Save Course button' do
+    render
+    expect(rendered).to include('Save Course')
+  end
+
+  it 'renders the Discard Course button' do
+    render
+    expect(rendered).to include('Discard Course')
+  end
+
+  it 'renders the discard form targeting the discard route with turbo_frame _top' do
+    render
+    expect(rendered).to include('action="/content_studio/courses/1"')
+    expect(rendered).to include('data-turbo-frame="_top"')
+  end
+
+  it 'renders the save form targeting the save route' do
+    render
+    expect(rendered).to include('action="/content_studio/courses/1/save"')
+  end
+
   context 'when no pending lessons and no progress_text' do
     before do
       all_verified = ContentStudio::StructureModule.new(
