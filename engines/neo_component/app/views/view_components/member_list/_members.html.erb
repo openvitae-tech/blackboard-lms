@@ -16,7 +16,7 @@
     <div class="flex-1 overflow-y-auto md:divide-y md:divide-line-colour rounded-lg border border-line-colour md:border-0">
       <% members.each do |member| %>
         <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center md:py-4 md:px-5 border-b border-line-colour md:border-0">
-          <div class="col-span-6 flex flex-wrap items-center justify-between gap-2 border-b md:px-0 md:py-0 px-4 py-3 border-line-colour md:border-none bg-primary-light-50 md:bg-white ">
+          <div class="col-span-6 flex flex-wrap items-center justify-between gap-2 border-b md:px-0 md:py-0 px-4 py-3 border-line-colour md:border-none bg-primary-light-50 md:bg-white-light">
             <% link = policy(member).show? ? member_path(member) : "javascript:void(0);" %>
 
             <%= link_to link, class: "cursor-pointer" do %>
