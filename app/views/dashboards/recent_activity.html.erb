@@ -41,8 +41,10 @@
           <p class="general-text-xs-normal text-letter-color-light mt-0.5"><%= time_ago_in_words(activity[:created_at]) %> ago</p>
         </div>
       </div>
-      <% if activity[:type] == 'certificate' %>
-        <%= link_to "#", class: "flex items-center gap-1 text-primary general-text-sm-normal flex-none" do %>
+      <% if activity[:type] == 'certificate' && activity[:user].present? %>
+        <%= link_to appreciate_member_dashboards_path(user_id: activity[:user].id, banner_type: 'crushing_it'),
+            data: { turbo_frame: 'modal' },
+            class: "flex items-center gap-1 text-primary general-text-sm-normal flex-none" do %>
           <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
           <span class="main-text-sm-normal"><%= t("dashboard.actions.congrats") %></span>
         <% end %>
