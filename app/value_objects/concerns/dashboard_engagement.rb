@@ -12,7 +12,7 @@ module DashboardEngagement
   end
 
   def daily_avg_hours
-    days = [(@duration.end.to_date - @duration.begin.to_date).to_i, 1].max
+    days = [(@duration.end.to_date - @duration.begin.to_date).to_i + 1, 1].max
     (total_hours / days).round(1)
   end
 

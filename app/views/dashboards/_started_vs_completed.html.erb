@@ -73,7 +73,7 @@
               <% end %>
             </p>
           </div>
-          <%= link_to nudge_all_dashboards_path(course_id: worst[:course].id), data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary flex-none" do %>
+          <%= link_to nudge_all_dashboards_path(course_id: worst[:course].id, team_id: params[:team_id]), data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary flex-none" do %>
             <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
             <span class="main-text-sm-normal"><%= t("dashboard.actions.nudge") %></span>
           <% end %>

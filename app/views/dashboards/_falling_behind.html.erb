@@ -9,7 +9,7 @@
         </p>
       </div>
     </div>
-    <%= link_to nudge_all_dashboards_path, data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary cursor-pointer" do %>
+    <%= link_to nudge_all_dashboards_path(team_id: params[:team_id]), data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary cursor-pointer" do %>
       <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4 text-primary") %>
       <span class="main-text-sm-normal"><%= t("dashboard.actions.nudge_all") %></span>
     <% end %>

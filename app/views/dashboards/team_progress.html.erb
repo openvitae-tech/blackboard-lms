@@ -6,7 +6,7 @@
                   data: { controller: "debounce-search", turbo_frame: "team_progress_results" } do |f| %>
       <%= hidden_field_tag :duration, params[:duration] %>
       <%= hidden_field_tag :team_id, params[:team_id] if params[:team_id].present? %>
-      <%= hidden_field_tag :origin, params[:origin] if params[:origin].present? %>
+      <%= hidden_field_tag :origin, safe_origin if safe_origin.present? %>
       <%= hidden_field_tag :tab, 'members' %>
       <div class="relative">
         <%= icon("magnifying-glass", css: "h-5 w-5 text-letter-color-light absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none") %>
