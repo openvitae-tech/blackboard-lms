@@ -58,8 +58,9 @@
                 </div>
                 <span class="general-text-sm-normal"><%= member[:completed] %>/<%= member[:courses] %></span>
                 <div class="flex items-center gap-2">
-                  <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
-                    <div class="h-1.5 bg-secondary rounded-full" style="width: <%= member[:progress] %>%"></div>
+                  <% member_color = member[:progress] == 100 ? :secondary : member[:progress] < 20 ? :danger : :primary %>
+                  <div class="flex-1">
+                    <%= progressbar_component(value: member[:progress], color: member_color) %>
                   </div>
                   <span class="general-text-xs-normal text-letter-color-light w-8"><%= member[:progress] %>%</span>
                   <div class="w-14 flex items-center justify-center">
@@ -96,8 +97,9 @@
                 <p class="main-text-sm-medium line-clamp-1"><%= sub_team[:name] %></p>
                 <span class="general-text-sm-normal"><%= t("dashboard.team_progress.members_count", count: sub_team[:members_count]) %></span>
                 <div class="flex items-center gap-2">
-                  <div class="flex-1 h-1.5 bg-primary-light-100 rounded-full">
-                    <div class="h-1.5 bg-primary rounded-full" style="width: <%= sub_team[:progress] %>%"></div>
+                  <% sub_team_color = sub_team[:progress] == 100 ? :secondary : sub_team[:progress] < 20 ? :danger : :primary %>
+                  <div class="flex-1">
+                    <%= progressbar_component(value: sub_team[:progress], color: sub_team_color) %>
                   </div>
                   <span class="general-text-xs-normal text-letter-color-light w-8"><%= sub_team[:progress] %>%</span>
                 </div>

@@ -194,9 +194,8 @@
                     <span class="general-text-md-medium"><%= t("dashboard.learning_activity.quizzes_passed") %></span>
                     <span class="general-text-sm-normal"><%= @member_data[:quizzes_passed] %>/<%= @member_data[:total_quizzes] %></span>
                   </div>
-                  <div class="h-1.5 w-full bg-primary-light-100 rounded-full">
-                    <div class="h-1.5 bg-secondary rounded-full" style="width: <%= @member_data[:quiz_pass_rate] %>%"></div>
-                  </div>
+                  <% quiz_color = @member_data[:quiz_pass_rate] == 100 ? :secondary : @member_data[:quiz_pass_rate] < 20 ? :danger : :primary %>
+                  <%= progressbar_component(value: @member_data[:quiz_pass_rate], color: quiz_color) %>
                   <p class="general-text-sm-normal text-letter-color-light mt-1"><%= t("dashboard.learning_activity.pass_rate", rate: @member_data[:quiz_pass_rate]) %></p>
                 </div>
               </div>
@@ -226,10 +225,8 @@
                       <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
                       <span class="general-text-sm-normal text-letter-color-light w-12 text-right"><%= enrollment.progress %>%</span>
                     </div>
-                    <div class="h-1.5 bg-primary-light-100 rounded-full">
-                      <div class="h-1.5 rounded-full <%= enrollment.course_completed ? 'bg-secondary' : 'bg-primary' %>"
-                          style="width: <%= enrollment.progress %>%"></div>
-                    </div>
+                    <% course_color = enrollment.progress == 100 ? :secondary : enrollment.progress < 20 ? :danger : :primary %>
+                    <%= progressbar_component(value: enrollment.progress, color: course_color) %>
                   </div>
                 <% end %>
                 <% if @member_data[:course_enrollments].empty? %>
