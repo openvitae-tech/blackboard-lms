@@ -190,7 +190,7 @@ class ProgramsController < ApplicationController
   end
 
   def load_unassigned_courses
-    @courses = filter_courses.page(params[:page]).per(Course::PER_PAGE_LIMIT)
+    @courses = filter_courses.includes(:tags, banner_attachment: :blob).page(params[:page]).per(Course::PER_PAGE_LIMIT)
   end
 
   def filter_courses
