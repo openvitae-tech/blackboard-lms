@@ -1,33 +1,23 @@
 # frozen_string_literal: true
 
 module DashboardEngagement
-  SAMPLE_HOURS = [2.5, 4.0, 3.2, 5.8, 4.5, 6.2, 3.8, 2.1, 4.8, 5.2, 3.6, 4.9, 5.5, 3.0].freeze
-
   def daily_hours_series
     series = build_empty_series
     fill_series_from_events(series)
-    return sample_hours_series if Rails.env.development? && series.values.all?(&:zero?)
-
     series
   end
 
   def total_hours
-    return 28.2 if Rails.env.development? && total_time_spent_metric.zero?
-
     (total_time_spent_metric / 3600.0).round(1)
   end
 
   def daily_avg_hours
-    return 4.0 if Rails.env.development? && total_time_spent_metric.zero?
-
     days = [(@duration.end.to_date - @duration.begin.to_date).to_i, 1].max
     (total_hours / days).round(1)
   end
 
   def peak_day
     by_day = group_events_by_day
-    return 'Thursday' if Rails.env.development? && by_day.empty?
-
     return nil if by_day.empty?
 
     best_day_name(by_day)
@@ -108,11 +98,6 @@ module DashboardEngagement
 
   def date_key(date)
     [date.day.to_s.rjust(2, '0'), Date::MONTHNAMES[date.month][0..2]].join(' ')
-  end
-
-  def sample_hours_series
-    dates = (@duration.begin.to_date..@duration.end.to_date).to_a
-    dates.each_with_index.to_h { |d, i| [date_key(d), SAMPLE_HOURS[i % SAMPLE_HOURS.size]] }
   end
 
   def daily_avg_seconds(day_hash)

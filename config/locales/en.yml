@@ -368,6 +368,9 @@ en:
       congrats: "Congrats"
       appreciate: "Appreciate"
       cancel: "Cancel"
+    appreciate_member:
+      message_label: "Message"
+      send: "Send"
   my_profile:
     label: "My Profile"
     my_courses:

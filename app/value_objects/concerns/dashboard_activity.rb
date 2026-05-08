@@ -101,7 +101,7 @@ module DashboardActivity
       .joins(:user, :course)
       .where(users: { team_id: team_and_subteam_ids(@team) })
       .where(assigned_by_id: nil, course_completed: false)
-      .includes(:user, :course)
+      .includes(:user, course: :course_modules)
       .order(created_at: :desc)
       .limit(3)
   end

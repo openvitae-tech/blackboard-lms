@@ -12,9 +12,10 @@ module DashboardTeam
       users = users.where('name ILIKE ?', "%#{query}%") if query.present?
 
       users.map do |user|
-        total = user.enrollments.size
-        completed = user.enrollments.count(&:course_completed)
-        progress = total.zero? ? 0 : (completed.to_f / total * 100).round
+        enrollments = user.enrollments.to_a
+        total = enrollments.length
+        completed = enrollments.count(&:course_completed)
+        progress = calculate_progress(total, completed)
         { user:, courses: total, completed:, progress: }
       end
     end
@@ -23,7 +24,7 @@ module DashboardTeam
   end
 
   def team_member_data(user)
-    enrollments = user.enrollments.includes(:course).to_a
+    enrollments = user.enrollments.includes(course: :course_modules).to_a
     enrollment_stats(enrollments)
       .merge(user_quiz_stats(user))
       .merge(member_delta_stats(user, enrollments))
@@ -41,9 +42,10 @@ module DashboardTeam
           .active
           .includes(:enrollments)
           .map do |user|
-            total = user.enrollments.size
-            completed = user.enrollments.count(&:course_completed)
-            progress = total.zero? ? 0 : (completed.to_f / total * 100).round
+            enrollments = user.enrollments.to_a
+            total = enrollments.length
+            completed = enrollments.count(&:course_completed)
+            progress = calculate_progress(total, completed)
             { user:, courses: total, completed:, progress: }
           end
     end
@@ -61,21 +63,46 @@ module DashboardTeam
       .includes(:enrollments, :team)
       .limit(4)
       .map do |user|
-        total = user.enrollments.size
-        completed = user.enrollments.count(&:course_completed)
-        progress = total.zero? ? 0 : (completed.to_f / total * 100).round
+        enrollments = user.enrollments.to_a
+        total = enrollments.length
+        completed = enrollments.count(&:course_completed)
+        progress = calculate_progress(total, completed)
         { user:, courses: total, progress:, completed: }
       end
   end
 
   def sub_teams_progress
-    @team.sub_teams.map do |sub_team|
-      total = Enrollment.joins(:user).where(users: { team_id: sub_team.id,
-                                                     role: User::LEARNER }).merge(User.active).count
-      completed = Enrollment.joins(:user).where(users: { team_id: sub_team.id, role: User::LEARNER },
-                                                course_completed: true).merge(User.active).count
-      members_count = User.where(team_id: sub_team.id).active.count
-      progress = total.zero? ? 0 : (completed.to_f / total * 100).round
+    sub_teams = @team.sub_teams # already preloaded via includes(sub_teams: :sub_teams)
+    return [] if sub_teams.empty?
+
+    sub_team_ids = sub_teams.map(&:id)
+
+    total_by_team = Enrollment
+                    .joins(:user)
+                    .where(users: { team_id: sub_team_ids, role: User::LEARNER })
+                    .merge(User.active)
+                    .group('users.team_id')
+                    .count
+
+    completed_by_team = Enrollment
+                        .joins(:user)
+                        .where(users: { team_id: sub_team_ids, role: User::LEARNER },
+                               course_completed: true)
+                        .merge(User.active)
+                        .group('users.team_id')
+                        .count
+
+    members_by_team = User
+                      .where(team_id: sub_team_ids)
+                      .active
+                      .group(:team_id)
+                      .count
+
+    sub_teams.map do |sub_team|
+      total = total_by_team.fetch(sub_team.id, 0)
+      completed = completed_by_team.fetch(sub_team.id, 0)
+      members_count = members_by_team.fetch(sub_team.id, 0)
+      progress = calculate_progress(total, completed)
       { id: sub_team.id, name: sub_team.name, members_count:, progress: }
     end
   end
@@ -85,7 +112,7 @@ module DashboardTeam
   def enrollment_stats(enrollments)
     total = enrollments.size
     completed = enrollments.count(&:course_completed)
-    avg_completion = total.zero? ? 0 : (completed.to_f / total * 100).round
+    avg_completion = calculate_progress(total, completed)
     {
       courses_count: total,
       completed_count: completed,
@@ -152,37 +179,31 @@ module DashboardTeam
 
   def member_engagement_data(user)
     events = current_time_spent_events.select { |e| e.user_id == user.id }
-    series = member_daily_series(events, user)
-    total_hrs = member_total_hours(events, series)
+    series = member_daily_series(events)
+    total_hrs = member_total_hours(events)
     days = [(@duration.end.to_date - @duration.begin.to_date).to_i + 1, 1].max
 
     {
       engagement_series: series,
       total_watch_hours: total_hrs,
       daily_avg_watch_hours: (total_hrs / days).round(1),
-      member_peak_day: member_peak_day(events, series)
+      member_peak_day: member_peak_day(events)
     }
   end
 
-  def member_daily_series(events, user)
+  def member_daily_series(events)
     series = initialize_member_series
     fill_member_series(series, events)
-    return sample_member_series(user) if Rails.env.development? && series.values.all?(&:zero?)
-
     series
   end
 
-  def member_total_hours(events, series)
+  def member_total_hours(events)
     total_secs = events.sum { |e| e.data['time_spent'].to_i }
-    total_hrs = (total_secs / 3600.0).round(1)
-    return series.values.sum.round(1) if Rails.env.development? && total_hrs.zero?
-
-    total_hrs
+    (total_secs / 3600.0).round(1)
   end
 
-  def member_peak_day(events, series)
+  def member_peak_day(events)
     by_day = events.group_by { |e| e.created_at.to_date }
-    return member_peak_day_from_series(series) if Rails.env.development? && by_day.empty?
     return nil if by_day.empty?
 
     by_day.max_by { |_, d| d.sum { |e| e.data['time_spent'].to_i } }.first.strftime('%A')
@@ -198,16 +219,9 @@ module DashboardTeam
     end
   end
 
-  def sample_member_series(user)
-    series = initialize_member_series
-    offset = user.id % DashboardEngagement::SAMPLE_HOURS.size
-    sample = DashboardEngagement::SAMPLE_HOURS
-    series.each_with_index { |(k, _), i| series[k] = sample[(i + offset) % sample.size] }
-    series
-  end
+  def calculate_progress(total, completed)
+    return 0 if total.zero?
 
-  def member_peak_day_from_series(series)
-    peak_key = series.max_by { |_, v| v }&.first
-    (@duration.begin.to_date..@duration.end.to_date).find { |d| date_key(d) == peak_key }&.strftime('%A')
+    (completed.to_f / total * 100).round
   end
 end

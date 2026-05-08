@@ -23,6 +23,7 @@ class DevelopmentSeed
         setup_course
       end
       setup_tag
+      setup_dashboard_data
     end
   end
 
@@ -188,6 +189,79 @@ class DevelopmentSeed
       filename: 'sample_video.mp4',
       content_type: 'video/mp4'
     )
+  end
+
+  def setup_dashboard_data
+    partner = LearningPartner.first
+    return unless partner
+
+    team = Team.where(learning_partner_id: partner.id).first
+    return unless team
+
+    learners = User.where(team_id: team.id, role: User::LEARNER).active
+    courses = Course.all.to_a
+    return if learners.empty? || courses.empty?
+
+    learners.each do |user|
+      setup_time_spent_events(user, partner, team, courses)
+      enrollments = setup_enrollments(user, courses)
+      setup_quiz_answers(enrollments)
+    end
+  end
+
+  def setup_time_spent_events(user, partner, team, courses)
+    daily_hours = [2.5, 4.0, 3.2, 5.8, 4.5, 6.2, 3.8, 2.1, 4.8, 5.2, 3.6, 4.9, 5.5, 3.0]
+    30.times do |days_ago|
+      next if rand < 0.3 # skip ~30% of days for realism
+
+      hours = daily_hours[days_ago % daily_hours.size]
+      Event.create!(
+        name: 'learning_time_spent',
+        partner_id: partner.id,
+        user_id: user.id,
+        data: {
+          team_id: team.id,
+          user_id: user.id,
+          course_id: courses.sample.id,
+          time_spent: (hours * 3600).to_i
+        },
+        created_at: days_ago.days.ago
+      )
+    end
+  end
+
+  def setup_enrollments(user, courses)
+    courses.sample(rand(3..6)).filter_map do |course|
+      next if Enrollment.exists?(user: user, course: course)
+
+      completed = [true, false, false].sample
+      Enrollment.create!(
+        user: user,
+        course: course,
+        course_completed: completed,
+        course_started_at: rand(1..30).days.ago
+      )
+    end
+  end
+
+  def setup_quiz_answers(enrollments)
+    enrollments.each do |enrollment|
+      quizzes = Quiz.joins(:course_module)
+                    .where(course_modules: { course_id: enrollment.course_id })
+      quizzes.each do |quiz|
+        next if QuizAnswer.exists?(quiz: quiz, enrollment: enrollment)
+
+        status = ['correct', 'correct', 'incorrect'].sample
+        QuizAnswer.create!(
+          quiz: quiz,
+          enrollment: enrollment,
+          course_module_id: quiz.course_module_id,
+          status: status,
+          answer: %w[a b c d].sample,
+          created_at: rand(1..30).days.ago
+        )
+      end
+    end
   end
 
   def setup_tag

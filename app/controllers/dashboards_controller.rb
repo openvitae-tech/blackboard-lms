@@ -60,7 +60,10 @@ class DashboardsController < ApplicationController
 
     nudge_key = params[:course_id].present? ? 'course.nudge' : 'course.nudge_deadline'
     @enrollments.each do |enrollment|
+      next unless enrollment.reminder_send_at.blank? || enrollment.reminder_send_at < 23.hours.ago
+
       UserMailer.course_deadline_reminder(enrollment.user, enrollment.course, enrollment.deadline_at).deliver_later
+      enrollment.touch(:reminder_send_at)
       NotificationService.notify(
         enrollment.user,
         I18n.t("#{nudge_key}.title"),
@@ -80,8 +83,11 @@ class DashboardsController < ApplicationController
 
     return unless request.post?
 
+    message = params[:message].to_s.strip
+    return head(:unprocessable_entity) if message.blank? || message.length > 500
+
     notification_title = @banner_type == 'crushing_it' ? 'Your manager appreciates you!' : 'Reminder from your manager'
-    NotificationService.notify(@member, notification_title, params[:message].to_s.strip)
+    NotificationService.notify(@member, notification_title, message)
 
     flash[:success] = "Message sent to #{@member.display_name}"
     redirect_to team_member_profile_dashboards_path(user_id: @member.id, team_id: @team.id)
@@ -93,13 +99,16 @@ class DashboardsController < ApplicationController
     enrollment = Enrollment.joins(:user)
                            .where(users: { team_id: @team.team_hierarchy_ids })
                            .find(params[:enrollment_id])
-    UserMailer.course_deadline_reminder(enrollment.user, enrollment.course, enrollment.deadline_at).deliver_later
-    NotificationService.notify(
-      enrollment.user,
-      I18n.t('course.nudge.title'),
-      format(I18n.t('course.nudge.text'), course: enrollment.course.title),
-      link: course_path(enrollment.course)
-    )
+    if enrollment.reminder_send_at.blank? || enrollment.reminder_send_at < 23.hours.ago
+      UserMailer.course_deadline_reminder(enrollment.user, enrollment.course, enrollment.deadline_at).deliver_later
+      enrollment.touch(:reminder_send_at)
+      NotificationService.notify(
+        enrollment.user,
+        I18n.t('course.nudge.title'),
+        format(I18n.t('course.nudge.text'), course: enrollment.course.title),
+        link: course_path(enrollment.course)
+      )
+    end
 
     flash[:success] = "Nudge sent to #{enrollment.user.name}"
     redirect_to dashboards_path

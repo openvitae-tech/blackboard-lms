@@ -10,10 +10,11 @@
     <%= f.hidden_field :team_id, value: @team&.id %>
 
     <div class="mb-5">
-      <label class="general-text-sm-normal text-letter-color-light mb-1 block">Message</label>
+      <label class="general-text-sm-normal text-letter-color-light mb-1 block"><%= t('dashboard.appreciate_member.message_label') %></label>
       <%= f.text_area :message,
           rows: 4,
           required: true,
+          maxlength: 500,
           value: placeholder,
           placeholder: "",
           class: "w-full border border-line-colour-light rounded-lg px-3 py-2 main-text-md-normal focus:outline-none focus:border-primary resize-none" %>
@@ -23,9 +24,9 @@
       <button type="button"
               data-action="click->modals#closeModal"
               class="flex-1 border border-line-colour-light rounded-lg py-2 main-text-sm-medium text-letter-color">
-        Cancel
+        <%= t('dashboard.actions.cancel') %>
       </button>
-      <%= f.submit "Send",
+      <%= f.submit t('dashboard.appreciate_member.send'),
           class: "flex-1 bg-primary text-white rounded-lg py-2 main-text-sm-medium cursor-pointer" %>
     </div>
   <% end %>
