@@ -155,14 +155,7 @@
                   <% @member_data[:self_assigned_enrollments].each do |enrollment| %>
                     <div class="flex items-center justify-between">
                       <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
-                      <div class="relative w-10 h-10 flex-none">
-                        <svg viewBox="0 0 36 36" class="w-10 h-10 -rotate-90">
-                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="#D9E3F5" stroke-width="3"/>
-                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="#0041B9" stroke-width="3"
-                            stroke-dasharray="<%= enrollment.progress %>, 100"/>
-                        </svg>
-                        <span class="absolute inset-0 flex items-center justify-center general-text-xs-normal"><%= enrollment.progress %>%</span>
-                      </div>
+                      <%= render 'shared/components/progress_circle', value: enrollment.progress %>
                     </div>
                   <% end %>
                 <% else %>
