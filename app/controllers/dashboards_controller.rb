@@ -120,7 +120,8 @@ class DashboardsController < ApplicationController
     if user.is_admin?
       Team.all
     else
-      Team.where(id: user.team.team_hierarchy_ids)
+      team = Team.includes(sub_teams: :sub_teams).find(user.team_id)
+      Team.where(id: team.team_hierarchy_ids)
     end
   end
 

@@ -457,7 +457,7 @@ RSpec.describe Dashboard do
       first_result = dashboard.recent_activities
 
       # Mutate DB after first fetch — enrollment added should not appear
-      create(:enrollment, user: learner, course:)
+      Enrollment.create!(user: learner, course:)
 
       second_result = dashboard.recent_activities
       expect(second_result).to eq(first_result)
@@ -468,7 +468,7 @@ RSpec.describe Dashboard do
       first_result = dashboard.recent_activities
 
       # Trigger cache invalidation via after_commit callback
-      enrollment = create(:enrollment, user: learner, course:)
+      enrollment = Enrollment.create!(user: learner, course:)
       enrollment.update!(updated_at: Time.current)
 
       fresh_dashboard = described_class.new(team, 'last_7_days')

@@ -16,13 +16,13 @@ RSpec.describe 'Dashboards', type: :request do
   describe 'POST #nudge_all' do
     context 'when nudging all learners behind on a specific course' do
       let!(:incomplete_enrollment) do
-        create(:enrollment, user: learner, course:, course_completed: false,
-                            deadline_at: 3.days.from_now)
+        Enrollment.create!(user: learner, course:, course_completed: false,
+                           deadline_at: 3.days.from_now)
       end
 
       before do
-        create(:enrollment, user: learner, course: create(:course, :published),
-                            course_completed: true, deadline_at: 3.days.from_now)
+        Enrollment.create!(user: learner, course: create(:course, :published),
+                           course_completed: true, deadline_at: 3.days.from_now)
       end
 
       it 'sends a notification only to incomplete learners for that course' do
@@ -53,8 +53,8 @@ RSpec.describe 'Dashboards', type: :request do
 
     context 'when nudging all falling-behind learners (no course_id)' do
       before do
-        create(:enrollment, user: learner, course:, course_completed: false,
-                            deadline_at: 3.days.from_now)
+        Enrollment.create!(user: learner, course:, course_completed: false,
+                           deadline_at: 3.days.from_now)
       end
 
       it 'sends notifications to all falling-behind learners' do
