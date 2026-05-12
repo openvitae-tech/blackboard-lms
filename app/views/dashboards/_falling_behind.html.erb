@@ -1,0 +1,17 @@
+<% if @dashboard.falling_behind_count > 0 %>
+  <div class="bg-danger-light rounded-xl p-4 flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <%= icon("exclamation-circle-solid", css: "h-5 w-5 text-danger flex-none") %>
+      <div>
+        <p class="main-text-sm-medium text-danger"><%= t("dashboard.falling_behind.message", count: @dashboard.falling_behind_count) %></p>
+        <p class="general-text-sm-normal text-letter-color-light">
+          <%= @dashboard.falling_behind_learners.first(2).map { |e| e.user.name }.join(', ') %> <%= t("dashboard.falling_behind.pending") %>
+        </p>
+      </div>
+    </div>
+    <%= link_to nudge_all_dashboards_path(team_id: params[:team_id]), data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary cursor-pointer" do %>
+      <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4 text-primary") %>
+      <span class="main-text-sm-normal"><%= t("dashboard.actions.nudge_all") %></span>
+    <% end %>
+  </div>
+<% end %>

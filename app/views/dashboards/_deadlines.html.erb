@@ -1,0 +1,60 @@
+<div class="bg-white rounded-xl border border-line-colour-light">
+
+  <% header_content = capture do %>
+    <h2 class="main-text-lg-semibold"><%= t("dashboard.deadlines.title") %></h2>
+  <% end %>
+
+  <%= accordion_component(
+        header: header_content,
+        wrapper_class: "",
+        icon_class: "md:hidden",
+        content_class: "md:!block"
+      ) do %>
+    <div class="px-5 pb-5">
+      <% overdue = @dashboard.overdue_deadlines %>
+      <% upcoming = @dashboard.upcoming_deadlines %>
+
+      <% if overdue.empty? && upcoming.empty? %>
+        <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.deadlines.empty") %></p>
+      <% else %>
+        <div class="flex flex-col divide-y divide-line-colour-light">
+          <% overdue.each do |item| %>
+            <div class="flex items-center justify-between py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-danger-light rounded-lg flex items-center justify-center flex-none">
+                  <%= icon("exclamation-circle-solid", css: "h-4 w-4 text-danger") %>
+                </div>
+                <div>
+                  <p class="main-text-sm-medium"><%= item[:course].title %></p>
+                  <p class="general-text-sm-normal text-danger"><%= t("dashboard.deadlines.incomplete", count: item[:incomplete_count]) %></p>
+                </div>
+              </div>
+              <div class="text-right flex-none">
+                <p class="general-text-sm-normal text-letter-color-light"><%= item[:deadline_at].strftime('%B %d') %></p>
+                <p class="general-text-sm-normal text-danger"><%= t("dashboard.deadlines.days_overdue", days: item[:days_overdue]) %></p>
+              </div>
+            </div>
+          <% end %>
+
+          <% upcoming.each do |item| %>
+            <div class="flex items-center justify-between py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-danger-light rounded-lg flex items-center justify-center flex-none">
+                  <%= icon("calendar", css: "h-4 w-4 text-danger") %>
+                </div>
+                <div>
+                  <p class="main-text-sm-medium"><%= item[:course].title %></p>
+                  <p class="general-text-sm-normal text-danger"><%= t("dashboard.deadlines.incomplete", count: item[:incomplete_count]) %></p>
+                </div>
+              </div>
+              <div class="text-right flex-none">
+                <p class="general-text-sm-normal text-letter-color-light"><%= item[:deadline_at].strftime('%B %d') %></p>
+                <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.deadlines.days_left", days: item[:days_left]) %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

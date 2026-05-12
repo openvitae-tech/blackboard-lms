@@ -1,0 +1,29 @@
+<div class="bg-white rounded-xl border border-line-colour-light">
+
+  <% header_content = capture do %>
+    <h2 class="main-text-lg-semibold"><%= t("dashboard.learning_activity.title") %></h2>
+  <% end %>
+
+  <%= accordion_component(
+        header: header_content,
+        wrapper_class: "",
+        icon_class: "md:hidden",
+        content_class: "md:!block"
+      ) do %>
+    <div class="px-5 pb-5">
+      <div class="flex items-center gap-2">
+        <div class="bg-secondary-light h-10 w-10 p-4 rounded-lg flex items-center justify-center flex-none">
+          <%= icon("puzzle-piece", css: "h-6 w-6 text-primary") %>
+        </div>
+        <div class="flex flex-col w-full gap-1">
+          <div class="flex justify-between w-full">
+            <span class="general-text-md-medium"><%= t("dashboard.learning_activity.quizzes_passed") %></span>
+            <span class="general-text-sm-normal"><%= @dashboard.quizzes_passed %>/<%= @dashboard.total_quizzes %></span>
+          </div>
+          <%= progressbar_component(value: @dashboard.quiz_pass_rate, color: :secondary) %>
+          <p class="general-text-sm-normal text-letter-color-light mt-1"><%= t("dashboard.learning_activity.pass_rate", rate: @dashboard.quiz_pass_rate) %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

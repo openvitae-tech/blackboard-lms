@@ -101,6 +101,12 @@ en:
     assigned:
       title: "New course assigned"
       text: "You have been assigned with new course %{course} by %{name}"
+    nudge:
+      title: "Complete your course"
+      text: "Your manager has nudged you to complete %{course}"
+    nudge_deadline:
+      title: "You're falling behind"
+      text: "Your manager has nudged you — deadline for %{course} is approaching"
     drop_warning: "Are you sure want to drop out ? Please note that all your progress will be lost!"
     published: "Course is now available to everyone"
     unpublished: "Course is unpublished and is not available for new enrollments"
@@ -250,6 +256,122 @@ en:
     partners: "Partners"
     assets: "Assets"
     explore: "Explore"
+  dashboard:
+    index:
+      team_label: "Team:"
+      subtitle: "Dashboard | %{count} members"
+      active_learners_delta:
+        one: "%{count} learner"
+        other: "%{count} learners"
+    stats:
+      active_learners: "Active Learners"
+      avg_completion: "Avg Completion"
+      avg_watch_time: "Avg Watch Time"
+      certificates_earned: "Certificates Earned"
+      courses: "Courses"
+      courses: "Courses"
+    total_engagement:
+      title: "Total Engagement"
+      hrs_watched_per_day: "Hrs watched per day"
+      daily_avg: "Daily avg"
+      peak_day: "Peak day"
+      total_hrs: "Total hrs / %{period}"
+      hours_watched: "Hours watched"
+      weekend_drop_tip: "Engagement drops %{pct}% on weekends. Set Friday as deadline."
+    engagement:
+      title: "Engagement"
+      hrs_watched_per_day: "Hrs watched per day"
+      daily_avg: "Daily avg"
+      peak_day: "Peak day"
+      hrs_per_period: "hrs/%{period}"
+      hours_watched: "Hours watched"
+    learning_activity:
+      title: "Learning Activity"
+      quizzes_passed: "Quizzes Passed"
+      pass_rate: "%{rate}% Pass rate"
+    self_assigned:
+      title: "Self-Assigned"
+      subtitle: "Courses learners enrolled on their own initiative"
+      empty: "No self-assigned courses"
+    deadlines:
+      title: "Deadlines"
+      empty: "No upcoming deadlines"
+      incomplete: "%{count} incomplete"
+      days_overdue: "%{days}d overdue"
+      days_left: "%{days}d left"
+    started_vs_completed:
+      title: "Started vs Completed"
+      completed: "Completed"
+      started: "Started"
+      widest_gap: "has the widest gap —"
+      widest_gap_title: "Courses with the widest gap"
+      none_started: "nobody has started yet (%{total} assigned)."
+      gap_detail: "%{started} started, %{completed} completed out of %{total} assigned."
+      empty: "No courses found."
+      search_placeholder: "Search courses..."
+    recent_activity:
+      title: "Recent Activity"
+      completions: "Completions"
+      certificates: "Certificates"
+      new_starts: "New Starts"
+      action:
+        completed: "completed"
+        started: "started"
+        certificate: "earned a certificate in"
+    team_progress:
+      title: "Team Progress"
+      no_sub_teams: "No sub teams"
+      sub_teams: "Sub Teams"
+      search_placeholder: "Search Members..."
+      members_count:
+        one: "%{count} member"
+        other: "%{count} members"
+      member_counts:
+        completed: "%{count} Completed"
+        behind: "%{count} Behind"
+      columns:
+        member: "Member"
+        courses: "Courses"
+        progress: "Progress"
+        team: "Team"
+        members: "Members"
+      no_members_found: "No members found for \"%{query}\"."
+      no_teams_found: "No teams found."
+    course_progress:
+      title: "Course Progress"
+      empty: "No courses enrolled"
+    member_profile:
+      last_active: "Last active: %{time} ago"
+      self_assigned_delta:
+        one: "%{count} course self assigned"
+        other: "%{count} courses self assigned"
+      crushing_it: "is crushing it!"
+      falling_behind: "is falling behind."
+    falling_behind:
+      message: "%{count} Learners falling behind!"
+      pending: "have pending assignments"
+    custom_date:
+      title: "Customise Date"
+      from: "From"
+      to: "To"
+      select_date: "Select date"
+      range_hint: "Date range is limited to 6 months. Choose a start and end date to continue."
+    nudge_all:
+      title: "Nudge Incomplete Learners"
+      assignment_on: "Assignment on \"%{course}\""
+    actions:
+      view_all: "View all"
+      view_all_activity: "View all activity"
+      view_all_members: "View all members"
+      view_all_teams: "View all teams"
+      nudge: "Nudge"
+      nudge_all: "Nudge All"
+      congrats: "Congrats"
+      appreciate: "Appreciate"
+      cancel: "Cancel"
+    appreciate_member:
+      message_label: "Message"
+      send: "Send"
   my_profile:
     label: "My Profile"
     my_courses:

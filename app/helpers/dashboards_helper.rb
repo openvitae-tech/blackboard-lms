@@ -1,15 +1,75 @@
 # frozen_string_literal: true
 
 module DashboardsHelper
-  MenuItem = Struct.new(:label, :link)
+  MenuItem = Struct.new(:label, :link, :data)
   def duration_menu_for(team)
     @duration_menu_for ||= Dashboard::VALID_DURATIONS.map do |key, value|
       MenuItem.new(value, dashboard_path(duration: key.to_s, team_id: team.id))
+    end + [MenuItem.new('Custom date', '#', { action: 'click->custom-date#open' })]
+  end
+
+  def duration_select_options(team, member: nil, origin: nil)
+    options = Dashboard::VALID_DURATIONS.map do |key, label|
+      path = if member
+               team_member_profile_dashboards_path(duration: key.to_s, team_id: team.id, user_id: member.id, origin:)
+             else
+               dashboard_path(duration: key.to_s, team_id: team.id)
+             end
+      [label, path]
+    end
+    options + [['Custom date', 'custom']]
+  end
+
+  def duration_select_value(team, member: nil, origin: nil)
+    return 'custom' if params[:duration] == 'custom'
+
+    key = params[:duration].presence || 'last_7_days'
+    key = 'last_7_days' unless Dashboard::VALID_DURATIONS.key?(key.to_sym)
+    if member
+      team_member_profile_dashboards_path(duration: key, team_id: team.id, user_id: member.id, origin:)
+    else
+      dashboard_path(duration: key, team_id: team.id)
     end
   end
 
+  def duration_select_html_options
+    { data: { action: 'change->custom-date#handleDurationChange' }, class: 'cursor-pointer' }
+  end
+
+  def duration_menu_for_member(team, member, origin: nil)
+    Dashboard::VALID_DURATIONS.map do |key, value|
+      MenuItem.new(value,
+                   team_member_profile_dashboards_path(duration: key.to_s, team_id: team.id, user_id: member.id,
+                                                       origin: origin))
+    end + [MenuItem.new('Custom date', '#', { action: 'click->custom-date#open' })]
+  end
+
   def selected_label(duration)
+    return 'Custom date' if duration.is_a?(Range)
+
     Dashboard::VALID_DURATIONS[duration.to_sym] || Dashboard::VALID_DURATIONS[:last_7_days].to_s
+  end
+
+  def period_label(duration)
+    days = (duration.end - duration.begin).to_i / 1.day
+    case days
+    when 0..7 then 'this week'
+    when 8..14 then 'last 2 weeks'
+    when 15..31 then 'this month'
+    else 'this period'
+    end
+  end
+
+  def safe_origin_path(origin)
+    return nil if origin.blank?
+    return nil unless origin.start_with?('/') && !origin.start_with?('//')
+    return nil if origin.include?(':')
+
+    origin
+  end
+
+  def days_remaining(deadline)
+    ((deadline - Time.current) / 1.day).ceil
   end
 
   def scale_series(series, max_limit)

@@ -1,0 +1,10 @@
+<% size_classes = local_assigns[:size] == 'sm' ? 'w-8 h-8' : 'w-10 h-10' %>
+<div class="<%= size_classes %> relative flex-none flex items-center justify-center">
+  <div class="absolute inset-0 text-primary-light-100">
+    <%= icon("circle-track", css: "w-full h-full -rotate-90") %>
+  </div>
+  <div class="absolute inset-0 text-primary" style="--progress: <%= value %>">
+    <%= icon("circle-progress", css: "w-full h-full -rotate-90") %>
+  </div>
+  <span class="general-text-xs-normal text-primary font-medium z-10"><%= value %>%</span>
+</div>

@@ -1,0 +1,27 @@
+<% modal_footer = capture do %>
+  <div class="flex gap-2 sticky bottom-0 bg-white w-full">
+    <div class="flex-1" data-action="click->modals#closeModal">
+      <%= button_component(text: t("button.cancel"), type: "outline") %>
+    </div>
+    <%= button_to nudge_all_dashboards_path(course_id: params[:course_id]), method: :post, class: "flex-1" do %>
+      <%= button_component(text: t("dashboard.actions.nudge_all")) %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= modal_box_component(title: t("dashboard.nudge_all.title"), modal_footer:) do %>
+  <div class="flex flex-col gap-3">
+    <% @enrollments.each do |enrollment| %>
+      <div class="flex items-center justify-between py-2">
+        <div class="flex items-center gap-3">
+          <%= icon("user-circle", css: "h-8 w-8 text-primary") %>
+          <div>
+            <p class="main-text-sm-medium"><%= enrollment.user.name %></p>
+            <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.nudge_all.assignment_on", course: enrollment.course.title) %></p>
+          </div>
+        </div>
+        <%= link_component text: t("dashboard.actions.nudge"), url: nudge_user_dashboards_path(enrollment_id: enrollment.id), html_options: { data: { turbo_method: :post } } %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

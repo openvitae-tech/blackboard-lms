@@ -1,0 +1,87 @@
+<div class="flex justify-between">
+  <%= render 'shared/components/bread_crumbs', links: [['Dashboard', dashboards_path], [t("dashboard.started_vs_completed.title"), nil]] %>
+  <%= form_with url: started_vs_completed_dashboards_path, method: :get,
+                data: { controller: "debounce-search", turbo_frame: "courses_results" } do |f| %>
+    <%= hidden_field_tag :duration, params[:duration] %>
+    <%= hidden_field_tag :team_id, params[:team_id] if params[:team_id].present? %>
+    <div class="relative">
+      <%= icon("magnifying-glass", css: "h-5 w-5 text-letter-color-light absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none") %>
+      <%= f.text_field :query, value: params[:query], placeholder: t("dashboard.started_vs_completed.search_placeholder"),
+          class: "border border-line-colour-light rounded-lg pl-9 pr-3 py-2 main-text-md-normal focus:outline-none focus:border-primary w-[340px]",
+          data: { action: "input->debounce-search#search" } %>
+    </div>
+  <% end %>
+</div>
+<div class="flex items-center justify-between my-6 px-1">
+  <div class="flex justify-between gap-4 w-full">
+    <div class="flex flex-row gap-3">
+      <%= render 'shared/components/back_button', back_link: dashboards_path %>
+      <h2 class="main-text-lg-semibold"><%= t("dashboard.started_vs_completed.title") %></h2>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1">
+        <div class="w-3 h-3 rounded-full bg-secondary"></div>
+        <span class="general-text-sm-normal"><%= t("dashboard.started_vs_completed.completed") %></span>
+      </div>
+      <div class="flex items-center gap-1">
+        <div class="w-3 h-3 rounded-full bg-primary"></div>
+        <span class="general-text-sm-normal"><%= t("dashboard.started_vs_completed.started") %></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%= turbo_frame_tag "courses_results", data: { turbo_action: "advance" } do %>
+<% if @widest_gap_courses.any? %>
+  <div class="bg-gold-light rounded-xl p-5 mb-4">
+    <div class="flex items-center justify-center mb-3">
+      <h3 class="main-text-sm-medium text-letter-color-medium"><%= t("dashboard.started_vs_completed.widest_gap_title") %></h3>
+    </div>
+    <% @widest_gap_courses.each do |item| %>
+    <div class="flex justify-between gap-5 border-b border-line-colour-light last:border-b-0">
+      <div class="px-5 py-3 flex-1">
+        <div class="flex justify-between gap-2">
+          <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
+          <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
+        </div>
+        <%= progressbar_component(segments: [
+            { value: item[:completed_percent], color: :secondary },
+            { value: item[:started_percent], color: :primary }
+          ]) %>
+      </div>
+      <%= link_to nudge_all_dashboards_path(course_id: item[:course].id, team_id: params[:team_id]), data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary flex-none" do %>
+        <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
+        <span class="main-text-sm-normal"><%= t("dashboard.actions.nudge") %></span>
+      <% end %>
+     </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="bg-white rounded-xl border border-line-colour-light">
+  <% if @courses.any? %>
+    <div class="flex flex-col">
+      <% @courses.each do |item| %>
+        <div class="px-5 py-3 border-b border-line-colour-light last:border-b-0">
+          <div class="flex justify-between gap-2">
+            <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
+            <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
+          </div>
+          <%= progressbar_component(segments: [
+            { value: item[:completed_percent], color: :secondary },
+            { value: item[:started_percent], color: :primary }
+          ]) %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="general-text-sm-normal text-letter-color-light text-center py-8"><%= t("dashboard.started_vs_completed.empty") %></p>
+  <% end %>
+</div>
+
+<div class="flex justify-end gap-3 mt-4">
+  <%= render 'shared/pagination/prev', items: @courses %>
+  <%= render 'shared/pagination/next', items: @courses %>
+</div>
+<% end %>

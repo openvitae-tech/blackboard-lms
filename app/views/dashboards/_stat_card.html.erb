@@ -1,0 +1,25 @@
+<% delta_value = local_assigns[:delta] || 0 %>
+<div class="bg-white rounded-xl border border-line-colour-light p-5">
+  <div class="flex items-center gap-4">
+    <div class="bg-primary-light-100 p-4 rounded-lg">
+      <%= icon(icon_name, css: "h-6 w-6 text-primary") %>
+    </div>
+    <div class="flex flex-col gap-1">
+      <span class="main-text-sm-normal text-primary"><%= title %></span>
+      <p class="main-text-lg-medium text-primary"><%= value.presence || '—' %></p>
+    </div>
+  </div>
+  <% unless local_assigns[:delta].nil? %>
+    <div class="w-full h-px border border-line-colour-light my-3"></div>
+    <p class="flex flex-row justify-center items-center gap-1 general-text-md-normal <%= delta_value > 0 ? 'text-secondary' : 'text-danger' %>">
+      <% if delta_value > 0 %>
+        <%= icon("arrow-up", css: "h-4 w-4") %>+<%= delta_label %>
+      <% elsif delta_value < 0 %>
+        <%= icon("arrow-down", css: "h-4 w-4") %><%= delta_label %>
+      <% else %>
+        <%= delta_label %>
+      <% end %>
+      <%= delta_suffix %>
+    </p>
+  <% end %>
+</div>

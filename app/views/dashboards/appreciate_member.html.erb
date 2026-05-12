@@ -1,0 +1,33 @@
+<% title = @banner_type == 'crushing_it' ? "Appreciate #{@member.display_name}" : "Remind #{@member.display_name}" %>
+<% placeholder = @banner_type == 'crushing_it' \
+    ? "Congrats #{@member.display_name.split.first}! You're doing amazing. Keep it up!" \
+    : "Hey #{@member.display_name.split.first}, you're falling behind on your courses. Keep going!" %>
+
+<%= modal_box_component(title:) do %>
+  <%= form_with url: appreciate_member_dashboards_path, method: :post, data: { turbo_frame: "_top" } do |f| %>
+    <%= f.hidden_field :user_id, value: @member.id %>
+    <%= f.hidden_field :banner_type, value: @banner_type %>
+    <%= f.hidden_field :team_id, value: @team&.id %>
+
+    <div class="mb-5">
+      <label class="general-text-sm-normal text-letter-color-light mb-1 block"><%= t('dashboard.appreciate_member.message_label') %></label>
+      <%= f.text_area :message,
+          rows: 4,
+          required: true,
+          maxlength: 500,
+          value: placeholder,
+          placeholder: "",
+          class: "w-full border border-line-colour-light rounded-lg px-3 py-2 main-text-md-normal focus:outline-none focus:border-primary resize-none" %>
+    </div>
+
+    <div class="flex gap-2">
+      <button type="button"
+              data-action="click->modals#closeModal"
+              class="flex-1 border border-line-colour-light rounded-lg py-2 main-text-sm-medium text-letter-color">
+        <%= t('dashboard.actions.cancel') %>
+      </button>
+      <%= f.submit t('dashboard.appreciate_member.send'),
+          class: "flex-1 bg-primary text-white rounded-lg py-2 main-text-sm-medium cursor-pointer" %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,9 +1,9 @@
 .dropdown-component-md{
-      @apply px-3 py-2 rounded;
+      @apply rounded;
 }
 
 .dropdown-component-lg{
-    @apply px-3 py-2 md:p-4 rounded-lg;
+    @apply md:p-4 rounded-lg;
 }
 
 .dropdown-component-base{

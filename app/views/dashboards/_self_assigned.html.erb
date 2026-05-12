@@ -1,0 +1,28 @@
+<div class="bg-white rounded-xl border border-line-colour-light">
+
+  <% header_content = capture do %>
+    <h2 class="main-text-lg-semibold"><%= t("dashboard.self_assigned.title") %></h2>
+  <% end %>
+
+  <%= accordion_component(
+        header: header_content,
+        wrapper_class: "",
+        icon_class: "md:hidden",
+        content_class: "md:!block"
+      ) do %>
+    <div class="px-5 pb-5">
+      <p class="general-text-sm-normal text-letter-color-light mb-4"><%= t("dashboard.self_assigned.subtitle") %></p>
+      <div class="flex flex-col gap-3">
+        <% @dashboard.self_assigned_enrollments.each do |enrollment| %>
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="main-text-sm-medium line-clamp-1"><%= enrollment.course.title %></p>
+              <p class="general-text-sm-normal text-letter-color-light"><%= enrollment.user.name %></p>
+            </div>
+            <%= render 'shared/components/progress_circle', value: enrollment.progress %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>  

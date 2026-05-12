@@ -1,0 +1,57 @@
+<div class="bg-white rounded-xl border border-line-colour-light">
+
+  <% header_content = capture do %>
+    <div class="w-full flex flex-col md:flex-row md:justify-between md:mb-4">
+
+      <p class="main-text-lg-semibold"><%= t("dashboard.total_engagement.title") %></p>
+      <p class="general-text-sm-normal text-letter-color-light hidden md:block"><%= t("dashboard.total_engagement.hrs_watched_per_day") %></p>
+    </div>
+  <% end %>
+
+  <%= accordion_component(
+        header: header_content,
+        wrapper_class: "",
+        icon_class: "md:hidden",
+        content_class: "md:!block"
+      ) do %>
+    <div class="px-5 pb-5">
+      <p class="general-text-sm-normal text-letter-color-light md:hidden"><%= t("dashboard.total_engagement.hrs_watched_per_day") %></p>
+
+      <div class="w-full bg-white py-4">
+        <%= column_chart [
+          { name: t("dashboard.total_engagement.hours_watched"), data: @dashboard.daily_hours_series }
+        ], height: "200px",
+        dataset: { backgroundColor: '#D9E3F5', borderWidth: 0 },
+        library: {
+          plugins: { legend: { display: false } },
+          scales: { y: { min: 0, ticks: { stepSize: 1 } } }
+        } %>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 mt-4 text-center border-t border-line-colour-light pt-4">
+        <div>
+          <p class="main-text-lg-medium text-primary"><%= @dashboard.total_hours %> hrs</p>
+          <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.total_engagement.total_hrs", period: period_label(@dashboard.duration)) %></p>
+        </div>
+        <div>
+          <p class="main-text-lg-medium text-primary"><%= @dashboard.daily_avg_hours %> hrs</p>
+          <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.total_engagement.daily_avg") %></p>
+        </div>
+        <div>
+          <p class="main-text-lg-medium text-primary"><%= @dashboard.peak_day || '—' %></p>
+          <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.total_engagement.peak_day") %></p>
+        </div>
+      </div>
+
+      <% drop_pct = @dashboard.weekend_engagement_drop_percent %>
+      <% if drop_pct > 0 %>
+        <div class="mt-4 bg-danger-light rounded-lg p-3 flex items-start gap-2">
+          <%= icon("arrow-down", css: "h-4 w-4 text-danger flex-none mt-0.5") %>
+          <p class="general-text-sm-normal text-letter-color-medium">
+            <%= t("dashboard.total_engagement.weekend_drop_tip", pct: drop_pct) %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
