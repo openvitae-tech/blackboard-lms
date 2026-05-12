@@ -469,7 +469,8 @@ RSpec.describe Dashboard do
 
       # Simulate what Enrollment#clear_dashboard_cache does on after_commit
       # (after_commit does not fire in transactional test fixtures)
-      Rails.cache.increment("dashboard/team_#{team.id}/version", 1, initial: 1)
+      # Use write so the namespace is applied consistently with read in base_cache_key
+      Rails.cache.write("dashboard/team_#{team.id}/version", 2)
 
       fresh_dashboard = described_class.new(team, 'last_7_days')
       expect(fresh_dashboard.send(:base_cache_key)).not_to eq(original_key)

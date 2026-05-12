@@ -127,6 +127,9 @@ class Enrollment < ApplicationRecord
 
   def clear_dashboard_cache
     team_id = User.where(id: user_id).pick(:team_id)
-    Rails.cache.increment("dashboard/team_#{team_id}/version", 1, initial: 1) if team_id
+    return unless team_id
+
+    key = "dashboard/team_#{team_id}/version"
+    Rails.cache.write(key, (Rails.cache.read(key) || 0) + 1)
   end
 end
