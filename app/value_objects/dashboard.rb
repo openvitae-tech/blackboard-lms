@@ -237,7 +237,7 @@ class Dashboard
   end
 
   def base_cache_key
-    version = Rails.cache.fetch("dashboard/team_#{@team.id}/version") { 1 }
+    version = Rails.cache.read("dashboard/team_#{@team.id}/version") || 1
     "dashboard/team_#{@team.id}/v#{version}/#{duration_cache_key}"
   end
 
