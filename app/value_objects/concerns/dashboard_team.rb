@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Handles team members, sub-teams, member profile metrics
 module DashboardTeam
   def all_team_members_progress(page, query: nil)
     all = Rails.cache.fetch("#{base_cache_key}/team_members_progress/#{Digest::SHA1.hexdigest(query.to_s)}",
@@ -220,7 +221,7 @@ module DashboardTeam
   end
 
   def calculate_progress(total, completed)
-    return 0 if total.zero?
+    return 0 if total.nil? || total.zero?
 
     (completed.to_f / total * 100).round
   end

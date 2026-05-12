@@ -127,6 +127,6 @@ class Enrollment < ApplicationRecord
 
   def clear_dashboard_cache
     team_id = User.where(id: user_id).pick(:team_id)
-    Rails.cache.delete_matched("dashboard/team_#{team_id}/*") if team_id
+    Rails.cache.increment("dashboard/team_#{team_id}/version", 1, initial: 1) if team_id
   end
 end

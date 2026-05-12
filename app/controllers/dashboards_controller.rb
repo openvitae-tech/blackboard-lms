@@ -83,7 +83,7 @@ class DashboardsController < ApplicationController
 
     return unless request.post?
 
-    message = params[:message].to_s.strip
+    message = ActionController::Base.helpers.sanitize(params[:message].to_s.strip, tags: [])
     return head(:unprocessable_entity) if message.blank? || message.length > 500
 
     notification_title = @banner_type == 'crushing_it' ? 'Your manager appreciates you!' : 'Reminder from your manager'

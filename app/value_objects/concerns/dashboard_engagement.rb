@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Handles engagement chart, watch time, quiz/assessment metrics
 module DashboardEngagement
   def daily_hours_series
     series = build_empty_series

@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+# Handles recent activity, started vs completed, nudge targets
 module DashboardActivity
   def recent_activities
-    team_user_ids = User.where(team_id: team_and_subteam_ids(@team)).pluck(:id)
-    (event_activities(team_user_ids) + certificate_activities(team_user_ids))
-      .sort_by { |a| a[:created_at] }
-      .reverse
-      .first(3)
+    Rails.cache.fetch("#{base_cache_key}/recent_activities", expires_in: 5.minutes) do
+      team_user_ids = User.where(team_id: team_and_subteam_ids(@team)).pluck(:id)
+      (event_activities(team_user_ids) + certificate_activities(team_user_ids))
+        .sort_by { |a| a[:created_at] }
+        .reverse
+        .first(3)
+    end
   end
 
   def all_recent_activity(page)

@@ -137,8 +137,10 @@ class Dashboard
   end
 
   def previous_duration
-    period_length = @duration.end - @duration.begin
-    (@duration.begin - period_length)..@duration.begin
+    @previous_duration ||= begin
+      period_length = @duration.end - @duration.begin
+      (@duration.begin - period_length)..@duration.begin
+    end
   end
 
   def previous_active_learners_count
@@ -231,11 +233,12 @@ class Dashboard
   end
 
   def duration_cache_key
-    "#{@duration.begin.to_date}-#{@duration.end.to_date}"
+    "#{@duration.begin.to_i}-#{@duration.end.to_i}"
   end
 
   def base_cache_key
-    "dashboard/team_#{@team.id}/#{duration_cache_key}"
+    version = Rails.cache.fetch("dashboard/team_#{@team.id}/version") { 1 }
+    "dashboard/team_#{@team.id}/v#{version}/#{duration_cache_key}"
   end
 
   def filter_by_teams(events)

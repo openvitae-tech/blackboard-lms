@@ -24,21 +24,28 @@ RSpec.describe Dashboard do
       expect(dashboard.send(:base_cache_key)).to include("team_#{team.id}")
     end
 
-    it 'includes the duration start and end dates' do
+    it 'includes unix timestamps for duration start and end' do
+      duration = dashboard.instance_variable_get(:@duration)
       key = dashboard.send(:base_cache_key)
-      expect(key).to include(7.days.ago.to_date.to_s)
-      expect(key).to include(Time.zone.today.to_s)
+      expect(key).to include(duration.begin.to_i.to_s)
+      expect(key).to include(duration.end.to_i.to_s)
     end
 
     context 'with a custom date Range' do
-      let(:from_date) { 10.days.ago.to_date }
-      let(:to_date) { 3.days.ago.to_date }
-      let(:dashboard) { described_class.new(team, from_date.beginning_of_day..to_date.end_of_day) }
+      let(:from) { 10.days.ago.beginning_of_day }
+      let(:to)   { 3.days.ago.end_of_day }
+      let(:dashboard) { described_class.new(team, from..to) }
 
-      it 'reflects the custom range' do
+      it 'reflects the custom range as unix timestamps' do
         key = dashboard.send(:base_cache_key)
-        expect(key).to include(from_date.to_s)
-        expect(key).to include(to_date.to_s)
+        expect(key).to include(from.to_i.to_s)
+        expect(key).to include(to.to_i.to_s)
+      end
+
+      it 'produces different keys for same-day ranges with different times' do
+        dashboard_a = described_class.new(team, from.all_day)
+        dashboard_b = described_class.new(team, from.noon..from.end_of_day)
+        expect(dashboard_a.send(:base_cache_key)).not_to eq(dashboard_b.send(:base_cache_key))
       end
     end
   end
@@ -438,6 +445,35 @@ RSpec.describe Dashboard do
       result = dashboard.team_member_data(learner)
       # 0 this period, 1 previous → delta = -1
       expect(result[:certificates_delta]).to eq(-1)
+    end
+  end
+
+  # ---------------------------------------------------------------------------
+  # Caching behaviour
+  # ---------------------------------------------------------------------------
+  describe 'caching' do
+    it 'returns cached result on second call without hitting the DB' do
+      Rails.cache.clear
+      first_result = dashboard.recent_activities
+
+      # Mutate DB after first fetch — enrollment added should not appear
+      create(:enrollment, user: learner, course:)
+
+      second_result = dashboard.recent_activities
+      expect(second_result).to eq(first_result)
+    end
+
+    it 'returns fresh data after enrollment commit invalidates the cache version' do
+      Rails.cache.clear
+      first_result = dashboard.recent_activities
+
+      # Trigger cache invalidation via after_commit callback
+      enrollment = create(:enrollment, user: learner, course:)
+      enrollment.update!(updated_at: Time.current)
+
+      fresh_dashboard = described_class.new(team, 'last_7_days')
+      second_result = fresh_dashboard.recent_activities
+      expect(second_result).not_to eq(first_result)
     end
   end
 end
