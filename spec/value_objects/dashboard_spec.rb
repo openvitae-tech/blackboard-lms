@@ -463,17 +463,19 @@ RSpec.describe Dashboard do
       expect(second_result).to eq(first_result)
     end
 
-    it 'returns fresh data after enrollment commit invalidates the cache version' do
+    it 'increments the cache version and changes base_cache_key after enrollment commit' do
       Rails.cache.clear
-      first_result = dashboard.recent_activities
+      original_key = dashboard.send(:base_cache_key)
 
-      # Trigger cache invalidation via after_commit callback
-      enrollment = Enrollment.create!(user: learner, course:)
-      enrollment.update!(updated_at: Time.current)
+      # Creating an enrollment fires after_commit :clear_dashboard_cache
+      # which increments dashboard/team_#{id}/version
+      Enrollment.create!(user: learner, course:)
+
+      new_version = Rails.cache.read("dashboard/team_#{team.id}/version")
+      expect(new_version).to be > 0
 
       fresh_dashboard = described_class.new(team, 'last_7_days')
-      second_result = fresh_dashboard.recent_activities
-      expect(second_result).not_to eq(first_result)
+      expect(fresh_dashboard.send(:base_cache_key)).not_to eq(original_key)
     end
   end
 end

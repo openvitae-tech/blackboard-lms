@@ -32,9 +32,12 @@ RSpec.describe 'Dashboards', type: :request do
       end
 
       it 'enqueues a mailer for the incomplete learner' do
+        ActiveJob::Base.queue_adapter = :test
         expect do
           post nudge_all_dashboards_path(course_id: course.id)
         end.to have_enqueued_mail(UserMailer, :course_deadline_reminder)
+      ensure
+        ActiveJob::Base.queue_adapter = :sidekiq
       end
 
       it 'redirects to dashboards path with a success flash' do
