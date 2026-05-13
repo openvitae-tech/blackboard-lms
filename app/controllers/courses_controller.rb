@@ -64,7 +64,10 @@ class CoursesController < ApplicationController
   # GET /courses/1 or /courses/1.json
   def show
     authorize @course
-    @course_modules = @course.modules_in_order
+    @course_modules = RecordOrdering.records_in_order(
+      @course.course_modules.includes(:lessons),
+      @course.course_modules_in_order
+    )
     @enrollment = current_user.get_enrollment_for(@course)
     if params[:program_id].present?
       @program = current_user.learning_partner.programs
@@ -221,7 +224,7 @@ class CoursesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_course
-    @course = Course.includes(course_modules: :lessons).find(params[:id])
+    @course = Course.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
