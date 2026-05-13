@@ -8,7 +8,7 @@ gem 'connection_pool', '~> 2.5'
 gem 'neo_components', path: 'engines/neo_component'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '8.0.2.1'
+gem 'rails', '8.0.5'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -49,7 +49,7 @@ gem 'bootsnap', require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem 'image_processing', '~> 1.2'
 
-gem 'devise', '~> 5.0.3'
+gem 'devise', '~> 5.0.4'
 
 gem 'yard'
 
@@ -129,7 +129,7 @@ gem 'scorm-package', '~> 0.1.2', require: 'scorm_package'
 
 gem 'combine_pdf'
 gem 'grover'
-gem 'net-imap', '0.5.7'
+gem 'net-imap', '0.5.14'
 gem 'nokogiri', '1.19.3'
 gem 'phonelib'
 gem 'rack', '>= 3.1.11'
