@@ -129,7 +129,7 @@ gem 'scorm-package', '~> 0.1.2', require: 'scorm_package'
 
 gem 'combine_pdf'
 gem 'grover'
-gem 'net-imap', '0.5.7'
+gem 'net-imap', '0.5.14'
 gem 'nokogiri', '1.19.3'
 gem 'phonelib'
 gem 'rack', '>= 3.1.11'

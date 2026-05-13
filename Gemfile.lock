@@ -271,7 +271,7 @@ GEM
     nenv (0.3.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    net-imap (0.5.7)
+    net-imap (0.5.14)
       date
       net-protocol
     net-pop (0.1.2)
@@ -569,7 +569,7 @@ DEPENDENCIES
   kaminari
   letter_opener
   neo_components!
-  net-imap (= 0.5.7)
+  net-imap (= 0.5.14)
   newrelic_rpm
   nokogiri (= 1.19.3)
   pg (~> 1.1)
