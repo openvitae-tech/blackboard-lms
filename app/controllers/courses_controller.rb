@@ -64,10 +64,7 @@ class CoursesController < ApplicationController
   # GET /courses/1 or /courses/1.json
   def show
     authorize @course
-    @course_modules = RecordOrdering.records_in_order(
-      @course.course_modules.includes(:lessons),
-      @course.course_modules_in_order
-    )
+    @course_modules = @course.modules_in_order
     @enrollment = current_user.get_enrollment_for(@course)
     if params[:program_id].present?
       @program = current_user.learning_partner.programs
