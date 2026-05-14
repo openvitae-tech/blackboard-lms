@@ -24,6 +24,10 @@ export default class extends Controller {
     if (this.hiddenBlobIdTarget.value) {
       this.restoreUploadedVideo();
     }
+    if (this.element._pendingFile) {
+      this.setFile(this.element._pendingFile);
+      delete this.element._pendingFile;
+    }
   }
   restoreUploadedVideo() {
     const blobId = this.hiddenBlobIdTarget.value;

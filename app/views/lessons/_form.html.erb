@@ -60,7 +60,9 @@
         </div>
         
         <div class="flex-1 hidden" data-lessons-form-target="uploadButtonEnabled">
-          <%= button_component(text: submit_label_for(lesson), disabled: false ) %>
+          <%= form.button type: :submit, class: 'w-full' do %>
+            <%= button_component(text: submit_label_for(lesson)) %>
+          <% end %>
         </div>
                  
       </div>
