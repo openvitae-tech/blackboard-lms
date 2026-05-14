@@ -14,7 +14,8 @@ module ViewComponent
         progress: nil,
         badge: nil,
         description: nil,
-        highlights: []
+        highlights: [],
+        checkbox: false
       )
         badge = { bg_color: 'bg-secondary', text_color: 'text-primary-dark' }.merge(badge) if badge
         render partial: 'view_components/cards/long_course_card_component',
@@ -29,7 +30,8 @@ module ViewComponent
                  progress:,
                  badge:,
                  description:,
-                 highlights:
+                 highlights:,
+                 checkbox:
                }
       end
     end

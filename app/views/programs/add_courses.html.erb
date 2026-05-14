@@ -56,12 +56,10 @@
       <% else %>
         <ul class="flex flex-col gap-4">
           <% @courses.each do |course| %>
-            <li class="relative">
-              <%= check_box_tag 'course_ids[]', course.id, false,
-                    id: dom_id(course, "course_ids"),
-                    class: 'absolute top-4 right-4 w-5 h-5 z-10 border rounded checked:bg-primary checked:border-primary focus:ring-0',
-                    data: { action: "change->course-selection#toggleSubmit" } %>
-              <%= build_long_course_card(course, nil) %>
+            <li>
+              <%= build_long_course_card(course, nil,
+                    checkbox: { name: 'course_ids[]', value: course.id, id: dom_id(course, "course_ids"),
+                                data: { action: "change->course-selection#toggleSubmit" } }) %>
             </li>
           <% end %>
         </ul>
