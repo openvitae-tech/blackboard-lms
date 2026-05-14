@@ -75,11 +75,11 @@ export default class extends Controller {
 
     const record = this.nestedRecordContainer.lastElementChild;
     this.setDefaultLanguageFor(record);
-    const outlet = this.videoUploadOutlets.find(outlet =>
-      record.contains(outlet.element)
-    );
 
-    outlet?.setFile(file);
+    // Stimulus connects outlets asynchronously. Store the file directly on the
+    // outlet element so video_upload_controller can pick it up in connect().
+    const videoUploadEl = record.querySelector('[data-controller~="video-upload"]');
+    if (videoUploadEl) videoUploadEl._pendingFile = file;
 
     this.videoInputTarget.value = "";
     this.videoFieldCount++;
