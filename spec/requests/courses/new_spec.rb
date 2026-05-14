@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Request spec for GET /courses/new' do
   describe 'accessing new course page by non admin' do
     %i[owner manager learner].each do |role|

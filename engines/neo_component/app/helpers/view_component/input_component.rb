@@ -165,9 +165,10 @@ module ViewComponent
 
     def file_selector_component(type:, form: nil, name: nil, label: nil, support_text: nil,
                                 support_text_two: nil, error: nil,
-                                disabled: false, html_options: {})
+                                disabled: false, multiple: false, accept: nil, html_options: {})
       file_selector = FileSelectorComponent.new(
-        form:, name:, label:, support_text:, support_text_two:, error:, disabled:, html_options:, type:
+        form:, name:, label:, support_text:, support_text_two:, error:,
+        disabled:, multiple:, accept:, html_options:, type:
       )
 
       render partial: 'view_components/inputs/file_selector', locals: { file_selector: }
@@ -285,6 +286,37 @@ module ViewComponent
 
       render partial: 'view_components/inputs/date_picker_component/date_picker',
              locals: { date_picker: }
+    end
+
+    def multi_select_component(
+      form: nil,
+      name: nil,
+      label: nil,
+      options: [],
+      value: [],
+      placeholder: nil,
+      size: 'md',
+      support_text: nil,
+      error: nil,
+      disabled: false,
+      html_options: {}
+    )
+      multi_select = MultiSelectComponent.new(
+        form:,
+        name:,
+        label:,
+        options:,
+        value:,
+        placeholder:,
+        size:,
+        support_text:,
+        error:,
+        disabled:,
+        html_options:
+      )
+
+      render partial: 'view_components/inputs/multi_select_component/multi_select',
+             locals: { multi_select: }
     end
   end
 end

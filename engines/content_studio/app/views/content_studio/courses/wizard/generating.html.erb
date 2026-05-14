@@ -1,0 +1,31 @@
+<div class="flex flex-col py-3 max-w-4xl mx-auto w-full"
+     data-controller="generation-polling"
+     data-generation-polling-status-url-value="<%= @course_id == 'pending' ? '' : generation_status_path(id: @course_id) %>"
+     data-generation-polling-start-url-value="<%= @course_id == 'pending' ? start_generation_path : '' %>">
+
+  <%# Wizard steps header %>
+  <div class="flex justify-center py-3">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'document-text', label: 'Upload doc' },
+        { icon_name: 'camera',        label: 'Configure Video' },
+        { icon_name: 'numbered-list', label: 'Course Structure' }
+      ],
+      current_step: 2
+    ) %>
+  </div>
+
+  <div class="flex flex-col items-center pb-10 -mt-12">
+    <%= image_tag 'waiting.gif', class: 'w-[406px] h-[406px]' %>
+    <p class="main-text-md-medium text-letter-color text-center">
+      We're creating your course structure !<br>
+      It will take sometime.<br>
+      Please be patient!
+    </p>
+    <p class="general-text-md-normal text-letter-color-light text-center"
+       data-generation-polling-target="stage">
+      Preparing your course…
+    </p>
+  </div>
+
+</div>

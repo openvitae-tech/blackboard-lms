@@ -1,0 +1,54 @@
+<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full">
+
+  <%# Wizard steps header %>
+  <div class="flex justify-center py-3">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'document-text', label: 'Upload doc' },
+        { icon_name: 'camera',        label: 'Configure Video' },
+        { icon_name: 'numbered-list', label: 'Course Structure' }
+      ],
+      current_step: 1
+    ) %>
+  </div>
+
+  <%= form_with url: configure_video_path(id: @course_id), method: :patch, multipart: true, class: 'flex flex-col gap-5' do |form| %>
+
+    <%# Card: Upload Logo %>
+    <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">
+      <p class="main-text-lg-semibold text-letter-color">Upload Logo</p>
+      <%= file_selector_component(
+        form: form,
+        name: :logo,
+        type: 'image',
+        accept: '.png,.jpeg,.jpg,.svg',
+        support_text: 'File types : png, jpeg, jpg, svg',
+        support_text_two: 'File size : 5 mb/file'
+      ) %>
+    </div>
+
+    <%# Card: Video Generation — hidden, remove 'hidden' class to expose %>
+    <div class="hidden bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">
+      <p class="main-text-lg-semibold text-letter-color">Video Generation</p>
+      <%= input_checkbox_component(
+        form: form,
+        name: :no_video,
+        label: 'Skip video generation',
+        value: '1'
+      ) %>
+    </div>
+
+    <%# Footer %>
+    <div class="flex gap-3">
+      <%= link_to new_course_path do %>
+        <%= button_component(text: 'Back to Upload', type: 'outline', colorscheme: 'primary') %>
+      <% end %>
+      <%= form.button class: 'flex-1' do %>
+        <%= button_component(text: 'Generate Course', type: 'solid', colorscheme: 'primary',
+                             html_options: { class: 'w-full' }) %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+</div>

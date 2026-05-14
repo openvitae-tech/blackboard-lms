@@ -1,0 +1,19 @@
+@keyframes progressbar-gradient-flow {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 100% 0%; }
+}
+
+@layer utilities {
+  .progressbar-animated {
+    background-image: linear-gradient(
+      90deg,
+      theme('colors.primary'),
+      theme('colors.cyan'),
+      theme('colors.teal'),
+      theme('colors.secondary'),
+      theme('colors.primary')
+    );
+    background-size: 300% 100%;
+    animation: progressbar-gradient-flow 2.2s linear infinite;
+  }
+}

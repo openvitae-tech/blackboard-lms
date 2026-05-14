@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "title": "Introduction to Airport Services",
+  "description": "This lesson introduces the core concepts of airport services management including check-in procedures, baggage handling, and passenger assistance. You will learn the fundamentals of delivering excellent service in a fast-paced airport environment and understand the key touchpoints that create exceptional passenger experiences.",
+  "duration": 1800,
+  "lesson_type": "video",
+  "rating": 4.8,
+  "video_streaming_source": "youtube",
+  "local_contents": [
+    { "id": 1, "lang": "en", "status": "published", "video_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "video_published_at": null }
+  ]
+}

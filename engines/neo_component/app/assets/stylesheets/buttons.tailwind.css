@@ -1,5 +1,5 @@
 .btn-base {
-    @apply inline-flex w-full items-center justify-center gap-2 border;
+    @apply inline-flex w-full items-center justify-center gap-2 border cursor-pointer;
 }
 
 .btn-disabled {

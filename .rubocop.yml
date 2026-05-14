@@ -1,4 +1,7 @@
 # .rubocop.yml
+require:
+  - ./lib/rubocop/cop/no_direct_model_access
+
 plugins:
   - rubocop-rails
   - rubocop-rspec
@@ -25,6 +28,8 @@ AllCops:
     - "engines/*/app/controllers/**/*"
     - "engines/*/app/javascript/**/*"
     - "engines/*/app/views/**/*"
+    - "engines/*/bin/**/*"
+    - "engines/*/spec/dummy/**/*"
 
 Style/Documentation:
   Enabled: false

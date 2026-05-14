@@ -39,6 +39,13 @@
               icon_name: 'user-group',
               label: t('team.label') %>
         <% end %>
+        <% if APP_CONFIG.content_studio_enabled? && policy(:content_studio).index? %>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'content_studio',
+              url: content_studio.root_path,
+              icon_name: 'bolt',
+              label: 'Content Studio' %>
+        <% end %>
         <% if policy(:learning_partner).show? %>
           <%= render 'shared/components/sidebar_item',
               nav_key: 'learning_partners',

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Request spec for LearningPartner state changes' do
   describe 'PUT /learning_partners/:id/(activate|deactivate)' do
     before do

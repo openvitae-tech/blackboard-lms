@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Request spec for PUT /course' do
   describe 'Creating course by non admin' do
     %i[owner manager learner].each do |role|

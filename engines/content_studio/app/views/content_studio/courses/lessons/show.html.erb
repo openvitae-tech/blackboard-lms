@@ -1,0 +1,277 @@
+<% failed = @stage.to_s.end_with?('_failed') %>
+<% scenes_with_video = @lesson.scenes.count { |s| s.video_url.present? } %>
+<% has_pending = !failed && scenes_with_video < @lesson.scenes.size %>
+<turbo-frame id="lesson-content">
+<div class="flex flex-col gap-6 py-3 pb-24"
+     data-controller="lesson-polling"
+     data-lesson-polling-pending-value="<%= has_pending %>"
+     data-lesson-polling-scene-status-url-value="<%= lesson_scene_status_path(@course_id, @lesson.id) %>">
+
+  <%# Header %>
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <%= link_to course_structure_path(id: @course_id), data: { turbo_frame: '_top' } do %>
+        <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
+          <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
+        </span>
+      <% end %>
+      <span class="main-text-lg-semibold text-letter-color">Lesson Page</span>
+    </div>
+    <div class="flex items-center gap-3"></div>
+  </div>
+
+  <%# Three-column layout %>
+  <div class="flex gap-6 items-start" data-controller="scene-player">
+
+    <%# Left: Scene playlist %>
+    <div class="flex flex-col gap-3 bg-white-light border border-line-colour rounded-xl p-3 w-[181px] shrink-0 h-[544px] overflow-y-auto">
+      <%# Progress %>
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center justify-between">
+          <span class="general-text-sm-medium text-letter-color-light">Progress</span>
+          <div class="flex items-center gap-1">
+            <span class="general-text-sm-normal text-letter-color-light" data-progress-text><%= "#{scenes_with_video}/#{@lesson.scenes.size} Scenes" %></span>
+            <%= icon 'check-circle', css: 'w-4 h-4 text-primary' %>
+          </div>
+        </div>
+        <%= progressbar_component(
+              numerator: scenes_with_video,
+              denominator: [@lesson.scenes.size, 1].max,
+              full_width: true,
+              thin: true,
+              animated: has_pending
+            ) %>
+      </div>
+      <% scenes = @lesson.scenes.presence || [] %>
+      <% scenes.each_with_index do |scene, index| %>
+        <div class="overflow-hidden rounded-lg shrink-0 cursor-pointer transition-colors border border-line-colour-light
+                    <%= index == 0 ? 'border-2 border-primary-light' : '' %>"
+             data-scene-player-target="item"
+             data-scene-index="<%= index %>"
+             data-video-url="<%= scene.video_url %>"
+             data-narration="<%= scene.narration %>"
+             data-scene-id="<%= scene.id %>"
+             data-scene-status="<%= scene.status %>"
+             data-regenerate-url="<%= regenerate_scene_path(@course_id, @lesson.id, scene.id) %>"
+             data-action="click->scene-player#select">
+          <div class="h-[47px] w-full">
+            <% if scene.status == 'COMPLETED' %>
+              <% if scene.thumbnail_url.present? %>
+                <%= image_tag scene.thumbnail_url, class: 'w-full h-full object-cover', alt: "Scene #{index + 1} thumbnail" %>
+              <% else %>
+                <div class="w-full h-full bg-white flex items-center justify-center">
+                  <%= icon 'play-circle', css: 'w-6 h-6 text-letter-color' %>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="w-full h-full bg-white flex items-center justify-center">
+                <%= image_tag 'video_film.gif', class: 'w-8 h-8', alt: "Scene #{index + 1} generating" %>
+              </div>
+            <% end %>
+          </div>
+          <div class="bg-line-colour-light flex items-center justify-between px-2.5 h-[18px]">
+            <span class="general-text-sm-medium text-letter-color-light truncate">Scene <%= index + 1 %></span>
+            <span class="general-text-sm-medium text-letter-color-light"><%= scene.timestamp || '0.00' %></span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Center: Video player + controls + script %>
+    <div class="flex flex-1 flex-col gap-5 min-w-0 min-h-[612px]">
+
+      <%# Video player + nav bar %>
+      <div class="flex flex-col gap-4">
+        <%# Video player %>
+        <div class="group bg-letter-color rounded-xl overflow-hidden h-96 relative shrink-0 w-full">
+          <video class="w-full h-full object-contain hidden"
+                 data-scene-player-target="video"
+                 data-action="ended->scene-player#ended timeupdate->scene-player#timeUpdate loadedmetadata->scene-player#metadataLoaded play->scene-player#onPlay pause->scene-player#onPause"
+                 preload="metadata">
+          </video>
+
+          <%# Bottom control bar overlay %>
+          <div class="absolute bottom-0 inset-x-0 px-4 pb-3 pt-10 bg-gradient-to-t from-black/80 to-transparent flex flex-col gap-2 group-hover:opacity-100 transition-opacity duration-500"
+               data-scene-player-target="controlBar">
+
+            <%# Seek bar row %>
+            <div class="flex items-center gap-2">
+              <span class="text-white text-xs font-bold w-8 shrink-0 tabular-nums"
+                    data-scene-player-target="currentTime">0:00</span>
+              <div class="flex-1 relative h-1 bg-white/30 rounded-full cursor-pointer"
+                   data-scene-player-target="progressTrack"
+                   data-action="click->scene-player#seek">
+                <div class="h-full bg-white rounded-full relative pointer-events-none"
+                     data-scene-player-target="progressFill"
+                     style="width: 0%">
+                  <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full shadow"></div>
+                </div>
+              </div>
+              <span class="text-white text-xs font-bold w-8 shrink-0 text-right tabular-nums"
+                    data-scene-player-target="duration">0:00</span>
+            </div>
+
+            <%# Controls row %>
+            <div class="flex items-center justify-center gap-5">
+              <button class="flex items-center justify-center text-white disabled:text-line-colour disabled:cursor-not-allowed"
+                      data-scene-player-target="prevButton"
+                      data-action="click->scene-player#prev">
+                <%= icon 'skip-start', css: 'w-6 h-6' %>
+              </button>
+
+              <button class="flex items-center justify-center text-white"
+                      data-action="click->scene-player#togglePlay">
+                <span data-scene-player-target="playIcon">
+                  <%= icon 'play-circle-solid', css: 'w-8 h-8' %>
+                </span>
+                <span class="hidden" data-scene-player-target="pauseIcon">
+                  <%= icon 'pause-circle-solid', css: 'w-8 h-8' %>
+                </span>
+              </button>
+
+              <button class="flex items-center justify-center text-white disabled:text-line-colour disabled:cursor-not-allowed"
+                      data-scene-player-target="nextButton"
+                      data-action="click->scene-player#next">
+                <%= icon 'skip-end', css: 'w-6 h-6' %>
+              </button>
+            </div>
+          </div>
+
+          <div class="absolute inset-0"
+               data-scene-player-target="placeholder">
+            <div class="w-full h-full flex items-center justify-center">
+              <%= image_tag 'video_film.gif', alt: 'No video available' %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <%# Script + Regenerate %>
+      <div class="flex flex-1 flex-col min-h-0">
+        <div class="flex flex-1 flex-col gap-2 min-h-0">
+          <span class="general-text-md-medium text-letter-color px-1">Script</span>
+          <%= textarea_component(
+                name: 'scene_script',
+                placeholder: 'Scene script will appear here…',
+                rows: 6,
+                size: 'md',
+                support_text: 'Maximum 512 characters',
+                html_options: {
+                  maxlength: 512,
+                  data: {
+                    'scene-player-target' => 'narration',
+                    action: 'input->scene-player#onNarrationInput'
+                  }
+                }
+              ) %>
+        </div>
+        <div class="self-end">
+          <%= button_component(
+                text: 'Regenerate Scene',
+                type: 'solid',
+                size: 'md',
+                colorscheme: 'primary',
+                html_options: {
+                  data: {
+                    'scene-player-target' => 'regenerateButton',
+                    action: 'click->scene-player#regenerate'
+                  }
+                }
+              ) %>
+        </div>
+      </div>
+
+    </div>
+
+    <%# Right: Lesson info + version history %>
+    <div class="flex flex-col gap-5 w-[325px] shrink-0">
+
+      <%# Lesson info card %>
+      <div class="bg-primary-light-50 rounded-lg p-5 flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <span class="main-text-lg-semibold text-primary"><%= @lesson.title %></span>
+          <button type="button" class="flex items-center justify-center border border-primary rounded-full size-7 shrink-0 bg-primary-light-50">
+            <%= icon 'ellipsis-vertical', css: 'w-4 h-4 text-primary' %>
+          </button>
+        </div>
+        <div class="flex flex-col gap-1" data-controller="show-more">
+          <p class="main-text-sm-normal text-letter-color line-clamp-6 overflow-hidden"
+             data-show-more-target="text">
+            <%= @lesson.description %>
+          </p>
+          <a href="#" class="main-text-sm-normal text-primary underline"
+             data-action="click->show-more#toggle"
+             data-show-more-target="toggle">Show more</a>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="general-text-md-normal text-letter-color-light">Language :</span>
+          <div class="bg-white flex items-center gap-2 px-4 py-2 rounded-lg shadow-[1px_2px_4px_0px_rgba(0,0,0,0.1)]">
+            <%= icon 'chevron-down', css: 'w-4 h-4 text-letter-color-light' %>
+            <span class="main-text-sm-medium text-letter-color-light">English</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <%# Footer navigation %>
+  <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-line-colour-light grid grid-cols-3 items-center py-6 px-5 md:px-16 z-10">
+    <span class="general-text-md-normal text-letter-color-light">
+      <% if @lesson_number && @total_lessons %>
+        Lesson <span class="text-primary"><%= @lesson_number %></span> of <%= @total_lessons %>
+      <% end %>
+    </span>
+    <div class="flex items-center justify-center gap-2">
+      <%= link_to @prev_lesson_id ? course_lesson_path(@course_id, @prev_lesson_id) : '#' do %>
+        <%= button_component(
+              text: 'Previous',
+              type: 'outline',
+              size: 'md',
+              colorscheme: 'primary',
+              icon_name: 'chevron-left',
+              icon_position: 'left',
+              disabled: @prev_lesson_id.nil?
+            ) %>
+      <% end %>
+      <%= link_to @next_lesson_id ? course_lesson_path(@course_id, @next_lesson_id) : '#' do %>
+        <%= button_component(
+              text: 'Next',
+              type: 'outline',
+              size: 'md',
+              colorscheme: 'primary',
+              icon_name: 'chevron-right',
+              icon_position: 'right',
+              disabled: @next_lesson_id.nil?
+            ) %>
+      <% end %>
+      <% if @lesson.status == 'VERIFIED' %>
+        <div class="flex items-center gap-2">
+          <%= icon 'check-badge-solid', css: 'w-8 h-8 text-secondary' %>
+          <span class="main-text-lg-semibold text-secondary">Verified</span>
+        </div>
+      <% else %>
+        <%= form_with url: verify_lesson_path(@course_id, @lesson.id), method: :post,
+                      data: { turbo_frame: '_top' } do |f| %>
+          <%= f.hidden_field :next_lesson_id, value: @next_lesson_id %>
+          <%= f.button disabled: @lesson.status != 'VIDEO_READY' do %>
+            <%= button_component(
+                  text: 'Verify & Next',
+                  type: 'solid',
+                  size: 'md',
+                  colorscheme: 'secondary',
+                  icon_name: 'chevron-right',
+                  icon_position: 'right',
+                  disabled: @lesson.status != 'VIDEO_READY'
+                ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <span></span>
+  </div>
+
+</div>
+</turbo-frame>

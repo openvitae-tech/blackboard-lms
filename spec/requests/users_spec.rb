@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe 'Request spec for Users' do
   let(:user) { create :user, :admin }
   let(:learning_partner) { create :learning_partner }

@@ -8,10 +8,11 @@ module ViewComponent
       FILE_SELECTOR_TYPES = %w[image document video].freeze
 
       attr_accessor :form, :name, :label, :support_text,
-                    :support_text_two, :error, :disabled, :html_options, :type
+                    :support_text_two, :error, :disabled, :html_options, :type, :multiple, :accept
 
       def initialize(type:, form: nil, name: nil, label: nil,
-                     support_text: nil, support_text_two: nil, error: nil, disabled: false, html_options: {})
+                     support_text: nil, support_text_two: nil, error: nil,
+                     disabled: false, multiple: false, accept: nil, html_options: {})
         raise "Invalid or missing file type: #{type}" unless FILE_SELECTOR_TYPES.include?(type)
 
         error_message = resolve_error(form, name, error)
@@ -23,11 +24,15 @@ module ViewComponent
         self.support_text_two = support_text_two
         self.error = error_message
         self.disabled = disabled
+        self.multiple = multiple
+        self.accept = accept
         self.html_options = html_options
         self.type = type
       end
 
       def accepted_types
+        return accept if accept.present?
+
         case type
         when 'image'
           'image/*'

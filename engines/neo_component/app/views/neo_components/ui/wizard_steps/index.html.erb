@@ -1,0 +1,76 @@
+<%= h3_component(text: 'Wizard Steps Component') %>
+
+<%= doc_section_component(title: 'Interactive — Step 1 active') do %>
+  <div data-controller="wizard-steps" data-wizard-steps-current-step-value="0">
+    <%= wizard_steps_component(
+        steps: [
+          { icon_name: 'document-text', label: 'Upload doc' },
+          { icon_name: 'camera',        label: 'Configure Video' },
+          { icon_name: 'numbered-list', label: 'Course Structure' }
+        ],
+        current_step: 0
+      ) %>
+
+    <div class="mt-6 p-4 border border-slate-grey-light rounded-lg">
+      <div data-wizard-steps-target="panel">
+        <p class="general-text-lg-normal text-letter-color">Step 1: Upload your document here.</p>
+      </div>
+      <div data-wizard-steps-target="panel" class="hidden">
+        <p class="general-text-lg-normal text-letter-color">Step 2: Configure your video settings.</p>
+      </div>
+      <div data-wizard-steps-target="panel" class="hidden">
+        <p class="general-text-lg-normal text-letter-color">Step 3: Define the course structure.</p>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: 'Interactive — Step 2 active (step 1 completed)') do %>
+  <div data-controller="wizard-steps" data-wizard-steps-current-step-value="1">
+    <%= wizard_steps_component(
+        steps: [
+          { icon_name: 'document-text', label: 'Upload doc' },
+          { icon_name: 'camera',        label: 'Configure Video' },
+          { icon_name: 'numbered-list', label: 'Course Structure' }
+        ],
+        current_step: 1
+      ) %>
+
+    <div class="mt-6 p-4 border border-slate-grey-light rounded-lg">
+      <div data-wizard-steps-target="panel" class="hidden">
+        <p class="general-text-lg-normal text-letter-color">Step 1: Upload your document here.</p>
+      </div>
+      <div data-wizard-steps-target="panel">
+        <p class="general-text-lg-normal text-letter-color">Step 2: Configure your video settings.</p>
+      </div>
+      <div data-wizard-steps-target="panel" class="hidden">
+        <p class="general-text-lg-normal text-letter-color">Step 3: Define the course structure.</p>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: 'Interactive — Step 3 active (steps 1 & 2 completed)') do %>
+  <div data-controller="wizard-steps" data-wizard-steps-current-step-value="2">
+    <%= wizard_steps_component(
+        steps: [
+          { icon_name: 'document-text', label: 'Upload doc' },
+          { icon_name: 'camera',        label: 'Configure Video' },
+          { icon_name: 'numbered-list', label: 'Course Structure' }
+        ],
+        current_step: 2
+      ) %>
+
+    <div class="mt-6 p-4 border border-slate-grey-light rounded-lg">
+      <div data-wizard-steps-target="panel" class="hidden">
+        <p class="general-text-lg-normal text-letter-color">Step 1: Upload your document here.</p>
+      </div>
+      <div data-wizard-steps-target="panel" class="hidden">
+        <p class="general-text-lg-normal text-letter-color">Step 2: Configure your video settings.</p>
+      </div>
+      <div data-wizard-steps-target="panel">
+        <p class="general-text-lg-normal text-letter-color">Step 3: Define the course structure.</p>
+      </div>
+    </div>
+  </div>
+<% end %>
