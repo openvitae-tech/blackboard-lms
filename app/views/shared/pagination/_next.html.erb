@@ -9,7 +9,7 @@
           ) %>
     <% end %>
   </div>
-<% else %>
+<% elsif items.total_pages > 1 %>
   <div class="w-fit hidden md:block">
     <%= button_component(
           text: 'Next',

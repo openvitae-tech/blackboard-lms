@@ -7,8 +7,8 @@ module DashboardTeam
                             expires_in: 5.minutes) do
       users = User
               .where(team_id: team_and_subteam_ids(@team))
-              .where(role: User::LEARNER)
-              .active
+              .where.not(role: User::SUPPORT)
+              .skip_deactivated
               .includes(:enrollments, :team)
       users = users.where('name ILIKE ?', "%#{query}%") if query.present?
 
@@ -17,11 +17,11 @@ module DashboardTeam
         total = enrollments.length
         completed = enrollments.count(&:course_completed)
         progress = calculate_progress(total, completed)
-        { user:, courses: total, completed:, progress: }
+        { user:, team_name: user.team&.name, courses: total, completed:, progress: }
       end
     end
 
-    Kaminari.paginate_array(all, total_count: all.size).page(page).per(20)
+    Kaminari.paginate_array(all, total_count: all.size).page(page).per(10)
   end
 
   def team_member_data(user)
@@ -39,8 +39,8 @@ module DashboardTeam
   def team_member_status_counts
     all = Rails.cache.fetch("#{base_cache_key}/team_members_progress/", expires_in: 5.minutes) do
       User.where(team_id: team_and_subteam_ids(@team))
-          .where(role: User::LEARNER)
-          .active
+          .where.not(role: User::SUPPORT)
+          .skip_deactivated
           .includes(:enrollments)
           .map do |user|
             enrollments = user.enrollments.to_a
@@ -59,8 +59,8 @@ module DashboardTeam
   def team_members_progress
     User
       .where(team_id: team_and_subteam_ids(@team))
-      .where(role: User::LEARNER)
-      .active
+      .where.not(role: User::SUPPORT)
+      .skip_deactivated
       .includes(:enrollments, :team)
       .limit(4)
       .map do |user|
@@ -80,16 +80,17 @@ module DashboardTeam
 
     total_by_team = Enrollment
                     .joins(:user)
-                    .where(users: { team_id: sub_team_ids, role: User::LEARNER })
-                    .merge(User.active)
+                    .where(users: { team_id: sub_team_ids })
+                    .where.not(users: { role: User::SUPPORT })
+                    .merge(User.skip_deactivated)
                     .group('users.team_id')
                     .count
 
     completed_by_team = Enrollment
                         .joins(:user)
-                        .where(users: { team_id: sub_team_ids, role: User::LEARNER },
-                               course_completed: true)
-                        .merge(User.active)
+                        .where(users: { team_id: sub_team_ids }, course_completed: true)
+                        .where.not(users: { role: User::SUPPORT })
+                        .merge(User.skip_deactivated)
                         .group('users.team_id')
                         .count
 

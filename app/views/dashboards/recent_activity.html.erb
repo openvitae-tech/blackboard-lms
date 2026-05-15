@@ -19,38 +19,39 @@
     <p class="general-text-sm-normal text-letter-color-light"><%= t("dashboard.recent_activity.new_starts") %></p>
   </div>
 </div>
-
-<div class="bg-white border border-line-colour-light rounded-xl px-5 md:max-w-[760px]">
-  <% @activities.each do |activity| %>
-    <div class="flex items-start justify-between py-4 border-b border-line-colour-light last:border-b-0">
-      <div class="flex items-start gap-3">
-        <div class="w-3 h-3 rounded-full mt-1 flex-none flex items-center justify-center
-          <%= activity[:type] == 'completed' ? 'bg-secondary-light' :
-              activity[:type] == 'certificate' ? 'bg-gold-light' : 'bg-primary-light-50' %>">
-          <div class="w-1.5 h-1.5 rounded-full
-            <%= activity[:type] == 'completed' ? 'bg-secondary' :
-                activity[:type] == 'certificate' ? 'bg-gold' : 'bg-primary' %>">
+<div class="flex justify-center">
+  <div class="bg-white border border-line-colour-light rounded-xl px-5 md:w-[760px]">
+    <% @activities.each do |activity| %>
+      <div class="flex items-start justify-between py-4 border-b border-line-colour-light last:border-b-0">
+        <div class="flex items-start gap-3">
+          <div class="w-3 h-3 rounded-full mt-1 flex-none flex items-center justify-center
+            <%= activity[:type] == 'completed' ? 'bg-secondary-light' :
+                activity[:type] == 'certificate' ? 'bg-gold-light' : 'bg-primary-light-50' %>">
+            <div class="w-1.5 h-1.5 rounded-full
+              <%= activity[:type] == 'completed' ? 'bg-secondary' :
+                  activity[:type] == 'certificate' ? 'bg-gold' : 'bg-primary' %>">
+            </div>
+          </div>
+          <div>
+            <p class="general-text-sm-normal">
+              <span class="main-text-sm-medium"><%= activity[:user]&.display_name %></span>
+              <%= activity[:action_text] %>
+            </p>
+            <p class="general-text-sm-normal text-letter-color-light"><%= activity[:resource_name] %></p>
+            <p class="general-text-xs-normal text-letter-color-light mt-0.5"><%= time_ago_in_words(activity[:created_at]) %> ago</p>
           </div>
         </div>
-        <div>
-          <p class="general-text-sm-normal">
-            <span class="main-text-sm-medium"><%= activity[:user]&.display_name %></span>
-            <%= activity[:action_text] %>
-          </p>
-          <p class="general-text-sm-normal text-letter-color-light"><%= activity[:resource_name] %></p>
-          <p class="general-text-xs-normal text-letter-color-light mt-0.5"><%= time_ago_in_words(activity[:created_at]) %> ago</p>
-        </div>
-      </div>
-      <% if activity[:type] == 'certificate' && activity[:user].present? %>
-        <%= link_to appreciate_member_dashboards_path(user_id: activity[:user].id, banner_type: 'crushing_it'),
-            data: { turbo_frame: 'modal' },
-            class: "flex items-center gap-1 text-primary general-text-sm-normal flex-none" do %>
-          <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
-          <span class="main-text-sm-normal"><%= t("dashboard.actions.congrats") %></span>
+        <% if activity[:type] == 'certificate' && activity[:user].present? %>
+          <%= link_to appreciate_member_dashboards_path(user_id: activity[:user].id, banner_type: 'crushing_it'),
+              data: { turbo_frame: 'modal' },
+              class: "flex items-center gap-1 text-primary general-text-sm-normal flex-none" do %>
+            <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
+            <span class="main-text-sm-normal"><%= t("dashboard.actions.congrats") %></span>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-  <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <div class="flex justify-end gap-3 mt-4">
