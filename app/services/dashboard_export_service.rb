@@ -210,7 +210,8 @@ class DashboardExportService
     [
       ['Active Learners', @dashboard.active_learners_count, delta_label(@dashboard.active_learners_delta)],
       ['Completion %', "#{@dashboard.completion_percent_metric}%", delta_label(@dashboard.completion_percent_delta)],
-      ['Avg Time Spent', format_seconds(@dashboard.average_time_spent_metric), delta_label(@dashboard.average_time_spent_delta)],
+      ['Avg Time Spent', format_seconds(@dashboard.average_time_spent_metric),
+       delta_label(@dashboard.average_time_spent_delta)],
       ['Certificates Earned', @dashboard.certificates_count, delta_label(@dashboard.certificates_delta)],
       ['Active Courses', @dashboard.active_course_count_metric, '—'],
       ['Learners Falling Behind', @dashboard.falling_behind_count, '—']
