@@ -59,29 +59,8 @@ class MemberExportService
       sheet.add_row ['Period',      duration_label]
       sheet.add_row ['Generated at', Time.zone.now.strftime('%d %b %Y %H:%M')]
       sheet.add_row []
-
       sheet.add_row ['Metric', 'Value', 'Change vs Previous Period'], style: header_style
-
-      sheet.add_row ['Courses Enrolled',
-                     @data[:courses_count],
-                     delta_label(@data[:courses_delta])]
-
-      sheet.add_row ['Avg Completion %',
-                     "#{@data[:avg_completion_percent]}%",
-                     delta_label(@data[:avg_completion_delta])]
-
-      sheet.add_row ['Total Watch Time',
-                     format_seconds(@data[:total_watch_seconds].to_i),
-                     delta_label(@data[:watch_time_delta])]
-
-      sheet.add_row ['Certificates Earned',
-                     @data[:certificates_count].to_i,
-                     delta_label(@data[:certificates_delta])]
-
-      sheet.add_row ['Quiz Pass Rate',    "#{@data[:quiz_pass_rate]}%", '—']
-      sheet.add_row ['Quizzes Passed',    "#{@data[:quizzes_passed]}/#{@data[:total_quizzes]}", '—']
-      sheet.add_row ['Self-Assigned Courses', @data[:self_assigned_count].to_i, '—']
-
+      summary_metric_rows.each { |row| sheet.add_row row }
       sheet.column_widths 35, 25, 30
     end
   end
@@ -153,6 +132,19 @@ class MemberExportService
 
       sheet.column_widths 45, 14, 14, 18
     end
+  end
+
+  def summary_metric_rows
+    [
+      ['Courses Enrolled',      @data[:courses_count], delta_label(@data[:courses_delta])],
+      ['Avg Completion %',      "#{@data[:avg_completion_percent]}%", delta_label(@data[:avg_completion_delta])],
+      ['Total Watch Time',      format_seconds(@data[:total_watch_seconds].to_i),
+       delta_label(@data[:watch_time_delta])],
+      ['Certificates Earned',   @data[:certificates_count].to_i, delta_label(@data[:certificates_delta])],
+      ['Quiz Pass Rate',        "#{@data[:quiz_pass_rate]}%", '—'],
+      ['Quizzes Passed',        "#{@data[:quizzes_passed]}/#{@data[:total_quizzes]}", '—'],
+      ['Self-Assigned Courses', @data[:self_assigned_count].to_i, '—']
+    ]
   end
 
   def course_progress_row(enrollment)

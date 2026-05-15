@@ -64,28 +64,8 @@ class DashboardExportService
       sheet.add_row ['Period', duration_label]
       sheet.add_row ['Generated at', Time.zone.now.strftime('%d %b %Y %H:%M')]
       sheet.add_row []
-
       sheet.add_row ['Metric', 'Value', 'Change vs Previous Period'], style: header_style
-
-      sheet.add_row ['Active Learners',
-                     @dashboard.active_learners_count,
-                     delta_label(@dashboard.active_learners_delta)]
-
-      sheet.add_row ['Completion %',
-                     "#{@dashboard.completion_percent_metric}%",
-                     delta_label(@dashboard.completion_percent_delta)]
-
-      sheet.add_row ['Avg Time Spent',
-                     format_seconds(@dashboard.average_time_spent_metric),
-                     delta_label(@dashboard.average_time_spent_delta)]
-
-      sheet.add_row ['Certificates Earned',
-                     @dashboard.certificates_count,
-                     delta_label(@dashboard.certificates_delta)]
-
-      sheet.add_row ['Active Courses', @dashboard.active_course_count_metric, '—']
-      sheet.add_row ['Learners Falling Behind', @dashboard.falling_behind_count, '—']
-
+      summary_metric_rows.each { |row| sheet.add_row row }
       sheet.column_widths 35, 25, 30
     end
   end
@@ -224,6 +204,17 @@ class DashboardExportService
         sheet.column_widths 30, 25, 45, 14, 14, 18
       end
     end
+  end
+
+  def summary_metric_rows
+    [
+      ['Active Learners', @dashboard.active_learners_count, delta_label(@dashboard.active_learners_delta)],
+      ['Completion %', "#{@dashboard.completion_percent_metric}%", delta_label(@dashboard.completion_percent_delta)],
+      ['Avg Time Spent', format_seconds(@dashboard.average_time_spent_metric), delta_label(@dashboard.average_time_spent_delta)],
+      ['Certificates Earned', @dashboard.certificates_count, delta_label(@dashboard.certificates_delta)],
+      ['Active Courses', @dashboard.active_course_count_metric, '—'],
+      ['Learners Falling Behind', @dashboard.falling_behind_count, '—']
+    ]
   end
 
   def activity_row(item)
