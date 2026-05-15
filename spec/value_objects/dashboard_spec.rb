@@ -335,10 +335,16 @@ RSpec.describe Dashboard do
       expect(result.map { |m| m[:user] }).not_to include(inactive)
     end
 
-    it 'does not include managers' do
+    it 'includes managers' do
       manager = create(:user, :manager, t_team: team)
       result = dashboard.team_members_progress
-      expect(result.map { |m| m[:user] }).not_to include(manager)
+      expect(result.map { |m| m[:user] }).to include(manager)
+    end
+
+    it 'does not include support users' do
+      support = create(:user, t_team: team, role: 'support')
+      result = dashboard.team_members_progress
+      expect(result.map { |m| m[:user] }).not_to include(support)
     end
   end
 
@@ -346,14 +352,14 @@ RSpec.describe Dashboard do
   # DashboardTeam — all_team_members_progress
   # ---------------------------------------------------------------------------
   describe '#all_team_members_progress' do
-    it 'returns paginated results (20 per page)' do
-      21.times { create(:user, :learner, t_team: team) }
+    it 'returns paginated results (10 per page)' do
+      11.times { create(:user, :learner, t_team: team) }
       result = dashboard.all_team_members_progress(1)
-      expect(result.size).to eq(20)
+      expect(result.size).to eq(10)
     end
 
     it 'returns the second page' do
-      21.times { create(:user, :learner, t_team: team) }
+      11.times { create(:user, :learner, t_team: team) }
       result = dashboard.all_team_members_progress(2)
       expect(result.size).to eq(1)
     end
