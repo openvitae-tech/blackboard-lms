@@ -26,7 +26,8 @@
             duration: params[:duration],
             from_date: params[:from_date],
             to_date: params[:to_date]
-          ) do %>
+          ),
+          data: { controller: "download", action: "click->download#start" } do %>
         <%= button_component(text: 'Export', icon_name: 'arrow-down-tray', type: "outline", icon_position: 'left') %>
       <% end %>
     </div>

@@ -3,8 +3,7 @@
 require 'caxlsx'
 
 class MemberExportService
-  HEADER_COLOR = '1F3A5F'
-  HEADER_FG    = 'FFFFFF'
+  include Exports::SpreadsheetHelpers
 
   def initialize(member, member_data, dashboard, team)
     @member      = member
@@ -29,25 +28,6 @@ class MemberExportService
 
   private
 
-  def duration_label
-    range = @dashboard.duration
-    "#{range.begin.strftime('%d %b %Y')} – #{range.end.strftime('%d %b %Y')}"
-  end
-
-  def delta_label(value)
-    return 'No change' if value.to_i.zero?
-
-    value.to_i.positive? ? "+#{value}" : value.to_s
-  end
-
-  def format_seconds(seconds)
-    return '0m' if seconds.to_i.zero?
-
-    hours   = seconds / 3600
-    minutes = (seconds % 3600) / 60
-    hours.positive? ? "#{hours}h #{minutes}m" : "#{minutes}m"
-  end
-
   # ─── Sheet 1: Summary ────────────────────────────────────────────────────
 
   def add_summary_sheet(wbk, header_style)
@@ -56,7 +36,7 @@ class MemberExportService
       sheet.add_row ['Name',        @member.display_name]
       sheet.add_row ['Team',        @member.team&.name || '—']
       sheet.add_row ['Last Active', @member.last_sign_in_at&.strftime('%d %b %Y %H:%M') || '—']
-      sheet.add_row ['Period',      duration_label]
+      sheet.add_row ['Period',      duration_label(@dashboard.duration)]
       sheet.add_row ['Generated at', Time.zone.now.strftime('%d %b %Y %H:%M')]
       sheet.add_row []
       sheet.add_row ['Metric', 'Value', 'Change vs Previous Period'], style: header_style

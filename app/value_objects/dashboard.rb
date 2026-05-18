@@ -99,7 +99,7 @@ class Dashboard
     Enrollment
       .joins(:user)
       .where(users: { team_id: @team.team_hierarchy_ids })
-      .where.not(users: { role: [User::ADMIN, User::SUPPORT] })
+      .where.not(users: { role: User::SUPPORT })
       .where(course_completed: false)
       .where('deadline_at IS NOT NULL AND deadline_at < ?', 7.days.from_now)
       .includes(:user, :course)

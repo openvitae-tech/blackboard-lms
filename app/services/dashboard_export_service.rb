@@ -3,9 +3,8 @@
 require 'caxlsx'
 
 class DashboardExportService
-  HEADER_COLOR     = '1F3A5F'
-  HEADER_FG        = 'FFFFFF'
-  WIDEST_GAP_COLOR = 'FFF3CD'
+  include Exports::SpreadsheetHelpers
+
   MAX_ROWS = 1000
 
   def initialize(dashboard, team, duration)
@@ -34,34 +33,13 @@ class DashboardExportService
 
   private
 
-  def duration_label
-    range = @dashboard.duration
-    from  = range.begin.strftime('%d %b %Y')
-    to    = range.end.strftime('%d %b %Y')
-    "#{from} – #{to}"
-  end
-
-  def delta_label(value)
-    return 'No change' if value.zero?
-
-    value.positive? ? "+#{value}" : value.to_s
-  end
-
-  def format_seconds(seconds)
-    return '0m' if seconds.zero?
-
-    hours   = seconds / 3600
-    minutes = (seconds % 3600) / 60
-    hours.positive? ? "#{hours}h #{minutes}m" : "#{minutes}m"
-  end
-
   # ─── Sheet 1: Summary ────────────────────────────────────────────────────
 
   def add_summary_sheet(wbk, header_style)
     wbk.add_worksheet(name: 'Summary') do |sheet|
       sheet.add_row ['Dashboard Export Report'], b: true, sz: 14
       sheet.add_row ['Team', @team.name]
-      sheet.add_row ['Period', duration_label]
+      sheet.add_row ['Period', duration_label(@dashboard.duration)]
       sheet.add_row ['Generated at', Time.zone.now.strftime('%d %b %Y %H:%M')]
       sheet.add_row []
       sheet.add_row ['Metric', 'Value', 'Change vs Previous Period'], style: header_style

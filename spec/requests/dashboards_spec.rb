@@ -82,4 +82,105 @@ RSpec.describe 'Dashboards', type: :request do
       end
     end
   end
+
+  # ---------------------------------------------------------------------------
+  # GET #export
+  # ---------------------------------------------------------------------------
+  describe 'GET #export' do
+    let(:fake_xlsx) { 'fake-xlsx-binary' }
+    let(:mock_dashboard) { instance_double(Dashboard) }
+    let(:export_service) { instance_double(DashboardExportService, generate: fake_xlsx) }
+
+    before do
+      allow(DashboardService.instance).to receive(:build_dashboard_for).and_return(mock_dashboard)
+      allow(DashboardExportService).to receive(:new).and_return(export_service)
+    end
+
+    context 'when a manager requests the export' do
+      it 'responds with a successful xlsx download' do
+        get export_dashboards_path(team_id: team.id)
+        expect(response).to be_successful
+        expect(response.content_type).to eq('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+      end
+
+      it 'sets a filename containing the team name and today\'s date' do
+        get export_dashboards_path(team_id: team.id)
+        disposition = response.headers['Content-Disposition']
+        expect(disposition).to include("dashboard-#{team.name.parameterize}")
+        expect(disposition).to include("#{Time.zone.today}.xlsx")
+      end
+
+      it 'delegates to DashboardExportService with the built dashboard' do
+        get export_dashboards_path(team_id: team.id)
+        expect(DashboardExportService).to have_received(:new).with(mock_dashboard, team, anything)
+        expect(export_service).to have_received(:generate)
+      end
+    end
+
+    context 'when a learner requests the export' do
+      before { sign_in learner }
+
+      it 'is unauthorized' do
+        get export_dashboards_path(team_id: team.id)
+        expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      end
+    end
+  end
+
+  # ---------------------------------------------------------------------------
+  # GET #export_member
+  # ---------------------------------------------------------------------------
+  describe 'GET #export_member' do
+    let(:fake_xlsx) { 'fake-xlsx-binary' }
+    let(:mock_dashboard) { instance_double(Dashboard) }
+    let(:member_service) { instance_double(MemberExportService, generate: fake_xlsx) }
+    let(:member_data) { { courses_count: 2 } }
+
+    before do
+      allow(DashboardService.instance).to receive(:build_dashboard_for).and_return(mock_dashboard)
+      allow(mock_dashboard).to receive(:team_member_data).and_return(member_data)
+      allow(MemberExportService).to receive(:new).and_return(member_service)
+    end
+
+    context 'when a manager requests a member export' do
+      it 'responds with a successful xlsx download' do
+        get export_member_dashboards_path(team_id: team.id, user_id: learner.id)
+        expect(response).to be_successful
+        expect(response.content_type).to eq('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+      end
+
+      it 'sets a filename containing the member name and today\'s date' do
+        get export_member_dashboards_path(team_id: team.id, user_id: learner.id)
+        disposition = response.headers['Content-Disposition']
+        expect(disposition).to include("member-#{learner.display_name.parameterize}")
+        expect(disposition).to include("#{Time.zone.today}.xlsx")
+      end
+
+      it 'delegates to MemberExportService with the member and their data' do
+        get export_member_dashboards_path(team_id: team.id, user_id: learner.id)
+        expect(MemberExportService).to have_received(:new).with(learner, member_data, mock_dashboard, team)
+        expect(member_service).to have_received(:generate)
+      end
+    end
+
+    context 'when the user_id does not belong to the manager\'s team hierarchy' do
+      let(:other_team)    { create(:team) }
+      let(:other_learner) { create(:user, :learner, t_team: other_team) }
+
+      it 'raises ActiveRecord::RecordNotFound' do
+        expect do
+          get export_member_dashboards_path(team_id: team.id, user_id: other_learner.id)
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when a learner requests the export' do
+      before { sign_in learner }
+
+      it 'is unauthorized' do
+        get export_member_dashboards_path(team_id: team.id, user_id: learner.id)
+        expect(flash[:notice]).to eq(I18n.t('pundit.unauthorized'))
+      end
+    end
+  end
 end
