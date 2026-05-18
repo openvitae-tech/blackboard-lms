@@ -167,10 +167,9 @@ RSpec.describe 'Dashboards', type: :request do
       let(:other_team)    { create(:team) }
       let(:other_learner) { create(:user, :learner, t_team: other_team) }
 
-      it 'raises ActiveRecord::RecordNotFound' do
-        expect do
-          get export_member_dashboards_path(team_id: team.id, user_id: other_learner.id)
-        end.to raise_error(ActiveRecord::RecordNotFound)
+      it 'returns not found' do
+        get export_member_dashboards_path(team_id: team.id, user_id: other_learner.id)
+        expect(response).to have_http_status(:not_found)
       end
     end
 

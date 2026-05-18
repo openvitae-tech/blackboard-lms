@@ -49,26 +49,31 @@ RSpec.describe MemberExportService do
     end
 
     it 'includes the member name in the summary sheet' do
-      binary = service.generate
-      Zip::File.open_buffer(binary) do |zip|
-        shared_strings = zip.find_entry('xl/sharedStrings.xml').get_input_stream.read
-        expect(shared_strings).to include(member.display_name)
-      end
+      expect(sheet_xml(service.generate, 'xl/worksheets/sheet1.xml')).to include(member.display_name)
     end
 
     it 'includes quiz pass rate from member_data' do
-      binary = service.generate
-      Zip::File.open_buffer(binary) do |zip|
-        shared_strings = zip.find_entry('xl/sharedStrings.xml').get_input_stream.read
-        expect(shared_strings).to include('80%')
-      end
+      expect(sheet_xml(service.generate, 'xl/worksheets/sheet4.xml')).to include('80%')
     end
   end
 
   def worksheet_names(xlsx_binary)
-    Zip::File.open_buffer(xlsx_binary) do |zip|
-      content = zip.find_entry('xl/workbook.xml').get_input_stream.read
-      content.scan(/<sheet\b[^>]+name="([^"]+)"/).flatten
+    Zip::InputStream.open(StringIO.new(xlsx_binary)) do |zip|
+      while (entry = zip.get_next_entry)
+        next unless entry.name == 'xl/workbook.xml'
+
+        return zip.read.scan(/<sheet\b[^>]+name="([^"]+)"/).flatten
+      end
     end
+    []
+  end
+
+  def sheet_xml(xlsx_binary, entry_name)
+    Zip::InputStream.open(StringIO.new(xlsx_binary)) do |zip|
+      while (entry = zip.get_next_entry)
+        return zip.read if entry.name == entry_name
+      end
+    end
+    ''
   end
 end
