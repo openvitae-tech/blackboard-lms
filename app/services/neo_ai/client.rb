@@ -84,10 +84,6 @@ module NeoAi
       end
     end
 
-    def delete(path)
-      build_connection.delete("#{API_PREFIX}#{path}", { partner_id: partner_id })
-    end
-
     def build_connection
       token = current_token
       Faraday.new(url: NEO_AI_BASE_URL) do |f|
