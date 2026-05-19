@@ -27,15 +27,30 @@ RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
       ]
     }
   end
+  let(:learner) { create(:user, :learner) }
   let(:neo_ai) { instance_double(NeoAi::Client) }
 
   before do
     Api::Internal::Courses::LessonsController.instance_variable_set(:@neo_ai_client, nil)
-    sign_in privileged_user
     allow(NeoAi::Client).to receive(:new).and_return(neo_ai)
   end
 
+  describe 'authentication and authorization' do
+    it 'returns 401 when not signed in' do
+      get '/api/internal/courses/c1/lessons/l1'
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'returns 403 for non-privileged users' do
+      sign_in learner
+      get '/api/internal/courses/c1/lessons/l1'
+      expect(response).to have_http_status(:forbidden)
+    end
+  end
+
   describe 'GET /api/internal/courses/:course_id/lessons/:id' do
+    before { sign_in privileged_user }
+
     it 'returns the lesson with scenes' do
       allow(neo_ai).to receive(:find_course).with('c1').and_return(course_data)
       get '/api/internal/courses/c1/lessons/l1'
