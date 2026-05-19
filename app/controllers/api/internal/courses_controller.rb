@@ -3,6 +3,8 @@
 module Api
   module Internal
     class CoursesController < BaseController
+      SUPPORTED_LANGUAGES = %w[English Hindi Tamil Telugu Kannada Malayalam Marathi Bengali Gujarati Punjabi].freeze
+
       def stats
         courses = neo_ai.list_courses
         render json: {
@@ -23,7 +25,7 @@ module Api
       def metadata
         render json: {
           categories: [],
-          languages: %w[English Hindi Tamil Telugu Kannada Malayalam Marathi Bengali Gujarati Punjabi]
+          languages: SUPPORTED_LANGUAGES
         }
       end
 
