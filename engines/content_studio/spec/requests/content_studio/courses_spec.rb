@@ -5,7 +5,7 @@ require_relative '../../rails_helper'
 RSpec.describe 'ContentStudio::Courses', type: :request do
   let(:stats) { ContentStudio::CourseStats.new(created: 10, published: 5, in_progress: 3) }
 
-  let(:course) do
+  let(:in_progress_course) do
     ContentStudio::Course.new(
       id: 1,
       title: 'Front Desk Operations Excellence',
@@ -14,7 +14,6 @@ RSpec.describe 'ContentStudio::Courses', type: :request do
       categories: ['Front Office', 'Hospitality'],
       banner: nil,
       rating: nil,
-      is_published: false,
       visibility: 'public',
       levels: ['Beginner'],
       enrollments_count: 0,
@@ -24,30 +23,10 @@ RSpec.describe 'ContentStudio::Courses', type: :request do
     )
   end
 
-  let(:published_course) do
-    ContentStudio::Course.new(
-      id: 7,
-      title: 'Food & Beverage Service Fundamentals',
-      duration: 9000,
-      course_modules_count: 2,
-      categories: ['Food & Beverage'],
-      banner: nil,
-      rating: 4.5,
-      is_published: true,
-      visibility: 'public',
-      levels: ['Beginner'],
-      enrollments_count: 185,
-      team_enrollments_count: 8,
-      modules: [],
-      progress: nil
-    )
-  end
-
   before do
     allow(ContentStudio::ApiClient).to receive(:course_stats).and_return(stats)
-    allow(ContentStudio::ApiClient).to receive(:list_courses_by_status).with('to_be_verified').and_return([course])
-    allow(ContentStudio::ApiClient).to receive(:list_courses_by_status).with('verified').and_return([])
-    allow(ContentStudio::ApiClient).to receive(:list_courses_by_status).with('published').and_return([published_course])
+    allow(ContentStudio::ApiClient).to receive(:list_courses_by_status).with('in_progress').and_return([in_progress_course])
+    allow(ContentStudio::ApiClient).to receive(:list_courses_by_status).with('completed').and_return([])
   end
 
   describe 'GET /content_studio' do
@@ -68,24 +47,18 @@ RSpec.describe 'ContentStudio::Courses', type: :request do
       expect(response.body).to include('Create New Course')
     end
 
-    it 'renders all three tab headers' do
-      expect(response.body).to include('To be Verified')
-      expect(response.body).to include('Verified')
-      expect(response.body).to include('Published')
+    it 'renders In Progress and Completed tab headers' do
+      expect(response.body).to include('In Progress')
+      expect(response.body).to include('Completed')
+      expect(response.body).not_to include('No published courses yet.')
     end
 
-    it 'renders course cards in the to_be_verified tab' do
+    it 'renders course cards in the In Progress tab' do
       expect(response.body).to include('Front Desk Operations Excellence')
-      expect(response.body).to include('Pending')
     end
 
-    it 'renders course cards in the published tab' do
-      expect(response.body).to include('Food &amp; Beverage Service Fundamentals')
-      expect(response.body).to include('Published')
-    end
-
-    it 'shows empty state for the verified tab' do
-      expect(response.body).to include('No verified courses yet.')
+    it 'shows empty state for the Completed tab' do
+      expect(response.body).to include('No completed courses yet.')
     end
 
     it 'renders the Show all Creations button' do

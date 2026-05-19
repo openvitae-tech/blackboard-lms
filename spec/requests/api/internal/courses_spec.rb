@@ -29,8 +29,7 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
     let(:courses) do
       [
         { 'id' => 'c1', 'title' => 'Course One', 'status' => 'PENDING' },
-        { 'id' => 'c2', 'title' => 'Course Two', 'status' => 'COMPLETED' },
-        { 'id' => 'c3', 'title' => 'Course Three', 'status' => 'PUBLISHED' }
+        { 'id' => 'c2', 'title' => 'Course Two', 'status' => 'COMPLETED' }
       ]
     end
 
@@ -42,36 +41,35 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
     it 'returns all courses when no status filter' do
       get '/api/internal/courses'
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body.length).to eq(3)
+      expect(response.parsed_body.length).to eq(2)
     end
 
-    it 'filters by verified status (COMPLETED)' do
-      get '/api/internal/courses', params: { studio_status: 'verified' }
+    it 'filters by completed status' do
+      get '/api/internal/courses', params: { studio_status: 'completed' }
       ids = response.parsed_body.map { |c| c['id'] }
       expect(ids).to eq(['c2'])
     end
 
-    it 'filters by published status' do
-      get '/api/internal/courses', params: { studio_status: 'published' }
-      ids = response.parsed_body.map { |c| c['id'] }
-      expect(ids).to eq(['c3'])
-    end
-
-    it 'filters in_progress (excludes COMPLETED and PUBLISHED)' do
+    it 'filters in_progress (PENDING only)' do
       get '/api/internal/courses', params: { studio_status: 'in_progress' }
       ids = response.parsed_body.map { |c| c['id'] }
       expect(ids).to eq(['c1'])
     end
 
+    it 'returns empty array for unknown studio_status' do
+      get '/api/internal/courses', params: { studio_status: 'unknown' }
+      expect(response.parsed_body).to eq([])
+    end
+
     it 'respects the limit param' do
-      get '/api/internal/courses', params: { limit: 2 }
-      expect(response.parsed_body.length).to eq(2)
+      get '/api/internal/courses', params: { limit: 1 }
+      expect(response.parsed_body.length).to eq(1)
     end
 
     it 'maps status to studio status in response' do
       get '/api/internal/courses'
       statuses = response.parsed_body.map { |c| c['status'] }
-      expect(statuses).to eq(%w[to_be_verified verified published])
+      expect(statuses).to eq(%w[in_progress completed])
     end
   end
 
@@ -80,9 +78,8 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
       sign_in privileged_user
       allow(neo_ai).to receive(:list_courses).and_return([
                                                            { 'status' => 'PENDING' },
-                                                           { 'status' => 'COMPLETED' },
-                                                           { 'status' => 'PUBLISHED' },
-                                                           { 'status' => 'PUBLISHED' }
+                                                           { 'status' => 'PENDING' },
+                                                           { 'status' => 'COMPLETED' }
                                                          ])
     end
 
@@ -90,8 +87,8 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
       get '/api/internal/courses/stats'
       body = response.parsed_body
       expect(body['created']).to eq(0)
-      expect(body['published']).to eq(2)
-      expect(body['in_progress']).to eq(1)
+      expect(body['published']).to eq(0)
+      expect(body['in_progress']).to eq(2)
     end
   end
 

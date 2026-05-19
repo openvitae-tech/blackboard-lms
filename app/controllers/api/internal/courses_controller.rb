@@ -3,18 +3,12 @@
 module Api
   module Internal
     class CoursesController < BaseController
-      NEO_STATUS_FOR_STUDIO = {
-        'verified' => 'COMPLETED',
-        'published' => 'PUBLISHED'
-      }.freeze
-      TERMINAL_NEO_STATUSES = %w[COMPLETED PUBLISHED].freeze
-
       def stats
         courses = neo_ai.list_courses
         render json: {
           created: 0,
-          published: courses.count { |c| c['status']&.upcase == NEO_STATUS_FOR_STUDIO['published'] },
-          in_progress: courses.reject { |c| TERMINAL_NEO_STATUSES.include?(c['status']&.upcase) }.count
+          published: 0,
+          in_progress: courses.reject { |c| neo_completed?(c) }.count
         }
       end
 
@@ -93,14 +87,16 @@ module Api
       private
 
       def filter_by_studio_status(courses, status)
-        return courses if status.blank?
-
-        neo_target = NEO_STATUS_FOR_STUDIO[status]
-        if neo_target
-          courses.select { |c| c['status']&.upcase == neo_target }
-        else
-          courses.reject { |c| TERMINAL_NEO_STATUSES.include?(c['status']&.upcase) }
+        case status.presence
+        when nil             then courses
+        when 'completed'     then courses.select { |c| neo_completed?(c) }
+        when 'in_progress'   then courses.reject { |c| neo_completed?(c) }
+        else []
         end
+      end
+
+      def neo_completed?(course)
+        course['status']&.upcase == 'COMPLETED'
       end
 
       def serialize_course(data)
@@ -111,7 +107,6 @@ module Api
           status: map_studio_status(data['status']),
           thumbnail_url: data['thumbnail_url'],
           visibility: nil,
-          is_published: data['status']&.upcase == 'PUBLISHED',
           duration: nil,
           rating: nil,
           banner: nil,
@@ -126,11 +121,7 @@ module Api
       end
 
       def map_studio_status(raw)
-        case raw&.upcase
-        when 'COMPLETED' then 'verified'
-        when 'PUBLISHED' then 'published'
-        else 'to_be_verified'
-        end
+        raw&.upcase == 'COMPLETED' ? 'completed' : 'in_progress'
       end
 
       def serialize_structure(data)

@@ -112,7 +112,6 @@ module ContentStudio
         title: data['title'],
         description: data['description'],
         visibility: data['visibility'],
-        is_published: data['is_published'],
         duration: data['duration'],
         rating: data['rating'],
         banner: data['banner'],
