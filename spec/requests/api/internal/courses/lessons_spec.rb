@@ -4,13 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
   let(:privileged_user) { create(:user, :owner) }
-  let(:neo_ai) { instance_double(NeoAi::Client) }
-
-  before do
-    sign_in privileged_user
-    allow(NeoAi::Client).to receive(:new).and_return(neo_ai)
-  end
-
   let(:course_data) do
     {
       'modules' => [
@@ -33,6 +26,12 @@ RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
         }
       ]
     }
+  end
+  let(:neo_ai) { instance_double(NeoAi::Client) }
+
+  before do
+    sign_in privileged_user
+    allow(NeoAi::Client).to receive(:new).and_return(neo_ai)
   end
 
   describe 'GET /api/internal/courses/:course_id/lessons/:id' do
