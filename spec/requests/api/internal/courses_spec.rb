@@ -98,70 +98,62 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
     before { sign_in privileged_user }
 
     it 'returns PENDING when no modules and stage is not log_course_completed' do
-      allow(neo_ai).to receive(:find_course).with('c1').and_return({
-                                                                     'stage' => 'scene_writer', 'modules' => [], 'progress_text' => nil
-                                                                   })
+      data = { 'stage' => 'scene_writer', 'modules' => [], 'progress_text' => nil }
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(data)
       allow(neo_ai).to receive(:stage_label).with('scene_writer').and_return('Writing lesson scripts…')
       get '/api/internal/courses/c1/generation_status'
       expect(response.parsed_body['status']).to eq('PENDING')
     end
 
     it 'returns COMPLETED when modules are present' do
-      allow(neo_ai).to receive(:find_course).with('c1').and_return({
-                                                                     'stage' => 'video_generation', 'modules' => [{ 'id' => 'm1' }], 'progress_text' => nil
-                                                                   })
+      data = { 'stage' => 'video_generation', 'modules' => [{ 'id' => 'm1' }], 'progress_text' => nil }
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(data)
       allow(neo_ai).to receive(:stage_label).with('video_generation').and_return('Generating videos…')
       get '/api/internal/courses/c1/generation_status'
       expect(response.parsed_body['status']).to eq('COMPLETED')
     end
 
     it 'returns COMPLETED when stage is log_course_completed' do
-      allow(neo_ai).to receive(:find_course).with('c1').and_return({
-                                                                     'stage' => 'log_course_completed', 'modules' => [], 'progress_text' => nil
-                                                                   })
+      data = { 'stage' => 'log_course_completed', 'modules' => [], 'progress_text' => nil }
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(data)
       allow(neo_ai).to receive(:stage_label).with('log_course_completed').and_return('Course is ready!')
       get '/api/internal/courses/c1/generation_status'
       expect(response.parsed_body['status']).to eq('COMPLETED')
     end
 
     it 'uses progress_text when present' do
-      allow(neo_ai).to receive(:find_course).with('c1').and_return({
-                                                                     'stage' => 'scene_writer', 'modules' => [], 'progress_text' => 'Almost there…'
-                                                                   })
+      data = { 'stage' => 'scene_writer', 'modules' => [], 'progress_text' => 'Almost there…' }
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(data)
       get '/api/internal/courses/c1/generation_status'
       expect(response.parsed_body['stage']).to eq('Almost there…')
     end
   end
 
   describe 'GET /api/internal/courses/:id/structure' do
+    let(:structure_data) do
+      {
+        'id' => 'c1', 'title' => 'My Course', 'thumbnail_url' => nil,
+        'progress_text' => nil, 'stage' => 'log_course_completed',
+        'modules' => [
+          {
+            'id' => 'm1', 'title' => 'Module 1',
+            'lessons' => [
+              {
+                'id' => 'l1', 'title' => 'Lesson 1', 'description' => nil,
+                'summary' => nil, 'estimated_duration' => nil,
+                'video_url' => 'https://example.com/video.mp4',
+                'verified' => true,
+                'scenes' => [{ 'id' => 's1', 'video_url' => 'https://example.com/s1.mp4' }]
+              }
+            ]
+          }
+        ]
+      }
+    end
+
     before do
       sign_in privileged_user
-      allow(neo_ai).to receive(:find_course).with('c1').and_return({
-                                                                     'id' => 'c1',
-                                                                     'title' => 'My Course',
-                                                                     'thumbnail_url' => nil,
-                                                                     'progress_text' => nil,
-                                                                     'stage' => 'log_course_completed',
-                                                                     'modules' => [
-                                                                       {
-                                                                         'id' => 'm1',
-                                                                         'title' => 'Module 1',
-                                                                         'lessons' => [
-                                                                           {
-                                                                             'id' => 'l1',
-                                                                             'title' => 'Lesson 1',
-                                                                             'description' => nil,
-                                                                             'summary' => nil,
-                                                                             'estimated_duration' => nil,
-                                                                             'video_url' => 'https://example.com/video.mp4',
-                                                                             'verified' => true,
-                                                                             'scenes' => [{ 'id' => 's1',
-                                                                                            'video_url' => 'https://example.com/s1.mp4' }]
-                                                                           }
-                                                                         ]
-                                                                       }
-                                                                     ]
-                                                                   })
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(structure_data)
     end
 
     it 'returns the course structure' do
