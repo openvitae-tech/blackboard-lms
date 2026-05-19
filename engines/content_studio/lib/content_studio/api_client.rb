@@ -9,6 +9,8 @@ module ContentStudio
   # Never call BlackboardClient directly from views or controllers — always go through ApiClient.
   class ApiClient
     thread_mattr_accessor :current_cookie
+    thread_mattr_accessor :cached_client
+    thread_mattr_accessor :cached_client_cookie
 
     class << self
       def list_courses # rubocop:disable Rails/Delegate
@@ -74,7 +76,11 @@ module ContentStudio
       private
 
       def client
-        BlackboardClient.new(cookie: current_cookie)
+        if cached_client.nil? || cached_client_cookie != current_cookie
+          self.cached_client_cookie = current_cookie
+          self.cached_client = BlackboardClient.new(cookie: current_cookie)
+        end
+        cached_client
       end
     end
   end
