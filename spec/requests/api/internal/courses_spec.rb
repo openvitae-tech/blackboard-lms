@@ -230,4 +230,21 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe 'BaseController#render_upstream_error' do
+    before { sign_in privileged_user }
+
+    it 'forwards the upstream status code when NeoAI returns an error response' do
+      err = Faraday::ServerError.new(nil, { status: 503, body: 'service unavailable', headers: {} })
+      allow(neo_ai).to receive(:list_courses).and_raise(err)
+      get '/api/internal/courses'
+      expect(response).to have_http_status(503)
+    end
+
+    it 'returns 502 when Faraday raises a connection-level error with no response' do
+      allow(neo_ai).to receive(:list_courses).and_raise(Faraday::ConnectionFailed.new('connection refused'))
+      get '/api/internal/courses'
+      expect(response).to have_http_status(:bad_gateway)
+    end
+  end
 end
