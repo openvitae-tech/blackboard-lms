@@ -8,8 +8,8 @@ module Api
       def stats
         courses = neo_ai.list_courses
         render json: {
-          created: 0,
-          published: 0,
+          created: courses.count { |c| neo_completed?(c) },
+          published: 0, # TODO: requires BlackboardLMS published course count
           in_progress: courses.reject { |c| neo_completed?(c) }.count
         }
       end

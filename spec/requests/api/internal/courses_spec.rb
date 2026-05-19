@@ -86,7 +86,7 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
     it 'returns created, published, in_progress counts' do
       get '/api/internal/courses/stats'
       body = response.parsed_body
-      expect(body['created']).to eq(0)
+      expect(body['created']).to eq(1)
       expect(body['published']).to eq(0)
       expect(body['in_progress']).to eq(2)
     end
