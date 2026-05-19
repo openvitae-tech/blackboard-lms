@@ -15,6 +15,7 @@ module ContentStudio
     helper HostRoutesHelper
     before_action :require_content_studio_access!
     before_action { ApiClient.current_cookie = request.env['HTTP_COOKIE'] }
+    after_action { ApiClient.current_cookie = ApiClient.cached_client = ApiClient.cached_client_cookie = nil }
 
     private
 
