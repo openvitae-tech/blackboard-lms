@@ -4,6 +4,8 @@ module NeoAi
   class Client
     API_PREFIX = '/api/v1'
     TOKEN_EXPIRY_BUFFER = 10
+    REQUEST_TIMEOUT = 30
+    OPEN_TIMEOUT = 5
 
     STAGE_LABELS = {
       'accepted' => 'Preparing your course…',
@@ -89,6 +91,8 @@ module NeoAi
     def build_connection
       token = current_token
       Faraday.new(url: NEO_AI_BASE_URL) do |f|
+        f.options.timeout = REQUEST_TIMEOUT
+        f.options.open_timeout = OPEN_TIMEOUT
         f.request :json
         f.response :raise_error
         f.headers['Authorization'] = "Bearer #{token}"
@@ -108,7 +112,11 @@ module NeoAi
     end
 
     def refresh_token
-      conn = Faraday.new(url: NEO_AI_BASE_URL) { |f| f.response :raise_error }
+      conn = Faraday.new(url: NEO_AI_BASE_URL) do |f|
+        f.options.timeout = REQUEST_TIMEOUT
+        f.options.open_timeout = OPEN_TIMEOUT
+        f.response :raise_error
+      end
       response = conn.get("#{API_PREFIX}/token") do |req|
         req.headers['x-client-secret'] = NEO_AI_CLIENT_SECRET
       end
