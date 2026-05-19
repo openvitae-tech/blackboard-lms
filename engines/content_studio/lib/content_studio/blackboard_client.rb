@@ -4,6 +4,10 @@ module ContentStudio
   class BlackboardClient
     BASE_PATH = '/api/internal'
 
+    def initialize(cookie: nil)
+      @cookie = cookie
+    end
+
     def list_courses
       response = connection.get("#{BASE_PATH}/courses")
       JSON.parse(response.body).map { |c| build_course(c) }
@@ -27,11 +31,6 @@ module ContentStudio
     def list_courses_by_status(status)
       response = connection.get("#{BASE_PATH}/courses", { studio_status: status, limit: 12 })
       JSON.parse(response.body).map { |c| build_course(c) }
-    end
-
-    def current_user
-      response = connection.get("#{BASE_PATH}/users/me")
-      build_user(JSON.parse(response.body))
     end
 
     def list_avatars
@@ -60,7 +59,7 @@ module ContentStudio
     def generation_status(course_id)
       response = connection.get("#{BASE_PATH}/courses/#{course_id}/generation_status")
       data = JSON.parse(response.body)
-      GenerationStatus.new(status: data['status'], redirect_url: data['redirect_url'])
+      GenerationStatus.new(status: data['status'], stage: data['stage'], redirect_url: data['redirect_url'])
     end
 
     def course_structure(course_id)
@@ -78,7 +77,23 @@ module ContentStudio
 
     def get_lesson(course_id, lesson_id)
       response = connection.get("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}")
-      build_lesson(JSON.parse(response.body))
+      build_structure_lesson(JSON.parse(response.body))
+    end
+
+    def create_course(files:, branding:, no_video: false)
+      response = connection.post("#{BASE_PATH}/courses", { files: files, branding: branding, no_video: no_video })
+      JSON.parse(response.body)['course_id']
+    end
+
+    def regenerate_scene(scene_id, course_id:, lesson_id:, narration:)
+      connection.post(
+        "#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}/scenes/#{scene_id}/regenerate",
+        { narration: narration }
+      )
+    end
+
+    def verify_lesson(lesson_id, course_id:)
+      connection.post("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}/verify")
     end
 
     private
@@ -87,6 +102,7 @@ module ContentStudio
       @connection ||= Faraday.new(url: ContentStudio.base_url) do |f|
         f.request :json
         f.response :raise_error
+        f.headers['Cookie'] = @cookie if @cookie.present?
       end
     end
 
@@ -143,15 +159,6 @@ module ContentStudio
       )
     end
 
-    def build_user(data)
-      User.new(
-        id: data['id'],
-        name: data['name'],
-        email: data['email'],
-        role: data['role']
-      )
-    end
-
     def build_course_structure(data)
       CourseStructure.new(
         id: data['id'],
@@ -159,7 +166,9 @@ module ContentStudio
         duration: data['duration'],
         modules: (data['modules'] || []).map { |m| build_structure_module(m) },
         verified_modules_count: data['verified_modules_count'].to_i,
-        thumbnail_url: data['thumbnail_url']
+        thumbnail_url: data['thumbnail_url'],
+        progress_text: data['progress_text'],
+        stage: data['stage']
       )
     end
 
@@ -172,7 +181,29 @@ module ContentStudio
     end
 
     def build_structure_lesson(data)
-      StructureLesson.new(id: data['id'], title: data['title'], status: data['status'])
+      StructureLesson.new(
+        id: data['id'],
+        title: data['title'],
+        description: data['description'],
+        summary: data['summary'],
+        estimated_duration: data['estimated_duration'],
+        status: data['status'],
+        video_url: data['video_url'],
+        verified: data['verified'] == true,
+        scenes: (data['scenes'] || []).map { |s| build_scene(s) }
+      )
+    end
+
+    def build_scene(data)
+      Scene.new(
+        id: data['id'],
+        timestamp: data['timestamp'],
+        visual: data['visual'],
+        narration: data['narration'],
+        status: data['status'],
+        video_url: data['video_url'],
+        thumbnail_url: data['thumbnail_url']
+      )
     end
   end
 end

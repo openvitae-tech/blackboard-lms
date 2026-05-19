@@ -8,6 +8,8 @@ module ContentStudio
   #
   # Never call BlackboardClient directly from views or controllers — always go through ApiClient.
   class ApiClient
+    thread_mattr_accessor :current_cookie
+
     class << self
       def list_courses # rubocop:disable Rails/Delegate
         client.list_courses
@@ -23,10 +25,6 @@ module ContentStudio
 
       def list_courses_by_status(status) # rubocop:disable Rails/Delegate
         client.list_courses_by_status(status)
-      end
-
-      def current_user # rubocop:disable Rails/Delegate
-        client.current_user
       end
 
       def list_avatars # rubocop:disable Rails/Delegate
@@ -65,18 +63,18 @@ module ContentStudio
         client.create_course(files: files, branding: branding, no_video: no_video)
       end
 
-      def regenerate_scene(scene_id, narration:)
-        client.regenerate_scene(scene_id, narration: narration)
+      def regenerate_scene(scene_id, course_id:, lesson_id:, narration:)
+        client.regenerate_scene(scene_id, course_id: course_id, lesson_id: lesson_id, narration: narration)
       end
 
-      def verify_lesson(lesson_id) # rubocop:disable Rails/Delegate
-        client.verify_lesson(lesson_id)
+      def verify_lesson(lesson_id, course_id:)
+        client.verify_lesson(lesson_id, course_id: course_id)
       end
 
       private
 
       def client
-        @client ||= NeoAiClient.new
+        BlackboardClient.new(cookie: current_cookie)
       end
     end
   end
