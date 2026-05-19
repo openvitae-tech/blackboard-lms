@@ -40,7 +40,7 @@ module Api
       def generation_status
         data = neo_ai.find_course(params[:id])
         stage = data['stage']
-        completed = data.fetch('modules', []).any? || stage == 'log_course_completed'
+        completed = (data['modules'] || []).any? || stage == 'log_course_completed'
         render json: {
           status: completed ? 'COMPLETED' : 'PENDING',
           stage: data['progress_text'].presence || neo_ai.stage_label(stage),
