@@ -25,7 +25,8 @@ RSpec.describe 'ContentStudio::Courses', type: :request do
 
   before do
     allow(ContentStudio::ApiClient).to receive(:course_stats).and_return(stats)
-    allow(ContentStudio::ApiClient).to receive(:list_courses_by_status).with('in_progress').and_return([in_progress_course])
+    allow(ContentStudio::ApiClient).to receive(:list_courses_by_status)
+      .with('in_progress').and_return([in_progress_course])
     allow(ContentStudio::ApiClient).to receive(:list_courses_by_status).with('completed').and_return([])
   end
 
