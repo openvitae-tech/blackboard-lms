@@ -8,6 +8,12 @@ module Api
       skip_before_action :set_active_nav
       skip_before_action :proceed_to_onboarding_steps, raise: false
 
+      include NeoAiLessonSerializer
+
+      def self.neo_ai_client
+        @neo_ai_client ||= NeoAi::Client.new
+      end
+
       rescue_from Pundit::NotAuthorizedError, with: :render_forbidden
       rescue_from Faraday::Error, with: :render_upstream_error
 
@@ -33,7 +39,7 @@ module Api
       end
 
       def neo_ai
-        @neo_ai ||= NeoAi::Client.new
+        self.class.neo_ai_client
       end
     end
   end

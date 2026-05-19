@@ -30,6 +30,7 @@ RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
   let(:neo_ai) { instance_double(NeoAi::Client) }
 
   before do
+    Api::Internal::Courses::LessonsController.instance_variable_set(:@neo_ai_client, nil)
     sign_in privileged_user
     allow(NeoAi::Client).to receive(:new).and_return(neo_ai)
   end

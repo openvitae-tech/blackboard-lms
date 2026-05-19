@@ -8,6 +8,7 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
   let(:neo_ai) { instance_double(NeoAi::Client) }
 
   before do
+    Api::Internal::CoursesController.instance_variable_set(:@neo_ai_client, nil)
     allow(NeoAi::Client).to receive(:new).and_return(neo_ai)
   end
 
