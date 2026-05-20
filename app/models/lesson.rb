@@ -47,6 +47,7 @@ class Lesson < ApplicationRecord
   end
 
   def local_contents_present?
+    return false if video_streaming_source.present?
     return false unless local_contents.reject(&:marked_for_destruction?).empty?
 
     errors.add(:base,

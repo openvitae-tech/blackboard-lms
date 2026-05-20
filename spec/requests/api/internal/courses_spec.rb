@@ -181,10 +181,59 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
   end
 
   describe 'PATCH /api/internal/courses/:id/save' do
-    it 'returns ok' do
+    let(:neo_ai_data) do
+      {
+        'title' => 'AI Generated Course',
+        'description' => 'An AI generated course about a very interesting topic for learners',
+        'modules' => [
+          {
+            'id' => 'm1',
+            'title' => 'Module One',
+            'lessons' => [
+              {
+                'id' => 'l1',
+                'title' => 'Lesson One',
+                'description' => 'Intro lesson',
+                'estimated_duration' => 60,
+                'video_url' => 'https://example.com/video.mp4'
+              }
+            ]
+          }
+        ]
+      }
+    end
+
+    before do
       sign_in privileged_user
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(neo_ai_data)
+    end
+
+    it 'returns ok' do
       patch '/api/internal/courses/c1/save'
       expect(response).to have_http_status(:ok)
+    end
+
+    it 'creates a course in BlackboardLMS' do
+      expect { patch '/api/internal/courses/c1/save' }.to change(Course, :count).by(1)
+    end
+
+    it 'persists the course title and neo_ai_course_id' do
+      patch '/api/internal/courses/c1/save'
+      course = Course.last
+      expect(course.title).to eq('AI Generated Course')
+      expect(course.neo_ai_course_id).to eq('c1')
+    end
+
+    it 'creates modules and lessons' do
+      patch '/api/internal/courses/c1/save'
+      course = Course.last
+      expect(course.course_modules.count).to eq(1)
+      expect(course.course_modules.first.lessons.count).to eq(1)
+    end
+
+    it 'is idempotent on repeated calls' do
+      patch '/api/internal/courses/c1/save'
+      expect { patch '/api/internal/courses/c1/save' }.not_to change(Course, :count)
     end
   end
 

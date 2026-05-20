@@ -54,6 +54,7 @@ module Api
       end
 
       def save
+        NeoAi::CourseSaveService.new(neo_ai).call(params[:id])
         render json: { status: 'ok' }
       end
 
