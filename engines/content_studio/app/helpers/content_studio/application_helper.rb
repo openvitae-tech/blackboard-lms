@@ -49,10 +49,10 @@ module ContentStudio
     end
 
     def studio_badge(status)
-      if status == 'to_be_verified'
-        { label: 'Pending', bg_color: 'bg-danger', text_color: 'text-white' }
+      if status == 'in_progress'
+        { label: 'In Progress', bg_color: 'bg-danger', text_color: 'text-white' }
       else
-        { label: status == 'verified' ? 'Verified' : 'Published' }
+        { label: 'Completed' }
       end
     end
   end

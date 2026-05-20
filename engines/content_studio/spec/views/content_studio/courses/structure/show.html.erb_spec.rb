@@ -113,9 +113,9 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
   end
 
   context 'when thumbnail_url is absent' do
-    it 'renders the video_film gif as fallback in the thumbnail section' do
+    it 'renders the image-ai gif as fallback in the thumbnail section' do
       render
-      expect(rendered).to match(/src="[^"]*video_film[^"]*\.gif"/)
+      expect(rendered).to match(/src="[^"]*image-ai[^"]*\.gif"/)
     end
   end
 

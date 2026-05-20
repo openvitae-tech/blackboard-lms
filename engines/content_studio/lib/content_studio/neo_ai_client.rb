@@ -125,7 +125,7 @@ module ContentStudio
     def post(path, body, no_video: false)
       build_connection.post("#{API_PREFIX}#{path}", body) do |req|
         req.params[:partner_id] = partner_id
-        req.headers['no_video'] = 'true' if no_video
+        req.headers['No-Video'] = 'true' if no_video
       end
     end
 
