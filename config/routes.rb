@@ -215,6 +215,8 @@ Rails.application.routes.draw do
       get  :team_member_profile
       get  :started_vs_completed
       get  :recent_activity
+      get  :export
+      get  :export_member
     end
   end
   resources :settings, only: :index

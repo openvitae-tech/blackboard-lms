@@ -13,13 +13,23 @@
         </p>
       </div>
     </div>
-    <div class="z-20">
+    <div class="z-20 flex items-center gap-2">
       <%= dropdown_component(
         name: "duration",
         options: duration_select_options(@team, member: @member, origin: safe_origin),
         value: duration_select_value(@team, member: @member, origin: safe_origin),
         html_options: duration_select_html_options
       ) %>
+      <%= link_to export_member_dashboards_path(
+            user_id: @member.id,
+            team_id: @team.id,
+            duration: params[:duration],
+            from_date: params[:from_date],
+            to_date: params[:to_date]
+          ),
+          data: { controller: "download", action: "click->download#start" } do %>
+        <%= button_component(text: 'Export', icon_name: 'arrow-down-tray', type: "outline", icon_position: 'left') %>
+      <% end %>
     </div>
   </div>
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DashboardsController < ApplicationController
-  before_action :set_dashboard_params, only: %i[index nudge_all appreciate_member team_progress team_member_profile started_vs_completed recent_activity nudge_user]
+  before_action :set_dashboard_params, only: %i[index nudge_all appreciate_member team_progress team_member_profile started_vs_completed recent_activity nudge_user export export_member]
 
   def index
     authorize :dashboard
@@ -34,10 +34,29 @@ class DashboardsController < ApplicationController
   def team_progress
     authorize :dashboard
     @dashboard = DashboardService.instance.build_dashboard_for(@team, @duration)
-    @sub_teams = @dashboard.sub_teams_progress
-    @tab = @sub_teams.any? && params[:tab] == 'teams' ? 'teams' : 'members'
+    all_sub_teams = @dashboard.sub_teams_progress
+    @tab = all_sub_teams.any? && params[:tab] == 'teams' ? 'teams' : 'members'
+    @sub_teams = Kaminari.paginate_array(all_sub_teams, total_count: all_sub_teams.size).page(params[:page]).per(10)
     @team_members = @dashboard.all_team_members_progress(params[:page], query: params[:query])
     @member_counts = @dashboard.team_member_status_counts
+  end
+
+  def export
+    authorize :dashboard
+    @dashboard = DashboardService.instance.build_dashboard_for(@team, @duration)
+    xlsx = DashboardExportService.new(@dashboard, @team, @duration).generate
+    filename = "dashboard-#{@team.name.parameterize}-#{Date.today}.xlsx"
+    send_data xlsx, filename:, type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  end
+
+  def export_member
+    authorize :dashboard
+    @member = User.where(team_id: @team.team_hierarchy_ids).find(params[:user_id])
+    @dashboard = DashboardService.instance.build_dashboard_for(@team, @duration)
+    member_data = @dashboard.team_member_data(@member)
+    xlsx = MemberExportService.new(@member, member_data, @dashboard, @team).generate
+    filename = "member-#{@member.display_name.parameterize}-#{Date.today}.xlsx"
+    send_data xlsx, filename:, type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   end
 
   def nudge_all
@@ -50,6 +69,7 @@ class DashboardsController < ApplicationController
                      Enrollment
                        .joins(:user)
                        .where(users: { team_id: @team.team_hierarchy_ids })
+                       .where.not(users: { role: [User::ADMIN, User::SUPPORT] })
                        .where(course_id: params[:course_id], course_completed: false)
                        .includes(:user, :course)
                    else

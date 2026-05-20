@@ -1,3 +1,5 @@
+const exportColors = require('./export_colors.json')
+
 module.exports = {
   content: [
     "./public/*.html",
@@ -43,7 +45,8 @@ module.exports = {
         "slate-grey-50":"#808285",
         "slate-grey-light":"#D1D3D4",
         "white":"#FFFFFF",
-        "white-light":"#FAFAFA"
+        "white-light":"#FAFAFA",
+        ...exportColors
       },
       borderRadius: {
         '4xl': '2rem',

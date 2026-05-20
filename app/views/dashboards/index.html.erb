@@ -19,6 +19,10 @@
       value: duration_select_value(@team),
       html_options: duration_select_html_options
     ) %>
+    <%= link_to export_dashboards_path(team_id: @team.id, duration: params[:duration], from_date: params[:from_date], to_date: params[:to_date]),
+             data: { controller: "download", action: "click->download#start" } do %>
+      <%= button_component(text: "Export", icon_name: "arrow-down-tray", type: "outline", icon_position: "left") %>
+    <% end %>
   </div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">

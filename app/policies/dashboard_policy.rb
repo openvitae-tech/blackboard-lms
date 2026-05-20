@@ -39,4 +39,12 @@ class DashboardPolicy
   def appreciate_member?
     index?
   end
+
+  def export?
+    index?
+  end
+
+  def export_member?
+    index?
+  end
 end
