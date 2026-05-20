@@ -24,7 +24,7 @@ module ContentStudio
     end
 
     def require_content_studio_access!
-      redirect_to root_path unless ContentStudio.authorization_callback.call(try(:current_user))
+      redirect_to '/' unless ContentStudio.authorization_callback.call(try(:current_user))
     end
   end
 end

@@ -405,6 +405,11 @@ en:
     deactivate_failed: "User deactivate failed"
     deactivated_account: "Your account is deactivated, please contact your team manager."
     deleted: "User deleted"
+    content_studio_creator_enabled: "Content Studio access enabled."
+    content_studio_creator_disabled: "Content Studio access disabled."
+  users:
+    enable_content_studio: "Enable Content Studio"
+    disable_content_studio: "Disable Content Studio"
   page_not_found: "The page you're looking for is missing."
   learning_partner:
     label: "Learning partner"

@@ -249,6 +249,7 @@ Rails.application.routes.draw do
       get :change_role
       patch :confirm_change_role
       get :select_roles
+      patch :toggle_content_studio_creator
     end
   end
 

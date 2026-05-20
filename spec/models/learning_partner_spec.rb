@@ -152,6 +152,22 @@ RSpec.describe LearningPartner, type: :model do
     end
   end
 
+  describe '#content_studio_enabled?' do
+    it 'returns false when no payment plan exists' do
+      expect(learning_partner.content_studio_enabled?).to be false
+    end
+
+    it 'returns false when payment plan has content_studio_enabled: false' do
+      create(:payment_plan, learning_partner:, content_studio_enabled: false)
+      expect(learning_partner.content_studio_enabled?).to be false
+    end
+
+    it 'returns true when payment plan has content_studio_enabled: true' do
+      create(:payment_plan, learning_partner:, content_studio_enabled: true)
+      expect(learning_partner.content_studio_enabled?).to be true
+    end
+  end
+
   describe '#active_certificate_template' do
     before do
       @certificate_template = create(:certificate_template, learning_partner:, active: true)

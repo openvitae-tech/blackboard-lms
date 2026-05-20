@@ -123,11 +123,12 @@ class LearningPartnersController < ApplicationController
       :banner,
       supported_countries: [],
       payment_plan_attributes: [
-        :id,  
+        :id,
         :start_date,
         :end_date,
         :total_seats,
-        :per_seat_cost
+        :per_seat_cost,
+        :content_studio_enabled
       ]
     )
   end
