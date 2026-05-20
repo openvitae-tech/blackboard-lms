@@ -114,6 +114,22 @@ RSpec.describe 'Request spec for PaymentPlans' do
       expect(response).to redirect_to(error_401_path)
     end
 
+    it 'enables content studio' do
+      put learning_partner_payment_plan_path(learning_partner),
+          params: payment_plan_params.deep_merge(payment_plan: { content_studio_enabled: true })
+
+      expect(@payment_plan.reload.content_studio_enabled).to be true
+    end
+
+    it 'disables content studio' do
+      @payment_plan.update!(content_studio_enabled: true)
+
+      put learning_partner_payment_plan_path(learning_partner),
+          params: payment_plan_params.deep_merge(payment_plan: { content_studio_enabled: false })
+
+      expect(@payment_plan.reload.content_studio_enabled).to be false
+    end
+
     it 'Update payment plan failure' do
       put learning_partner_payment_plan_path(learning_partner), params: { payment_plan: { start_date: nil } }
 

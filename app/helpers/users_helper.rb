@@ -76,7 +76,8 @@ module UsersHelper
       activate_item(user),
       delete_item(user),
       change_role_item(user),
-      change_team_item(user)
+      change_team_item(user),
+      content_studio_creator_item(user)
     ].compact
   end
 
@@ -135,6 +136,18 @@ module UsersHelper
       url: change_team_member_path,
       type: :link,
       options: { data: { turbo_frame: 'modal' } }
+    )
+  end
+
+  def content_studio_creator_item(user)
+    return unless policy(user).assign_content_studio_creator?
+
+    label_key = user.content_studio_creator? ? 'users.disable_content_studio' : 'users.enable_content_studio'
+    ViewComponent::MenuComponentHelper::MenuItem.new(
+      label: t(label_key),
+      url: toggle_content_studio_creator_member_path(user),
+      type: :link,
+      options: { data: { turbo_method: :patch } }
     )
   end
 end

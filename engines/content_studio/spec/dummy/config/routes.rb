@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: proc { [200, {}, ['']] }
+
   mount ContentStudio::Engine => '/content_studio'
 
   namespace :api do

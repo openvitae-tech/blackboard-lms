@@ -9,6 +9,6 @@ class ContentStudioPolicy
   end
 
   def index?
-    user.privileged_user?
+    user.content_studio_creator? && user.learning_partner.content_studio_enabled?
   end
 end

@@ -51,6 +51,13 @@ class UserPolicy
     user.manager_of?(other_user) && user.id != other_user.id
   end
 
+  def assign_content_studio_creator?
+    other_user.learning_partner.content_studio_enabled? &&
+      user.is_support? &&
+      user.manager_of?(other_user) &&
+      (other_user.is_manager? || other_user.is_owner?)
+  end
+
   private
 
   def changing_own_team?
