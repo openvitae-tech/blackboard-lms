@@ -62,6 +62,10 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('input[type="checkbox"]')).to be_nil
       end
 
+      it 'raises ArgumentError when checkbox is truthy but not a Hash' do
+        expect { render_card(checkbox: true) }.to raise_error(ArgumentError, /Hash/)
+      end
+
       it 'renders a checkbox when checkbox is a Hash' do
         doc = render_card(checkbox: { name: 'course_ids[]', value: '42' })
         expect(doc.at_css('input[type="checkbox"]')).to be_present

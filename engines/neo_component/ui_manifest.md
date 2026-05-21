@@ -288,8 +288,8 @@ long_course_card_component(
   badge: nil,              # nil or Hash with :label, optional :bg_color, :text_color
   description: nil,
   highlights: [],
-  checkbox: false          # false to hide; true for a default checkbox; or a Hash of check_box_tag options
-                           #   Hash keys: :name (field name), :value, :checked (Boolean),
+  checkbox: false          # false to hide; or a Hash of check_box_tag options (truthy non-Hash raises ArgumentError)
+                           #   Hash keys: :name (field name), :value, :checked (Boolean), :id,
                            #   plus any other HTML attributes (e.g. data-*, class overrides).
                            #   The checkbox is rendered absolute top-right (top-4 right-4) and
                            #   its click event is stopped from bubbling so it does not trigger

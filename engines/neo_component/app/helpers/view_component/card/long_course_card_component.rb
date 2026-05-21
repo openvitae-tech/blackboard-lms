@@ -17,6 +17,8 @@ module ViewComponent
         highlights: [],
         checkbox: false
       )
+        raise ArgumentError, 'checkbox must be false or a Hash of check_box_tag options' if checkbox && !checkbox.is_a?(Hash)
+
         badge = { bg_color: 'bg-secondary', text_color: 'text-primary-dark' }.merge(badge) if badge
         render partial: 'view_components/cards/long_course_card_component',
                locals: {
