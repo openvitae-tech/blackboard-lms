@@ -1,9 +1,11 @@
 <div class="group rounded-xl border border-line-colour relative md:max-h-[132px]">
   <% if checkbox %>
     <% checkbox_opts = checkbox.is_a?(Hash) ? checkbox.dup : {} %>
+    <% checkbox_id = checkbox_opts.delete(:id) %>
     <%= check_box_tag checkbox_opts.delete(:name) || 'checkbox',
           checkbox_opts.delete(:value),
           checkbox_opts.delete(:checked) || false,
+          id: checkbox_id,
           class: 'absolute top-4 right-4 w-5 h-5 z-10 rounded border border-slate-grey-light checked:bg-primary checked:border-primary focus:ring-0 cursor-pointer',
           onclick: 'event.stopPropagation()',
           **checkbox_opts %>
