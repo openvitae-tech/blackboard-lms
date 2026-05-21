@@ -19,7 +19,7 @@ RSpec.describe 'ContentStudio::Courses::Scenes', type: :request do
 
       it 'calls ApiClient.regenerate_scene with the scene_id and narration' do
         expect(ContentStudio::ApiClient).to have_received(:regenerate_scene)
-          .with('s1', narration: 'Updated narration text.')
+          .with('s1', course_id: '1', lesson_id: '2', narration: 'Updated narration text.')
       end
     end
 

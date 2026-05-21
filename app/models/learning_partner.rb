@@ -27,6 +27,10 @@ class LearningPartner < ApplicationRecord
 
   has_rich_text :content
 
+  def content_studio_enabled?
+    payment_plan&.content_studio_enabled? || false
+  end
+
   def parent_team
     @parent_team ||= Team.where(learning_partner_id: id, parent_team_id: nil).first
   end

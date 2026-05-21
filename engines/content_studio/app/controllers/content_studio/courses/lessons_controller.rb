@@ -4,7 +4,7 @@ module ContentStudio
   module Courses
     class LessonsController < ApplicationController
       def verify
-        ApiClient.verify_lesson(params[:id])
+        ApiClient.verify_lesson(params[:id], course_id: params[:course_id])
         next_id = params[:next_lesson_id]
         if next_id.present?
           redirect_to course_lesson_path(params[:course_id], next_id)

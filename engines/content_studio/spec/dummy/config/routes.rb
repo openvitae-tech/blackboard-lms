@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: proc { [200, {}, ['']] }
+
   mount ContentStudio::Engine => '/content_studio'
 
   namespace :api do
@@ -12,6 +14,8 @@ Rails.application.routes.draw do
       get 'courses/:id/structure', to: 'courses#structure'
       patch 'courses/:id/save', to: 'courses#save'
       delete 'courses/:id', to: 'courses#discard'
+      post 'courses/:course_id/lessons/:lesson_id/scenes/:scene_id/regenerate', to: 'courses#regenerate_scene'
+      post 'courses/:course_id/lessons/:lesson_id/verify', to: 'courses#verify_lesson'
       get 'courses/:course_id/lessons/:id', to: 'courses/lessons#show'
       get 'users/me', to: 'users#me'
     end

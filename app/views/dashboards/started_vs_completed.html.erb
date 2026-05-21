@@ -12,6 +12,7 @@
     </div>
   <% end %>
 </div>
+
 <div class="flex items-center justify-between my-6 px-1">
   <div class="flex justify-between gap-4 w-full">
     <div class="flex flex-row gap-3">
@@ -31,57 +32,60 @@
   </div>
 
 </div>
-
-<%= turbo_frame_tag "courses_results", data: { turbo_action: "advance" } do %>
-<% if @widest_gap_courses.any? %>
-  <div class="bg-gold-light rounded-xl p-5 mb-4">
-    <div class="flex items-center justify-center mb-3">
-      <h3 class="main-text-sm-medium text-letter-color-medium"><%= t("dashboard.started_vs_completed.widest_gap_title") %></h3>
-    </div>
-    <% @widest_gap_courses.each do |item| %>
-    <div class="flex justify-between gap-5 border-b border-line-colour-light last:border-b-0">
-      <div class="px-5 py-3 flex-1">
-        <div class="flex justify-between gap-2">
-          <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
-          <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
+<div class="flex justify-center">
+  <div class="md:w-[760px]">
+    <%= turbo_frame_tag "courses_results", data: { turbo_action: "advance" } do %>
+    <% if @widest_gap_courses.any? %>
+      <div class="bg-gold-light rounded-xl p-5 mb-4">
+        <div class="flex items-center justify-center mb-3">
+          <h3 class="main-text-sm-medium text-letter-color-medium"><%= t("dashboard.started_vs_completed.widest_gap_title") %></h3>
         </div>
-        <%= progressbar_component(segments: [
-            { value: item[:completed_percent], color: :secondary },
-            { value: item[:started_percent], color: :primary }
-          ]) %>
+        <% @widest_gap_courses.each do |item| %>
+        <div class="flex justify-between gap-5 border-b border-line-colour-light last:border-b-0">
+          <div class="px-5 py-3 flex-1">
+            <div class="flex justify-between gap-2">
+              <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
+              <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
+            </div>
+            <%= progressbar_component(segments: [
+                { value: item[:completed_percent], color: :secondary },
+                { value: item[:started_percent], color: :primary }
+              ]) %>
+          </div>
+          <%= link_to nudge_all_dashboards_path(course_id: item[:course].id, team_id: params[:team_id]), data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary flex-none" do %>
+            <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
+            <span class="main-text-sm-normal"><%= t("dashboard.actions.nudge") %></span>
+          <% end %>
+        </div>
+        <% end %>
       </div>
-      <%= link_to nudge_all_dashboards_path(course_id: item[:course].id, team_id: params[:team_id]), data: { turbo_frame: 'modal' }, class: "flex items-center gap-1 text-primary flex-none" do %>
-        <%= icon("chat-bubble-bottom-center-text", css: "h-4 w-4") %>
-        <span class="main-text-sm-normal"><%= t("dashboard.actions.nudge") %></span>
+    <% end %>
+
+    <div class="bg-white rounded-xl border border-line-colour-light">
+      <% if @courses.any? %>
+        <div class="flex flex-col">
+          <% @courses.each do |item| %>
+            <div class="px-5 py-3 border-b border-line-colour-light last:border-b-0">
+              <div class="flex justify-between gap-2">
+                <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
+                <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
+              </div>
+              <%= progressbar_component(segments: [
+                { value: item[:completed_percent], color: :secondary },
+                { value: item[:started_percent], color: :primary }
+              ]) %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="general-text-sm-normal text-letter-color-light text-center py-8"><%= t("dashboard.started_vs_completed.empty") %></p>
       <% end %>
-     </div>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-4">
+      <%= render 'shared/pagination/prev', items: @courses %>
+      <%= render 'shared/pagination/next', items: @courses %>
+    </div>
     <% end %>
   </div>
-<% end %>
-
-<div class="bg-white rounded-xl border border-line-colour-light">
-  <% if @courses.any? %>
-    <div class="flex flex-col">
-      <% @courses.each do |item| %>
-        <div class="px-5 py-3 border-b border-line-colour-light last:border-b-0">
-          <div class="flex justify-between gap-2">
-            <p class="main-text-sm-medium line-clamp-1 mb-1"><%= item[:course].title %></p>
-            <span class="general-text-sm-normal w-8 text-right"><%= item[:completed] + item[:started] %>/<%= item[:total] %></span>
-          </div>
-          <%= progressbar_component(segments: [
-            { value: item[:completed_percent], color: :secondary },
-            { value: item[:started_percent], color: :primary }
-          ]) %>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <p class="general-text-sm-normal text-letter-color-light text-center py-8"><%= t("dashboard.started_vs_completed.empty") %></p>
-  <% end %>
 </div>
-
-<div class="flex justify-end gap-3 mt-4">
-  <%= render 'shared/pagination/prev', items: @courses %>
-  <%= render 'shared/pagination/next', items: @courses %>
-</div>
-<% end %>

@@ -61,49 +61,35 @@
             <div class="py-1 cursor-pointer general-text-md-medium text-letter-color-light"
                  data-tabs-target="tabItem"
                  data-action="click->tabs#select">
-              To be Verified
+              In Progress
             </div>
             <div class="py-1 cursor-pointer general-text-md-medium text-letter-color-light"
                  data-tabs-target="tabItem"
                  data-action="click->tabs#select">
-              Verified
-            </div>
-            <div class="py-1 cursor-pointer general-text-md-medium text-letter-color-light"
-                 data-tabs-target="tabItem"
-                 data-action="click->tabs#select">
-              Published
+              Completed
             </div>
           </div>
 
-          <%# To be Verified panel %>
+          <%# In Progress panel %>
           <div data-tabs-target="panelItem">
-            <% if @to_be_verified.any? %>
-              <% cards = @to_be_verified.map { |course| studio_course_card(course, 'to_be_verified') } %>
+            <% if @in_progress.any? %>
+              <% cards = @in_progress.map { |course| studio_course_card(course, 'in_progress') } %>
               <%= carousel_component(cards: cards, loop: false) %>
             <% else %>
-              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No courses to verify yet.</p>
+              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No courses in progress.</p>
             <% end %>
           </div>
 
-          <%# Verified panel %>
+          <%# Completed panel %>
           <div class="hidden" data-tabs-target="panelItem">
-            <% if @verified.any? %>
-              <% cards = @verified.map { |course| studio_course_card(course, 'verified') } %>
+            <% if @completed.any? %>
+              <% cards = @completed.map { |course| studio_course_card(course, 'completed') } %>
               <%= carousel_component(cards: cards, loop: false) %>
             <% else %>
-              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No verified courses yet.</p>
+              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No completed courses yet.</p>
             <% end %>
           </div>
 
-          <%# Published panel %>
-          <div class="hidden" data-tabs-target="panelItem">
-            <% if @published.any? %>
-              <% cards = @published.map { |course| studio_course_card(course, 'published') } %>
-              <%= carousel_component(cards: cards, loop: false) %>
-            <% else %>
-              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No published courses yet.</p>
-            <% end %>
-          </div>
         </div>
 
         <div class="w-fit">

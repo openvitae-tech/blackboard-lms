@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_19_040807) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_20_094656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -129,6 +129,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_19_040807) do
     t.integer "duration", default: 0
     t.decimal "rating"
     t.string "visibility", null: false
+    t.string "neo_ai_course_id"
+    t.index ["neo_ai_course_id"], name: "index_courses_on_neo_ai_course_id", unique: true
   end
 
   create_table "courses_tags", force: :cascade do |t|
@@ -230,6 +232,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_19_040807) do
     t.integer "total_seats", null: false
     t.decimal "per_seat_cost", null: false
     t.bigint "learning_partner_id", null: false
+    t.boolean "content_studio_enabled", default: false, null: false
     t.index ["learning_partner_id"], name: "index_payment_plans_on_learning_partner_id"
   end
 
@@ -404,6 +407,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_19_040807) do
     t.datetime "phone_confirmation_sent_at"
     t.datetime "phone_confirmed_at"
     t.string "country_code"
+    t.boolean "content_studio_creator", default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["learning_partner_id"], name: "index_users_on_learning_partner_id"

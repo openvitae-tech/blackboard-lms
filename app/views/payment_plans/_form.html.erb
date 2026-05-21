@@ -19,7 +19,15 @@
   </div>
   <%= input_text_component(form:, name: :total_seats, label: "User Limit", placeholder: "Enter Limit") %> 
 
-  <%= input_text_component(form:, name: :per_seat_cost, label: "Per user amount ( ₹ )", placeholder: "Enter amount") %>      
+  <%= input_text_component(form:, name: :per_seat_cost, label: "Per user amount ( ₹ )", placeholder: "Enter amount") %>
+
+  <%= form.hidden_field :content_studio_enabled, value: '0' %>
+  <%= input_checkbox_component(
+    name: 'payment_plan[content_studio_enabled]',
+    label: 'Enable Content Studio',
+    value: '1',
+    html_options: { checked: payment_plan.content_studio_enabled }
+  ) %>
 
   <% if action_name == "new" %>
     <div class="flex items-center gap-3 text-sm">

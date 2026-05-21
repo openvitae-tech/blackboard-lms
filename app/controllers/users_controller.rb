@@ -76,6 +76,13 @@ class UsersController < ApplicationController
     @user.role = params[:selected]
   end
 
+  def toggle_content_studio_creator
+    authorize @user, :assign_content_studio_creator?
+    @user.update!(content_studio_creator: !@user.content_studio_creator?)
+    key = @user.content_studio_creator? ? 'user.content_studio_creator_enabled' : 'user.content_studio_creator_disabled'
+    redirect_to member_path(@user), notice: I18n.t(key)
+  end
+
   def change_team
     authorize @user
     sub_teams = current_user.team.sub_teams

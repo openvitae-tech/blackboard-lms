@@ -60,4 +60,37 @@ RSpec.describe 'Request spec for Users' do
       expect(response.status).to eq(422)
     end
   end
+
+  describe 'PATCH /toggle_content_studio_creator' do
+    let(:support_user) { create(:user, role: 'support', team: parent_team, learning_partner:) }
+
+    before do
+      create(:payment_plan, learning_partner:, content_studio_enabled: true)
+      sign_in support_user
+    end
+
+    it 'enables content studio creator for a manager' do
+      expect do
+        patch toggle_content_studio_creator_member_path(@learner)
+      end.to change { @learner.reload.content_studio_creator }.from(false).to(true)
+
+      expect(response).to redirect_to(member_path(@learner))
+    end
+
+    it 'disables content studio creator when already enabled' do
+      @learner.update!(content_studio_creator: true)
+
+      expect do
+        patch toggle_content_studio_creator_member_path(@learner)
+      end.to change { @learner.reload.content_studio_creator }.from(true).to(false)
+    end
+
+    it 'returns 401 when a non-support user attempts to toggle' do
+      sign_in manager
+
+      patch toggle_content_studio_creator_member_path(@learner)
+
+      expect(response).to redirect_to(error_401_path)
+    end
+  end
 end

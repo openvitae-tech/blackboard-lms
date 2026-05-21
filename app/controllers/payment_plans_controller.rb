@@ -48,7 +48,7 @@ class PaymentPlansController < ApplicationController
   end
 
   def payment_plan_params
-    params.require(:payment_plan).permit(:start_date, :end_date, :total_seats, :per_seat_cost)
+    params.require(:payment_plan).permit(:start_date, :end_date, :total_seats, :per_seat_cost, :content_studio_enabled)
   end
 
   def set_payment_plan

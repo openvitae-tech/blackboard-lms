@@ -99,4 +99,43 @@ RSpec.describe UserPolicy do
       expect(described_class.new(new_support_user, @manager)).not_to be_change_team
     end
   end
+
+  describe '#assign_content_studio_creator?' do
+    let(:support_user) { create(:user, role: 'support', team: parent_team, learning_partner:) }
+
+    before do
+      create(:payment_plan, learning_partner:, content_studio_enabled: true)
+      @manager = create(:user, :manager, team: parent_team, learning_partner:)
+      @owner = create(:user, :owner, team: parent_team, learning_partner:)
+      @learner = create(:user, :learner, team: parent_team, learning_partner:)
+    end
+
+    it 'returns true for support user assigning to manager' do
+      expect(described_class.new(support_user, @manager)).to be_assign_content_studio_creator
+    end
+
+    it 'returns true for support user assigning to owner' do
+      expect(described_class.new(support_user, @owner)).to be_assign_content_studio_creator
+    end
+
+    it 'returns false when partner has content studio disabled' do
+      learning_partner.payment_plan.update!(content_studio_enabled: false)
+      expect(described_class.new(support_user, @manager)).not_to be_assign_content_studio_creator
+    end
+
+    it 'returns false for support user assigning to learner' do
+      expect(described_class.new(support_user, @learner)).not_to be_assign_content_studio_creator
+    end
+
+    it 'returns false for manager attempting to assign' do
+      expect(described_class.new(@manager, @owner)).not_to be_assign_content_studio_creator
+    end
+
+    it 'returns false for support user from a different learning partner' do
+      other_partner = create(:learning_partner)
+      other_team = create(:team, learning_partner: other_partner)
+      other_support = create(:user, role: 'support', team: other_team, learning_partner: other_partner)
+      expect(described_class.new(other_support, @manager)).not_to be_assign_content_studio_creator
+    end
+  end
 end

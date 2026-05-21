@@ -215,6 +215,8 @@ Rails.application.routes.draw do
       get  :team_member_profile
       get  :started_vs_completed
       get  :recent_activity
+      get  :export
+      get  :export_member
     end
   end
   resources :settings, only: :index
@@ -247,6 +249,7 @@ Rails.application.routes.draw do
       get :change_role
       patch :confirm_change_role
       get :select_roles
+      patch :toggle_content_studio_creator
     end
   end
 
@@ -275,5 +278,6 @@ Rails.application.routes.draw do
   mount NeoComponents::Engine, at: '/'
   draw :sidekiq_web
   draw :v1_api
+  draw :internal_api
   draw :catch_all
 end

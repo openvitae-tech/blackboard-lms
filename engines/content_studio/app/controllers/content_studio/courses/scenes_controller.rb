@@ -4,7 +4,12 @@ module ContentStudio
   module Courses
     class ScenesController < ApplicationController
       def regenerate
-        ApiClient.regenerate_scene(params[:scene_id], narration: params[:narration])
+        ApiClient.regenerate_scene(
+          params[:scene_id],
+          course_id: params[:course_id],
+          lesson_id: params[:lesson_id],
+          narration: params[:narration]
+        )
         head :accepted
       rescue Faraday::BadRequestError
         render json: { error: 'Invalid or duplicate narration' }, status: :bad_request

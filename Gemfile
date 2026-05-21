@@ -127,6 +127,7 @@ gem 'rails-html-sanitizer', '1.6.1'
 
 gem 'scorm-package', '~> 0.1.2', require: 'scorm_package'
 
+gem 'caxlsx', '~> 3.4'
 gem 'combine_pdf'
 gem 'grover'
 gem 'net-imap', '0.5.14'

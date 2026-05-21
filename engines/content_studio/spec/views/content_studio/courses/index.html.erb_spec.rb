@@ -16,7 +16,6 @@ RSpec.describe 'content_studio/courses/index', type: :view do
       categories: ['Front Office', 'Hospitality'],
       banner: nil,
       rating: 4.7,
-      is_published: false,
       visibility: 'public',
       levels: ['Beginner'],
       enrollments_count: 0,
@@ -28,9 +27,8 @@ RSpec.describe 'content_studio/courses/index', type: :view do
   before do
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:stats, stats)
-    assign(:to_be_verified, [sample_course])
-    assign(:verified, [])
-    assign(:published, [])
+    assign(:in_progress, [sample_course])
+    assign(:completed, [])
   end
 
   it 'renders the greeting' do
@@ -54,18 +52,17 @@ RSpec.describe 'content_studio/courses/index', type: :view do
     expect(rendered).to include('Create New Course')
   end
 
-  it 'renders the Your Creations section with tabs' do
+  it 'renders the Your Creations section with In Progress and Completed tabs' do
     render
     expect(rendered).to include('Your Creations')
-    expect(rendered).to include('To be Verified')
-    expect(rendered).to include('Verified')
-    expect(rendered).to include('Published')
+    expect(rendered).to include('In Progress')
+    expect(rendered).to include('Completed')
+    expect(rendered).not_to include('No published courses yet.')
   end
 
-  it 'renders a course card in the To be Verified tab' do
+  it 'renders a course card in the In Progress tab' do
     render
     expect(rendered).to include('Front Desk Operations Excellence')
-    expect(rendered).to include('Pending')
   end
 
   it 'wraps each course card in a link to its structure page' do
@@ -73,16 +70,12 @@ RSpec.describe 'content_studio/courses/index', type: :view do
     expect(rendered).to include('href="/content_studio/courses/1/structure"')
   end
 
-  context 'when a tab has no courses' do
-    before do
-      assign(:verified, [])
-      assign(:published, [])
-    end
+  context 'when the Completed tab has no courses' do
+    before { assign(:completed, []) }
 
-    it 'shows empty state for tabs with no courses' do
+    it 'shows empty state for the Completed tab' do
       render
-      expect(rendered).to include('No verified courses yet.')
-      expect(rendered).to include('No published courses yet.')
+      expect(rendered).to include('No completed courses yet.')
     end
   end
 

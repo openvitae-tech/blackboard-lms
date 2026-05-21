@@ -53,7 +53,6 @@ module ContentStudio
     :description,
     :status,
     :visibility,
-    :is_published,
     :duration,
     :rating,
     :banner,
