@@ -1,7 +1,8 @@
 <div class="group rounded-xl border border-line-colour relative md:max-h-[132px]">
   <% if checkbox %>
     <% checkbox_opts = checkbox.is_a?(Hash) ? checkbox.dup : {} %>
-    <% checkbox_id = checkbox_opts.delete(:id) %>
+    <% checkbox_id    = checkbox_opts.delete(:id) %>
+    <% checkbox_class = ['w-5 h-5 rounded border border-slate-grey-light checked:bg-primary checked:border-primary focus:ring-0 cursor-pointer', checkbox_opts.delete(:class)].compact.join(' ') %>
     <span class="absolute top-4 right-4 z-10"
           data-controller="stop-propagation"
           data-action="click->stop-propagation#stop">
@@ -9,7 +10,7 @@
             checkbox_opts.delete(:value),
             checkbox_opts.delete(:checked) || false,
             id: checkbox_id,
-            class: 'w-5 h-5 rounded border border-slate-grey-light checked:bg-primary checked:border-primary focus:ring-0 cursor-pointer',
+            class: checkbox_class,
             **checkbox_opts %>
     </span>
   <% end %>

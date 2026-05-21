@@ -71,6 +71,13 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('input[type="checkbox"]')).to be_present
       end
 
+      it 'merges a caller-supplied class with the base class instead of raising' do
+        doc = render_card(checkbox: { name: 'course_ids[]', value: '1', class: 'extra-class' })
+        input = doc.at_css('input[type="checkbox"]')
+        expect(input['class']).to include('extra-class')
+        expect(input['class']).to include('cursor-pointer')
+      end
+
       it 'uses the caller-supplied name' do
         doc = render_card(checkbox: { name: 'course_ids[]', value: '7' })
         expect(doc.at_css('input[type="checkbox"]')['name']).to eq('course_ids[]')
