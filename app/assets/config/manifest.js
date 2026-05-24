@@ -4,4 +4,3 @@
 //= link_tree ../../../vendor/javascript .js
 //= link_tree ../builds
 //= link content_studio/application.css
-//= link_tree ../../../engines/neo_component/app/javascript .js
