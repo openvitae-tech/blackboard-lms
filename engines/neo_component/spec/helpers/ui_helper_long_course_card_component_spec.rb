@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require_relative '../rails_helper'
 
 RSpec.describe UiHelper, type: :helper do
   def render_card(**kwargs)
