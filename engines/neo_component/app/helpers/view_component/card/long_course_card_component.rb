@@ -14,8 +14,14 @@ module ViewComponent
         progress: nil,
         badge: nil,
         description: nil,
-        highlights: []
+        highlights: [],
+        checkbox: false
       )
+        if checkbox && !checkbox.is_a?(Hash)
+          raise ArgumentError,
+                'checkbox must be false or a Hash of check_box_tag options'
+        end
+
         badge = { bg_color: 'bg-secondary', text_color: 'text-primary-dark' }.merge(badge) if badge
         render partial: 'view_components/cards/long_course_card_component',
                locals: {
@@ -29,7 +35,8 @@ module ViewComponent
                  progress:,
                  badge:,
                  description:,
-                 highlights:
+                 highlights:,
+                 checkbox:
                }
       end
     end

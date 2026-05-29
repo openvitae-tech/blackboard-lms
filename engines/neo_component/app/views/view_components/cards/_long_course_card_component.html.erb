@@ -1,4 +1,19 @@
 <div class="group rounded-xl border border-line-colour relative md:max-h-[132px]">
+  <% if checkbox %>
+    <% checkbox_opts = checkbox.is_a?(Hash) ? checkbox.dup : {} %>
+    <% checkbox_id    = checkbox_opts.delete(:id) %>
+    <% checkbox_class = ['w-5 h-5 rounded border border-slate-grey-light checked:bg-primary checked:border-primary focus:ring-0 cursor-pointer', checkbox_opts.delete(:class)].compact.join(' ') %>
+    <span class="absolute top-4 right-4 z-10"
+          data-controller="stop-propagation"
+          data-action="click->stop-propagation#stop">
+      <%= check_box_tag checkbox_opts.delete(:name) || 'checkbox',
+            checkbox_opts.delete(:value),
+            checkbox_opts.delete(:checked) || false,
+            id: checkbox_id,
+            class: checkbox_class,
+            **checkbox_opts %>
+    </span>
+  <% end %>
   <% if description.present? %>
     <div class="hidden md:group-hover:block absolute left-0 bottom-full z-50 mb-3 w-80">
       <div class="relative bg-primary-light-50 border border-primary-light rounded-lg p-4 shadow-md">
@@ -25,9 +40,9 @@
 
     <div class="relative self-stretch">
       <% if banner_url.present? %>
-        <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-full md:h-[132px] rounded-l-xl object-cover' %>
+        <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-full md:h-[130px] rounded-l-xl object-cover' %>
       <% else %>
-        <div class="w-[100px] md:w-[297px] h-full md:h-[132px] rounded-l-xl bg-primary-light-50"></div>
+        <div class="w-[100px] md:w-[297px] h-full md:h-[130px] rounded-l-xl bg-primary-light-50"></div>
       <% end %>
       <span class="absolute bottom-0 right-4 z-10 flex rounded-t-md bg-primary-light-100 general-text-sm-normal py-0.5 px-1 text-primary-dark">
           <%= duration %>

@@ -47,8 +47,8 @@ module CardsHelper
     course_card_component(**course_card_params(course, enrollment))
   end
 
-  def build_long_course_card(course, enrollment)
-    long_course_card_component(**course_card_params(course, enrollment))
+  def build_long_course_card(course, enrollment, checkbox: false)
+    long_course_card_component(**course_card_params(course, enrollment), checkbox:)
   end
 
   def course_card_params(course, enrollment)
