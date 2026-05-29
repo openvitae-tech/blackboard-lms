@@ -16,19 +16,22 @@ class CourseAssignsController < ApplicationController
   end
 
   def create
-    course_ids = (params[:course_ids] || []).filter { |id| !id.empty? }
-    deadlines = (params[:duration] || []).map { |d| to_deadline(d) }
-
-    @courses_with_deadline = []
+    course_ids = (params[:course_ids] || []).reject(&:blank?)
 
     if course_ids.empty?
       flash.now[:error] = 'No courses selected'
       return render
     end
 
+    durations_hash = params.fetch(:durations, {})
+    custom_dates_hash = params.fetch(:custom_dates, {})
     courses = Course.find(course_ids)
 
-    @courses_with_deadline = courses.zip(deadlines)
+    @courses_with_deadline = courses.map do |course|
+      id = course.id.to_s
+      [course, to_deadline(durations_hash[id], custom_dates_hash[id])]
+    end
+
     service = Courses::ManagementService.instance
 
     if @team_assign
@@ -59,20 +62,15 @@ class CourseAssignsController < ApplicationController
     end
   end
 
-  def to_deadline(duration)
+  def to_deadline(duration, custom_date = nil)
+    return DateTime.parse(custom_date) if duration == 'custom' && custom_date.present?
+
     case duration
-    when 'one_day'
-      DateTime.now + 1.day
-    when 'two_days'
-      DateTime.now + 2.days
-    when 'one_week'
-      DateTime.now + 1.week
-    when 'two_weeks'
-      DateTime.now + 2.weeks
-    when 'one_month'
-      DateTime.now + 1.month
-    else
-      nil
+    when 'one_day' then DateTime.now + 1.day
+    when 'two_days' then DateTime.now + 2.days
+    when 'one_week' then DateTime.now + 1.week
+    when 'two_weeks' then DateTime.now + 2.weeks
+    when 'one_month' then DateTime.now + 1.month
     end
   end
 end

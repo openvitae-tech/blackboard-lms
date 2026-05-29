@@ -153,6 +153,17 @@ module CoursesHelper
     }.invert
   end
 
+  def deadline_duration_options
+    [
+      ['1 Day', 'one_day'],
+      ['2 Days', 'two_days'],
+      ['1 Week', 'one_week'],
+      ['2 Weeks', 'two_weeks'],
+      ['1 Month', 'one_month'],
+      ['Custom', 'custom']
+    ]
+  end
+
   def current_module?(course_module, enrollment)
     course_module.id == enrollment&.current_module_id
   end

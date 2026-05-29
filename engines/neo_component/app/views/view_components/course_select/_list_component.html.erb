@@ -3,9 +3,17 @@
     <div class="text-notice">No courses to select</div>
   <% else %>
 
-    <ul id="course-list" class="flex flex-col gap-4 overflow-y-auto p-1 h-[700px]">
+    <ul id="course-list" class="flex flex-col gap-4">
       <% courses.each do |course| %>
-        <%= _course_select_list_item_component(course: course) %>
+        <li id="<%= dom_id(course, "unassigned") %>">
+          <%= build_long_course_card(course, nil,
+                checkbox: {
+                  name: 'course_ids[]',
+                  value: course.id,
+                  id: dom_id(course, 'course_ids'),
+                  data: { action: 'change->course-select#toggleAssignButton' }
+                }) %>
+        </li>
       <% end %>
     </ul>
 
