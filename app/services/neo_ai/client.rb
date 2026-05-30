@@ -71,6 +71,22 @@ module NeoAi
       end
     end
 
+    def delete_lesson(lesson_id, course_id:)
+      build_connection.post("#{API_PREFIX}/course/delete-lesson") do |req|
+        req.params[:course_id] = course_id
+        req.params[:lesson_id] = lesson_id
+        req.params[:partner_id] = partner_id
+      end
+    end
+
+    def regenerate_lesson(lesson_id, course_id:)
+      build_connection.post("#{API_PREFIX}/course/regenerate-scenes") do |req|
+        req.params[:course_id] = course_id
+        req.params[:lesson_id] = lesson_id
+        req.params[:partner_id] = partner_id
+      end
+    end
+
     def stage_label(stage)
       STAGE_LABELS.fetch(stage.to_s, stage.to_s)
     end

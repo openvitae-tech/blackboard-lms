@@ -96,6 +96,14 @@ module ContentStudio
       connection.post("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}/verify")
     end
 
+    def delete_lesson(lesson_id, course_id:)
+      connection.delete("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}")
+    end
+
+    def regenerate_lesson(lesson_id, course_id:)
+      connection.post("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}/regenerate")
+    end
+
     private
 
     def connection
@@ -115,6 +123,8 @@ module ContentStudio
         duration: data['duration'],
         rating: data['rating'],
         banner: data['banner'],
+        thumbnail_url: data['thumbnail_url'],
+        level: data['level'],
         categories: data['categories'],
         levels: data['levels'],
         course_modules_count: data['course_modules_count'],

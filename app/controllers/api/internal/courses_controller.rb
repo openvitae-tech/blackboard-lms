@@ -66,7 +66,7 @@ module Api
       def create
         data = neo_ai.create_course(
           files: params[:files],
-          branding: params[:branding],
+          branding: params[:branding]&.to_unsafe_h || {},
           no_video: params[:no_video].to_s == 'true'
         )
         render json: { course_id: data['course_id'] || data['id'] }
@@ -84,6 +84,16 @@ module Api
 
       def verify_lesson
         neo_ai.verify_lesson(params[:lesson_id], course_id: params[:course_id])
+        render json: { status: 'ok' }
+      end
+
+      def delete_lesson
+        neo_ai.delete_lesson(params[:lesson_id], course_id: params[:course_id])
+        head :no_content
+      end
+
+      def regenerate_lesson
+        neo_ai.regenerate_lesson(params[:lesson_id], course_id: params[:course_id])
         render json: { status: 'ok' }
       end
 
@@ -114,8 +124,9 @@ module Api
           rating: nil,
           banner: nil,
           categories: [],
+          level: data['level'],
           levels: [],
-          course_modules_count: 0,
+          course_modules_count: data['num_modules'].to_i,
           enrollments_count: 0,
           team_enrollments_count: 0,
           modules: [],
@@ -129,10 +140,15 @@ module Api
 
       def serialize_structure(data)
         modules = (data['modules'] || []).map { |m| serialize_structure_module(m) }
+        scene_duration = (data['modules'] || [])
+                         .flat_map { |m| m['lessons'] || [] }
+                         .flat_map { |l| l['scenes'] || [] }
+                         .sum { |s| s['duration'].to_f }
+                         .ceil
         {
           id: data['id'],
           title: data['title'],
-          duration: nil,
+          duration: scene_duration.positive? ? scene_duration : nil,
           thumbnail_url: data['thumbnail_url'],
           progress_text: data['progress_text'],
           stage: data['stage'],

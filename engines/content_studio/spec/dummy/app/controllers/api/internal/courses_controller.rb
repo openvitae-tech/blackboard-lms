@@ -51,6 +51,22 @@ module Api
       def discard
         head :no_content
       end
+
+      def delete_lesson
+        head :no_content
+      end
+
+      def regenerate_lesson
+        render json: { status: 'ok' }
+      end
+
+      def regenerate_scene
+        render json: { status: 'ok' }
+      end
+
+      def verify_lesson
+        render json: { status: 'ok' }
+      end
     end
   end
 end

@@ -73,6 +73,14 @@ module ContentStudio
         client.verify_lesson(lesson_id, course_id: course_id)
       end
 
+      def delete_lesson(lesson_id, course_id:)
+        client.delete_lesson(lesson_id, course_id: course_id)
+      end
+
+      def regenerate_lesson(lesson_id, course_id:)
+        client.regenerate_lesson(lesson_id, course_id: course_id)
+      end
+
       private
 
       def client

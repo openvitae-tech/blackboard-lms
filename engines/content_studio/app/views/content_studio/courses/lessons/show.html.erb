@@ -21,10 +21,10 @@
   </div>
 
   <%# Three-column layout %>
-  <div class="flex gap-6 items-start" data-controller="scene-player">
+  <div class="flex gap-6 <%= @lesson.scenes.any? ? 'items-start' : 'items-stretch' %>" data-controller="scene-player">
 
     <%# Left: Scene playlist %>
-    <div class="flex flex-col gap-3 bg-white-light border border-line-colour rounded-xl p-3 w-[181px] shrink-0 h-[544px] overflow-y-auto">
+    <div class="flex flex-col gap-3 bg-white-light border border-line-colour rounded-xl p-3 w-[181px] shrink-0 overflow-y-auto <%= 'h-[544px]' if @lesson.scenes.any? %>">
       <%# Progress %>
       <div class="flex flex-col gap-1">
         <div class="flex items-center justify-between">
@@ -78,109 +78,144 @@
     </div>
 
     <%# Center: Video player + controls + script %>
-    <div class="flex flex-1 flex-col gap-5 min-w-0 min-h-[612px]">
+    <div class="flex flex-1 flex-col gap-5 min-w-0 <%= 'min-h-[612px]' if @lesson.scenes.any? %>">
 
-      <%# Video player + nav bar %>
-      <div class="flex flex-col gap-4">
-        <%# Video player %>
-        <div class="group bg-letter-color rounded-xl overflow-hidden h-96 relative shrink-0 w-full">
-          <video class="w-full h-full object-contain hidden"
-                 data-scene-player-target="video"
-                 data-action="ended->scene-player#ended timeupdate->scene-player#timeUpdate loadedmetadata->scene-player#metadataLoaded play->scene-player#onPlay pause->scene-player#onPause"
-                 preload="metadata">
-          </video>
+      <% if @lesson.scenes.any? %>
+        <%# Video player + nav bar %>
+        <div class="flex flex-col gap-4">
+          <%# Video player %>
+          <div class="group bg-letter-color rounded-xl overflow-hidden h-96 relative shrink-0 w-full">
+            <video class="w-full h-full object-contain hidden"
+                   data-scene-player-target="video"
+                   data-action="ended->scene-player#ended timeupdate->scene-player#timeUpdate loadedmetadata->scene-player#metadataLoaded play->scene-player#onPlay pause->scene-player#onPause"
+                   preload="metadata">
+            </video>
 
-          <%# Bottom control bar overlay %>
-          <div class="absolute bottom-0 inset-x-0 px-4 pb-3 pt-10 bg-gradient-to-t from-black/80 to-transparent flex flex-col gap-2 group-hover:opacity-100 transition-opacity duration-500"
-               data-scene-player-target="controlBar">
+            <%# Bottom control bar overlay %>
+            <div class="absolute bottom-0 inset-x-0 px-4 pb-3 pt-10 bg-gradient-to-t from-black/80 to-transparent flex flex-col gap-2 group-hover:opacity-100 transition-opacity duration-500"
+                 data-scene-player-target="controlBar">
 
-            <%# Seek bar row %>
-            <div class="flex items-center gap-2">
-              <span class="text-white text-xs font-bold w-8 shrink-0 tabular-nums"
-                    data-scene-player-target="currentTime">0:00</span>
-              <div class="flex-1 relative h-1 bg-white/30 rounded-full cursor-pointer"
-                   data-scene-player-target="progressTrack"
-                   data-action="click->scene-player#seek">
-                <div class="h-full bg-white rounded-full relative pointer-events-none"
-                     data-scene-player-target="progressFill"
-                     style="width: 0%">
-                  <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full shadow"></div>
+              <%# Seek bar row %>
+              <div class="flex items-center gap-2">
+                <span class="text-white text-xs font-bold w-8 shrink-0 tabular-nums"
+                      data-scene-player-target="currentTime">0:00</span>
+                <div class="flex-1 relative h-1 bg-white/30 rounded-full cursor-pointer"
+                     data-scene-player-target="progressTrack"
+                     data-action="click->scene-player#seek">
+                  <div class="h-full bg-white rounded-full relative pointer-events-none"
+                       data-scene-player-target="progressFill"
+                       style="width: 0%">
+                    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full shadow"></div>
+                  </div>
                 </div>
+                <span class="text-white text-xs font-bold w-8 shrink-0 text-right tabular-nums"
+                      data-scene-player-target="duration">0:00</span>
               </div>
-              <span class="text-white text-xs font-bold w-8 shrink-0 text-right tabular-nums"
-                    data-scene-player-target="duration">0:00</span>
+
+              <%# Controls row %>
+              <div class="flex items-center justify-center gap-5">
+                <button class="flex items-center justify-center text-white disabled:text-line-colour disabled:cursor-not-allowed"
+                        data-scene-player-target="prevButton"
+                        data-action="click->scene-player#prev">
+                  <%= icon 'skip-start', css: 'w-6 h-6' %>
+                </button>
+
+                <button class="flex items-center justify-center text-white"
+                        data-action="click->scene-player#togglePlay">
+                  <span data-scene-player-target="playIcon">
+                    <%= icon 'play-circle-solid', css: 'w-8 h-8' %>
+                  </span>
+                  <span class="hidden" data-scene-player-target="pauseIcon">
+                    <%= icon 'pause-circle-solid', css: 'w-8 h-8' %>
+                  </span>
+                </button>
+
+                <button class="flex items-center justify-center text-white disabled:text-line-colour disabled:cursor-not-allowed"
+                        data-scene-player-target="nextButton"
+                        data-action="click->scene-player#next">
+                  <%= icon 'skip-end', css: 'w-6 h-6' %>
+                </button>
+              </div>
             </div>
 
-            <%# Controls row %>
-            <div class="flex items-center justify-center gap-5">
-              <button class="flex items-center justify-center text-white disabled:text-line-colour disabled:cursor-not-allowed"
-                      data-scene-player-target="prevButton"
-                      data-action="click->scene-player#prev">
-                <%= icon 'skip-start', css: 'w-6 h-6' %>
-              </button>
-
-              <button class="flex items-center justify-center text-white"
-                      data-action="click->scene-player#togglePlay">
-                <span data-scene-player-target="playIcon">
-                  <%= icon 'play-circle-solid', css: 'w-8 h-8' %>
-                </span>
-                <span class="hidden" data-scene-player-target="pauseIcon">
-                  <%= icon 'pause-circle-solid', css: 'w-8 h-8' %>
-                </span>
-              </button>
-
-              <button class="flex items-center justify-center text-white disabled:text-line-colour disabled:cursor-not-allowed"
-                      data-scene-player-target="nextButton"
-                      data-action="click->scene-player#next">
-                <%= icon 'skip-end', css: 'w-6 h-6' %>
-              </button>
-            </div>
-          </div>
-
-          <div class="absolute inset-0"
-               data-scene-player-target="placeholder">
-            <div class="w-full h-full flex items-center justify-center">
-              <%= image_tag 'video_film.gif', alt: 'No video available' %>
+            <div class="absolute inset-0"
+                 data-scene-player-target="placeholder">
+              <div class="w-full h-full flex items-center justify-center">
+                <%= image_tag 'video_film.gif', alt: 'No video available' %>
+              </div>
             </div>
           </div>
+
         </div>
 
-      </div>
+        <%# Script + Regenerate %>
+        <div class="flex flex-1 flex-col min-h-0">
+          <div class="flex flex-1 flex-col gap-2 min-h-0">
+            <span class="general-text-md-medium text-letter-color px-1">Script</span>
+            <%= textarea_component(
+                  name: 'scene_script',
+                  placeholder: 'Scene script will appear here…',
+                  rows: 6,
+                  size: 'md',
+                  support_text: 'Maximum 512 characters',
+                  html_options: {
+                    maxlength: 512,
+                    data: {
+                      'scene-player-target' => 'narration',
+                      action: 'input->scene-player#onNarrationInput'
+                    }
+                  }
+                ) %>
+          </div>
+          <div class="self-end">
+            <%= button_component(
+                  text: 'Regenerate Scene',
+                  type: 'solid',
+                  size: 'md',
+                  colorscheme: 'primary',
+                  html_options: {
+                    data: {
+                      'scene-player-target' => 'regenerateButton',
+                      action: 'click->scene-player#regenerate'
+                    }
+                  }
+                ) %>
+          </div>
+        </div>
 
-      <%# Script + Regenerate %>
-      <div class="flex flex-1 flex-col min-h-0">
-        <div class="flex flex-1 flex-col gap-2 min-h-0">
-          <span class="general-text-md-medium text-letter-color px-1">Script</span>
-          <%= textarea_component(
-                name: 'scene_script',
-                placeholder: 'Scene script will appear here…',
-                rows: 6,
-                size: 'md',
-                support_text: 'Maximum 512 characters',
-                html_options: {
-                  maxlength: 512,
-                  data: {
-                    'scene-player-target' => 'narration',
-                    action: 'input->scene-player#onNarrationInput'
-                  }
-                }
-              ) %>
+      <% else %>
+        <%# Empty state: no scenes generated yet %>
+        <div class="flex flex-col items-center justify-center gap-6 bg-white-light border border-line-colour rounded-xl p-8 h-full">
+          <p class="general-text-md-normal text-letter-color-light text-center">No scenes have been generated for this lesson yet.</p>
+          <div class="flex items-center gap-3">
+            <%= form_with url: destroy_course_lesson_path(@course_id, @lesson.id), method: :delete do |f| %>
+              <%= f.button do %>
+                <%= button_component(
+                      text: 'Delete Lesson',
+                      type: 'outline',
+                      size: 'md',
+                      colorscheme: 'danger',
+                      icon_name: 'trash',
+                      icon_position: 'left'
+                    ) %>
+              <% end %>
+            <% end %>
+            <%= form_with url: regenerate_lesson_path(@course_id, @lesson.id), method: :post do |f| %>
+              <%= f.button do %>
+                <%= button_component(
+                      text: 'Regenerate Lesson',
+                      type: 'solid',
+                      size: 'md',
+                      colorscheme: 'primary',
+                      icon_name: 'arrow-uturn-right',
+                      icon_position: 'left'
+                    ) %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
-        <div class="self-end">
-          <%= button_component(
-                text: 'Regenerate Scene',
-                type: 'solid',
-                size: 'md',
-                colorscheme: 'primary',
-                html_options: {
-                  data: {
-                    'scene-player-target' => 'regenerateButton',
-                    action: 'click->scene-player#regenerate'
-                  }
-                }
-              ) %>
-        </div>
-      </div>
+
+      <% end %>
 
     </div>
 
@@ -247,10 +282,12 @@
               disabled: @next_lesson_id.nil?
             ) %>
       <% end %>
+    </div>
+    <div class="flex justify-end">
       <% if @lesson.status == 'VERIFIED' %>
-        <div class="flex items-center gap-2">
-          <%= icon 'check-badge-solid', css: 'w-8 h-8 text-secondary' %>
-          <span class="main-text-lg-semibold text-secondary">Verified</span>
+        <div class="flex items-center gap-1 bg-secondary-light px-2 h-9 rounded-lg">
+          <%= icon 'check-badge-solid', css: 'w-6 h-6 text-secondary-dark' %>
+          <span class="general-text-md-medium text-letter-color-light">Lesson Verified</span>
         </div>
       <% else %>
         <%= form_with url: verify_lesson_path(@course_id, @lesson.id), method: :post,
@@ -270,7 +307,6 @@
         <% end %>
       <% end %>
     </div>
-    <span></span>
   </div>
 
 </div>
