@@ -17,6 +17,7 @@ module ContentStudio
   Scene = Struct.new(
     :id,
     :timestamp,
+    :duration,
     :visual,
     :narration,
     :status,
@@ -57,6 +58,7 @@ module ContentStudio
     :rating,
     :banner,
     :categories,
+    :level,
     :levels,
     :course_modules_count,
     :enrollments_count,

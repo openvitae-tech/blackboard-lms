@@ -44,7 +44,8 @@
       </div>
       <% scenes = @lesson.scenes.presence || [] %>
       <% scenes.each_with_index do |scene, index| %>
-        <div class="overflow-hidden rounded-lg shrink-0 cursor-pointer transition-colors border border-line-colour-light
+        <div class="overflow-hidden rounded-lg shrink-0 cursor-pointer transition-colors relative h-[65px]
+                    border border-line-colour-light
                     <%= index == 0 ? 'border-2 border-primary-light' : '' %>"
              data-scene-player-target="item"
              data-scene-index="<%= index %>"
@@ -54,10 +55,11 @@
              data-scene-status="<%= scene.status %>"
              data-regenerate-url="<%= regenerate_scene_path(@course_id, @lesson.id, scene.id) %>"
              data-action="click->scene-player#select">
-          <div class="h-[47px] w-full">
+          <div class="absolute inset-0" data-thumbnail-area>
             <% if scene.status == 'COMPLETED' %>
               <% if scene.thumbnail_url.present? %>
-                <%= image_tag scene.thumbnail_url, class: 'w-full h-full object-cover', alt: "Scene #{index + 1} thumbnail" %>
+                <div class="absolute inset-0 bg-white"></div>
+                <%= image_tag scene.thumbnail_url, class: 'absolute inset-0 w-full h-full object-cover', alt: "Scene #{index + 1} thumbnail" %>
               <% else %>
                 <div class="w-full h-full bg-white flex items-center justify-center">
                   <%= icon 'play-circle', css: 'w-6 h-6 text-letter-color' %>
@@ -69,9 +71,9 @@
               </div>
             <% end %>
           </div>
-          <div class="bg-line-colour-light flex items-center justify-between px-2.5 h-[18px]">
+          <div class="absolute bottom-0 inset-x-0 bg-line-colour-light flex items-center justify-between px-2.5 h-[18px] opacity-90">
             <span class="general-text-sm-medium text-letter-color-light truncate">Scene <%= index + 1 %></span>
-            <span class="general-text-sm-medium text-letter-color-light"><%= scene.timestamp || '0.00' %></span>
+            <span class="general-text-sm-medium text-letter-color-light" data-duration-label><%= format_scene_duration(scene.duration) %></span>
           </div>
         </div>
       <% end %>

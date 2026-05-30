@@ -37,6 +37,19 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
     )
   end
 
+  let(:scene) do
+    ContentStudio::Scene.new(id: 's1', status: 'COMPLETED', video_url: 'https://example.com/s1.mp4',
+                             thumbnail_url: 'https://example.com/thumb.jpg', duration: 90)
+  end
+
+  let(:lesson_with_scenes) do
+    ContentStudio::StructureLesson.new(
+      id: '1', title: 'Introduction to Airport Services',
+      estimated_duration: 1800, status: 'VIDEO_READY', video_url: nil, verified: false,
+      scenes: [scene]
+    )
+  end
+
   before do
     allow(ContentStudio::ApiClient).to receive_messages(get_lesson: lesson, course_structure: structure)
   end
@@ -93,6 +106,43 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
 
     it 'renders the Show more toggle' do
       expect(response.body).to include('Show more')
+    end
+  end
+
+  describe 'GET /content_studio/courses/:course_id/lessons/:id/scene_status' do
+    before do
+      allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(lesson_with_scenes)
+      get '/content_studio/courses/1/lessons/1/scene_status', headers: { 'Accept' => 'application/json' }
+    end
+
+    it 'returns HTTP 200' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns scene status, video_url, thumbnail_url, and duration for each scene' do
+      body = response.parsed_body
+      scene_data = body['scenes'].first
+      expect(scene_data['id']).to eq('s1')
+      expect(scene_data['status']).to eq('COMPLETED')
+      expect(scene_data['video_url']).to eq('https://example.com/s1.mp4')
+      expect(scene_data['thumbnail_url']).to eq('https://example.com/thumb.jpg')
+      expect(scene_data['duration']).to eq(90)
+    end
+
+    it 'returns pending: false when all scenes have a video_url' do
+      expect(response.parsed_body['pending']).to be(false)
+    end
+
+    it 'returns pending: true when a scene has no video_url' do
+      pending_scene = ContentStudio::Scene.new(id: 's1', status: 'PENDING', video_url: nil,
+                                               thumbnail_url: nil, duration: nil)
+      pending_lesson = ContentStudio::StructureLesson.new(
+        id: '1', title: 'Intro', estimated_duration: 0, status: 'PENDING',
+        video_url: nil, verified: false, scenes: [pending_scene]
+      )
+      allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(pending_lesson)
+      get '/content_studio/courses/1/lessons/1/scene_status', headers: { 'Accept' => 'application/json' }
+      expect(response.parsed_body['pending']).to be(true)
     end
   end
 end

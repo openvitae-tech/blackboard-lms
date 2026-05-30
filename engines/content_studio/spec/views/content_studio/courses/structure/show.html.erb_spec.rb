@@ -72,7 +72,8 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
         id: 1, title: 'Airport Services',
         lessons: [
           ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'VERIFIED', scenes: [scene]),
-          ContentStudio::StructureLesson.new(id: 2, title: 'Rules and regulations', status: 'VIDEO_READY', scenes: [scene]),
+          ContentStudio::StructureLesson.new(id: 2, title: 'Rules and regulations', status: 'VIDEO_READY',
+                                             scenes: [scene]),
           ContentStudio::StructureLesson.new(id: 3, title: 'Lesson name', status: 'PENDING', scenes: [scene])
         ]
       )

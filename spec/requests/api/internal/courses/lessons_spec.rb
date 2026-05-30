@@ -19,7 +19,8 @@ RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
               'verified' => false,
               'scenes' => [
                 { 'id' => 's1', 'narration' => 'Hello', 'video_url' => nil,
-                  'timestamp' => '0:00', 'visual' => 'slide', 'status' => 'PENDING', 'thumbnail_url' => nil }
+                  'timestamp' => '0:00', 'visual' => 'slide', 'status' => 'PENDING',
+                  'thumbnail_url' => nil, 'duration' => 90 }
               ]
             }
           ]
@@ -58,6 +59,12 @@ RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
       expect(response).to have_http_status(:ok)
       expect(body['id']).to eq('l1')
       expect(body['scenes'].length).to eq(1)
+    end
+
+    it 'includes duration in each scene' do
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(course_data)
+      get '/api/internal/courses/c1/lessons/l1'
+      expect(response.parsed_body['scenes'].first['duration']).to eq(90)
     end
 
     it 'returns 404 when the lesson is not in the course' do

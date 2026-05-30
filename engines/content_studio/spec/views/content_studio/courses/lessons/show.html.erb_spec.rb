@@ -5,9 +5,9 @@ require_relative '../../../../rails_helper'
 RSpec.describe 'content_studio/courses/lessons/show', type: :view do
   let(:scenes) do
     [
-      ContentStudio::Scene.new(id: 's1', timestamp: '0.00', narration: 'Scene one narration.', status: 'APPROVED',
+      ContentStudio::Scene.new(id: 's1', duration: 90, narration: 'Scene one narration.', status: 'APPROVED',
                                video_url: nil),
-      ContentStudio::Scene.new(id: 's2', timestamp: '0.30', narration: 'Scene two narration.', status: 'APPROVED',
+      ContentStudio::Scene.new(id: 's2', duration: nil, narration: 'Scene two narration.', status: 'APPROVED',
                                video_url: nil)
     ]
   end
@@ -78,6 +78,48 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
     render
     expect(rendered).to include('Scene 1')
     expect(rendered).to include('Scene 2')
+  end
+
+  it 'renders the formatted duration for a scene with duration' do
+    render
+    expect(rendered).to include('1.30')
+  end
+
+  it 'renders 0.00 for a scene with no duration' do
+    render
+    expect(rendered).to include('0.00')
+  end
+
+  describe '#format_scene_duration' do
+    let(:obj) { Object.new.extend(ContentStudio::ApplicationHelper) }
+
+    it 'returns 0.00 for nil' do
+      expect(obj.format_scene_duration(nil)).to eq('0.00')
+    end
+
+    it 'returns 0.00 for zero' do
+      expect(obj.format_scene_duration(0)).to eq('0.00')
+    end
+
+    it 'formats seconds under a minute' do
+      expect(obj.format_scene_duration(45)).to eq('0.45')
+    end
+
+    it 'formats exactly one minute' do
+      expect(obj.format_scene_duration(60)).to eq('1.00')
+    end
+
+    it 'formats minutes and seconds' do
+      expect(obj.format_scene_duration(90)).to eq('1.30')
+    end
+
+    it 'zero-pads single-digit seconds' do
+      expect(obj.format_scene_duration(65)).to eq('1.05')
+    end
+
+    it 'truncates float seconds to integer' do
+      expect(obj.format_scene_duration(90.9)).to eq('1.30')
+    end
   end
 
   it 'renders video_film.gif for scenes that are not completed' do

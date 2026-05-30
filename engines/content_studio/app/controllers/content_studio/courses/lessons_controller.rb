@@ -44,7 +44,7 @@ module ContentStudio
       def scene_status
         lesson = ApiClient.get_lesson(params[:course_id], params[:id])
         scenes = lesson.scenes.map do |s|
-          { id: s.id, status: s.status, video_url: s.video_url, thumbnail_url: s.thumbnail_url }
+          { id: s.id, status: s.status, video_url: s.video_url, thumbnail_url: s.thumbnail_url, duration: s.duration }
         end
         render json: { scenes:, pending: scenes.any? { |s| s[:video_url].blank? } }
       end

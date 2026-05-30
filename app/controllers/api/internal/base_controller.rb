@@ -35,6 +35,7 @@ module Api
 
       def render_upstream_error(err)
         upstream_status = err.response&.dig(:status) || 502
+        Rails.logger.error("[NeoAI] upstream error: #{err.message} | body: #{err.response&.dig(:body)}")
         render json: { error: err.message }, status: upstream_status
       end
 

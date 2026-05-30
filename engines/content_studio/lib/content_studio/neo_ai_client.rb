@@ -224,6 +224,7 @@ module ContentStudio
       Scene.new(
         id: data['id'],
         timestamp: data['timestamp'],
+        duration: data['duration'],
         visual: data['visual'],
         narration: data['narration'],
         status: data['status'],

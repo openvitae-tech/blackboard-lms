@@ -1,17 +1,17 @@
 <div class="flex flex-col gap-6 py-3">
-  <div class="flex justify-center py-3">
-    <%= wizard_steps_component(
-      steps: [
-        { icon_name: 'document-text', label: 'Upload doc' },
-        { icon_name: 'camera',        label: 'Configure Video' },
-        { icon_name: 'numbered-list', label: 'Course Structure' }
-      ],
-      current_step: 2
-    ) %>
+  <div class="flex items-center gap-2">
+    <%= link_to root_path, data: { turbo_frame: '_top' } do %>
+      <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
+        <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
+      </span>
+    <% end %>
+    <span class="main-text-lg-semibold text-letter-color"><%= @structure.title %></span>
   </div>
 
   <% failed = @structure.stage.to_s.end_with?('_failed') %>
-  <% has_pending = !failed && @structure.modules.flat_map(&:lessons).any? { |l| %w[PENDING WAITING].include?(l.status) } %>
+  <% all_lessons = @structure.modules.flat_map(&:lessons) %>
+  <% has_pending = !failed && all_lessons.any? { |l| %w[PENDING WAITING].include?(l.status) } %>
+  <% all_videos_ready = all_lessons.all? { |l| l.video_url.present? } %>
   <turbo-frame id="course-structure">
   <div class="flex flex-col gap-6 px-4"
        data-controller="collapsible-group structure-polling"
@@ -82,7 +82,9 @@
                          data-lesson-name-target="input"
                          data-action="blur->lesson-name#blur keydown->lesson-name#keydown">
                 </div>
-                <% if lesson.status == 'PENDING' %>
+                <% if lesson.scenes.empty? %>
+                  <%= icon 'exclamation-circle-solid', css: 'w-6 h-6 text-danger flex-shrink-0' %>
+                <% elsif lesson.status == 'PENDING' %>
                   <div class="w-6 h-6 rounded-full border-2 border-primary-light-100 border-t-primary animate-spin flex-shrink-0"></div>
                 <% elsif lesson.status == 'WAITING' %>
                   <%= icon 'clock', css: 'w-6 h-6 text-primary flex-shrink-0' %>
@@ -135,6 +137,21 @@
           </div>
         </div>
 
+        <% verified_count = all_lessons.count { |l| l.verified } %>
+        <div class="bg-white-light rounded-lg p-3 flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="general-text-sm-medium text-letter-color">Verification</span>
+            <span class="general-text-sm-medium text-letter-color"><%= "#{verified_count}/#{all_lessons.count} Lessons" %></span>
+          </div>
+          <%= progressbar_component(
+                numerator: verified_count,
+                denominator: [all_lessons.count, 1].max,
+                full_width: true,
+                thin: true,
+                color: :secondary_dark
+              ) %>
+        </div>
+
         <div class="bg-white-light rounded-lg p-3 flex flex-col gap-3">
           <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
           <div class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
@@ -148,15 +165,17 @@
         </div>
 
         <div class="flex gap-3">
-          <%= form_with url: discard_course_path(id: @structure.id), method: :delete, class: 'flex-1', data: { turbo_frame: '_top' } do |f| %>
+          <%= form_with url: discard_course_path(id: @structure.id), method: :delete, class: 'flex-1',
+                data: { turbo_frame: '_top', turbo_confirm: 'Are you sure you want to discard this course? This action cannot be undone.' } do |f| %>
             <%= f.button class: 'w-full' do %>
               <%= button_component(text: 'Discard Course', type: 'outline', colorscheme: 'danger',
                                    html_options: { class: 'w-full' }) %>
             <% end %>
           <% end %>
           <%= form_with url: save_course_path(id: @structure.id), method: :patch, class: 'flex-1' do |f| %>
-            <%= f.button class: 'w-full' do %>
+            <%= f.button class: 'w-full', disabled: !all_videos_ready do %>
               <%= button_component(text: 'Save Course', type: 'solid', colorscheme: 'primary',
+                                   disabled: !all_videos_ready,
                                    html_options: { class: 'w-full' }) %>
             <% end %>
           <% end %>

@@ -2,6 +2,13 @@
 
 module ContentStudio
   module ApplicationHelper
+    def format_scene_duration(seconds)
+      return '0.00' if seconds.nil? || seconds <= 0
+
+      total = seconds.to_i
+      format('%d.%02d', total / 60, total % 60)
+    end
+
     def format_duration(seconds)
       return '' unless seconds
 
@@ -15,7 +22,7 @@ module ContentStudio
       end
     end
 
-    def studio_course_card(course, status)
+    def studio_course_card(course, _status)
       card = course_card_component(
         title: course.title,
         banner_url: course.thumbnail_url.presence,
@@ -25,7 +32,7 @@ module ContentStudio
         categories: course.categories || [],
         rating: course.rating,
         progress: course.progress,
-        badge: studio_badge(status)
+        badge: studio_badge(course.level)
       )
       link_to(card, course_structure_path(id: course.id), class: 'block')
     end
@@ -48,12 +55,10 @@ module ContentStudio
       end
     end
 
-    def studio_badge(status)
-      if status == 'in_progress'
-        { label: 'In Progress', bg_color: 'bg-danger', text_color: 'text-white' }
-      else
-        { label: 'Completed' }
-      end
+    def studio_badge(level)
+      return nil if level.blank?
+
+      { label: level, bg_color: 'bg-secondary', text_color: 'text-primary-dark' }
     end
   end
 end
