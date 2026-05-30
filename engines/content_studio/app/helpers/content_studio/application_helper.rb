@@ -6,7 +6,7 @@ module ContentStudio
       return '0.00' if seconds.nil? || seconds <= 0
 
       total = seconds.to_i
-      format('%d.%02d', total / 60, total % 60)
+      format('%<mins>d.%<secs>02d', mins: total / 60, secs: total % 60)
     end
 
     def format_duration(seconds)
