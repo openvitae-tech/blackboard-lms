@@ -151,6 +151,62 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
     expect(rendered).to include('group-hover:opacity-100')
   end
 
+  context 'when the lesson has no scenes' do
+    before do
+      assign(:lesson, ContentStudio::StructureLesson.new(
+                        id: '1',
+                        title: 'Introduction to Airport Services',
+                        description: 'Desc',
+                        estimated_duration: 1800,
+                        status: 'WAITING',
+                        video_url: nil,
+                        verified: false,
+                        scenes: []
+                      ))
+    end
+
+    it 'does not render the video player' do
+      render
+      expect(rendered).not_to include('data-scene-player-target="video"')
+    end
+
+    it 'does not render the Script label or textarea' do
+      render
+      expect(rendered).not_to include('Script')
+      expect(rendered).not_to include('scene-player#onNarrationInput')
+    end
+
+    it 'does not render the Regenerate Scene button' do
+      render
+      expect(rendered).not_to include('Regenerate Scene')
+    end
+
+    it 'renders the empty state message' do
+      render
+      expect(rendered).to include('No scenes have been generated for this lesson yet')
+    end
+
+    it 'renders the Delete Lesson button' do
+      render
+      expect(rendered).to include('Delete Lesson')
+    end
+
+    it 'renders the Regenerate Lesson button' do
+      render
+      expect(rendered).to include('Regenerate Lesson')
+    end
+
+    it 'renders the delete form pointing to the destroy route' do
+      render
+      expect(rendered).to include('action="/content_studio/courses/1/lessons/1"')
+    end
+
+    it 'renders the regenerate form pointing to the regenerate route' do
+      render
+      expect(rendered).to include('action="/content_studio/courses/1/lessons/1/regenerate"')
+    end
+  end
+
   context 'when lesson status is VIDEO_READY' do
     let(:lesson) do
       ContentStudio::StructureLesson.new(

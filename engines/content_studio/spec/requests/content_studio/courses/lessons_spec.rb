@@ -41,6 +41,36 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
     allow(ContentStudio::ApiClient).to receive_messages(get_lesson: lesson, course_structure: structure)
   end
 
+  describe 'DELETE /content_studio/courses/:course_id/lessons/:id' do
+    before do
+      allow(ContentStudio::ApiClient).to receive(:delete_lesson)
+      delete '/content_studio/courses/1/lessons/1'
+    end
+
+    it 'calls ApiClient.delete_lesson with the correct ids' do
+      expect(ContentStudio::ApiClient).to have_received(:delete_lesson).with('1', course_id: '1')
+    end
+
+    it 'redirects to the course structure page' do
+      expect(response).to redirect_to('/content_studio/courses/1/structure')
+    end
+  end
+
+  describe 'POST /content_studio/courses/:course_id/lessons/:id/regenerate' do
+    before do
+      allow(ContentStudio::ApiClient).to receive(:regenerate_lesson)
+      post '/content_studio/courses/1/lessons/1/regenerate'
+    end
+
+    it 'calls ApiClient.regenerate_lesson with the correct ids' do
+      expect(ContentStudio::ApiClient).to have_received(:regenerate_lesson).with('1', course_id: '1')
+    end
+
+    it 'redirects back to the lesson page' do
+      expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
+    end
+  end
+
   describe 'GET /content_studio/courses/:course_id/lessons/:id' do
     before { get '/content_studio/courses/1/lessons/1' }
 

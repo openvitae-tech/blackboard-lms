@@ -34,9 +34,9 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
                        ))
   end
 
-  it 'renders Course Structure as the active wizard step' do
+  it 'renders the structure-polling Stimulus controller' do
     render
-    expect(rendered).to include('Course Structure')
+    expect(rendered).to include('structure-polling')
   end
 
   it 'renders the Course Overview panel' do
@@ -56,11 +56,38 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('Rules and regulations')
   end
 
-  it 'renders lesson status icons' do
+  it 'renders exclamation icon for lessons with no scenes' do
     render
-    expect(rendered).to include('w-6 h-6 text-secondary flex-shrink-0')
-    expect(rendered).to include('w-6 h-6 text-primary flex-shrink-0')
-    expect(rendered).to include('animate-spin')
+    expect(rendered).to include('w-6 h-6 text-danger flex-shrink-0')
+  end
+
+  context 'when lessons have scenes' do
+    let(:scene) do
+      ContentStudio::Scene.new(id: 1, timestamp: nil, visual: nil, narration: 'test',
+                               status: 'COMPLETED', video_url: 'https://example.com/v.mp4', thumbnail_url: nil)
+    end
+
+    before do
+      mod = ContentStudio::StructureModule.new(
+        id: 1, title: 'Airport Services',
+        lessons: [
+          ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'VERIFIED', scenes: [scene]),
+          ContentStudio::StructureLesson.new(id: 2, title: 'Rules and regulations', status: 'VIDEO_READY', scenes: [scene]),
+          ContentStudio::StructureLesson.new(id: 3, title: 'Lesson name', status: 'PENDING', scenes: [scene])
+        ]
+      )
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1, title: 'Airport Services Management', duration: 9240,
+                           modules: [mod], verified_modules_count: 1, thumbnail_url: nil
+                         ))
+    end
+
+    it 'renders lesson status icons' do
+      render
+      expect(rendered).to include('w-6 h-6 text-secondary flex-shrink-0')
+      expect(rendered).to include('w-6 h-6 text-primary flex-shrink-0')
+      expect(rendered).to include('animate-spin')
+    end
   end
 
   it 'renders course name in sidebar' do
