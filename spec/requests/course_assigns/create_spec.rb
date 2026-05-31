@@ -17,7 +17,7 @@ RSpec.describe 'Request spec for POST /course_assigns' do
     it 'assigns the courses successfully' do
       params = {
         course_ids: @courses.map(&:id),
-        duration: %w[none one_week],
+        durations: { @courses[0].id.to_s => '', @courses[1].id.to_s => 'one_week' },
         user_id: @learner.id
       }
 
@@ -32,7 +32,7 @@ RSpec.describe 'Request spec for POST /course_assigns' do
     it 'assigns the courses successfully to team' do
       params = {
         course_ids: @courses.map(&:id),
-        duration: %w[none one_week],
+        durations: { @courses[0].id.to_s => '', @courses[1].id.to_s => 'one_week' },
         team_id: team.id
       }
 
@@ -47,7 +47,7 @@ RSpec.describe 'Request spec for POST /course_assigns' do
     it 'sets assigned_by fields' do
       params = {
         course_ids: @courses.map(&:id),
-        duration: %w[none one_week],
+        durations: { @courses[0].id.to_s => '', @courses[1].id.to_s => 'one_week' },
         team_id: team.id
       }
 
@@ -62,7 +62,7 @@ RSpec.describe 'Request spec for POST /course_assigns' do
     it 'sets deadline field of enrollment' do
       params = {
         course_ids: @courses.map(&:id),
-        duration: %w[none one_week],
+        durations: { @courses[0].id.to_s => '', @courses[1].id.to_s => 'one_week' },
         team_id: team.id
       }
 
@@ -89,7 +89,7 @@ RSpec.describe 'Request spec for POST /course_assigns' do
     it 'assigns the courses successfully' do
       params = {
         course_ids: @courses.map(&:id),
-        duration: %w[none one_week],
+        durations: { @courses[0].id.to_s => '', @courses[1].id.to_s => 'one_week' },
         user_id: @learner.id
       }
 
