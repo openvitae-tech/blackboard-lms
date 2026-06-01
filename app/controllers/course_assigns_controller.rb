@@ -16,15 +16,16 @@ class CourseAssignsController < ApplicationController
   end
 
   def create
-    course_ids = (params[:course_ids] || []).reject(&:blank?)
+    permitted = params.permit(course_ids: [], durations: {}, custom_dates: {})
+    course_ids = (permitted[:course_ids] || []).reject(&:blank?)
 
     if course_ids.empty?
       flash.now[:error] = 'No courses selected'
       return render
     end
 
-    durations_hash = params.fetch(:durations, {})
-    custom_dates_hash = params.fetch(:custom_dates, {})
+    durations_hash = permitted.fetch(:durations, {})
+    custom_dates_hash = permitted.fetch(:custom_dates, {})
     courses = Course.find(course_ids)
 
     @courses_with_deadline = courses.map do |course|
