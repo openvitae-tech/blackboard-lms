@@ -88,7 +88,9 @@
                     }
                   }
                 ) %>
-            <div class="hidden" data-deadline-modal-target="customDateWrapper">
+            <div class="hidden"
+                 data-deadline-modal-target="customDateWrapper"
+                 data-action="change->deadline-modal#resetApplyAll">
               <%= date_picker_component(
                     name: "custom_dates[#{course.id}]",
                     placeholder: 'Pick a date'

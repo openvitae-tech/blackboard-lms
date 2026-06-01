@@ -72,6 +72,11 @@ export default class extends Controller {
         });
     }
 
+    resetApplyAll() {
+        this.applyAllSelectTarget.value = "";
+        this.applyAllCustomDateTarget.classList.add("hidden");
+    }
+
     toggleCustomDate(event) {
         this.applyAllSelectTarget.value = "";
         this.applyAllCustomDateTarget.classList.add("hidden");
