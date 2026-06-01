@@ -15,4 +15,5 @@ en:
           error: "Something went wrong. Please try again."
         download:
           not_available: "The lesson video is not available yet. Please check back once processing is complete."
+          not_verified: "The lesson must be verified before it can be downloaded."
           expired: "The lesson video could not be downloaded. The link may have expired — please try again."

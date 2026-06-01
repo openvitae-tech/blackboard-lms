@@ -45,7 +45,33 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
   let(:lesson_with_scenes) do
     ContentStudio::StructureLesson.new(
       id: '1', title: 'Introduction to Airport Services',
-      estimated_duration: 1800, status: 'VIDEO_READY', video_url: 'https://example.com/lesson.mp4', verified: false,
+      estimated_duration: 1800, status: 'VIDEO_READY', video_url: 'https://example.com/lesson.mp4', verified: true,
+      scenes: [scene]
+    )
+  end
+
+  let(:lesson_with_pending_scene) do
+    pending_scene = ContentStudio::Scene.new(id: 's2', status: 'PENDING', video_url: nil,
+                                             thumbnail_url: nil, duration: nil)
+    ContentStudio::StructureLesson.new(
+      id: '1', title: 'Introduction to Airport Services',
+      estimated_duration: 1800, status: 'PENDING', video_url: nil, verified: false,
+      scenes: [pending_scene]
+    )
+  end
+
+  let(:unverified_lesson_with_scenes) do
+    ContentStudio::StructureLesson.new(
+      id: '1', title: 'Introduction to Airport Services',
+      estimated_duration: 1800, status: 'VIDEO_READY', video_url: nil, verified: false,
+      scenes: [scene]
+    )
+  end
+
+  let(:verified_lesson_without_video) do
+    ContentStudio::StructureLesson.new(
+      id: '1', title: 'Introduction to Airport Services',
+      estimated_duration: 1800, status: 'VIDEO_READY', video_url: nil, verified: true,
       scenes: [scene]
     )
   end
@@ -217,9 +243,9 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
       end
     end
 
-    context 'when the lesson has no video' do
+    context 'when not all scenes are completed' do
       before do
-        allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(lesson)
+        allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(lesson_with_pending_scene)
         get '/content_studio/courses/1/lessons/1/download'
       end
 
@@ -227,7 +253,38 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
         expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
       end
 
-      it 'sets an alert flash message' do
+      it 'sets a not_available alert' do
+        expected = 'The lesson video is not available yet. Please check back once processing is complete.'
+        expect(flash[:alert]).to eq(expected)
+      end
+    end
+
+    context 'when the lesson is not verified' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(unverified_lesson_with_scenes)
+        get '/content_studio/courses/1/lessons/1/download'
+      end
+
+      it 'redirects back to the lesson page' do
+        expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
+      end
+
+      it 'sets a not_verified alert' do
+        expect(flash[:alert]).to eq('The lesson must be verified before it can be downloaded.')
+      end
+    end
+
+    context 'when the lesson is verified but has no video url' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(verified_lesson_without_video)
+        get '/content_studio/courses/1/lessons/1/download'
+      end
+
+      it 'redirects back to the lesson page' do
+        expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
+      end
+
+      it 'sets a not_available alert' do
         expected = 'The lesson video is not available yet. Please check back once processing is complete.'
         expect(flash[:alert]).to eq(expected)
       end
@@ -244,7 +301,7 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
         expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
       end
 
-      it 'sets an alert flash message' do
+      it 'sets an expired alert' do
         expected = 'The lesson video could not be downloaded. The link may have expired — please try again.'
         expect(flash[:alert]).to eq(expected)
       end

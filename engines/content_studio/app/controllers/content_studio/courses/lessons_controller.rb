@@ -38,6 +38,17 @@ module ContentStudio
 
       def download
         lesson = ApiClient.get_lesson(params[:course_id], params[:id])
+
+        unless lesson.scenes.all? { |s| s.status == 'COMPLETED' }
+          flash[:alert] = t('.not_available')
+          return redirect_to(course_lesson_path(params[:course_id], params[:id]))
+        end
+
+        unless lesson.verified
+          flash[:alert] = t('.not_verified')
+          return redirect_to(course_lesson_path(params[:course_id], params[:id]))
+        end
+
         if lesson.video_url.blank?
           flash[:alert] = t('.not_available')
           return redirect_to(course_lesson_path(params[:course_id], params[:id]))
