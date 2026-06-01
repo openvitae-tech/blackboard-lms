@@ -23,7 +23,39 @@ module ContentStudio
 
       def destroy
         ApiClient.delete_lesson(params[:id], course_id: params[:course_id])
+        flash[:notice] = t('.success')
         redirect_to course_structure_path(id: params[:course_id])
+      rescue Faraday::ResourceNotFound
+        flash[:alert] = t('.not_found')
+        redirect_to course_structure_path(id: params[:course_id])
+      rescue Faraday::BadRequestError
+        flash[:alert] = t('.locked')
+        redirect_to course_lesson_path(params[:course_id], params[:id])
+      rescue Faraday::Error
+        flash[:alert] = t('.error')
+        redirect_to course_lesson_path(params[:course_id], params[:id])
+      end
+
+      def download
+        lesson = ApiClient.get_lesson(params[:course_id], params[:id])
+        if lesson.video_url.blank?
+          flash[:alert] = t('.not_available')
+          return redirect_to(course_lesson_path(params[:course_id], params[:id]))
+        end
+
+        video = Faraday.get(lesson.video_url)
+        unless video.success?
+          flash[:alert] = t('.expired')
+          return redirect_to(course_lesson_path(params[:course_id], params[:id]))
+        end
+
+        send_data video.body,
+                  filename: "#{lesson.title.parameterize}-lesson.mp4",
+                  type: 'video/mp4',
+                  disposition: 'attachment'
+      rescue Faraday::Error
+        flash[:alert] = t('.expired')
+        redirect_to course_lesson_path(params[:course_id], params[:id])
       end
 
       def regenerate

@@ -45,7 +45,7 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
   let(:lesson_with_scenes) do
     ContentStudio::StructureLesson.new(
       id: '1', title: 'Introduction to Airport Services',
-      estimated_duration: 1800, status: 'VIDEO_READY', video_url: nil, verified: false,
+      estimated_duration: 1800, status: 'VIDEO_READY', video_url: 'https://example.com/lesson.mp4', verified: false,
       scenes: [scene]
     )
   end
@@ -55,17 +55,68 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
   end
 
   describe 'DELETE /content_studio/courses/:course_id/lessons/:id' do
-    before do
-      allow(ContentStudio::ApiClient).to receive(:delete_lesson)
-      delete '/content_studio/courses/1/lessons/1'
+    context 'when deletion succeeds' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:delete_lesson)
+        delete '/content_studio/courses/1/lessons/1'
+      end
+
+      it 'calls ApiClient.delete_lesson with the correct ids' do
+        expect(ContentStudio::ApiClient).to have_received(:delete_lesson).with('1', course_id: '1')
+      end
+
+      it 'redirects to the course structure page' do
+        expect(response).to redirect_to('/content_studio/courses/1/structure')
+      end
+
+      it 'sets a success flash notice' do
+        expect(flash[:notice]).to eq('Lesson deleted successfully.')
+      end
     end
 
-    it 'calls ApiClient.delete_lesson with the correct ids' do
-      expect(ContentStudio::ApiClient).to have_received(:delete_lesson).with('1', course_id: '1')
+    context 'when the lesson is locked' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:delete_lesson).and_raise(Faraday::BadRequestError)
+        delete '/content_studio/courses/1/lessons/1'
+      end
+
+      it 'redirects back to the lesson page' do
+        expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
+      end
+
+      it 'sets an alert flash message' do
+        expect(flash[:alert]).to eq('Lesson is currently being processed and cannot be deleted.')
+      end
     end
 
-    it 'redirects to the course structure page' do
-      expect(response).to redirect_to('/content_studio/courses/1/structure')
+    context 'when the lesson is not found' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:delete_lesson).and_raise(Faraday::ResourceNotFound)
+        delete '/content_studio/courses/1/lessons/1'
+      end
+
+      it 'redirects to the course structure page' do
+        expect(response).to redirect_to('/content_studio/courses/1/structure')
+      end
+
+      it 'sets an alert flash message' do
+        expect(flash[:alert]).to eq('Lesson not found.')
+      end
+    end
+
+    context 'when an unexpected error occurs' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:delete_lesson).and_raise(Faraday::Error)
+        delete '/content_studio/courses/1/lessons/1'
+      end
+
+      it 'redirects back to the lesson page' do
+        expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
+      end
+
+      it 'sets an alert flash message' do
+        expect(flash[:alert]).to eq('Something went wrong. Please try again.')
+      end
     end
   end
 
@@ -143,6 +194,60 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
       allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(pending_lesson)
       get '/content_studio/courses/1/lessons/1/scene_status', headers: { 'Accept' => 'application/json' }
       expect(response.parsed_body['pending']).to be(true)
+    end
+  end
+
+  describe 'GET /content_studio/courses/:course_id/lessons/:id/download' do
+    context 'when the lesson video is available' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(lesson_with_scenes)
+        stub_request(:get, 'https://example.com/lesson.mp4').to_return(
+          status: 200, body: 'video-data', headers: { 'Content-Type' => 'video/mp4' }
+        )
+        get '/content_studio/courses/1/lessons/1/download'
+      end
+
+      it 'returns HTTP 200' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'sends the video as a file attachment' do
+        expect(response.headers['Content-Disposition']).to include('attachment')
+        expect(response.headers['Content-Disposition']).to include('.mp4')
+      end
+    end
+
+    context 'when the lesson has no video' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(lesson)
+        get '/content_studio/courses/1/lessons/1/download'
+      end
+
+      it 'redirects back to the lesson page' do
+        expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
+      end
+
+      it 'sets an alert flash message' do
+        expected = 'The lesson video is not available yet. Please check back once processing is complete.'
+        expect(flash[:alert]).to eq(expected)
+      end
+    end
+
+    context 'when the video link has expired' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:get_lesson).and_return(lesson_with_scenes)
+        stub_request(:get, 'https://example.com/lesson.mp4').to_return(status: 403)
+        get '/content_studio/courses/1/lessons/1/download'
+      end
+
+      it 'redirects back to the lesson page' do
+        expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
+      end
+
+      it 'sets an alert flash message' do
+        expected = 'The lesson video could not be downloaded. The link may have expired — please try again.'
+        expect(flash[:alert]).to eq(expected)
+      end
     end
   end
 end

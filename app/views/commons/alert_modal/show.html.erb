@@ -4,7 +4,7 @@
       <%= @description.html_safe %>
     </p>
     <div class="flex gap-2 w-full">
-      <%= link_to "#", class: "w-full" do %>
+      <%= link_to "#", class: "w-full", data: { action: "click->modals#closeModal" } do %>
         <%= button_component text: t("button.cancel"), type: "outline", colorscheme: "primary" %>
       <% end %>
       <%= link_to @action_path, data: { turbo_method: @method, turbo_frame: "_top" }, class: "w-full" do %>

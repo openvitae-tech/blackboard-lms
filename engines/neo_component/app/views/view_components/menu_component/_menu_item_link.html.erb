@@ -1,5 +1,6 @@
 <%= link_to item.url,
-  { class: "main-text-md-normal menu-component-list-items #{item.extra_classes} whitespace-nowrap" }
+  { class: "main-text-md-normal menu-component-list-items #{item.extra_classes} whitespace-nowrap flex items-center gap-2" }
     .merge(item.options || {}) do %>
+  <%= icon(item.icon, css: 'w-4 h-4 shrink-0') if item.icon.present? %>
   <%= item.label %>
 <% end %>

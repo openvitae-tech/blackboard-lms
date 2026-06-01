@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   root to: proc { [200, {}, ['']] }
+
+  get 'alert_modal', to: proc { [200, {}, ['']] }, as: :alert_modal
 
   mount ContentStudio::Engine => '/content_studio'
 

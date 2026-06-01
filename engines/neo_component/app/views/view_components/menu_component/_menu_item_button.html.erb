@@ -4,7 +4,10 @@
       method: :post,
       class: "main-text-md-normal menu-component-list-items #{item.extra_classes}"
     ) do %>
-    <span class="main-text-md-normal"><%= item.label %></span>
+    <span class="main-text-md-normal flex items-center gap-2">
+      <%= icon(item.icon, css: 'w-4 h-4 shrink-0') if item.icon.present? %>
+      <%= item.label %>
+    </span>
   <% end %>
 <% end %>  
 <%= item.options[:tooltip_text].present? ?

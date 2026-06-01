@@ -333,7 +333,8 @@ menu_component(
 
 **`MenuItem` struct:**
 ```ruby
-MenuItem = Struct.new(:label, :url, :type, :options, :extra_classes)
+MenuItem = Struct.new(:label, :url, :type, :options, :extra_classes, :icon)
+# icon: optional icon name string (e.g. 'trash', 'arrow-down-tray') — renders a 16px icon before the label
 ```
 
 ### `paginator_component`

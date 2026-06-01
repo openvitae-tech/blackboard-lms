@@ -6,6 +6,7 @@ module ViewComponent
     :url,
     :type,
     :options,
-    :extra_classes
+    :extra_classes,
+    :icon
   )
 end

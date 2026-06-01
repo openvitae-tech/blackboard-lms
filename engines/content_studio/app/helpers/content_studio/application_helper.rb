@@ -2,6 +2,31 @@
 
 module ContentStudio
   module ApplicationHelper
+    def lesson_menu_items(course_id, lesson)
+      [
+        ViewComponent::MenuItem.new(
+          label: 'Download Lesson',
+          url: download_course_lesson_path(course_id, lesson.id),
+          type: :link,
+          options: { data: { turbo: false } },
+          icon: 'arrow-down-tray'
+        ),
+        ViewComponent::MenuItem.new(
+          label: 'Delete Lesson',
+          url: alert_modal_path(
+            title: t('alert.title', resource_name: 'lesson'),
+            description: t('alert.description', label: lesson.title, resource_name: 'lesson'),
+            action_path: destroy_course_lesson_path(course_id, lesson.id),
+            method: :delete
+          ),
+          type: :link,
+          extra_classes: 'text-danger',
+          options: { data: { turbo_frame: 'modal' } },
+          icon: 'trash'
+        )
+      ]
+    end
+
     def format_scene_duration(seconds)
       return '0.00' if seconds.nil? || seconds <= 0
 

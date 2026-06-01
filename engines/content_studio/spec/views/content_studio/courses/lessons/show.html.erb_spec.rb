@@ -27,6 +27,7 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
   end
 
   before do
+    view.singleton_class.define_method(:alert_modal_path) { |**_| '/alert_modal' }
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:lesson, lesson)
     assign(:course_id, '1')
@@ -72,6 +73,23 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
   it 'renders the Script label' do
     render
     expect(rendered).to include('Script')
+  end
+
+  it 'renders the menu component trigger button' do
+    render
+    expect(rendered).to include('data-controller="menu-component"')
+  end
+
+  it 'renders the Delete Lesson menu item pointing to the alert modal' do
+    render
+    expect(rendered).to include('Delete Lesson')
+    expect(rendered).to include('alert_modal')
+  end
+
+  it 'renders the Download Lesson menu item linking to the download path' do
+    render
+    expect(rendered).to include('Download Lesson')
+    expect(rendered).to include('download')
   end
 
   it 'renders a scene card for each scene' do

@@ -228,9 +228,7 @@
       <div class="bg-primary-light-50 rounded-lg p-5 flex flex-col gap-4">
         <div class="flex items-center justify-between">
           <span class="main-text-lg-semibold text-primary"><%= @lesson.title %></span>
-          <button type="button" class="flex items-center justify-center border border-primary rounded-full size-7 shrink-0 bg-primary-light-50">
-            <%= icon 'ellipsis-vertical', css: 'w-4 h-4 text-primary' %>
-          </button>
+          <%= menu_component(menu_items: lesson_menu_items(@course_id, @lesson)) %>
         </div>
         <div class="flex flex-col gap-1" data-controller="show-more">
           <p class="main-text-sm-normal text-letter-color line-clamp-6 overflow-hidden"
