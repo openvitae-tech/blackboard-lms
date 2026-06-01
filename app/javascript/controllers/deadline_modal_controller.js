@@ -67,17 +67,18 @@ export default class extends Controller {
         });
     }
 
-    propagateApplyAllDate() {
-        const dateValue = this.applyAllCustomDateTarget
-            .querySelector('[data-date-picker-target="dateSelector"]')?.value;
+    propagateApplyAllDate(event) {
+        const dateValue = event.target.value;
         if (!dateValue) return;
 
         this.durationSelectTargets.forEach(select => {
             const row = select.closest('[data-deadline-modal-target="courseRow"]');
             if (row.classList.contains("hidden") || select.value !== "custom") return;
 
-            const input = row.querySelector('[data-date-picker-target="dateSelector"]');
-            if (input) input.value = dateValue;
+            const datePickerEl = row.querySelector('[data-controller~="date-picker"]');
+            datePickerEl?.dispatchEvent(
+                new CustomEvent('date-picker:set-value', { detail: { value: dateValue }, bubbles: false })
+            );
         });
     }
 
