@@ -20,8 +20,8 @@ module ViewComponent
 
       wrapper_class = ['modal-wrapper', wrapper_html_options[:class]].compact.join(' ')
       merged_wrapper_options = { data: { controller: 'modals', modals_target: 'modalBox' } }
-                                  .deep_merge(wrapper_html_options.except(:class))
-                                  .merge(class: wrapper_class)
+                               .deep_merge(wrapper_html_options.except(:class))
+                               .merge(class: wrapper_class)
 
       content_class = ['modal-content', html_options[:class]].compact.join(' ')
       merged_content_options = html_options.except(:class).merge(class: content_class)
