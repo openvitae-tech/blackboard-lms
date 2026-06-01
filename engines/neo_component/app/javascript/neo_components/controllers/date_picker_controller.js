@@ -5,11 +5,14 @@ export default class extends Controller {
 
   connect() {
     this.boundSetValue = this.handleSetValue.bind(this);
+    this.boundOpen = this.handleOpen.bind(this);
     this.element.addEventListener("date-picker:set-value", this.boundSetValue);
+    this.element.addEventListener("date-picker:open", this.boundOpen);
   }
 
   disconnect() {
     this.element.removeEventListener("date-picker:set-value", this.boundSetValue);
+    this.element.removeEventListener("date-picker:open", this.boundOpen);
   }
 
   datePicked(event) {
@@ -26,5 +29,9 @@ export default class extends Controller {
 
   handleSetValue(event) {
     this.dateSelectorTarget.value = event.detail.value;
+  }
+
+  handleOpen() {
+    this.datePickerTarget.showPicker();
   }
 }

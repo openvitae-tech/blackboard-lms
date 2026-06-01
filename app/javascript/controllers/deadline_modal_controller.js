@@ -46,8 +46,10 @@ export default class extends Controller {
 
         if (duration === "custom") {
             this.applyAllCustomDateTarget.classList.remove("hidden");
-            const icon = this.applyAllCustomDateTarget.querySelector('[data-action*="openDatePicker"]');
-            requestAnimationFrame(() => icon?.click());
+            const datePickerEl = this.applyAllCustomDateTarget.querySelector('[data-controller~="date-picker"]');
+            requestAnimationFrame(() => datePickerEl?.dispatchEvent(
+                new CustomEvent('date-picker:open', { bubbles: false })
+            ));
         } else {
             this.applyAllCustomDateTarget.classList.add("hidden");
         }
@@ -95,8 +97,10 @@ export default class extends Controller {
         const wrapper = row.querySelector('[data-deadline-modal-target="customDateWrapper"]');
         if (event.target.value === "custom") {
             wrapper.classList.remove("hidden");
-            const icon = wrapper.querySelector('[data-action*="openDatePicker"]');
-            requestAnimationFrame(() => icon?.click());
+            const datePickerEl = wrapper.querySelector('[data-controller~="date-picker"]');
+            requestAnimationFrame(() => datePickerEl?.dispatchEvent(
+                new CustomEvent('date-picker:open', { bubbles: false })
+            ));
         } else {
             wrapper.classList.add("hidden");
         }
