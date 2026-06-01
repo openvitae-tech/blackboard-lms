@@ -73,8 +73,8 @@ class CourseAssignsController < ApplicationController
       return nil if custom_date.blank?
 
       begin
-        DateTime.parse(custom_date)
-      rescue ArgumentError
+        Time.zone.parse(custom_date)
+      rescue ArgumentError, TypeError
         nil
       end
     else
