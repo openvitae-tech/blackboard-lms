@@ -32,6 +32,11 @@ class CourseAssignsController < ApplicationController
       [course, to_deadline(durations_hash[id], custom_dates_hash[id])]
     end
 
+    if @courses_with_deadline.any? { |course, dl| durations_hash[course.id.to_s] == 'custom' && dl.nil? }
+      flash.now[:error] = 'One or more custom dates are invalid'
+      return render status: :unprocessable_entity
+    end
+
     service = Courses::ManagementService.instance
 
     if @team_assign
@@ -63,14 +68,22 @@ class CourseAssignsController < ApplicationController
   end
 
   def to_deadline(duration, custom_date = nil)
-    return DateTime.parse(custom_date) if duration == 'custom' && custom_date.present?
+    if duration == 'custom'
+      return nil if custom_date.blank?
 
-    case duration
-    when 'one_day' then DateTime.now + 1.day
-    when 'two_days' then DateTime.now + 2.days
-    when 'one_week' then DateTime.now + 1.week
-    when 'two_weeks' then DateTime.now + 2.weeks
-    when 'one_month' then DateTime.now + 1.month
+      begin
+        DateTime.parse(custom_date)
+      rescue ArgumentError
+        nil
+      end
+    else
+      case duration
+      when 'one_day' then Time.current + 1.day
+      when 'two_days' then Time.current + 2.days
+      when 'one_week' then Time.current + 1.week
+      when 'two_weeks' then Time.current + 2.weeks
+      when 'one_month' then Time.current + 1.month
+      end
     end
   end
 end
