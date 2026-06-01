@@ -74,7 +74,11 @@ module ContentStudio
   CourseStructure = Struct.new(
     :id, :title, :duration, :modules, :verified_modules_count, :thumbnail_url, :progress_text, :stage,
     keyword_init: true
-  )
+  ) do
+    def script_writer_done?
+      stage.to_s.start_with?('scene_writer_', 'generate_background_media', 'video_generation', 'log_course')
+    end
+  end
 
   StructureModule = Struct.new(:id, :title, :lessons, keyword_init: true)
 

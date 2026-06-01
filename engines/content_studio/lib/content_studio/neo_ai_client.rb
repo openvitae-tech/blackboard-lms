@@ -240,7 +240,8 @@ module ContentStudio
         modules: (data['modules'] || []).map { |m| build_structure_module(m) },
         verified_modules_count: 0,
         thumbnail_url: data['thumbnail_url'],
-        progress_text: data['progress_text']
+        progress_text: data['progress_text'],
+        stage: data['stage']
       )
     end
 

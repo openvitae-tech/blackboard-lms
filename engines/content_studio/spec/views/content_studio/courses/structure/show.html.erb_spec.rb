@@ -56,9 +56,30 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('Rules and regulations')
   end
 
-  it 'renders exclamation icon for lessons with no scenes' do
-    render
-    expect(rendered).to include('w-6 h-6 text-danger flex-shrink-0')
+  context 'when script writer has completed and a lesson has no scenes' do
+    before do
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1,
+                           title: 'Airport Services Management',
+                           duration: 9240,
+                           modules: [airport_services_module, wine_serving_module],
+                           verified_modules_count: 1,
+                           thumbnail_url: nil,
+                           stage: 'scene_writer_completed'
+                         ))
+    end
+
+    it 'renders the exclamation icon' do
+      render
+      expect(rendered).to include('w-6 h-6 text-danger flex-shrink-0')
+    end
+  end
+
+  context 'when script writer has not yet completed and a lesson has no scenes' do
+    it 'does not render the exclamation icon' do
+      render
+      expect(rendered).not_to include('w-6 h-6 text-danger flex-shrink-0')
+    end
   end
 
   context 'when lessons have scenes' do

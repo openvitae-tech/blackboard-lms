@@ -82,7 +82,7 @@
                          data-lesson-name-target="input"
                          data-action="blur->lesson-name#blur keydown->lesson-name#keydown">
                 </div>
-                <% if lesson.scenes.empty? %>
+                <% if lesson.scenes.empty? && @structure.script_writer_done? %>
                   <%= icon 'exclamation-circle-solid', css: 'w-6 h-6 text-danger flex-shrink-0' %>
                 <% elsif lesson.status == 'PENDING' %>
                   <div class="w-6 h-6 rounded-full border-2 border-primary-light-100 border-t-primary animate-spin flex-shrink-0"></div>
