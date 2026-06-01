@@ -27,4 +27,12 @@ RSpec.describe 'Request spec for AlertModal', type: :request do
       action_path: '/courses/1'
     }
   end
+
+  describe 'GET /alert_modal with custom action_text and action_type' do
+    it 'renders the modal with the provided action button text and colour' do
+      get alert_modal_path, params: alert_params.merge(action_text: 'Discard', action_type: 'danger')
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include('Discard')
+    end
+  end
 end

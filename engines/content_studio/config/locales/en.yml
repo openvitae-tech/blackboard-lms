@@ -3,6 +3,10 @@ en:
     courses:
       discard:
         locked: "Course is currently being processed. Please wait before deleting."
+        confirm:
+          title: "Discard course?"
+          description: "You are permanently discarding <b>%{title}</b>. This action can't be undone."
+          action: "Discard"
       lessons:
         destroy:
           success: "Lesson deleted successfully."

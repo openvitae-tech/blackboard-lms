@@ -23,6 +23,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
   end
 
   before do
+    view.singleton_class.define_method(:alert_modal_path) { |**_| '/alert_modal' }
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:structure, ContentStudio::CourseStructure.new(
                          id: 1,
@@ -213,10 +214,10 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('Discard Course')
   end
 
-  it 'renders the discard form targeting the discard route with turbo_frame _top' do
+  it 'renders the Discard Course button as a modal link to the alert_modal' do
     render
-    expect(rendered).to include('action="/content_studio/courses/1"')
-    expect(rendered).to include('data-turbo-frame="_top"')
+    expect(rendered).to include('/alert_modal')
+    expect(rendered).to include('data-turbo-frame="modal"')
   end
 
   it 'renders the save form targeting the save route' do

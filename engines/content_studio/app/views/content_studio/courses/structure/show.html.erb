@@ -165,12 +165,16 @@
         </div>
 
         <div class="flex gap-3">
-          <%= form_with url: discard_course_path(id: @structure.id), method: :delete, class: 'flex-1',
-                data: { turbo_frame: '_top', turbo_confirm: 'Are you sure you want to discard this course? This action cannot be undone.' } do |f| %>
-            <%= f.button class: 'w-full' do %>
-              <%= button_component(text: 'Discard Course', type: 'outline', colorscheme: 'danger',
-                                   html_options: { class: 'w-full' }) %>
-            <% end %>
+          <%= link_to alert_modal_path(
+                title: t('content_studio.courses.discard.confirm.title'),
+                description: t('content_studio.courses.discard.confirm.description', title: @structure.title),
+                action_path: discard_course_path(id: @structure.id),
+                method: :delete,
+                action_text: t('content_studio.courses.discard.confirm.action'),
+                action_type: 'danger'
+              ), class: 'flex-1', data: { turbo_frame: 'modal' } do %>
+            <%= button_component(text: 'Discard Course', type: 'outline', colorscheme: 'danger',
+                                 html_options: { class: 'w-full' }) %>
           <% end %>
           <%= form_with url: save_course_path(id: @structure.id), method: :patch, class: 'flex-1' do |f| %>
             <%= f.button class: 'w-full', disabled: !all_videos_ready do %>
