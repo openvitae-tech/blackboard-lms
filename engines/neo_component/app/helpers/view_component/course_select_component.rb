@@ -28,6 +28,5 @@ module ViewComponent
     def _course_select_load_more(search_context:, courses:)
       render partial: 'view_components/course_select/load_more', locals: { search_context:, courses: }
     end
-
   end
 end
