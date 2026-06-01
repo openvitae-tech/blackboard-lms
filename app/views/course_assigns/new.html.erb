@@ -8,6 +8,10 @@
       courses: @courses,
       tags: @tags,
       cancel_link: @back_link,
-      show_duration: true,
       submit_path: course_assigns_path
     ) %>
+
+<%= render 'deadline_modal',
+      courses: @courses,
+      search_context: @search_context,
+      submit_path: course_assigns_path %>

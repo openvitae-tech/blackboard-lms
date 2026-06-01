@@ -29,9 +29,5 @@ module ViewComponent
       render partial: 'view_components/course_select/load_more', locals: { search_context:, courses: }
     end
 
-    def _course_select_deadline_modal_component(courses:, submit_path:, search_context:)
-      render partial: 'view_components/course_select/deadline_modal_component',
-             locals: { courses:, submit_path:, search_context: }
-    end
   end
 end
