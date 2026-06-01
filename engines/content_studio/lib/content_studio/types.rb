@@ -35,7 +35,7 @@ module ContentStudio
     :rating,
     :video_streaming_source,
     :local_contents,  # Array<ContentStudio::LocalContent>
-    :scenes,          # Array<ContentStudio::Scene> — populated by NeoAiClient
+    :scenes,          # Array<ContentStudio::Scene>
     keyword_init: true
   )
 
