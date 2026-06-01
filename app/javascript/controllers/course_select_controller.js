@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
     static targets = ["assignButton", "assignButtonInner", "modal"];
+    static outlets = ["deadline-modal"];
 
     toggleAssignButton() {
         const anyChecked = this.element.querySelectorAll('input[name="course_ids[]"]:checked').length > 0;
@@ -40,7 +41,6 @@ export default class extends Controller {
             }));
         }
 
-        this.modalTarget.style.display = "";
-        this.modalTarget.querySelector("button:not([disabled]), input:not([disabled]), select:not([disabled])")?.focus();
+        this.deadlineModalOutlet.open();
     }
 }

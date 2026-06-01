@@ -11,10 +11,20 @@ export default class extends Controller {
     ];
 
     connect() {
+        this.isOpen = false;
         this.boundHandleSubmitEnd = this.handleSubmitEnd.bind(this);
         this.boundHandleKeydown = this.handleKeydown.bind(this);
         this.element.addEventListener("turbo:submit-end", this.boundHandleSubmitEnd);
         document.addEventListener("keydown", this.boundHandleKeydown);
+    }
+
+    open() {
+        this.isOpen = true;
+        const wrapper = this.element.closest(".modal-wrapper");
+        if (wrapper) wrapper.style.display = "";
+        this.element
+            .querySelector("button:not([disabled]), input:not([disabled]), select:not([disabled])")
+            ?.focus();
     }
 
     disconnect() {
@@ -27,9 +37,8 @@ export default class extends Controller {
     }
 
     handleKeydown(event) {
-        if (event.key !== "Escape") return;
-        const wrapper = this.element.closest(".modal-wrapper");
-        if (wrapper?.style.display !== "none") this.cancel();
+        if (event.key !== "Escape" || !this.isOpen) return;
+        this.cancel();
     }
 
     toggleApplyAllCustomDate(event) {
@@ -107,6 +116,7 @@ export default class extends Controller {
     }
 
     close() {
+        this.isOpen = false;
         const wrapper = this.element.closest(".modal-wrapper");
         if (wrapper) wrapper.style.display = "none";
     }
