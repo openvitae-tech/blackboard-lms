@@ -31,9 +31,13 @@ export default class extends Controller {
 
         const container = this.modalTarget.querySelector('[data-deadline-modal-target="courseIdInputs"]');
         if (container) {
-            container.innerHTML = checkedIds
-                .map(id => `<input type="hidden" name="course_ids[]" value="${id}">`)
-                .join('');
+            container.replaceChildren(...checkedIds.map(id => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'course_ids[]';
+                input.setAttribute('value', id);
+                return input;
+            }));
         }
 
         this.modalTarget.style.display = "";
