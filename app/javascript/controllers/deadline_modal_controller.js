@@ -93,6 +93,7 @@ export default class extends Controller {
     }
 
     close() {
-        this.element.closest(".modal-wrapper").style.display = "none";
+        const wrapper = this.element.closest(".modal-wrapper");
+        if (wrapper) wrapper.style.display = "none";
     }
 }
