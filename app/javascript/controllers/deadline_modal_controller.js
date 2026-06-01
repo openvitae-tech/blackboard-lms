@@ -12,15 +12,24 @@ export default class extends Controller {
 
     connect() {
         this.boundHandleSubmitEnd = this.handleSubmitEnd.bind(this);
+        this.boundHandleKeydown = this.handleKeydown.bind(this);
         this.element.addEventListener("turbo:submit-end", this.boundHandleSubmitEnd);
+        document.addEventListener("keydown", this.boundHandleKeydown);
     }
 
     disconnect() {
         this.element.removeEventListener("turbo:submit-end", this.boundHandleSubmitEnd);
+        document.removeEventListener("keydown", this.boundHandleKeydown);
     }
 
     handleSubmitEnd(event) {
         if (event.detail.success) this.close();
+    }
+
+    handleKeydown(event) {
+        if (event.key !== "Escape") return;
+        const wrapper = this.element.closest(".modal-wrapper");
+        if (wrapper?.style.display !== "none") this.cancel();
     }
 
     toggleApplyAllCustomDate(event) {

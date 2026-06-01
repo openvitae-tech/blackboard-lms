@@ -40,6 +40,7 @@ export default class extends Controller {
                 .join('');
         }
 
-        this.modalTarget.style.removeProperty("display");
+        this.modalTarget.style.display = "";
+        this.modalTarget.querySelector("button:not([disabled]), input:not([disabled]), select:not([disabled])")?.focus();
     }
 }
