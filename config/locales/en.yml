@@ -250,12 +250,13 @@ en:
   sidebar:
     managing: "Managing"
     learning: "Learning"
-    support: "Support"
+    support: "Help"
     dashboard: "Dashboard"
     programs: "Programs"
     partners: "Partners"
     assets: "Assets"
     explore: "Explore"
+    courses: "Courses"
   dashboard:
     index:
       team_label: "Team:"
