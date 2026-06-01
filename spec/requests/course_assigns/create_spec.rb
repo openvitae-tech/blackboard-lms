@@ -73,6 +73,33 @@ RSpec.describe 'Request spec for POST /course_assigns' do
       expect(enrollment_one.deadline_at).to be_nil
       expect(enrollment_two.deadline_at).not_to be_nil
     end
+
+    it 'sets a custom deadline date on the enrollment' do
+      custom_date = 2.weeks.from_now.to_date.to_s
+      params = {
+        course_ids: [@courses[0].id],
+        durations: { @courses[0].id.to_s => 'custom' },
+        custom_dates: { @courses[0].id.to_s => custom_date },
+        team_id: team.id
+      }
+
+      post('/course_assigns', params:, headers: { 'Accept' => 'text/vnd.turbo-stream.html' })
+
+      expect(Enrollment.last.deadline_at.to_date).to eq(Date.parse(custom_date))
+    end
+
+    it 'returns 422 when custom duration is chosen but no date is provided' do
+      params = {
+        course_ids: [@courses[0].id],
+        durations: { @courses[0].id.to_s => 'custom' },
+        custom_dates: { @courses[0].id.to_s => '' },
+        team_id: team.id
+      }
+
+      post('/course_assigns', params:, headers: { 'Accept' => 'text/vnd.turbo-stream.html' })
+
+      expect(response.status).to be(422)
+    end
   end
 
   describe 'A support user can assign course to a user' do
