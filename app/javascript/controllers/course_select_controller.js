@@ -3,10 +3,6 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
     static targets = ["assignButton", "assignButtonInner", "modal"];
 
-    connect() {
-        this.showDuration = this.element.dataset.showDuration === "true";
-    }
-
     toggleAssignButton() {
         const anyChecked = this.element.querySelectorAll('input[name="course_ids[]"]:checked').length > 0;
 
