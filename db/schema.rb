@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_20_094656) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_02_033317) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -112,6 +112,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_20_094656) do
     t.integer "quizzes_count", default: 0
     t.bigint "lessons_in_order", default: [], array: true
     t.bigint "quizzes_in_order", default: [], array: true
+    t.string "neo_ai_module_id"
     t.index ["course_id"], name: "index_course_modules_on_course_id"
   end
 
@@ -130,6 +131,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_20_094656) do
     t.decimal "rating"
     t.string "visibility", null: false
     t.string "neo_ai_course_id"
+    t.bigint "learning_partner_id"
+    t.index ["learning_partner_id"], name: "index_courses_on_learning_partner_id"
     t.index ["neo_ai_course_id"], name: "index_courses_on_neo_ai_course_id", unique: true
   end
 
@@ -210,6 +213,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_20_094656) do
     t.integer "duration", default: 0
     t.decimal "rating"
     t.datetime "last_rated_at"
+    t.string "neo_ai_lesson_id"
     t.index ["course_module_id"], name: "index_lessons_on_course_module_id"
   end
 
@@ -424,6 +428,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_20_094656) do
   add_foreign_key "course_certificates", "courses"
   add_foreign_key "course_certificates", "users"
   add_foreign_key "course_modules", "courses"
+  add_foreign_key "courses", "learning_partners"
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"
   add_foreign_key "enrollments", "users", column: "assigned_by_id"
