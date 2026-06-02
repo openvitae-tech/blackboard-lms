@@ -37,6 +37,11 @@ module NeoComponents
       end
     end
 
+    # Load engine-owned translations so views don't depend on the host app's locale files.
+    initializer 'neo_components.i18n' do |app|
+      app.config.i18n.load_path += Dir[Engine.gem_root.join('config/locales/**/*.yml')]
+    end
+
     # Register gem's Stimulus controllers with importmap-rails
     initializer 'neo_components.importmap', before: 'importmap' do |app|
       if app.config.respond_to?(:importmap)

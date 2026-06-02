@@ -8,24 +8,6 @@ export default class extends Controller {
         "datePicker"
     ];
 
-    static outlets = ["course-select"]; // controller to which we want to connect to
-
-    connect() {
-        this.showDuration = this.courseSelectOutlet.showDuration;
-    }
-
-    toggleDurationSelect(event) {
-        if (this.showDuration) {
-            this.dateSelectorTarget.disabled = !this.dateSelectorTarget.disabled;
-
-            if (!this.dateSelectorTarget.disabled) {
-                this.durationContainerTarget.classList.remove("invisible", "opacity-0");
-            } else {
-                this.durationContainerTarget.classList.add("invisible", "opacity-0");
-            }
-        }
-    }
-
     datePicked(event) {
         const selectedDate = event.target.value;
 

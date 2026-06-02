@@ -1,16 +1,16 @@
 <%= turbo_frame_tag 'modal' do %>
 <div data-controller="modal-loader" class="relative">
-    <div class="modal-wrapper" data-controller="modals" data-modals-target="modalBox">     
+    <%= content_tag :div, **wrapper_html_options do %>
       <div class="<%= container_class %>">
         <div data-modal-loader-target="loader"
              class="hidden absolute flex modal-loader-container">
           <div class="modal-loader"></div>
         </div>
-        <div class="modal-content" <%= tag.attributes(html_options) %>>
+        <%= content_tag :div, **html_options do %>
           <% if modal.title.present? %>
             <div class="modal-header">
               <span class="main-text-lg-semibold"><%= modal.title %></span>
-              <button data-action="click->modals#closeModal">
+              <button data-action="<%= close_action %>">
                 <%= icon("x-circle", css: "h-6 w-6") %>
               </button>
             </div>
@@ -21,8 +21,8 @@
           <%= content_tag :div, class: "modal-footer" do %>
             <%= modal_footer %>
           <% end if modal_footer %>
-        </div>
+        <% end %>
       </div>
-    </div>
+    <% end %>
   </div>
 <% end %>

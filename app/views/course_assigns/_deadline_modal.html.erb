@@ -1,0 +1,111 @@
+<% modal_footer = capture do %>
+  <div class="flex gap-3">
+    <button type="button" class="flex-1" data-action="click->deadline-modal#cancel">
+      <%= button_component(text: t('button.cancel'), type: 'outline', size: 'sm') %>
+    </button>
+    <button type="submit" form="deadline-form" class="flex-1">
+      <%= button_component(text: 'Confirm', size: 'sm') %>
+    </button>
+  </div>
+<% end %>
+
+<%= modal_box_component(
+      title: 'Choose Deadline',
+      modal_footer:,
+      close_action: 'click->deadline-modal#cancel',
+      wrapper_html_options: {
+        style: 'display:none'
+      },
+      html_options: {
+        id: 'deadline-modal',
+        data: { controller: 'deadline-modal' }
+      }
+    ) do %>
+
+  <%# Apply to All — UI helper only, intentionally outside the form %>
+  <div class="flex items-start justify-between gap-4 mb-6 border border-line-colour bg-primary-light-50 rounded-xl p-5">
+    <p class="main-text-md-semibold whitespace-nowrap pt-2">Apply to All</p>
+    <div class="flex flex-col gap-2 w-[160px]">
+      <%= dropdown_component(
+            name: 'apply_all_duration',
+            options: deadline_duration_options,
+            prompt: 'None',
+            html_options: {
+              data: {
+                action: 'change->deadline-modal#toggleApplyAllCustomDate',
+                deadline_modal_target: 'applyAllSelect'
+              }
+            }
+          ) %>
+      <div class="hidden"
+           data-deadline-modal-target="applyAllCustomDate"
+           data-action="change->deadline-modal#propagateApplyAllDate">
+        <%= date_picker_component(name: 'apply_all_custom_date', placeholder: 'Pick a date') %>
+      </div>
+    </div>
+  </div>
+
+  <%# Divider %>
+  <div class="flex items-center gap-3 mb-6">
+    <hr class="flex-1 border-line-colour">
+    <span class="general-text-sm-normal text-letter-color-light whitespace-nowrap">Or Set deadline individually</span>
+    <hr class="flex-1 border-line-colour">
+  </div>
+
+  <%# Form — only the submittable fields live here %>
+  <%= form_with url: submit_path, id: 'deadline-form', method: :post do |form| %>
+    <% if search_context.team_assign? %>
+      <%= form.hidden_field :team_id, value: search_context.team.id %>
+    <% elsif search_context.user_assign? %>
+      <%= form.hidden_field :user_id, value: search_context.user.id %>
+    <% end %>
+
+    <%# JS injects hidden course_ids[] inputs here when the modal opens %>
+    <div data-deadline-modal-target="courseIdInputs"></div>
+
+    <%# Per-course rows — all rendered; JS shows only the selected ones %>
+    <div class="flex flex-col">
+      <% courses.each do |course| %>
+        <div class="flex hidden items-center gap-4 py-4 border-b border-line-colour last:border-0"
+             data-deadline-modal-target="courseRow"
+             data-course-id="<%= course.id %>">
+          <div class="relative w-[84px] h-[84px] flex-shrink-0">
+            <% if course_banner(course, :horizontal).present? %>
+              <%= image_tag course_banner(course, :horizontal),
+                            class: 'w-full h-full rounded-lg object-cover' %>
+            <% else %>
+              <div class="w-full h-full rounded-lg bg-primary-light-50"></div>
+            <% end %>
+            <div class="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-1 p-1 bg-white-light opacity-95 rounded-b-lg">
+              <span class="icon icon-clock h-3 w-3 bg-letter-color-light"></span>
+              <span class="general-text-sm-normal text-letter-color-light whitespace-nowrap"><%= course_duration(course) %></span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2 flex-1 min-w-0">
+            <p class="main-text-md-medium line-clamp-2"><%= course.title %></p>
+            <%= dropdown_component(
+                  name: "durations[#{course.id}]",
+                  options: deadline_duration_options,
+                  prompt: 'None',
+                  html_options: {
+                    data: {
+                      action: 'change->deadline-modal#toggleCustomDate',
+                      deadline_modal_target: 'durationSelect'
+                    }
+                  }
+                ) %>
+            <div class="hidden"
+                 data-deadline-modal-target="customDateWrapper"
+                 data-action="change->deadline-modal#resetApplyAll">
+              <%= date_picker_component(
+                    name: "custom_dates[#{course.id}]",
+                    placeholder: 'Pick a date'
+                  ) %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+<% end %>

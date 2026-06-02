@@ -20,7 +20,7 @@
           disabled: date_picker.disabled %>
   <% end %>
   <input type="date"
-        class="invisible p-0 w-[2px]"
+        class="absolute left-0 bottom-0 w-full h-0 opacity-0 pointer-events-none border-0 p-0"
         data-date-picker-target="datePicker"
         data-action="change->date-picker#datePicked"
         min="<%= Date.today.strftime('%Y-%m-%d') %>" />
