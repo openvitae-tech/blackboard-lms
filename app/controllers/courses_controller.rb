@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
   include CourseAssociationsPreloader
 
   before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
-  before_action :set_course_active_nav, only: %i[show]
+  before_action :set_course_active_nav, only: %i[show index explore continue complete manage]
   before_action :set_tags, only: %i[new create edit update]
 
   include SearchContextHelper
@@ -12,6 +12,13 @@ class CoursesController < ApplicationController
   # GET /courses or /courses.json
   def index
     authorize :course
+    @data = HomePageService.instance.build_data_for(current_user)
+    @tags = Tag.load_tags
+  end
+
+  def manage
+    authorize :course, :manage?
+    @type = params[:type]
     if current_user.is_admin?
       search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term],
                                          type: params[:type])
@@ -19,7 +26,11 @@ class CoursesController < ApplicationController
                                        .includes(:tags, banner_attachment: :blob)
       @courses = @courses.page(filter_params[:page])
     else
-      @data = HomePageService.instance.build_data_for(current_user)
+      @courses = Course.where(learning_partner_id: current_user.learning_partner_id)
+                       .where.not(neo_ai_course_id: nil)
+                       .includes(:tags, banner_attachment: :blob)
+                       .order(created_at: :desc)
+                       .page(filter_params[:page])
     end
     @tags = Tag.load_tags
   end
@@ -135,6 +146,10 @@ class CoursesController < ApplicationController
   # DELETE /courses/1 or /courses/1.json
   def destroy
     authorize @course
+    ActiveRecord::Associations::Preloader.new(
+      records: [@course],
+      associations: { course_modules: { lessons: :local_contents } }
+    ).call
     @course.destroy!
     redirect_to courses_url, notice: I18n.t('course.deleted')
   end
@@ -216,7 +231,13 @@ class CoursesController < ApplicationController
   private
 
   def set_course_active_nav
-    @active_nav = params[:mode] == Program::MANAGER_MODE ? 'programs' : 'courses'
+    @active_nav = if params[:mode] == Program::MANAGER_MODE
+                    'programs'
+                  elsif %w[index explore continue complete].include?(action_name)
+                    'explore'
+                  else
+                    'courses'
+                  end
   end
 
   # Use callbacks to share common setup or constraints between actions.

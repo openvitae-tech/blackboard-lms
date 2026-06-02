@@ -1,6 +1,6 @@
 <div data-controller="courses">
   <div class="pt-4 md:pt-5 pb-3 flex flex-col gap-4 sticky top-0 w-full z-40 bg-white">
-    <%= render 'filters', tags: tags %>
+    <%= render 'filters', tags: tags, filter_url: manage_courses_path %>
     <div class="flex flex-row justify-between">
       <h1 class="heading-xl">My Courses</h1>
       <% if policy(:course).new? %>
@@ -12,7 +12,7 @@
     <div class="flex flex-col gap-1">
       <div class="flex gap-2 md:gap-3 items-center">
         <div class="flex flex-col gap-1 w-full justify-start">
-          <%= form_tag courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
+          <%= form_tag manage_courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
             <div class="flex gap-2 md:gap-3 items-center">
               <div class="relative rounded-md border border-line-colour-light w-full">      
                 <%= input_text_component( 

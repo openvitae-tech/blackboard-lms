@@ -256,6 +256,7 @@ en:
     partners: "Partners"
     assets: "Assets"
     explore: "Explore"
+    courses: "Courses"
   dashboard:
     index:
       team_label: "Team:"

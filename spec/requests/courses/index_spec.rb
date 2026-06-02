@@ -66,7 +66,7 @@ RSpec.describe 'Request spec for GET /courses' do
     end
   end
 
-  describe 'accessing index page by admin' do
+  describe 'accessing manage page by admin' do
     before do
       admin = create :user, :admin
       sign_in admin
@@ -74,35 +74,35 @@ RSpec.describe 'Request spec for GET /courses' do
 
     let(:courses) { @courses }
 
-    it 'successfully renders the index page for an admin' do
-      get('/courses')
-      expect(response.status).to render_template(:index)
+    it 'successfully renders the manage page for an admin' do
+      get(manage_courses_path)
+      expect(response.status).to render_template(:manage)
     end
 
     it 'shows only the first 12 available courses on the admin dashboard' do
-      get('/courses')
+      get(manage_courses_path)
       expect(assigns[:courses].pluck(:id).sort)
         .to eq(Course.limit(12).order(created_at: :desc).pluck(:id).sort)
     end
 
     it 'shows all available courses when type is all' do
-      get('/courses', params: { type: 'all' })
+      get(manage_courses_path, params: { type: 'all' })
       expect(assigns[:courses].pluck(:id).sort)
         .to eq(Course.limit(12).order(created_at: :desc).pluck(:id).sort)
     end
 
     it 'filters available courses when tags are provided' do
-      get courses_path, params: { type: 'all', tags: [level_tags.last.name] }
+      get manage_courses_path, params: { type: 'all', tags: [level_tags.last.name] }
       expect(assigns[:courses].pluck(:id).sort).to eq([@courses[14].id, @courses[1].id].sort)
     end
 
     it 'filters available courses by a search term' do
-      get courses_path, params: { type: 'all', term: @courses.last.title }
+      get manage_courses_path, params: { type: 'all', term: @courses.last.title }
       expect(assigns[:courses].pluck(:id)).to eq([@courses.last.id])
     end
 
     it 'filters available courses by search term and tags' do
-      get courses_path, params: { type: 'all', term: @courses[2].title, tags: [level_tags.first.id] }
+      get manage_courses_path, params: { type: 'all', term: @courses[2].title, tags: [level_tags.first.id] }
       expect(assigns[:courses].pluck(:id)).to eq([@courses[2].id])
     end
   end

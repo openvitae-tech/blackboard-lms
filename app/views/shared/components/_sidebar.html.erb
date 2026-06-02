@@ -46,6 +46,13 @@
               icon_name: 'bolt',
               label: 'Content Studio' %>
         <% end %>
+        <% if policy(:course).manage? %>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'courses',
+              url: manage_courses_path,
+              icon_name: 'book-open',
+              label: t('sidebar.courses') %>
+        <% end %>
         <% if policy(:learning_partner).show? %>
           <%= render 'shared/components/sidebar_item',
               nav_key: 'learning_partners',
@@ -65,7 +72,7 @@
           <div class="flex-1 h-px bg-letter-color-light"></div>
         </li>
         <%= render 'shared/components/sidebar_item',
-            nav_key: 'courses',
+            nav_key: 'explore',
             url: courses_path,
             icon_name: 'book-open',
             label: t('sidebar.explore') %>

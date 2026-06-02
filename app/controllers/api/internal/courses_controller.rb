@@ -54,7 +54,7 @@ module Api
       end
 
       def save
-        NeoAi::CourseSaveService.new(neo_ai).call(params[:id])
+        NeoAi::CourseSaveService.new(neo_ai).call(params[:id], learning_partner_id: current_user.learning_partner_id)
         render json: { status: 'ok' }
       end
 
