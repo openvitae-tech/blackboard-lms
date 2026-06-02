@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Request spec for GET /courses/manage' do
   describe 'accessing manage page by privileged user' do
     %i[manager owner].each do |role|
-      context "as #{role}" do
+      context "when accessed as #{role}" do
         before do
           @team = create :team
           @user = create :user, role, team: @team
