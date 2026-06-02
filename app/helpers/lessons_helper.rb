@@ -28,6 +28,8 @@ module LessonsHelper
   end
 
   def get_video_iframe(local_content)
+    return if local_content.nil?
+
     video_url = local_content.video.blob.metadata['url']
 
     return if video_url.blank?
