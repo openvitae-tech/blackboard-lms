@@ -54,7 +54,8 @@ module ContentStudio
           return redirect_to(course_lesson_path(params[:course_id], params[:id]))
         end
 
-        video = Faraday.get(lesson.video_url)
+        conn = Faraday.new(request: { open_timeout: 5, timeout: 30 })
+        video = conn.get(lesson.video_url)
         unless video.success?
           flash[:alert] = t('.expired')
           return redirect_to(course_lesson_path(params[:course_id], params[:id]))

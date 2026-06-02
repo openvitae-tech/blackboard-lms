@@ -89,7 +89,7 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
   it 'renders the Download Lesson menu item linking to the download path' do
     render
     expect(rendered).to include('Download Lesson')
-    expect(rendered).to include('download')
+    expect(rendered).to include('/courses/1/lessons/1/download')
   end
 
   it 'renders a scene card for each scene' do
