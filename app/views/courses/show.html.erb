@@ -14,8 +14,8 @@
         [@course.title, nil]
       ] %>
     <% else %>
-      <%# Generic breadcrumb for direct navigation (admin and non-program context) %>
-      <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]] %>
+      <% courses_index = policy(@course).manage? ? manage_courses_path : courses_path %>
+      <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_index], [@course.title, nil]] %>
     <% end %>
 
     
