@@ -41,23 +41,35 @@ export default class extends Controller {
         this.updateThumbnail(item, scene)
         item.dispatchEvent(new CustomEvent('scene-video-ready', { bubbles: true }))
       }
+
+      if (scene.duration) this.updateDurationLabel(item, scene.duration)
     })
 
     this.updateProgress(scenes)
   }
 
   updateThumbnail(item, scene) {
-    const thumbnailArea = item.querySelector('.h-\\[47px\\]')
+    const thumbnailArea = item.querySelector('[data-thumbnail-area]')
     if (!thumbnailArea) return
 
     thumbnailArea.innerHTML = scene.thumbnail_url
-      ? `<img src="${scene.thumbnail_url}" class="w-full h-full object-cover" alt="Scene thumbnail">`
+      ? `<div class="absolute inset-0 bg-white"></div><img src="${scene.thumbnail_url}" class="absolute inset-0 w-full h-full object-cover" alt="Scene thumbnail">`
       : `<div class="w-full h-full bg-white flex items-center justify-center">
            <svg class="w-6 h-6 text-letter-color" fill="none" viewBox="0 0 24 24" stroke="currentColor">
              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
            </svg>
          </div>`
+  }
+
+  updateDurationLabel(item, seconds) {
+    const label = item.querySelector('[data-duration-label]')
+    if (!label) return
+
+    const total = Math.floor(seconds)
+    const mins = Math.floor(total / 60)
+    const secs = String(total % 60).padStart(2, '0')
+    label.textContent = `${mins}.${secs}`
   }
 
   updateProgress(scenes) {

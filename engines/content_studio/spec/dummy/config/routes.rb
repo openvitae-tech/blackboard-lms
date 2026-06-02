@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   root to: proc { [200, {}, ['']] }
+
+  get 'alert_modal', to: proc { [200, {}, ['']] }, as: :alert_modal
 
   mount ContentStudio::Engine => '/content_studio'
 
@@ -16,6 +20,8 @@ Rails.application.routes.draw do
       delete 'courses/:id', to: 'courses#discard'
       post 'courses/:course_id/lessons/:lesson_id/scenes/:scene_id/regenerate', to: 'courses#regenerate_scene'
       post 'courses/:course_id/lessons/:lesson_id/verify', to: 'courses#verify_lesson'
+      delete 'courses/:course_id/lessons/:lesson_id', to: 'courses#delete_lesson'
+      post 'courses/:course_id/lessons/:lesson_id/regenerate', to: 'courses#regenerate_lesson'
       get 'courses/:course_id/lessons/:id', to: 'courses/lessons#show'
       get 'users/me', to: 'users#me'
     end

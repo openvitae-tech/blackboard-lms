@@ -255,24 +255,23 @@ bundle exec rubocop                        # lint + custom cops
 
 | Phase | Status | Description |
 |-------|--------|-------------|
-| **Phase 1** | In progress | Engine scaffold, MockClient, spec/dummy app, ui_manifest |
-| **Phase 2** | Pending | Visual audit vs Figma, NeoComponent extensions, visual QA |
-| **Phase 3** | Pending | Real ApiClient, Internal API, dark launch |
+| **Phase 1** | Complete | Engine scaffold, ApiClient, spec/dummy app, ui_manifest |
+| **Phase 2** | Complete | Visual audit vs Figma, NeoComponent extensions, visual QA |
+| **Phase 3** | Complete | Real ApiClient, Internal API, dark launch |
 
 ---
 
 ## Git & PR Rules
 
-- All Content Studio work lives on `feature/content-studio-v1`
-- Task branches: `task/<short-description>` — PR into `feature/content-studio-v1`
-- Never PR directly into `main` during active Content Studio development
-- **Before starting any task**, sync `feature/content-studio-v1` with `main`:
+- All work (Content Studio and otherwise) branches from `main`
+- Task branches: `task/<short-description>` — PR into `main`
+- **Before starting any task**, sync with `main`:
   ```bash
-  git checkout feature/content-studio-v1
-  git pull origin main
-  git push origin feature/content-studio-v1
+  git checkout main
+  git fetch origin
+  git rebase origin/main
   ```
-  Then create the task branch from the updated integration branch.
+  Then create the task branch from `main`.
 - PR descriptions must include Visual Diffs for any NeoComponent changes
 - Always run `bundle exec rspec` and `bundle exec rubocop` before pushing. Fix all failures before pushing — do not push a broken build.
 - PRs require passing RSpec + RuboCop before merge

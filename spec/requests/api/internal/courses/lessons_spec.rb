@@ -19,7 +19,8 @@ RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
               'verified' => false,
               'scenes' => [
                 { 'id' => 's1', 'narration' => 'Hello', 'video_url' => nil,
-                  'timestamp' => '0:00', 'visual' => 'slide', 'status' => 'PENDING', 'thumbnail_url' => nil }
+                  'timestamp' => '0:00', 'visual' => 'slide', 'status' => 'PENDING',
+                  'thumbnail_url' => nil, 'duration' => 90 }
               ]
             }
           ]
@@ -60,6 +61,12 @@ RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
       expect(body['scenes'].length).to eq(1)
     end
 
+    it 'includes duration in each scene' do
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(course_data)
+      get '/api/internal/courses/c1/lessons/l1'
+      expect(response.parsed_body['scenes'].first['duration']).to eq(90)
+    end
+
     it 'returns 404 when the lesson is not in the course' do
       allow(neo_ai).to receive(:find_course).with('c1').and_return(course_data)
       get '/api/internal/courses/c1/lessons/missing'
@@ -95,6 +102,15 @@ RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
       allow(neo_ai).to receive(:find_course).with('c1').and_return(data)
       get '/api/internal/courses/c1/lessons/l1'
       expect(response.parsed_body['status']).to eq('VERIFIED')
+    end
+
+    it 'derives PENDING when verified but video_url is blank' do
+      data = course_data.deep_dup
+      data['modules'][0]['lessons'][0]['verified'] = true
+      data['modules'][0]['lessons'][0]['scenes'][0]['video_url'] = 'https://example.com/s1.mp4'
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(data)
+      get '/api/internal/courses/c1/lessons/l1'
+      expect(response.parsed_body['status']).to eq('PENDING')
     end
   end
 end

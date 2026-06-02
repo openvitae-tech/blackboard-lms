@@ -23,6 +23,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
   end
 
   before do
+    view.singleton_class.define_method(:alert_modal_path) { |**_| '/alert_modal' }
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:structure, ContentStudio::CourseStructure.new(
                          id: 1,
@@ -34,9 +35,9 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
                        ))
   end
 
-  it 'renders Course Structure as the active wizard step' do
+  it 'renders the structure-polling Stimulus controller' do
     render
-    expect(rendered).to include('Course Structure')
+    expect(rendered).to include('structure-polling')
   end
 
   it 'renders the Course Overview panel' do
@@ -56,11 +57,60 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('Rules and regulations')
   end
 
-  it 'renders lesson status icons' do
-    render
-    expect(rendered).to include('w-6 h-6 text-secondary flex-shrink-0')
-    expect(rendered).to include('w-6 h-6 text-primary flex-shrink-0')
-    expect(rendered).to include('animate-spin')
+  context 'when script writer has completed and a lesson has no scenes' do
+    before do
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1,
+                           title: 'Airport Services Management',
+                           duration: 9240,
+                           modules: [airport_services_module, wine_serving_module],
+                           verified_modules_count: 1,
+                           thumbnail_url: nil,
+                           stage: 'scene_writer_completed'
+                         ))
+    end
+
+    it 'renders the exclamation icon' do
+      render
+      expect(rendered).to include('w-6 h-6 text-danger flex-shrink-0')
+    end
+  end
+
+  context 'when script writer has not yet completed and a lesson has no scenes' do
+    it 'does not render the exclamation icon' do
+      render
+      expect(rendered).not_to include('w-6 h-6 text-danger flex-shrink-0')
+    end
+  end
+
+  context 'when lessons have scenes' do
+    let(:scene) do
+      ContentStudio::Scene.new(id: 1, timestamp: nil, visual: nil, narration: 'test',
+                               status: 'COMPLETED', video_url: 'https://example.com/v.mp4', thumbnail_url: nil)
+    end
+
+    before do
+      mod = ContentStudio::StructureModule.new(
+        id: 1, title: 'Airport Services',
+        lessons: [
+          ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'VERIFIED', scenes: [scene]),
+          ContentStudio::StructureLesson.new(id: 2, title: 'Rules and regulations', status: 'VIDEO_READY',
+                                             scenes: [scene]),
+          ContentStudio::StructureLesson.new(id: 3, title: 'Lesson name', status: 'PENDING', scenes: [scene])
+        ]
+      )
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1, title: 'Airport Services Management', duration: 9240,
+                           modules: [mod], verified_modules_count: 1, thumbnail_url: nil
+                         ))
+    end
+
+    it 'renders lesson status icons' do
+      render
+      expect(rendered).to include('w-6 h-6 text-secondary flex-shrink-0')
+      expect(rendered).to include('w-6 h-6 text-primary flex-shrink-0')
+      expect(rendered).to include('animate-spin')
+    end
   end
 
   it 'renders course name in sidebar' do
@@ -164,10 +214,10 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('Discard Course')
   end
 
-  it 'renders the discard form targeting the discard route with turbo_frame _top' do
+  it 'renders the Discard Course button as a modal link to the alert_modal' do
     render
-    expect(rendered).to include('action="/content_studio/courses/1"')
-    expect(rendered).to include('data-turbo-frame="_top"')
+    expect(rendered).to include('/alert_modal')
+    expect(rendered).to include('data-turbo-frame="modal"')
   end
 
   it 'renders the save form targeting the save route' do

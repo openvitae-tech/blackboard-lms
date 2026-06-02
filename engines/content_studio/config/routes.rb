@@ -15,7 +15,10 @@ ContentStudio::Engine.routes.draw do
   get 'courses/:course_id/lessons/:id', to: 'courses/lessons#show', as: :course_lesson
   post 'courses/:course_id/lessons/:id/verify', to: 'courses/lessons#verify', as: :verify_lesson
   get 'courses/:course_id/lessons/:id/scene_status', to: 'courses/lessons#scene_status', as: :lesson_scene_status
+  get 'courses/:course_id/lessons/:id/download', to: 'courses/lessons#download', as: :download_course_lesson
   post 'courses/:course_id/lessons/:lesson_id/scenes/:scene_id/regenerate',
        to: 'courses/scenes#regenerate',
        as: :regenerate_scene
+  delete 'courses/:course_id/lessons/:id', to: 'courses/lessons#destroy', as: :destroy_course_lesson
+  post 'courses/:course_id/lessons/:id/regenerate', to: 'courses/lessons#regenerate', as: :regenerate_lesson
 end

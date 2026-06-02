@@ -22,6 +22,7 @@ module NeoAiLessonSerializer
     {
       id: data['id'],
       timestamp: data['timestamp'],
+      duration: data['duration'],
       visual: data['visual'],
       narration: data['narration'],
       status: data['status'],
@@ -33,6 +34,7 @@ module NeoAiLessonSerializer
   def derive_lesson_status(scenes, video_url:, verified:)
     return 'WAITING' if scenes.empty?
     return 'VERIFIED' if verified && video_url.present?
+    return 'PENDING' if verified
     return 'VIDEO_READY' if scenes.all? { |s| s[:video_url].present? }
 
     'PENDING'

@@ -2,6 +2,38 @@
 
 module ContentStudio
   module ApplicationHelper
+    def lesson_menu_items(course_id, lesson)
+      [
+        ViewComponent::MenuItem.new(
+          label: 'Download Lesson',
+          url: download_course_lesson_path(course_id, lesson.id),
+          type: :link,
+          options: { data: { turbo: false } },
+          icon: 'arrow-down-tray'
+        ),
+        ViewComponent::MenuItem.new(
+          label: 'Delete Lesson',
+          url: alert_modal_path(
+            title: t('alert.title', resource_name: 'lesson'),
+            description: t('alert.description', label: lesson.title, resource_name: 'lesson'),
+            action_path: destroy_course_lesson_path(course_id, lesson.id),
+            method: :delete
+          ),
+          type: :link,
+          extra_classes: 'text-danger',
+          options: { data: { turbo_frame: 'modal' } },
+          icon: 'trash'
+        )
+      ]
+    end
+
+    def format_scene_duration(seconds)
+      return '0.00' if seconds.nil? || seconds <= 0
+
+      total = seconds.to_i
+      format('%<mins>d.%<secs>02d', mins: total / 60, secs: total % 60)
+    end
+
     def format_duration(seconds)
       return '' unless seconds
 
@@ -15,7 +47,7 @@ module ContentStudio
       end
     end
 
-    def studio_course_card(course, status)
+    def studio_course_card(course, _status)
       card = course_card_component(
         title: course.title,
         banner_url: course.thumbnail_url.presence,
@@ -25,7 +57,7 @@ module ContentStudio
         categories: course.categories || [],
         rating: course.rating,
         progress: course.progress,
-        badge: studio_badge(status)
+        badge: studio_badge(course.level)
       )
       link_to(card, course_structure_path(id: course.id), class: 'block')
     end
@@ -48,12 +80,10 @@ module ContentStudio
       end
     end
 
-    def studio_badge(status)
-      if status == 'in_progress'
-        { label: 'In Progress', bg_color: 'bg-danger', text_color: 'text-white' }
-      else
-        { label: 'Completed' }
-      end
+    def studio_badge(level)
+      return nil if level.blank?
+
+      { label: level, bg_color: 'bg-secondary', text_color: 'text-primary-dark' }
     end
   end
 end

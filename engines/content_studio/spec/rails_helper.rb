@@ -4,6 +4,7 @@ ENV['RAILS_ENV'] = 'test'
 
 require_relative 'dummy/config/environment'
 require 'rspec/rails'
+require 'webmock/rspec'
 
 # Content Studio is API-driven with no database. ActiveRecord is loaded as a
 # transitive dependency of the `rails` gem but never initialised with a

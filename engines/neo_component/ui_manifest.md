@@ -333,7 +333,8 @@ menu_component(
 
 **`MenuItem` struct:**
 ```ruby
-MenuItem = Struct.new(:label, :url, :type, :options, :extra_classes)
+MenuItem = Struct.new(:label, :url, :type, :options, :extra_classes, :icon)
+# icon: optional icon name string (e.g. 'trash', 'arrow-down-tray') — renders a 16px icon before the label
 ```
 
 ### `paginator_component`
@@ -379,6 +380,7 @@ notification_bar(
 progressbar_component(
   numerator:,
   denominator:,
+  color: :primary,    # :primary | :secondary | :secondary_dark | :danger — bar fill color
   full_width: false,  # true stretches to w-full; default is w-[52px] md:w-[120px]
   thin: false,        # true renders a 3px bar (no border); default is 6-8px with border
   animated: false     # true applies a flowing blue→cyan→teal→green gradient; width still reflects fill %
@@ -398,6 +400,9 @@ progressbar_component(numerator: 30, denominator: 100, full_width: true, thin: t
 
 # Thin + animated gradient — use while generation is in progress
 progressbar_component(numerator: 30, denominator: 100, full_width: true, thin: true, animated: true)
+
+# Thin + secondary_dark (green) — use for verification progress
+progressbar_component(numerator: 3, denominator: 15, full_width: true, thin: true, color: :secondary_dark)
 ```
 
 ---

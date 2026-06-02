@@ -17,6 +17,7 @@ module ContentStudio
   Scene = Struct.new(
     :id,
     :timestamp,
+    :duration,
     :visual,
     :narration,
     :status,
@@ -34,7 +35,7 @@ module ContentStudio
     :rating,
     :video_streaming_source,
     :local_contents,  # Array<ContentStudio::LocalContent>
-    :scenes,          # Array<ContentStudio::Scene> — populated by NeoAiClient
+    :scenes,          # Array<ContentStudio::Scene>
     keyword_init: true
   )
 
@@ -57,6 +58,7 @@ module ContentStudio
     :rating,
     :banner,
     :categories,
+    :level,
     :levels,
     :course_modules_count,
     :enrollments_count,
@@ -72,7 +74,11 @@ module ContentStudio
   CourseStructure = Struct.new(
     :id, :title, :duration, :modules, :verified_modules_count, :thumbnail_url, :progress_text, :stage,
     keyword_init: true
-  )
+  ) do
+    def script_writer_done?
+      stage.to_s.start_with?('scene_writer_', 'generate_background_media', 'video_generation', 'log_course')
+    end
+  end
 
   StructureModule = Struct.new(:id, :title, :lessons, keyword_init: true)
 

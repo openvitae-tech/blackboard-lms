@@ -3,3 +3,17 @@ en:
     courses:
       discard:
         locked: "Course is currently being processed. Please wait before deleting."
+        confirm:
+          title: "Discard course?"
+          description: "You are permanently discarding <b>%{title}</b>. This action can't be undone."
+          action: "Discard"
+      lessons:
+        destroy:
+          success: "Lesson deleted successfully."
+          locked: "Lesson is currently being processed and cannot be deleted."
+          not_found: "Lesson not found."
+          error: "Something went wrong. Please try again."
+        download:
+          not_available: "The lesson video is not available yet. Please check back once processing is complete."
+          not_verified: "The lesson must be verified before it can be downloaded."
+          expired: "The lesson video could not be downloaded. The link may have expired — please try again."
