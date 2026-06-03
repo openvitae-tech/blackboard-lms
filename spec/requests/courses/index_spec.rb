@@ -85,12 +85,6 @@ RSpec.describe 'Request spec for GET /courses' do
         .to eq(Course.limit(12).order(created_at: :desc).pluck(:id).sort)
     end
 
-    it 'shows all available courses when type is all' do
-      get(manage_courses_path, params: { type: 'all' })
-      expect(assigns[:courses].pluck(:id).sort)
-        .to eq(Course.limit(12).order(created_at: :desc).pluck(:id).sort)
-    end
-
     it 'filters available courses when tags are provided' do
       get manage_courses_path, params: { type: 'all', tags: [level_tags.last.name] }
       expect(assigns[:courses].pluck(:id).sort).to eq([@courses[14].id, @courses[1].id].sort)
@@ -102,7 +96,7 @@ RSpec.describe 'Request spec for GET /courses' do
     end
 
     it 'filters available courses by search term and tags' do
-      get manage_courses_path, params: { type: 'all', term: @courses[2].title, tags: [level_tags.first.id] }
+      get manage_courses_path, params: { type: 'all', term: @courses[2].title, tags: [level_tags.first.name] }
       expect(assigns[:courses].pluck(:id)).to eq([@courses[2].id])
     end
   end

@@ -78,8 +78,7 @@ module NeoAi
       )
       lesson.save!
       lesson.update!(rich_description: lesson_data['description']) if lesson_data['description'].present?
-      enqueue_video_download(lesson) if lesson_data['video_url'].present? &&
-                                        (lesson.saved_change_to_video_streaming_source? || lesson.local_contents.none?)
+      enqueue_video_download(lesson) if lesson_data['video_url'].present?
       lesson
     end
 

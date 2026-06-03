@@ -9,15 +9,15 @@ class LessonPolicy
   end
 
   def new?
-    user.is_admin? || user.privileged_user?
+    user.is_admin? || own_content_studio_lesson?
   end
 
   def show?
-    user.is_admin? || own_content_studio_lesson? || user.enrolled_for_course?(record)
+    user.is_admin? || own_content_studio_lesson? || user.enrolled_for_course?(record.course_module.course)
   end
 
   def create?
-    user.is_admin? || user.privileged_user?
+    user.is_admin? || own_content_studio_lesson?
   end
 
   def update?

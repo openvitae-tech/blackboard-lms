@@ -41,7 +41,7 @@ RSpec.describe 'Request spec for GET /courses/manage' do
       sign_in learner
 
       get(manage_courses_path)
-      expect(response).not_to render_template(:manage)
+      expect(response).to redirect_to(error_401_path)
     end
   end
 end

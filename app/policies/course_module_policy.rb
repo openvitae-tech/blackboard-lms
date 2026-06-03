@@ -9,7 +9,7 @@ class CourseModulePolicy
   end
 
   def new?
-    user.is_admin? || user.privileged_user?
+    user.is_admin? || own_content_studio_module?
   end
 
   def show?
@@ -17,7 +17,7 @@ class CourseModulePolicy
   end
 
   def create?
-    user.is_admin? || user.privileged_user?
+    user.is_admin? || own_content_studio_module?
   end
 
   def update?

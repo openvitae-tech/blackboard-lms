@@ -9,8 +9,6 @@ module NeoAi
       return if lesson.nil? || lesson.video_streaming_source.blank?
 
       with_tracing "lesson_id=#{lesson_id}" do
-        lesson.local_contents.destroy_all
-
         URI.open(lesson.video_streaming_source, 'rb') do |file| # rubocop:disable Security/Open
           blob = ActiveStorage::Blob.create_and_upload!(
             io: file,
@@ -18,6 +16,7 @@ module NeoAi
             content_type: 'video/mp4'
           )
 
+          lesson.local_contents.destroy_all
           Lessons::UpdateService.instance.update_lesson!(
             lesson,
             local_contents_attributes: [{ blob_id: blob.id, lang: LocalContent::DEFAULT_LANGUAGE.downcase }]
