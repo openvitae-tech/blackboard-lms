@@ -101,7 +101,7 @@ RSpec.describe UiHelper, type: :helper do
       end
 
       it 'applies disabled colour to the bullet dots' do
-        doc = render_card(disabled: true, highlights: ['One', 'Two'])
+        doc = render_card(disabled: true, highlights: %w[One Two])
         dots = doc.css('li div.rounded-full')
         dots.each { |dot| expect(dot['class']).to include('bg-disabled-color') }
       end
