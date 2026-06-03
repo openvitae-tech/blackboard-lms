@@ -312,6 +312,62 @@ long_program_card_component(program:, enrolled_program_ids:)
 certificate_card_component(certificate:, thumbnail_url: nil)
 ```
 
+### `content_type_card_component`
+```ruby
+content_type_card_component(
+  title:,                 # Card heading
+  description:,           # Short body text
+  icon_name:,             # Icon name (see icon helper)
+  radio_value:,           # Value submitted when this card is selected
+  radio_name:,            # Radio group name (shared across cards in the same group)
+  highlights: [],         # Array of strings — rendered as a bulleted list with check icons
+  caption: nil,           # Optional footer note (shown below a divider line)
+  selected: false,        # Pre-select this card
+  disabled: false         # Muted, non-interactive state
+)
+```
+
+The entire card is a `<label>` wrapping a hidden `<input type="radio">` — clicking anywhere selects it.
+
+**Visual states:**
+- **Default** — white background, `border-line-colour`
+- **Hover** — `border-primary`
+- **Selected** — `border-primary` + `ring-2 ring-primary-light-50`; icon background fills with primary, radio dot appears
+- **Disabled** — `opacity-50`, `cursor-not-allowed`, non-interactive
+
+**Example — three content-type options, first pre-selected:**
+```ruby
+content_type_card_component(
+  title: 'Video Course',
+  description: 'AI-generated video lessons with narration.',
+  icon_name: 'play-circle',
+  radio_name: 'course[content_type]',
+  radio_value: 'video',
+  highlights: ['HD video generation', 'Auto narration', 'Scene editor'],
+  caption: 'Recommended for most courses',
+  selected: true
+)
+
+content_type_card_component(
+  title: 'Text Course',
+  description: 'Written lessons without video content.',
+  icon_name: 'document-text',
+  radio_name: 'course[content_type]',
+  radio_value: 'text',
+  highlights: ['Fast to create', 'Markdown support']
+)
+
+content_type_card_component(
+  title: 'Live Session',
+  description: 'Instructor-led sessions scheduled in real time.',
+  icon_name: 'camera',
+  radio_name: 'course[content_type]',
+  radio_value: 'live',
+  highlights: ['Calendar integration', 'Recording support'],
+  disabled: true
+)
+```
+
 ---
 
 ## Navigation

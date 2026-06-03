@@ -1,3 +1,55 @@
+<%= doc_section_component(title: "Content Type Card — default (unselected)") do %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+    <%= content_type_card_component(
+          title: 'Video',
+          description: 'Upload or link a video for learners to watch.',
+          icon_name: 'play-circle',
+          radio_name: 'content_type_example',
+          radio_value: 'video',
+          highlights: ['Supports MP4, MOV, AVI', 'Auto-captioning available']
+        ) %>
+    <%= content_type_card_component(
+          title: 'Document',
+          description: 'Share a PDF, Word doc, or presentation.',
+          icon_name: 'play-circle',
+          radio_name: 'content_type_example',
+          radio_value: 'document',
+          highlights: ['PDF, DOCX, PPTX supported', 'In-browser preview'],
+          caption: 'Best for · Frontline teams, instructor-led, in-person'
+
+          
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Content Type Card — with caption") do %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+    <%= content_type_card_component(
+          title: 'Quiz',
+          description: 'Test learner knowledge with multiple-choice or open questions.',
+          icon_name: 'question-mark-circle',
+          radio_name: 'content_type_caption_example',
+          radio_value: 'quiz',
+          highlights: ['Instant grading', 'Attempt limits'],
+          caption: 'Available on Professional plan and above'
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Content Type Card — disabled") do %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+    <%= content_type_card_component(
+          title: 'Live Session',
+          description: 'Schedule a real-time virtual classroom session.',
+          icon_name: 'play-circle',
+          radio_name: 'content_type_disabled_example',
+          radio_value: 'live_session',
+          highlights: ['Zoom & Teams integration', 'Attendance tracking'],
+          disabled: true
+        ) %>
+  </div>
+<% end %>
+
 <%= doc_section_component(title: "Certificate Card with thumbnail") do %>
   <div class="flex gap-4">
     <%= certificate_card_component(
