@@ -13,7 +13,7 @@ class LessonPolicy
   end
 
   def show?
-    user.is_admin? || own_content_studio_lesson? || user.enrolled_for_course?(record.course_module.course)
+    user.is_admin? || own_content_studio_lesson? || user.enrolled_for_course?(record)
   end
 
   def create?
