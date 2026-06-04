@@ -333,7 +333,7 @@ The entire card is a `<label>` wrapping a hidden `<input type="radio">` — clic
 - **Default** — white background, `border-line-colour`
 - **Hover** — `border-primary`
 - **Selected** — `border-primary` + `ring-2 ring-primary`; icon background unchanged (`bg-secondary-light`), radio dot appears
-- **Disabled** — `opacity-50`, `cursor-not-allowed`, non-interactive
+- **Disabled** — `opacity-40`, `pointer-events-none`, non-interactive
 
 **Example — three content-type options, first pre-selected:**
 ```ruby
