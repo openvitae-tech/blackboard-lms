@@ -15,10 +15,10 @@
         <%= course_duration(course) %>
       </span>
     </div>  
-    <% if current_user.is_admin? %>
+    <% if policy(course).edit? %>
       <div class="absolute top-8 md:top-4 right-8 md:right-16 flex">
-      <%= menu_component(menu_items: course_menu_items(course)) %>      
-      </div> 
+      <%= menu_component(menu_items: course_menu_items(course)) %>
+      </div>
     <% end %>
     <div class="md:hidden">
       <% if local_assigns[:enrollment].present? %>

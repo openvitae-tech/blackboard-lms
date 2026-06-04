@@ -9,23 +9,23 @@ class CourseModulePolicy
   end
 
   def new?
-    user.is_admin?
+    user.is_admin? || own_content_studio_module?
   end
 
   def show?
-    user.is_admin?
+    user.is_admin? || own_content_studio_module?
   end
 
   def create?
-    user.is_admin?
+    user.is_admin? || own_content_studio_module?
   end
 
   def update?
-    user.is_admin?
+    user.is_admin? || own_content_studio_module?
   end
 
   def edit?
-    user.is_admin?
+    user.is_admin? || own_content_studio_module?
   end
 
   def destroy?
@@ -33,11 +33,11 @@ class CourseModulePolicy
   end
 
   def moveup?
-    user.is_admin?
+    user.is_admin? || own_content_studio_module?
   end
 
   def movedown?
-    user.is_admin?
+    user.is_admin? || own_content_studio_module?
   end
 
   def summary?
@@ -46,5 +46,11 @@ class CourseModulePolicy
 
   def redo_quiz?
     true
+  end
+
+  private
+
+  def own_content_studio_module?
+    user.privileged_user? && CoursePolicy.new(user, course_module.course).edit?
   end
 end

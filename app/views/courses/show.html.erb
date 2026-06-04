@@ -14,15 +14,15 @@
         [@course.title, nil]
       ] %>
     <% else %>
-      <%# Generic breadcrumb for direct navigation (admin and non-program context) %>
-      <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_path], [@course.title, nil]] %>
+      <% courses_index = policy(@course).manage? ? manage_courses_path : courses_path %>
+      <%= breadcrumbs_component links: [[I18n.t('course.label'), courses_index], [@course.title, nil]] %>
     <% end %>
 
     
-    <div class="flex <%= current_user.is_admin? ? 'flex-col' : 'flex-row items-center'%> md:flex-row justify-between gap-4 w-full">
+    <div class="flex <%= policy(@course).edit? ? 'flex-col' : 'flex-row items-center'%> md:flex-row justify-between gap-4 w-full">
       <%= render 'shared/components/back_button', back_link: :back %>
       <div class="flex flex-nowrap w-full md:w-fit gap-4 justify-end">
-        <% if current_user.is_admin? %>
+        <% if policy(@course).edit? %>
           <%= render 'courses/admin_actions', course: @course %>
         <% else %>
           <%= render 'courses/non_admin_actions', course: @course, assessment: @assessment, enrollment: @enrollment %>
@@ -34,7 +34,7 @@
 <%= render 'courses/course_header_card', course: @course, enrollment: @enrollment %>
 
 <div class="-mt-4">
-  <% if current_user.is_admin? %>
+  <% if policy(@course).edit? %>
     <div class="flex gap-4 mb-5">
       <%= link_to course_materials_path(@course) do %>
         <%= button_component text: "Course Materials", type: "outline", size: "sm" %>
@@ -54,7 +54,7 @@
   <% else %>
     <div class="flex flex-col items-center justify-center flex-grow py-6">
       <h2 class="text-semibold"><%= t("course.course_module.empty") %></h2>
-      <% if policy(:course_module).new? %>
+      <% if policy(@course).edit? %>
         <%= link_to new_course_module_path(@course),  data: { turbo_frame: "modal" }, class: "mt-4" do %>
           <%= button_component(text: "Add module", size:"sm", icon_name: "plus") %>
         <% end %>

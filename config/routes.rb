@@ -97,6 +97,7 @@ Rails.application.routes.draw do
       get :explore
       get :continue
       get :complete
+      get :manage
     end
     member do
       put :enroll
