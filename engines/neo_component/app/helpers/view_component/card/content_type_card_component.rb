@@ -24,11 +24,13 @@ module ViewComponent
           caption:,
           selected:,
           disabled:,
-          label_classes: disabled \
-            ? 'opacity-40 cursor-not-allowed pointer-events-none border-line-colour' \
-            : 'cursor-pointer border-line-colour hover:border-primary hover:ring-2 hover:ring-primary ' \
-              'has-[input:checked]:bg-primary-light-50 has-[input:checked]:border-primary ' \
-              'has-[input:checked]:ring-2 has-[input:checked]:ring-primary'
+          label_classes: if disabled
+                           'opacity-40 cursor-not-allowed pointer-events-none border-line-colour'
+                         else
+                           'cursor-pointer border-line-colour hover:border-primary hover:ring-2 hover:ring-primary ' \
+                             'has-[input:checked]:bg-primary-light-50 has-[input:checked]:border-primary ' \
+                             'has-[input:checked]:ring-2 has-[input:checked]:ring-primary'
+                         end
         }
       end
     end
