@@ -1,4 +1,4 @@
-<% if policy(:course_module).new? %>
+<% if policy(course).edit? %>
   <%= link_to new_course_module_path(course), data: { turbo_frame: "modal" }, class:"flex-1 md:w-fit" do %>
     <%= button_component(text: "Add module", size:"sm", icon_name: "plus") %>
   <% end %>

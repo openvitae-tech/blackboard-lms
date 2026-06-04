@@ -1,5 +1,1 @@
-<% if current_user.is_admin? %>
-  <%= render 'courses/list/admin', tags: @tags, type: @type, courses: @courses %>
-<% else %>
-  <%= render 'courses/list/non_admin', tags: @tags, data: @data %>
-<% end %>
+<%= render 'courses/list/non_admin', tags: @tags, data: @data %>

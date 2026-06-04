@@ -46,6 +46,13 @@
               icon_name: 'bolt',
               label: 'Content Studio' %>
         <% end %>
+        <% if policy(:course).manage? %>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'courses',
+              url: manage_courses_path,
+              icon_name: 'book-open',
+              label: t('sidebar.courses') %>
+        <% end %>
         <% if policy(:learning_partner).show? %>
           <%= render 'shared/components/sidebar_item',
               nav_key: 'learning_partners',
@@ -60,21 +67,23 @@
               icon_name: 'rectangle-group',
               label: t('sidebar.assets') %>
         <% end %>
-        <li class="flex items-center gap-1 pt-5 pb-1 px-5">
-          <span class="general-text-lg-normal text-letter-color-light"><%= t('sidebar.learning') %></span>
-          <div class="flex-1 h-px bg-letter-color-light"></div>
-        </li>
-        <%= render 'shared/components/sidebar_item',
-            nav_key: 'courses',
-            url: courses_path,
-            icon_name: 'book-open',
-            label: t('sidebar.explore') %>
-        <% if policy(:my_profile).show? %>
+        <% unless current_user.is_admin? %>
+          <li class="flex items-center gap-1 pt-5 pb-1 px-5">
+            <span class="general-text-lg-normal text-letter-color-light"><%= t('sidebar.learning') %></span>
+            <div class="flex-1 h-px bg-letter-color-light"></div>
+          </li>
           <%= render 'shared/components/sidebar_item',
-              nav_key: 'my_profiles',
-              url: profile_path,
-              icon_name: 'user-circle',
-              label: t('my_profile.label') %>
+              nav_key: 'explore',
+              url: courses_path,
+              icon_name: 'book-open',
+              label: t('sidebar.explore') %>
+          <% if policy(:my_profile).show? %>
+            <%= render 'shared/components/sidebar_item',
+                nav_key: 'my_profiles',
+                url: profile_path,
+                icon_name: 'user-circle',
+                label: t('my_profile.label') %>
+          <% end %>
         <% end %>
         <li class="flex items-center gap-1 pt-5 pb-1 px-5">
           <span class="general-text-lg-normal text-letter-color-light"><%= t('sidebar.support') %></span>

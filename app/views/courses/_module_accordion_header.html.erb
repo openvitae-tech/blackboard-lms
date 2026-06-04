@@ -28,7 +28,7 @@
     <% end %>
 
     <div class="flex flex-col items-center gap-2">
-      <% if policy(:course_module).moveup? %>
+      <% if policy(course_module).moveup? %>
         <%= link_to moveup_course_module_path(course, course_module), data: { turbo_method: :put } do %>
           <div class="h-4 w-4 rounded border border-slate-grey-light">
           <%= icon("arrow-long-up", css: "h-4 w-4 text-primary") %>
@@ -36,7 +36,7 @@
         <% end %>
       <% end %>
 
-      <% if policy(:course_module).movedown? %>
+      <% if policy(course_module).movedown? %>
         <%= link_to movedown_course_module_path(course, course_module), data: { turbo_method: :put } do %>
           <div class="h-4 w-4 rounded border border-slate-grey-light">
           <%= icon("arrow-long-down", css: "h-4 w-4 text-primary") %>

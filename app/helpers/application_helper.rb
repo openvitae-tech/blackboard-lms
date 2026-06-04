@@ -41,6 +41,8 @@ module ApplicationHelper
   end
 
   def selected_language(local_content)
+    return if local_content.nil?
+
     LocalContent::SUPPORTED_LANGUAGES[local_content.lang.to_sym]
   end
 
