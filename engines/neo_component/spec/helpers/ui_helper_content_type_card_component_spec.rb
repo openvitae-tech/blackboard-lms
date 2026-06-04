@@ -1,0 +1,156 @@
+# frozen_string_literal: true
+
+require_relative '../rails_helper'
+
+RSpec.describe UiHelper, type: :helper do
+  def render_card(**kwargs)
+    defaults = {
+      title: 'Video',
+      description: 'Upload or link a video for learners to watch.',
+      icon_name: 'play-circle',
+      radio_name: 'content_type',
+      radio_value: 'video'
+    }
+    html = helper.content_type_card_component(**defaults, **kwargs)
+    Nokogiri::HTML::DocumentFragment.parse(html)
+  end
+
+  describe '#content_type_card_component' do
+    it 'renders a label as the outer wrapper' do
+      doc = render_card
+      expect(doc.at_css('label')).to be_present
+    end
+
+    it 'renders the title' do
+      doc = render_card(title: 'Quiz')
+      expect(doc.text).to include('Quiz')
+    end
+
+    it 'renders the description' do
+      doc = render_card(description: 'Test learner knowledge.')
+      expect(doc.text).to include('Test learner knowledge.')
+    end
+
+    it 'renders a hidden radio button with the correct name and value' do
+      doc = render_card(radio_name: 'content_type', radio_value: 'quiz')
+      input = doc.at_css('input[type="radio"]')
+      expect(input).to be_present
+      expect(input['name']).to eq('content_type')
+      expect(input['value']).to eq('quiz')
+      expect(input['class']).to include('hidden')
+    end
+
+    it 'renders an icon span containing an svg for the given icon_name' do
+      doc = render_card(icon_name: 'play-circle')
+      expect(doc.at_css('span svg')).to be_present
+    end
+
+    it 'renders an unchecked radio by default' do
+      doc = render_card
+      expect(doc.at_css('input[type="radio"]')['checked']).to be_nil
+    end
+
+    it 'renders a pre-checked radio when selected: true' do
+      doc = render_card(selected: true)
+      expect(doc.at_css('input[type="radio"]')['checked']).to eq('checked')
+    end
+
+    describe 'highlights' do
+      it 'renders a ul when highlights are provided' do
+        doc = render_card(highlights: ['Supports MP4'])
+        expect(doc.at_css('ul')).to be_present
+      end
+
+      it 'renders each highlight as a list item' do
+        doc = render_card(highlights: ['Supports MP4', 'Auto-captioning'])
+        items = doc.css('li').map(&:text).map(&:strip)
+        expect(items).to include('Supports MP4', 'Auto-captioning')
+      end
+
+      it 'renders a bullet dot div for each highlight' do
+        doc = render_card(highlights: ['Supports MP4', 'Auto-captioning'])
+        dots = doc.css('li div.rounded-full')
+        expect(dots.length).to eq(2)
+      end
+
+      it 'applies bg-secondary-dark to bullet dots' do
+        doc = render_card(highlights: ['One'])
+        expect(doc.at_css('li div.rounded-full')['class']).to include('bg-secondary-dark')
+      end
+
+      it 'omits the highlights list when highlights is empty' do
+        doc = render_card(highlights: [])
+        expect(doc.at_css('ul')).to be_nil
+      end
+
+      it 'omits the highlights list when highlights is not provided' do
+        doc = render_card
+        expect(doc.at_css('ul')).to be_nil
+      end
+    end
+
+    describe 'caption' do
+      it 'renders the caption when present' do
+        doc = render_card(caption: 'Available on Pro plan')
+        expect(doc.text).to include('Available on Pro plan')
+      end
+
+      it 'renders the caption with a top border divider' do
+        doc = render_card(caption: 'Available on Pro plan')
+        caption_p = doc.css('p').find { |p| p.text.include?('Available on Pro plan') }
+        expect(caption_p['class']).to include('border-t')
+      end
+
+      it 'omits the caption when nil' do
+        doc = render_card(caption: nil)
+        expect(doc.css('p').count).to eq(2)
+      end
+
+      it 'omits the caption when an empty string' do
+        doc = render_card(caption: '')
+        expect(doc.css('p').count).to eq(2)
+      end
+    end
+
+    describe 'disabled state' do
+      it 'renders a disabled radio input' do
+        doc = render_card(disabled: true)
+        expect(doc.at_css('input[type="radio"]')['disabled']).to be_present
+      end
+
+      it 'applies opacity-40 and pointer-events-none to the label' do
+        doc = render_card(disabled: true)
+        label_class = doc.at_css('label')['class']
+        expect(label_class).to include('opacity-40')
+        expect(label_class).to include('pointer-events-none')
+      end
+
+      it 'does not apply cursor-pointer to the label' do
+        doc = render_card(disabled: true)
+        expect(doc.at_css('label')['class']).not_to include('cursor-pointer')
+      end
+    end
+
+    describe 'enabled state' do
+      it 'applies cursor-pointer and interactive classes to the label' do
+        doc = render_card(disabled: false)
+        label_class = doc.at_css('label')['class']
+        expect(label_class).to include('cursor-pointer')
+        expect(label_class).to include('hover:border-primary')
+        expect(label_class).to include('has-[input:checked]:ring-primary')
+      end
+
+      it 'does not apply pointer-events-none or opacity-40 to the label' do
+        doc = render_card(disabled: false)
+        label_class = doc.at_css('label')['class']
+        expect(label_class).not_to include('pointer-events-none')
+        expect(label_class).not_to include('opacity-40')
+      end
+
+      it 'does not mark the radio input as disabled' do
+        doc = render_card(disabled: false)
+        expect(doc.at_css('input[type="radio"]')['disabled']).to be_nil
+      end
+    end
+  end
+end
