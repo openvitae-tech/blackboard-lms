@@ -100,10 +100,10 @@ RSpec.describe UiHelper, type: :helper do
         expect(label_class).to include('pointer-events-none')
       end
 
-      it 'applies disabled colour to the bullet dots' do
+      it 'keeps secondary-dark colour on bullet dots (opacity-50 on the label handles disabled dimming)' do
         doc = render_card(disabled: true, highlights: %w[One Two])
         dots = doc.css('li div.rounded-full')
-        dots.each { |dot| expect(dot['class']).to include('bg-disabled-color') }
+        dots.each { |dot| expect(dot['class']).to include('bg-secondary-dark') }
       end
     end
 

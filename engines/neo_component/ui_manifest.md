@@ -320,7 +320,7 @@ content_type_card_component(
   icon_name:,             # Icon name (see icon helper)
   radio_value:,           # Value submitted when this card is selected
   radio_name:,            # Radio group name (shared across cards in the same group)
-  highlights: [],         # Array of strings — rendered as a bulleted list with check icons
+  highlights: [],         # Array of strings — rendered as a bulleted list with plain dot markers
   caption: nil,           # Optional footer note (shown below a divider line)
   selected: false,        # Pre-select this card
   disabled: false         # Muted, non-interactive state
@@ -332,7 +332,7 @@ The entire card is a `<label>` wrapping a hidden `<input type="radio">` — clic
 **Visual states:**
 - **Default** — white background, `border-line-colour`
 - **Hover** — `border-primary`
-- **Selected** — `border-primary` + `ring-2 ring-primary-light-50`; icon background fills with primary, radio dot appears
+- **Selected** — `border-primary` + `ring-2 ring-primary`; icon background unchanged (`bg-secondary-light`), radio dot appears
 - **Disabled** — `opacity-50`, `cursor-not-allowed`, non-interactive
 
 **Example — three content-type options, first pre-selected:**

@@ -1,36 +1,32 @@
-<label class="group relative flex flex-col gap-4 rounded-xl border p-5 bg-white transition-all
-  <%= disabled ? 'opacity-50 cursor-not-allowed pointer-events-none border-line-colour' :
-    'cursor-pointer border-line-colour hover:border-primary hover:ring-2 hover:ring-primary has-[input:checked]:bg-primary-light-50 has-[input:checked]:border-primary has-[input:checked]:ring-2 has-[input:checked]:ring-primary' %>">
+<label class="group relative flex flex-col gap-4 rounded-xl border p-5 bg-white transition-all <%= label_classes %>">
 
   <%= radio_button_tag radio_name, radio_value, selected, class: 'hidden', disabled: disabled %>
 
   <div class="flex items-start justify-between gap-3">
     <div class="flex items-center gap-3">
-      <span class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary-light
-        <%= disabled ? 'text-disabled-color' : 'text-primary' %>">
+      <span class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary-light text-primary">
         <%= icon(icon_name, css: 'w-5 h-5') %>
       </span>
-      <p class="main-text-lg-semibold <%= disabled ? 'text-disabled-color' : 'text-letter-color' %>">
+      <p class="main-text-lg-semibold text-letter-color">
         <%= title %>
       </p>
     </div>
 
     <span class="flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5
-      <%= disabled ? 'border-disabled-color' :
-        'border-slate-grey-50 group-hover:border-primary group-has-[input:checked]:border-primary group-has-[input:checked]:bg-primary' %>">
+      border-slate-grey-50 group-hover:border-primary group-has-[input:checked]:border-primary group-has-[input:checked]:bg-primary">
       <span class="w-2 h-2 rounded-full bg-white hidden group-has-[input:checked]:block"></span>
     </span>
   </div>
 
-  <p class="general-text-md-normal <%= disabled ? 'text-disabled-color' : 'text-letter-color-light' %>">
+  <p class="general-text-md-normal text-letter-color-light">
     <%= description %>
   </p>
 
   <% if highlights.present? %>
     <ul class="space-y-1.5">
       <% highlights.each do |highlight| %>
-        <li class="flex items-center gap-2 general-text-sm-normal <%= disabled ? 'text-disabled-color' : 'text-letter-color' %>">
-          <div class="w-1.5 h-1.5 rounded-full flex-shrink-0 <%= disabled ? 'bg-disabled-color' : 'bg-secondary-dark' %>"></div>
+        <li class="flex items-center gap-2 general-text-sm-normal text-letter-color">
+          <div class="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-secondary-dark"></div>
           <%= highlight %>
         </li>
       <% end %>
@@ -38,7 +34,7 @@
   <% end %>
 
   <% if caption.present? %>
-    <p class="general-text-sm-normal <%= disabled ? 'text-disabled-color' : 'text-letter-color-light' %> border-t border-primary-light-50 group-has-[input:checked]:border-white pt-3 mt-auto">
+    <p class="general-text-sm-normal text-letter-color-light border-t border-primary-light-50 group-has-[input:checked]:border-white pt-3 mt-auto">
       <%= caption %>
     </p>
   <% end %>
