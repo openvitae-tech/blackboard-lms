@@ -40,9 +40,9 @@ RSpec.describe UiHelper, type: :helper do
       expect(input['class']).to include('hidden')
     end
 
-    it 'renders an icon element for the given icon_name' do
+    it 'renders an icon span containing an svg for the given icon_name' do
       doc = render_card(icon_name: 'play-circle')
-      expect(doc.at_css('svg, img, [data-icon], .icon, span.icon')).to be_present
+      expect(doc.at_css('span svg')).to be_present
     end
 
     it 'renders an unchecked radio by default' do
@@ -56,6 +56,11 @@ RSpec.describe UiHelper, type: :helper do
     end
 
     describe 'highlights' do
+      it 'renders a ul when highlights are provided' do
+        doc = render_card(highlights: ['Supports MP4'])
+        expect(doc.at_css('ul')).to be_present
+      end
+
       it 'renders each highlight as a list item' do
         doc = render_card(highlights: ['Supports MP4', 'Auto-captioning'])
         items = doc.css('li').map(&:text).map(&:strip)
@@ -66,6 +71,11 @@ RSpec.describe UiHelper, type: :helper do
         doc = render_card(highlights: ['Supports MP4', 'Auto-captioning'])
         dots = doc.css('li div.rounded-full')
         expect(dots.length).to eq(2)
+      end
+
+      it 'applies bg-secondary-dark to bullet dots' do
+        doc = render_card(highlights: ['One'])
+        expect(doc.at_css('li div.rounded-full')['class']).to include('bg-secondary-dark')
       end
 
       it 'omits the highlights list when highlights is empty' do
@@ -85,10 +95,20 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.text).to include('Available on Pro plan')
       end
 
+      it 'renders the caption with a top border divider' do
+        doc = render_card(caption: 'Available on Pro plan')
+        caption_p = doc.css('p').find { |p| p.text.include?('Available on Pro plan') }
+        expect(caption_p['class']).to include('border-t')
+      end
+
       it 'omits the caption when nil' do
         doc = render_card(caption: nil)
-        paragraphs = doc.css('p').map(&:text)
-        expect(paragraphs).not_to include('Available on Pro plan')
+        expect(doc.css('p').count).to eq(2)
+      end
+
+      it 'omits the caption when an empty string' do
+        doc = render_card(caption: '')
+        expect(doc.css('p').count).to eq(2)
       end
     end
 
@@ -98,33 +118,38 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('input[type="radio"]')['disabled']).to be_present
       end
 
-      it 'applies pointer-events-none to the label' do
+      it 'applies opacity-40 and pointer-events-none to the label' do
         doc = render_card(disabled: true)
-        expect(doc.at_css('label')['class']).to include('pointer-events-none')
+        label_class = doc.at_css('label')['class']
+        expect(label_class).to include('opacity-40')
+        expect(label_class).to include('pointer-events-none')
       end
 
-      it 'applies opacity-40 to the label (single source of dimming for all children)' do
+      it 'does not apply cursor-pointer to the label' do
         doc = render_card(disabled: true)
-        expect(doc.at_css('label')['class']).to include('opacity-40')
-      end
-
-      it 'keeps secondary-dark colour on bullet dots (opacity-40 on the label handles disabled dimming)' do
-        doc = render_card(disabled: true, highlights: %w[One Two])
-        dots = doc.css('li div.rounded-full')
-        dots.each { |dot| expect(dot['class']).to include('bg-secondary-dark') }
+        expect(doc.at_css('label')['class']).not_to include('cursor-pointer')
       end
     end
 
     describe 'enabled state' do
-      it 'applies cursor-pointer to the label' do
+      it 'applies cursor-pointer and interactive classes to the label' do
         doc = render_card(disabled: false)
-        expect(doc.at_css('label')['class']).to include('cursor-pointer')
+        label_class = doc.at_css('label')['class']
+        expect(label_class).to include('cursor-pointer')
+        expect(label_class).to include('hover:border-primary')
+        expect(label_class).to include('has-[input:checked]:ring-primary')
       end
 
-      it 'applies secondary-dark colour to the bullet dots' do
-        doc = render_card(highlights: ['One'], disabled: false)
-        dot = doc.at_css('li div.rounded-full')
-        expect(dot['class']).to include('bg-secondary-dark')
+      it 'does not apply pointer-events-none or opacity-40 to the label' do
+        doc = render_card(disabled: false)
+        label_class = doc.at_css('label')['class']
+        expect(label_class).not_to include('pointer-events-none')
+        expect(label_class).not_to include('opacity-40')
+      end
+
+      it 'does not mark the radio input as disabled' do
+        doc = render_card(disabled: false)
+        expect(doc.at_css('input[type="radio"]')['disabled']).to be_nil
       end
     end
   end
