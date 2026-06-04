@@ -40,6 +40,11 @@ RSpec.describe UiHelper, type: :helper do
       expect(input['class']).to include('hidden')
     end
 
+    it 'renders an icon element for the given icon_name' do
+      doc = render_card(icon_name: 'play-circle')
+      expect(doc.at_css('svg, img, [data-icon], .icon, span.icon')).to be_present
+    end
+
     it 'renders an unchecked radio by default' do
       doc = render_card
       expect(doc.at_css('input[type="radio"]')['checked']).to be_nil
@@ -100,7 +105,12 @@ RSpec.describe UiHelper, type: :helper do
         expect(label_class).to include('pointer-events-none')
       end
 
-      it 'keeps secondary-dark colour on bullet dots (opacity-50 on the label handles disabled dimming)' do
+      it 'applies opacity-40 to the label (single source of dimming for all children)' do
+        doc = render_card(disabled: true)
+        expect(doc.at_css('label')['class']).to include('opacity-40')
+      end
+
+      it 'keeps secondary-dark colour on bullet dots (opacity-40 on the label handles disabled dimming)' do
         doc = render_card(disabled: true, highlights: %w[One Two])
         dots = doc.css('li div.rounded-full')
         dots.each { |dot| expect(dot['class']).to include('bg-secondary-dark') }
