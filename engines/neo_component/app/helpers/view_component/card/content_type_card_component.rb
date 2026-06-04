@@ -25,7 +25,7 @@ module ViewComponent
           selected:,
           disabled:,
           label_classes: if disabled
-                           'opacity-40 cursor-not-allowed pointer-events-none border-line-colour'
+                           'opacity-40 pointer-events-none border-line-colour'
                          else
                            'cursor-pointer border-line-colour hover:border-primary hover:ring-2 hover:ring-primary ' \
                              'has-[input:checked]:bg-primary-light-50 has-[input:checked]:border-primary ' \

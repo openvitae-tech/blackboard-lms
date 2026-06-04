@@ -98,11 +98,9 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('input[type="radio"]')['disabled']).to be_present
       end
 
-      it 'applies disabled cursor classes to the label' do
+      it 'applies pointer-events-none to the label' do
         doc = render_card(disabled: true)
-        label_class = doc.at_css('label')['class']
-        expect(label_class).to include('cursor-not-allowed')
-        expect(label_class).to include('pointer-events-none')
+        expect(doc.at_css('label')['class']).to include('pointer-events-none')
       end
 
       it 'applies opacity-40 to the label (single source of dimming for all children)' do
