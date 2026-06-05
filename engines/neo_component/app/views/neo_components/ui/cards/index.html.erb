@@ -49,7 +49,7 @@
 <% end %>
 
 <%= doc_section_component(title: "Course Card — default (with duration & enrolment)") do %>
-  <div class="flex gap-4 flex-wrap">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
     <%= course_card_component(
           title: 'Introduction to Ruby on Rails',
           banner_url: nil,
@@ -73,7 +73,7 @@
 <% end %>
 
 <%= doc_section_component(title: "Course Card — Classroom Kit (no duration, no enrolment, label: Document)") do %>
-  <div class="flex gap-4 flex-wrap">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
     <%= course_card_component(
           title: 'Onboarding Document Pack',
           banner_url: nil,
