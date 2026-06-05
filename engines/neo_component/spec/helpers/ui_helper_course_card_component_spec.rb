@@ -87,7 +87,9 @@ RSpec.describe UiHelper, type: :helper do
 
       it 'omits the enrolment count when nil' do
         doc = render_card(enroll_count: nil)
-        expect(doc.at_css('svg[data-src*="user"]')).to be_nil
+        # icon() renders <svg class="..."> with no data-src; with rating:nil (default)
+        # only the lessons icon is present, so exactly one SVG should be rendered.
+        expect(doc.css('svg').count).to eq(1)
       end
 
       it 'omits the divider when enroll_count is nil' do
