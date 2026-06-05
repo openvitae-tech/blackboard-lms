@@ -62,6 +62,18 @@ module ContentStudio
       link_to(card, course_structure_path(id: course.id), class: 'block')
     end
 
+    def studio_kit_card(kit)
+      card = course_card_component(
+        title: kit.title,
+        banner_url: kit.thumbnail_url.presence,
+        modules_count: kit.documents_count,
+        modules_label: 'Document',
+        categories: kit.categories || [],
+        badge: studio_badge(kit.level)
+      )
+      link_to(card, course_structure_path(id: kit.id), class: 'block')
+    end
+
     def lesson_status_label(status)
       case status
       when 'WAITING'     then 'Waiting'
