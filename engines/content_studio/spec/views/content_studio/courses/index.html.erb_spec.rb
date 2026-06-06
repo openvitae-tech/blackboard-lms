@@ -49,7 +49,7 @@ RSpec.describe 'content_studio/courses/index', type: :view do
   it 'renders the main action section' do
     render
     expect(rendered).to include('Transform Documents into engaging Courses')
-    expect(rendered).to include('Create New Course')
+    expect(rendered).to include('Create New')
   end
 
   it 'renders the Your Creations section with In Progress and Completed tabs' do

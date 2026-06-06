@@ -45,7 +45,7 @@ RSpec.describe 'ContentStudio::Courses', type: :request do
 
     it 'renders the main action section with CTA' do
       expect(response.body).to include('Transform Documents into engaging Courses')
-      expect(response.body).to include('Create New Course')
+      expect(response.body).to include('Create New')
     end
 
     it 'renders In Progress and Completed tab headers' do

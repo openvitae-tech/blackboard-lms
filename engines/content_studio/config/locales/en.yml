@@ -17,3 +17,16 @@ en:
           not_available: "The lesson video is not available yet. Please check back once processing is complete."
           not_verified: "The lesson must be verified before it can be downloaded."
           expired: "The lesson video could not be downloaded. The link may have expired — please try again."
+    classroom_kits:
+      discard:
+        locked: "Kit is currently being processed. Please wait before deleting."
+        confirm:
+          title: "Discard kit?"
+          description: "You are permanently discarding <b>%{title}</b>. This action can't be undone."
+          action: "Discard"
+      components:
+        destroy:
+          success: "Component deleted successfully."
+          locked: "Component is currently being processed and cannot be deleted."
+          not_found: "Component not found."
+          error: "Something went wrong. Please try again."
