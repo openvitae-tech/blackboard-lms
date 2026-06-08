@@ -14,6 +14,11 @@ module ViewComponent
         selected: false,
         disabled: false
       )
+        radio_input = InputComponent::InputRadioComponent.new(
+          form: nil, name: radio_name, label: nil, value: radio_value,
+          disabled:, error: nil, label_position: 'right', html_options: {}
+        )
+
         render partial: 'view_components/cards/content_type_card_component', locals: {
           title:,
           description:,
@@ -24,6 +29,7 @@ module ViewComponent
           caption:,
           selected:,
           disabled:,
+          radio_input:,
           label_classes: if disabled
                            'opacity-40 pointer-events-none border-line-colour'
                          else
