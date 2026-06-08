@@ -134,6 +134,44 @@ RSpec.describe UiHelper, type: :helper do
         doc = render_card(rating: nil)
         expect(doc.css('[class*="star"]')).to be_empty
       end
+
+      it 'renders the rating on the right side of the stats row' do
+        doc = render_card(rating: '4.5', modules_count: 3)
+        stats_row = doc.at_css('div.flex.items-center.justify-between')
+        expect(stats_row).to be_present
+        element_children = stats_row.children.select(&:element?)
+        expect(element_children.last.text).to include('4.5')
+      end
+    end
+
+    describe 'type_tag' do
+      it 'renders the type tag label when present' do
+        doc = render_card(type_tag: { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-white' })
+        expect(doc.text).to include('Course')
+      end
+
+      it 'applies the supplied bg_color class to the type tag' do
+        doc = render_card(type_tag: { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200',
+                                      text_color: 'text-white' })
+        expect(doc.at_css('div.bg-secondary-light-200')).to be_present
+      end
+
+      it 'omits the type tag when nil' do
+        doc = render_card(type_tag: nil)
+        expect(doc.css('div.rounded-bl-xl.rounded-br-xl').select { |n| n.text.strip.present? }).to be_empty
+      end
+
+      it 'uses pb-4 on the content section when type_tag is present' do
+        doc = render_card(type_tag: { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-white' })
+        content = doc.at_css('div.pb-4')
+        expect(content).to be_present
+      end
+
+      it 'uses pb-5 on the content section when type_tag is absent' do
+        doc = render_card(type_tag: nil)
+        content = doc.at_css('div.pb-5')
+        expect(content).to be_present
+      end
     end
 
     describe 'progress bar' do

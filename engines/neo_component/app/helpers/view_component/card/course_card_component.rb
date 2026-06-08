@@ -15,7 +15,8 @@ module ViewComponent
         progress: nil,
         badge: nil,
         description: nil,
-        highlights: []
+        highlights: [],
+        type_tag: nil
       )
         badge = { bg_color: 'bg-secondary', text_color: 'text-primary-dark' }.merge(badge) if badge
         render partial: 'view_components/cards/course_card_component', locals: {
@@ -30,7 +31,8 @@ module ViewComponent
           progress:,
           badge:,
           description:,
-          highlights:
+          highlights:,
+          type_tag:
         }
       end
     end

@@ -72,6 +72,37 @@
   </div>
 <% end %>
 
+<%= doc_section_component(title: "Course Card — with type tag") do %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <%= course_card_component(
+          title: 'Health, Safety & Security in Food Service',
+          banner_url: nil,
+          modules_count: 8,
+          enroll_count: 54,
+          categories: %w[F&B Compliance],
+          badge: { label: 'Beginner' },
+          progress: 50,
+          type_tag: { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-white' }
+        ) %>
+    <%= course_card_component(
+          title: 'Onboarding Document Pack',
+          banner_url: nil,
+          modules_count: 5,
+          modules_label: 'Document',
+          categories: %w[HR Onboarding],
+          type_tag: { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200', text_color: 'text-white' }
+        ) %>
+    <%= course_card_component(
+          title: 'Intro to Workplace Safety',
+          banner_url: nil,
+          modules_count: 3,
+          duration: '12 Mins',
+          categories: %w[Safety],
+          type_tag: { label: 'Microlesson', bg_color: 'bg-gold-dark', text_color: 'text-white' }
+        ) %>
+  </div>
+<% end %>
+
 <%= doc_section_component(title: "Course Card — Classroom Kit (no duration, no enrolment, label: Document)") do %>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
     <%= course_card_component(
