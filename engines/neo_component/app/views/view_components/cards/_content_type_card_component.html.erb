@@ -1,9 +1,9 @@
-<label class="group relative flex flex-col gap-4 rounded-xl border p-5 bg-white transition-all <%= label_classes %>">
+<label class="group relative flex flex-col gap-4 rounded-xl border border-primary-light-100 p-5 bg-white transition-all <%= label_classes %>">
 
   <%= radio_button_tag radio_name, radio_value, selected, class: 'hidden', disabled: disabled %>
 
   <div class="flex items-start justify-between gap-3">
-    <div class="flex items-center gap-3">
+    <div class="flex flex-col gap-3">
       <span class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary-light text-primary">
         <%= icon(icon_name, css: 'w-5 h-5') %>
       </span>
@@ -12,10 +12,9 @@
       </p>
     </div>
 
-    <span class="flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5
-      border-slate-grey-50 group-hover:border-primary group-has-[input:checked]:border-primary group-has-[input:checked]:bg-primary">
-      <span class="w-2 h-2 rounded-full bg-white hidden group-has-[input:checked]:block"></span>
-    </span>
+    <div class="w-5 h-5 flex-shrink-0 flex justify-center items-center rounded-full border-2 mt-0.5 <%= radio_input.radio_circle_style %>">
+      <div class="w-2.5 h-2.5 inline-block rounded-full <%= radio_input.radio_dot_style %>"></div>
+    </div>
   </div>
 
   <p class="general-text-md-normal text-letter-color-light">
