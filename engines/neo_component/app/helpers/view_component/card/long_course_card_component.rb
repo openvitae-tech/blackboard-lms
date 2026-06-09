@@ -15,7 +15,8 @@ module ViewComponent
         badge: nil,
         description: nil,
         highlights: [],
-        checkbox: false
+        checkbox: false,
+        type_tag: nil
       )
         if checkbox && !checkbox.is_a?(Hash)
           raise ArgumentError,
@@ -36,7 +37,8 @@ module ViewComponent
                  badge:,
                  description:,
                  highlights:,
-                 checkbox:
+                 checkbox:,
+                 type_tag:
                }
       end
     end

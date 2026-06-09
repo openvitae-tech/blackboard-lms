@@ -1,9 +1,9 @@
-<div class="group rounded-xl border border-line-colour relative md:max-h-[132px]">
+<div class="group rounded-lg md:rounded-xl border border-line-colour relative">
   <% if checkbox %>
     <% checkbox_opts = checkbox.is_a?(Hash) ? checkbox.dup : {} %>
     <% checkbox_id    = checkbox_opts.delete(:id) %>
     <% checkbox_class = ['w-5 h-5 rounded border border-slate-grey-light checked:bg-primary checked:border-primary focus:ring-0 cursor-pointer', checkbox_opts.delete(:class)].compact.join(' ') %>
-    <span class="absolute top-4 right-4 z-10"
+    <span class="absolute top-3 right-3 md:top-4 md:right-4 z-10"
           data-controller="stop-propagation"
           data-action="click->stop-propagation#stop">
       <%= check_box_tag checkbox_opts.delete(:name) || 'checkbox',
@@ -33,80 +33,93 @@
 
   <div class="w-full rounded relative flex gap-1">
     <% if badge.present? %>
-      <div class="absolute top-0 left-0 z-10 px-2 py-1 general-text-sm-medium <%= badge[:bg_color] %> <%= badge[:text_color] %> rounded-tl-xl rounded-br-[8px] border-b border-r border-line-colour">
+      <div class="absolute top-0 left-0 z-10 px-2 py-1 general-text-sm-medium <%= badge[:bg_color] %> <%= badge[:text_color] %> rounded-tl-lg md:rounded-tl-xl rounded-br-[8px] border-b border-r border-line-colour">
         <%= badge[:label] %>
       </div>
     <% end %>
 
     <div class="relative self-stretch">
       <% if banner_url.present? %>
-        <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-full md:h-[130px] rounded-l-xl object-cover' %>
+        <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-full md:h-[130px] rounded-tl-lg md:rounded-l-xl object-cover' %>
       <% else %>
-        <div class="w-[100px] md:w-[297px] h-full md:h-[130px] rounded-l-xl bg-primary-light-50"></div>
+        <div class="w-[100px] md:w-[297px] h-full md:h-[130px] rounded-tl-lg md:rounded-l-xl bg-primary-light-50"></div>
       <% end %>
-      <span class="absolute bottom-0 right-4 z-10 flex rounded-t-md bg-primary-light-100 general-text-sm-normal py-0.5 px-1 text-primary-dark">
-          <%= duration %>
+      <span class="absolute bottom-2 right-2 z-10 flex rounded bg-white-light border border-line-colour-light general-text-sm-normal py-0.5 px-1 text-primary-dark">
+        <%= duration %>
       </span>
     </div>
 
-    <div class="flex justify-between flex-grow p-4 md:p-5 gap-3 ">
-      <div class="flex flex-col gap-3">
+    <div class="flex justify-between flex-grow pr-3 py-4 md:p-5 gap-3">
+      <div class="flex flex-col gap-3 h-full w-full">
         <div class="flex justify-between">
           <div class="max-w-[148px] md:max-w-[716px]">
-            <p class="main-text-md-medium text-primary overflow-hidden md:whitespace-nowrap md:text-ellipsis line-clamp-2">
+            <p class="main-text-md-medium text-letter-color overflow-hidden md:whitespace-nowrap md:text-ellipsis line-clamp-2">
               <%= title %>
             </p>
           </div>
         </div>
 
-        <div class="flex gap-3 md:gap-4 items-center">
-          <% if rating.present? %>
-            <div class="flex items-center">
-              <%= icon("star-transparent", css: "h-4 w-4 text-primary fill-primary") %>
-              <span class="ml-2 general-text-sm-normal"><%= rating %></span>
+        <div class="flex flex-col gap-3">
+          <div class="flex gap-2 md:gap-4 items-center flex-wrap">
+            <div class="flex gap-1 md:gap-1 items-center">
+              <div class="flex items-center">
+                <%= icon("book", css: "h-4 w-4 text-primary") %>
+                <span class="ml-1 general-text-sm-normal"><%= modules_count %></span>
+              </div>
+              <div class="w-px h-4 bg-slate-grey-light"></div>
+              <div class="flex items-center">
+                <%= icon("user", css: "h-4 w-4 text-primary") %>
+                <span class="ml-1 general-text-sm-normal"><%= enroll_count %></span>
+              </div>
+              <% if rating.present? %>
+                <div class="w-px h-4 bg-slate-grey-light"></div>
+                <div class="flex items-center gap-0.5">
+                  <span class="general-text-sm-normal"><%= rating %></span>
+                  <%= icon("star-transparent", css: "h-4 w-4 text-primary fill-primary") %>
+                </div>
+              <% end %>
             </div>
-            <div class="w-px h-full bg-slate-grey-light md:hidden"></div>
-
-          <% end %>
-          <div class="flex gap-3 md:gap-1">
-            <div class="flex items-center">
-              <%= icon("book", css: "h-4 w-4 text-primary") %>
-              <span class="ml-2 general-text-sm-normal"><%= modules_count %></span>
-            </div>
-            <div class="w-px h-full bg-slate-grey-light"></div>
-            <div class="flex items-center">
-              <%= icon("user", css: "h-4 w-4 text-primary") %>
-              <span class="ml-2 general-text-sm-normal"><%= enroll_count %></span>
-            </div>
+            <% if progress.present? %>
+              <div class="h-1 w-[151px] hidden md:block bg-primary-light-100 rounded-sm">
+                <div class="h-1 bg-primary rounded-sm" style="width: <%= progress %>%"></div>
+              </div>
+            <% end %>
           </div>
+
           <% if progress.present? %>
-            <div class="h-1 w-[151px] hidden md:block bg-primary-light-100 rounded-sm">
-              <div class="h-1 bg-primary rounded-sm" style="width: <%= progress %>%"></div>
+            <div class="h-0.5 w-full md:hidden bg-primary-light-100 rounded-sm">
+              <div class="h-0.5 bg-primary rounded-sm" style="width: <%= progress %>%"></div>
             </div>
           <% end %>
         </div>
 
-        <% if progress.present? %>
-          <div class="h-0.5 w-full md:hidden bg-primary-light-100 rounded-sm">
-            <div class="h-0.5 bg-primary rounded-sm" style="width: <%= progress %>%"></div>
+        <div class="hidden md:flex items-center justify-between gap-2 mt-auto">
+          <div class="flex items-center gap-2">
+            <% categories.first(2).each do |category| %>
+              <%= chip_component(text: category, colorscheme: 'primary', icon_name: 'check') %>
+            <% end %>
+            <% overflow = categories.length - 2 %>
+            <% if overflow > 0 %>
+              <span class="general-text-sm-normal text-primary whitespace-nowrap">+<%= overflow %></span>
+            <% end %>
           </div>
-        <% end %>
-
-        <div class="hidden md:flex items-center gap-2">
-          <% categories.first(2).each do |category| %>
-            <%= chip_component(text: category, colorscheme: 'primary', icon_name: 'check') %>
-          <% end %>
-          <% overflow = categories.length - 2 %>
-          <% if overflow > 0 %>
-            <span class="general-text-sm-normal text-primary whitespace-nowrap">+<%= overflow %></span>
+          <% if type_tag.present? %>
+            <div class="flex items-center justify-center px-3 py-1 rounded <%= type_tag[:bg_color] %>">
+              <span class="general-text-sm-normal <%= type_tag[:text_color] %> whitespace-nowrap"><%= type_tag[:label] %></span>
+            </div>
           <% end %>
         </div>
 
-     </div>
+      </div>
       <div class="hidden border border-primary rounded-full min-w-8 md:min-w-10 h-8 md:h-10 flex justify-center">
         <%= icon("bookmark", css: "h-5 w-5 text-primary") %>
       </div>
     </div>
-
   </div>
+
+  <% if type_tag.present? %>
+    <div class="md:hidden flex items-center justify-center py-1 rounded-bl-lg rounded-br-lg <%= type_tag[:bg_color] %>">
+      <span class="general-text-sm-medium <%= type_tag[:text_color] %>"><%= type_tag[:label] %></span>
+    </div>
+  <% end %>
 </div>

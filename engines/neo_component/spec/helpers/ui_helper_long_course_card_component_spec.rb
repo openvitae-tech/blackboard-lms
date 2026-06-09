@@ -19,7 +19,7 @@ RSpec.describe UiHelper, type: :helper do
   describe '#long_course_card_component' do
     it 'renders the outer card wrapper' do
       doc = render_card
-      expect(doc.at_css('div.rounded-xl')).to be_present
+      expect(doc.at_css('div.rounded-lg')).to be_present
     end
 
     it 'renders the title' do
@@ -183,6 +183,33 @@ RSpec.describe UiHelper, type: :helper do
       it 'omits the rating block when rating is nil' do
         doc = render_card(rating: nil)
         expect(doc.css('[class*="star"]')).to be_empty
+      end
+
+      it 'renders the rating after modules and enroll in the stats row' do
+        doc = render_card(rating: '4.2', modules_count: '6 modules', enroll_count: '50 enrolled')
+        stats_row = doc.at_css('div.flex.gap-1.md\\:gap-1.items-center')
+        expect(stats_row).to be_present
+        element_children = stats_row.children.select(&:element?)
+        expect(element_children.last.text).to include('4.2')
+      end
+    end
+
+    describe 'type_tag' do
+      it 'renders the type tag label when present' do
+        tag = { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-grey-300' }
+        doc = render_card(type_tag: tag)
+        expect(doc.text).to include('Course')
+      end
+
+      it 'applies the supplied bg_color class to the type tag' do
+        tag = { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200', text_color: 'text-grey-300' }
+        doc = render_card(type_tag: tag)
+        expect(doc.at_css('div.bg-secondary-light-200')).to be_present
+      end
+
+      it 'omits the type tag when nil' do
+        doc = render_card(type_tag: nil)
+        expect(doc.css('div.bg-primary-light-200, div.bg-secondary-light-200, div.bg-gold-dark')).to be_empty
       end
     end
 
