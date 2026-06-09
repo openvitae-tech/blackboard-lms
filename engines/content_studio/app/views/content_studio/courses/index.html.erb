@@ -32,25 +32,17 @@
 
     <%# ── Section 2: Main Action ── %>
     <div class="bg-white border border-line-colour-light rounded-3xl p-8 flex gap-5 items-center relative overflow-hidden">
-      <%# Decorative blobs — radial gradients matching Figma node 2699:4003 %>
-      <svg class="absolute pointer-events-none" style="left:-93px;top:113px;width:222px;height:222px;" viewBox="0 0 222 222" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="111" cy="111" r="111" fill="url(#blob-primary)"/>
-        <defs>
-          <radialGradient id="blob-primary" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="rgba(234,240,253,1)"/>
-            <stop offset="70%" stop-color="rgba(255,255,255,1)"/>
-          </radialGradient>
-        </defs>
-      </svg>
-      <svg class="absolute pointer-events-none" style="right:-93px;top:-101px;width:245px;height:244px;" viewBox="0 0 245 244" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <ellipse cx="122.5" cy="122" rx="122.5" ry="122" fill="url(#blob-secondary)"/>
-        <defs>
-          <radialGradient id="blob-secondary" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="rgba(247,255,213,1)"/>
-            <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
-          </radialGradient>
-        </defs>
-      </svg>
+      <%# Decorative blobs — matching Figma node 2699:4003 %>
+      <%= image_tag 'blob-primary.svg',
+            class: 'absolute pointer-events-none',
+            style: 'left:-93px;top:113px;width:222px;height:222px;',
+            aria: { hidden: 'true' },
+            alt: '' %>
+      <%= image_tag 'blob-secondary.svg',
+            class: 'absolute pointer-events-none z-20',
+            style: 'right:-93px;top:-101px;width:245px;height:244px;',
+            aria: { hidden: 'true' },
+            alt: '' %>
 
       <%# Left: text + CTA %>
       <div class="flex flex-col gap-5 flex-1 relative z-10">
