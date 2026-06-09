@@ -18,7 +18,7 @@
   </div>
   <div class="h-1 w-full <%= 'bg-primary-light-100' if progress.present? %>">
     <% if progress.present? %>
-      <div class="h-1 rounded-r bg-progress-gradient animate-gradient-flow " style="width: <%= progress %>%; background-size: 200% 100%;"></div>
+      <div class="h-1 rounded-r bg-progress-gradient animate-gradient-flow" style="width: <%= progress %>%;"></div>
     <% end %>
   </div>
   <div class="flex flex-col gap-4 px-4 mt-2 <%= type_tag.present? ? 'pb-4' : 'pb-5' %>">

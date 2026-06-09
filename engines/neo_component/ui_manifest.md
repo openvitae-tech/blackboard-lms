@@ -271,7 +271,9 @@ course_card_component(
   progress: nil,
   badge: nil,              # nil or Hash with :label, optional :bg_color, :text_color
   description: nil,
-  highlights: []
+  highlights: [],
+  type_tag: nil            # nil or Hash with :label, :bg_color — renders a full-width coloured footer strip
+                           #   text colour is always text-grey-300 (hardcoded in template)
 )
 ```
 

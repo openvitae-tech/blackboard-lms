@@ -57,8 +57,8 @@ module.exports = {
       },
       keyframes: {
         'gradient-flow': {
-          '0%':   { backgroundPosition: '0% 0%' },
-          '100%': { backgroundPosition: '-200% 0%' },
+          '0%':   { backgroundPosition: '0% 0%', backgroundSize: '200% 100%' },
+          '100%': { backgroundPosition: '-200% 0%', backgroundSize: '200% 100%' },
         },
       },
       animation: {
