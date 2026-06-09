@@ -273,7 +273,7 @@ course_card_component(
   description: nil,
   highlights: [],
   type_tag: nil            # nil or Hash with :label, :bg_color — renders a full-width coloured footer strip
-                           #   text colour is always text-grey-300 (hardcoded in template)
+                           #   text colour is always text-letter-colour-medium (hardcoded in template)
 )
 ```
 
