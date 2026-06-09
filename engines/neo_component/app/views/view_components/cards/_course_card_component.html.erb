@@ -6,8 +6,8 @@
       </div>
     <% end %>
     <% if duration.present? %>
-      <div class="absolute bottom-0 right-4 z-10 px-1 py-0.5 bg-primary-light-100 rounded-t">
-        <span class="general-text-sm-normal"><%= duration %></span>
+      <div class="absolute bottom-2 right-2 z-10 px-1 py-0.5 bg-white-light border border-line-colour-light rounded general-text-sm-normal">
+        <%= duration %>
       </div>
     <% end %>
     <% if banner_url.present? %>
@@ -58,7 +58,7 @@
   </div>
   <% if type_tag.present? %>
     <div class="flex items-center justify-center py-1.5 rounded-bl-xl rounded-br-xl <%= type_tag[:bg_color] %>">
-      <span class="general-text-sm-medium <%= type_tag[:text_color] %>"><%= type_tag[:label] %></span>
+      <span class="general-text-sm-medium text-grey-300"><%= type_tag[:label] %></span>
     </div>
   <% end %>
   <% if description.present? %>
