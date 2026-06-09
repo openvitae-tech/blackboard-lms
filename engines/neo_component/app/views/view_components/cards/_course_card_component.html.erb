@@ -1,4 +1,4 @@
-<div class="group relative items-stretch rounded-xl border border-line-colour bg-white h-full w-auto md:w-[280px]">
+<div class="group relative items-stretch rounded-xl border border-line-colour bg-white h-full w-auto md:w-[280px] text-letter-color">
   <div class="w-full relative">
     <% if badge.present? %>
       <div class="absolute top-0 left-0 z-10 px-2 py-1 general-text-sm-medium <%= badge[:bg_color] %> <%= badge[:text_color] %> rounded-tl-xl rounded-br-[12px] border-b border-r border-line-colour">
@@ -18,7 +18,7 @@
   </div>
   <div class="h-1 w-full <%= 'bg-primary-light-100' if progress.present? %>">
     <% if progress.present? %>
-      <div class="h-1 rounded-r bg-progress-gradient transition-[width] duration-700 ease-in-out" style="width: <%= progress %>%"></div>
+      <div class="h-1 rounded-r bg-progress-gradient animate-gradient-flow " style="width: <%= progress %>%; background-size: 200% 100%;"></div>
     <% end %>
   </div>
   <div class="flex flex-col gap-4 px-4 mt-2 <%= type_tag.present? ? 'pb-4' : 'pb-5' %>">
