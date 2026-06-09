@@ -288,6 +288,8 @@ long_course_card_component(
   badge: nil,              # nil or Hash with :label, optional :bg_color, :text_color
   description: nil,
   highlights: [],
+  type_tag: nil,           # nil or Hash with :label, :bg_color — inline pill on desktop, footer bar on mobile
+                           #   text colour is always text-grey-300 (hardcoded in template)
   checkbox: false          # false to hide; or a Hash of check_box_tag options (truthy non-Hash raises ArgumentError)
                            #   Hash keys: :name (field name), :value, :checked (Boolean), :id,
                            #   plus any other HTML attributes (e.g. data-*, class overrides).
