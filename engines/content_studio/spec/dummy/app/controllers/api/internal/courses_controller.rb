@@ -52,6 +52,10 @@ module Api
         head :no_content
       end
 
+      def delete_module
+        head :no_content
+      end
+
       def delete_lesson
         head :no_content
       end

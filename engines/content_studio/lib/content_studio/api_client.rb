@@ -73,6 +73,10 @@ module ContentStudio
         client.verify_lesson(lesson_id, course_id: course_id)
       end
 
+      def delete_module(module_id, course_id:)
+        client.delete_module(module_id, course_id: course_id)
+      end
+
       def delete_lesson(lesson_id, course_id:)
         client.delete_lesson(lesson_id, course_id: course_id)
       end

@@ -128,6 +128,76 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('data-controller="collapsible"')
   end
 
+  context 'when all scenes in a module have a video_url' do
+    let(:ready_scene) do
+      ContentStudio::Scene.new(id: 's1', status: 'COMPLETED',
+                               video_url: 'https://example.com/v.mp4', thumbnail_url: nil)
+    end
+
+    let(:ready_module) do
+      ContentStudio::StructureModule.new(
+        id: 3, title: 'Ready Module',
+        lessons: [
+          ContentStudio::StructureLesson.new(id: 4, title: 'Ready Lesson', status: 'VIDEO_READY',
+                                             video_url: nil, verified: false, scenes: [ready_scene]),
+          ContentStudio::StructureLesson.new(id: 5, title: 'Another Lesson', status: 'VIDEO_READY',
+                                             video_url: nil, verified: false, scenes: [ready_scene])
+        ]
+      )
+    end
+
+    before do
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1, title: 'Airport Services Management', duration: 9240,
+                           modules: [ready_module], verified_modules_count: 0, thumbnail_url: nil
+                         ))
+    end
+
+    it 'renders the Select link' do
+      render
+      expect(rendered).to include('data-module-select-target="selectLink"')
+      expect(rendered).to include('Select')
+    end
+
+    it 'wires the module-select Stimulus controller' do
+      render
+      expect(rendered).to include('module-select')
+    end
+
+    it 'renders lesson checkboxes' do
+      render
+      expect(rendered).to include('data-module-select-target="lessonCheckbox"')
+    end
+
+    it 'renders the delete bar' do
+      render
+      expect(rendered).to include('data-module-select-target="deleteBar"')
+    end
+
+    it 'renders the modal trigger link' do
+      render
+      expect(rendered).to include('data-module-select-target="modalTrigger"')
+    end
+
+    it 'renders the delete module path as a data value' do
+      render
+      expect(rendered).to include('data-module-select-delete-module-path-value=')
+      expect(rendered).to include('/content_studio/courses/1/modules/3')
+    end
+  end
+
+  context 'when not all scenes in a module have a video_url' do
+    it 'does not render the Select link' do
+      render
+      expect(rendered).not_to include('data-module-select-target="selectLink"')
+    end
+
+    it 'does not wire the module-select controller' do
+      render
+      expect(rendered).not_to include('module-select')
+    end
+  end
+
   it 'renders a hidden Expand link as a collapsible expandLink target on each module card' do
     render
     expect(rendered).to include('data-collapsible-target="expandLink"')

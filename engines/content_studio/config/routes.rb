@@ -19,6 +19,9 @@ ContentStudio::Engine.routes.draw do
   post 'courses/:course_id/lessons/:lesson_id/scenes/:scene_id/regenerate',
        to: 'courses/scenes#regenerate',
        as: :regenerate_scene
+  delete 'courses/:course_id/modules/:id', to: 'courses/modules#destroy', as: :destroy_course_module
+  delete 'courses/:course_id/modules/:module_id/lessons', to: 'courses/modules#bulk_destroy_lessons',
+         as: :bulk_destroy_course_module_lessons
   delete 'courses/:course_id/lessons/:id', to: 'courses/lessons#destroy', as: :destroy_course_lesson
   post 'courses/:course_id/lessons/:id/regenerate', to: 'courses/lessons#regenerate', as: :regenerate_lesson
 end
