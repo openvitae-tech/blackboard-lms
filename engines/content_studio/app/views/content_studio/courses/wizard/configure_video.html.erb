@@ -20,12 +20,7 @@
 
       <%# Card: Choose Template %>
       <div class="bg-white border border-line-colour-light rounded-2xl pt-4 pb-5 px-5 flex flex-col gap-5">
-        <div class="flex items-center justify-between">
-          <p class="main-text-lg-semibold text-letter-color">Choose Template</p>
-          <%= button_component(text: 'View all', type: 'outline', colorscheme: 'primary',
-                               icon_name: 'chevron-right', icon_position: 'right',
-                               html_options: { type: 'button' }) %>
-        </div>
+        <p class="main-text-lg-semibold text-letter-color">Choose Template</p>
         <% template_cards = @templates.each_with_index.map { |t, i| template_card(t, selected: i.zero?) } %>
         <%= carousel_component(cards: template_cards) %>
       </div>
@@ -70,11 +65,11 @@
     <%# Right column: Video Style Preview %>
     <div class="bg-primary-light-50 border border-line-colour-light rounded-xl p-8 flex flex-col gap-7 w-80 shrink-0">
       <p class="main-text-lg-semibold text-letter-color">Video Style Preview</p>
-      <%= image_tag '', alt: 'Template preview',
-                    class: 'rounded-xl w-full h-[150px] object-cover bg-white',
-                    data: { template_selector_target: 'preview' } %>
-      <%= button_component(text: 'Preview', type: 'outline', colorscheme: 'primary',
-                           html_options: { type: 'button', class: 'w-full' }) %>
+      <div class="overflow-hidden rounded-xl aspect-video bg-white">
+        <%= image_tag '', alt: 'Template preview',
+                      class: 'w-full h-full object-cover',
+                      data: { template_selector_target: 'preview' } %>
+      </div>
     </div>
 
   </div>

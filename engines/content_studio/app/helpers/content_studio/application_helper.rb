@@ -67,7 +67,7 @@ module ContentStudio
                        content_tag(:div, template.name, class: placeholder_class)
                      end
         card = content_tag(:div, card_inner,
-                           class: "rounded-xl overflow-hidden w-[280px] h-[135px] #{border_class}",
+                           class: "rounded-xl overflow-hidden w-72 aspect-video #{border_class}",
                            data: { template_selector_target: 'card' })
         radio + card
       end
