@@ -148,7 +148,8 @@ export default class extends Controller {
     const target = event.currentTarget
     target.classList.remove('border-t-2', 'border-b-2', 'border-primary')
     if (!this._dragSrc || target === this._dragSrc) return
-    const dropBefore = event.clientY < target.getBoundingClientRect().top + target.getBoundingClientRect().height / 2
+    const rect = target.getBoundingClientRect()
+    const dropBefore = event.clientY < rect.top + rect.height / 2
     if (dropBefore) {
       target.parentElement.insertBefore(this._dragSrc, target)
     } else {
