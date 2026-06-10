@@ -26,7 +26,8 @@ module NeoAi
       'log_course_failed' => 'Something went wrong'
     }.freeze
 
-    def initialize
+    def initialize(partner_id:)
+      @partner_id = partner_id
       @token_mutex = Mutex.new
       @token = nil
       @token_expires_at = nil
@@ -155,6 +156,6 @@ module NeoAi
       JSON.parse(Base64.urlsafe_decode64(padded)).fetch('exp')
     end
 
-    def partner_id = NEO_AI_PARTNER_ID
+    attr_reader :partner_id
   end
 end
