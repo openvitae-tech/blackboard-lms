@@ -16,8 +16,7 @@ module ViewComponent
         badge: nil,
         description: nil,
         highlights: [],
-        type_tag: nil,
-        card_width: 312
+        type_tag: nil
       )
         badge = { bg_color: 'bg-secondary', text_color: 'text-primary-dark' }.merge(badge) if badge
         render partial: 'view_components/cards/course_card_component', locals: {
@@ -33,8 +32,7 @@ module ViewComponent
           badge:,
           description:,
           highlights:,
-          type_tag:,
-          card_width:
+          type_tag:
         }
       end
     end
