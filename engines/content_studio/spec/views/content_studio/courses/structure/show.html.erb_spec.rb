@@ -128,6 +128,13 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('data-controller="collapsible"')
   end
 
+  it 'renders a hidden Expand link as a collapsible expandLink target on each module card' do
+    render
+    expect(rendered).to include('data-collapsible-target="expandLink"')
+    expect(rendered).to include('collapsible#expand')
+    expect(rendered).to include('Expand')
+  end
+
   it 'wires the lesson-name Stimulus controller on each lesson pill' do
     render
     expect(rendered).to include('data-controller="lesson-name"')

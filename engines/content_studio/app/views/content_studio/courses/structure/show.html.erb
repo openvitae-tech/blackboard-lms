@@ -51,7 +51,8 @@
         <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4"
              data-controller="collapsible"
              data-collapsible-open-value="true"
-             data-action="collapsible:close-all@window->collapsible#close collapsible:open-all@window->collapsible#open">
+             data-collapsible-storage-key-value="cs-module-<%= mod.id %>"
+             data-action="collapsible:close-all@window->collapsible#closeFromGlobal collapsible:open-all@window->collapsible#openFromGlobal">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer"
                  data-action="click->collapsible#toggle">
@@ -61,6 +62,10 @@
               </span>
               <span class="main-text-md-semibold text-letter-color"><%= mod.title %></span>
             </div>
+            <a href="#"
+               class="hidden main-text-sm-normal text-primary"
+               data-collapsible-target="expandLink"
+               data-action="click->collapsible#expand">Expand</a>
           </div>
 
           <div data-collapsible-target="content" class="flex flex-col gap-3">
