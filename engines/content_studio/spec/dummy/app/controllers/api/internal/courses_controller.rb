@@ -52,6 +52,18 @@ module Api
         head :no_content
       end
 
+      def reorder_lesson
+        render json: { status: 'ok' }
+      end
+
+      def bulk_destroy_lessons
+        head :no_content
+      end
+
+      def delete_module
+        head :no_content
+      end
+
       def delete_lesson
         head :no_content
       end

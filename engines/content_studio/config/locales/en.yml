@@ -7,7 +7,29 @@ en:
           title: "Discard course?"
           description: "You are permanently discarding <b>%{title}</b>. This action can't be undone."
           action: "Discard"
+      modules:
+        destroy:
+          success: "Module deleted successfully."
+          not_found: "Module not found."
+          locked: "Module is currently being processed and cannot be deleted."
+          error: "Something went wrong. Please try again."
+          confirm:
+            title: "Delete module?"
+            description: "You are permanently deleting <b>%{title}</b> and all its lessons. This action can't be undone."
+            action: "Delete"
+        bulk_destroy_lessons:
+          success: "Selected lessons deleted successfully."
+          not_found: "One or more lessons not found."
+          locked: "Course is currently being processed. Please wait before deleting."
+          error: "Something went wrong. Please try again."
+          confirm:
+            title: "Delete lessons?"
+            description: "You are permanently deleting the selected lessons. This action can't be undone."
+            action: "Delete"
       lessons:
+        reorder:
+          locked: "Course is currently being processed. Please wait before reordering."
+          error: "Something went wrong while reordering. Please try again."
         destroy:
           success: "Lesson deleted successfully."
           locked: "Lesson is currently being processed and cannot be deleted."

@@ -307,4 +307,56 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
       end
     end
   end
+
+  describe 'PATCH /content_studio/courses/:course_id/lessons/:id/reorder' do
+    context 'when reorder succeeds' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:reorder_lesson)
+        patch '/content_studio/courses/1/lessons/1/reorder', params: { new_position: 2 }
+      end
+
+      it 'calls ApiClient.reorder_lesson with the correct args' do
+        expect(ContentStudio::ApiClient).to have_received(:reorder_lesson).with('1', course_id: '1', new_position: 2)
+      end
+
+      it 'returns ok JSON' do
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq('status' => 'ok')
+      end
+    end
+
+    context 'when the course is locked' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:reorder_lesson).and_raise(Faraday::BadRequestError)
+        patch '/content_studio/courses/1/lessons/1/reorder', params: { new_position: 0 }
+      end
+
+      it 'returns bad_request status' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'returns a locked error message' do
+        expect(JSON.parse(response.body)['error']).to eq(
+          'Course is currently being processed. Please wait before reordering.'
+        )
+      end
+    end
+
+    context 'when an unexpected error occurs' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:reorder_lesson).and_raise(Faraday::Error)
+        patch '/content_studio/courses/1/lessons/1/reorder', params: { new_position: 0 }
+      end
+
+      it 'returns unprocessable_entity status' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a generic error message' do
+        expect(JSON.parse(response.body)['error']).to eq(
+          'Something went wrong while reordering. Please try again.'
+        )
+      end
+    end
+  end
 end

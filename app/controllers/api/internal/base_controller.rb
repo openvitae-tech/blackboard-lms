@@ -10,10 +10,6 @@ module Api
 
       include NeoAiLessonSerializer
 
-      def self.neo_ai_client
-        @neo_ai_client ||= NeoAi::Client.new
-      end
-
       rescue_from Pundit::NotAuthorizedError, with: :render_forbidden
       rescue_from Faraday::Error, with: :render_upstream_error
 
@@ -40,7 +36,7 @@ module Api
       end
 
       def neo_ai
-        self.class.neo_ai_client
+        @neo_ai ||= NeoAi::Client.new(partner_id: current_user.learning_partner_id)
       end
     end
   end
