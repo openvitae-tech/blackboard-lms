@@ -39,7 +39,9 @@ module NeoAi
 
     def list_templates
       response = get('/course/list-templates')
-      JSON.parse(response.body)
+      JSON.parse(response.body).fetch('templates', []).map do |t|
+        { 'id' => t['template_id'], 'name' => t['name'], 'thumbnail_url' => t['thumbnail_url'] }
+      end
     end
 
     def find_course(id)
