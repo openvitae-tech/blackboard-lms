@@ -69,11 +69,11 @@ RSpec.describe 'ContentStudio::Courses::Modules', type: :request do
     end
   end
 
-  describe 'DELETE /content_studio/courses/:course_id/modules/:module_id/lessons' do
+  describe 'DELETE /content_studio/courses/:course_id/lessons' do
     context 'when deletion succeeds' do
       before do
         allow(ContentStudio::ApiClient).to receive(:delete_lesson)
-        delete '/content_studio/courses/1/modules/m1/lessons', params: { lesson_ids: %w[l1 l2] }
+        delete '/content_studio/courses/1/lessons', params: { lesson_ids: %w[l1 l2] }
       end
 
       it 'calls ApiClient.delete_lesson for each selected lesson' do
@@ -93,7 +93,7 @@ RSpec.describe 'ContentStudio::Courses::Modules', type: :request do
     context 'when the course is locked' do
       before do
         allow(ContentStudio::ApiClient).to receive(:delete_lesson).and_raise(Faraday::BadRequestError)
-        delete '/content_studio/courses/1/modules/m1/lessons', params: { lesson_ids: ['l1'] }
+        delete '/content_studio/courses/1/lessons', params: { lesson_ids: ['l1'] }
       end
 
       it 'redirects to the course structure page' do
@@ -108,7 +108,7 @@ RSpec.describe 'ContentStudio::Courses::Modules', type: :request do
     context 'when a lesson is not found' do
       before do
         allow(ContentStudio::ApiClient).to receive(:delete_lesson).and_raise(Faraday::ResourceNotFound)
-        delete '/content_studio/courses/1/modules/m1/lessons', params: { lesson_ids: ['l1'] }
+        delete '/content_studio/courses/1/lessons', params: { lesson_ids: ['l1'] }
       end
 
       it 'redirects to the course structure page' do

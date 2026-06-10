@@ -56,6 +56,10 @@ module Api
         render json: { status: 'ok' }
       end
 
+      def bulk_destroy_lessons
+        head :no_content
+      end
+
       def delete_module
         head :no_content
       end

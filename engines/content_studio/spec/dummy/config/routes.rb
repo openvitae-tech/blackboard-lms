@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       post 'courses/:course_id/lessons/:lesson_id/scenes/:scene_id/regenerate', to: 'courses#regenerate_scene'
       post 'courses/:course_id/lessons/:lesson_id/verify', to: 'courses#verify_lesson'
       delete 'courses/:course_id/modules/:module_id', to: 'courses#delete_module'
+      delete 'courses/:course_id/lessons', to: 'courses#bulk_destroy_lessons'
       delete 'courses/:course_id/lessons/:lesson_id', to: 'courses#delete_lesson'
       post 'courses/:course_id/lessons/:lesson_id/regenerate', to: 'courses#regenerate_lesson'
       get 'courses/:course_id/lessons/:id', to: 'courses/lessons#show'

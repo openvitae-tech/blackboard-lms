@@ -60,7 +60,7 @@
                data-module-select-all-scenes-ready-value="true"
                data-module-select-alert-modal-url-value="<%= alert_modal_path %>"
                data-module-select-delete-module-path-value="<%= destroy_course_module_path(course_id: @structure.id, id: mod.id) %>"
-               data-module-select-bulk-delete-lessons-path-value="<%= bulk_destroy_course_module_lessons_path(course_id: @structure.id, module_id: mod.id) %>"
+               data-module-select-bulk-delete-lessons-path-value="<%= bulk_destroy_course_lessons_path(course_id: @structure.id) %>"
                data-module-select-confirm-module-title-value="<%= t('content_studio.courses.modules.destroy.confirm.title') %>"
                data-module-select-confirm-module-description-value="<%= t('content_studio.courses.modules.destroy.confirm.description', title: mod.title) %>"
                data-module-select-confirm-lessons-title-value="<%= t('content_studio.courses.modules.bulk_destroy_lessons.confirm.title') %>"
