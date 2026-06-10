@@ -14,6 +14,7 @@ export default class extends Controller {
   }
 
   connect() {
+    this._previewMode = false
     if (this.itemTargets.length > 0) {
       this.loadScene(0)
       if (this.hasVideoTarget && this.videoTarget.src) {
@@ -70,6 +71,7 @@ export default class extends Controller {
     if (this.hasCurrentTimeTarget) this.currentTimeTarget.textContent = '0:00'
     if (this.hasDurationTarget) this.durationTarget.textContent = '0:00'
 
+    this._previewMode = true
     this.videoTarget.play().catch(() => {})
   }
 
@@ -127,6 +129,11 @@ export default class extends Controller {
   }
 
   ended() {
+    if (this._previewMode) {
+      this._previewMode = false
+      this.loadScene(this.currentIndexValue)
+      return
+    }
     const nextIndex = this.currentIndexValue + 1
     if (nextIndex < this.itemTargets.length) {
       this.loadScene(nextIndex)
