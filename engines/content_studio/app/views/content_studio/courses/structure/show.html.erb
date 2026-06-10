@@ -12,10 +12,11 @@
   <% all_lessons = @structure.modules.flat_map(&:lessons) %>
   <% has_pending = !failed && all_lessons.any? { |l| %w[PENDING WAITING].include?(l.status) } %>
   <% all_videos_ready = all_lessons.all? { |l| l.video_url.present? } %>
-  <turbo-frame id="course-structure">
+  <turbo-frame id="course-structure" refresh="morph">
   <div class="flex flex-col gap-6 px-4"
        data-controller="collapsible-group structure-polling"
-       data-structure-polling-pending-value="<%= has_pending %>">
+       data-structure-polling-pending-value="<%= has_pending %>"
+       data-structure-polling-thumbnail-url-value="<%= @structure.thumbnail_url %>">
 
     <%# Status card — below stepper, above modules %>
     <% all_scenes = @structure.modules.flat_map(&:lessons).flat_map(&:scenes) %>
@@ -159,9 +160,11 @@
 
         <div class="bg-white-light rounded-lg p-3 flex flex-col gap-3">
           <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
-          <div class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
+          <div id="course-thumbnail" data-turbo-permanent
+               class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
             <% thumb = @structure.thumbnail_url.presence %>
             <%= image_tag thumb || image_path('image-ai.gif'),
+                         id: 'course-thumbnail-img',
                          class: "w-full h-full #{thumb ? 'object-cover' : 'object-contain'}", alt: 'Course thumbnail' %>
             <button type="button" class="absolute bottom-3 right-3 bg-white border border-letter-color rounded-full p-1.5 opacity-70">
               <%= icon 'pencil', css: 'w-4 h-4' %>

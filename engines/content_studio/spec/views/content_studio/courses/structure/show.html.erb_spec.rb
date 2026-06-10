@@ -167,12 +167,22 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       render
       expect(rendered).to include('https://example.com/thumb.jpg')
     end
+
+    it 'passes the thumbnail URL as a Stimulus value on the polling controller' do
+      render
+      expect(rendered).to include('data-structure-polling-thumbnail-url-value="https://example.com/thumb.jpg"')
+    end
   end
 
   context 'when thumbnail_url is absent' do
     it 'renders the image-ai gif as fallback in the thumbnail section' do
       render
       expect(rendered).to match(/src="[^"]*image-ai[^"]*\.gif"/)
+    end
+
+    it 'passes a blank thumbnail URL value on the polling controller' do
+      render
+      expect(rendered).to include('data-structure-polling-thumbnail-url-value=""')
     end
   end
 
