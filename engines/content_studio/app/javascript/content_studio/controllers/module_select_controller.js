@@ -185,7 +185,7 @@ export default class extends Controller {
     if (!this.hasSelectLinkTarget) return
     const content = this.element.querySelector('[data-collapsible-target="content"]')
     const isOpen = content && !content.classList.contains('hidden')
-    const inSelectMode = this.hasNormalHeaderTarget && this.normalHeaderTarget.classList.contains('hidden')
+    const inSelectMode = this._inSelectMode
     this.selectLinkTarget.classList.toggle('hidden', !isOpen || inSelectMode)
   }
 
