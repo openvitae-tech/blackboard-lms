@@ -48,7 +48,7 @@ RSpec.describe UiHelper, type: :helper do
 
       it 'omits the duration badge when nil' do
         doc = render_card(duration: nil)
-        expect(doc.at_css('div.bg-primary-light-100')).to be_nil
+        expect(doc.at_css('div.bg-white-light')).to be_nil
       end
     end
 
@@ -115,7 +115,7 @@ RSpec.describe UiHelper, type: :helper do
 
       it 'hides the duration badge' do
         doc = render_kit
-        expect(doc.at_css('div.bg-primary-light-100')).to be_nil
+        expect(doc.at_css('div.bg-white-light')).to be_nil
       end
 
       it 'hides the enrolment row and divider' do
@@ -154,6 +154,16 @@ RSpec.describe UiHelper, type: :helper do
         doc = render_card(type_tag: { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200',
                                       text_color: 'text-white' })
         expect(doc.at_css('div.bg-secondary-light-200')).to be_present
+      end
+
+      it 'applies the supplied text_color class to the type tag label' do
+        doc = render_card(type_tag: { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-white' })
+        expect(doc.at_css('span.text-white')).to be_present
+      end
+
+      it 'defaults the type tag label to text-letter-colour-medium when text_color is omitted' do
+        doc = render_card(type_tag: { label: 'Course', bg_color: 'bg-primary-light-200' })
+        expect(doc.at_css('span.text-letter-colour-medium')).to be_present
       end
 
       it 'omits the type tag when nil' do

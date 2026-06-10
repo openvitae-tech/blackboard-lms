@@ -1,4 +1,4 @@
-<div class="group relative items-stretch rounded-xl border border-line-colour bg-white h-full w-auto md:w-[280px] text-letter-color">
+<div class="group relative items-stretch rounded-xl border border-line-colour bg-white h-full w-auto md:w-[312px] text-letter-color"<%= " style=\"width: #{card_width}px;\"".html_safe if card_width != 312 %>>
   <div class="w-full relative">
     <% if badge.present? %>
       <div class="absolute top-0 left-0 z-10 px-2 py-1 general-text-sm-medium <%= badge[:bg_color] %> <%= badge[:text_color] %> rounded-tl-xl rounded-br-[12px] border-b border-r border-line-colour">
@@ -58,7 +58,7 @@
   </div>
   <% if type_tag.present? %>
     <div class="flex items-center justify-center py-1.5 rounded-bl-xl rounded-br-xl <%= type_tag[:bg_color] %>">
-      <span class="general-text-sm-medium text-letter-colour-medium"><%= type_tag[:label] %></span>
+      <span class="general-text-sm-medium <%= type_tag.fetch(:text_color, 'text-letter-colour-medium') %>"><%= type_tag[:label] %></span>
     </div>
   <% end %>
   <% if description.present? %>
