@@ -37,6 +37,11 @@ module NeoAi
       JSON.parse(response.body).fetch('courses', [])
     end
 
+    def list_templates
+      response = get('/course/list-templates')
+      JSON.parse(response.body)
+    end
+
     def find_course(id)
       response = get("/course/#{id}")
       JSON.parse(response.body)

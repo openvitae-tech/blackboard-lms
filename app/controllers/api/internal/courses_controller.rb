@@ -34,7 +34,7 @@ module Api
       end
 
       def templates
-        render json: []
+        render json: neo_ai.list_templates
       end
 
       def generation_status

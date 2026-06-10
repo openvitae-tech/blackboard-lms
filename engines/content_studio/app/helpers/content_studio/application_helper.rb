@@ -47,6 +47,32 @@ module ContentStudio
       end
     end
 
+    def template_card(template, selected: false)
+      border_class = selected ? 'border-2 border-primary' : 'border border-line-colour'
+      content_tag(:label,
+                  class: 'cursor-pointer block',
+                  data: { action: 'click->template-selector#select' }) do
+        radio = tag.input(type: 'radio', name: 'template_id', value: template.id,
+                          class: 'sr-only',
+                          data: { template_selector_target: 'radio',
+                                  thumbnail_url: template.thumbnail_url.to_s },
+                          checked: selected)
+        card_inner = if template.thumbnail_url.present?
+                       image_tag(template.thumbnail_url,
+                                 alt: template.name,
+                                 class: 'w-full h-full object-cover')
+                     else
+                       placeholder_class = 'w-full h-full bg-primary-light-50 flex items-center ' \
+                                           'justify-center general-text-sm-normal text-letter-color-light'
+                       content_tag(:div, template.name, class: placeholder_class)
+                     end
+        card = content_tag(:div, card_inner,
+                           class: "rounded-xl overflow-hidden w-[280px] h-[135px] #{border_class}",
+                           data: { template_selector_target: 'card' })
+        radio + card
+      end
+    end
+
     def studio_course_card(course, _status)
       card = course_card_component(
         title: course.title,
