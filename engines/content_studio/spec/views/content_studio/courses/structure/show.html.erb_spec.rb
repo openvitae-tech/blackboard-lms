@@ -184,6 +184,14 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       expect(rendered).to include('data-module-select-delete-module-path-value=')
       expect(rendered).to include('/content_studio/courses/1/modules/3')
     end
+
+    it 'renders lesson rows as draggable with reorder paths' do
+      render
+      expect(rendered).to include('data-module-select-target="lessonRow"')
+      expect(rendered).to include('draggable="true"')
+      expect(rendered).to include('/content_studio/courses/1/lessons/4/reorder')
+      expect(rendered).to include('/content_studio/courses/1/lessons/5/reorder')
+    end
   end
 
   context 'when not all scenes in a module have a video_url' do

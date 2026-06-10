@@ -73,6 +73,10 @@ module ContentStudio
         client.verify_lesson(lesson_id, course_id: course_id)
       end
 
+      def reorder_lesson(lesson_id, course_id:, new_position:)
+        client.reorder_lesson(lesson_id, course_id: course_id, new_position: new_position)
+      end
+
       def delete_module(module_id, course_id:)
         client.delete_module(module_id, course_id: course_id)
       end

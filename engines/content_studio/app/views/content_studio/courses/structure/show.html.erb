@@ -110,11 +110,19 @@
 
           <div data-collapsible-target="content" class="flex flex-col gap-3">
             <% mod.lessons.each do |lesson| %>
-              <div class="flex items-center gap-3">
-                <span class="text-slate-grey-50 flex-shrink-0 cursor-grab"
-                      <% if all_scenes_ready %>data-module-select-target="grip"<% end %>>
-                  <%= icon 'grip-vertical', css: 'w-5 h-5' %>
-                </span>
+              <div class="flex items-center gap-3"
+                   <% if all_scenes_ready %>
+                     data-module-select-target="lessonRow"
+                     draggable="true"
+                     data-reorder-path="<%= reorder_course_lesson_path(course_id: @structure.id, id: lesson.id) %>"
+                     data-action="dragstart->module-select#dragStart dragover->module-select#dragOver dragleave->module-select#dragLeave drop->module-select#drop dragend->module-select#dragEnd"
+                   <% end %>>
+                <% if all_scenes_ready %>
+                  <span class="text-slate-grey-50 flex-shrink-0 cursor-grab"
+                        data-module-select-target="grip">
+                    <%= icon 'grip-vertical', css: 'w-5 h-5' %>
+                  </span>
+                <% end %>
                 <% if all_scenes_ready %>
                   <input type="checkbox"
                          class="hidden w-4 h-4 rounded accent-primary flex-shrink-0 cursor-pointer"

@@ -87,6 +87,12 @@ module Api
         render json: { status: 'ok' }
       end
 
+      def reorder_lesson
+        neo_ai.reorder_lesson(params[:lesson_id], course_id: params[:course_id],
+                                                  new_position: params[:new_position].to_i)
+        render json: { status: 'ok' }
+      end
+
       def delete_module
         neo_ai.delete_module(params[:module_id], course_id: params[:course_id])
         head :no_content

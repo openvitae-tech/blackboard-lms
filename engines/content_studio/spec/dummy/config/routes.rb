@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get 'courses/:id/generation_status', to: 'courses#generation_status'
       get 'courses/:id/structure', to: 'courses#structure'
       patch 'courses/:id/save', to: 'courses#save'
+      patch 'courses/:course_id/lessons/:lesson_id/reorder', to: 'courses#reorder_lesson'
       delete 'courses/:id', to: 'courses#discard'
       post 'courses/:course_id/lessons/:lesson_id/scenes/:scene_id/regenerate', to: 'courses#regenerate_scene'
       post 'courses/:course_id/lessons/:lesson_id/verify', to: 'courses#verify_lesson'

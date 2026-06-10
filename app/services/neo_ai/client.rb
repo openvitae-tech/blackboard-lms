@@ -88,6 +88,16 @@ module NeoAi
     end
 
     # NeoAI declares these as FastAPI Query(...) params, not Body — must be query string.
+    def reorder_lesson(lesson_id, course_id:, new_position:)
+      build_connection.post("#{API_PREFIX}/course/reorder-lesson") do |req|
+        req.params[:course_id] = course_id
+        req.params[:lesson_id] = lesson_id
+        req.params[:new_position] = new_position
+        req.params[:partner_id] = partner_id
+      end
+    end
+
+    # NeoAI declares these as FastAPI Query(...) params, not Body — must be query string.
     def delete_module(module_id, course_id:)
       build_connection.post("#{API_PREFIX}/course/delete-module") do |req|
         req.params[:course_id] = course_id

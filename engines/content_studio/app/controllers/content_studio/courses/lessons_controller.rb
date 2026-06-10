@@ -70,6 +70,16 @@ module ContentStudio
         redirect_to course_lesson_path(params[:course_id], params[:id])
       end
 
+      def reorder
+        ApiClient.reorder_lesson(params[:id], course_id: params[:course_id],
+                                              new_position: params[:new_position].to_i)
+        render json: { status: 'ok' }
+      rescue Faraday::BadRequestError
+        render json: { error: t('.locked') }, status: :bad_request
+      rescue Faraday::Error
+        render json: { error: t('.error') }, status: :unprocessable_entity
+      end
+
       def regenerate
         ApiClient.regenerate_lesson(params[:id], course_id: params[:course_id])
         redirect_to course_lesson_path(params[:course_id], params[:id])

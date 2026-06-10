@@ -27,6 +27,9 @@ en:
             description: "You are permanently deleting the selected lessons. This action can't be undone."
             action: "Delete"
       lessons:
+        reorder:
+          locked: "Course is currently being processed. Please wait before reordering."
+          error: "Something went wrong while reordering. Please try again."
         destroy:
           success: "Lesson deleted successfully."
           locked: "Lesson is currently being processed and cannot be deleted."
