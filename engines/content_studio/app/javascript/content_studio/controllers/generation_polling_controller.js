@@ -8,7 +8,7 @@ export default class extends Controller {
     pollInterval: { type: Number, default: 3000 }
   }
 
-  static targets = ['stage']
+  static targets = ['stage', 'uploadPhase', 'craftingPhase', 'errorPhase']
 
   async connect() {
     if (this.startUrlValue) {
@@ -30,20 +30,36 @@ export default class extends Controller {
     })
     const data = await response.json()
     if (!response.ok || data.error) {
-      if (this.hasStageTarget) this.stageTarget.textContent = data.error || 'Failed to start generation'
+      this.showErrorPhase()
       return false
     }
     this.statusUrlValue = data.status_url
     return true
   }
 
+  showErrorPhase() {
+    if (this.hasUploadPhaseTarget)   this.uploadPhaseTarget.classList.add('hidden')
+    if (this.hasCraftingPhaseTarget) this.craftingPhaseTarget.classList.add('hidden')
+    if (this.hasErrorPhaseTarget)    this.errorPhaseTarget.classList.remove('hidden')
+    clearInterval(this.timer)
+  }
+
   async poll() {
     if (!this.statusUrlValue) return
     const response = await fetch(this.statusUrlValue, { headers: { Accept: 'application/json' } })
+    if (!response.ok) { this.showErrorPhase(); return }
     const data = await response.json()
 
     if (data.stage && this.hasStageTarget) {
       this.stageTarget.textContent = data.stage
+    }
+
+    if (data.stage && this.hasUploadPhaseTarget && this.hasCraftingPhaseTarget) {
+      const crafting = data.stage.toLowerCase().includes('craft') ||
+                       data.stage.toLowerCase().includes('generat') ||
+                       data.stage.toLowerCase().includes('structur')
+      this.uploadPhaseTarget.classList.toggle('hidden', crafting)
+      this.craftingPhaseTarget.classList.toggle('hidden', !crafting)
     }
 
     if (data.status === 'complete') {

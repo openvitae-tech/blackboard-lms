@@ -1,0 +1,36 @@
+<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full">
+
+  <%# Wizard steps header %>
+  <div class="flex justify-center py-3">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'document-text-outline', label: 'Upload doc' },
+        { icon_name: 'square-3-stack-3d',     label: 'Configure Kit' },
+        { icon_name: 'bars-3-bottom-left',    label: 'Kit Structure' }
+      ],
+      current_step: 2
+    ) %>
+  </div>
+
+  <div class="flex flex-col items-center gap-4 py-16 text-center">
+    <%= image_tag '404-error.gif', class: 'w-40 h-40', alt: 'Error' %>
+
+    <div class="flex flex-col items-center gap-2">
+      <p class="heading-2xl text-red-500">We couldn't create your kit</p>
+      <p class="general-text-md-normal text-letter-color-light max-w-lg">
+        Something interrupted the process. You can retry, or upload a different document.
+        Your previous progress is saved.
+      </p>
+    </div>
+
+    <div class="flex gap-3 mt-4">
+      <%= link_to new_classroom_kit_path do %>
+        <%= button_component(text: 'Upload a different document', type: 'outline', colorscheme: 'primary') %>
+      <% end %>
+      <%= link_to generating_classroom_kit_path(id: :pending) do %>
+        <%= button_component(text: 'Retry', type: 'solid', colorscheme: 'primary') %>
+      <% end %>
+    </div>
+  </div>
+
+</div>

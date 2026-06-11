@@ -4,3 +4,6 @@
 //= link_tree ../../../vendor/javascript .js
 //= link_tree ../builds
 //= link content_studio/application.css
+//= link upload.gif
+//= link hourglass.gif
+//= link 404-error.gif

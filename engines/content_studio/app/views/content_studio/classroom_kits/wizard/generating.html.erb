@@ -1,0 +1,22 @@
+<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full"
+     data-controller="generation-polling"
+     data-generation-polling-status-url-value="<%= @kit_id == 'pending' ? '' : kit_generation_status_path(id: @kit_id) %>"
+     data-generation-polling-start-url-value="<%= @kit_id == 'pending' ? start_kit_generation_path : '' %>">
+
+  <%# Wizard steps header %>
+  <div class="flex justify-center py-3">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'document-text-outline', label: 'Upload doc' },
+        { icon_name: 'square-3-stack-3d',     label: 'Configure Kit' },
+        { icon_name: 'bars-3-bottom-left',    label: 'Kit Structure' }
+      ],
+      current_step: 2
+    ) %>
+  </div>
+
+  <%= render 'uploading' %>
+  <%= render 'crafting' %>
+  <%= render 'error' %>
+
+</div>

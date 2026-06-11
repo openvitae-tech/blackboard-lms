@@ -1,0 +1,59 @@
+<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full">
+
+  <%# Wizard steps header %>
+  <div class="flex justify-center py-3">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'document-text-outline', label: 'Upload doc' },
+        { icon_name: 'square-3-stack-3d', label: 'Configure Kit' },
+        { icon_name: 'bars-3-bottom-left', label: 'Kit Structure' }
+      ],
+      current_step: 1
+    ) %>
+  </div>
+
+  <%= form_with url: configure_classroom_kit_path(id: @kit_id), method: :patch,
+                class: 'flex flex-col gap-6' do |form| %>
+
+    <%# Card: Kit components %>
+    <div class="bg-white border border-line-colour-light rounded-xl p-8 flex flex-col gap-6">
+      <div class="flex flex-col gap-1">
+        <p class="main-text-sm-medium text-letter-color">Kit components</p>
+      </div>
+      <hr class="border-line-colour-light">
+
+      <div class="flex flex-col gap-4">
+        <% [
+          { value: 'slide_deck_for_learners', label: 'Slide deck for learners' },
+          { value: 'trainer_guide',           label: 'Trainer guide' },
+          { value: 'learner_handouts',        label: 'Learner handouts' },
+          { value: 'learning_notes',          label: 'Learning Notes' },
+          { value: 'quiz',                    label: 'Quiz' }
+        ].each do |component| %>
+          <%= input_checkbox_component(
+            name: 'components[]',
+            label: component[:label],
+            value: component[:value],
+            html_options: {
+              checked: @selected_components.include?(component[:value])
+            }
+          ) %>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Footer %>
+    <div class="flex justify-between">
+      <%= link_to new_classroom_kit_path do %>
+        <%= button_component(text: 'Back', type: 'outline', colorscheme: 'primary',
+                             icon_name: 'arrow-left', icon_position: 'left') %>
+      <% end %>
+      <%= form.button do %>
+        <%= button_component(text: 'Generate Kit Structure', type: 'solid', colorscheme: 'primary',
+                             icon_name: 'arrow-right', icon_position: 'right') %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+</div>

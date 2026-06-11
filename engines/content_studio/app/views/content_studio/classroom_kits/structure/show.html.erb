@@ -1,0 +1,25 @@
+<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full">
+
+  <%# Wizard steps header %>
+  <div class="flex justify-center py-3">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'document-text-outline', label: 'Upload doc' },
+        { icon_name: 'square-3-stack-3d',     label: 'Configure Kit' },
+        { icon_name: 'bars-3-bottom-left',    label: 'Kit Structure' }
+      ],
+      current_step: 2
+    ) %>
+  </div>
+
+  <div class="bg-white border border-line-colour-light rounded-xl p-8 flex flex-col items-center gap-4 text-center">
+    <%= icon('puzzle-piece', css: 'w-12 h-12 text-primary', span_css: 'bg-primary-light-50 rounded-2xl w-20 h-20') %>
+    <div class="flex flex-col gap-2">
+      <p class="heading-2xl text-primary">Kit Structure</p>
+      <p class="general-text-lg-normal text-letter-color-light">
+        Kit structure for <strong><%= @kit_id %></strong> is being built. Coming soon.
+      </p>
+    </div>
+  </div>
+
+</div>
