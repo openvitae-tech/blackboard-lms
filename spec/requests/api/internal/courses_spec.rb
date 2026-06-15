@@ -8,6 +8,7 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
   let(:neo_ai) { instance_double(NeoAi::Client) }
 
   before do
+    stub_const('NEO_AI_PARTNER_HMAC_SECRET', 'test-secret')
     Api::Internal::CoursesController.instance_variable_set(:@neo_ai_client, nil)
     allow(NeoAi::Client).to receive(:new).and_return(neo_ai)
   end
@@ -206,6 +207,7 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
     before do
       sign_in privileged_user
       allow(neo_ai).to receive(:find_course).with('c1').and_return(neo_ai_data)
+      allow(NeoAi::DownloadLessonVideoJob).to receive(:perform_async)
     end
 
     it 'returns ok' do
