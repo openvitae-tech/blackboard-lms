@@ -22,8 +22,10 @@ export default class extends Controller {
       this._applyThumbnail()
       this._schedulePoll()
     }
+    this._onBeforeVisit = () => clearTimeout(this.timer)
     window.addEventListener('module-select:drag-start', this._onDragStart)
     window.addEventListener('module-select:drag-end', this._onDragEnd)
+    document.addEventListener('turbo:before-visit', this._onBeforeVisit)
     this.element.closest('turbo-frame').addEventListener('turbo:frame-load', this._onFrameLoad)
     this._schedulePoll()
   }
@@ -32,6 +34,7 @@ export default class extends Controller {
     clearTimeout(this.timer)
     window.removeEventListener('module-select:drag-start', this._onDragStart)
     window.removeEventListener('module-select:drag-end', this._onDragEnd)
+    document.removeEventListener('turbo:before-visit', this._onBeforeVisit)
     this.element.closest('turbo-frame')?.removeEventListener('turbo:frame-load', this._onFrameLoad)
   }
 

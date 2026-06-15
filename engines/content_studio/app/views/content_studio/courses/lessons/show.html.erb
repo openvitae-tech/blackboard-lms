@@ -11,7 +11,7 @@
   <%# Header %>
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-2">
-      <%= link_to course_structure_path(id: @course_id), data: { turbo_frame: '_top' } do %>
+      <%= link_to course_structure_path(id: @course_id), data: { turbo: false } do %>
         <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
           <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
         </span>
