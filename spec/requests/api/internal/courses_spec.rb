@@ -207,6 +207,7 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
     before do
       sign_in privileged_user
       allow(neo_ai).to receive(:find_course).with('c1').and_return(neo_ai_data)
+      allow(NeoAi::DownloadLessonVideoJob).to receive(:perform_async)
     end
 
     it 'returns ok' do
