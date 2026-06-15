@@ -31,7 +31,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
                          duration: 9240,
                          modules: [airport_services_module, wine_serving_module],
                          verified_modules_count: 1,
-                         thumbnail_url: nil
+                         thumbnail_url: nil, saved: false
                        ))
   end
 
@@ -65,7 +65,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
                            duration: 9240,
                            modules: [airport_services_module, wine_serving_module],
                            verified_modules_count: 1,
-                           thumbnail_url: nil,
+                           thumbnail_url: nil, saved: false,
                            stage: 'scene_writer_completed'
                          ))
     end
@@ -101,7 +101,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       )
       assign(:structure, ContentStudio::CourseStructure.new(
                            id: 1, title: 'Airport Services Management', duration: 9240,
-                           modules: [mod], verified_modules_count: 1, thumbnail_url: nil
+                           modules: [mod], verified_modules_count: 1, thumbnail_url: nil, saved: false
                          ))
     end
 
@@ -149,7 +149,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     before do
       assign(:structure, ContentStudio::CourseStructure.new(
                            id: 1, title: 'Airport Services Management', duration: 9240,
-                           modules: [ready_module], verified_modules_count: 0, thumbnail_url: nil
+                           modules: [ready_module], verified_modules_count: 0, thumbnail_url: nil, saved: false
                          ))
     end
 
@@ -237,7 +237,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
                            duration: 9240,
                            modules: [airport_services_module],
                            verified_modules_count: 1,
-                           thumbnail_url: 'https://example.com/thumb.jpg'
+                           thumbnail_url: 'https://example.com/thumb.jpg', saved: false
                          ))
     end
 
@@ -287,7 +287,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       )
       assign(:structure, ContentStudio::CourseStructure.new(
                            id: 1, title: 'Airport Services Management', duration: 9240,
-                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil,
+                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil, saved: false,
                            progress_text: 'Generating module 2 of 3'
                          ))
     end
@@ -299,9 +299,31 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     end
   end
 
-  it 'renders the Save Course button' do
-    render
-    expect(rendered).to include('Save Course')
+  context 'when the course is not yet saved to LMS' do
+    it 'renders the Save Course button' do
+      render
+      expect(rendered).to include('Save Course')
+      expect(rendered).not_to include('Update Course')
+    end
+  end
+
+  context 'when the course is already saved to LMS' do
+    before do
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1,
+                           title: 'Airport Services Management',
+                           duration: 9240,
+                           modules: [airport_services_module, wine_serving_module],
+                           verified_modules_count: 1,
+                           thumbnail_url: nil, saved: true
+                         ))
+    end
+
+    it 'renders the Update Course button' do
+      render
+      expect(rendered).to include('Update Course')
+      expect(rendered).not_to include('Save Course')
+    end
   end
 
   it 'renders the Discard Course button' do
@@ -330,7 +352,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       )
       assign(:structure, ContentStudio::CourseStructure.new(
                            id: 1, title: 'Airport Services Management', duration: 9240,
-                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil
+                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil, saved: false
                          ))
     end
 

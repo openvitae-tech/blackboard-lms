@@ -18,8 +18,16 @@ export default class extends Controller {
       this._dragging = false
       this._schedulePoll()
     }
+    this._onFrameLoad = () => {
+      this._applyThumbnail()
+      this._schedulePoll()
+    }
+    this._onBeforeVisit = () => clearTimeout(this.timer)
     window.addEventListener('module-select:drag-start', this._onDragStart)
     window.addEventListener('module-select:drag-end', this._onDragEnd)
+    document.addEventListener('turbo:before-visit', this._onBeforeVisit)
+    this._frame = this.element.closest('turbo-frame')
+    this._frame?.addEventListener('turbo:frame-load', this._onFrameLoad)
     this._schedulePoll()
   }
 
@@ -27,11 +35,16 @@ export default class extends Controller {
     clearTimeout(this.timer)
     window.removeEventListener('module-select:drag-start', this._onDragStart)
     window.removeEventListener('module-select:drag-end', this._onDragEnd)
+    document.removeEventListener('turbo:before-visit', this._onBeforeVisit)
+    this._frame?.removeEventListener('turbo:frame-load', this._onFrameLoad)
   }
 
-  // Updates the permanent thumbnail img only when the URL first becomes available.
-  // The loadedUrl guard prevents redundant updates (and re-fetches) on subsequent polls.
   thumbnailUrlValueChanged(url) {
+    this._applyThumbnail()
+  }
+
+  _applyThumbnail() {
+    const url = this.thumbnailUrlValue
     if (!url) return
     const img = document.getElementById('course-thumbnail-img')
     if (!img || img.dataset.loadedUrl === url) return
@@ -42,9 +55,9 @@ export default class extends Controller {
 
   _schedulePoll() {
     clearTimeout(this.timer)
-    if (!this.pendingValue || this._dragging) return
+    if (!this.pendingValue || this._dragging || !this._frame) return
     this.timer = setTimeout(() => {
-      this.element.closest('turbo-frame').src = window.location.href
+      this._frame.src = window.location.href
     }, POLL_INTERVAL_MS)
   }
 }

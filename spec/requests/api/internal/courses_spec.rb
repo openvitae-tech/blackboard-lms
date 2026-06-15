@@ -167,6 +167,20 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
       get '/api/internal/courses/c1/structure'
       expect(response.parsed_body['verified_modules_count']).to eq(1)
     end
+
+    it 'returns saved: false when the course is not in the LMS' do
+      get '/api/internal/courses/c1/structure'
+      expect(response.parsed_body['saved']).to be(false)
+    end
+
+    context 'when a LMS course with the matching neo_ai_course_id exists' do
+      before { create(:course, neo_ai_course_id: 'c1') }
+
+      it 'returns saved: true' do
+        get '/api/internal/courses/c1/structure'
+        expect(response.parsed_body['saved']).to be(true)
+      end
+    end
   end
 
   describe 'POST /api/internal/courses' do

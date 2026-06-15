@@ -164,7 +164,8 @@ module Api
           progress_text: data['progress_text'],
           stage: data['stage'],
           verified_modules_count: modules.sum { |m| m[:lessons].count { |l| l[:verified] } },
-          modules: modules
+          modules: modules,
+          saved: Course.exists?(neo_ai_course_id: data['id'])
         }
       end
 

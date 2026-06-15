@@ -33,7 +33,8 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
         )
       ],
       verified_modules_count: 0,
-      thumbnail_url: nil
+      thumbnail_url: nil,
+      saved: false
     )
   end
 
@@ -142,6 +143,83 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
 
       it 'sets an alert flash message' do
         expect(flash[:alert]).to eq('Something went wrong. Please try again.')
+      end
+    end
+  end
+
+  describe 'POST /content_studio/courses/:course_id/lessons/:id/verify' do
+    context 'when verification succeeds' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:verify_lesson)
+        post '/content_studio/courses/1/lessons/1/verify'
+      end
+
+      it 'calls ApiClient.verify_lesson with the correct ids' do
+        expect(ContentStudio::ApiClient).to have_received(:verify_lesson).with('1', course_id: '1')
+      end
+
+      it 'redirects to the course structure page when there is no next lesson' do
+        expect(response).to redirect_to('/content_studio/courses/1/structure')
+      end
+
+      it 'sets a success flash notice' do
+        expect(flash[:notice]).to eq('Lesson verified.')
+      end
+    end
+
+    context 'when a next_lesson_id is provided' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:verify_lesson)
+        post '/content_studio/courses/1/lessons/1/verify', params: { next_lesson_id: '2' }
+      end
+
+      it 'redirects to the next lesson' do
+        expect(response).to redirect_to('/content_studio/courses/1/lessons/2')
+      end
+    end
+
+    context 'when the lesson is not found' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:verify_lesson).and_raise(Faraday::ResourceNotFound)
+        post '/content_studio/courses/1/lessons/1/verify'
+      end
+
+      it 'redirects to the course structure page' do
+        expect(response).to redirect_to('/content_studio/courses/1/structure')
+      end
+
+      it 'sets an alert flash message' do
+        expect(flash[:alert]).to eq('Lesson not found.')
+      end
+    end
+
+    context 'when the course is locked' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:verify_lesson).and_raise(Faraday::BadRequestError)
+        post '/content_studio/courses/1/lessons/1/verify'
+      end
+
+      it 'redirects back to the lesson page' do
+        expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
+      end
+
+      it 'sets an alert flash message' do
+        expect(flash[:alert]).to eq('Course is currently being processed. Please wait before verifying.')
+      end
+    end
+
+    context 'when an unexpected error occurs' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:verify_lesson).and_raise(Faraday::Error)
+        post '/content_studio/courses/1/lessons/1/verify'
+      end
+
+      it 'redirects back to the lesson page' do
+        expect(response).to redirect_to('/content_studio/courses/1/lessons/1')
+      end
+
+      it 'sets an alert flash message' do
+        expect(flash[:alert]).to eq('Something went wrong while verifying. Please try again.')
       end
     end
   end

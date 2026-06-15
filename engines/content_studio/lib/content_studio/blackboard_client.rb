@@ -188,7 +188,8 @@ module ContentStudio
         verified_modules_count: data['verified_modules_count'].to_i,
         thumbnail_url: data['thumbnail_url'],
         progress_text: data['progress_text'],
-        stage: data['stage']
+        stage: data['stage'],
+        saved: data['saved'] == true
       )
     end
 
