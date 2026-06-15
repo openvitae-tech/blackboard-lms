@@ -26,7 +26,8 @@ export default class extends Controller {
     window.addEventListener('module-select:drag-start', this._onDragStart)
     window.addEventListener('module-select:drag-end', this._onDragEnd)
     document.addEventListener('turbo:before-visit', this._onBeforeVisit)
-    this.element.closest('turbo-frame').addEventListener('turbo:frame-load', this._onFrameLoad)
+    this._frame = this.element.closest('turbo-frame')
+    this._frame?.addEventListener('turbo:frame-load', this._onFrameLoad)
     this._schedulePoll()
   }
 
@@ -35,7 +36,7 @@ export default class extends Controller {
     window.removeEventListener('module-select:drag-start', this._onDragStart)
     window.removeEventListener('module-select:drag-end', this._onDragEnd)
     document.removeEventListener('turbo:before-visit', this._onBeforeVisit)
-    this.element.closest('turbo-frame')?.removeEventListener('turbo:frame-load', this._onFrameLoad)
+    this._frame?.removeEventListener('turbo:frame-load', this._onFrameLoad)
   }
 
   thumbnailUrlValueChanged(url) {
@@ -54,9 +55,9 @@ export default class extends Controller {
 
   _schedulePoll() {
     clearTimeout(this.timer)
-    if (!this.pendingValue || this._dragging) return
+    if (!this.pendingValue || this._dragging || !this._frame) return
     this.timer = setTimeout(() => {
-      this.element.closest('turbo-frame').src = window.location.href
+      this._frame.src = window.location.href
     }, POLL_INTERVAL_MS)
   }
 }
