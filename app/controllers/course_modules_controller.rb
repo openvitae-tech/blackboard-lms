@@ -16,8 +16,8 @@ class CourseModulesController < ApplicationController
 
   # GET /course_modules/new
   def new
-    authorize :course_module
     @course_module = @course.course_modules.new
+    authorize @course_module
   end
 
   # GET /course_modules/1/edit
@@ -27,8 +27,8 @@ class CourseModulesController < ApplicationController
 
   # POST /course_modules or /course_modules.json
   def create
-    authorize :course_module
     @course_module = @course.course_modules.new(course_module_params)
+    authorize @course_module
     service = Courses::ManagementService.instance
 
     if @course_module.save

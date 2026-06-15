@@ -11,8 +11,8 @@ class LessonsController < ApplicationController
   before_action :set_local_content, only: :show
 
   def new
-    authorize @course, policy_class: LessonPolicy
     @lesson = @course_module.lessons.new
+    authorize @lesson
   end
 
   def show
@@ -30,7 +30,7 @@ class LessonsController < ApplicationController
   end
 
   def create
-    authorize @course, policy_class: LessonPolicy
+    authorize @course_module.lessons.build
 
     service = Lessons::CreateService.instance
 
