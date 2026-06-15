@@ -36,7 +36,11 @@ module Api
       end
 
       def neo_ai
-        @neo_ai ||= NeoAi::Client.new(partner_id: current_user.learning_partner_id)
+        @neo_ai ||= NeoAi::Client.new(partner_id: scoped_partner_id)
+      end
+
+      def scoped_partner_id
+        OpenSSL::HMAC.hexdigest('SHA256', NEO_AI_PARTNER_HMAC_SECRET, current_user.learning_partner_id.to_s)
       end
     end
   end
