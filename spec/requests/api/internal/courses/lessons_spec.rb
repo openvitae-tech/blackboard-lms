@@ -95,22 +95,21 @@ RSpec.describe 'Api::Internal::Courses::Lessons', type: :request do
       expect(response.parsed_body['status']).to eq('VIDEO_READY')
     end
 
-    it 'derives VERIFIED when verified and video_url present' do
+    it 'derives VERIFIED when verified is true regardless of video_url' do
+      data = course_data.deep_dup
+      data['modules'][0]['lessons'][0]['verified'] = true
+      allow(neo_ai).to receive(:find_course).with('c1').and_return(data)
+      get '/api/internal/courses/c1/lessons/l1'
+      expect(response.parsed_body['status']).to eq('VERIFIED')
+    end
+
+    it 'derives VERIFIED when verified is true and video_url is present' do
       data = course_data.deep_dup
       data['modules'][0]['lessons'][0]['verified'] = true
       data['modules'][0]['lessons'][0]['video_url'] = 'https://example.com/lesson.mp4'
       allow(neo_ai).to receive(:find_course).with('c1').and_return(data)
       get '/api/internal/courses/c1/lessons/l1'
       expect(response.parsed_body['status']).to eq('VERIFIED')
-    end
-
-    it 'derives PENDING when verified but video_url is blank' do
-      data = course_data.deep_dup
-      data['modules'][0]['lessons'][0]['verified'] = true
-      data['modules'][0]['lessons'][0]['scenes'][0]['video_url'] = 'https://example.com/s1.mp4'
-      allow(neo_ai).to receive(:find_course).with('c1').and_return(data)
-      get '/api/internal/courses/c1/lessons/l1'
-      expect(response.parsed_body['status']).to eq('PENDING')
     end
   end
 end

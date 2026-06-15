@@ -87,12 +87,22 @@ module ContentStudio
 
       def verify
         ApiClient.verify_lesson(params[:id], course_id: params[:course_id])
+        flash[:notice] = t('.success')
         next_id = params[:next_lesson_id]
         if next_id.present?
           redirect_to course_lesson_path(params[:course_id], next_id)
         else
           redirect_to course_structure_path(id: params[:course_id])
         end
+      rescue Faraday::ResourceNotFound
+        flash[:alert] = t('.not_found')
+        redirect_to course_structure_path(id: params[:course_id])
+      rescue Faraday::BadRequestError
+        flash[:alert] = t('.locked')
+        redirect_to course_lesson_path(params[:course_id], params[:id])
+      rescue Faraday::Error
+        flash[:alert] = t('.error')
+        redirect_to course_lesson_path(params[:course_id], params[:id])
       end
 
       def scene_status
