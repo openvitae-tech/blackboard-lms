@@ -18,8 +18,13 @@ export default class extends Controller {
       this._dragging = false
       this._schedulePoll()
     }
+    this._onFrameLoad = () => {
+      this._applyThumbnail()
+      this._schedulePoll()
+    }
     window.addEventListener('module-select:drag-start', this._onDragStart)
     window.addEventListener('module-select:drag-end', this._onDragEnd)
+    this.element.closest('turbo-frame').addEventListener('turbo:frame-load', this._onFrameLoad)
     this._schedulePoll()
   }
 
@@ -27,11 +32,15 @@ export default class extends Controller {
     clearTimeout(this.timer)
     window.removeEventListener('module-select:drag-start', this._onDragStart)
     window.removeEventListener('module-select:drag-end', this._onDragEnd)
+    this.element.closest('turbo-frame')?.removeEventListener('turbo:frame-load', this._onFrameLoad)
   }
 
-  // Updates the permanent thumbnail img only when the URL first becomes available.
-  // The loadedUrl guard prevents redundant updates (and re-fetches) on subsequent polls.
   thumbnailUrlValueChanged(url) {
+    this._applyThumbnail()
+  }
+
+  _applyThumbnail() {
+    const url = this.thumbnailUrlValue
     if (!url) return
     const img = document.getElementById('course-thumbnail-img')
     if (!img || img.dataset.loadedUrl === url) return
