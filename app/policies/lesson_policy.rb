@@ -52,6 +52,9 @@ class LessonPolicy
   private
 
   def own_content_studio_lesson?
-    user.privileged_user? && CoursePolicy.new(user, record.course_module.course).edit?
+    return false unless user.privileged_user?
+
+    course = record.is_a?(Course) ? record : record.course_module.course
+    CoursePolicy.new(user, course).edit?
   end
 end
