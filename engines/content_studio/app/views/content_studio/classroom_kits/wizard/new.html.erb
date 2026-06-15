@@ -18,9 +18,21 @@
                         action: 'file-selector:change->wizard-upload#onFilesChanged',
                         wizard_upload_existing_count_value: @existing_files.size } do |form| %>
 
-    <%# Card: Document upload %>
-    <div class="bg-white border border-line-colour-light rounded-xl p-8 flex flex-col gap-3">
-      <p class="main-text-sm-medium text-letter-color">Choose Classroom Kit Documents</p>
+    <%# Card: Title + Document upload %>
+    <div class="bg-white border border-line-colour-light rounded-xl p-8 flex flex-col gap-6">
+      <div class="flex flex-col gap-3">
+        <p class="main-text-sm-medium text-letter-color">Kit Title</p>
+        <%= input_text_component(
+          form: form,
+          name: 'kit_title',
+          label: 'Title',
+          placeholder: 'e.g. Banking and Basic Strategies',
+          size: 'md'
+        ) %>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <p class="main-text-sm-medium text-letter-color">Choose Classroom Kit Documents</p>
 
       <%= file_selector_component(
         form: form,
@@ -48,7 +60,8 @@
           <% end %>
         </div>
       <% end %>
-    </div>
+      </div><%# end documents div %>
+    </div><%# end card %>
 
     <%# Footer %>
     <div class="flex justify-between">

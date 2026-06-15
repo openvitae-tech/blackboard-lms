@@ -19,6 +19,7 @@ module ContentStudio
 
         session[:kit_wizard_file_urls] = existing_urls + new_urls
         session[:kit_wizard_file_metadata] = existing_meta + new_meta
+        session[:kit_wizard_title] = params[:kit_title].presence
 
         redirect_to configure_classroom_kit_path(id: :pending)
       end
@@ -71,6 +72,7 @@ module ContentStudio
         session.delete(:kit_wizard_file_urls)
         session.delete(:kit_wizard_file_metadata)
         session.delete(:kit_wizard_components)
+        session.delete(:kit_wizard_title)
       end
     end
   end
