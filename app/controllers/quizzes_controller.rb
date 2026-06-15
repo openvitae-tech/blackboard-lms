@@ -17,8 +17,8 @@ class QuizzesController < ApplicationController
   end
 
   def new
-    authorize Quiz
     @quiz = @course_module.quizzes.new
+    authorize @quiz
   end
 
   def edit
@@ -26,7 +26,7 @@ class QuizzesController < ApplicationController
   end
 
   def create
-    authorize Quiz
+    authorize Quiz.new(course_module: @course_module)
     @quiz = @course_module.quizzes.new(quiz_params)
     service = Courses::ManagementService.instance
 
@@ -49,7 +49,7 @@ class QuizzesController < ApplicationController
   end
 
   def generate
-    authorize Quiz
+    authorize Quiz.new(course_module: @course_module)
 
     quizzes = Quizzes::GenerationService.new(@course_module).generate_via_ai
     if quizzes.empty?
