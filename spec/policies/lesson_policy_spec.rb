@@ -19,42 +19,30 @@ RSpec.describe LessonPolicy do
   end
 
   describe '#show?' do
-    context 'when record is a Course (as authorized in LessonsController#show)' do
-      subject { described_class.new(user, course).show? }
+    let(:cs_lesson) do
+      cs_course = create :course, learning_partner:, neo_ai_course_id: 'neo-123'
+      create :lesson, course_module: (create :course_module, course: cs_course)
+    end
 
-      context 'when user is admin' do
-        let(:user) { admin }
+    it 'permits admin' do
+      expect(described_class.new(admin, lesson).show?).to be true
+    end
 
-        it { is_expected.to be true }
-      end
+    it 'permits manager who owns the content studio course' do
+      expect(described_class.new(manager, cs_lesson).show?).to be true
+    end
 
-      context 'when manager owns the content studio course' do
-        let(:user) { manager }
+    it 'denies manager on a non-content-studio course' do
+      expect(described_class.new(manager, lesson).show?).to be false
+    end
 
-        before { course.update!(neo_ai_course_id: 'neo-123') }
+    it 'permits enrolled learner' do
+      Enrollment.create!(user: learner, course:)
+      expect(described_class.new(learner, lesson).show?).to be true
+    end
 
-        it { is_expected.to be true }
-      end
-
-      context 'when manager does not own a content studio course' do
-        let(:user) { manager }
-
-        it { is_expected.to be false }
-      end
-
-      context 'when learner is enrolled' do
-        let(:user) { learner }
-
-        before { Enrollment.create!(user: learner, course:) }
-
-        it { is_expected.to be true }
-      end
-
-      context 'without enrollment' do
-        let(:user) { learner }
-
-        it { is_expected.to be false }
-      end
+    it 'denies unenrolled learner' do
+      expect(described_class.new(learner, lesson).show?).to be false
     end
   end
 
