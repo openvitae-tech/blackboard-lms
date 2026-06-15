@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include Impersonation
 
   before_action :authenticate_user!
+  before_action :preload_learning_partner_plan
   before_action :set_back_link
   before_action :set_active_nav
 
@@ -38,21 +39,28 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(user)
     stored_location_for(:user) || if user.privileged_user?
-      dashboards_path
-    elsif user.is_admin?
-      learning_partners_path
-    else
-      courses_path
-    end
+                                    dashboards_path
+                                  elsif user.is_admin?
+                                    learning_partners_path
+                                  else
+                                    courses_path
+                                  end
+  end
+
+  def preload_learning_partner_plan
+    return unless current_user&.content_studio_creator?
+
+    lp = current_user.learning_partner
+    return unless lp
+
+    ActiveRecord::Associations::Preloader.new(records: [lp], associations: :payment_plan).call
   end
 
   def set_back_link
-    @back_link = params[:source_path].present? ? params[:source_path] : request.referer
+    @back_link = params[:source_path].presence || request.referer
   end
 
-  def active_nav
-    @active_nav
-  end
+  attr_reader :active_nav
 
   def set_active_nav
     @active_nav = controller_name

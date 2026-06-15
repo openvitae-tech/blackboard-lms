@@ -14,6 +14,11 @@ RSpec.describe CourseModulePolicy do
   let(:cs_course) { create :course, learning_partner:, neo_ai_course_id: 'neo-123' }
   let(:cs_module) { create :course_module, course: cs_course }
 
+  before do
+    manager.update!(content_studio_creator: true)
+    create :payment_plan, learning_partner:, content_studio_enabled: true
+  end
+
   %i[new? create? edit? update? show?].each do |action|
     describe "##{action}" do
       it 'permits admin' do

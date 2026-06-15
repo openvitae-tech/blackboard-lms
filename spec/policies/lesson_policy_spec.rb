@@ -13,6 +13,11 @@ RSpec.describe LessonPolicy do
   let(:course_module) { create :course_module, course: }
   let(:lesson) { create :lesson, course_module: }
 
+  before do
+    manager.update!(content_studio_creator: true)
+    create :payment_plan, learning_partner:, content_studio_enabled: true
+  end
+
   describe '#show?' do
     context 'when record is a Course (as authorized in LessonsController#show)' do
       subject { described_class.new(user, course).show? }
