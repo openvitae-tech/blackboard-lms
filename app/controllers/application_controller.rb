@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   include Impersonation
 
   before_action :authenticate_user!
-  before_action :preload_learning_partner_plan
   before_action :set_back_link
   before_action :set_active_nav
 

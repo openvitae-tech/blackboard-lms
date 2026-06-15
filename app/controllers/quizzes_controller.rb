@@ -4,6 +4,7 @@ class QuizzesController < ApplicationController
   include CommonsHelper
   include CourseNavContext
   
+  before_action :preload_learning_partner_plan
   before_action :set_course
   before_action :set_course_module
   before_action :set_quiz, only: %i[show edit update destroy submit_answer moveup movedown]

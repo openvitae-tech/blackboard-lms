@@ -3,6 +3,7 @@
 class CoursesController < ApplicationController
   include CourseAssociationsPreloader
 
+  before_action :preload_learning_partner_plan
   before_action :set_course, only: %i[show edit update destroy enroll unenroll proceed publish unpublish]
   before_action :set_course_active_nav, only: %i[show index explore continue complete manage]
   before_action :set_tags, only: %i[new create edit update]

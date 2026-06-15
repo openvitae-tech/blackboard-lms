@@ -3,6 +3,7 @@
 class CourseModulesController < ApplicationController
   include CourseNavContext
 
+  before_action :preload_learning_partner_plan
   before_action :set_course, only: %i[new create show edit update destroy moveup movedown summary redo_quiz]
   before_action :set_course_module, only: %i[show edit update destroy moveup movedown summary redo_quiz]
 

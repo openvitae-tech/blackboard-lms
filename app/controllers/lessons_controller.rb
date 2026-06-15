@@ -4,6 +4,7 @@ class LessonsController < ApplicationController
   include LessonsHelper
   include CourseNavContext
 
+  before_action :preload_learning_partner_plan
   before_action :set_course
   before_action :set_course_module
   before_action :set_enrollment, only: %i[show complete]
