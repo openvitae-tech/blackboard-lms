@@ -30,7 +30,7 @@ class LessonsController < ApplicationController
   end
 
   def create
-    authorize @course_module.lessons.build
+    authorize Lesson.new(course_module: @course_module)
 
     service = Lessons::CreateService.instance
 
