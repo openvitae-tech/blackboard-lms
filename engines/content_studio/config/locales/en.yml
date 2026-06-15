@@ -1,6 +1,10 @@
 en:
   content_studio:
     courses:
+      structure:
+        save:
+          success: "Course saved to LMS."
+          error: "Something went wrong while saving. Please try again."
       discard:
         locked: "Course is currently being processed. Please wait before deleting."
         confirm:

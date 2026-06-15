@@ -253,9 +253,10 @@
             <%= button_component(text: 'Discard Course', type: 'outline', colorscheme: 'danger',
                                  html_options: { class: 'w-full' }) %>
           <% end %>
-          <%= form_with url: save_course_path(id: @structure.id), method: :patch, class: 'flex-1' do |f| %>
+          <%= form_with url: save_course_path(id: @structure.id), method: :patch, class: 'flex-1', data: { turbo_frame: '_top' } do |f| %>
             <%= f.button class: 'w-full', disabled: !all_videos_ready do %>
-              <%= button_component(text: 'Save Course', type: 'solid', colorscheme: 'primary',
+              <%= button_component(text: @structure.saved ? 'Update Course' : 'Save Course',
+                                   type: 'solid', colorscheme: 'primary',
                                    disabled: !all_videos_ready,
                                    html_options: { class: 'w-full' }) %>
             <% end %>

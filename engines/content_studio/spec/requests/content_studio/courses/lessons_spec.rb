@@ -33,7 +33,8 @@ RSpec.describe 'ContentStudio::Courses::Lessons', type: :request do
         )
       ],
       verified_modules_count: 0,
-      thumbnail_url: nil
+      thumbnail_url: nil,
+      saved: false
     )
   end
 
