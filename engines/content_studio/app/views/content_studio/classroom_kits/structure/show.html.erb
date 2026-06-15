@@ -1,0 +1,115 @@
+<div class="flex flex-col gap-6 py-3">
+
+  <%# Page header %>
+  <div class="flex items-center gap-2">
+    <%= link_to new_classroom_kit_path do %>
+      <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
+        <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
+      </span>
+    <% end %>
+    <span class="main-text-lg-semibold text-letter-color">Banking and Basic Strategies</span>
+  </div>
+
+  <%# Generation-in-progress banner — hidden when kit is fully ready %>
+  <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden">
+    <div class="flex items-center justify-between p-3">
+      <div class="flex items-center gap-2 min-w-0">
+        <%= video_tag 'gliters-ai.mp4', class: 'w-7 h-7 shrink-0', autoplay: true, loop: true, muted: true, playsinline: true %>
+        <span class="general-text-sm-normal text-letter-color truncate">
+          Generating Trainer Guide for Banking and Basic Strategies
+        </span>
+      </div>
+      <div class="flex items-center gap-3 flex-shrink-0 pl-3">
+        <span class="general-text-sm-normal text-primary-dark bg-primary-light-100 rounded-sm py-0.5 px-1">~ 5 mins remaining</span>
+        <span class="general-text-md-medium text-primary">66%</span>
+      </div>
+    </div>
+    <%= progressbar_component(numerator: 66, denominator: 100, full_width: true, animated: true, thin: true) %>
+  </div>
+
+  <%# Two-column body %>
+  <div class="flex gap-6 items-start">
+
+    <%# Left — kit components list %>
+    <div class="flex-1 bg-white border border-line-colour-light rounded-2xl p-6 flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <span class="main-text-md-semibold text-letter-color">Classroom Kit</span>
+        <button class="main-text-sm-normal text-primary hover:underline">Download All</button>
+      </div>
+
+      <div class="flex flex-col gap-3">
+
+        <div class="flex items-center gap-3">
+          <span class="flex-1 main-text-sm-normal text-letter-color bg-white-light border border-line-colour-light rounded-lg px-4 py-3">Slide deck for learners</span>
+          <button class="flex-shrink-0 text-primary hover:text-primary-dark">
+            <%= icon 'arrow-down-tray', css: 'w-6 h-6' %>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="flex-1 main-text-sm-normal text-letter-color bg-white-light border border-line-colour-light rounded-lg px-4 py-3">Trainer guide</span>
+          <button class="flex-shrink-0 text-primary hover:text-primary-dark">
+            <%= icon 'arrow-down-tray', css: 'w-6 h-6' %>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="flex-1 main-text-sm-normal text-letter-color bg-white-light border border-line-colour-light rounded-lg px-4 py-3">Learner handouts</span>
+          <button class="flex-shrink-0 text-primary hover:text-primary-dark">
+            <%= icon 'arrow-down-tray', css: 'w-6 h-6' %>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="flex-1 main-text-sm-normal text-letter-color bg-white-light border border-line-colour-light rounded-lg px-4 py-3">Learning Notes</span>
+          <span class="flex-shrink-0 w-6 h-6 rounded-full border-2 border-disabled-color border-t-transparent animate-spin"></span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="flex-1 main-text-sm-normal text-letter-color bg-white-light border border-line-colour-light rounded-lg px-4 py-3">Quiz</span>
+          <%= icon 'clock', css: 'w-6 h-6 text-disabled-color flex-shrink-0' %>
+        </div>
+
+      </div>
+    </div>
+
+    <%# Right — kit summary %>
+    <div class="w-[420px] bg-primary-light-50 border border-primary-light-100 rounded-2xl p-6 flex flex-col gap-5">
+      <span class="main-text-lg-semibold text-letter-color">Kit summary</span>
+
+      <div class="flex flex-col gap-3">
+        <p class="main-text-sm-medium text-letter-color">Banking and Basic Strategies</p>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-1">
+            <%= icon 'users', css: 'w-4 h-4 text-letter-color-light' %>
+            <span class="general-text-sm-normal text-letter-color-light">CES Frontline Sales</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <%= icon 'book-open', css: 'w-4 h-4 text-letter-color-light' %>
+            <span class="general-text-sm-normal text-letter-color-light">5 Documents</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Thumbnail %>
+      <div class="flex flex-col gap-3 bg-white p-3 rounded-lg">
+        <span class="general-text-sm-normal text-letter-color">Thumbnail</span>
+        <div class="relative h-[159px] w-full bg-white border border-line-colour-light rounded-lg overflow-hidden">
+          <%= image_tag 'checker.png', class: 'absolute inset-0 w-full h-full object-cover rounded-lg', alt: '' %>
+          <button class="absolute bottom-2 right-2 w-7 h-7 bg-white border border-letter-color rounded-[14px] opacity-70 flex items-center justify-center p-1.5 hover:opacity-100">
+            <%= icon 'pencil', css: 'w-4 h-4 text-letter-color' %>
+          </button>
+        </div>
+      </div>
+
+      <%# Actions %>
+      <div class="flex gap-3">
+        <%= button_component(text: 'Discard Kit', type: 'outline', colorscheme: 'danger', size: 'md',
+                             html_options: { class: 'flex-1' }) %>
+        <%= button_component(text: 'Save Kit', colorscheme: 'primary', size: 'md',
+                             html_options: { class: 'flex-1' }) %>
+      </div>
+    </div>
+
+  </div>
+</div>
