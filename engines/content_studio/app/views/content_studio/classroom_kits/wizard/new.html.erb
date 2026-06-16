@@ -27,7 +27,13 @@
           name: 'kit_title',
           label: 'Title',
           placeholder: 'e.g. Banking and Basic Strategies',
-          size: 'md'
+          size: 'md',
+          html_options: {
+            data: {
+              wizard_upload_target: 'title',
+              action: 'input->wizard-upload#onTitleChanged'
+            }
+          }
         ) %>
       </div>
 

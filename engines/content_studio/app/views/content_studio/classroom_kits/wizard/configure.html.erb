@@ -13,7 +13,8 @@
   </div>
 
   <%= form_with url: configure_classroom_kit_path(id: @kit_id), method: :patch,
-                class: 'flex flex-col gap-6' do |form| %>
+                class: 'flex flex-col gap-6',
+                data: { controller: 'kit-configure' } do |form| %>
 
     <%# Card: Kit components %>
     <div class="bg-white border border-line-colour-light rounded-xl p-8 flex flex-col gap-6">
@@ -35,7 +36,11 @@
             label: component[:label],
             value: component[:value],
             html_options: {
-              checked: @selected_components.include?(component[:value])
+              checked: @selected_components.include?(component[:value]),
+              data: {
+                kit_configure_target: 'checkbox',
+                action: 'change->kit-configure#onCheckboxChanged'
+              }
             }
           ) %>
         <% end %>
@@ -48,7 +53,7 @@
         <%= button_component(text: 'Back', type: 'outline', colorscheme: 'primary',
                              icon_name: 'arrow-left', icon_position: 'left') %>
       <% end %>
-      <%= form.button do %>
+      <%= form.button data: { kit_configure_target: 'submit' } do %>
         <%= button_component(text: 'Generate Kit Structure', type: 'solid', colorscheme: 'primary',
                              icon_name: 'arrow-right', icon_position: 'right') %>
       <% end %>

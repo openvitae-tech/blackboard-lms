@@ -11,7 +11,6 @@ ContentStudio::Engine.routes.draw do
   get  'classroom-kits/error',                 to: 'classroom_kits/wizard#error',             as: :classroom_kit_error
   post 'classroom-kits/start_generation',      to: 'classroom_kits/wizard#start_generation',  as: :start_kit_generation
   get  'classroom-kits/:id/generation_status', to: 'classroom_kits/wizard#generation_status', as: :kit_generation_status
-  get  'classroom-kits/:id/structure',         to: 'classroom_kits/structure#show',           as: :kit_structure
   get 'courses/new', to: 'courses/wizard#new', as: :new_course
   post 'courses', to: 'courses/wizard#create', as: :courses
   get 'courses/:id/configure_video', to: 'courses/wizard#configure_video', as: :configure_video
