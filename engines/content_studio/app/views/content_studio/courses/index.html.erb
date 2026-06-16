@@ -6,51 +6,70 @@
     <%# ── Section 1: Stats Cards ── %>
     <div class="flex gap-7 items-stretch">
       <div class="bg-primary-light-50 border border-slate-grey-light rounded-2xl p-5 flex gap-4 items-center flex-1">
-        <%= icon('book-open', css: 'w-7 h-7 text-primary', span_css: 'bg-white rounded-xl w-14 h-14 shrink-0') %>
+        <%= icon('book-open', css: 'w-7 h-7 text-primary', span_css: 'bg-white rounded-xl w-16 h-16 shrink-0') %>
         <div class="flex flex-col gap-1">
-          <p class="heading-xl text-letter-color"><%= @stats.created %> Courses</p>
+          <p class="main-text-lg-semibold text-letter-color"><%= @stats.created %> Courses</p>
           <p class="general-text-lg-normal text-letter-color">Created</p>
         </div>
       </div>
 
       <div class="bg-primary-light-50 border border-slate-grey-light rounded-2xl p-5 flex gap-4 items-center flex-1">
-        <%= icon('check-badge', css: 'w-7 h-7 text-primary', span_css: 'bg-white rounded-xl w-14 h-14 shrink-0') %>
+        <%= icon('check-badge', css: 'w-7 h-7 text-primary', span_css: 'bg-white rounded-xl w-16 h-16 shrink-0') %>
         <div class="flex flex-col gap-1">
-          <p class="heading-xl text-letter-color"><%= @stats.published %> Courses</p>
+          <p class="main-text-lg-semibold text-letter-color"><%= @stats.published %> Courses</p>
           <p class="general-text-lg-normal text-letter-color">Published</p>
         </div>
       </div>
 
       <div class="bg-primary-light-50 border border-slate-grey-light rounded-2xl p-5 flex gap-4 items-center flex-1">
-        <%= icon('clock', css: 'w-7 h-7 text-primary', span_css: 'bg-white rounded-xl w-14 h-14 shrink-0') %>
+        <%= icon('clock', css: 'w-7 h-7 text-primary', span_css: 'bg-white rounded-xl w-16 h-16 shrink-0') %>
         <div class="flex flex-col gap-1">
-          <p class="heading-xl text-letter-color"><%= @stats.in_progress %> Courses</p>
+          <p class="main-text-lg-semibold text-letter-color"><%= @stats.in_progress %> Courses</p>
           <p class="general-text-lg-normal text-letter-color">In Progress</p>
         </div>
       </div>
     </div>
 
     <%# ── Section 2: Main Action ── %>
-    <div class="bg-white border border-line-colour-light rounded-4xl p-8 flex gap-5 items-center">
-      <div class="flex flex-col gap-5 items-center flex-1">
-        <%= icon('rocket-launch', css: 'w-10 h-10 text-primary', span_css: 'bg-primary-light-50 rounded-2xl w-24 h-24') %>
-        <div class="flex flex-col gap-3 items-center text-center w-full">
-          <p class="heading-3xl text-primary">Transform Documents into engaging Courses</p>
-          <p class="general-text-lg-normal text-letter-color">
-            Upload Documents → Configure Video style → Finalize Course Structure
+    <div class="bg-white border border-line-colour-light rounded-3xl p-8 flex gap-5 items-center relative overflow-hidden">
+      <%# Decorative blobs — matching Figma node 2699:4003 %>
+      <%= image_tag 'blob-primary.svg',
+            class: 'absolute pointer-events-none',
+            style: 'left:-93px;top:113px;width:222px;height:222px;',
+            aria: { hidden: 'true' },
+            alt: '' %>
+      <%= image_tag 'blob-secondary.svg',
+            class: 'absolute pointer-events-none z-20',
+            style: 'right:-93px;top:-101px;width:245px;height:244px;',
+            aria: { hidden: 'true' },
+            alt: '' %>
+
+      <%# Left: text + CTA %>
+      <div class="flex flex-col gap-5 flex-1 relative z-10">
+        <div class="flex flex-col gap-3">
+          <p class="heading-2xl text-primary">Transform documents into engaging courses & classroom kits</p>
+          <p class="general-text-lg-normal text-letter-color-light">
+            Upload your source → Choose Course, Classroom Kit, or Both → Generate AI-built videos,
+            slide decks, trainer guides, handouts and quizzes — all branded, in minutes.
           </p>
         </div>
         <div class="w-fit">
-          <%= link_to new_course_path do %>
-            <%= button_component(text: 'Create New Course', colorscheme: 'primary', size: 'lg') %>
+          <%= link_to new_creation_path do %>
+            <%= button_component(text: 'Create new', colorscheme: 'primary', size: 'md',
+                                 icon_name: 'arrow-right', icon_position: 'right') %>
           <% end %>
         </div>
+      </div>
+
+      <%# Right: illustration %>
+      <div class="shrink-0 rounded-2xl overflow-hidden relative z-10">
+        <%= image_tag 'creation_hero.png', class: 'block', alt: '', width: 212, height: 164 %>
       </div>
     </div>
 
     <%# ── Section 3: Your Creations ── %>
     <div class="flex flex-col gap-3">
-      <p class="heading-xl text-primary px-2">Your Creations</p>
+      <p class="heading-xl text-primary px-2">Recent Creations</p>
 
       <div class="bg-white border-2 border-line-colour-light rounded-xl pt-4 pb-5 px-5 flex flex-col gap-4">
         <div data-controller="tabs"
@@ -92,11 +111,6 @@
 
         </div>
 
-        <div class="w-fit">
-          <%= button_component(text: 'Show all Creations', type: 'outline', size: 'sm',
-                               icon_name: 'chevron-right', icon_position: 'right',
-                               html_options: { href: '#' }) %>
-        </div>
       </div>
     </div>
 

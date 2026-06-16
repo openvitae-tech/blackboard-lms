@@ -31,7 +31,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
                          duration: 9240,
                          modules: [airport_services_module, wine_serving_module],
                          verified_modules_count: 1,
-                         thumbnail_url: nil
+                         thumbnail_url: nil, saved: false
                        ))
   end
 
@@ -65,7 +65,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
                            duration: 9240,
                            modules: [airport_services_module, wine_serving_module],
                            verified_modules_count: 1,
-                           thumbnail_url: nil,
+                           thumbnail_url: nil, saved: false,
                            stage: 'scene_writer_completed'
                          ))
     end
@@ -101,7 +101,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       )
       assign(:structure, ContentStudio::CourseStructure.new(
                            id: 1, title: 'Airport Services Management', duration: 9240,
-                           modules: [mod], verified_modules_count: 1, thumbnail_url: nil
+                           modules: [mod], verified_modules_count: 1, thumbnail_url: nil, saved: false
                          ))
     end
 
@@ -128,6 +128,91 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('data-controller="collapsible"')
   end
 
+  context 'when all scenes in a module have a video_url' do
+    let(:ready_scene) do
+      ContentStudio::Scene.new(id: 's1', status: 'COMPLETED',
+                               video_url: 'https://example.com/v.mp4', thumbnail_url: nil)
+    end
+
+    let(:ready_module) do
+      ContentStudio::StructureModule.new(
+        id: 3, title: 'Ready Module',
+        lessons: [
+          ContentStudio::StructureLesson.new(id: 4, title: 'Ready Lesson', status: 'VIDEO_READY',
+                                             video_url: nil, verified: false, scenes: [ready_scene]),
+          ContentStudio::StructureLesson.new(id: 5, title: 'Another Lesson', status: 'VIDEO_READY',
+                                             video_url: nil, verified: false, scenes: [ready_scene])
+        ]
+      )
+    end
+
+    before do
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1, title: 'Airport Services Management', duration: 9240,
+                           modules: [ready_module], verified_modules_count: 0, thumbnail_url: nil, saved: false
+                         ))
+    end
+
+    it 'renders the Select link' do
+      render
+      expect(rendered).to include('data-module-select-target="selectLink"')
+      expect(rendered).to include('Select')
+    end
+
+    it 'wires the module-select Stimulus controller' do
+      render
+      expect(rendered).to include('module-select')
+    end
+
+    it 'renders lesson checkboxes' do
+      render
+      expect(rendered).to include('data-module-select-target="lessonCheckbox"')
+    end
+
+    it 'renders the delete bar' do
+      render
+      expect(rendered).to include('data-module-select-target="deleteBar"')
+    end
+
+    it 'renders the modal trigger link' do
+      render
+      expect(rendered).to include('data-module-select-target="modalTrigger"')
+    end
+
+    it 'renders the delete module path as a data value' do
+      render
+      expect(rendered).to include('data-module-select-delete-module-path-value=')
+      expect(rendered).to include('/content_studio/courses/1/modules/3')
+    end
+
+    it 'renders lesson rows as draggable with reorder paths' do
+      render
+      expect(rendered).to include('data-module-select-target="lessonRow"')
+      expect(rendered).to include('draggable="true"')
+      expect(rendered).to include('/content_studio/courses/1/lessons/4/reorder')
+      expect(rendered).to include('/content_studio/courses/1/lessons/5/reorder')
+    end
+  end
+
+  context 'when not all scenes in a module have a video_url' do
+    it 'does not render the Select link' do
+      render
+      expect(rendered).not_to include('data-module-select-target="selectLink"')
+    end
+
+    it 'does not wire the module-select controller' do
+      render
+      expect(rendered).not_to include('module-select')
+    end
+  end
+
+  it 'renders a hidden Expand link as a collapsible expandLink target on each module card' do
+    render
+    expect(rendered).to include('data-collapsible-target="expandLink"')
+    expect(rendered).to include('collapsible#expand')
+    expect(rendered).to include('Expand')
+  end
+
   it 'wires the lesson-name Stimulus controller on each lesson pill' do
     render
     expect(rendered).to include('data-controller="lesson-name"')
@@ -152,7 +237,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
                            duration: 9240,
                            modules: [airport_services_module],
                            verified_modules_count: 1,
-                           thumbnail_url: 'https://example.com/thumb.jpg'
+                           thumbnail_url: 'https://example.com/thumb.jpg', saved: false
                          ))
     end
 
@@ -160,12 +245,22 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       render
       expect(rendered).to include('https://example.com/thumb.jpg')
     end
+
+    it 'passes the thumbnail URL as a Stimulus value on the polling controller' do
+      render
+      expect(rendered).to include('data-structure-polling-thumbnail-url-value="https://example.com/thumb.jpg"')
+    end
   end
 
   context 'when thumbnail_url is absent' do
     it 'renders the image-ai gif as fallback in the thumbnail section' do
       render
       expect(rendered).to match(/src="[^"]*image-ai[^"]*\.gif"/)
+    end
+
+    it 'passes a blank thumbnail URL value on the polling controller' do
+      render
+      expect(rendered).to include('data-structure-polling-thumbnail-url-value=""')
     end
   end
 
@@ -192,7 +287,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       )
       assign(:structure, ContentStudio::CourseStructure.new(
                            id: 1, title: 'Airport Services Management', duration: 9240,
-                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil,
+                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil, saved: false,
                            progress_text: 'Generating module 2 of 3'
                          ))
     end
@@ -204,9 +299,31 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     end
   end
 
-  it 'renders the Save Course button' do
-    render
-    expect(rendered).to include('Save Course')
+  context 'when the course is not yet saved to LMS' do
+    it 'renders the Save Course button' do
+      render
+      expect(rendered).to include('Save Course')
+      expect(rendered).not_to include('Update Course')
+    end
+  end
+
+  context 'when the course is already saved to LMS' do
+    before do
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1,
+                           title: 'Airport Services Management',
+                           duration: 9240,
+                           modules: [airport_services_module, wine_serving_module],
+                           verified_modules_count: 1,
+                           thumbnail_url: nil, saved: true
+                         ))
+    end
+
+    it 'renders the Update Course button' do
+      render
+      expect(rendered).to include('Update Course')
+      expect(rendered).not_to include('Save Course')
+    end
   end
 
   it 'renders the Discard Course button' do
@@ -235,7 +352,7 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
       )
       assign(:structure, ContentStudio::CourseStructure.new(
                            id: 1, title: 'Airport Services Management', duration: 9240,
-                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil
+                           modules: [all_verified], verified_modules_count: 1, thumbnail_url: nil, saved: false
                          ))
     end
 

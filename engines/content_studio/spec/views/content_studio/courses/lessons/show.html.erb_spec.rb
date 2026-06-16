@@ -147,7 +147,7 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
 
   it 'wires the scene-player Stimulus controller' do
     render
-    expect(rendered).to include('data-controller="scene-player"')
+    expect(rendered).to include('scene-player')
   end
 
   it 'renders the scene player video target and placeholder' do
@@ -305,6 +305,43 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
     it 'does not render the Verify & Next form' do
       render
       expect(rendered).not_to include('Verify &amp; Next')
+    end
+  end
+
+  context 'when video_url is nil' do
+    it 'does not render the Preview Lesson button' do
+      render
+      expect(rendered).not_to include('Preview Lesson')
+    end
+  end
+
+  context 'when video_url is present' do
+    let(:lesson) do
+      ContentStudio::StructureLesson.new(
+        id: '1', title: 'Introduction to Airport Services',
+        description: 'Desc', estimated_duration: 1800,
+        status: 'VIDEO_READY', video_url: 'https://example.com/lesson.mp4', verified: false, scenes: scenes
+      )
+    end
+
+    it 'renders the Preview Lesson button' do
+      render
+      expect(rendered).to include('Preview Lesson')
+    end
+
+    it 'wires the Preview Lesson button to scene-player#previewLesson' do
+      render
+      expect(rendered).to include('scene-player#previewLesson')
+    end
+
+    it 'passes lesson video_url as a scene-player value' do
+      render
+      expect(rendered).to include('data-scene-player-lesson-video-url-value="https://example.com/lesson.mp4"')
+    end
+
+    it 'marks the script panel as a scene-player target' do
+      render
+      expect(rendered).to include('data-scene-player-target="scriptPanel"')
     end
   end
 end

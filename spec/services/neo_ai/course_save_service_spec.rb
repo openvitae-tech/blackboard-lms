@@ -11,6 +11,7 @@ RSpec.describe NeoAi::CourseSaveService do
       'title' => 'Test Course Title',
       'description' => 'An AI generated course about a very interesting topic for learners',
       'level' => 'Beginner',
+      'thumbnail_url' => 'https://neo.ai/thumb.jpg',
       'modules' => [
         {
           'id' => 'm1',
@@ -32,6 +33,7 @@ RSpec.describe NeoAi::CourseSaveService do
   before do
     allow(neo_ai).to receive(:find_course).with('neo-c1').and_return(neo_ai_data)
     allow(NeoAi::DownloadLessonVideoJob).to receive(:perform_async)
+    allow(NeoAi::DownloadCourseThumbnailJob).to receive(:perform_async)
   end
 
   describe '#call — initial save' do
@@ -68,6 +70,17 @@ RSpec.describe NeoAi::CourseSaveService do
       course = service.call('neo-c1', learning_partner_id: learning_partner.id)
       lesson = course.course_modules.first.lessons.first
       expect(NeoAi::DownloadLessonVideoJob).to have_received(:perform_async).with(lesson.id)
+    end
+
+    it 'enqueues a thumbnail download job when thumbnail_url is present' do
+      course = service.call('neo-c1', learning_partner_id: learning_partner.id)
+      expect(NeoAi::DownloadCourseThumbnailJob).to have_received(:perform_async).with(course.id, 'https://neo.ai/thumb.jpg')
+    end
+
+    it 'does not enqueue a thumbnail download job when thumbnail_url is absent' do
+      neo_ai_data.delete('thumbnail_url')
+      service.call('neo-c1', learning_partner_id: learning_partner.id)
+      expect(NeoAi::DownloadCourseThumbnailJob).not_to have_received(:perform_async)
     end
 
     it 'attaches the level tag from the API response' do
@@ -130,6 +143,12 @@ RSpec.describe NeoAi::CourseSaveService do
       course = service.call('neo-c1', learning_partner_id: learning_partner.id)
       expect(course.title).to eq('Updated Title')
       expect(course.description).to start_with('Updated description')
+    end
+
+    it 'enqueues a thumbnail download job with the updated thumbnail_url' do
+      neo_ai_data['thumbnail_url'] = 'https://neo.ai/new-thumb.jpg'
+      course = service.call('neo-c1', learning_partner_id: learning_partner.id)
+      expect(NeoAi::DownloadCourseThumbnailJob).to have_received(:perform_async).with(course.id, 'https://neo.ai/new-thumb.jpg')
     end
 
     it 'updates existing CS modules in place' do

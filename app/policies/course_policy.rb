@@ -15,7 +15,7 @@ class CoursePolicy
   end
 
   def manage?
-    user.is_admin? || user.privileged_user?
+    user.is_admin? || content_studio_access?
   end
 
   def continue?
@@ -99,6 +99,12 @@ class CoursePolicy
   private
 
   def own_content_studio_course?
-    course.neo_ai_course_id.present? && course.learning_partner_id == user.learning_partner_id
+    content_studio_access? &&
+      course.neo_ai_course_id.present? &&
+      course.learning_partner_id == user.learning_partner_id
+  end
+
+  def content_studio_access?
+    user.content_studio_creator? && user.learning_partner.content_studio_enabled?
   end
 end

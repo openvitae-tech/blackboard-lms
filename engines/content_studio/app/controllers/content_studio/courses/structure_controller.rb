@@ -11,6 +11,10 @@ module ContentStudio
 
       def save
         ApiClient.save_course(params[:id])
+        flash[:notice] = t('.success')
+        redirect_to course_structure_path(id: params[:id])
+      rescue Faraday::Error
+        flash[:alert] = t('.error')
         redirect_to course_structure_path(id: params[:id])
       end
 
