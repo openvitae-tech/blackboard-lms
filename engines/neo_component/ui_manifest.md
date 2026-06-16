@@ -273,7 +273,7 @@ course_card_component(
   description: nil,
   highlights: [],
   type_tag: nil            # nil or Hash with :label, :bg_color, optional :text_color — renders a full-width coloured footer strip
-                           #   :text_color defaults to text-letter-colour-medium when omitted
+                           #   :text_color defaults to text-letter-color-medium when omitted
 )
 ```
 

@@ -161,9 +161,9 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('span.text-white')).to be_present
       end
 
-      it 'defaults the type tag label to text-letter-colour-medium when text_color is omitted' do
+      it 'defaults the type tag label to text-letter-color-medium when text_color is omitted' do
         doc = render_card(type_tag: { label: 'Course', bg_color: 'bg-primary-light-200' })
-        expect(doc.at_css('span.text-letter-colour-medium')).to be_present
+        expect(doc.at_css('span.text-letter-color-medium')).to be_present
       end
 
       it 'omits the type tag when nil' do

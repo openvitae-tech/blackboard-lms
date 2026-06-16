@@ -49,7 +49,7 @@ module.exports = {
         "primary-light-200":"#AAC9EC",
         "secondary-light-200":"#B8CB6C",
         "gold-dark":"#EEC062",
-        "letter-colour-medium":"#4D4D4D",
+        "letter-color-medium":"#4D4D4D",
         ...exportColors
       },
       backgroundImage: {
