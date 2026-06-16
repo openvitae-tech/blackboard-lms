@@ -100,4 +100,19 @@ module ContentStudio
     :role,
     keyword_init: true
   )
+
+  Kit = Struct.new(
+    :id,
+    :title,
+    :description,
+    :status,
+    keyword_init: true
+  )
+
+  KitComponent = Struct.new(
+    :id,
+    :title,
+    :kit_id,
+    keyword_init: true
+  )
 end

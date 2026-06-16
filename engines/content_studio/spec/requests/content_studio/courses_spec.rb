@@ -44,8 +44,8 @@ RSpec.describe 'ContentStudio::Courses', type: :request do
     end
 
     it 'renders the main action section with CTA' do
-      expect(response.body).to include('Transform Documents into engaging Courses')
-      expect(response.body).to include('Create New Course')
+      expect(response.body).to include('Transform documents into engaging courses & classroom kits')
+      expect(response.body).to include('Create new')
     end
 
     it 'renders In Progress and Completed tab headers' do
@@ -62,8 +62,8 @@ RSpec.describe 'ContentStudio::Courses', type: :request do
       expect(response.body).to include('No completed courses yet.')
     end
 
-    it 'renders the Show all Creations button' do
-      expect(response.body).to include('Show all Creations')
+    it 'does not render a Show all Creations button' do
+      expect(response.body).not_to include('Show all Creations')
     end
   end
 end

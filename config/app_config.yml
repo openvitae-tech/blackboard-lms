@@ -3,6 +3,8 @@ default: &default
   sidekiq_auth_enabled: false
   enable_chatwoot: false
   content_studio: false
+  classroom_kit_enabled: false
+  microlesson_enabled: false
 
 production:
   <<: *default
@@ -17,10 +19,12 @@ staging:
   sidekiq_auth_enabled: true
   enable_chatwoot: true
   content_studio: true
+  classroom_kit_enabled: true
 
 development:
   <<: *default
   content_studio: true
+  classroom_kit_enabled: true
 
 test:
   <<: *default

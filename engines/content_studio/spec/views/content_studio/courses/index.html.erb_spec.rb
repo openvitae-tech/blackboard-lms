@@ -48,13 +48,13 @@ RSpec.describe 'content_studio/courses/index', type: :view do
 
   it 'renders the main action section' do
     render
-    expect(rendered).to include('Transform Documents into engaging Courses')
-    expect(rendered).to include('Create New Course')
+    expect(rendered).to include('Transform documents into engaging courses & classroom kits')
+    expect(rendered).to include('Create new')
   end
 
-  it 'renders the Your Creations section with In Progress and Completed tabs' do
+  it 'renders the Recent Creations section with In Progress and Completed tabs' do
     render
-    expect(rendered).to include('Your Creations')
+    expect(rendered).to include('Recent Creations')
     expect(rendered).to include('In Progress')
     expect(rendered).to include('Completed')
     expect(rendered).not_to include('No published courses yet.')
@@ -79,8 +79,8 @@ RSpec.describe 'content_studio/courses/index', type: :view do
     end
   end
 
-  it 'renders the Show all Creations button' do
+  it 'renders the Create new button' do
     render
-    expect(rendered).to include('Show all Creations')
+    expect(rendered).to include('Create new')
   end
 end
