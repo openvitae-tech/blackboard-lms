@@ -2,6 +2,8 @@
 
 ContentStudio::Engine.routes.draw do
   root to: 'courses#index'
+  get 'new', to: 'creations#new', as: :new_creation
+  resources :classroom_kits, path: 'classroom-kits', only: [:new]
   get 'courses/new', to: 'courses/wizard#new', as: :new_course
   post 'courses', to: 'courses/wizard#create', as: :courses
   get 'courses/:id/configure_video', to: 'courses/wizard#configure_video', as: :configure_video
@@ -19,6 +21,10 @@ ContentStudio::Engine.routes.draw do
   post 'courses/:course_id/lessons/:lesson_id/scenes/:scene_id/regenerate',
        to: 'courses/scenes#regenerate',
        as: :regenerate_scene
+  patch 'courses/:course_id/lessons/:id/reorder', to: 'courses/lessons#reorder', as: :reorder_course_lesson
+  delete 'courses/:course_id/modules/:id', to: 'courses/modules#destroy', as: :destroy_course_module
+  delete 'courses/:course_id/lessons', to: 'courses/modules#bulk_destroy_lessons',
+                                       as: :bulk_destroy_course_lessons
   delete 'courses/:course_id/lessons/:id', to: 'courses/lessons#destroy', as: :destroy_course_lesson
   post 'courses/:course_id/lessons/:id/regenerate', to: 'courses/lessons#regenerate', as: :regenerate_lesson
 end

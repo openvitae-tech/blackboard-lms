@@ -20,4 +20,12 @@ class AppConfigService
   def content_studio_enabled?
     CONFIG[:content_studio]
   end
+
+  def classroom_kit_enabled?
+    CONFIG[:classroom_kit_enabled]
+  end
+
+  def microlesson_enabled?
+    CONFIG[:microlesson_enabled]
+  end
 end

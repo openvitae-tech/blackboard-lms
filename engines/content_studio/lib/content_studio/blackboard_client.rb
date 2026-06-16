@@ -96,6 +96,17 @@ module ContentStudio
       connection.post("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}/verify")
     end
 
+    def reorder_lesson(lesson_id, course_id:, new_position:)
+      connection.patch(
+        "#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}/reorder",
+        { new_position: new_position }
+      )
+    end
+
+    def delete_module(module_id, course_id:)
+      connection.delete("#{BASE_PATH}/courses/#{course_id}/modules/#{module_id}")
+    end
+
     def delete_lesson(lesson_id, course_id:)
       connection.delete("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}")
     end
@@ -177,7 +188,8 @@ module ContentStudio
         verified_modules_count: data['verified_modules_count'].to_i,
         thumbnail_url: data['thumbnail_url'],
         progress_text: data['progress_text'],
-        stage: data['stage']
+        stage: data['stage'],
+        saved: data['saved'] == true
       )
     end
 

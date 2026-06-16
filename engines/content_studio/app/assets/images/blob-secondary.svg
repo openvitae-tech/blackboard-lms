@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 245 244" fill="none">
+  <ellipse cx="122.5" cy="122" rx="122.5" ry="122" fill="url(#blob-secondary-gradient)"/>
+  <defs>
+    <radialGradient id="blob-secondary-gradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F2F9D9"/>
+      <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

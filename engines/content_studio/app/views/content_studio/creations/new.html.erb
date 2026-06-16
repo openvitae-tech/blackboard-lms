@@ -1,0 +1,65 @@
+<div class="flex flex-col gap-7"
+     data-controller="creation-type"
+     data-action="change->creation-type#select">
+
+  <div class="flex flex-col gap-2 text-center">
+    <p class="heading-2xl text-letter-color">What do you want to create?</p>
+    <p class="general-text-md-normal text-letter-color-light">
+      Pick the output that matches how your learners will consume it. You can change this later.
+    </p>
+  </div>
+
+  <div class="flex gap-5 items-stretch">
+    <div data-url="<%= new_course_path %>" class="flex-1">
+      <%= content_type_card_component(
+            title: 'Online Course',
+            description: 'AI-built video lessons with quizzes — ideal for self-paced learning at scale.',
+            icon_name: 'book-open',
+            radio_value: 'online_course',
+            radio_name: 'content_type',
+            highlights: ['Modular video lessons (.mp4)', 'Auto-generated quiz questions', 'Trackable in your LMS'],
+            caption: 'Best for · Self-paced learners, always-on access'
+          ) %>
+    </div>
+
+    <div data-url="<%= new_classroom_kit_path %>" class="flex-1">
+      <%= content_type_card_component(
+            title: 'Classroom Kit',
+            description: 'A trainer-led offline pack — slides, guide, handouts, and quiz, branded and ready.',
+            icon_name: 'academy',
+            radio_value: 'classroom_kit',
+            radio_name: 'content_type',
+            highlights: ['Slide deck', 'Trainer guide', 'Learner handouts', 'Trainer + Learner quiz versions'],
+            caption: 'Best for · Frontline teams, instructor-led, in-person',
+            disabled: !APP_CONFIG.classroom_kit_enabled?
+          ) %>
+    </div>
+
+    <div class="flex-1">
+      <%= content_type_card_component(
+            title: 'Microlesson',
+            description: 'A single-concept video with a quick check — perfect for refreshers and just-in-time training.',
+            icon_name: 'play-circle',
+            radio_value: 'microlesson',
+            radio_name: 'content_type',
+            highlights: ['1–3 min video lesson', '2–3 question knowledge check', 'Mobile-ready, push to learners instantly'],
+            caption: 'Best for · Refreshers, nudges, on-the-job moments',
+            disabled: !APP_CONFIG.microlesson_enabled?
+          ) %>
+    </div>
+  </div>
+
+  <div class="flex justify-end items-center gap-3">
+    <%= link_to root_path do %>
+      <%= button_component(text: 'Cancel', type: 'outline', size: 'md') %>
+    <% end %>
+
+    <%= link_to '#',
+          class: 'pointer-events-none opacity-50',
+          data: { creation_type_target: 'continueButton' } do %>
+      <%= button_component(text: 'Continue', colorscheme: 'primary', size: 'md',
+                           icon_name: 'chevron-right', icon_position: 'right') %>
+    <% end %>
+  </div>
+
+</div>

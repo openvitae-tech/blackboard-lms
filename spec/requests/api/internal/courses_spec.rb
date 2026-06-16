@@ -8,6 +8,7 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
   let(:neo_ai) { instance_double(NeoAi::Client) }
 
   before do
+    stub_const('NEO_AI_PARTNER_HMAC_SECRET', 'test-secret')
     Api::Internal::CoursesController.instance_variable_set(:@neo_ai_client, nil)
     allow(NeoAi::Client).to receive(:new).and_return(neo_ai)
   end
@@ -166,6 +167,20 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
       get '/api/internal/courses/c1/structure'
       expect(response.parsed_body['verified_modules_count']).to eq(1)
     end
+
+    it 'returns saved: false when the course is not in the LMS' do
+      get '/api/internal/courses/c1/structure'
+      expect(response.parsed_body['saved']).to be(false)
+    end
+
+    context 'when a LMS course with the matching neo_ai_course_id exists' do
+      before { create(:course, neo_ai_course_id: 'c1') }
+
+      it 'returns saved: true' do
+        get '/api/internal/courses/c1/structure'
+        expect(response.parsed_body['saved']).to be(true)
+      end
+    end
   end
 
   describe 'POST /api/internal/courses' do
@@ -206,6 +221,7 @@ RSpec.describe 'Api::Internal::Courses', type: :request do
     before do
       sign_in privileged_user
       allow(neo_ai).to receive(:find_course).with('c1').and_return(neo_ai_data)
+      allow(NeoAi::DownloadLessonVideoJob).to receive(:perform_async)
     end
 
     it 'returns ok' do
