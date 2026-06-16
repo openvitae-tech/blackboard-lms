@@ -50,7 +50,9 @@ module ContentStudio
           return render json: { error: 'Missing files or components' }, status: :unprocessable_content
         end
 
-        Rails.logger.info("[ContentStudio] kit start_generation files=#{file_urls.inspect} components=#{components.inspect}")
+        Rails.logger.info(
+          "[ContentStudio] kit start_generation files=#{file_urls.count} components=#{components.inspect}"
+        )
 
         kit_id = ApiClient.create_classroom_kit(files: file_urls, components: components)
         session.delete(:kit_wizard_file_urls)
