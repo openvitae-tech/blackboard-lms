@@ -60,7 +60,7 @@ module ContentStudio
         render json: { kit_id:, status_url: kit_generation_status_url(id: kit_id) }
       rescue Faraday::Error => e
         Rails.logger.error("[ContentStudio] kit start_generation failed: #{e.message}")
-        render json: { error: e.message }, status: :unprocessable_content
+        render json: { error: 'An error occurred while starting generation' }, status: :unprocessable_content
       end
 
       def generation_status
