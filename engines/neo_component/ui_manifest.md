@@ -262,15 +262,18 @@ chip_component(
 course_card_component(
   title:,
   banner_url:,
-  duration:,
   modules_count:,
-  enroll_count:,
+  duration: nil,           # omit to hide the duration badge
+  enroll_count: nil,       # omit to hide the enrolment row
+  modules_label: 'Lesson', # override label, e.g. 'Document' for Classroom Kit cards
   categories: [],
   rating: nil,
   progress: nil,
   badge: nil,              # nil or Hash with :label, optional :bg_color, :text_color
   description: nil,
-  highlights: []
+  highlights: [],
+  type_tag: nil            # nil or Hash with :label, :bg_color, optional :text_color — renders a full-width coloured footer strip
+                           #   :text_color defaults to text-letter-color-medium when omitted
 )
 ```
 
