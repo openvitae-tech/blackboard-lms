@@ -6,7 +6,7 @@ RSpec.describe 'ContentStudio::Courses::Structure', type: :request do
   let(:structure) do
     ContentStudio::CourseStructure.new(
       id: 1, title: 'Test Course', duration: 3600,
-      modules: [], verified_modules_count: 0, thumbnail_url: nil
+      modules: [], verified_modules_count: 0, thumbnail_url: nil, saved: false
     )
   end
 
@@ -34,11 +34,34 @@ RSpec.describe 'ContentStudio::Courses::Structure', type: :request do
   end
 
   describe 'PATCH /content_studio/courses/:id/save' do
-    before { allow(ContentStudio::ApiClient).to receive(:save_course) }
+    context 'when save succeeds' do
+      before { allow(ContentStudio::ApiClient).to receive(:save_course) }
 
-    it 'redirects after save' do
-      patch '/content_studio/courses/1/save'
-      expect(response).to have_http_status(:redirect)
+      it 'redirects to the structure page' do
+        patch '/content_studio/courses/1/save'
+        expect(response).to redirect_to('/content_studio/courses/1/structure')
+      end
+
+      it 'sets a success flash notice' do
+        patch '/content_studio/courses/1/save'
+        expect(flash[:notice]).to eq('Course saved to LMS.')
+      end
+    end
+
+    context 'when an error occurs' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:save_course).and_raise(Faraday::Error)
+      end
+
+      it 'redirects to the structure page' do
+        patch '/content_studio/courses/1/save'
+        expect(response).to redirect_to('/content_studio/courses/1/structure')
+      end
+
+      it 'sets an alert flash message' do
+        patch '/content_studio/courses/1/save'
+        expect(flash[:alert]).to eq('Something went wrong while saving. Please try again.')
+      end
     end
   end
 

@@ -1,18 +1,49 @@
 en:
   content_studio:
     courses:
+      structure:
+        save:
+          success: "Course saved to LMS."
+          error: "Something went wrong while saving. Please try again."
       discard:
         locked: "Course is currently being processed. Please wait before deleting."
         confirm:
           title: "Discard course?"
           description: "You are permanently discarding <b>%{title}</b>. This action can't be undone."
           action: "Discard"
+      modules:
+        destroy:
+          success: "Module deleted successfully."
+          not_found: "Module not found."
+          locked: "Module is currently being processed and cannot be deleted."
+          error: "Something went wrong. Please try again."
+          confirm:
+            title: "Delete module?"
+            description: "You are permanently deleting <b>%{title}</b> and all its lessons. This action can't be undone."
+            action: "Delete"
+        bulk_destroy_lessons:
+          success: "Selected lessons deleted successfully."
+          not_found: "One or more lessons not found."
+          locked: "Course is currently being processed. Please wait before deleting."
+          error: "Something went wrong. Please try again."
+          confirm:
+            title: "Delete lessons?"
+            description: "You are permanently deleting the selected lessons. This action can't be undone."
+            action: "Delete"
       lessons:
+        reorder:
+          locked: "Course is currently being processed. Please wait before reordering."
+          error: "Something went wrong while reordering. Please try again."
         destroy:
           success: "Lesson deleted successfully."
           locked: "Lesson is currently being processed and cannot be deleted."
           not_found: "Lesson not found."
           error: "Something went wrong. Please try again."
+        verify:
+          success: "Lesson verified."
+          locked: "Course is currently being processed. Please wait before verifying."
+          not_found: "Lesson not found."
+          error: "Something went wrong while verifying. Please try again."
         download:
           not_available: "The lesson video is not available yet. Please check back once processing is complete."
           not_verified: "The lesson must be verified before it can be downloaded."

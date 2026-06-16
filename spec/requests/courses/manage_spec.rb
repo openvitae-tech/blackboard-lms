@@ -9,6 +9,8 @@ RSpec.describe 'Request spec for GET /courses/manage' do
         before do
           @team = create :team
           @user = create :user, role, team: @team
+          @user.update!(content_studio_creator: true)
+          create :payment_plan, learning_partner: @user.learning_partner, content_studio_enabled: true
           sign_in @user
         end
 

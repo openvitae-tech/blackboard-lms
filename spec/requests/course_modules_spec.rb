@@ -135,7 +135,7 @@ RSpec.describe 'Request spec for CourseModules', type: :request do
     end
 
     it 'Destroy course module failure' do
-      invalid_id = 123
+      invalid_id = CourseModule.maximum(:id).to_i + 1
       delete course_module_path(@course.id, invalid_id)
 
       expect(response).to have_http_status(:not_found)

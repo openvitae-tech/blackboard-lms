@@ -5,15 +5,21 @@ export default class extends Controller {
     'video', 'placeholder', 'narration', 'item', 'regenerateButton',
     'prevButton', 'nextButton',
     'playIcon', 'pauseIcon',
-    'progressTrack', 'progressFill', 'currentTime', 'duration', 'controlBar'
+    'progressTrack', 'progressFill', 'currentTime', 'duration', 'controlBar',
+    'scriptPanel'
   ]
   static values = {
-    currentIndex: { type: Number, default: 0 }
+    currentIndex: { type: Number, default: 0 },
+    lessonVideoUrl: { type: String, default: '' }
   }
 
   connect() {
+    this._previewMode = false
     if (this.itemTargets.length > 0) {
       this.loadScene(0)
+      if (this.hasVideoTarget && this.videoTarget.src) {
+        this.videoTarget.play().catch(() => {})
+      }
     }
     this.element.addEventListener('scene-video-ready', this.onSceneVideoReady)
   }
@@ -43,6 +49,30 @@ export default class extends Controller {
     if (this.hasVideoTarget && this.videoTarget.src) {
       this.videoTarget.play().catch(() => {})
     }
+  }
+
+  previewLesson(event) {
+    event.preventDefault()
+    if (!this.lessonVideoUrlValue || !this.hasVideoTarget) return
+
+    this.itemTargets.forEach(item => {
+      item.classList.remove('border-2', 'border-primary-light')
+    })
+
+    if (this.hasScriptPanelTarget) this.scriptPanelTarget.classList.add('hidden')
+
+    this.videoTarget.src = this.lessonVideoUrlValue
+    this.videoTarget.classList.remove('hidden')
+    if (this.hasPlaceholderTarget) this.placeholderTarget.classList.add('hidden')
+    if (this.hasControlBarTarget) this.controlBarTarget.classList.remove('hidden')
+
+    this.onPause()
+    if (this.hasProgressFillTarget) this.progressFillTarget.style.width = '0%'
+    if (this.hasCurrentTimeTarget) this.currentTimeTarget.textContent = '0:00'
+    if (this.hasDurationTarget) this.durationTarget.textContent = '0:00'
+
+    this._previewMode = true
+    this.videoTarget.play().catch(() => {})
   }
 
   prev() {
@@ -99,6 +129,11 @@ export default class extends Controller {
   }
 
   ended() {
+    if (this._previewMode) {
+      this._previewMode = false
+      this.loadScene(this.currentIndexValue)
+      return
+    }
     const nextIndex = this.currentIndexValue + 1
     if (nextIndex < this.itemTargets.length) {
       this.loadScene(nextIndex)
@@ -142,6 +177,8 @@ export default class extends Controller {
   loadScene(index) {
     const items = this.itemTargets
     if (index < 0 || index >= items.length) return
+
+    if (this.hasScriptPanelTarget) this.scriptPanelTarget.classList.remove('hidden')
 
     items.forEach((item, i) => {
       const active = i === index
