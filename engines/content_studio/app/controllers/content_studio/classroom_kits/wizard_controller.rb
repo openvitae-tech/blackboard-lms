@@ -43,12 +43,18 @@ module ContentStudio
       end
 
       def start_generation
-        file_urls   = session.delete(:kit_wizard_file_urls) || []
-        components  = session.delete(:kit_wizard_components) || []
+        file_urls  = session[:kit_wizard_file_urls] || []
+        components = session[:kit_wizard_components] || []
+
+        if file_urls.empty? || components.empty?
+          return render json: { error: 'Missing files or components' }, status: :unprocessable_content
+        end
 
         Rails.logger.info("[ContentStudio] kit start_generation files=#{file_urls.inspect} components=#{components.inspect}")
 
         kit_id = ApiClient.create_classroom_kit(files: file_urls, components: components)
+        session.delete(:kit_wizard_file_urls)
+        session.delete(:kit_wizard_components)
         render json: { kit_id:, status_url: kit_generation_status_url(id: kit_id) }
       rescue Faraday::Error => e
         Rails.logger.error("[ContentStudio] kit start_generation failed: #{e.message}")

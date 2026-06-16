@@ -23,8 +23,10 @@ module Api
 
         if elapsed < 6
           render json: { status: 'PENDING', stage: 'Uploading your document…', redirect_url: nil }
-        else
+        elsif elapsed < 12
           render json: { status: 'PENDING', stage: 'Crafting your kit structure…', redirect_url: nil }
+        else
+          render json: { status: 'COMPLETED', stage: nil, redirect_url: content_studio.root_path }
         end
       end
     end
