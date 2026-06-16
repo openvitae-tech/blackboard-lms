@@ -13,7 +13,7 @@ module NeoAiLessonSerializer
       estimated_duration: data['estimated_duration'],
       video_url: video_url,
       verified: verified,
-      status: derive_lesson_status(scenes, video_url: video_url, verified: verified),
+      status: derive_lesson_status(scenes, verified: verified),
       scenes: scenes
     }
   end
@@ -31,10 +31,9 @@ module NeoAiLessonSerializer
     }
   end
 
-  def derive_lesson_status(scenes, video_url:, verified:)
+  def derive_lesson_status(scenes, verified:)
     return 'WAITING' if scenes.empty?
-    return 'VERIFIED' if verified && video_url.present?
-    return 'PENDING' if verified
+    return 'VERIFIED' if verified
     return 'VIDEO_READY' if scenes.all? { |s| s[:video_url].present? }
 
     'PENDING'

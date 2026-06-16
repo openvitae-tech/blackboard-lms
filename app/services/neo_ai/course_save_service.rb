@@ -25,6 +25,7 @@ module NeoAi
           attach_level_tag(course, data['level'])
           module_ids = (data['modules'] || []).map { |m| save_module(course, m).id }
           course.update!(course_modules_in_order: module_ids)
+          enqueue_thumbnail_download(course, data['thumbnail_url'])
           course
         end
       end
@@ -47,6 +48,7 @@ module NeoAi
       bb_module_ids = course.course_modules.where(neo_ai_module_id: nil).order(:created_at).ids
 
       course.update!(course_modules_in_order: cs_module_ids + bb_module_ids)
+      enqueue_thumbnail_download(course, data['thumbnail_url'])
       course
     end
 
@@ -110,6 +112,12 @@ module NeoAi
 
     def enqueue_video_download(lesson)
       NeoAi::DownloadLessonVideoJob.perform_async(lesson.id)
+    end
+
+    def enqueue_thumbnail_download(course, thumbnail_url)
+      return if thumbnail_url.blank?
+
+      NeoAi::DownloadCourseThumbnailJob.perform_async(course.id, thumbnail_url)
     end
   end
 end

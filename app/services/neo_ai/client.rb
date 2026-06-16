@@ -26,7 +26,8 @@ module NeoAi
       'log_course_failed' => 'Something went wrong'
     }.freeze
 
-    def initialize
+    def initialize(partner_id:)
+      @partner_id = partner_id
       @token_mutex = Mutex.new
       @token = nil
       @token_expires_at = nil
@@ -35,6 +36,13 @@ module NeoAi
     def list_courses
       response = get('/course/list-courses')
       JSON.parse(response.body).fetch('courses', [])
+    end
+
+    def list_templates
+      response = get('/course/list-templates')
+      JSON.parse(response.body).fetch('templates', []).map do |t|
+        { 'id' => t['template_id'], 'name' => t['name'], 'thumbnail_url' => t['thumbnail_url'] }
+      end
     end
 
     def find_course(id)
@@ -75,6 +83,25 @@ module NeoAi
       build_connection.post("#{API_PREFIX}/course/delete-lesson") do |req|
         req.params[:course_id] = course_id
         req.params[:lesson_id] = lesson_id
+        req.params[:partner_id] = partner_id
+      end
+    end
+
+    # NeoAI declares these as FastAPI Query(...) params, not Body — must be query string.
+    def reorder_lesson(lesson_id, course_id:, new_position:)
+      build_connection.post("#{API_PREFIX}/course/reorder-lesson") do |req|
+        req.params[:course_id] = course_id
+        req.params[:lesson_id] = lesson_id
+        req.params[:new_position] = new_position
+        req.params[:partner_id] = partner_id
+      end
+    end
+
+    # NeoAI declares these as FastAPI Query(...) params, not Body — must be query string.
+    def delete_module(module_id, course_id:)
+      build_connection.post("#{API_PREFIX}/course/delete-module") do |req|
+        req.params[:course_id] = course_id
+        req.params[:module_id] = module_id
         req.params[:partner_id] = partner_id
       end
     end
@@ -148,6 +175,6 @@ module NeoAi
       JSON.parse(Base64.urlsafe_decode64(padded)).fetch('exp')
     end
 
-    def partner_id = NEO_AI_PARTNER_ID
+    attr_reader :partner_id
   end
 end

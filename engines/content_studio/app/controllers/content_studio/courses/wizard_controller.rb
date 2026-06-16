@@ -23,6 +23,7 @@ module ContentStudio
 
       def configure_video
         @course_id = params[:id]
+        @templates = ApiClient.list_templates
       end
 
       def update_video_config
@@ -30,6 +31,7 @@ module ContentStudio
           'background_colour' => params[:background_colour],
           'text_colour' => params[:text_colour],
           'logo_url' => upload_logo(params[:logo]),
+          'template_id' => params[:template_id].presence,
           'languages' => session.delete(:wizard_languages)
         }.compact
         session[:wizard_no_video] = params[:no_video] == '1'
