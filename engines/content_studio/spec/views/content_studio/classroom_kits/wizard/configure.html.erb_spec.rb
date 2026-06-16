@@ -23,7 +23,7 @@ RSpec.describe 'content_studio/classroom_kits/wizard/configure', type: :view do
     expect(rendered).to include('Slide deck for learners')
     expect(rendered).to include('Trainer guide')
     expect(rendered).to include('Learner handouts')
-    expect(rendered).to include('Learning Notes')
+    expect(rendered).to include('Learning notes')
     expect(rendered).to include('Quiz')
   end
 
@@ -36,6 +36,17 @@ RSpec.describe 'content_studio/classroom_kits/wizard/configure', type: :view do
     render
     expect(rendered).to include('Back')
     expect(rendered).to include('Generate Kit Structure')
+  end
+
+  context 'when no components are selected' do
+    before do
+      assign(:selected_components, [])
+    end
+
+    it 'renders no checkboxes as checked' do
+      render
+      expect(rendered).not_to include('checked="checked"')
+    end
   end
 
   context 'when only some components are selected' do
