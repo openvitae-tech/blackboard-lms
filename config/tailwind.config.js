@@ -52,18 +52,6 @@ module.exports = {
         "gold-dark":"#EEC062",
         ...exportColors
       },
-      backgroundImage: {
-        'progress-gradient': 'linear-gradient(90deg, rgb(31, 61, 240) 0.69%, rgb(43, 182, 255) 21.62%, rgb(25, 212, 166) 45.95%, rgb(196, 229, 79) 70.28%, rgb(31, 61, 240) 100.69%)',
-      },
-      keyframes: {
-        'gradient-flow': {
-          '0%':   { backgroundPosition: '0% 0%' },
-          '100%': { backgroundPosition: '-200% 0%' },
-        },
-      },
-      animation: {
-        'gradient-flow': 'gradient-flow 3s linear infinite',
-      },
       borderRadius: {
         '4xl': '2rem',
       },
