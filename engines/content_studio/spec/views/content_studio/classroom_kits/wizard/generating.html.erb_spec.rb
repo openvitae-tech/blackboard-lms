@@ -44,7 +44,6 @@ RSpec.describe 'content_studio/classroom_kits/wizard/generating', type: :view do
     end
   end
 
-
   context 'when state is error' do
     before { assign(:state, 'error') }
 

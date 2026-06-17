@@ -93,9 +93,7 @@ module ContentStudio
         client.create_classroom_kit(files: files, components: components, title: title)
       end
 
-      def get_classroom_kit(kit_id)
-        client.get_classroom_kit(kit_id)
-      end
+      delegate :get_classroom_kit, to: :client
 
       private
 
