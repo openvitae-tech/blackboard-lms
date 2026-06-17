@@ -65,7 +65,7 @@ module ContentStudio
         render json: {
           status: completed ? 'complete' : result.status,
           stage: result.stage,
-          redirect_url: completed ? kit_structure_path(id: params[:id]) : nil
+          redirect_url: completed ? root_path : nil
         }
       end
 
