@@ -127,7 +127,7 @@ module ContentStudio
         f.request :json
         f.response :raise_error
         f.headers['Cookie'] = @cookie if @cookie.present?
-        f.headers['ngrok-skip-browser-warning'] = '1'
+        f.headers['ngrok-skip-browser-warning'] = '1' if Rails.env.development?
       end
     end
 
