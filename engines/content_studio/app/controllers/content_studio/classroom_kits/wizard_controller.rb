@@ -39,9 +39,10 @@ module ContentStudio
       end
 
       def start_generation
-        file_urls  = session.delete(:kit_wizard_file_urls) || []
-        components = session.delete(:kit_wizard_components) || []
-        title      = session.delete(:kit_wizard_title)
+        file_urls  = session[:kit_wizard_file_urls] || []
+        components = session[:kit_wizard_components] || []
+        title      = session[:kit_wizard_title]
+        clear_kit_wizard_session
 
         Rails.logger.info("[ContentStudio] kit start_generation files=#{file_urls.inspect} " \
                           "components=#{components.inspect}")
