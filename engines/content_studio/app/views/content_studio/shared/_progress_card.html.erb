@@ -1,0 +1,22 @@
+<% completed = local_assigns.fetch(:completed, 0) %>
+<% total = local_assigns.fetch(:total, 0) %>
+<div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden">
+  <div class="flex items-center justify-between p-3">
+    <div class="flex items-center gap-2 min-w-0">
+      <%= image_tag 'image-ai.gif', class: 'w-7 h-7 shrink-0', alt: '' %>
+      <span class="general-text-sm-normal text-letter-color truncate">
+        <%= progress_text %>
+      </span>
+    </div>
+    <div class="flex-shrink-0 pl-3">
+      <span class="general-text-md-medium text-primary"><%= fill_pct %>%</span>
+    </div>
+  </div>
+  <%= progressbar_component(
+        numerator: completed,
+        denominator: [total, 1].max,
+        full_width: true,
+        animated: pending,
+        thin: true
+      ) %>
+</div>
