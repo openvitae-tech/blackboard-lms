@@ -14,12 +14,14 @@ export default class extends Controller {
     if (this.startUrlValue) {
       // Run API call and phase transitions in parallel
       // Minimum display: 4s uploading + 4s crafting before redirect
-      const [result] = await Promise.all([
-        this.startGeneration(),
-        this.runPhaseTransitions()
-      ])
-      if (result?.redirect_url) {
-        window.location.href = result.redirect_url
+      try {
+        const [result] = await Promise.all([
+          this.startGeneration(),
+          this.runPhaseTransitions()
+        ])
+        if (result?.redirect_url) window.location.href = result.redirect_url
+      } catch {
+        this.showErrorPhase()
       }
       return
     }
