@@ -49,7 +49,7 @@
 <% end %>
 
 <%= doc_section_component(title: "Long Course Card — default") do %>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 w-full">
     <%= long_course_card_component(
           title: 'Introduction to Ruby on Rails',
           banner_url: nil,
@@ -73,7 +73,7 @@
 <% end %>
 
 <%= doc_section_component(title: "Long Course Card — with type tag") do %>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 w-full">
     <%= long_course_card_component(
           title: 'Health, Safety & Security in Food and Beverage Service',
           banner_url: nil,
@@ -108,7 +108,7 @@
 <% end %>
 
 <%= doc_section_component(title: "Long Course Card — with checkbox") do %>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 w-full">
     <%= long_course_card_component(
           title: 'Health, Safety & Security in Food and Beverage Service',
           banner_url: nil,
@@ -124,7 +124,7 @@
 <% end %>
 
 <%= doc_section_component(title: "Long Course Card — with checkbox and type tag") do %>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 w-full">
     <%= long_course_card_component(
           title: 'Health, Safety & Security in Food and Beverage Service',
           banner_url: nil,
@@ -157,6 +157,36 @@
           categories: %w[Safety],
           checkbox: { name: 'course_ids[]', value: '3' },
           type_tag: { label: 'Microlesson', bg_color: 'bg-gold-dark' }
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Long Course Card — published corner tag") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Health, Safety & Security in Food and Beverage Service',
+          banner_url: nil,
+          duration: '1hr 10min',
+          modules_count: '8 Lessons',
+          enroll_count: '102 Enrolled',
+          categories: ['F&B Service', 'Housekeeping'],
+          badge: { label: 'Beginner' },
+          rating: '4.5',
+          publish_status: 'published'
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Long Course Card — unpublished corner tag") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Frontline Onboarding Document Pack',
+          banner_url: nil,
+          duration: '45 min',
+          modules_count: '5 Documents',
+          enroll_count: '88 Enrolled',
+          categories: %w[HR Onboarding],
+          publish_status: 'unpublished'
         ) %>
   </div>
 <% end %>

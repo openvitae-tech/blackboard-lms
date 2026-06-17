@@ -1,4 +1,4 @@
-<div class="group rounded-lg md:rounded-xl border border-line-colour relative md:max-h-[132px]">
+<div class="group rounded-lg md:rounded-xl border border-line-colour relative md:max-h-[132px] w-full">
   <% if checkbox %>
     <% checkbox_opts = checkbox.is_a?(Hash) ? checkbox.dup : {} %>
     <% checkbox_id    = checkbox_opts.delete(:id) %>
@@ -120,6 +120,16 @@
   <% if type_tag.present? %>
     <div class="md:hidden flex items-center justify-center py-1 rounded-bl-lg rounded-br-lg <%= type_tag[:bg_color] %>">
       <span class="general-text-sm-medium text-grey-dark"><%= type_tag[:label] %></span>
+    </div>
+  <% end %>
+
+  <% if publish_status.present? %>
+    <% corner_bg = publish_status == 'published' ? 'bg-primary-light-200' : 'bg-gold' %>
+    <div class="absolute top-0 right-0 w-20 h-20 overflow-hidden rounded-lg md:rounded-xl pointer-events-none">
+      <div class="absolute -top-10 -right-10 w-20 h-20 rotate-45 rounded-lg md:rounded-xl <%= corner_bg %>"></div>
+      <div class="absolute top-2 right-2">
+        <%= icon('eye', css: 'h-4 w-4 text-white') %>
+      </div>
     </div>
   <% end %>
 </div>

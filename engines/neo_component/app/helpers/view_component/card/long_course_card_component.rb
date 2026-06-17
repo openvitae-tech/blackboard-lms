@@ -16,11 +16,17 @@ module ViewComponent
         description: nil,
         highlights: [],
         checkbox: false,
-        type_tag: nil
+        type_tag: nil,
+        publish_status: nil
       )
         if checkbox && !checkbox.is_a?(Hash)
           raise ArgumentError,
                 'checkbox must be false or a Hash of check_box_tag options'
+        end
+
+        unless publish_status.nil? || %w[published unpublished].include?(publish_status)
+          raise ArgumentError,
+                "publish_status must be 'published', 'unpublished', or nil"
         end
 
         badge = { bg_color: 'bg-secondary', text_color: 'text-primary-dark' }.merge(badge) if badge
@@ -38,7 +44,8 @@ module ViewComponent
                  description:,
                  highlights:,
                  checkbox:,
-                 type_tag:
+                 type_tag:,
+                 publish_status:
                }
       end
     end

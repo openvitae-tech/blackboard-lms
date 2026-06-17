@@ -252,5 +252,26 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.css('[data-chip]')).to be_empty
       end
     end
+
+    describe 'publish_status corner tag' do
+      it 'renders a blue corner tag when publish_status is published' do
+        doc = render_card(publish_status: 'published')
+        expect(doc.at_css('div.bg-primary-light-200.rotate-45')).to be_present
+      end
+
+      it 'renders a gold corner tag when publish_status is unpublished' do
+        doc = render_card(publish_status: 'unpublished')
+        expect(doc.at_css('div.bg-gold.rotate-45')).to be_present
+      end
+
+      it 'omits the corner tag when publish_status is nil' do
+        doc = render_card(publish_status: nil)
+        expect(doc.at_css('div.rotate-45')).to be_nil
+      end
+
+      it 'raises ArgumentError for an invalid publish_status' do
+        expect { render_card(publish_status: 'draft') }.to raise_error(ArgumentError)
+      end
+    end
   end
 end
