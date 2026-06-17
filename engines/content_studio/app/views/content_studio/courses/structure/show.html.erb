@@ -23,27 +23,12 @@
     <% completed_scenes = all_scenes.count { |s| s.video_url.present? } %>
     <% fill_pct = all_scenes.size > 0 ? (completed_scenes.to_f / all_scenes.size * 100).to_i : 0 %>
     <% if has_pending || @structure.progress_text.present? %>
-      <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden">
-        <div class="flex items-center justify-between p-3">
-          <div class="flex items-center gap-2 min-w-0">
-            <%= image_tag 'image-ai.gif', class: 'w-7 h-7 shrink-0', alt: '' %>
-            <span class="general-text-sm-normal text-letter-color truncate">
-              <%= @structure.progress_text.presence || 'Generating your course…' %>
-            </span>
-          </div>
-          <div class="flex items-center gap-1 flex-shrink-0 pl-3">
-            <span class="general-text-md-medium text-primary"><%= fill_pct %>%</span>
-            <%= icon 'check-circle', css: 'w-4 h-4 text-primary' %>
-          </div>
-        </div>
-        <%= progressbar_component(
-              numerator: completed_scenes,
-              denominator: [all_scenes.size, 1].max,
-              full_width: true,
-              animated: has_pending,
-              thin: true
-            ) %>
-      </div>
+      <%= render 'content_studio/shared/progress_card',
+            pending: has_pending,
+            progress_text: @structure.progress_text.presence || 'Generating your course…',
+            fill_pct: fill_pct,
+            completed: completed_scenes,
+            total: all_scenes.size %>
     <% end %>
 
     <div class="flex gap-6">
