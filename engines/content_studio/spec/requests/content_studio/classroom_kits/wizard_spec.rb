@@ -8,6 +8,18 @@ RSpec.describe 'ContentStudio::ClassroomKits::Wizard', type: :request do
       get '/content_studio/classroom-kits/new'
       expect(response).to have_http_status(:ok)
     end
+
+    it 'preserves wizard session when fresh param is absent' do
+      post '/content_studio/classroom-kits', params: { kit_title: 'My Kit' }
+      get '/content_studio/classroom-kits/new'
+      expect(session[:kit_wizard_title]).to eq('My Kit')
+    end
+
+    it 'clears wizard session when fresh param is present' do
+      post '/content_studio/classroom-kits', params: { kit_title: 'My Kit' }
+      get '/content_studio/classroom-kits/new', params: { fresh: true }
+      expect(session[:kit_wizard_title]).to be_nil
+    end
   end
 
   describe 'POST /content_studio/classroom-kits' do
@@ -67,9 +79,10 @@ RSpec.describe 'ContentStudio::ClassroomKits::Wizard', type: :request do
         expect(response.parsed_body['redirect_url']).to include('kit-123')
       end
 
-      it 'clears wizard session variables after generation' do
+      it 'clears all wizard session variables after generation' do
         post '/content_studio/classroom-kits/start_generation'
         expect(session[:kit_wizard_file_urls]).to be_nil
+        expect(session[:kit_wizard_file_metadata]).to be_nil
         expect(session[:kit_wizard_components]).to be_nil
         expect(session[:kit_wizard_title]).to be_nil
       end
