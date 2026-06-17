@@ -17,7 +17,7 @@ RSpec.describe 'content_studio/classroom_kits/wizard/generating', type: :view do
 
   it 'marks Kit Structure as the active step' do
     render
-    expect(rendered).to include('Kit Structure')
+    expect(rendered).to include('border-2 border-primary')
   end
 
   it 'renders the uploading heading' do
