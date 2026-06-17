@@ -1,4 +1,4 @@
-<div class="flex w-fit gap-1 items-center rounded h-5 px-1 py-0.5 border <%= border_style %> <%= bg_style %>">
+<div class="flex w-fit gap-1 items-center <%= pill ? 'rounded-full px-2 py-1' : 'rounded h-5 px-1 py-0.5' %> border <%= border_style %> <%= bg_style %>">
   <% if icon_name.present? %>
     <%= icon(icon_name, span_css: icon_style, css: 'h-4 w-4') %>
   <% end %>

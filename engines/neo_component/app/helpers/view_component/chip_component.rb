@@ -44,10 +44,31 @@ module ViewComponent
         text-primary-dark
         text-primary-dark
         border-slate-grey-light
+      ],
+      'published' => %w[
+        bg-primary-light-200
+        text-black
+        text-black
+        text-black
+        border-line-colour
+      ],
+      'unpublished' => %w[
+        bg-line-colour-light
+        text-black
+        text-black
+        text-black
+        border-line-colour
+      ],
+      'transparent' => %w[
+        bg-transparent
+        text-black
+        text-black
+        text-black
+        border-line-colour
       ]
     }.freeze
 
-    def chip_component(text: '', icon_name: nil, close: false, colorscheme: 'primary')
+    def chip_component(text: '', icon_name: nil, close: false, colorscheme: 'primary', pill: false)
       styles = COLOR_SCHEMES[colorscheme]
       raise "Incorrect color scheme #{colorscheme}" unless styles
 
@@ -61,7 +82,8 @@ module ViewComponent
         text_style:,
         icon_style:,
         close_style:,
-        border_style:
+        border_style:,
+        pill:
       }
     end
   end

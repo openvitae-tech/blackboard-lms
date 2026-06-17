@@ -257,6 +257,13 @@ en:
     assets: "Assets"
     explore: "Explore"
     courses: "Courses"
+    my_content: "My Content"
+  content:
+    courses: "Courses"
+    programs: "Programs"
+    classroom_kit: "Classroom Kit"
+    published: "Published"
+    unpublished: "Unpublished"
   dashboard:
     index:
       team_label: "Team:"
