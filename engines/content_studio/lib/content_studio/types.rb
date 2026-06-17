@@ -104,7 +104,6 @@ module ContentStudio
   Kit = Struct.new(
     :id,
     :title,
-    :description,
     :status,
     keyword_init: true
   )

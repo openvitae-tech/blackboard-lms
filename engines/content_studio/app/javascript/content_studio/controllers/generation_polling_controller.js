@@ -12,14 +12,27 @@ export default class extends Controller {
 
   async connect() {
     if (this.startUrlValue) {
-      const ok = await this.startGeneration()
-      if (!ok) return
+      // Run API call and phase transitions in parallel
+      // Minimum display: 4s uploading + 4s crafting before redirect
+      const [result] = await Promise.all([
+        this.startGeneration(),
+        this.runPhaseTransitions()
+      ])
+      if (result?.redirect_url) {
+        window.location.href = result.redirect_url
+      }
+      return
     }
     this.timer = setInterval(() => this.poll(), this.pollIntervalValue)
   }
 
   disconnect() {
     clearInterval(this.timer)
+  }
+
+  switchToCraftingPhase() {
+    if (this.hasUploadPhaseTarget)   this.uploadPhaseTarget.classList.add('hidden')
+    if (this.hasCraftingPhaseTarget) this.craftingPhaseTarget.classList.remove('hidden')
   }
 
   async startGeneration() {
@@ -29,12 +42,20 @@ export default class extends Controller {
       headers: { 'X-CSRF-Token': csrfToken, Accept: 'application/json' }
     })
     const data = await response.json()
-    if (!response.ok || data.error) {
-      this.showErrorPhase()
-      return false
-    }
+    if (data.redirect_url) return data
     this.statusUrlValue = data.status_url
-    return true
+    return null
+  }
+
+  async runPhaseTransitions() {
+    // Show uploading for 4s, then crafting for 4s
+    await this.delay(4000)
+    this.switchToCraftingPhase()
+    await this.delay(4000)
+  }
+
+  delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 
   showErrorPhase() {

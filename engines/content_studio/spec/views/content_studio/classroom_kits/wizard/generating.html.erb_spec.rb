@@ -5,52 +5,70 @@ require_relative '../../../../rails_helper'
 RSpec.describe 'content_studio/classroom_kits/wizard/generating', type: :view do
   before do
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
-    assign(:kit_id, 'pending')
   end
 
   it 'renders all three wizard step labels' do
+    assign(:state, 'pending')
     render
     expect(rendered).to include('Upload doc')
     expect(rendered).to include('Configure Kit')
     expect(rendered).to include('Kit Structure')
   end
 
-  it 'marks Kit Structure as the active step' do
-    render
-    expect(rendered).to include('border-2 border-primary')
-  end
+  context 'when state is pending' do
+    before { assign(:state, 'pending') }
 
-  it 'renders the uploading heading' do
-    render
-    expect(rendered).to include('Uploading your document')
-  end
-
-  it 'renders the hold tight message' do
-    render
-    expect(rendered).to include('Hold tight! Your file is on its way.')
-  end
-
-  describe 'Stimulus generation-polling controller integration' do
-    before { render }
-
-    it 'mounts the generation-polling controller on the root element' do
+    it 'mounts the generation-polling controller' do
+      render
       expect(rendered).to include('data-controller="generation-polling"')
     end
 
-    it 'sets the status-url value attribute for polling' do
-      expect(rendered).to include('data-generation-polling-status-url-value')
+    it 'sets the start-url-value data attribute to the start_kit_generation path' do
+      render
+      expect(rendered).to include('data-generation-polling-start-url-value=')
     end
 
     it 'renders the uploadPhase target' do
+      render
       expect(rendered).to include('data-generation-polling-target="uploadPhase"')
     end
 
     it 'renders the craftingPhase target' do
+      render
       expect(rendered).to include('data-generation-polling-target="craftingPhase"')
     end
 
-    it 'renders the errorPhase target' do
-      expect(rendered).to include('data-generation-polling-target="errorPhase"')
+    it 'renders the uploading heading' do
+      render
+      expect(rendered).to include('Uploading your document')
+    end
+  end
+
+  context 'when state is success' do
+    before { assign(:state, 'success') }
+
+    it 'renders the success partial' do
+      render
+      expect(rendered).to include('Your kit is ready!')
+    end
+
+    it 'does not render the polling controller' do
+      render
+      expect(rendered).not_to include('data-controller="generation-polling"')
+    end
+  end
+
+  context 'when state is error' do
+    before { assign(:state, 'error') }
+
+    it 'renders the error partial' do
+      render
+      expect(rendered).to include("couldn't create your kit")
+    end
+
+    it 'does not render the polling controller' do
+      render
+      expect(rendered).not_to include('data-controller="generation-polling"')
     end
   end
 end

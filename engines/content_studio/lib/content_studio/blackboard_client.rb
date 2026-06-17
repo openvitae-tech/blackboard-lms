@@ -120,12 +120,6 @@ module ContentStudio
       JSON.parse(response.body)['kit_id']
     end
 
-    def kit_generation_status(kit_id)
-      response = connection.get("#{BASE_PATH}/classroom_kits/#{kit_id}/generation_status")
-      data = JSON.parse(response.body)
-      GenerationStatus.new(status: data['status'], stage: data['stage'], redirect_url: data['redirect_url'])
-    end
-
     private
 
     def connection
@@ -133,6 +127,7 @@ module ContentStudio
         f.request :json
         f.response :raise_error
         f.headers['Cookie'] = @cookie if @cookie.present?
+        f.headers['ngrok-skip-browser-warning'] = '1'
       end
     end
 

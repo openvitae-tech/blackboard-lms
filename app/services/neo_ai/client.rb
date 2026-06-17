@@ -7,6 +7,8 @@ module NeoAi
     REQUEST_TIMEOUT = 30
     OPEN_TIMEOUT = 5
 
+    KIT_PARTNER_ID = 1000
+
     STAGE_LABELS = {
       'accepted' => 'Preparing your course…',
       'upload_artifacts' => 'Uploading documents…',
@@ -52,6 +54,11 @@ module NeoAi
 
     def create_course(files:, branding:, no_video: false)
       response = post('/course/create-course', { files: files, branding: branding }, no_video: no_video)
+      JSON.parse(response.body)
+    end
+
+    def create_kit(files:, components:)
+      response = kit_post('/kit/create-kit', { files: files, components: components })
       JSON.parse(response.body)
     end
 
@@ -120,6 +127,12 @@ module NeoAi
     end
 
     private
+
+    def kit_post(path, body)
+      build_connection.post("#{API_PREFIX}#{path}", body) do |req|
+        req.params[:partner_id] = KIT_PARTNER_ID
+      end
+    end
 
     def get(path)
       build_connection.get("#{API_PREFIX}#{path}", { partner_id: partner_id })

@@ -93,10 +93,6 @@ module ContentStudio
         client.create_classroom_kit(files: files, components: components)
       end
 
-      def kit_generation_status(kit_id) # rubocop:disable Rails/Delegate
-        client.kit_generation_status(kit_id)
-      end
-
       private
 
       def client
