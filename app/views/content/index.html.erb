@@ -7,8 +7,8 @@
     <%= link_to manage_courses_path, class: "flex items-center gap-3 border-b border-line-colour pl-2 pr-4 py-5 hover:bg-primary-light-50" do %>
       <span class="flex-1 text-base font-medium text-primary"><%= t('content.courses') %></span>
       <div class="flex items-center gap-2">
-        <%= chip_component(text: "#{@courses_published_count} #{t('content.published')}", icon_name: 'eye', colorscheme: 'published') %>
-        <%= chip_component(text: "#{@courses_unpublished_count} #{t('content.unpublished')}", colorscheme: 'unpublished') %>
+        <%= chip_component(text: "#{@courses_published_count} #{t('content.published')}", icon_name: 'eye', colorscheme: 'published', pill: true) %>
+        <%= chip_component(text: "#{@courses_unpublished_count} #{t('content.unpublished')}", colorscheme: 'unpublished', pill: true) %>
       </div>
       <%= icon('chevron-right', css: 'h-5 w-5 text-primary') %>
     <% end %>
@@ -17,7 +17,7 @@
   <%= link_to programs_path, class: "flex items-center gap-3 border-b border-line-colour pl-2 pr-4 py-5 hover:bg-primary-light-50" do %>
     <span class="flex-1 text-base font-medium text-primary"><%= t('content.programs') %></span>
     <div class="flex items-center gap-2">
-      <%= chip_component(text: @programs_count.to_s, colorscheme: 'transparent') %>
+      <%= chip_component(text: @programs_count.to_s, colorscheme: 'transparent', pill: true) %>
     </div>
     <%= icon('chevron-right', css: 'h-5 w-5 text-primary') %>
   <% end %>

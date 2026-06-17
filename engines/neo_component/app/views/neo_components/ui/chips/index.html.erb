@@ -14,14 +14,14 @@
   <%= chip_component(text: 'In Process', colorscheme: 'gold') %>
 <% end %>
 
-<%= doc_section_component(title: "Chip - published") do %>
-  <%= chip_component(text: '12 Published', icon_name: 'eye', colorscheme: 'published') %>
+<%= doc_section_component(title: "Chip - published (pill)") do %>
+  <%= chip_component(text: '12 Published', icon_name: 'eye', colorscheme: 'published', pill: true) %>
 <% end %>
 
-<%= doc_section_component(title: "Chip - unpublished") do %>
-  <%= chip_component(text: '3 Unpublished', colorscheme: 'unpublished') %>
+<%= doc_section_component(title: "Chip - unpublished (pill)") do %>
+  <%= chip_component(text: '3 Unpublished', colorscheme: 'unpublished', pill: true) %>
 <% end %>
 
-<%= doc_section_component(title: "Chip - transparent") do %>
-  <%= chip_component(text: '7', colorscheme: 'transparent') %>
+<%= doc_section_component(title: "Chip - transparent (pill)") do %>
+  <%= chip_component(text: '7', colorscheme: 'transparent', pill: true) %>
 <% end %>

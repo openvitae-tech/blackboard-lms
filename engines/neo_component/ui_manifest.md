@@ -249,7 +249,8 @@ chip_component(
   text: '',
   icon_name: nil,
   close: false,
-  colorscheme: 'primary'  # primary | primary_lite | danger | input | secondary | gold | published | unpublished | transparent
+  colorscheme: 'primary',  # primary | primary_lite | danger | input | secondary | gold | published | unpublished | transparent
+  pill: false              # true → rounded-full, px-2 py-1 (pill shape); false → rounded, px-1 py-0.5 (default)
 )
 ```
 
@@ -271,14 +272,14 @@ chip_component(
 # Standard tag
 chip_component(text: 'Design')
 
-# Published content badge with icon
-chip_component(text: '12 Published', icon_name: 'eye', colorscheme: 'published')
+# Published content badge with icon (pill shape)
+chip_component(text: '12 Published', icon_name: 'eye', colorscheme: 'published', pill: true)
 
-# Unpublished content badge
-chip_component(text: '3 Unpublished', colorscheme: 'unpublished')
+# Unpublished content badge (pill shape)
+chip_component(text: '3 Unpublished', colorscheme: 'unpublished', pill: true)
 
-# Count-only border badge
-chip_component(text: '7', colorscheme: 'transparent')
+# Count-only border badge (pill shape)
+chip_component(text: '7', colorscheme: 'transparent', pill: true)
 
 # Removable chip (e.g. multi-select)
 chip_component(text: 'Ruby', colorscheme: 'input', close: true)
