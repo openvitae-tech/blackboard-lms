@@ -5,6 +5,7 @@ require_relative '../../../../rails_helper'
 RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
   before do
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
+    assign(:kit, kit)
   end
 
   let(:slide_deck_component) do
@@ -22,8 +23,6 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
       'stage' => 'ready', 'thumbnail_url' => nil, 'doc_count' => 0,
       'components' => [slide_deck_component, trainer_guide_component] }
   end
-
-  before { assign(:kit, kit) }
 
   it 'renders the kit title in the header' do
     render
