@@ -9,7 +9,6 @@ ContentStudio::Engine.routes.draw do
   patch 'classroom-kits/:id/configure', to: 'classroom_kits/wizard#update_config'
   get  'classroom-kits/:id/generating',        to: 'classroom_kits/wizard#generating',
                                                as: :generating_classroom_kit
-  get  'classroom-kits/error',                 to: 'classroom_kits/wizard#error',             as: :classroom_kit_error
   post 'classroom-kits/start_generation',      to: 'classroom_kits/wizard#start_generation',  as: :start_kit_generation
   get  'classroom-kits/:id/generation_status', to: 'classroom_kits/wizard#generation_status', as: :kit_generation_status
   get 'courses/new', to: 'courses/wizard#new', as: :new_course

@@ -38,10 +38,6 @@ module ContentStudio
         @kit_id = params[:id]
       end
 
-      def error
-        clear_kit_wizard_session
-      end
-
       def start_generation
         file_urls  = session[:kit_wizard_file_urls] || []
         components = session[:kit_wizard_components] || []
