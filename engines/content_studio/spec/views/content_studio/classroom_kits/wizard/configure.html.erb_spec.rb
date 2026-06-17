@@ -22,8 +22,8 @@ RSpec.describe 'content_studio/classroom_kits/wizard/configure', type: :view do
     render
     expect(rendered).to include('Slide deck for learners')
     expect(rendered).to include('Trainer guide')
-    expect(rendered).to include('Learner handouts')
-    expect(rendered).to include('Learning Notes')
+    expect(rendered).to include('Learner workbook')
+    expect(rendered).to include('Assessment')
     expect(rendered).to include('Quiz')
   end
 
