@@ -10,26 +10,26 @@ RSpec.describe ProgramsController, type: :controller do
 
   describe '#set_programs_active_nav' do
     context 'when on explore action' do
-      it 'sets @active_nav to courses' do
+      it 'sets @active_nav to explore' do
         get :explore
-        expect(assigns(:active_nav)).to eq('courses')
+        expect(assigns(:active_nav)).to eq('explore')
       end
     end
 
     context 'when on show action' do
-      it 'sets @active_nav to courses in learner mode' do
+      it 'sets @active_nav to explore in learner mode' do
         get :show, params: { id: program.id, mode: Program::LEARNER_MODE }
-        expect(assigns(:active_nav)).to eq('courses')
+        expect(assigns(:active_nav)).to eq('explore')
       end
 
-      it 'sets @active_nav to programs in manager mode' do
+      it 'sets @active_nav to content in manager mode' do
         get :show, params: { id: program.id, mode: Program::MANAGER_MODE }
-        expect(assigns(:active_nav)).to eq('programs')
+        expect(assigns(:active_nav)).to eq('content')
       end
 
-      it 'defaults @active_nav to courses when mode is blank' do
+      it 'defaults @active_nav to explore when mode is blank' do
         get :show, params: { id: program.id }
-        expect(assigns(:active_nav)).to eq('courses')
+        expect(assigns(:active_nav)).to eq('explore')
       end
     end
   end

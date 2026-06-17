@@ -10,9 +10,9 @@ RSpec.describe CoursesController, type: :controller do
 
   describe '#set_course_active_nav' do
     context 'when mode is manager' do
-      it 'sets @active_nav to programs' do
+      it 'sets @active_nav to content' do
         get :show, params: { id: course.id, mode: Program::MANAGER_MODE }
-        expect(assigns(:active_nav)).to eq('programs')
+        expect(assigns(:active_nav)).to eq('content')
       end
     end
 
