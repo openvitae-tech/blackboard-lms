@@ -10,10 +10,6 @@ module Api
 
       include NeoAiLessonSerializer
 
-      def self.neo_ai_client
-        @neo_ai_client ||= NeoAi::Client.new
-      end
-
       rescue_from Pundit::NotAuthorizedError, with: :render_forbidden
       rescue_from Faraday::Error, with: :render_upstream_error
 
@@ -40,7 +36,13 @@ module Api
       end
 
       def neo_ai
-        self.class.neo_ai_client
+        @neo_ai ||= NeoAi::Client.new(partner_id: scoped_partner_id)
+      end
+
+      def scoped_partner_id
+        return NEO_AI_PARTNER_ID if Rails.env.development?
+
+        OpenSSL::HMAC.hexdigest('SHA256', NEO_AI_PARTNER_HMAC_SECRET, current_user.learning_partner_id.to_s)
       end
     end
   end

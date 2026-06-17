@@ -3,6 +3,8 @@
 module ContentStudio
   module Courses
     class WizardController < ApplicationController
+      include WizardUploadConcern
+
       def new
         @metadata = ApiClient.course_metadata
         @existing_files = session[:wizard_file_metadata] || []
@@ -23,6 +25,7 @@ module ContentStudio
 
       def configure_video
         @course_id = params[:id]
+        @templates = ApiClient.list_templates
       end
 
       def update_video_config
@@ -30,6 +33,7 @@ module ContentStudio
           'background_colour' => params[:background_colour],
           'text_colour' => params[:text_colour],
           'logo_url' => upload_logo(params[:logo]),
+          'template_id' => params[:template_id].presence,
           'languages' => session.delete(:wizard_languages)
         }.compact
         session[:wizard_no_video] = params[:no_video] == '1'
@@ -66,51 +70,6 @@ module ContentStudio
         }
       end
 
-      private
-
-      def upload_files_with_meta(files)
-        return [[], []] if files.blank?
-
-        pairs = flatten_uploads(files).filter_map do |file|
-          next unless file.respond_to?(:original_filename)
-
-          blob = ActiveStorage::Blob.create_and_upload!(
-            io: file,
-            filename: file.original_filename,
-            content_type: file.content_type
-          )
-          url = blob_url(blob)
-          [url, { 'name' => file.original_filename, 'url' => url }]
-        end
-
-        [pairs.map(&:first), pairs.map(&:last)]
-      end
-
-      def flatten_uploads(files)
-        case files
-        when ActionController::Parameters then files.values.flatten
-        when Array                        then files.flatten
-        else                                   [files]
-        end
-      end
-
-      def upload_logo(file)
-        return nil if file.blank?
-
-        blob = ActiveStorage::Blob.create_and_upload!(
-          io: file,
-          filename: file.original_filename,
-          content_type: file.content_type
-        )
-        blob_url(blob)
-      end
-
-      def blob_url(blob)
-        uri = URI.parse(ContentStudio.public_host)
-        default_port = uri.scheme == 'https' ? 443 : 80
-        port = uri.port == default_port ? nil : uri.port
-        main_app.rails_storage_proxy_url(blob, host: uri.host, protocol: uri.scheme, port: port)
-      end
     end
   end
 end

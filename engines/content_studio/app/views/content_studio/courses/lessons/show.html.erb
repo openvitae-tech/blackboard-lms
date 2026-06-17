@@ -3,14 +3,15 @@
 <% has_pending = !failed && scenes_with_video < @lesson.scenes.size %>
 <turbo-frame id="lesson-content">
 <div class="flex flex-col gap-6 py-3 pb-24"
-     data-controller="lesson-polling"
+     data-controller="lesson-polling scene-player"
      data-lesson-polling-pending-value="<%= has_pending %>"
-     data-lesson-polling-scene-status-url-value="<%= lesson_scene_status_path(@course_id, @lesson.id) %>">
+     data-lesson-polling-scene-status-url-value="<%= lesson_scene_status_path(@course_id, @lesson.id) %>"
+     data-scene-player-lesson-video-url-value="<%= @lesson.video_url %>">
 
   <%# Header %>
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-2">
-      <%= link_to course_structure_path(id: @course_id), data: { turbo_frame: '_top' } do %>
+      <%= link_to course_structure_path(id: @course_id), data: { turbo: false } do %>
         <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
           <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
         </span>
@@ -21,7 +22,7 @@
   </div>
 
   <%# Three-column layout %>
-  <div class="flex gap-6 <%= @lesson.scenes.any? ? 'items-start' : 'items-stretch' %>" data-controller="scene-player">
+  <div class="flex gap-6 <%= @lesson.scenes.any? ? 'items-start' : 'items-stretch' %>">
 
     <%# Left: Scene playlist %>
     <div class="flex flex-col gap-3 bg-white-light border border-line-colour rounded-xl p-3 w-[181px] shrink-0 overflow-y-auto <%= 'h-[544px]' if @lesson.scenes.any? %>">
@@ -151,7 +152,7 @@
         </div>
 
         <%# Script + Regenerate %>
-        <div class="flex flex-1 flex-col min-h-0">
+        <div class="flex flex-1 flex-col min-h-0" data-scene-player-target="scriptPanel">
           <div class="flex flex-1 flex-col gap-2 min-h-0">
             <span class="general-text-md-medium text-letter-color px-1">Script</span>
             <%= textarea_component(
@@ -260,7 +261,8 @@
       <% end %>
     </span>
     <div class="flex items-center justify-center gap-2">
-      <%= link_to @prev_lesson_id ? course_lesson_path(@course_id, @prev_lesson_id) : '#' do %>
+      <%= link_to @prev_lesson_id ? course_lesson_path(@course_id, @prev_lesson_id) : '#',
+                  data: { turbo: 'false' } do %>
         <%= button_component(
               text: 'Previous',
               type: 'outline',
@@ -271,7 +273,8 @@
               disabled: @prev_lesson_id.nil?
             ) %>
       <% end %>
-      <%= link_to @next_lesson_id ? course_lesson_path(@course_id, @next_lesson_id) : '#' do %>
+      <%= link_to @next_lesson_id ? course_lesson_path(@course_id, @next_lesson_id) : '#',
+                  data: { turbo: 'false' } do %>
         <%= button_component(
               text: 'Next',
               type: 'outline',
@@ -280,6 +283,17 @@
               icon_name: 'chevron-right',
               icon_position: 'right',
               disabled: @next_lesson_id.nil?
+            ) %>
+      <% end %>
+      <% if @lesson.video_url.present? %>
+        <%= button_component(
+              text: 'Preview Lesson',
+              type: 'solid',
+              size: 'md',
+              colorscheme: 'primary',
+              icon_name: 'play',
+              icon_position: 'left',
+              html_options: { data: { action: 'click->scene-player#previewLesson' } }
             ) %>
       <% end %>
     </div>
@@ -291,7 +305,7 @@
         </div>
       <% else %>
         <%= form_with url: verify_lesson_path(@course_id, @lesson.id), method: :post,
-                      data: { turbo_frame: '_top' } do |f| %>
+                      data: { turbo: 'false' } do |f| %>
           <%= f.hidden_field :next_lesson_id, value: @next_lesson_id %>
           <%= f.button disabled: @lesson.status != 'VIDEO_READY' do %>
             <%= button_component(

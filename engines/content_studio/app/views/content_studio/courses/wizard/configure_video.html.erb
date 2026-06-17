@@ -1,6 +1,6 @@
-<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full">
+<div class="flex flex-col gap-6 py-3 w-full" data-controller="template-selector">
 
-  <%# Wizard steps header %>
+  <%# Wizard steps header — full width %>
   <div class="flex justify-center py-3">
     <%= wizard_steps_component(
       steps: [
@@ -12,43 +12,65 @@
     ) %>
   </div>
 
-  <%= form_with url: configure_video_path(id: @course_id), method: :patch, multipart: true, class: 'flex flex-col gap-5' do |form| %>
+  <%# Two-column body %>
+  <div class="flex gap-6 items-start">
 
-    <%# Card: Upload Logo %>
-    <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">
-      <p class="main-text-lg-semibold text-letter-color">Upload Logo</p>
-      <%= file_selector_component(
-        form: form,
-        name: :logo,
-        type: 'image',
-        accept: '.png,.jpeg,.jpg,.svg',
-        support_text: 'File types : png, jpeg, jpg, svg',
-        support_text_two: 'File size : 5 mb/file'
-      ) %>
+    <%# Left column: form %>
+    <%= form_with url: configure_video_path(id: @course_id), method: :patch, multipart: true, class: 'flex flex-col gap-5 flex-1 min-w-0' do |form| %>
+
+      <%# Card: Choose Template %>
+      <div class="bg-white border border-line-colour-light rounded-2xl pt-4 pb-5 px-5 flex flex-col gap-5">
+        <p class="main-text-lg-semibold text-letter-color">Choose Template</p>
+        <% template_cards = @templates.each_with_index.map { |t, i| template_card(t, selected: i.zero?) } %>
+        <%= carousel_component(cards: template_cards) %>
+      </div>
+
+      <%# Card: Upload Logo %>
+      <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">
+        <p class="main-text-lg-semibold text-letter-color">Upload Logo</p>
+        <%= file_selector_component(
+          form: form,
+          name: :logo,
+          type: 'image',
+          accept: '.png,.jpeg,.jpg,.svg',
+          support_text: 'File types : png, jpeg, jpg, svg',
+          support_text_two: 'File size : 5 mb/file'
+        ) %>
+      </div>
+
+      <%# Card: Video Generation — hidden, remove 'hidden' class to expose %>
+      <div class="hidden bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">
+        <p class="main-text-lg-semibold text-letter-color">Video Generation</p>
+        <%= input_checkbox_component(
+          form: form,
+          name: :no_video,
+          label: 'Skip video generation',
+          value: '1'
+        ) %>
+      </div>
+
+      <%# Footer %>
+      <div class="flex gap-3">
+        <%= link_to new_course_path do %>
+          <%= button_component(text: 'Back to Upload', type: 'outline', colorscheme: 'primary') %>
+        <% end %>
+        <%= form.button class: 'flex-1' do %>
+          <%= button_component(text: 'Generate Course', type: 'solid', colorscheme: 'primary',
+                               html_options: { class: 'w-full' }) %>
+        <% end %>
+      </div>
+
+    <% end %>
+
+    <%# Right column: Video Style Preview %>
+    <div class="bg-primary-light-50 border border-line-colour-light rounded-xl p-8 flex flex-col gap-7 w-80 shrink-0">
+      <p class="main-text-lg-semibold text-letter-color">Video Style Preview</p>
+      <div class="overflow-hidden rounded-xl aspect-video bg-white">
+        <%= image_tag '', alt: 'Template preview',
+                      class: 'w-full h-full object-cover',
+                      data: { template_selector_target: 'preview' } %>
+      </div>
     </div>
 
-    <%# Card: Video Generation — hidden, remove 'hidden' class to expose %>
-    <div class="hidden bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4">
-      <p class="main-text-lg-semibold text-letter-color">Video Generation</p>
-      <%= input_checkbox_component(
-        form: form,
-        name: :no_video,
-        label: 'Skip video generation',
-        value: '1'
-      ) %>
-    </div>
-
-    <%# Footer %>
-    <div class="flex gap-3">
-      <%= link_to new_course_path do %>
-        <%= button_component(text: 'Back to Upload', type: 'outline', colorscheme: 'primary') %>
-      <% end %>
-      <%= form.button class: 'flex-1' do %>
-        <%= button_component(text: 'Generate Course', type: 'solid', colorscheme: 'primary',
-                             html_options: { class: 'w-full' }) %>
-      <% end %>
-    </div>
-
-  <% end %>
-
+  </div>
 </div>

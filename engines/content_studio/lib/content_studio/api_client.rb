@@ -73,12 +73,24 @@ module ContentStudio
         client.verify_lesson(lesson_id, course_id: course_id)
       end
 
+      def reorder_lesson(lesson_id, course_id:, new_position:)
+        client.reorder_lesson(lesson_id, course_id: course_id, new_position: new_position)
+      end
+
+      def delete_module(module_id, course_id:)
+        client.delete_module(module_id, course_id: course_id)
+      end
+
       def delete_lesson(lesson_id, course_id:)
         client.delete_lesson(lesson_id, course_id: course_id)
       end
 
       def regenerate_lesson(lesson_id, course_id:)
         client.regenerate_lesson(lesson_id, course_id: course_id)
+      end
+
+      def create_classroom_kit(files:, components:)
+        client.create_classroom_kit(files: files, components: components)
       end
 
       private

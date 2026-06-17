@@ -4,33 +4,38 @@ class LessonsController < ApplicationController
   include LessonsHelper
   include CourseNavContext
 
+  before_action :preload_learning_partner_plan
   before_action :set_course
   before_action :set_course_module
   before_action :set_enrollment, only: %i[show complete]
   before_action :set_lesson, only: %i[show edit update destroy complete moveup movedown transcribe]
   before_action :set_local_content, only: :show
 
-  def new
-    authorize Lesson
-    @lesson = @course_module.lessons.new
-  end
-
   def show
-    authorize @course,  policy_class: LessonPolicy
+    authorize @lesson
 
     if @enrollment.present?
       EVENT_LOGGER.publish_lesson_viewed(current_user, @course.id, @lesson.id)
-      unless lesson_accessible?(@lesson, @course, @enrollment)
-        redirect_to_next_lesson and return
-      end
+      redirect_to_next_lesson and return unless lesson_accessible?(@lesson, @course, @enrollment)
     end
 
     @course_modules = helpers.modules_in_order(@course)
     @video_iframe = get_video_iframe(@local_content)
   end
 
+  def new
+    @lesson = @course_module.lessons.new
+    authorize @lesson
+  end
+
+  def edit
+    authorize @lesson
+
+    association_preloader([@lesson], { local_contents: :video_attachment })
+  end
+
   def create
-    authorize Lesson
+    authorize Lesson.new(course_module: @course_module)
 
     service = Lessons::CreateService.instance
 
@@ -43,19 +48,13 @@ class LessonsController < ApplicationController
         end
         format.json { render :show, status: :created, location: @lesson }
       end
-    rescue ActiveRecord::RecordInvalid => exception
-      @lesson = exception.record
+    rescue ActiveRecord::RecordInvalid => e
+      @lesson = e.record
       respond_to do |format|
         format.html { render :new, status: :unprocessable_content }
         format.json { render json: @lesson.errors, status: :unprocessable_content }
       end
     end
-  end
-
-  def edit
-    authorize @lesson
-
-    association_preloader([@lesson], { local_contents: :video_attachment })
   end
 
   def update
@@ -71,8 +70,8 @@ class LessonsController < ApplicationController
         end
         format.json { render :show, status: :ok, location: @lesson }
       end
-    rescue ActiveRecord::RecordInvalid => exception
-      @lesson = exception.record
+    rescue ActiveRecord::RecordInvalid => e
+      @lesson = e.record
       respond_to do |format|
         format.html { render :edit, status: :unprocessable_content }
         format.json { render json: @lesson.errors, status: :unprocessable_content }
@@ -107,7 +106,12 @@ class LessonsController < ApplicationController
       return
     end
 
-    next_path = @enrollment.course_completed? ? course_path(@course) : helpers.next_lesson_path(@course, @course_module, @lesson)
+    next_path = if @enrollment.course_completed?
+                  course_path(@course)
+                else
+                  helpers.next_lesson_path(@course,
+                                           @course_module, @lesson)
+                end
 
     next_path = course_path(@course) if next_path.blank?
 
@@ -141,11 +145,13 @@ class LessonsController < ApplicationController
   def transcribe
     authorize @lesson
     english_content = @lesson.local_contents.find_by(lang: LocalContent::SUPPORTED_LANGUAGES[:english].downcase)
-    if (english_content)
+    if english_content
       ExtractAndSaveAudioJob.perform_async(english_content.id)
-      redirect_to course_module_lesson_path(@course, @course_module, @lesson), notice: "Transcription job has been initiated for English content."
+      redirect_to course_module_lesson_path(@course, @course_module, @lesson),
+                  notice: 'Transcription job has been initiated for English content.'
     else
-      redirect_to course_module_lesson_path(@course, @course_module, @lesson), notice: "No English content found for this lesson."
+      redirect_to course_module_lesson_path(@course, @course_module, @lesson),
+                  notice: 'No English content found for this lesson.'
     end
   end
 
@@ -181,29 +187,29 @@ class LessonsController < ApplicationController
 
   def set_local_content
     @local_content = if params[:lang].blank?
-                default_local_content
-             else
-               @lesson.local_contents.find_by!(lang: params[:lang])
-             end
+                       default_local_content
+                     else
+                       @lesson.local_contents.find_by!(lang: params[:lang])
+                     end
   end
 
   def default_local_content
     default_language = @lesson.local_contents.find_by(lang: LocalContent::DEFAULT_LANGUAGE.downcase)
-    default_language.present? ? default_language : @lesson.local_contents.first
+    default_language.presence || @lesson.local_contents.first
   end
 
   def redirect_to_next_lesson
     first_incomplete_id = first_incomplete_lesson_id(@enrollment.completed_lessons, ordered_lesson_ids(@course))
 
-    if first_incomplete_id
-      first_incomplete_lesson = Lesson.find(first_incomplete_id)
-      first_incomplete_module = first_incomplete_lesson.course_module
+    return unless first_incomplete_id
 
-      redirect_to course_module_lesson_path(
-                    @course,
-                    first_incomplete_module,
-                    first_incomplete_lesson
-                  )
-    end
+    first_incomplete_lesson = Lesson.find(first_incomplete_id)
+    first_incomplete_module = first_incomplete_lesson.course_module
+
+    redirect_to course_module_lesson_path(
+      @course,
+      first_incomplete_module,
+      first_incomplete_lesson
+    )
   end
 end

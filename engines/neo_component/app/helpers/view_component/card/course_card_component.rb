@@ -6,15 +6,17 @@ module ViewComponent
       def course_card_component(
         title:,
         banner_url:,
-        duration:,
         modules_count:,
-        enroll_count:,
+        duration: nil,
+        enroll_count: nil,
+        modules_label: 'Lesson',
         categories: [],
         rating: nil,
         progress: nil,
         badge: nil,
         description: nil,
-        highlights: []
+        highlights: [],
+        type_tag: nil
       )
         badge = { bg_color: 'bg-secondary', text_color: 'text-primary-dark' }.merge(badge) if badge
         render partial: 'view_components/cards/course_card_component', locals: {
@@ -23,12 +25,14 @@ module ViewComponent
           duration:,
           modules_count:,
           enroll_count:,
+          modules_label:,
           categories:,
           rating:,
           progress:,
           badge:,
           description:,
-          highlights:
+          highlights:,
+          type_tag:
         }
       end
     end

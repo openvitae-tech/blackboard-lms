@@ -72,7 +72,7 @@ module ContentStudio
   CourseStats = Struct.new(:created, :published, :in_progress, keyword_init: true)
 
   CourseStructure = Struct.new(
-    :id, :title, :duration, :modules, :verified_modules_count, :thumbnail_url, :progress_text, :stage,
+    :id, :title, :duration, :modules, :verified_modules_count, :thumbnail_url, :progress_text, :stage, :saved,
     keyword_init: true
   ) do
     def script_writer_done?
@@ -104,7 +104,6 @@ module ContentStudio
   Kit = Struct.new(
     :id,
     :title,
-    :description,
     :status,
     keyword_init: true
   )

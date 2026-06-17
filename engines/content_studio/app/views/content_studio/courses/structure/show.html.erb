@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-6 py-3">
   <div class="flex items-center gap-2">
-    <%= link_to root_path, data: { turbo_frame: '_top' } do %>
+    <%= link_to root_path, data: { turbo: false } do %>
       <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
         <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
       </span>
@@ -12,10 +12,11 @@
   <% all_lessons = @structure.modules.flat_map(&:lessons) %>
   <% has_pending = !failed && all_lessons.any? { |l| %w[PENDING WAITING].include?(l.status) } %>
   <% all_videos_ready = all_lessons.all? { |l| l.video_url.present? } %>
-  <turbo-frame id="course-structure">
+  <turbo-frame id="course-structure" refresh="morph">
   <div class="flex flex-col gap-6 px-4"
        data-controller="collapsible-group structure-polling"
-       data-structure-polling-pending-value="<%= has_pending %>">
+       data-structure-polling-pending-value="<%= has_pending %>"
+       data-structure-polling-thumbnail-url-value="<%= @structure.thumbnail_url %>">
 
     <%# Status card — below stepper, above modules %>
     <% all_scenes = @structure.modules.flat_map(&:lessons).flat_map(&:scenes) %>
@@ -48,27 +49,87 @@
     <div class="flex gap-6">
       <div class="flex-1 flex flex-col gap-6">
       <% @structure.modules.each do |mod| %>
+        <% all_scenes_ready = mod.lessons.present? &&
+             mod.lessons.all? { |l| l.scenes.present? && l.scenes.all? { |s| s.video_url.present? } } %>
         <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-4"
-             data-controller="collapsible"
+             data-controller="collapsible<%= ' module-select' if all_scenes_ready %>"
              data-collapsible-open-value="true"
-             data-action="collapsible:close-all@window->collapsible#close collapsible:open-all@window->collapsible#open">
+             data-collapsible-storage-key-value="cs-module-<%= mod.id %>"
+             data-action="collapsible:close-all@window->collapsible#closeFromGlobal collapsible:open-all@window->collapsible#openFromGlobal"
+             <% if all_scenes_ready %>
+               data-module-select-all-scenes-ready-value="true"
+               data-module-select-alert-modal-url-value="<%= alert_modal_path %>"
+               data-module-select-delete-module-path-value="<%= destroy_course_module_path(course_id: @structure.id, id: mod.id) %>"
+               data-module-select-bulk-delete-lessons-path-value="<%= bulk_destroy_course_lessons_path(course_id: @structure.id) %>"
+               data-module-select-confirm-module-title-value="<%= t('content_studio.courses.modules.destroy.confirm.title') %>"
+               data-module-select-confirm-module-description-value="<%= t('content_studio.courses.modules.destroy.confirm.description', title: mod.title) %>"
+               data-module-select-confirm-lessons-title-value="<%= t('content_studio.courses.modules.bulk_destroy_lessons.confirm.title') %>"
+               data-module-select-confirm-lessons-description-value="<%= t('content_studio.courses.modules.bulk_destroy_lessons.confirm.description') %>"
+             <% end %>>
           <div class="flex items-center justify-between">
+            <%# Normal header: chevron + title — hidden in select mode %>
             <div class="flex items-center gap-3 cursor-pointer"
-                 data-action="click->collapsible#toggle">
+                 data-action="click->collapsible#toggle"
+                 <% if all_scenes_ready %>data-module-select-target="normalHeader"<% end %>>
               <span class="text-primary flex-shrink-0" data-collapsible-target="icon"
                     class="block rotate-180 transition-transform duration-200 ease-in-out">
                 <%= icon 'chevron-down', css: 'w-5 h-5' %>
               </span>
               <span class="main-text-md-semibold text-letter-color"><%= mod.title %></span>
             </div>
+            <% if all_scenes_ready %>
+              <%# Select mode header: select-all checkbox + title — shown only in select mode %>
+              <label class="hidden flex items-center gap-3 cursor-pointer"
+                     data-module-select-target="selectHeader">
+                <input type="checkbox"
+                       class="w-4 h-4 rounded accent-primary flex-shrink-0"
+                       data-module-select-target="selectAll"
+                       data-action="change->module-select#toggleAll">
+                <span class="main-text-md-semibold text-letter-color"><%= mod.title %></span>
+              </label>
+            <% end %>
+            <div class="flex items-center gap-2">
+              <a href="#"
+                 class="hidden main-text-sm-normal text-primary"
+                 data-collapsible-target="expandLink"
+                 data-action="click->collapsible#expand">Expand</a>
+              <% if all_scenes_ready %>
+                <a href="#"
+                   class="hidden main-text-sm-normal text-primary"
+                   data-module-select-target="selectLink"
+                   data-action="click->module-select#enterSelectMode">Select</a>
+                <button type="button"
+                        class="hidden flex bg-primary-light-50 rounded-full w-10 h-10 items-center justify-center flex-shrink-0"
+                        data-module-select-target="cancelBtn"
+                        data-action="click->module-select#exitSelectMode">
+                  <%= icon 'x-mark', css: 'w-5 h-5 text-primary' %>
+                </button>
+              <% end %>
+            </div>
           </div>
 
           <div data-collapsible-target="content" class="flex flex-col gap-3">
             <% mod.lessons.each do |lesson| %>
-              <div class="flex items-center gap-3">
-                <span class="text-slate-grey-50 flex-shrink-0 cursor-grab">
-                  <%= icon 'grip-vertical', css: 'w-5 h-5' %>
-                </span>
+              <div class="flex items-center gap-3"
+                   <% if all_scenes_ready %>
+                     data-module-select-target="lessonRow"
+                     draggable="true"
+                     data-reorder-path="<%= reorder_course_lesson_path(course_id: @structure.id, id: lesson.id) %>"
+                     data-action="dragstart->module-select#dragStart dragover->module-select#dragOver dragleave->module-select#dragLeave drop->module-select#drop dragend->module-select#dragEnd"
+                   <% end %>>
+                <% if all_scenes_ready %>
+                  <span class="text-slate-grey-50 flex-shrink-0 cursor-grab"
+                        data-module-select-target="grip">
+                    <%= icon 'grip-vertical', css: 'w-5 h-5' %>
+                  </span>
+                <% end %>
+                <% if all_scenes_ready %>
+                  <input type="checkbox"
+                         class="hidden w-4 h-4 rounded accent-primary flex-shrink-0 cursor-pointer"
+                         data-module-select-target="lessonCheckbox"
+                         data-lesson-id="<%= lesson.id %>"
+                         data-action="change->module-select#updateDeleteButton">
+                <% end %>
                 <div class="flex-1 bg-white-light border border-line-colour-light rounded px-3 py-2.5 h-10 flex items-center overflow-hidden cursor-pointer"
                      data-controller="lesson-name"
                      data-lesson-name-href-value="<%= course_lesson_path(course_id: @structure.id, id: lesson.id) %>"
@@ -94,6 +155,20 @@
                   <%= icon 'check-badge-solid', css: 'w-6 h-6 text-secondary flex-shrink-0' %>
                 <% end %>
               </div>
+            <% end %>
+            <% if all_scenes_ready %>
+              <div class="hidden" data-module-select-target="deleteBar">
+                <button type="button"
+                        class="w-full flex items-center justify-center gap-2 bg-danger-dark rounded-md h-9"
+                        data-action="click->module-select#deleteSelected">
+                  <%= icon 'trash', css: 'w-3.5 h-3.5 text-white' %>
+                  <span class="main-text-sm-medium text-white">Delete</span>
+                </button>
+              </div>
+              <a href="#"
+                 class="hidden"
+                 data-module-select-target="modalTrigger"
+                 data-turbo-frame="modal"></a>
             <% end %>
           </div>
         </div>
@@ -154,9 +229,11 @@
 
         <div class="bg-white-light rounded-lg p-3 flex flex-col gap-3">
           <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
-          <div class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
+          <div id="course-thumbnail" data-turbo-permanent
+               class="relative border border-line-colour-light rounded-lg overflow-hidden h-40">
             <% thumb = @structure.thumbnail_url.presence %>
             <%= image_tag thumb || image_path('image-ai.gif'),
+                         id: 'course-thumbnail-img',
                          class: "w-full h-full #{thumb ? 'object-cover' : 'object-contain'}", alt: 'Course thumbnail' %>
             <button type="button" class="absolute bottom-3 right-3 bg-white border border-letter-color rounded-full p-1.5 opacity-70">
               <%= icon 'pencil', css: 'w-4 h-4' %>
@@ -176,9 +253,10 @@
             <%= button_component(text: 'Discard Course', type: 'outline', colorscheme: 'danger',
                                  html_options: { class: 'w-full' }) %>
           <% end %>
-          <%= form_with url: save_course_path(id: @structure.id), method: :patch, class: 'flex-1' do |f| %>
+          <%= form_with url: save_course_path(id: @structure.id), method: :patch, class: 'flex-1', data: { turbo_frame: '_top' } do |f| %>
             <%= f.button class: 'w-full', disabled: !all_videos_ready do %>
-              <%= button_component(text: 'Save Course', type: 'solid', colorscheme: 'primary',
+              <%= button_component(text: @structure.saved ? 'Update Course' : 'Save Course',
+                                   type: 'solid', colorscheme: 'primary',
                                    disabled: !all_videos_ready,
                                    html_options: { class: 'w-full' }) %>
             <% end %>

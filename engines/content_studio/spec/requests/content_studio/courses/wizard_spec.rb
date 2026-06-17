@@ -24,6 +24,10 @@ RSpec.describe 'ContentStudio::Courses::Wizard', type: :request do
   end
 
   describe 'GET /content_studio/courses/:id/configure_video' do
+    before do
+      allow(ContentStudio::ApiClient).to receive(:list_templates).and_return([])
+    end
+
     it 'returns HTTP 200' do
       get '/content_studio/courses/1/configure_video'
       expect(response).to have_http_status(:ok)
@@ -34,6 +38,11 @@ RSpec.describe 'ContentStudio::Courses::Wizard', type: :request do
     it 'redirects after submission' do
       patch '/content_studio/courses/1/configure_video'
       expect(response).to have_http_status(:redirect)
+    end
+
+    it 'stores template_id in the session branding' do
+      patch '/content_studio/courses/1/configure_video', params: { template_id: '2' }
+      expect(session[:wizard_branding]).to include('template_id' => '2')
     end
   end
 

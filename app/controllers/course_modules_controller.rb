@@ -3,6 +3,7 @@
 class CourseModulesController < ApplicationController
   include CourseNavContext
 
+  before_action :preload_learning_partner_plan
   before_action :set_course, only: %i[new create show edit update destroy moveup movedown summary redo_quiz]
   before_action :set_course_module, only: %i[show edit update destroy moveup movedown summary redo_quiz]
 
@@ -16,8 +17,8 @@ class CourseModulesController < ApplicationController
 
   # GET /course_modules/new
   def new
-    authorize :course_module
     @course_module = @course.course_modules.new
+    authorize @course_module
   end
 
   # GET /course_modules/1/edit
@@ -27,8 +28,8 @@ class CourseModulesController < ApplicationController
 
   # POST /course_modules or /course_modules.json
   def create
-    authorize :course_module
     @course_module = @course.course_modules.new(course_module_params)
+    authorize @course_module
     service = Courses::ManagementService.instance
 
     if @course_module.save
