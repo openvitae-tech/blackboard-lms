@@ -221,6 +221,7 @@ Rails.application.routes.draw do
     end
   end
   resources :settings, only: :index
+  get 'content', to: 'content#index'
 
   resource :login, only: %i[new create] do
     collection do

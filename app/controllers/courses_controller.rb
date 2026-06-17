@@ -232,10 +232,10 @@ class CoursesController < ApplicationController
   private
 
   def set_course_active_nav
-    @active_nav = if params[:mode] == Program::MANAGER_MODE
-                    'programs'
-                  elsif %w[index explore continue complete].include?(action_name)
+    @active_nav = if %w[index explore continue complete].include?(action_name)
                     'explore'
+                  elsif action_name == 'manage' || params[:mode] == Program::MANAGER_MODE
+                    'content'
                   else
                     'courses'
                   end

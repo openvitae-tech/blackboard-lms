@@ -249,8 +249,41 @@ chip_component(
   text: '',
   icon_name: nil,
   close: false,
-  colorscheme: 'primary'  # primary | primary_lite | danger | input | secondary | gold
+  colorscheme: 'primary',  # primary | primary_lite | danger | input | secondary | gold | published | unpublished | transparent
+  pill: false              # true → rounded-full, px-2 py-1 (pill shape); false → rounded, px-1 py-0.5 (default)
 )
+```
+
+#### Colorschemes
+
+| Colorscheme | Background | Border | Typical use |
+|-------------|-----------|--------|-------------|
+| `primary` | `primary-light-100` | none | General tags |
+| `primary_lite` | `primary-light-50` | none | Subtle tags |
+| `danger` | `danger-light` | none | Error / warning |
+| `input` | `primary-light-50` | `slate-grey-light` | Multi-select input chips |
+| `secondary` | `secondary` | none | Success / positive |
+| `gold` | `gold-light` | `slate-grey-light` | Highlighted / featured |
+| `published` | `primary-light-200` | `line-colour` | Published content count badge |
+| `unpublished` | `line-colour-light` | `line-colour` | Unpublished content count badge |
+| `transparent` | transparent | `line-colour` | Count-only border badge |
+
+#### Examples
+```ruby
+# Standard tag
+chip_component(text: 'Design')
+
+# Published content badge with icon (pill shape)
+chip_component(text: '12 Published', icon_name: 'eye', colorscheme: 'published', pill: true)
+
+# Unpublished content badge (pill shape)
+chip_component(text: '3 Unpublished', colorscheme: 'unpublished', pill: true)
+
+# Count-only border badge (pill shape)
+chip_component(text: '7', colorscheme: 'transparent', pill: true)
+
+# Removable chip (e.g. multi-select)
+chip_component(text: 'Ruby', colorscheme: 'input', close: true)
 ```
 
 ---
