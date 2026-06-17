@@ -55,8 +55,7 @@ module ContentStudio
         )
 
         kit_id = ApiClient.create_classroom_kit(files: file_urls, components: components)
-        session.delete(:kit_wizard_file_urls)
-        session.delete(:kit_wizard_components)
+        clear_kit_wizard_session
         render json: { kit_id:, status_url: kit_generation_status_url(id: kit_id) }
       rescue Faraday::Error => e
         Rails.logger.error("[ContentStudio] kit start_generation failed: #{e.message}")
