@@ -71,11 +71,10 @@ RSpec.describe 'ContentStudio::ClassroomKits::Wizard', type: :request do
         patch '/content_studio/classroom-kits/pending/configure', params: { components: %w[slide_deck] }
       end
 
-      it 'returns a redirect_url to the success generating page' do
+      it 'returns a redirect_url to the kit structure page' do
         post '/content_studio/classroom-kits/start_generation'
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body['redirect_url']).to include('generating')
-        expect(response.parsed_body['redirect_url']).to include('state=success')
+        expect(response.parsed_body['redirect_url']).to include('structure')
         expect(response.parsed_body['redirect_url']).to include('kit-123')
       end
 

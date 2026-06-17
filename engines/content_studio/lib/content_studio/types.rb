@@ -105,13 +105,22 @@ module ContentStudio
     :id,
     :title,
     :status,
+    :stage,
+    :thumbnail_url,
+    :doc_count,
+    :created_at,
+    :updated_at,
+    :expires_at,
+    :components,
     keyword_init: true
   )
 
   KitComponent = Struct.new(
     :id,
+    :type,
     :title,
-    :kit_id,
+    :status,
+    :download_url,
     keyword_init: true
   )
 end

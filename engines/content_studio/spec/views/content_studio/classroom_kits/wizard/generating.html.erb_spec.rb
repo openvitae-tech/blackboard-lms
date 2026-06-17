@@ -44,19 +44,6 @@ RSpec.describe 'content_studio/classroom_kits/wizard/generating', type: :view do
     end
   end
 
-  context 'when state is success' do
-    before { assign(:state, 'success') }
-
-    it 'renders the success partial' do
-      render
-      expect(rendered).to include('Your kit is ready!')
-    end
-
-    it 'does not render the polling controller' do
-      render
-      expect(rendered).not_to include('data-controller="generation-polling"')
-    end
-  end
 
   context 'when state is error' do
     before { assign(:state, 'error') }

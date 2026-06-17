@@ -21,9 +21,13 @@ export default class extends Controller {
           this.startGeneration(),
           this.runPhaseTransitions()
         ])
-        if (result?.redirect_url) window.location.href = result.redirect_url
+        if (result?.redirect_url) { window.location.href = result.redirect_url; return }
       } catch {
         // silent — error page only shown when server returns state=error
+      }
+      // status_url was set by startGeneration — begin polling
+      if (this.statusUrlValue) {
+        this.timer = setInterval(() => this.poll(), this.pollIntervalValue)
       }
       return
     }
@@ -87,7 +91,7 @@ export default class extends Controller {
       this.craftingPhaseTarget.classList.toggle('hidden', !crafting)
     }
 
-    if (data.status === 'complete') {
+    if (data.status === 'complete' || data.status === 'error') {
       clearInterval(this.timer)
       window.location.href = data.redirect_url
     }

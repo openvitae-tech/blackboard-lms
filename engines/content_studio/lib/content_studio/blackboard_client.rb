@@ -115,9 +115,14 @@ module ContentStudio
       connection.post("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}/regenerate")
     end
 
-    def create_classroom_kit(files:, components:)
-      response = connection.post("#{BASE_PATH}/classroom_kits", { files: files, components: components })
+    def create_classroom_kit(files:, components:, title: nil)
+      response = connection.post("#{BASE_PATH}/classroom_kits", { files: files, components: components, title: title })
       JSON.parse(response.body)['kit_id']
+    end
+
+    def get_classroom_kit(kit_id)
+      response = connection.get("#{BASE_PATH}/classroom_kits/#{kit_id}")
+      JSON.parse(response.body)
     end
 
     private

@@ -13,6 +13,11 @@ module Api
         Rails.cache.write("kit_title_#{kit_id}", title, expires_in: 90.days) if title.present?
         render json: { kit_id: kit_id }
       end
+
+      def show
+        data = neo_ai.get_kit(params[:id])
+        render json: data
+      end
     end
   end
 end
