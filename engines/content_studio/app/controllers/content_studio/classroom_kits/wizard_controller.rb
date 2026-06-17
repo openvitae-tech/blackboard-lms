@@ -44,7 +44,7 @@ module ContentStudio
         title      = session[:kit_wizard_title]
         clear_kit_wizard_session
 
-        Rails.logger.info("[ContentStudio] kit start_generation files=#{file_urls.inspect} " \
+        Rails.logger.info("[ContentStudio] kit start_generation files=#{file_urls.size} " \
                           "components=#{components.inspect}")
 
         kit_id = ApiClient.create_classroom_kit(files: file_urls, components: components)
