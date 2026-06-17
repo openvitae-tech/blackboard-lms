@@ -27,7 +27,7 @@ RSpec.describe 'content_studio/classroom_kits/wizard/new', type: :view do
 
   it 'renders the file selector support text' do
     render
-    expect(rendered).to include('File types : pdf, png, jpeg, doc, docx')
+    expect(rendered).to include('File types : pdf, png, jpeg, doc, docx, txt')
     expect(rendered).to include('File size : 5 mb/file')
   end
 
