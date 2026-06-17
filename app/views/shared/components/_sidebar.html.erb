@@ -25,6 +25,13 @@
               icon_name: 'chart-bar',
               label: t('sidebar.dashboard') %>
         <% end %>
+        <% if policy(:content).index? %>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'content',
+              url: content_path,
+              icon_name: 'grid',
+              label: t('sidebar.my_content') %>
+        <% end %>
         <% if policy(:program).index? %>
           <%= render 'shared/components/sidebar_item',
               nav_key: 'programs',

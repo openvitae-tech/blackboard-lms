@@ -44,6 +44,27 @@ module ViewComponent
         text-primary-dark
         text-primary-dark
         border-slate-grey-light
+      ],
+      'published' => %w[
+        bg-primary-light-200
+        text-black
+        text-black
+        text-black
+        border-line-colour
+      ],
+      'unpublished' => %w[
+        bg-line-colour-light
+        text-black
+        text-black
+        text-black
+        border-line-colour
+      ],
+      'transparent' => %w[
+        bg-transparent
+        text-black
+        text-black
+        text-black
+        border-line-colour
       ]
     }.freeze
 
