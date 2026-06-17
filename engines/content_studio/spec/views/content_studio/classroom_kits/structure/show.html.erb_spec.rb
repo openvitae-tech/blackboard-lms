@@ -36,7 +36,7 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
   end
 
   it 'falls back to Untitled Kit when title is nil' do
-    assign(:kit, ContentStudio::Kit.new(**kit.to_h.merge(title: nil)))
+    assign(:kit, ContentStudio::Kit.new(**kit.to_h, title: nil))
     render
     expect(rendered).to include('Untitled Kit')
   end
@@ -111,7 +111,7 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
     end
 
     before do
-      assign(:kit, ContentStudio::Kit.new(**kit.to_h.merge(components: [failed_component])))
+      assign(:kit, ContentStudio::Kit.new(**kit.to_h, components: [failed_component]))
     end
 
     it 'renders a danger icon for FAILED components' do
