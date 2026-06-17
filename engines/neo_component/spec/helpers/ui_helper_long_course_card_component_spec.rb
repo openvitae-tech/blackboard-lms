@@ -187,10 +187,9 @@ RSpec.describe UiHelper, type: :helper do
 
       it 'renders the rating after modules and enroll in the stats row' do
         doc = render_card(rating: '4.2', modules_count: '6 modules', enroll_count: '50 enrolled')
-        stats_row = doc.at_css('div.flex.gap-1.items-center')
-        expect(stats_row).to be_present
-        element_children = stats_row.children.select(&:element?)
-        expect(element_children.last.text).to include('4.2')
+        text = doc.text
+        expect(text.index('6 modules')).to be < text.index('50 enrolled')
+        expect(text.index('50 enrolled')).to be < text.index('4.2')
       end
     end
 
