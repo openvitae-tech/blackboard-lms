@@ -196,13 +196,13 @@ RSpec.describe UiHelper, type: :helper do
 
     describe 'type_tag' do
       it 'renders the type tag label when present' do
-        tag = { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-grey-300' }
+        tag = { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-grey-dark' }
         doc = render_card(type_tag: tag)
         expect(doc.text).to include('Course')
       end
 
       it 'applies the supplied bg_color class to the type tag' do
-        tag = { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200', text_color: 'text-grey-300' }
+        tag = { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200', text_color: 'text-grey-dark' }
         doc = render_card(type_tag: tag)
         expect(doc.at_css('div.bg-secondary-light-200')).to be_present
       end
