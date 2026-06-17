@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ContentController < ApplicationController
-  before_action :authenticate_user!
-
   def index
     authorize :content, :index?
     lp_id = current_user.learning_partner_id

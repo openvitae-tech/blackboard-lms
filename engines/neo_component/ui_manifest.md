@@ -255,6 +255,7 @@ chip_component(
 ```
 
 #### Colorschemes
+
 | Colorscheme | Background | Border | Typical use |
 |-------------|-----------|--------|-------------|
 | `primary` | `primary-light-100` | none | General tags |
