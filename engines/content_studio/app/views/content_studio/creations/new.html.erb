@@ -22,7 +22,7 @@
           ) %>
     </div>
 
-    <div data-url="<%= new_classroom_kit_path %>" class="flex-1">
+    <div data-url="<%= new_classroom_kit_path(fresh: true) %>" class="flex-1">
       <%= content_type_card_component(
             title: 'Classroom Kit',
             description: 'A trainer-led offline pack — slides, guide, handouts, and quiz, branded and ready.',

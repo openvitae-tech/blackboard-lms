@@ -1,3 +1,4 @@
+<script>sessionStorage.removeItem('kit_generation_started')</script>
 <div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full">
 
   <%# Wizard steps header %>
@@ -29,6 +30,7 @@
           placeholder: 'e.g. Banking and Basic Strategies',
           size: 'md',
           html_options: {
+            value: @kit_title,
             data: {
               wizard_upload_target: 'title',
               action: 'input->wizard-upload#onTitleChanged'

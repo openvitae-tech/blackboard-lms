@@ -6,8 +6,9 @@ module ContentStudio
       include WizardUploadConcern
 
       def new
-        clear_kit_wizard_session
-        @existing_files = []
+        clear_kit_wizard_session if params[:fresh]
+        @existing_files = session[:kit_wizard_file_metadata] || []
+        @kit_title = session[:kit_wizard_title]
       end
 
       def create
