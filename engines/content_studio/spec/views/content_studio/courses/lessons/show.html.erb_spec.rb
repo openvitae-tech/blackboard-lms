@@ -281,9 +281,9 @@ RSpec.describe 'content_studio/courses/lessons/show', type: :view do
       expect(rendered).to include('Verify &amp; Next')
     end
 
-    it 'renders the verify form targeting _top turbo frame' do
+    it 'renders the verify form with turbo disabled' do
       render
-      expect(rendered).to include('data-turbo-frame="_top"')
+      expect(rendered).to include('data-turbo="false"')
     end
   end
 

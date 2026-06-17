@@ -8,18 +8,35 @@ export default class extends Controller {
     pollInterval: { type: Number, default: 3000 }
   }
 
-  static targets = ['stage']
+  static targets = ['stage', 'uploadPhase', 'craftingPhase', 'errorPhase']
 
   async connect() {
     if (this.startUrlValue) {
-      const ok = await this.startGeneration()
-      if (!ok) return
+      if (sessionStorage.getItem('kit_generation_started')) return
+      sessionStorage.setItem('kit_generation_started', '1')
+      // Run API call and phase transitions in parallel
+      // Minimum display: 4s uploading + 4s crafting before redirect
+      try {
+        const [result] = await Promise.all([
+          this.startGeneration(),
+          this.runPhaseTransitions()
+        ])
+        if (result?.redirect_url) window.location.href = result.redirect_url
+      } catch {
+        // silent — error page only shown when server returns state=error
+      }
+      return
     }
     this.timer = setInterval(() => this.poll(), this.pollIntervalValue)
   }
 
   disconnect() {
     clearInterval(this.timer)
+  }
+
+  switchToCraftingPhase() {
+    if (this.hasUploadPhaseTarget)   this.uploadPhaseTarget.classList.add('hidden')
+    if (this.hasCraftingPhaseTarget) this.craftingPhaseTarget.classList.remove('hidden')
   }
 
   async startGeneration() {
@@ -29,21 +46,45 @@ export default class extends Controller {
       headers: { 'X-CSRF-Token': csrfToken, Accept: 'application/json' }
     })
     const data = await response.json()
-    if (!response.ok || data.error) {
-      if (this.hasStageTarget) this.stageTarget.textContent = data.error || 'Failed to start generation'
-      return false
-    }
+    if (data.redirect_url) return data
     this.statusUrlValue = data.status_url
-    return true
+    return null
+  }
+
+  async runPhaseTransitions() {
+    // Show uploading for 4s, then crafting for 4s
+    await this.delay(4000)
+    this.switchToCraftingPhase()
+    await this.delay(4000)
+  }
+
+  delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
+  showErrorPhase() {
+    if (this.hasUploadPhaseTarget)   this.uploadPhaseTarget.classList.add('hidden')
+    if (this.hasCraftingPhaseTarget) this.craftingPhaseTarget.classList.add('hidden')
+    if (this.hasErrorPhaseTarget)    this.errorPhaseTarget.classList.remove('hidden')
+    clearInterval(this.timer)
   }
 
   async poll() {
     if (!this.statusUrlValue) return
     const response = await fetch(this.statusUrlValue, { headers: { Accept: 'application/json' } })
+    if (!response.ok) { this.showErrorPhase(); return }
     const data = await response.json()
 
     if (data.stage && this.hasStageTarget) {
       this.stageTarget.textContent = data.stage
+    }
+
+    if (data.stage && this.hasUploadPhaseTarget && this.hasCraftingPhaseTarget) {
+      const crafting = data.stage.toLowerCase().includes('craft') ||
+                       data.stage.toLowerCase().includes('generat') ||
+                       data.stage.toLowerCase().includes('structur')
+      this.uploadPhaseTarget.classList.toggle('hidden', crafting)
+      this.craftingPhaseTarget.classList.toggle('hidden', !crafting)
     }
 
     if (data.status === 'complete') {

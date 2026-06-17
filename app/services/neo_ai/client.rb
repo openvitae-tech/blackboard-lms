@@ -55,6 +55,11 @@ module NeoAi
       JSON.parse(response.body)
     end
 
+    def create_kit(files:, components:)
+      response = kit_post('/kit/create-kit', { files: files, components: components })
+      JSON.parse(response.body)
+    end
+
     def regenerate_scene(scene_id, course_id:, lesson_id:, narration:)
       post('/course/regenerate-scene',
            { scene_id: scene_id, course_id: course_id, lesson_id: lesson_id, narration: narration })
@@ -120,6 +125,12 @@ module NeoAi
     end
 
     private
+
+    def kit_post(path, body)
+      build_connection.post("#{API_PREFIX}#{path}", body) do |req|
+        req.params[:partner_id] = partner_id
+      end
+    end
 
     def get(path)
       build_connection.get("#{API_PREFIX}#{path}", { partner_id: partner_id })
