@@ -1,0 +1,18 @@
+<div class="flex flex-col items-center gap-6 py-16">
+  <%= image_tag '404-error.gif', class: 'w-40 h-40', alt: 'Error' %>
+  <div class="flex flex-col items-center gap-2 text-center">
+    <p class="heading-2xl text-danger-dark">We couldn't create your kit</p>
+    <p class="main-text-md-medium text-letter-color-light max-w-lg">
+      Something interrupted the process. You can retry, or upload a different document.
+      Your previous progress is saved.
+    </p>
+  </div>
+  <div class="flex gap-3 mt-2">
+    <%= link_to new_classroom_kit_path(fresh: true) do %>
+      <%= button_component(text: 'Upload a different document', type: 'outline', colorscheme: 'primary') %>
+    <% end %>
+    <%= link_to generating_classroom_kit_path(id: :pending) do %>
+      <%= button_component(text: 'Retry', type: 'solid', colorscheme: 'primary') %>
+    <% end %>
+  </div>
+</div>

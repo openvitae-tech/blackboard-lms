@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       post 'courses/:course_id/lessons/:lesson_id/regenerate', to: 'courses#regenerate_lesson'
       get 'courses/:course_id/lessons/:id', to: 'courses/lessons#show'
       get 'users/me', to: 'users#me'
+      post 'classroom_kits',                       to: 'classroom_kits#create'
+      get  'classroom_kits/:id/generation_status', to: 'classroom_kits#generation_status'
     end
   end
 end

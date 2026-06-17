@@ -1,18 +1,22 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['submit']
+  static targets = ['submit', 'title']
   static values = {
     existingCount: { type: Number, default: 0 }
   }
 
   connect() {
     this.browserCount = 0
-    this.submitTarget.disabled = this.existingCountValue === 0
+    this.updateSubmit()
   }
 
   onFilesChanged(event) {
     this.browserCount = event.detail.count
+    this.updateSubmit()
+  }
+
+  onTitleChanged() {
     this.updateSubmit()
   }
 
@@ -29,6 +33,17 @@ export default class extends Controller {
   }
 
   updateSubmit() {
-    this.submitTarget.disabled = this.existingCountValue + this.browserCount === 0
+    const hasTitle = this.hasTitleTarget ? this.titleTarget.value.trim().length > 0 : true
+    const hasFiles = this.existingCountValue + this.browserCount > 0
+    const enabled = hasTitle && hasFiles
+
+    this.submitTarget.disabled = !enabled
+
+    // Apply/remove disabled visual styles on the inner button_component div
+    const inner = this.submitTarget.querySelector('[class*="btn-"]')
+    if (inner) {
+      inner.classList.toggle('btn-disabled', !enabled)
+      inner.classList.toggle('btn-solid-primary-disabled', !enabled)
+    }
   }
 }

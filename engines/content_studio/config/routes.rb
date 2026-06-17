@@ -3,7 +3,13 @@
 ContentStudio::Engine.routes.draw do
   root to: 'courses#index'
   get 'new', to: 'creations#new', as: :new_creation
-  resources :classroom_kits, path: 'classroom-kits', only: [:new]
+  get  'classroom-kits/new',            to: 'classroom_kits/wizard#new',          as: :new_classroom_kit
+  post 'classroom-kits',                to: 'classroom_kits/wizard#create',       as: :classroom_kits
+  get  'classroom-kits/:id/configure',  to: 'classroom_kits/wizard#configure',    as: :configure_classroom_kit
+  patch 'classroom-kits/:id/configure', to: 'classroom_kits/wizard#update_config'
+  get  'classroom-kits/:id/generating',        to: 'classroom_kits/wizard#generating',
+                                               as: :generating_classroom_kit
+  post 'classroom-kits/start_generation',      to: 'classroom_kits/wizard#start_generation', as: :start_kit_generation
   get 'courses/new', to: 'courses/wizard#new', as: :new_course
   post 'courses', to: 'courses/wizard#create', as: :courses
   get 'courses/:id/configure_video', to: 'courses/wizard#configure_video', as: :configure_video

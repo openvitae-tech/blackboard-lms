@@ -115,6 +115,11 @@ module ContentStudio
       connection.post("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}/regenerate")
     end
 
+    def create_classroom_kit(files:, components:)
+      response = connection.post("#{BASE_PATH}/classroom_kits", { files: files, components: components })
+      JSON.parse(response.body)['kit_id']
+    end
+
     private
 
     def connection
@@ -122,6 +127,7 @@ module ContentStudio
         f.request :json
         f.response :raise_error
         f.headers['Cookie'] = @cookie if @cookie.present?
+        f.headers['ngrok-skip-browser-warning'] = '1' if Rails.env.development?
       end
     end
 
