@@ -9,19 +9,25 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
   end
 
   let(:slide_deck_component) do
-    { 'id' => 'comp-1', 'type' => 'slide_deck', 'title' => nil,
-      'status' => 'READY', 'download_url' => 'https://s3.example.com/slide_deck.pptx' }
+    ContentStudio::KitComponent.new(
+      id: 'comp-1', type: 'slide_deck', title: nil,
+      status: 'READY', download_url: 'https://s3.example.com/slide_deck.pptx'
+    )
   end
 
   let(:trainer_guide_component) do
-    { 'id' => 'comp-2', 'type' => 'trainer_guide', 'title' => nil,
-      'status' => 'PENDING', 'download_url' => nil }
+    ContentStudio::KitComponent.new(
+      id: 'comp-2', type: 'trainer_guide', title: nil,
+      status: 'PENDING', download_url: nil
+    )
   end
 
   let(:kit) do
-    { 'id' => 'kit-123', 'title' => 'Banking Basics', 'status' => 'COMPLETED',
-      'stage' => 'ready', 'thumbnail_url' => nil, 'doc_count' => 0,
-      'components' => [slide_deck_component, trainer_guide_component] }
+    ContentStudio::Kit.new(
+      id: 'kit-123', title: 'Banking Basics', status: 'COMPLETED',
+      stage: 'ready', thumbnail_url: nil, doc_count: 0,
+      components: [slide_deck_component, trainer_guide_component]
+    )
   end
 
   it 'renders the kit title in the header' do
@@ -30,7 +36,7 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
   end
 
   it 'falls back to Untitled Kit when title is nil' do
-    assign(:kit, kit.merge('title' => nil))
+    assign(:kit, ContentStudio::Kit.new(**kit.to_h.merge(title: nil)))
     render
     expect(rendered).to include('Untitled Kit')
   end
@@ -73,9 +79,11 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
 
   context 'when all components are READY' do
     let(:kit) do
-      { 'id' => 'kit-123', 'title' => 'Banking Basics', 'status' => 'COMPLETED',
-        'stage' => 'ready', 'thumbnail_url' => nil, 'doc_count' => 0,
-        'components' => [slide_deck_component] }
+      ContentStudio::Kit.new(
+        id: 'kit-123', title: 'Banking Basics', status: 'COMPLETED',
+        stage: 'ready', thumbnail_url: nil, doc_count: 0,
+        components: [slide_deck_component]
+      )
     end
 
     it 'sets pending to false' do
@@ -96,11 +104,15 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
 
   context 'when a component has FAILED' do
     let(:failed_component) do
-      { 'id' => 'comp-3', 'type' => 'assessment', 'title' => nil,
-        'status' => 'FAILED', 'download_url' => nil }
+      ContentStudio::KitComponent.new(
+        id: 'comp-3', type: 'assessment', title: nil,
+        status: 'FAILED', download_url: nil
+      )
     end
 
-    before { assign(:kit, kit.merge('components' => [failed_component])) }
+    before do
+      assign(:kit, ContentStudio::Kit.new(**kit.to_h.merge(components: [failed_component])))
+    end
 
     it 'renders a danger icon for FAILED components' do
       render

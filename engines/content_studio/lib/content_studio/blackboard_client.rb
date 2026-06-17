@@ -122,10 +122,35 @@ module ContentStudio
 
     def get_classroom_kit(kit_id)
       response = connection.get("#{BASE_PATH}/classroom_kits/#{kit_id}")
-      JSON.parse(response.body)
+      build_kit(JSON.parse(response.body))
     end
 
     private
+
+    def build_kit(data)
+      Kit.new(
+        id: data['id'],
+        title: data['title'],
+        status: data['status'],
+        stage: data['stage'],
+        thumbnail_url: data['thumbnail_url'],
+        doc_count: data['doc_count'],
+        created_at: data['created_at'],
+        updated_at: data['updated_at'],
+        expires_at: data['expires_at'],
+        components: Array(data['components']).map { |c| build_kit_component(c) }
+      )
+    end
+
+    def build_kit_component(data)
+      KitComponent.new(
+        id: data['id'],
+        type: data['type'],
+        title: data['title'],
+        status: data['status'],
+        download_url: data['download_url']
+      )
+    end
 
     def connection
       @connection ||= Faraday.new(url: ContentStudio.base_url) do |f|

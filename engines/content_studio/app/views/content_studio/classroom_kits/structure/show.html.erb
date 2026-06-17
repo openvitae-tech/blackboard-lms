@@ -1,17 +1,16 @@
 <%
-  components    = @kit['components'] || []
-  completed     = components.count { |c| c['status'] == 'READY' }
+  components    = @kit.components || []
+  completed     = components.count { |c| c.status == 'READY' }
   total         = components.size
   progress_pct  = total.positive? ? ((completed.to_f / total) * 100).round : 0
-  kit_ready     = @kit['status'] == 'COMPLETED'
-  all_ready     = total.positive? && components.all? { |c| c['status'] == 'READY' }
+  all_ready     = total.positive? && components.all? { |c| c.status == 'READY' }
 
   component_labels = {
-    'slide_deck'      => 'Slide deck for learners',
-    'trainer_guide'   => 'Trainer guide',
-    'learner_workbook'=> 'Learner workbook',
-    'assessment'      => 'Assessment',
-    'quiz'            => 'Quiz'
+    'slide_deck'       => 'Slide deck for learners',
+    'trainer_guide'    => 'Trainer guide',
+    'learner_workbook' => 'Learner workbook',
+    'assessment'       => 'Assessment',
+    'quiz'             => 'Quiz'
   }
 %>
 <turbo-frame id="kit-structure" refresh="morph">
@@ -26,7 +25,7 @@
         <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
       </span>
     <% end %>
-    <span class="main-text-lg-semibold text-letter-color"><%= @kit['title'].presence || 'Untitled Kit' %></span>
+    <span class="main-text-lg-semibold text-letter-color"><%= @kit.title.presence || 'Untitled Kit' %></span>
   </div>
 
   <%# Progress banner %>
@@ -38,7 +37,7 @@
           <% if all_ready %>
             Kit is ready
           <% else %>
-            Generating <%= @kit['stage'].presence || 'kit components' %><%= @kit['title'].present? ? " for #{@kit['title']}" : '' %>
+            Generating <%= @kit.stage.presence || 'kit components' %><%= @kit.title.present? ? " for #{@kit.title}" : '' %>
           <% end %>
         </span>
       </div>
@@ -65,11 +64,11 @@
         <% components.each do |component| %>
           <div class="flex items-center gap-3">
             <span class="flex-1 main-text-sm-normal text-letter-color bg-white-light border border-line-colour-light rounded-lg px-4 py-3">
-              <%= component_labels[component['type']] || component['type']&.humanize %>
+              <%= component_labels[component.type] || component.type&.humanize %>
             </span>
-            <% case component['status'] %>
+            <% case component.status %>
             <% when 'READY' %>
-              <%= link_to component['download_url'], class: 'flex-shrink-0 text-primary hover:text-primary-dark', target: '_blank', rel: 'noopener' do %>
+              <%= link_to component.download_url, class: 'flex-shrink-0 text-primary hover:text-primary-dark', target: '_blank', rel: 'noopener' do %>
                 <%= icon 'arrow-down-tray', css: 'w-6 h-6' %>
               <% end %>
             <% when 'FAILED' %>
@@ -87,14 +86,14 @@
       <span class="main-text-md-semibold text-letter-color">Kit summary</span>
 
       <div class="flex flex-col gap-3">
-        <p class="main-text-sm-medium text-letter-color"><%= @kit['title'].presence || 'Untitled Kit' %></p>
+        <p class="main-text-sm-medium text-letter-color"><%= @kit.title.presence || 'Untitled Kit' %></p>
         <div class="flex items-center gap-1">
           <%= icon 'book-open', css: 'w-4 h-4 text-letter-color-light' %>
           <span class="general-text-sm-normal text-letter-color-light"><%= total %> <%= 'Component'.pluralize(total) %></span>
         </div>
       </div>
 
-<%# Actions %>
+      <%# Actions %>
       <div class="flex gap-3">
         <%= button_component(text: 'Discard Kit', type: 'outline', colorscheme: 'danger', size: 'sm',
                              html_options: { class: 'flex-1' }) %>
