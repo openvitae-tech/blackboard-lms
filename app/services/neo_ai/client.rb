@@ -7,8 +7,6 @@ module NeoAi
     REQUEST_TIMEOUT = 30
     OPEN_TIMEOUT = 5
 
-    KIT_PARTNER_ID = 1000
-
     STAGE_LABELS = {
       'accepted' => 'Preparing your course…',
       'upload_artifacts' => 'Uploading documents…',
@@ -130,7 +128,7 @@ module NeoAi
 
     def kit_post(path, body)
       build_connection.post("#{API_PREFIX}#{path}", body) do |req|
-        req.params[:partner_id] = KIT_PARTNER_ID
+        req.params[:partner_id] = partner_id
       end
     end
 
