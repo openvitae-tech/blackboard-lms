@@ -32,6 +32,13 @@
               icon_name: 'rectangle-group',
               label: t('sidebar.my_content') %>
         <% end %>
+        <% if current_user.is_admin? %>
+          <%= render 'shared/components/sidebar_item',
+              nav_key: 'courses',
+              url: manage_courses_path,
+              icon_name: 'book-open',
+              label: t('sidebar.courses') %>
+        <% end %>
         <% if current_user.team.present? && policy(current_user.team).show? %>
           <%= render 'shared/components/sidebar_item',
               nav_key: 'teams',
