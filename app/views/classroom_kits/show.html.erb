@@ -19,7 +19,12 @@
   </div>
 
   <div class="bg-white border border-line-colour-light rounded-2xl p-6 flex flex-col gap-4">
-    <span class="main-text-md-semibold text-letter-color"><%= t('classroom_kits.show.components_heading') %></span>
+    <div class="flex items-center justify-between">
+      <span class="main-text-md-semibold text-letter-color"><%= t('classroom_kits.show.components_heading') %></span>
+      <%= link_to 'Download All', download_all_classroom_kit_path(@kit),
+                  class: 'main-text-sm-normal text-primary hover:underline',
+                  data: { turbo: false } %>
+    </div>
 
     <div class="flex flex-col gap-3">
       <% @components.each do |component| %>

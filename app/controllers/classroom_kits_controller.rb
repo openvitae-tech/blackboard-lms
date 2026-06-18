@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class ClassroomKitsController < ApplicationController
+  include ZipDownloadConcern
+
   before_action :authenticate_user!
-  before_action :set_kit, only: %i[show download]
+  before_action { @active_nav = 'content' }
+  before_action :set_kit, only: %i[show download download_all]
 
   def index
     authorize :classroom_kit, :index?
@@ -24,6 +27,21 @@ class ClassroomKitsController < ApplicationController
     redirect_to component['download_url'], allow_other_host: true
   rescue Faraday::Error => e
     Rails.logger.warn("[ClassroomKits] download failed: #{e.message}")
+    flash[:alert] = t('.failed')
+    redirect_to classroom_kit_path(@kit)
+  end
+
+  def download_all
+    authorize @kit, :show?
+    data = neo_ai_client.get_kit(@kit.neo_ai_kit_id)
+    components = Array(data['components']).select { |c| c['download_url'].present? }
+    return head :not_found if components.empty?
+
+    zip_data = build_zip(components)
+    kit_name = @kit.title.presence&.parameterize || 'classroom-kit'
+    send_data zip_data.string, filename: "#{kit_name}.zip", type: 'application/zip', disposition: 'attachment'
+  rescue Faraday::Error => e
+    Rails.logger.warn("[ClassroomKits] download_all failed: #{e.message}")
     flash[:alert] = t('classroom_kits.download.failed')
     redirect_to classroom_kit_path(@kit)
   end
