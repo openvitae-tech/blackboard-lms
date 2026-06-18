@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ClassroomKitsController < ApplicationController
+  include ZipDownloadConcern
+
   before_action :authenticate_user!
   before_action { @active_nav = 'content' }
   before_action :set_kit, only: %i[show download download_all]
@@ -44,32 +46,7 @@ class ClassroomKitsController < ApplicationController
     redirect_to classroom_kit_path(@kit)
   end
 
-  EXTENSIONS = {
-    'application/pdf' => 'pdf',
-    'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx'
-  }.freeze
-
   private
-
-  def build_zip(components)
-    conn = Faraday.new(request: { open_timeout: 5, timeout: 60 })
-    Zip::OutputStream.write_buffer do |zip|
-      components.each do |component|
-        file = conn.get(component['download_url'])
-        unless file.success?
-          Rails.logger.warn("[ClassroomKits] skipping #{component['id']} — #{file.status}")
-          next
-        end
-
-        content_type = file.headers['content-type'] || 'application/octet-stream'
-        ext = EXTENSIONS[content_type.split(';').first.strip] || 'bin'
-        zip.put_next_entry("#{(component['type'] || 'component').parameterize}-#{component['id']}.#{ext}")
-        zip.write(file.body)
-      end
-    end
-  end
 
   def set_kit
     @kit = ClassroomKit.find_by!(id: params[:id], learning_partner_id: current_user.learning_partner_id)
