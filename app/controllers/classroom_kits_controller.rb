@@ -65,7 +65,7 @@ class ClassroomKitsController < ApplicationController
 
         content_type = file.headers['content-type'] || 'application/octet-stream'
         ext = EXTENSIONS[content_type.split(';').first.strip] || 'bin'
-        zip.put_next_entry("#{component['type'].parameterize}-#{component['id']}.#{ext}")
+        zip.put_next_entry("#{(component['type'] || 'component').parameterize}-#{component['id']}.#{ext}")
         zip.write(file.body)
       end
     end
