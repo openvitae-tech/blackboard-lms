@@ -156,7 +156,7 @@ RSpec.describe 'ClassroomKits', type: :request do
       neo_ai_client = instance_double(NeoAi::Client)
       faraday_conn  = instance_double(Faraday::Connection)
       file_response = instance_double(Faraday::Response, success?: true, body: 'binary-content',
-                                                          headers: { 'content-type' => 'application/pdf' })
+                                                         headers: { 'content-type' => 'application/pdf' })
       allow(NeoAi::Client).to receive(:new).and_return(neo_ai_client)
       allow(Faraday).to receive(:new).and_return(faraday_conn)
       allow(faraday_conn).to receive(:get).and_return(file_response)
