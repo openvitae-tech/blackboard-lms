@@ -1,5 +1,8 @@
 <div class="pt-4 md:pt-5 pb-3 flex flex-col gap-4">
-  <h1 class="heading-xl"><%= t('classroom_kits.index.title') %></h1>
+  <div class="flex items-center gap-3">
+    <%= render 'shared/components/back_button', back_link: content_path %>
+    <h1 class="heading-xl"><%= t('classroom_kits.index.title') %></h1>
+  </div>
 </div>
 
 <% if @kits.empty? %>
