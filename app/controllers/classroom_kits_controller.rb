@@ -2,6 +2,7 @@
 
 class ClassroomKitsController < ApplicationController
   before_action :authenticate_user!
+  before_action { @active_nav = 'content' }
   before_action :set_kit, only: %i[show download download_all]
 
   def index
