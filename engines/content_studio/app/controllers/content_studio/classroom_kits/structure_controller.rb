@@ -61,10 +61,16 @@ module ContentStudio
         conn = Faraday.new(request: { open_timeout: 5, timeout: 60 })
         zip_data = Zip::OutputStream.write_buffer do |zip|
           ready_components.each do |component|
-            next if component.download_url.blank?
+            if component.download_url.blank?
+              Rails.logger.warn("[ContentStudio] download_all: skipping component #{component.id} (#{component.type}) — download_url is blank")
+              next
+            end
 
             file = conn.get(component.download_url)
-            next unless file.success?
+            unless file.success?
+              Rails.logger.warn("[ContentStudio] download_all: skipping component #{component.id} (#{component.type}) — fetch returned #{file.status}")
+              next
+            end
 
             content_type = file.headers['content-type'] || 'application/octet-stream'
             entry_name = "#{component.type.parameterize}-kit.#{ext_for(content_type)}"
