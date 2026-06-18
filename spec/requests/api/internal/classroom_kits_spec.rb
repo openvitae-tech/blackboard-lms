@@ -69,23 +69,26 @@ RSpec.describe 'Api::Internal::ClassroomKits', type: :request do
         expect(response.parsed_body['kit_id']).to eq('kit-abc')
       end
 
-      it 'passes files and components to neo_ai.create_kit' do
+      it 'passes files, components and title to neo_ai.create_kit' do
         allow(neo_ai).to receive(:create_kit).and_return({ 'kit_id' => 'kit-abc' })
         post '/api/internal/classroom_kits',
-             params: { files: ['https://example.com/doc.pdf'], components: %w[slide_deck trainer_guide] }
+             params: { title: 'Banking Basics', files: ['https://example.com/doc.pdf'],
+                       components: %w[slide_deck trainer_guide] }
         expect(neo_ai).to have_received(:create_kit).with(
           files: ['https://example.com/doc.pdf'],
-          components: %w[slide_deck trainer_guide]
+          components: %w[slide_deck trainer_guide],
+          title: 'Banking Basics'
         )
       end
 
       it 'wraps a single component string in an array' do
         allow(neo_ai).to receive(:create_kit).and_return({ 'kit_id' => 'kit-abc' })
         post '/api/internal/classroom_kits',
-             params: { files: [], components: 'slide_deck' }
+             params: { title: 'Banking Basics', files: [], components: 'slide_deck' }
         expect(neo_ai).to have_received(:create_kit).with(
           files: anything,
-          components: ['slide_deck']
+          components: ['slide_deck'],
+          title: 'Banking Basics'
         )
       end
 
