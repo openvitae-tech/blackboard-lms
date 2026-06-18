@@ -29,7 +29,8 @@
   </div>
 
   <%# Progress banner %>
-  <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden">
+  <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden"
+       data-structure-polling-target="banner">
     <div class="flex items-center justify-between p-3">
       <div class="flex items-center gap-2 min-w-0">
         <%= video_tag 'gliters-ai.mp4', class: 'w-7 h-7 shrink-0', autoplay: true, loop: true, muted: true, playsinline: true %>
@@ -56,15 +57,10 @@
       <div class="flex items-center justify-between">
         <span class="main-text-md-semibold text-letter-color">Classroom Kit</span>
         <% if all_ready %>
-          <% proxy_urls = components.select { |c| c.status == 'READY' }
-                                    .map { |c| download_kit_component_path(id: @kit.id, component_id: c.id) }
-                                    .to_json %>
-          <span data-controller="download-all"
-                data-download-all-urls-value="<%= proxy_urls %>"
-                data-action="click->download-all#download"
-                class="main-text-sm-normal text-primary hover:underline cursor-pointer">
-            Download All
-          </span>
+          <%= link_to 'Download All',
+                      download_all_kit_components_path(id: @kit.id),
+                      class: 'main-text-sm-normal text-primary hover:underline',
+                      data: { turbo: false } %>
         <% end %>
       </div>
 

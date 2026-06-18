@@ -30,6 +30,34 @@ module ContentStudio
         head :bad_gateway
       end
 
+      def download_all
+        kit = ApiClient.get_classroom_kit(params[:id])
+        ready_components = (kit.components || []).select { |c| c.status == 'READY' }
+
+        return head :not_found if ready_components.empty?
+
+        conn = Faraday.new(request: { open_timeout: 5, timeout: 60 })
+        zip_data = Zip::OutputStream.write_buffer do |zip|
+          ready_components.each do |component|
+            next if component.download_url.blank?
+
+            file = conn.get(component.download_url)
+            next unless file.success?
+
+            content_type = file.headers['content-type'] || 'application/octet-stream'
+            entry_name = "#{component.type.parameterize}-kit.#{ext_for(content_type)}"
+            zip.put_next_entry(entry_name)
+            zip.write(file.body)
+          end
+        end
+
+        kit_name = kit.title.presence&.parameterize || 'classroom-kit'
+        send_data zip_data.string, filename: "#{kit_name}.zip", type: 'application/zip', disposition: 'attachment'
+      rescue Faraday::Error => e
+        Rails.logger.error("[ContentStudio] kit download_all failed: #{e.message}")
+        head :bad_gateway
+      end
+
       EXTENSIONS = {
         'application/pdf' => 'pdf',
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'pptx',
