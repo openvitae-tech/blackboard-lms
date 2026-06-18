@@ -4,6 +4,7 @@ require_relative '../../../../rails_helper'
 
 RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
   before do
+    view.singleton_class.define_method(:alert_modal_path) { |**_| '/alert_modal' }
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:kit, kit)
   end
@@ -100,6 +101,12 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
       render
       expect(rendered).to include('Kit is ready')
     end
+  end
+
+  it 'renders the Discard Kit button as a modal link to the alert_modal' do
+    render
+    expect(rendered).to include('/alert_modal')
+    expect(rendered).to include('Discard Kit')
   end
 
   context 'when a component has FAILED' do

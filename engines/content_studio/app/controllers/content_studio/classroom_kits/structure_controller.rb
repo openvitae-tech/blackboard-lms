@@ -20,6 +20,14 @@ module ContentStudio
         redirect_to kit_structure_path(id: params[:id])
       end
 
+      def discard
+        ApiClient.discard_kit(params[:id])
+        redirect_to root_path
+      rescue Faraday::BadRequestError
+        flash[:alert] = t('content_studio.classroom_kits.discard.locked')
+        redirect_to kit_structure_path(id: params[:id])
+      end
+
       def download
         kit = ApiClient.get_classroom_kit(params[:id])
         component = kit.components.find { |c| c.id.to_s == params[:component_id].to_s }

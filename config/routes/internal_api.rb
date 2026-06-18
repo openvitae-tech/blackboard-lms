@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       post 'classroom_kits', to: 'classroom_kits#create'
       get  'classroom_kits/:id', to: 'classroom_kits#show'
       patch 'classroom_kits/:id/save', to: 'classroom_kits#save'
+      delete 'classroom_kits/:id', to: 'classroom_kits#destroy'
     end
   end
 end

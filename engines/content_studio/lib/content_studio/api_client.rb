@@ -97,7 +97,7 @@ module ContentStudio
         client.save_classroom_kit(kit_id)
       end
 
-      delegate :get_classroom_kit, to: :client
+      delegate :get_classroom_kit, :discard_kit, to: :client
 
       private
 

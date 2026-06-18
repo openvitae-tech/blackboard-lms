@@ -125,6 +125,10 @@ module ContentStudio
       build_kit(JSON.parse(response.body))
     end
 
+    def discard_kit(kit_id)
+      connection.delete("#{BASE_PATH}/classroom_kits/#{kit_id}")
+    end
+
     def save_classroom_kit(kit_id)
       connection.patch("#{BASE_PATH}/classroom_kits/#{kit_id}/save")
     end

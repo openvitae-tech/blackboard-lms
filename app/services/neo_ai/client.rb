@@ -83,6 +83,14 @@ module NeoAi
     end
 
     # NeoAI declares these as FastAPI Query(...) params, not Body — must be query string.
+    def delete_kit(kit_id)
+      build_connection.post("#{API_PREFIX}/kit/delete-kit") do |req|
+        req.params[:kit_id] = kit_id
+        req.params[:partner_id] = partner_id
+      end
+    end
+
+    # NeoAI declares these as FastAPI Query(...) params, not Body — must be query string.
     def delete_course(course_id)
       build_connection.post("#{API_PREFIX}/course/delete-course") do |req|
         req.params[:course_id] = course_id

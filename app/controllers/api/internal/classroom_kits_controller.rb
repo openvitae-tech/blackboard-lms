@@ -20,6 +20,13 @@ module Api
         render json: { kit_id: kit_id }
       end
 
+      def destroy
+        neo_ai.delete_kit(params[:id])
+        head :no_content
+      rescue Faraday::BadRequestError
+        render json: { error: t('content_studio.classroom_kits.discard.locked') }, status: :unprocessable_entity
+      end
+
       def save
         authorize :classroom_kit, :save?
         NeoAi::ClassroomKitSaveService.new(neo_ai).call(
