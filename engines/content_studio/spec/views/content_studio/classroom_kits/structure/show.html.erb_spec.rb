@@ -27,7 +27,8 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
     ContentStudio::Kit.new(
       id: 'kit-123', title: 'Banking Basics', status: 'COMPLETED',
       stage: 'ready', thumbnail_url: nil, doc_count: 0,
-      components: [slide_deck_component, trainer_guide_component]
+      components: [slide_deck_component, trainer_guide_component],
+      saved: false
     )
   end
 
@@ -78,12 +79,43 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
     expect(rendered).to include('data-structure-polling-pending-value="true"')
   end
 
+  it 'renders the Save Kit button when kit is not saved to LMS' do
+    render
+    expect(rendered).to include('Save Kit')
+  end
+
+  it 'does not render Update Kit when kit is not saved' do
+    render
+    expect(rendered).not_to include('Update Kit')
+  end
+
+  context 'when kit is already saved to LMS' do
+    before { assign(:kit, ContentStudio::Kit.new(**kit.to_h, saved: true)) }
+
+    it 'renders the Update Kit button' do
+      render
+      expect(rendered).to include('Update Kit')
+    end
+
+    it 'does not render Save Kit when kit is already saved' do
+      render
+      expect(rendered).not_to include('Save Kit')
+    end
+  end
+
+  it 'does not hide the progress banner when not all components are ready' do
+    render
+    expect(rendered).to include('data-structure-polling-target="banner"')
+    expect(rendered).not_to include('visibility: hidden')
+  end
+
   context 'when all components are READY' do
     let(:kit) do
       ContentStudio::Kit.new(
         id: 'kit-123', title: 'Banking Basics', status: 'COMPLETED',
         stage: 'ready', thumbnail_url: nil, doc_count: 0,
-        components: [slide_deck_component]
+        components: [slide_deck_component],
+        saved: false
       )
     end
 
@@ -100,6 +132,11 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
     it 'shows Kit is ready in the banner' do
       render
       expect(rendered).to include('Kit is ready')
+    end
+
+    it 'hides the progress banner server-side' do
+      render
+      expect(rendered).to include('visibility: hidden')
     end
   end
 

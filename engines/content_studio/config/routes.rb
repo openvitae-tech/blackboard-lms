@@ -8,6 +8,8 @@ ContentStudio::Engine.routes.draw do
                                       as: :kit_structure
   get 'classroom-kits/:id/components/:component_id/download', to: 'classroom_kits/structure#download',
                                                               as: :download_kit_component
+  get 'classroom-kits/:id/download_all', to: 'classroom_kits/structure#download_all',
+                                         as: :download_all_kit_components
   patch 'classroom-kits/:id/save', to: 'classroom_kits/structure#save', as: :save_classroom_kit
   delete 'classroom-kits/:id', to: 'classroom_kits/structure#discard', as: :discard_kit
   get  'classroom-kits/new',            to: 'classroom_kits/wizard#new',          as: :new_classroom_kit

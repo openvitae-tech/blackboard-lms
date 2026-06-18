@@ -342,6 +342,47 @@ RSpec.describe 'content_studio/courses/structure/show', type: :view do
     expect(rendered).to include('action="/content_studio/courses/1/save"')
   end
 
+  context 'when modules are blank (early generation, no lessons yet)' do
+    before do
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1, title: 'Airport Services Management', duration: 0,
+                           modules: [], verified_modules_count: 0,
+                           thumbnail_url: nil, saved: false, progress_text: 'Preparing your course…'
+                         ))
+    end
+
+    it 'still renders the progress card' do
+      render
+      expect(rendered).to include('border-secondary-dark')
+      expect(rendered).to include('Preparing your course')
+    end
+  end
+
+  context 'when all lessons have a video_url (course complete)' do
+    before do
+      completed_module = ContentStudio::StructureModule.new(
+        id: 1, title: 'Airport Services',
+        lessons: [
+          ContentStudio::StructureLesson.new(id: 1, title: 'Introduction', status: 'VERIFIED',
+                                             video_url: 'https://example.com/v1.mp4', scenes: []),
+          ContentStudio::StructureLesson.new(id: 2, title: 'Rules', status: 'VIDEO_READY',
+                                             video_url: 'https://example.com/v2.mp4', scenes: [])
+        ]
+      )
+      assign(:structure, ContentStudio::CourseStructure.new(
+                           id: 1, title: 'Airport Services Management', duration: 9240,
+                           modules: [completed_module], verified_modules_count: 1,
+                           thumbnail_url: nil, saved: false, progress_text: 'Course is ready!'
+                         ))
+    end
+
+    it 'does not render the progress card even when progress_text is present' do
+      render
+      expect(rendered).not_to include('border-secondary-dark')
+      expect(rendered).not_to include('Course is ready!')
+    end
+  end
+
   context 'when no pending lessons and no progress_text' do
     before do
       all_verified = ContentStudio::StructureModule.new(
