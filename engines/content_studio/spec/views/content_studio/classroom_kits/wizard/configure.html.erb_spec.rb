@@ -8,7 +8,7 @@ RSpec.describe 'content_studio/classroom_kits/wizard/configure', type: :view do
   before do
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:kit_id, 'pending')
-    assign(:selected_components, all_components)
+    assign(:selected_components, [])
   end
 
   it 'renders all three wizard step labels' do
@@ -27,9 +27,9 @@ RSpec.describe 'content_studio/classroom_kits/wizard/configure', type: :view do
     expect(rendered).to include('Quiz')
   end
 
-  it 'renders all five checkboxes as checked by default' do
+  it 'renders no checkboxes as checked by default' do
     render
-    expect(rendered.scan('checked').size).to be >= 5
+    expect(rendered).not_to include('checked="checked"')
   end
 
   it 'renders the Back and Generate Kit Structure footer buttons' do

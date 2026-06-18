@@ -27,7 +27,7 @@ module ContentStudio
 
       def configure
         @kit_id = params[:id]
-        @selected_components = %w[slide_deck trainer_guide learner_workbook assessment quiz]
+        @selected_components = []
       end
 
       def update_config
