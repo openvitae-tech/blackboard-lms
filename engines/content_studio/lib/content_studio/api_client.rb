@@ -89,9 +89,11 @@ module ContentStudio
         client.regenerate_lesson(lesson_id, course_id: course_id)
       end
 
-      def create_classroom_kit(files:, components:)
-        client.create_classroom_kit(files: files, components: components)
+      def create_classroom_kit(files:, components:, title: nil)
+        client.create_classroom_kit(files: files, components: components, title: title)
       end
+
+      delegate :get_classroom_kit, to: :client
 
       private
 

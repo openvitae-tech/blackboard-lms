@@ -23,11 +23,13 @@ export default class extends Controller {
       this._schedulePoll()
     }
     this._onBeforeVisit = () => clearTimeout(this.timer)
+    this._onFrameMissing = (event) => { event.preventDefault(); this._schedulePoll() }
     window.addEventListener('module-select:drag-start', this._onDragStart)
     window.addEventListener('module-select:drag-end', this._onDragEnd)
     document.addEventListener('turbo:before-visit', this._onBeforeVisit)
     this._frame = this.element.closest('turbo-frame')
     this._frame?.addEventListener('turbo:frame-load', this._onFrameLoad)
+    this._frame?.addEventListener('turbo:frame-missing', this._onFrameMissing)
     this._schedulePoll()
   }
 
@@ -37,6 +39,7 @@ export default class extends Controller {
     window.removeEventListener('module-select:drag-end', this._onDragEnd)
     document.removeEventListener('turbo:before-visit', this._onBeforeVisit)
     this._frame?.removeEventListener('turbo:frame-load', this._onFrameLoad)
+    this._frame?.removeEventListener('turbo:frame-missing', this._onFrameMissing)
   }
 
   thumbnailUrlValueChanged(url) {
