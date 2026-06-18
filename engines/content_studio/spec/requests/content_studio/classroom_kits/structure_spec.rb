@@ -80,9 +80,9 @@ RSpec.describe 'ContentStudio::ClassroomKits::Structure', type: :request do
         allow(ContentStudio::ApiClient).to receive(:save_classroom_kit)
       end
 
-      it 'redirects to the host app root' do
+      it 'redirects back to the kit structure page' do
         patch '/content_studio/classroom-kits/kit-abc/save'
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to('/content_studio/classroom-kits/kit-abc/structure')
       end
 
       it 'calls ApiClient.save_classroom_kit with the kit id' do
@@ -109,9 +109,9 @@ RSpec.describe 'ContentStudio::ClassroomKits::Structure', type: :request do
         allow(ContentStudio::ApiClient).to receive(:discard_kit)
       end
 
-      it 'redirects to the host app root' do
+      it 'redirects to the My Content page' do
         delete '/content_studio/classroom-kits/kit-abc'
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to('/content')
       end
 
       it 'calls ApiClient.discard_kit with the kit id' do

@@ -113,6 +113,7 @@ module ContentStudio
     :updated_at,
     :expires_at,
     :components,
+    :saved,
     keyword_init: true
   )
 

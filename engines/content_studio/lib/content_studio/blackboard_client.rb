@@ -151,7 +151,8 @@ module ContentStudio
         created_at: data['created_at'],
         updated_at: data['updated_at'],
         expires_at: data['expires_at'],
-        components: Array(data['components']).map { |c| build_kit_component(c) }
+        components: Array(data['components']).map { |c| build_kit_component(c) },
+        saved: data['saved_to_lms'] == true
       )
     end
 

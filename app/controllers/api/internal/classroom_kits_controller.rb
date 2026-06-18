@@ -13,7 +13,8 @@ module Api
 
       def show
         data = neo_ai.get_kit(params[:id])
-        render json: data
+        saved = ClassroomKit.exists?(neo_ai_kit_id: params[:id])
+        render json: data.merge('saved_to_lms' => saved)
       end
 
       def create
