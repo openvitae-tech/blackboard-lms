@@ -62,6 +62,11 @@ module NeoAi
       JSON.parse(response.body)
     end
 
+    def list_kits
+      response = kit_get('/kit/list-kits')
+      JSON.parse(response.body).fetch('kits', [])
+    end
+
     def get_kit(kit_id)
       response = kit_get("/kit/#{kit_id}")
       JSON.parse(response.body)
