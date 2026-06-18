@@ -488,3 +488,16 @@ en:
   llm:
     response:
       idontknow: "I'm unable to provide a response as the question appears outside the current scope."
+  classroom_kits:
+    untitled: "Untitled Kit"
+    index:
+      title: "Classroom Kits"
+      empty: "No classroom kits have been saved yet."
+    show:
+      components_heading: "Components"
+    components:
+      slide_deck: "Slide deck for learners"
+      trainer_guide: "Trainer guide"
+      learner_workbook: "Learner workbook"
+      assessment: "Assessment"
+      quiz: "Quiz"

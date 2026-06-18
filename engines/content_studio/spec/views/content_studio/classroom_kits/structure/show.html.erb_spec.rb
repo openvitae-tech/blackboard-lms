@@ -53,7 +53,7 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
 
   it 'renders a download link for READY components' do
     render
-    expect(rendered).to include('https://s3.example.com/slide_deck.pptx')
+    expect(rendered).to include('classroom-kits/kit-123/components/comp-1/download')
   end
 
   it 'renders a spinner for PENDING components' do

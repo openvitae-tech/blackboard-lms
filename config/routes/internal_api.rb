@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get 'courses/:course_id/lessons/:id', to: 'courses/lessons#show'
       post 'classroom_kits', to: 'classroom_kits#create'
       get  'classroom_kits/:id', to: 'classroom_kits#show'
+      patch 'classroom_kits/:id/save', to: 'classroom_kits#save'
     end
   end
 end

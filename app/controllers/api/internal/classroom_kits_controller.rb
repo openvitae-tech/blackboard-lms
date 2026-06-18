@@ -3,6 +3,11 @@
 module Api
   module Internal
     class ClassroomKitsController < BaseController
+      def show
+        data = neo_ai.get_kit(params[:id])
+        render json: data
+      end
+
       def create
         title = params[:title]
         data = neo_ai.create_kit(
@@ -14,9 +19,13 @@ module Api
         render json: { kit_id: kit_id }
       end
 
-      def show
-        data = neo_ai.get_kit(params[:id])
-        render json: data
+      def save
+        authorize :classroom_kit, :save?
+        NeoAi::ClassroomKitSaveService.new(neo_ai).call(
+          params[:id],
+          learning_partner_id: current_user.learning_partner_id
+        )
+        render json: { status: :ok }
       end
     end
   end

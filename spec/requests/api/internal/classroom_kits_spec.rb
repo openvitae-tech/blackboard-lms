@@ -25,6 +25,35 @@ RSpec.describe 'Api::Internal::ClassroomKits', type: :request do
     end
   end
 
+  describe 'PATCH /api/internal/classroom_kits/:id/save' do
+    let(:creator) { create(:user, :owner, content_studio_creator: true) }
+    let(:save_service) { instance_double(NeoAi::ClassroomKitSaveService) }
+
+    before do
+      sign_in creator
+      allow(NeoAi::ClassroomKitSaveService).to receive(:new).and_return(save_service)
+      allow(save_service).to receive(:call)
+    end
+
+    it 'returns 200 and delegates to ClassroomKitSaveService' do
+      patch '/api/internal/classroom_kits/kit-abc/save'
+      expect(response).to have_http_status(:ok)
+      expect(save_service).to have_received(:call).with('kit-abc', learning_partner_id: creator.learning_partner_id)
+    end
+
+    it 'returns 403 for a user without content_studio_creator flag' do
+      sign_in privileged_user
+      patch '/api/internal/classroom_kits/kit-abc/save'
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'returns 403 for a learner' do
+      sign_in learner
+      patch '/api/internal/classroom_kits/kit-abc/save'
+      expect(response).to have_http_status(:forbidden)
+    end
+  end
+
   describe 'POST /api/internal/classroom_kits' do
     before { sign_in privileged_user }
 
