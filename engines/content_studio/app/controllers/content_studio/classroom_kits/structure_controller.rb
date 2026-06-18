@@ -73,7 +73,7 @@ module ContentStudio
             end
 
             content_type = file.headers['content-type'] || 'application/octet-stream'
-            entry_name = "#{component.type.parameterize}-kit.#{ext_for(content_type)}"
+            entry_name = "#{component.type.parameterize}-#{component.id}.#{ext_for(content_type)}"
             zip.put_next_entry(entry_name)
             zip.write(file.body)
           end
