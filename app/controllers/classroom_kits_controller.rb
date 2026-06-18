@@ -22,12 +22,16 @@ class ClassroomKitsController < ApplicationController
     return head :not_found if component.nil? || component['download_url'].blank?
 
     redirect_to component['download_url'], allow_other_host: true
+  rescue Faraday::Error => e
+    Rails.logger.warn("[ClassroomKits] download failed: #{e.message}")
+    flash[:alert] = t('classroom_kits.download.failed')
+    redirect_to classroom_kit_path(@kit)
   end
 
   private
 
   def set_kit
-    @kit = ClassroomKit.find(params[:id])
+    @kit = ClassroomKit.find_by!(id: params[:id], learning_partner_id: current_user.learning_partner_id)
   end
 
   def neo_ai_client

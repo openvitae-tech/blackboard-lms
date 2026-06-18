@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateClassroomKitComponents < ActiveRecord::Migration[8.0]
   def change
     create_table :classroom_kit_components do |t|

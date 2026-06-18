@@ -490,6 +490,8 @@ en:
       idontknow: "I'm unable to provide a response as the question appears outside the current scope."
   classroom_kits:
     untitled: "Untitled Kit"
+    download:
+      failed: "Download failed. Please try again."
     index:
       title: "Classroom Kits"
       empty: "No classroom kits have been saved yet."

@@ -22,10 +22,11 @@ export default class extends Controller {
           this.startGeneration(),
           this.runPhaseTransitions()
         ])
-        sessionStorage.removeItem(storageKey)
         if (result?.redirect_url) { window.location.href = result.redirect_url; return }
       } catch {
         // silent — error page only shown when server returns state=error
+      } finally {
+        sessionStorage.removeItem(storageKey)
       }
       // status_url was set by startGeneration — begin polling
       if (this.statusUrlValue) {

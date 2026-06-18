@@ -64,12 +64,23 @@ RSpec.describe 'ClassroomKits', type: :request do
       end
     end
 
+    context 'when signed in as a manager from another learning partner' do
+      let(:other_manager) { create(:user, :manager) }
+
+      before { sign_in other_manager }
+
+      it 'returns 404' do
+        get classroom_kit_path(kit)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
     context 'when signed in as an admin' do
       before { sign_in admin }
 
-      it 'returns 403' do
+      it 'returns 404' do
         get classroom_kit_path(kit)
-        expect(response).to redirect_to(error_401_path)
+        expect(response).to have_http_status(:not_found)
       end
     end
 
@@ -113,6 +124,19 @@ RSpec.describe 'ClassroomKits', type: :request do
       it 'returns 404' do
         get download_component_classroom_kit_path(kit, component_id: component.neo_ai_component_id)
         expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when NeoAI is unavailable' do
+      before do
+        sign_in manager
+        allow(neo_ai_client).to receive(:get_kit).and_raise(Faraday::ConnectionFailed, 'connection refused')
+      end
+
+      it 'redirects back to the kit page with a flash alert' do
+        get download_component_classroom_kit_path(kit, component_id: component.neo_ai_component_id)
+        expect(response).to redirect_to(classroom_kit_path(kit))
+        expect(flash[:alert]).to eq(I18n.t('classroom_kits.download.failed'))
       end
     end
 
