@@ -53,6 +53,8 @@ en:
         save:
           saved: "Classroom kit saved successfully."
           save_failed: "Something went wrong while saving. Please try again."
+        discard:
+          discard_failed: "Something went wrong while discarding. Please try again."
       discard:
         locked: "Kit is currently being processed. Please wait before deleting."
         confirm:

@@ -8,5 +8,7 @@ class CreateClassroomKitComponents < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
+
+    add_index :classroom_kit_components, :neo_ai_component_id, unique: true
   end
 end

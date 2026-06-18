@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_18_012101) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_18_062854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -88,6 +88,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_18_012101) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["classroom_kit_id"], name: "index_classroom_kit_components_on_classroom_kit_id"
+    t.index ["neo_ai_component_id"], name: "index_classroom_kit_components_on_neo_ai_component_id", unique: true
   end
 
   create_table "classroom_kits", force: :cascade do |t|
