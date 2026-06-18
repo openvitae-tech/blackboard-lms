@@ -20,15 +20,31 @@ RSpec.describe 'content_studio/courses/index', type: :view do
       levels: ['Beginner'],
       enrollments_count: 0,
       team_enrollments_count: 0,
-      modules: []
+      modules: [],
+      created_at: '2025-06-10T10:00:00Z'
+    )
+  end
+
+  let(:sample_kit) do
+    ContentStudio::Kit.new(
+      id: 'kit-1',
+      title: 'Banking Basics',
+      status: 'IN_PROGRESS',
+      stage: nil,
+      thumbnail_url: nil,
+      doc_count: 3,
+      created_at: '2025-06-17T12:00:00Z',
+      updated_at: nil,
+      expires_at: nil,
+      components: []
     )
   end
 
   before do
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:stats, stats)
-    assign(:in_progress, [sample_course])
-    assign(:completed, [])
+    assign(:in_progress_creations, [sample_kit, sample_course])
+    assign(:completed_creations, [])
   end
 
   it 'renders the greeting' do
@@ -57,7 +73,6 @@ RSpec.describe 'content_studio/courses/index', type: :view do
     expect(rendered).to include('Recent Creations')
     expect(rendered).to include('In Progress')
     expect(rendered).to include('Completed')
-    expect(rendered).not_to include('No published courses yet.')
   end
 
   it 'renders a course card in the In Progress tab' do
@@ -70,12 +85,41 @@ RSpec.describe 'content_studio/courses/index', type: :view do
     expect(rendered).to include('href="/content_studio/courses/1/structure"')
   end
 
-  context 'when the Completed tab has no courses' do
-    before { assign(:completed, []) }
+  it 'renders a kit card in the In Progress tab' do
+    render
+    expect(rendered).to include('Banking Basics')
+  end
+
+  it 'wraps each kit card in a link to its structure page' do
+    render
+    expect(rendered).to include('href="/content_studio/classroom-kits/kit-1/structure"')
+  end
+
+  it 'renders the Course type tag on course cards' do
+    render
+    expect(rendered).to include('Course')
+  end
+
+  it 'renders the Classroom Kit type tag on kit cards' do
+    render
+    expect(rendered).to include('Classroom Kit')
+  end
+
+  context 'when the Completed tab has no creations' do
+    before { assign(:completed_creations, []) }
 
     it 'shows empty state for the Completed tab' do
       render
-      expect(rendered).to include('No completed courses yet.')
+      expect(rendered).to include('No completed creations yet.')
+    end
+  end
+
+  context 'when there are no in-progress creations' do
+    before { assign(:in_progress_creations, []) }
+
+    it 'shows empty state for the In Progress tab' do
+      render
+      expect(rendered).to include('No creations in progress.')
     end
   end
 

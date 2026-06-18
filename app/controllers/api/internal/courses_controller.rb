@@ -141,7 +141,8 @@ module Api
           enrollments_count: 0,
           team_enrollments_count: 0,
           modules: [],
-          progress: nil
+          progress: nil,
+          created_at: data['created_at']
         }
       end
 

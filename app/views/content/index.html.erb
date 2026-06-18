@@ -22,10 +22,13 @@
     <%= icon('chevron-right', css: 'h-5 w-5 text-primary') %>
   <% end %>
 
-  <% if APP_CONFIG.classroom_kit_enabled? %>
-    <div class="flex items-center gap-3 border-b border-line-colour pl-2 pr-4 py-5">
+  <% if APP_CONFIG.classroom_kit_enabled? && policy(:classroom_kit).index? %>
+    <%= link_to classroom_kits_path, class: "flex items-center gap-3 border-b border-line-colour pl-2 pr-4 py-5 hover:bg-primary-light-50" do %>
       <span class="flex-1 text-base font-medium text-primary"><%= t('content.classroom_kit') %></span>
+      <div class="flex items-center gap-2">
+        <%= chip_component(text: @classroom_kits_count.to_s, colorscheme: 'transparent', pill: true) %>
+      </div>
       <%= icon('chevron-right', css: 'h-5 w-5 text-primary') %>
-    </div>
+    <% end %>
   <% end %>
 </div>

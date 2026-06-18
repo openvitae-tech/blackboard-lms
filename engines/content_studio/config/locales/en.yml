@@ -49,6 +49,12 @@ en:
           not_verified: "The lesson must be verified before it can be downloaded."
           expired: "The lesson video could not be downloaded. The link may have expired — please try again."
     classroom_kits:
+      structure:
+        save:
+          saved: "Classroom kit saved successfully."
+          save_failed: "Something went wrong while saving. Please try again."
+        discard:
+          discard_failed: "Something went wrong while discarding. Please try again."
       discard:
         locked: "Kit is currently being processed. Please wait before deleting."
         confirm:

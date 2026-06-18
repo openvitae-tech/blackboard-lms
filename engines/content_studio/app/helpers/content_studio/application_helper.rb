@@ -83,9 +83,22 @@ module ContentStudio
         categories: course.categories || [],
         rating: course.rating,
         progress: course.progress,
-        badge: studio_badge(course.level)
+        badge: studio_badge(course.level),
+        type_tag: { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-letter-color' }
       )
       link_to(card, course_structure_path(id: course.id), class: 'block')
+    end
+
+    def studio_kit_card(kit)
+      card = course_card_component(
+        title: kit.title.presence || 'Untitled Kit',
+        banner_url: kit.thumbnail_url.presence,
+        modules_count: kit.doc_count || 0,
+        modules_label: 'Document',
+        categories: [],
+        type_tag: { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200', text_color: 'text-letter-color' }
+      )
+      link_to(card, kit_structure_path(id: kit.id), class: 'block')
     end
 
     def lesson_status_label(status)

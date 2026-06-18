@@ -9,5 +9,6 @@ class ContentController < ApplicationController
       @courses_unpublished_count = Course.where(learning_partner_id: lp_id, is_published: false).count
     end
     @programs_count = Program.where(learning_partner_id: lp_id).count
+    @classroom_kits_count = ClassroomKit.where(learning_partner_id: lp_id).count if policy(:classroom_kit).index?
   end
 end
