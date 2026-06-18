@@ -326,6 +326,11 @@ long_course_card_component(
   highlights: [],
   type_tag: nil,           # nil or Hash with :label, :bg_color — inline pill on desktop, footer bar on mobile
                            #   text colour is always text-grey-dark (hardcoded in template)
+  publish_status: nil,     # nil | 'published' | 'unpublished'
+                           #   nil — no indicator rendered
+                           #   'published'   — corner diamond (top-right) with eye icon, blue background (bg-primary-light-200)
+                           #   'unpublished' — corner diamond with eye icon, gold background (bg-gold)
+                           #   Any other value raises ArgumentError
   checkbox: false          # false to hide; or a Hash of check_box_tag options (truthy non-Hash raises ArgumentError)
                            #   Hash keys: :name (field name), :value, :checked (Boolean), :id,
                            #   plus any other HTML attributes (e.g. data-*, class overrides).
