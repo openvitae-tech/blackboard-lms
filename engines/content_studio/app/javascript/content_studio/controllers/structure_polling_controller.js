@@ -46,9 +46,10 @@ export default class extends Controller {
     this._frame?.removeEventListener('turbo:frame-missing', this._onFrameMissing)
   }
 
-  pendingValueChanged(pending) {
-    if (pending || !this.hasBannerTarget) return
-    setTimeout(() => {
+  pendingValueChanged(pending, previousPending) {
+    if (pending || previousPending === undefined || !this.hasBannerTarget) return
+    clearTimeout(this._bannerHideTimer)
+    this._bannerHideTimer = setTimeout(() => {
       this.bannerTarget.style.visibility = 'hidden'
     }, BANNER_HIDE_DELAY_MS)
   }
