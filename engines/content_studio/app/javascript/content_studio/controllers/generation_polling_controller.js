@@ -12,8 +12,9 @@ export default class extends Controller {
 
   async connect() {
     if (this.startUrlValue) {
-      if (sessionStorage.getItem('kit_generation_started')) return
-      sessionStorage.setItem('kit_generation_started', '1')
+      const storageKey = `generation_started_${this.startUrlValue}`
+      if (sessionStorage.getItem(storageKey)) return
+      sessionStorage.setItem(storageKey, '1')
       // Run API call and phase transitions in parallel
       // Minimum display: 4s uploading + 4s crafting before redirect
       try {
@@ -21,6 +22,7 @@ export default class extends Controller {
           this.startGeneration(),
           this.runPhaseTransitions()
         ])
+        sessionStorage.removeItem(storageKey)
         if (result?.redirect_url) { window.location.href = result.redirect_url; return }
       } catch {
         // silent — error page only shown when server returns state=error
