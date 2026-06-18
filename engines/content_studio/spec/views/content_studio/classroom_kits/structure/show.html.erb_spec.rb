@@ -103,8 +103,9 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
     end
   end
 
-  it 'renders the progress banner without visibility: hidden when not all ready' do
+  it 'does not hide the progress banner when not all components are ready' do
     render
+    expect(rendered).to include('data-structure-polling-target="banner"')
     expect(rendered).not_to include('visibility: hidden')
   end
 
