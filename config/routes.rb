@@ -225,6 +225,7 @@ Rails.application.routes.draw do
   resources :classroom_kits, only: %i[index show] do
     member do
       get 'components/:component_id/download', action: :download, as: :download_component
+      get 'download_all', action: :download_all, as: :download_all
     end
   end
 

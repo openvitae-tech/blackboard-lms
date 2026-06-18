@@ -18,7 +18,7 @@ module Api
       end
 
       def create
-        title = params[:title]
+        title = params[:title].presence&.titleize
         data = neo_ai.create_kit(
           files: params[:files],
           components: Array(params[:components]),
