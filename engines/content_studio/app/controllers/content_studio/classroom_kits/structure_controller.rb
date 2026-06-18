@@ -22,7 +22,9 @@ module ContentStudio
 
       def discard
         ApiClient.discard_kit(params[:id])
-        redirect_to '/content'
+        redirect_to root_path
+      rescue Faraday::ResourceNotFound
+        redirect_to root_path
       rescue Faraday::BadRequestError
         flash[:alert] = t('content_studio.classroom_kits.discard.locked')
         redirect_to kit_structure_path(id: params[:id])

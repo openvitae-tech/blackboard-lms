@@ -109,14 +109,25 @@ RSpec.describe 'ContentStudio::ClassroomKits::Structure', type: :request do
         allow(ContentStudio::ApiClient).to receive(:discard_kit)
       end
 
-      it 'redirects to the My Content page' do
+      it 'redirects to the Content Studio landing page' do
         delete '/content_studio/classroom-kits/kit-abc'
-        expect(response).to redirect_to('/content')
+        expect(response).to redirect_to(root_path)
       end
 
       it 'calls ApiClient.discard_kit with the kit id' do
         delete '/content_studio/classroom-kits/kit-abc'
         expect(ContentStudio::ApiClient).to have_received(:discard_kit).with('kit-abc')
+      end
+    end
+
+    context 'when kit is already deleted (404)' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:discard_kit).and_raise(Faraday::ResourceNotFound)
+      end
+
+      it 'redirects to the Content Studio landing page' do
+        delete '/content_studio/classroom-kits/kit-abc'
+        expect(response).to redirect_to(root_path)
       end
     end
 
