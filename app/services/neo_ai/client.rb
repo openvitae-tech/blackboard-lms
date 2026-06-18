@@ -55,8 +55,10 @@ module NeoAi
       JSON.parse(response.body)
     end
 
-    def create_kit(files:, components:)
-      response = kit_post('/kit/create-kit', { files: files, components: components })
+    def create_kit(files:, components:, title:)
+      body = { files: files, components: components }
+      body[:title] = title if title.present?
+      response = kit_post('/kit/create-kit', body)
       JSON.parse(response.body)
     end
 
