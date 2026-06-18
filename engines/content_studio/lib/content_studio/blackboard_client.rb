@@ -120,9 +120,22 @@ module ContentStudio
       JSON.parse(response.body)['kit_id']
     end
 
+    def list_classroom_kits_by_status(status)
+      response = connection.get("#{BASE_PATH}/classroom_kits", { studio_status: status, limit: 12 })
+      JSON.parse(response.body).map { |k| build_kit(k) }
+    end
+
     def get_classroom_kit(kit_id)
       response = connection.get("#{BASE_PATH}/classroom_kits/#{kit_id}")
       build_kit(JSON.parse(response.body))
+    end
+
+    def discard_kit(kit_id)
+      connection.delete("#{BASE_PATH}/classroom_kits/#{kit_id}")
+    end
+
+    def save_classroom_kit(kit_id)
+      connection.patch("#{BASE_PATH}/classroom_kits/#{kit_id}/save")
     end
 
     private
@@ -178,7 +191,8 @@ module ContentStudio
         enrollments_count: data['enrollments_count'],
         team_enrollments_count: data['team_enrollments_count'],
         modules: (data['modules'] || []).map { |m| build_module(m) },
-        progress: data['progress']
+        progress: data['progress'],
+        created_at: data['created_at']
       )
     end
 

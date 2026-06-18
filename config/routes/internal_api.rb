@@ -20,8 +20,11 @@ Rails.application.routes.draw do
       delete 'courses/:course_id/lessons/:lesson_id', to: 'courses#delete_lesson'
       post 'courses/:course_id/lessons/:lesson_id/regenerate', to: 'courses#regenerate_lesson'
       get 'courses/:course_id/lessons/:id', to: 'courses/lessons#show'
+      get  'classroom_kits', to: 'classroom_kits#index'
       post 'classroom_kits', to: 'classroom_kits#create'
       get  'classroom_kits/:id', to: 'classroom_kits#show'
+      patch 'classroom_kits/:id/save', to: 'classroom_kits#save'
+      delete 'classroom_kits/:id', to: 'classroom_kits#destroy'
     end
   end
 end

@@ -91,21 +91,25 @@
 
           <%# In Progress panel %>
           <div data-tabs-target="panelItem">
-            <% if @in_progress.any? %>
-              <% cards = @in_progress.map { |course| studio_course_card(course, 'in_progress') } %>
+            <% if @in_progress_creations.any? %>
+              <% cards = @in_progress_creations.map { |item|
+                   item.is_a?(ContentStudio::Kit) ? studio_kit_card(item) : studio_course_card(item, 'in_progress')
+                 } %>
               <%= carousel_component(cards: cards, loop: false) %>
             <% else %>
-              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No courses in progress.</p>
+              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No creations in progress.</p>
             <% end %>
           </div>
 
           <%# Completed panel %>
           <div class="hidden" data-tabs-target="panelItem">
-            <% if @completed.any? %>
-              <% cards = @completed.map { |course| studio_course_card(course, 'completed') } %>
+            <% if @completed_creations.any? %>
+              <% cards = @completed_creations.map { |item|
+                   item.is_a?(ContentStudio::Kit) ? studio_kit_card(item) : studio_course_card(item, 'completed')
+                 } %>
               <%= carousel_component(cards: cards, loop: false) %>
             <% else %>
-              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No completed courses yet.</p>
+              <p class="general-text-lg-normal text-letter-color-light py-8 text-center">No completed creations yet.</p>
             <% end %>
           </div>
 

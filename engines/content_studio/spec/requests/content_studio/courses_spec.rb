@@ -24,7 +24,10 @@ RSpec.describe 'ContentStudio::Courses', type: :request do
   end
 
   before do
-    allow(ContentStudio::ApiClient).to receive(:course_stats).and_return(stats)
+    allow(ContentStudio::ApiClient).to receive_messages(
+      course_stats: stats,
+      list_classroom_kits_by_status: []
+    )
     allow(ContentStudio::ApiClient).to receive(:list_courses_by_status)
       .with('in_progress').and_return([in_progress_course])
     allow(ContentStudio::ApiClient).to receive(:list_courses_by_status).with('completed').and_return([])
@@ -59,7 +62,7 @@ RSpec.describe 'ContentStudio::Courses', type: :request do
     end
 
     it 'shows empty state for the Completed tab' do
-      expect(response.body).to include('No completed courses yet.')
+      expect(response.body).to include('No completed creations yet.')
     end
 
     it 'does not render a Show all Creations button' do

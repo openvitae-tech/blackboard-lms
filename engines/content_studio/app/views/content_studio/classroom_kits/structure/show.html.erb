@@ -101,10 +101,24 @@
 
       <%# Actions %>
       <div class="flex gap-3">
-        <%= button_component(text: 'Discard Kit', type: 'outline', colorscheme: 'danger', size: 'sm',
-                             html_options: { class: 'flex-1' }) %>
-        <%= button_component(text: 'Save Kit', colorscheme: 'primary', size: 'sm', disabled: true,
-                             html_options: { class: 'flex-1' }) %>
+        <%= link_to alert_modal_path(
+              title: t('content_studio.classroom_kits.discard.confirm.title'),
+              description: t('content_studio.classroom_kits.discard.confirm.description', title: @kit.title.presence || 'this kit'),
+              action_path: discard_kit_path(id: @kit.id),
+              method: 'delete',
+              action_text: t('content_studio.classroom_kits.discard.confirm.action'),
+              action_type: 'danger'
+            ), class: 'flex-1', data: { turbo_frame: 'modal' } do %>
+          <%= button_component(text: 'Discard Kit', type: 'outline', colorscheme: 'danger', size: 'sm',
+                               html_options: { class: 'w-full' }) %>
+        <% end %>
+        <%= form_with url: save_classroom_kit_path(id: @kit.id), method: :patch, class: 'flex-1',
+                      data: { turbo_frame: '_top' } do |f| %>
+          <%= f.button class: 'w-full', disabled: !all_ready do %>
+            <%= button_component(text: 'Save Kit', colorscheme: 'primary', size: 'sm',
+                                 disabled: !all_ready, html_options: { class: 'w-full' }) %>
+          <% end %>
+        <% end %>
       </div>
     </div>
 

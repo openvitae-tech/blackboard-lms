@@ -55,9 +55,16 @@ module NeoAi
       JSON.parse(response.body)
     end
 
-    def create_kit(files:, components:)
-      response = kit_post('/kit/create-kit', { files: files, components: components })
+    def create_kit(files:, components:, title:)
+      body = { files: files, components: components }
+      body[:title] = title if title.present?
+      response = kit_post('/kit/create-kit', body)
       JSON.parse(response.body)
+    end
+
+    def list_kits
+      response = kit_get('/kit/list-kits')
+      JSON.parse(response.body).fetch('kits', [])
     end
 
     def get_kit(kit_id)
@@ -76,6 +83,14 @@ module NeoAi
       build_connection.post("#{API_PREFIX}/course/verify-lesson") do |req|
         req.params[:lesson_id] = lesson_id
         req.params[:course_id] = course_id
+        req.params[:partner_id] = partner_id
+      end
+    end
+
+    # NeoAI declares these as FastAPI Query(...) params, not Body — must be query string.
+    def delete_kit(kit_id)
+      build_connection.post("#{API_PREFIX}/kit/delete-kit") do |req|
+        req.params[:kit_id] = kit_id
         req.params[:partner_id] = partner_id
       end
     end

@@ -10,6 +10,28 @@ module ContentStudio
         head :service_unavailable
       end
 
+      def save
+        ApiClient.save_classroom_kit(params[:id])
+        flash[:notice] = t('.saved')
+        redirect_to main_app.root_path
+      rescue Faraday::Error => e
+        Rails.logger.error("[ContentStudio] kit structure#save failed: #{e.message}")
+        flash[:alert] = t('.save_failed')
+        redirect_to kit_structure_path(id: params[:id])
+      end
+
+      def discard
+        ApiClient.discard_kit(params[:id])
+        redirect_to main_app.root_path
+      rescue Faraday::BadRequestError
+        flash[:alert] = t('content_studio.classroom_kits.discard.locked')
+        redirect_to kit_structure_path(id: params[:id])
+      rescue Faraday::Error => e
+        Rails.logger.error("[ContentStudio] kit structure#discard failed: #{e.message}")
+        flash[:alert] = t('.discard_failed')
+        redirect_to kit_structure_path(id: params[:id])
+      end
+
       def download
         kit = ApiClient.get_classroom_kit(params[:id])
         component = kit.components.find { |c| c.id.to_s == params[:component_id].to_s }
