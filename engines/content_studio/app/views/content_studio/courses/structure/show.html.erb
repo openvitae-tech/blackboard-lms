@@ -11,7 +11,7 @@
   <% failed = @structure.stage.to_s.end_with?('_failed') %>
   <% all_lessons = @structure.modules.flat_map(&:lessons) %>
   <% has_pending = !failed && all_lessons.any? { |l| %w[PENDING WAITING].include?(l.status) } %>
-  <% all_videos_ready = all_lessons.all? { |l| l.video_url.present? } %>
+  <% all_videos_ready = all_lessons.any? && all_lessons.all? { |l| l.video_url.present? } %>
   <turbo-frame id="course-structure" refresh="morph">
   <div class="flex flex-col gap-6 px-4"
        data-controller="collapsible-group structure-polling"
@@ -22,7 +22,7 @@
     <% all_scenes = @structure.modules.flat_map(&:lessons).flat_map(&:scenes) %>
     <% completed_scenes = all_scenes.count { |s| s.video_url.present? } %>
     <% fill_pct = all_scenes.size > 0 ? (completed_scenes.to_f / all_scenes.size * 100).to_i : 0 %>
-    <% if has_pending || @structure.progress_text.present? %>
+    <% if !all_videos_ready && (has_pending || @structure.progress_text.present?) %>
       <%= render 'content_studio/shared/progress_card',
             pending: has_pending,
             progress_text: @structure.progress_text.presence || 'Generating your course…',
