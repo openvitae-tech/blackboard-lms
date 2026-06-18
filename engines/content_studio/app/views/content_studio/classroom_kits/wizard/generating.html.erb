@@ -12,9 +12,7 @@
     ) %>
   </div>
 
-  <% if @state == 'success' %>
-    <%= render 'success' %>
-  <% elsif @state == 'error' %>
+  <% if @state == 'error' %>
     <%= render 'error' %>
   <% else %>
     <%# Pending — JS drives uploading/crafting phases and redirects on completion %>

@@ -60,6 +60,11 @@ module NeoAi
       JSON.parse(response.body)
     end
 
+    def get_kit(kit_id)
+      response = kit_get("/kit/#{kit_id}")
+      JSON.parse(response.body)
+    end
+
     def regenerate_scene(scene_id, course_id:, lesson_id:, narration:)
       post('/course/regenerate-scene',
            { scene_id: scene_id, course_id: course_id, lesson_id: lesson_id, narration: narration })
@@ -130,6 +135,10 @@ module NeoAi
       build_connection.post("#{API_PREFIX}#{path}", body) do |req|
         req.params[:partner_id] = partner_id
       end
+    end
+
+    def kit_get(path)
+      build_connection.get("#{API_PREFIX}#{path}", { partner_id: partner_id })
     end
 
     def get(path)

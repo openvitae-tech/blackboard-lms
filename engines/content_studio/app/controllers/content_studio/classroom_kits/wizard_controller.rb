@@ -48,12 +48,30 @@ module ContentStudio
         Rails.logger.info("[ContentStudio] kit start_generation files=#{file_urls.size} " \
                           "components=#{components.inspect}")
 
-        kit_id = ApiClient.create_classroom_kit(files: file_urls, components: components)
+        kit_id = ApiClient.create_classroom_kit(files: file_urls, components: components, title: title)
         Rails.cache.write("kit_title_#{kit_id}", title, expires_in: 90.days) if title.present?
-        render json: { redirect_url: generating_classroom_kit_url(id: kit_id, state: 'success') }
+        render json: { redirect_url: kit_structure_url(id: kit_id) }
       rescue Faraday::Error => e
         Rails.logger.error("[ContentStudio] kit start_generation failed: #{e.message}")
         render json: { redirect_url: generating_classroom_kit_url(id: :pending, state: 'error') },
+               status: :unprocessable_content
+      end
+
+      def generation_status
+        data = ApiClient.get_classroom_kit(params[:id])
+        status = data['status']
+
+        case status
+        when 'COMPLETED'
+          render json: { status: 'complete', redirect_url: kit_structure_url(id: params[:id]) }
+        when 'FAILED'
+          render json: { status: 'error', redirect_url: generating_classroom_kit_url(id: params[:id], state: 'error') }
+        else
+          render json: { status: 'pending', stage: data['stage'] }
+        end
+      rescue Faraday::Error => e
+        Rails.logger.error("[ContentStudio] kit generation_status failed: #{e.message}")
+        render json: { status: 'error', redirect_url: generating_classroom_kit_url(id: params[:id], state: 'error') },
                status: :unprocessable_content
       end
 

@@ -1,0 +1,117 @@
+<%
+  components    = @kit.components || []
+  completed     = components.count { |c| c.status == 'READY' }
+  total         = components.size
+  progress_pct  = total.positive? ? ((completed.to_f / total) * 100).round : 0
+  all_ready     = total.positive? && components.all? { |c| c.status == 'READY' }
+
+  component_labels = {
+    'slide_deck'       => 'Slide deck for learners',
+    'trainer_guide'    => 'Trainer guide',
+    'learner_workbook' => 'Learner workbook',
+    'assessment'       => 'Assessment',
+    'quiz'             => 'Quiz'
+  }
+%>
+<turbo-frame id="kit-structure" refresh="morph">
+<div class="flex flex-col gap-6 py-3"
+     data-controller="structure-polling"
+     data-structure-polling-pending-value="<%= !all_ready %>">
+
+  <%# Page header %>
+  <div class="flex items-center gap-2">
+    <%= link_to new_creation_path, data: { turbo: false } do %>
+      <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
+        <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
+      </span>
+    <% end %>
+    <span class="main-text-lg-semibold text-letter-color"><%= @kit.title.presence || 'Untitled Kit' %></span>
+  </div>
+
+  <%# Progress banner %>
+  <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden">
+    <div class="flex items-center justify-between p-3">
+      <div class="flex items-center gap-2 min-w-0">
+        <%= video_tag 'gliters-ai.mp4', class: 'w-7 h-7 shrink-0', autoplay: true, loop: true, muted: true, playsinline: true %>
+        <span class="general-text-sm-normal text-letter-color truncate">
+          <% if all_ready %>
+            Kit is ready
+          <% else %>
+            Generating <%= @kit.stage.presence || 'kit components' %><%= @kit.title.present? ? " for #{@kit.title}" : '' %>
+          <% end %>
+        </span>
+      </div>
+      <div class="flex items-center gap-3 flex-shrink-0 pl-3">
+        <span class="general-text-md-medium text-primary"><%= progress_pct %>%</span>
+      </div>
+    </div>
+    <%= progressbar_component(numerator: progress_pct, denominator: 100, full_width: true, animated: true, thin: true) %>
+  </div>
+
+  <%# Two-column body %>
+  <div class="flex gap-6 items-start">
+
+    <%# Left — kit components list %>
+    <div class="flex-1 bg-white border border-line-colour-light rounded-2xl p-6 flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <span class="main-text-md-semibold text-letter-color">Classroom Kit</span>
+        <% if all_ready %>
+          <% proxy_urls = components.select { |c| c.status == 'READY' }
+                                    .map { |c| download_kit_component_path(id: @kit.id, component_id: c.id) }
+                                    .to_json %>
+          <span data-controller="download-all"
+                data-download-all-urls-value="<%= proxy_urls %>"
+                data-action="click->download-all#download"
+                class="main-text-sm-normal text-primary hover:underline cursor-pointer">
+            Download All
+          </span>
+        <% end %>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <% components.each do |component| %>
+          <div class="flex items-center gap-3">
+            <span class="flex-1 main-text-sm-normal text-letter-color bg-white-light border border-line-colour-light rounded-lg px-4 py-3">
+              <%= component_labels[component.type] || component.type&.humanize %>
+            </span>
+            <% case component.status %>
+            <% when 'READY' %>
+              <%= link_to download_kit_component_path(id: @kit.id, component_id: component.id),
+                          class: 'flex-shrink-0 text-primary hover:text-primary-dark',
+                          data: { turbo: false } do %>
+                <%= icon 'arrow-down-tray', css: 'w-6 h-6' %>
+              <% end %>
+            <% when 'FAILED' %>
+              <%= icon 'x-circle', css: 'w-6 h-6 text-danger flex-shrink-0' %>
+            <% else %>
+              <span class="flex-shrink-0 w-6 h-6 rounded-full border-2 border-disabled-color border-t-transparent animate-spin"></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Right — kit summary %>
+    <div class="w-[420px] bg-primary-light-50 border border-primary-light-100 rounded-2xl p-6 flex flex-col gap-5">
+      <span class="main-text-md-semibold text-letter-color">Kit summary</span>
+
+      <div class="flex flex-col gap-3">
+        <p class="main-text-sm-medium text-letter-color"><%= @kit.title.presence || 'Untitled Kit' %></p>
+        <div class="flex items-center gap-1">
+          <%= icon 'book-open', css: 'w-4 h-4 text-letter-color-light' %>
+          <span class="general-text-sm-normal text-letter-color-light"><%= total %> <%= 'Component'.pluralize(total) %></span>
+        </div>
+      </div>
+
+      <%# Actions %>
+      <div class="flex gap-3">
+        <%= button_component(text: 'Discard Kit', type: 'outline', colorscheme: 'danger', size: 'sm',
+                             html_options: { class: 'flex-1' }) %>
+        <%= button_component(text: 'Save Kit', colorscheme: 'primary', size: 'sm', disabled: true,
+                             html_options: { class: 'flex-1' }) %>
+      </div>
+    </div>
+
+  </div>
+</div>
+</turbo-frame>

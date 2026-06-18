@@ -52,11 +52,6 @@ RSpec.describe 'ContentStudio::ClassroomKits::Wizard', type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'returns HTTP 200 with state=success' do
-      get '/content_studio/classroom-kits/kit-123/generating', params: { state: 'success' }
-      expect(response).to have_http_status(:ok)
-    end
-
     it 'returns HTTP 200 with state=error' do
       get '/content_studio/classroom-kits/pending/generating', params: { state: 'error' }
       expect(response).to have_http_status(:ok)
@@ -71,11 +66,10 @@ RSpec.describe 'ContentStudio::ClassroomKits::Wizard', type: :request do
         patch '/content_studio/classroom-kits/pending/configure', params: { components: %w[slide_deck] }
       end
 
-      it 'returns a redirect_url to the success generating page' do
+      it 'returns a redirect_url to the kit structure page' do
         post '/content_studio/classroom-kits/start_generation'
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body['redirect_url']).to include('generating')
-        expect(response.parsed_body['redirect_url']).to include('state=success')
+        expect(response.parsed_body['redirect_url']).to include('structure')
         expect(response.parsed_body['redirect_url']).to include('kit-123')
       end
 
@@ -118,6 +112,64 @@ RSpec.describe 'ContentStudio::ClassroomKits::Wizard', type: :request do
         expect(response).to have_http_status(422)
         expect(response.parsed_body['redirect_url']).to include('generating')
         expect(response.parsed_body['redirect_url']).to include('state=error')
+      end
+    end
+  end
+
+  describe 'GET /content_studio/classroom-kits/:id/generation_status' do
+    context 'when kit is COMPLETED' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:get_classroom_kit)
+          .and_return({ 'status' => 'COMPLETED', 'stage' => 'ready' })
+      end
+
+      it 'returns status complete with a redirect_url to the structure page' do
+        get '/content_studio/classroom-kits/kit-123/generation_status'
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body['status']).to eq('complete')
+        expect(response.parsed_body['redirect_url']).to include('structure')
+        expect(response.parsed_body['redirect_url']).to include('kit-123')
+      end
+    end
+
+    context 'when kit has FAILED' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:get_classroom_kit)
+          .and_return({ 'status' => 'FAILED', 'stage' => 'failed' })
+      end
+
+      it 'returns status error with a redirect_url to the error generating page' do
+        get '/content_studio/classroom-kits/kit-123/generation_status'
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body['status']).to eq('error')
+        expect(response.parsed_body['redirect_url']).to include('generating')
+        expect(response.parsed_body['redirect_url']).to include('state=error')
+      end
+    end
+
+    context 'when kit is still pending' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:get_classroom_kit)
+          .and_return({ 'status' => 'PENDING', 'stage' => 'crafting' })
+      end
+
+      it 'returns status pending with the current stage' do
+        get '/content_studio/classroom-kits/kit-123/generation_status'
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body['status']).to eq('pending')
+        expect(response.parsed_body['stage']).to eq('crafting')
+      end
+    end
+
+    context 'when ApiClient raises a Faraday::Error' do
+      before do
+        allow(ContentStudio::ApiClient).to receive(:get_classroom_kit).and_raise(Faraday::Error)
+      end
+
+      it 'returns 422 with status error' do
+        get '/content_studio/classroom-kits/kit-123/generation_status'
+        expect(response).to have_http_status(422)
+        expect(response.parsed_body['status']).to eq('error')
       end
     end
   end
