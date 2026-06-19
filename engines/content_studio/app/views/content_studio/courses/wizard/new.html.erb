@@ -12,7 +12,7 @@
     ) %>
   </div>
 
-  <%= form_with url: courses_path, method: :post, multipart: true,
+  <%= form_with url: wizard_courses_path, method: :post, multipart: true,
                 class: 'flex flex-col gap-6',
                 data: { controller: 'wizard-upload',
                         action: 'file-selector:change->wizard-upload#onFilesChanged',

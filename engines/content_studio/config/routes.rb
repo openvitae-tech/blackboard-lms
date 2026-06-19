@@ -20,7 +20,7 @@ ContentStudio::Engine.routes.draw do
                                                as: :generating_classroom_kit
   post 'classroom-kits/start_generation',      to: 'classroom_kits/wizard#start_generation', as: :start_kit_generation
   get 'courses/new', to: 'courses/wizard#new', as: :new_course
-  post 'courses', to: 'courses/wizard#create', as: :courses
+  post 'courses', to: 'courses/wizard#create', as: :wizard_courses
   get 'courses/:id/configure_video', to: 'courses/wizard#configure_video', as: :configure_video
   patch 'courses/:id/configure_video', to: 'courses/wizard#update_video_config'
   get 'courses/:id/generating', to: 'courses/wizard#generating', as: :generating_course
