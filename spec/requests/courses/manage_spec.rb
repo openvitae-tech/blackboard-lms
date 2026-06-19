@@ -9,7 +9,6 @@ RSpec.describe 'Request spec for GET /courses/manage' do
         before do
           @team = create :team
           @user = create :user, role, team: @team
-          @user.update!(content_studio_creator: true)
           create :payment_plan, learning_partner: @user.learning_partner, content_studio_enabled: true
           sign_in @user
         end
@@ -37,6 +36,16 @@ RSpec.describe 'Request spec for GET /courses/manage' do
   end
 
   describe 'access control' do
+    %i[manager owner].each do |role|
+      it "redirects #{role} whose LP does not have content studio enabled" do
+        user = create :user, role
+        sign_in user
+
+        get(manage_courses_path)
+        expect(response).to redirect_to(error_401_path)
+      end
+    end
+
     it 'redirects learners away from manage page' do
       team = create :team
       learner = create :user, :learner, team: team

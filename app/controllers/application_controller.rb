@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   end
 
   def preload_learning_partner_plan
-    return unless current_user&.content_studio_creator?
+    return unless current_user&.privileged_user?
 
     lp = current_user.learning_partner
     return unless lp

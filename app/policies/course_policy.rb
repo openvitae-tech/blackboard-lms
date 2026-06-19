@@ -15,7 +15,7 @@ class CoursePolicy
   end
 
   def manage?
-    user.is_admin? || content_studio_access?
+    user.is_admin? || (user.privileged_user? && user.learning_partner.content_studio_enabled?)
   end
 
   def continue?
@@ -36,7 +36,7 @@ class CoursePolicy
 
   def show?
     return true if user.is_admin?
-    return true if user.privileged_user? && own_content_studio_course?
+    return true if user.privileged_user? && partner_cs_course?
 
     return false unless visible_course?(course)
 
@@ -44,16 +44,15 @@ class CoursePolicy
   end
 
   def update?
-    user.is_admin? || (user.privileged_user? && own_content_studio_course?)
+    user.is_admin?
   end
 
   def edit?
-    user.is_admin? || (user.privileged_user? && own_content_studio_course?)
+    user.is_admin?
   end
 
   def destroy?
-    (user.is_admin? || (user.privileged_user? && own_content_studio_course?)) &&
-      !course.published? && !course.enrollments_present?
+    user.is_admin? && !course.published? && !course.enrollments_present?
   end
 
   def enroll?
@@ -97,6 +96,12 @@ class CoursePolicy
   end
 
   private
+
+  def partner_cs_course?
+    user.learning_partner.content_studio_enabled? &&
+      course.neo_ai_course_id.present? &&
+      course.learning_partner_id == user.learning_partner_id
+  end
 
   def own_content_studio_course?
     content_studio_access? &&
