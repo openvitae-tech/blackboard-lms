@@ -13,7 +13,7 @@ class LessonPolicy
   end
 
   def show?
-    user.is_admin? || own_content_studio_lesson? || user.enrolled_for_course?(record.course_module.course)
+    user.is_admin? || partner_content_studio_lesson? || user.enrolled_for_course?(record.course_module.course)
   end
 
   def create?
@@ -50,6 +50,15 @@ class LessonPolicy
   end
 
   private
+
+  def partner_content_studio_lesson?
+    return false unless user.privileged_user?
+
+    course = record.course_module.course
+    user.learning_partner.content_studio_enabled? &&
+      course.neo_ai_course_id.present? &&
+      course.learning_partner_id == user.learning_partner_id
+  end
 
   def own_content_studio_lesson?
     return false unless user.privileged_user?

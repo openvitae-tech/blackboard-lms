@@ -1,1 +1,1 @@
-<%= render 'courses/list/admin', tags: @tags, type: @type, courses: @courses %>
+<%= render 'courses/list/admin', tags: @tags, type: @type, courses: @courses, link_mode: current_user.privileged_user? ? Program::MANAGER_MODE : nil %>

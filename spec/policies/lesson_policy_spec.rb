@@ -14,7 +14,6 @@ RSpec.describe LessonPolicy do
   let(:lesson) { create :lesson, course_module: }
 
   before do
-    manager.update!(content_studio_creator: true)
     create :payment_plan, learning_partner:, content_studio_enabled: true
   end
 
@@ -28,7 +27,7 @@ RSpec.describe LessonPolicy do
       expect(described_class.new(admin, lesson).show?).to be true
     end
 
-    it 'permits manager who owns the content studio course' do
+    it 'permits manager of a content studio learning partner' do
       expect(described_class.new(manager, cs_lesson).show?).to be true
     end
 
@@ -47,77 +46,41 @@ RSpec.describe LessonPolicy do
   end
 
   describe '#new?' do
-    let(:cs_lesson) do
-      cs_course = create :course, learning_partner:, neo_ai_course_id: 'neo-456'
-      create :lesson, course_module: (create :course_module, course: cs_course)
-    end
-
     it 'permits admin' do
       expect(described_class.new(admin, lesson).new?).to be true
     end
 
-    it 'permits manager who owns the content studio course' do
-      expect(described_class.new(manager, cs_lesson).new?).to be true
-    end
-
-    it 'denies manager on a non-content-studio course' do
+    it 'denies manager' do
       expect(described_class.new(manager, lesson).new?).to be false
     end
   end
 
   describe '#create?' do
-    let(:cs_lesson) do
-      cs_course = create :course, learning_partner:, neo_ai_course_id: 'neo-456'
-      create :lesson, course_module: (create :course_module, course: cs_course)
-    end
-
     it 'permits admin' do
       expect(described_class.new(admin, lesson).create?).to be true
     end
 
-    it 'permits manager who owns the content studio course' do
-      expect(described_class.new(manager, cs_lesson).create?).to be true
-    end
-
-    it 'denies manager on a non-content-studio course' do
+    it 'denies manager' do
       expect(described_class.new(manager, lesson).create?).to be false
     end
   end
 
   describe '#edit?' do
-    let(:cs_lesson) do
-      cs_course = create :course, learning_partner:, neo_ai_course_id: 'neo-456'
-      create :lesson, course_module: (create :course_module, course: cs_course)
-    end
-
     it 'permits admin' do
       expect(described_class.new(admin, lesson).edit?).to be true
     end
 
-    it 'permits manager who owns the content studio course' do
-      expect(described_class.new(manager, cs_lesson).edit?).to be true
-    end
-
-    it 'denies manager on a non-content-studio course' do
+    it 'denies manager' do
       expect(described_class.new(manager, lesson).edit?).to be false
     end
   end
 
   describe '#update?' do
-    let(:cs_lesson) do
-      cs_course = create :course, learning_partner:, neo_ai_course_id: 'neo-456'
-      create :lesson, course_module: (create :course_module, course: cs_course)
-    end
-
     it 'permits admin' do
       expect(described_class.new(admin, lesson).update?).to be true
     end
 
-    it 'permits manager who owns the content studio course' do
-      expect(described_class.new(manager, cs_lesson).update?).to be true
-    end
-
-    it 'denies manager on a non-content-studio course' do
+    it 'denies manager' do
       expect(described_class.new(manager, lesson).update?).to be false
     end
   end

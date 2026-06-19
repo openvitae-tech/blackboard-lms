@@ -36,7 +36,7 @@ class CoursePolicy
 
   def show?
     return true if user.is_admin?
-    return true if user.privileged_user? && partner_cs_course?
+    return true if user.privileged_user? && partner_content_studio_course?
 
     return false unless visible_course?(course)
 
@@ -97,7 +97,7 @@ class CoursePolicy
 
   private
 
-  def partner_cs_course?
+  def partner_content_studio_course?
     user.learning_partner.content_studio_enabled? &&
       course.neo_ai_course_id.present? &&
       course.learning_partner_id == user.learning_partner_id
