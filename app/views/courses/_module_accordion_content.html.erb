@@ -20,13 +20,20 @@
               <% end %>             
           <% end %>
           <div class="flex items-center gap-2 w-44 md:w-fit">
-            <span class="main-text-lg-normal truncate md:whitespace-normal md:overflow-visible md:text-clip">
-              <%= lesson.title %>
-            </span>
+            <% if manage_mode?(course) %>
+              <%= link_to course_module_lesson_path(course, course_module, lesson, mode: params[:mode]),
+                          class: "main-text-lg-normal truncate md:whitespace-normal md:overflow-visible md:text-clip hover:underline" do %>
+                <%= lesson.title %>
+              <% end %>
+            <% else %>
+              <span class="main-text-lg-normal truncate md:whitespace-normal md:overflow-visible md:text-clip">
+                <%= lesson.title %>
+              </span>
+            <% end %>
           </div>
         </div>
         <div class="flex gap-6 items-center px-4 py-4 md:px-6">
-          <%= link_to course_module_lesson_path(course, course_module, lesson), class: "hover:cursor-pointer" do %>
+          <%= link_to course_module_lesson_path(course, course_module, lesson, mode: params[:mode]), class: "hover:cursor-pointer" do %>
             <div class="bg-primary-light-50 rounded-full p-1 md:p-[6px] flex items-center justify-center border border-slate-grey-light">
               <%= icon 'play', css: 'text-primary h-3 w-3 md:h-4 md:w-4' %>
             </div>

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ContentController < ApplicationController
+  before_action :preload_learning_partner_plan, only: :index
+
   def index
     authorize :content, :index?
     lp_id = current_user.learning_partner_id

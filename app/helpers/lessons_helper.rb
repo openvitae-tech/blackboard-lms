@@ -93,9 +93,22 @@ module LessonsHelper
     end
   end
 
+  def manage_mode?(course)
+    current_user.privileged_user? &&
+      params[:mode] == Program::MANAGER_MODE &&
+      course.neo_ai_course_id.present? &&
+      course.learning_partner_id == current_user.learning_partner_id &&
+      current_user.learning_partner.content_studio_enabled?
+  end
+
   def lesson_accessible?(lesson, course, enrollment)
+    return true if manage_mode?(course)
     return false unless enrollment
 
+    enrolled_lesson_accessible?(lesson, course, enrollment)
+  end
+
+  def enrolled_lesson_accessible?(lesson, course, enrollment)
     completed_lessons = enrollment.completed_lessons
 
     return course.first_module&.first_lesson&.id == lesson.id if completed_lessons.empty?

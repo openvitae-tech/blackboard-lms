@@ -32,9 +32,9 @@
       </div>
     <% end %>
 
-    <% if policy(lesson).complete? || current_user.is_admin? %>
+    <% if policy(lesson).complete? || current_user.is_admin? || manage_mode?(course) %>
       <div class="flex justify-end">
-        <% if lesson_completed?(enrollment, lesson) || current_user.is_admin? %>
+        <% if lesson_completed?(enrollment, lesson) || current_user.is_admin? || manage_mode?(course) %>
           <div class="flex items-center gap-2">
             <%= link_to prev_lesson_path(course, course_module, lesson) do %>
               <%= button_component(text: t('lesson.previous'), size: 'sm', type: 'outline', icon_name: 'chevron-left', disabled: prev_lesson_path(course, course_module, lesson).blank? ) %>

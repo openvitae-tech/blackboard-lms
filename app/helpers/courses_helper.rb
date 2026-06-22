@@ -48,7 +48,7 @@ module CoursesHelper
 
     return if next_lesson.blank?
 
-    course_module_lesson_path(course, course_module, next_lesson)
+    course_module_lesson_path(course, course_module, next_lesson, mode: params[:mode])
   end
 
   def prev_lesson_path(course, course_module, current_lesson)
@@ -61,7 +61,7 @@ module CoursesHelper
 
     return if prev_lesson.blank?
 
-    course_module_lesson_path(course, course_module, prev_lesson)
+    course_module_lesson_path(course, course_module, prev_lesson, mode: params[:mode])
   end
 
   def enroll_count(course)

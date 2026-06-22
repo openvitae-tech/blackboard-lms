@@ -23,7 +23,7 @@
       <ul>
         <% lessons_in_order(course_module).each do |lesson| %>
           <%= content_tag :li, class: "gap-4 border-t border-line-colour px-5 py-4 main-text-sm-normal" do %>
-            <%= link_to course_module_lesson_path(course, course_module, lesson),
+            <%= link_to course_module_lesson_path(course, course_module, lesson, mode: params[:mode]),
                         class: class_names("flex items-center justify-between",
                         'highlighted': active_lesson?(lesson.id, params[:id]),
                         'disabled': !current_user.is_admin? && !lesson_accessible?(lesson, course, enrollment)) do %>

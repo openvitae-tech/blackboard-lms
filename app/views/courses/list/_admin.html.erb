@@ -71,7 +71,7 @@
       <div class="flex flex-col gap-5 md:gap-6">
         <div class="flex flex-col gap-4 mt-3">
           <% courses.each do |course| %>
-            <%= link_to course_path(course) do %>
+            <%= link_to course_path(course, mode: link_mode) do %>
               <%= build_long_course_card(course, nil) %>
             <% end %>
           <% end %>
