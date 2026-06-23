@@ -36,17 +36,17 @@ module ViewComponent
         elsif error
           'border-danger-dark'
         else
-          'border-slate-grey-50 group-hover:border-primary-light group-has-[input:checked]:border-primary'
+          'border-slate-grey-50 group-hover:border-primary-light peer-checked:border-primary'
         end
       end
 
-      def check_style
+      def check_color
         if disabled
-          'hidden'
+          'text-disabled-color'
         elsif error
-          'hidden group-has-[input:checked]:flex group-has-[input:checked]:text-danger-dark'
+          'text-danger-dark'
         else
-          'hidden group-has-[input:checked]:flex group-has-[input:checked]:text-primary'
+          'text-primary'
         end
       end
     end
