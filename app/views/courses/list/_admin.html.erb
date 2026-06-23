@@ -46,14 +46,12 @@
             </div> 
           <% end %>
         </div>            
-        <% if type.present? || policy(:course).new? %>
-          <div data-action="click->courses#openFilter" class="cursor-pointer hidden md:block">
-            <%= button_component(text: 'Filter', type: "outline", icon_name: "funnel",) %>
-          </div>
-          <div data-action="click->courses#openFilter" class="cursor-pointer md:hidden">
-            <%= button_component(type: "outline", icon_name: "funnel",) %>
-          </div>
-        <% end %>
+        <div data-action="click->courses#openFilter" class="cursor-pointer hidden md:block">
+          <%= button_component(text: 'Filter', type: "outline", icon_name: "funnel") %>
+        </div>
+        <div data-action="click->courses#openFilter" class="cursor-pointer md:hidden">
+          <%= button_component(type: "outline", icon_name: "funnel") %>
+        </div>
       </div>
       <div class="space-x-2 flex flex-row">
         <% params[:tags]&.each do |tag| %>
