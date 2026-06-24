@@ -100,7 +100,7 @@
           </div>
           <% if type_tag.present? %>
             <div class="flex items-center justify-center px-3 py-1 rounded <%= type_tag[:bg_color] %>">
-              <span class="general-text-sm-normal text-grey-dark whitespace-nowrap"><%= type_tag[:label] %></span>
+              <span class="general-text-sm-normal <%= type_tag[:text_color].presence || 'text-grey-dark' %> whitespace-nowrap"><%= type_tag[:label] %></span>
             </div>
           <% end %>
         </div>
@@ -114,7 +114,7 @@
 
   <% if type_tag.present? %>
     <div class="md:hidden flex items-center justify-center py-1 rounded-bl-lg rounded-br-lg <%= type_tag[:bg_color] %>">
-      <span class="general-text-sm-medium text-grey-dark"><%= type_tag[:label] %></span>
+      <span class="general-text-sm-medium <%= type_tag[:text_color].presence || 'text-grey-dark' %>"><%= type_tag[:label] %></span>
     </div>
   <% end %>
 
