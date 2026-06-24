@@ -73,6 +73,7 @@ export default class extends Controller {
   pendingValueChanged(pending, previousPending) {
     if (pending || previousPending === undefined || !this.hasBannerTarget) return
     if (!this._startedPending || this.sourceValue === 'completed') return
+    sessionStorage.removeItem(this._storageKey)
     this.bannerTarget.style.display = ''
     if (this.sourceValue === 'generation') {
       setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
