@@ -5,7 +5,7 @@ const POLL_INTERVAL_MS = 5000
 export default class extends Controller {
   static values = {
     pending: Boolean,
-    showProgress: { type: Boolean, default: true },
+    source: { type: String, default: '' },
     thumbnailUrl: { type: String, default: '' }
   }
 
@@ -16,17 +16,25 @@ export default class extends Controller {
     this._storageKey = `kit-was-pending-${window.location.pathname}`
 
     if (this.hasBannerTarget) {
-      if (!this.showProgressValue) {
+      const source = this.sourceValue
+      if (source === 'completed') {
         this.bannerTarget.style.display = 'none'
       } else if (this._startedPending) {
-        sessionStorage.setItem(this._storageKey, '1')
-      } else if (sessionStorage.getItem(this._storageKey)) {
-        // Frame reloaded after reaching 100% — show for 1 second then hide
-        sessionStorage.removeItem(this._storageKey)
-        this.bannerTarget.style.display = ''
-        setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
+        sessionStorage.setItem(this._storageKey, source || 'generation')
       } else {
-        this.bannerTarget.style.display = 'none'
+        const prevSource = sessionStorage.getItem(this._storageKey)
+        if (prevSource) {
+          // Frame reloaded after reaching 100%
+          sessionStorage.removeItem(this._storageKey)
+          this.bannerTarget.style.display = ''
+          if (prevSource === 'generation') {
+            // Hide after 1 second for generation flow
+            setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
+          }
+          // in_progress: stays visible until next page refresh
+        } else {
+          this.bannerTarget.style.display = 'none'
+        }
       }
     }
     this._dragging = false
@@ -64,10 +72,11 @@ export default class extends Controller {
 
   pendingValueChanged(pending, previousPending) {
     if (pending || previousPending === undefined || !this.hasBannerTarget) return
-    if (!this._startedPending || !this.showProgressValue) return
-    // Just reached 100% — show banner then hide after 1 second
+    if (!this._startedPending || this.sourceValue === 'completed') return
     this.bannerTarget.style.display = ''
-    setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
+    if (this.sourceValue === 'generation') {
+      setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
+    }
   }
 
   thumbnailUrlValueChanged(url) {

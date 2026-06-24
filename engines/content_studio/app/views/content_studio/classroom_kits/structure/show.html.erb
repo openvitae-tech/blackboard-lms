@@ -17,7 +17,7 @@
 <div class="flex flex-col gap-6 py-3"
      data-controller="structure-polling"
      data-structure-polling-pending-value="<%= !all_ready %>"
-     data-structure-polling-show-progress-value="<%= @show_progress %>">
+     data-structure-polling-source-value="<%= params[:source].presence || '' %>">
 
   <%# Page header %>
   <div class="flex items-center gap-2">
