@@ -184,6 +184,10 @@ module CoursesHelper
     url_for(request.query_parameters.merge(tags: params[:tags] - [tag]))
   end
 
+  def updated_status_query_params(status)
+    url_for(request.query_parameters.merge(status: Array(params[:status]) - [status]))
+  end
+
   def score_earned_for_module(enrollment, course_module)
     enrollment.present? ? enrollment.score_earned_for(course_module) : 0
   end

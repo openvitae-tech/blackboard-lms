@@ -25,14 +25,13 @@ class CoursesController < ApplicationController
                                          type: params[:type])
       @courses = Courses::FilterService.new(current_user, search_context).filter.records
                                        .includes(:tags, banner_attachment: :blob)
-      @courses = @courses.page(filter_params[:page])
     else
       @courses = Course.where(learning_partner_id: current_user.learning_partner_id)
                        .where.not(neo_ai_course_id: nil)
                        .includes(:tags, banner_attachment: :blob)
                        .order(created_at: :desc)
-                       .page(filter_params[:page])
     end
+    @courses = apply_status_filter(@courses).page(filter_params[:page])
     @tags = Tag.load_tags
   end
 
@@ -249,6 +248,13 @@ class CoursesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def course_params
     params.expect(course: %i[title description banner category_id level_id visibility])
+  end
+
+  def apply_status_filter(scope)
+    statuses = Array(params[:status]).map(&:to_s) & %w[published unpublished]
+    return scope if statuses.empty? || statuses.size == 2
+
+    statuses.include?('published') ? scope.published : scope.where(is_published: false)
   end
 
   def filter_params
