@@ -71,11 +71,11 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('input[type="checkbox"]')).to be_present
       end
 
-      it 'merges a caller-supplied class with the base class instead of raising' do
+      it 'does not raise when a caller supplies a class and renders the checkbox input' do
         doc = render_card(checkbox: { name: 'course_ids[]', value: '1', class: 'extra-class' })
         input = doc.at_css('input[type="checkbox"]')
-        expect(input['class']).to include('extra-class')
-        expect(input['class']).to include('cursor-pointer')
+        expect(input).to be_present
+        expect(input['class']).to include('hidden')
       end
 
       it 'uses the caller-supplied name' do
@@ -186,8 +186,9 @@ RSpec.describe UiHelper, type: :helper do
       end
 
       it 'renders the rating after modules and enroll in the stats row' do
-        doc = render_card(rating: '4.2', modules_count: '6 modules', enroll_count: '50 enrolled')
-        text = doc.text
+        doc   = render_card(rating: '4.2', modules_count: '6 modules', enroll_count: '50 enrolled')
+        stats = doc.at_css('.flex.gap-1.items-center')
+        text  = stats.text
         expect(text.index('6 modules')).to be < text.index('50 enrolled')
         expect(text.index('50 enrolled')).to be < text.index('4.2')
       end

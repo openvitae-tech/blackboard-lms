@@ -3,6 +3,7 @@
     <% checkbox_opts = checkbox.is_a?(Hash) ? checkbox.dup : {} %>
     <% cb_name  = checkbox_opts.delete(:name) || 'checkbox' %>
     <% cb_value = checkbox_opts.delete(:value) %>
+    <% checkbox_opts[:id] = nil unless checkbox_opts.key?(:id) %>
     <span class="absolute top-3 right-3 md:top-4 md:right-4 z-10"
           data-controller="stop-propagation"
           data-action="click->stop-propagation#stop">
