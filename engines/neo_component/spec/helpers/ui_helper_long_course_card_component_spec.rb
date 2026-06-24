@@ -211,6 +211,26 @@ RSpec.describe UiHelper, type: :helper do
         doc = render_card(type_tag: nil)
         expect(doc.css('div.bg-primary-light-200, div.bg-secondary-light-200, div.bg-gold-dark')).to be_empty
       end
+
+      it 'applies text_color class when supplied' do
+        tag = { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-white' }
+        doc = render_card(type_tag: tag)
+        pill = doc.at_css('div.bg-primary-light-200 span')
+        expect(pill['class']).to include('text-white')
+      end
+
+      it 'defaults to text-grey-dark when text_color is omitted' do
+        tag = { label: 'Course', bg_color: 'bg-primary-light-200' }
+        doc = render_card(type_tag: tag)
+        pill = doc.at_css('div.bg-primary-light-200 span')
+        expect(pill['class']).to include('text-grey-dark')
+      end
+
+      it 'raises ArgumentError when type_tag contains unknown keys' do
+        expect do
+          render_card(type_tag: { label: 'Course', bg_color: 'bg-primary-light-200', unknown: 'x' })
+        end.to raise_error(ArgumentError, /type_tag/)
+      end
     end
 
     describe 'progress bar' do

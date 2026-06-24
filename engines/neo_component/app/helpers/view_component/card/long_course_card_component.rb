@@ -51,9 +51,12 @@ module ViewComponent
       end
 
       def validate_type_tag_arg!(type_tag)
-        return unless type_tag && (!type_tag.is_a?(Hash) || type_tag[:label].blank? || type_tag[:bg_color].blank?)
+        return unless type_tag
 
-        raise ArgumentError, 'type_tag must be nil or a Hash with :label and :bg_color'
+        valid = type_tag.is_a?(Hash) && type_tag[:label].present? && type_tag[:bg_color].present? &&
+                (type_tag.keys - %i[label bg_color text_color]).empty?
+
+        raise ArgumentError, 'type_tag must be nil or a Hash with :label, :bg_color, and optional :text_color' unless valid
       end
 
       def validate_publish_status_arg!(publish_status)

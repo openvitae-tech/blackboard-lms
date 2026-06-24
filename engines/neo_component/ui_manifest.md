@@ -324,8 +324,8 @@ long_course_card_component(
   badge: nil,              # nil or Hash with :label, optional :bg_color, :text_color
   description: nil,
   highlights: [],
-  type_tag: nil,           # nil or Hash with :label, :bg_color — inline pill on desktop, footer bar on mobile
-                           #   text colour is always text-grey-dark (hardcoded in template)
+  type_tag: nil,           # nil or Hash with :label, :bg_color, optional :text_color — inline pill on desktop, footer bar on mobile
+                           #   :text_color defaults to text-grey-dark when omitted
   publish_status: nil,     # nil | 'published' | 'unpublished'
                            #   nil — no indicator rendered
                            #   'published'   — corner diamond (top-right) with eye icon, blue background (bg-primary-light-200)
