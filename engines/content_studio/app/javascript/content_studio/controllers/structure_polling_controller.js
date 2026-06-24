@@ -2,8 +2,6 @@ import { Controller } from "@hotwired/stimulus"
 
 const POLL_INTERVAL_MS = 5000
 
-const BANNER_HIDE_DELAY_MS = 1500
-
 export default class extends Controller {
   static values = {
     pending: Boolean,
@@ -13,6 +11,10 @@ export default class extends Controller {
   static targets = ['banner']
 
   connect() {
+    this._startedPending = this.pendingValue
+    if (!this._startedPending && this.hasBannerTarget) {
+      this.bannerTarget.style.display = 'none'
+    }
     this._dragging = false
     this._onDragStart = () => {
       this._dragging = true
@@ -48,10 +50,8 @@ export default class extends Controller {
 
   pendingValueChanged(pending, previousPending) {
     if (pending || previousPending === undefined || !this.hasBannerTarget) return
-    clearTimeout(this._bannerHideTimer)
-    this._bannerHideTimer = setTimeout(() => {
-      this.bannerTarget.style.visibility = 'hidden'
-    }, BANNER_HIDE_DELAY_MS)
+    if (!this._startedPending) return
+    this.bannerTarget.style.display = ''
   }
 
   thumbnailUrlValueChanged(url) {
