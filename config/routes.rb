@@ -222,6 +222,12 @@ Rails.application.routes.draw do
   end
   resources :settings, only: :index
   get 'content', to: 'content#index'
+  resources :classroom_kits, only: %i[index show] do
+    member do
+      get 'components/:component_id/download', action: :download, as: :download_component
+      get 'download_all', action: :download_all
+    end
+  end
 
   resource :login, only: %i[new create] do
     collection do

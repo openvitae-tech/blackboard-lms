@@ -8,6 +8,10 @@ ContentStudio::Engine.routes.draw do
                                       as: :kit_structure
   get 'classroom-kits/:id/components/:component_id/download', to: 'classroom_kits/structure#download',
                                                               as: :download_kit_component
+  get 'classroom-kits/:id/download_all', to: 'classroom_kits/structure#download_all',
+                                         as: :download_all_kit_components
+  patch 'classroom-kits/:id/save', to: 'classroom_kits/structure#save', as: :save_classroom_kit
+  delete 'classroom-kits/:id', to: 'classroom_kits/structure#discard', as: :discard_kit
   get  'classroom-kits/new',            to: 'classroom_kits/wizard#new',          as: :new_classroom_kit
   post 'classroom-kits',                to: 'classroom_kits/wizard#create',       as: :classroom_kits
   get  'classroom-kits/:id/configure',  to: 'classroom_kits/wizard#configure',    as: :configure_classroom_kit
@@ -16,7 +20,7 @@ ContentStudio::Engine.routes.draw do
                                                as: :generating_classroom_kit
   post 'classroom-kits/start_generation',      to: 'classroom_kits/wizard#start_generation', as: :start_kit_generation
   get 'courses/new', to: 'courses/wizard#new', as: :new_course
-  post 'courses', to: 'courses/wizard#create', as: :courses
+  post 'courses', to: 'courses/wizard#create', as: :wizard_courses
   get 'courses/:id/configure_video', to: 'courses/wizard#configure_video', as: :configure_video
   patch 'courses/:id/configure_video', to: 'courses/wizard#update_video_config'
   get 'courses/:id/generating', to: 'courses/wizard#generating', as: :generating_course

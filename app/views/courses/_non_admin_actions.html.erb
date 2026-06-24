@@ -3,7 +3,7 @@
     <%= button_component(text: "Drop", size:"sm", type: "outline", icon_name: "minus") %>
   <% end %>
 <% end %>
-<% if policy(course).enroll? %>
+<% if policy(course).enroll? && params[:mode] != Program::MANAGER_MODE %>
   <%= link_to enroll_course_path(course), data: { turbo_method: :put }  do %>
     <%= button_component(text: I18n.t('course.enroll.label'), size:"sm") %>
   <% end %>

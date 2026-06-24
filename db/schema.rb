@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_02_033317) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_18_062854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,27 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_02_033317) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["learning_partner_id"], name: "index_certificate_templates_on_learning_partner_id"
+  end
+
+  create_table "classroom_kit_components", force: :cascade do |t|
+    t.bigint "classroom_kit_id", null: false
+    t.string "neo_ai_component_id", null: false
+    t.string "component_type", null: false
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classroom_kit_id"], name: "index_classroom_kit_components_on_classroom_kit_id"
+    t.index ["neo_ai_component_id"], name: "index_classroom_kit_components_on_neo_ai_component_id", unique: true
+  end
+
+  create_table "classroom_kits", force: :cascade do |t|
+    t.string "title"
+    t.string "neo_ai_kit_id", null: false
+    t.bigint "learning_partner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learning_partner_id"], name: "index_classroom_kits_on_learning_partner_id"
+    t.index ["neo_ai_kit_id"], name: "index_classroom_kits_on_neo_ai_kit_id", unique: true
   end
 
   create_table "contact_leads", force: :cascade do |t|
@@ -425,6 +446,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_02_033317) do
   add_foreign_key "assessments", "courses"
   add_foreign_key "assessments", "users"
   add_foreign_key "certificate_templates", "learning_partners"
+  add_foreign_key "classroom_kit_components", "classroom_kits"
+  add_foreign_key "classroom_kits", "learning_partners"
   add_foreign_key "course_certificates", "courses"
   add_foreign_key "course_certificates", "users"
   add_foreign_key "course_modules", "courses"

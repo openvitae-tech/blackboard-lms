@@ -20,7 +20,7 @@
 
   <%# Page header %>
   <div class="flex items-center gap-2">
-    <%= link_to new_creation_path, data: { turbo: false } do %>
+    <%= link_to root_path, data: { turbo: false } do %>
       <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
         <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
       </span>
@@ -29,7 +29,9 @@
   </div>
 
   <%# Progress banner %>
-  <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden">
+  <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden"
+       data-structure-polling-target="banner"
+       style="<%= 'visibility: hidden' if all_ready %>">
     <div class="flex items-center justify-between p-3">
       <div class="flex items-center gap-2 min-w-0">
         <%= video_tag 'gliters-ai.mp4', class: 'w-7 h-7 shrink-0', autoplay: true, loop: true, muted: true, playsinline: true %>
@@ -56,15 +58,10 @@
       <div class="flex items-center justify-between">
         <span class="main-text-md-semibold text-letter-color">Classroom Kit</span>
         <% if all_ready %>
-          <% proxy_urls = components.select { |c| c.status == 'READY' }
-                                    .map { |c| download_kit_component_path(id: @kit.id, component_id: c.id) }
-                                    .to_json %>
-          <span data-controller="download-all"
-                data-download-all-urls-value="<%= proxy_urls %>"
-                data-action="click->download-all#download"
-                class="main-text-sm-normal text-primary hover:underline cursor-pointer">
-            Download All
-          </span>
+          <%= link_to 'Download All',
+                      download_all_kit_components_path(id: @kit.id),
+                      class: 'main-text-sm-normal text-primary hover:underline',
+                      data: { turbo: false } %>
         <% end %>
       </div>
 
@@ -105,10 +102,24 @@
 
       <%# Actions %>
       <div class="flex gap-3">
-        <%= button_component(text: 'Discard Kit', type: 'outline', colorscheme: 'danger', size: 'sm',
-                             html_options: { class: 'flex-1' }) %>
-        <%= button_component(text: 'Save Kit', colorscheme: 'primary', size: 'sm', disabled: true,
-                             html_options: { class: 'flex-1' }) %>
+        <%= link_to alert_modal_path(
+              title: t('content_studio.classroom_kits.discard.confirm.title'),
+              description: t('content_studio.classroom_kits.discard.confirm.description', title: @kit.title.presence || 'this kit'),
+              action_path: discard_kit_path(id: @kit.id),
+              method: 'delete',
+              action_text: t('content_studio.classroom_kits.discard.confirm.action'),
+              action_type: 'danger'
+            ), class: 'flex-1', data: { turbo_frame: 'modal' } do %>
+          <%= button_component(text: 'Discard Kit', type: 'outline', colorscheme: 'danger', size: 'sm',
+                               html_options: { class: 'w-full' }) %>
+        <% end %>
+        <%= form_with url: save_classroom_kit_path(id: @kit.id), method: :patch, class: 'flex-1',
+                      data: { turbo_frame: '_top' } do |f| %>
+          <%= f.button class: 'w-full', disabled: !all_ready do %>
+            <%= button_component(text: @kit.saved ? 'Update Kit' : 'Save Kit', colorscheme: 'primary', size: 'sm',
+                                 disabled: !all_ready, html_options: { class: 'w-full' }) %>
+          <% end %>
+        <% end %>
       </div>
     </div>
 

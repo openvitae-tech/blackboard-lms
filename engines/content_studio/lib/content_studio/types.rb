@@ -66,6 +66,7 @@ module ContentStudio
     :modules,         # Array<ContentStudio::CourseModule>
     :progress,        # Integer 0–100 or nil
     :thumbnail_url,
+    :created_at,
     keyword_init: true
   )
 
@@ -112,6 +113,7 @@ module ContentStudio
     :updated_at,
     :expires_at,
     :components,
+    :saved,
     keyword_init: true
   )
 

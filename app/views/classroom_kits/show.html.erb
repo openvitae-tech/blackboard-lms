@@ -1,0 +1,44 @@
+<%
+  component_labels = {
+    'slide_deck'       => t('classroom_kits.components.slide_deck'),
+    'trainer_guide'    => t('classroom_kits.components.trainer_guide'),
+    'learner_workbook' => t('classroom_kits.components.learner_workbook'),
+    'assessment'       => t('classroom_kits.components.assessment'),
+    'quiz'             => t('classroom_kits.components.quiz')
+  }
+%>
+
+<div class="flex flex-col gap-6 py-3">
+  <div class="flex items-center gap-2">
+    <%= link_to classroom_kits_path do %>
+      <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100">
+        <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
+      </span>
+    <% end %>
+    <span class="main-text-lg-semibold text-letter-color"><%= @kit.title.presence || t('classroom_kits.untitled') %></span>
+  </div>
+
+  <div class="bg-white border border-line-colour-light rounded-2xl p-6 flex flex-col gap-4">
+    <div class="flex items-center justify-between">
+      <span class="main-text-md-semibold text-letter-color"><%= t('classroom_kits.show.components_heading') %></span>
+      <%= link_to 'Download All', download_all_classroom_kit_path(@kit),
+                  class: 'main-text-sm-normal text-primary hover:underline',
+                  data: { turbo: false } %>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <% @components.each do |component| %>
+        <div class="flex items-center gap-3">
+          <span class="flex-1 main-text-sm-normal text-letter-color bg-white-light border border-line-colour-light rounded-lg px-4 py-3">
+            <%= component_labels[component.component_type] || component.component_type.humanize %>
+          </span>
+          <%= link_to download_component_classroom_kit_path(@kit, component_id: component.neo_ai_component_id),
+                      class: 'flex-shrink-0 text-primary hover:text-primary-dark',
+                      data: { turbo: false } do %>
+            <%= icon 'arrow-down-tray', css: 'w-6 h-6' %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

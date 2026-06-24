@@ -1,4 +1,4 @@
-<% element = content_tag :div, class: "flex justify-center items-center" do %>
+<% element = content_tag :div, class: "relative flex justify-center items-center" do %>
   <% if input.form.present? %>
     <%= input.form.check_box input.name,
           input.html_options,
@@ -10,9 +10,10 @@
           input.html_options[:checked],
           input.html_options.except(:checked) %>
   <% end %>
-  <div class="w-5 h-5 flex justify-center items-center rounded-sm border <%= input.box_style %>">
-    <%= icon("check", span_css: "w-5 h-5 #{input.check_style}", stroke_width: '2.0') %>
-  </div>
+  <div class="w-5 h-5 rounded-sm border <%= input.box_style %>"></div>
+  <span class="absolute hidden peer-checked:flex w-5 h-5 items-center justify-center pointer-events-none <%= input.check_color %>">
+    <%= icon("check", css: "w-5 h-5", stroke_width: "2.0") %>
+  </span>
 <% end %>
 
 <% label_tag = content_tag :div, input.label, class: "main-text-md-normal" %>

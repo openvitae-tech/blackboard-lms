@@ -2,11 +2,15 @@ import { Controller } from "@hotwired/stimulus"
 
 const POLL_INTERVAL_MS = 5000
 
+const BANNER_HIDE_DELAY_MS = 1500
+
 export default class extends Controller {
   static values = {
     pending: Boolean,
     thumbnailUrl: { type: String, default: '' }
   }
+
+  static targets = ['banner']
 
   connect() {
     this._dragging = false
@@ -40,6 +44,14 @@ export default class extends Controller {
     document.removeEventListener('turbo:before-visit', this._onBeforeVisit)
     this._frame?.removeEventListener('turbo:frame-load', this._onFrameLoad)
     this._frame?.removeEventListener('turbo:frame-missing', this._onFrameMissing)
+  }
+
+  pendingValueChanged(pending, previousPending) {
+    if (pending || previousPending === undefined || !this.hasBannerTarget) return
+    clearTimeout(this._bannerHideTimer)
+    this._bannerHideTimer = setTimeout(() => {
+      this.bannerTarget.style.visibility = 'hidden'
+    }, BANNER_HIDE_DELAY_MS)
   }
 
   thumbnailUrlValueChanged(url) {

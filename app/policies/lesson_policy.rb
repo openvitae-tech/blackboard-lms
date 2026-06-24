@@ -9,23 +9,23 @@ class LessonPolicy
   end
 
   def new?
-    user.is_admin? || own_content_studio_lesson?
+    user.is_admin?
   end
 
   def show?
-    user.is_admin? || own_content_studio_lesson? || user.enrolled_for_course?(record.course_module.course)
+    user.is_admin? || partner_content_studio_lesson? || user.enrolled_for_course?(record.course_module.course)
   end
 
   def create?
-    user.is_admin? || own_content_studio_lesson?
+    user.is_admin?
   end
 
   def update?
-    user.is_admin? || own_content_studio_lesson?
+    user.is_admin?
   end
 
   def edit?
-    user.is_admin? || own_content_studio_lesson?
+    user.is_admin?
   end
 
   def destroy?
@@ -38,11 +38,11 @@ class LessonPolicy
   end
 
   def moveup?
-    user.is_admin? || own_content_studio_lesson?
+    user.is_admin?
   end
 
   def movedown?
-    user.is_admin? || own_content_studio_lesson?
+    user.is_admin?
   end
 
   def transcribe?
@@ -51,9 +51,12 @@ class LessonPolicy
 
   private
 
-  def own_content_studio_lesson?
+  def partner_content_studio_lesson?
     return false unless user.privileged_user?
 
-    CoursePolicy.new(user, record.course_module.course).edit?
+    course = record.course_module.course
+    user.learning_partner.content_studio_enabled? &&
+      course.neo_ai_course_id.present? &&
+      course.learning_partner_id == user.learning_partner_id
   end
 end

@@ -4,6 +4,7 @@ require_relative '../../../../rails_helper'
 
 RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
   before do
+    view.singleton_class.define_method(:alert_modal_path) { |**_| '/alert_modal' }
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
     assign(:kit, kit)
   end
@@ -26,7 +27,8 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
     ContentStudio::Kit.new(
       id: 'kit-123', title: 'Banking Basics', status: 'COMPLETED',
       stage: 'ready', thumbnail_url: nil, doc_count: 0,
-      components: [slide_deck_component, trainer_guide_component]
+      components: [slide_deck_component, trainer_guide_component],
+      saved: false
     )
   end
 
@@ -53,7 +55,7 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
 
   it 'renders a download link for READY components' do
     render
-    expect(rendered).to include('https://s3.example.com/slide_deck.pptx')
+    expect(rendered).to include('classroom-kits/kit-123/components/comp-1/download')
   end
 
   it 'renders a spinner for PENDING components' do
@@ -77,12 +79,43 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
     expect(rendered).to include('data-structure-polling-pending-value="true"')
   end
 
+  it 'renders the Save Kit button when kit is not saved to LMS' do
+    render
+    expect(rendered).to include('Save Kit')
+  end
+
+  it 'does not render Update Kit when kit is not saved' do
+    render
+    expect(rendered).not_to include('Update Kit')
+  end
+
+  context 'when kit is already saved to LMS' do
+    before { assign(:kit, ContentStudio::Kit.new(**kit.to_h, saved: true)) }
+
+    it 'renders the Update Kit button' do
+      render
+      expect(rendered).to include('Update Kit')
+    end
+
+    it 'does not render Save Kit when kit is already saved' do
+      render
+      expect(rendered).not_to include('Save Kit')
+    end
+  end
+
+  it 'does not hide the progress banner when not all components are ready' do
+    render
+    expect(rendered).to include('data-structure-polling-target="banner"')
+    expect(rendered).not_to include('visibility: hidden')
+  end
+
   context 'when all components are READY' do
     let(:kit) do
       ContentStudio::Kit.new(
         id: 'kit-123', title: 'Banking Basics', status: 'COMPLETED',
         stage: 'ready', thumbnail_url: nil, doc_count: 0,
-        components: [slide_deck_component]
+        components: [slide_deck_component],
+        saved: false
       )
     end
 
@@ -100,6 +133,17 @@ RSpec.describe 'content_studio/classroom_kits/structure/show', type: :view do
       render
       expect(rendered).to include('Kit is ready')
     end
+
+    it 'hides the progress banner server-side' do
+      render
+      expect(rendered).to include('visibility: hidden')
+    end
+  end
+
+  it 'renders the Discard Kit button as a modal link to the alert_modal' do
+    render
+    expect(rendered).to include('/alert_modal')
+    expect(rendered).to include('Discard Kit')
   end
 
   context 'when a component has FAILED' do
