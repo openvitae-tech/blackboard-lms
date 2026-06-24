@@ -29,7 +29,7 @@ export default class extends Controller {
           this.bannerTarget.style.display = ''
           if (prevSource === 'generation') {
             // Hide after 1 second for generation flow
-            setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
+            this.hideTimer = setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
           }
           // in_progress: stays visible until next page refresh
         } else {
@@ -63,6 +63,7 @@ export default class extends Controller {
 
   disconnect() {
     clearTimeout(this.timer)
+    clearTimeout(this.hideTimer)
     window.removeEventListener('module-select:drag-start', this._onDragStart)
     window.removeEventListener('module-select:drag-end', this._onDragEnd)
     document.removeEventListener('turbo:before-visit', this._onBeforeVisit)
@@ -76,7 +77,7 @@ export default class extends Controller {
     sessionStorage.removeItem(this._storageKey)
     this.bannerTarget.style.display = ''
     if (this.sourceValue === 'generation') {
-      setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
+      this.hideTimer = setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
     }
   }
 
