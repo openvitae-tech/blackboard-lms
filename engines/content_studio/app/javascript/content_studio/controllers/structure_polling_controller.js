@@ -5,6 +5,7 @@ const POLL_INTERVAL_MS = 5000
 export default class extends Controller {
   static values = {
     pending: Boolean,
+    showProgress: { type: Boolean, default: true },
     thumbnailUrl: { type: String, default: '' }
   }
 
@@ -12,8 +13,21 @@ export default class extends Controller {
 
   connect() {
     this._startedPending = this.pendingValue
-    if (!this._startedPending && this.hasBannerTarget) {
-      this.bannerTarget.style.display = 'none'
+    this._storageKey = `kit-was-pending-${window.location.pathname}`
+
+    if (this.hasBannerTarget) {
+      if (!this.showProgressValue) {
+        this.bannerTarget.style.display = 'none'
+      } else if (this._startedPending) {
+        sessionStorage.setItem(this._storageKey, '1')
+      } else if (sessionStorage.getItem(this._storageKey)) {
+        // Frame reloaded after reaching 100% — show for 1 second then hide
+        sessionStorage.removeItem(this._storageKey)
+        this.bannerTarget.style.display = ''
+        setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
+      } else {
+        this.bannerTarget.style.display = 'none'
+      }
     }
     this._dragging = false
     this._onDragStart = () => {
@@ -50,8 +64,10 @@ export default class extends Controller {
 
   pendingValueChanged(pending, previousPending) {
     if (pending || previousPending === undefined || !this.hasBannerTarget) return
-    if (!this._startedPending) return
+    if (!this._startedPending || !this.showProgressValue) return
+    // Just reached 100% — show banner then hide after 1 second
     this.bannerTarget.style.display = ''
+    setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
   }
 
   thumbnailUrlValueChanged(url) {

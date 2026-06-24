@@ -5,6 +5,7 @@ module ContentStudio
     class StructureController < ApplicationController
       def show
         @kit = ApiClient.get_classroom_kit(params[:id])
+        @show_progress = params[:source] != 'completed'
       rescue Faraday::Error => e
         Rails.logger.error("[ContentStudio] kit structure#show failed: #{e.message}")
         head :service_unavailable
