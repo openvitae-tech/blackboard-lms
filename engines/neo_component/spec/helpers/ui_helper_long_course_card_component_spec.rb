@@ -71,11 +71,16 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('input[type="checkbox"]')).to be_present
       end
 
-      it 'does not raise when a caller supplies a class and renders the checkbox input' do
+      it 'renders the checkbox input even when a caller supplies a class option' do
+        # InputCheckboxComponent unconditionally sets class to "hidden peer", so
+        # any caller-supplied :class is silently ignored — extra-class will NOT
+        # appear on the rendered input. This test only verifies the component
+        # does not raise and that the input is present with its fixed classes.
         doc = render_card(checkbox: { name: 'course_ids[]', value: '1', class: 'extra-class' })
         input = doc.at_css('input[type="checkbox"]')
         expect(input).to be_present
         expect(input['class']).to include('hidden')
+        expect(input['class']).not_to include('extra-class')
       end
 
       it 'uses the caller-supplied name' do
