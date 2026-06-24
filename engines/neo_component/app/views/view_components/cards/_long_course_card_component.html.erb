@@ -1,17 +1,12 @@
 <div class="group rounded-lg md:rounded-xl border border-line-colour relative md:max-h-[132px] w-full">
   <% if checkbox %>
     <% checkbox_opts = checkbox.is_a?(Hash) ? checkbox.dup : {} %>
-    <% checkbox_id    = checkbox_opts.delete(:id) %>
-    <% checkbox_class = ['w-5 h-5 rounded border border-slate-grey-light checked:bg-primary checked:border-primary focus:ring-0 cursor-pointer', checkbox_opts.delete(:class)].compact.join(' ') %>
+    <% cb_name  = checkbox_opts.delete(:name) || 'checkbox' %>
+    <% cb_value = checkbox_opts.delete(:value) %>
     <span class="absolute top-3 right-3 md:top-4 md:right-4 z-10"
           data-controller="stop-propagation"
           data-action="click->stop-propagation#stop">
-      <%= check_box_tag checkbox_opts.delete(:name) || 'checkbox',
-            checkbox_opts.delete(:value),
-            checkbox_opts.delete(:checked) || false,
-            id: checkbox_id,
-            class: checkbox_class,
-            **checkbox_opts %>
+      <%= input_checkbox_component(name: cb_name, value: cb_value, label: nil, html_options: checkbox_opts) %>
     </span>
   <% end %>
   <% if description.present? %>
