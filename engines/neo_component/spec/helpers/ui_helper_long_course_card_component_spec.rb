@@ -214,7 +214,7 @@ RSpec.describe UiHelper, type: :helper do
 
       it 'omits the type tag when nil' do
         doc = render_card(type_tag: nil)
-        expect(doc.css('div.bg-primary-light-200, div.bg-secondary-light-200, div.bg-gold-dark')).to be_empty
+        expect(doc.at_css('[data-testid="type-tag"]')).to be_nil
       end
 
       it 'applies text_color class when supplied' do
