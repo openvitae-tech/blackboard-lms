@@ -17,6 +17,7 @@ module Courses
       course_scope = filter_scope_for(user, search_context)
       course_scope = filter_by_matching_term(course_scope, search_context)
       course_scope = filter_by_tags(search_context.tags, course_scope)
+      course_scope = filter_by_statuses(search_context.statuses, course_scope)
 
       course_scope = if search_context.user_assign?
                        filter_out_user_enrolled_courses(course_scope, search_context)
@@ -56,6 +57,12 @@ module Courses
       else
         courses
       end
+    end
+
+    def filter_by_statuses(statuses, scope)
+      return scope if statuses.empty? || statuses.size == SearchContext::VALID_STATUSES.size
+
+      statuses.include?('published') ? scope.published : scope.where(is_published: false)
     end
 
     def filter_by_matching_term(scope, search_context)

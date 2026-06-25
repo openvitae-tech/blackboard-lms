@@ -22,7 +22,7 @@ class CoursesController < ApplicationController
     @type = params[:type]
     if current_user.is_admin?
       search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term],
-                                         type: params[:type])
+                                         statuses: params[:status], type: params[:type])
       @courses = Courses::FilterService.new(current_user, search_context).filter.records
                                        .includes(:tags, banner_attachment: :blob)
     else
@@ -31,7 +31,7 @@ class CoursesController < ApplicationController
                        .includes(:tags, banner_attachment: :blob)
                        .order(created_at: :desc)
     end
-    @courses = apply_status_filter(@courses).page(filter_params[:page])
+    @courses = @courses.page(filter_params[:page])
     @tags = Tag.load_tags
   end
 
@@ -248,13 +248,6 @@ class CoursesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def course_params
     params.expect(course: %i[title description banner category_id level_id visibility])
-  end
-
-  def apply_status_filter(scope)
-    statuses = Array(params[:status]).map(&:to_s) & %w[published unpublished]
-    return scope if statuses.empty? || statuses.size == 2
-
-    statuses.include?('published') ? scope.published : scope.where(is_published: false)
   end
 
   def filter_params
