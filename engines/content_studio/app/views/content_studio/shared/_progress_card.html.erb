@@ -1,8 +1,8 @@
 <% completed     = local_assigns.fetch(:completed, 0) %>
 <% total         = local_assigns.fetch(:total, 0) %>
-<% banner_target = local_assigns.fetch(:banner_target, false) %>
+<% html_options = local_assigns.fetch(:html_options, {}) %>
 <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden"
-     <% if banner_target %>data-structure-polling-target="banner"<% end %>>
+     <%= tag.attributes(html_options) %>>
   <div class="flex items-center justify-between p-3">
     <div class="flex items-center gap-2 min-w-0">
       <%= image_tag 'image-ai.gif', class: 'w-7 h-7 shrink-0', alt: '' %>
