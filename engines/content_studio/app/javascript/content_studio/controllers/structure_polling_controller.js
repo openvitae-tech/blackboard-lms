@@ -25,12 +25,7 @@ export default class extends Controller {
         const prevSource = sessionStorage.getItem(this._storageKey)
         if (prevSource) {
           // Frame reloaded after reaching 100%
-          sessionStorage.removeItem(this._storageKey)
-          this.bannerTarget.style.display = ''
-          if (prevSource === 'generation') {
-            // Hide after 1 second for generation flow
-            this.hideTimer = setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
-          }
+          this._showBanner(prevSource)
           // in_progress: stays visible until next page refresh
         } else {
           this.bannerTarget.style.display = 'none'
@@ -74,11 +69,7 @@ export default class extends Controller {
   pendingValueChanged(pending, previousPending) {
     if (pending || previousPending === undefined || !this.hasBannerTarget) return
     if (!this._startedPending || this.sourceValue === 'completed') return
-    sessionStorage.removeItem(this._storageKey)
-    this.bannerTarget.style.display = ''
-    if (this.sourceValue === 'generation') {
-      this.hideTimer = setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
-    }
+    this._showBanner(this.sourceValue)
   }
 
   thumbnailUrlValueChanged(url) {
@@ -93,6 +84,14 @@ export default class extends Controller {
     img.src = url
     img.classList.replace('object-contain', 'object-cover')
     img.dataset.loadedUrl = url
+  }
+
+  _showBanner(source) {
+    sessionStorage.removeItem(this._storageKey)
+    this.bannerTarget.style.display = ''
+    if (source === 'generation') {
+      this.hideTimer = setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
+    }
   }
 
   _schedulePoll() {
