@@ -18,7 +18,7 @@
                     label: 'Published',
                     value: 'published',
                     html_options: {
-                      checked: params[:status]&.include?('published'),
+                      checked: Array(params[:status]).include?('published'),
                       data: { courses_target: 'checkbox' }
                     }
                   ) %>
@@ -29,7 +29,7 @@
                     label: 'Unpublished',
                     value: 'unpublished',
                     html_options: {
-                      checked: params[:status]&.include?('unpublished'),
+                      checked: Array(params[:status]).include?('unpublished'),
                       data: { courses_target: 'checkbox' }
                     }
                   ) %>
