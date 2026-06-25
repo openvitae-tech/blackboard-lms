@@ -1,4 +1,4 @@
-<div class="group rounded-lg md:rounded-xl border border-line-colour relative md:max-h-[132px] w-full">
+<div class="group rounded-lg md:rounded-xl border border-line-colour relative md:max-h-[132px] w-full overflow-hidden">
   <% if checkbox %>
     <% checkbox_opts = checkbox.is_a?(Hash) ? checkbox.dup : {} %>
     <% cb_name  = checkbox_opts.delete(:name) || 'checkbox' %>
@@ -37,9 +37,9 @@
 
     <div class="relative self-stretch">
       <% if banner_url.present? %>
-        <%= image_tag banner_url, class: 'w-[100px] md:w-[297px] h-full md:h-[130px] rounded-tl-lg md:rounded-l-xl object-cover' %>
+        <%= image_tag banner_url, class: "w-[100px] md:w-[297px] h-full md:h-[130px] object-cover #{type_tag.present? ? 'rounded-tl-lg md:rounded-l-xl' : 'rounded-l-xl'}" %>
       <% else %>
-        <div class="w-[100px] md:w-[297px] h-full md:h-[130px] rounded-tl-lg md:rounded-l-xl bg-primary-light-50"></div>
+        <div class="w-[100px] md:w-[297px] h-full md:h-[130px] bg-primary-light-50 <%= type_tag.present? ? 'rounded-tl-lg md:rounded-l-xl' : 'rounded-l-xl' %>"></div>
       <% end %>
       <span class="absolute bottom-2 right-2 z-10 flex rounded bg-white-light border border-line-colour-light general-text-sm-normal py-0.5 px-1 text-primary-dark">
         <%= duration %>
