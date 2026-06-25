@@ -16,6 +16,7 @@
       <div class="flex gap-2 md:gap-3 items-center">
         <div class="flex flex-col gap-1 w-full justify-start">
           <%= form_tag manage_courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
+            <%= hidden_field_tag :from, params[:from] if params[:from].present? %>
             <div class="flex gap-2 md:gap-3 items-center">
               <div class="relative rounded-md border border-line-colour-light w-full">      
                 <%= input_text_component( 
