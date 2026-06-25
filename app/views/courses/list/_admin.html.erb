@@ -3,7 +3,7 @@
     <%= render 'filters', tags: tags, filter_url: manage_courses_path %>
     <div class="flex flex-row justify-between">
       <div class="flex items-center gap-3">
-        <%= render 'shared/components/back_button', back_link: content_path %>
+        <%= render 'shared/components/back_button', back_link: content_path if params[:from] == 'content' %>
         <h1 class="heading-xl">My Courses</h1>
       </div>
       <% if policy(:course).new? %>

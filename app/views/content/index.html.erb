@@ -4,7 +4,7 @@
 
 <div class="flex flex-col">
   <% if policy(:course).manage? %>
-    <%= link_to manage_courses_path, class: "flex items-center gap-3 border-b border-line-colour pl-2 pr-4 py-5 hover:bg-primary-light-50" do %>
+    <%= link_to manage_courses_path(from: 'content'), class: "flex items-center gap-3 border-b border-line-colour pl-2 pr-4 py-5 hover:bg-primary-light-50" do %>
       <span class="flex-1 text-base font-medium text-primary"><%= t('content.courses') %></span>
       <div class="flex items-center gap-2">
         <%= chip_component(text: "#{@courses_published_count} #{t('content.published')}", icon_name: 'eye', colorscheme: 'published', pill: true) %>
