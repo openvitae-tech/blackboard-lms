@@ -3,7 +3,7 @@
     <%= render 'filters', tags: tags, filter_url: manage_courses_path %>
     <div class="flex flex-row justify-between">
       <div class="flex items-center gap-3">
-        <%= render 'shared/components/back_button', back_link: content_path if params[:from] == 'content' %>
+        <%= render 'shared/components/back_button', back_link: content_path unless current_user.is_admin? %>
         <h1 class="heading-xl">My Courses</h1>
       </div>
       <% if policy(:course).new? %>
@@ -16,7 +16,6 @@
       <div class="flex gap-2 md:gap-3 items-center">
         <div class="flex flex-col gap-1 w-full justify-start">
           <%= form_tag manage_courses_path, method: :get, data: { action: "submit->courses#formSubmit" } do %>
-            <%= hidden_field_tag :from, params[:from] if params[:from].present? %>
             <div class="flex gap-2 md:gap-3 items-center">
               <div class="relative rounded-md border border-line-colour-light w-full">      
                 <%= input_text_component( 
