@@ -71,19 +71,23 @@
     <div class="flex flex-col gap-3">
       <p class="heading-xl text-primary px-2">Recent Creations</p>
 
+      <% active_tab_index = params[:tab] == 'completed' ? 1 : 0 %>
       <div class="bg-white border-2 border-line-colour-light rounded-xl pt-4 pb-5 px-5 flex flex-col gap-4">
-        <div data-controller="tabs"
+        <div data-controller="auto-click tabs"
+             data-auto-click-index-value="<%= active_tab_index %>"
              data-tabs-active-class="text-letter-color border-b-2 border-slate-grey">
 
           <%# Tab headers %>
           <div class="flex gap-5 border-b border-line-colour mb-4">
             <div class="py-1 cursor-pointer general-text-md-medium text-letter-color-light"
                  data-tabs-target="tabItem"
+                 data-auto-click-target="tabItem"
                  data-action="click->tabs#select">
               In Progress
             </div>
             <div class="py-1 cursor-pointer general-text-md-medium text-letter-color-light"
                  data-tabs-target="tabItem"
+                 data-auto-click-target="tabItem"
                  data-action="click->tabs#select">
               Completed
             </div>
