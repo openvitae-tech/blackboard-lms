@@ -97,7 +97,7 @@
           <div data-tabs-target="panelItem">
             <% if @in_progress_creations.any? %>
               <% cards = @in_progress_creations.map { |item|
-                   item.is_a?(ContentStudio::Kit) ? studio_kit_card(item) : studio_course_card(item, 'in_progress')
+                   item.is_a?(ContentStudio::Kit) ? studio_kit_card(item, 'in_progress') : studio_course_card(item, 'in_progress')
                  } %>
               <%= carousel_component(cards: cards, loop: false) %>
             <% else %>
@@ -109,7 +109,7 @@
           <div class="hidden" data-tabs-target="panelItem">
             <% if @completed_creations.any? %>
               <% cards = @completed_creations.map { |item|
-                   item.is_a?(ContentStudio::Kit) ? studio_kit_card(item) : studio_course_card(item, 'completed')
+                   item.is_a?(ContentStudio::Kit) ? studio_kit_card(item, 'completed') : studio_course_card(item, 'completed')
                  } %>
               <%= carousel_component(cards: cards, loop: false) %>
             <% else %>
