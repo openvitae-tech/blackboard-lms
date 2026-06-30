@@ -13,6 +13,7 @@ production:
   enable_chatwoot: true
   content_studio: true
   classroom_kit_enabled: true
+  microlesson_enabled: true
 
 staging:
   <<: *default
@@ -21,11 +22,13 @@ staging:
   enable_chatwoot: true
   content_studio: true
   classroom_kit_enabled: true
+  microlesson_enabled: true
 
 development:
   <<: *default
   content_studio: true
   classroom_kit_enabled: true
+  microlesson_enabled: true
 
 test:
   <<: *default
