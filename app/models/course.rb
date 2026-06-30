@@ -8,6 +8,9 @@ class Course < ApplicationRecord
   PER_PAGE_LIMIT = 12
 
   enum :visibility, { public: 'public', private: 'private' }, prefix: :visibility
+  enum :kind, { course: 'course', microlesson: 'microlesson' }, prefix: :kind
+
+  scope :courses_only, -> { where(kind: :course) }
 
   belongs_to :learning_partner, optional: true
 
