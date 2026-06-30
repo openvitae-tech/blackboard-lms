@@ -72,6 +72,33 @@
   </div>
 <% end %>
 
+<%= doc_section_component(title: "Long Course Card — with description tooltip") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Introduction to Ruby on Rails',
+          banner_url: nil,
+          duration: '2h 30m',
+          modules_count: '8 Lessons',
+          enroll_count: '120 Enrolled',
+          categories: %w[Ruby Backend],
+          rating: '4.5',
+          description: 'Learn the fundamentals of Ruby on Rails, the popular MVC web framework. Covers routing, ActiveRecord, views, and deployment best practices.',
+          highlights: ['Hands-on projects', 'Certificate on completion', 'Lifetime access']
+        ) %>
+    <%= long_course_card_component(
+          title: 'Advanced JavaScript Patterns',
+          banner_url: nil,
+          duration: '4h 15m',
+          modules_count: '12 Lessons',
+          enroll_count: '340 Enrolled',
+          categories: %w[JavaScript Frontend],
+          badge: { label: 'Advanced' },
+          progress: 60,
+          description: 'Deep-dive into closures, prototypes, async patterns, and modern ES2024 features with real-world examples.'
+        ) %>
+  </div>
+<% end %>
+
 <%= doc_section_component(title: "Long Course Card — with type tag") do %>
   <div class="flex flex-col gap-4 w-full">
     <%= long_course_card_component(
