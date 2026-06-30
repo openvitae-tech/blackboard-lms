@@ -103,7 +103,37 @@ module ContentStudio
 
       delegate :get_classroom_kit, :discard_kit, to: :client
 
+      # Microlesson methods — delegated to MockClient until real NeoAI endpoint is available.
+      def create_microlesson(prompt:, document_urls:, template_id:, logo_url:)
+        microlesson_client.create_microlesson(
+          prompt: prompt,
+          document_urls: document_urls,
+          template_id: template_id,
+          logo_url: logo_url
+        )
+      end
+
+      def get_microlesson(microlesson_id) # rubocop:disable Rails/Delegate
+        microlesson_client.get_microlesson(microlesson_id)
+      end
+
+      def replan_microlesson(microlesson_id:, prompt: nil, document_urls: nil)
+        microlesson_client.replan_microlesson(
+          microlesson_id: microlesson_id,
+          prompt: prompt,
+          document_urls: document_urls
+        )
+      end
+
+      def generate_microlesson(microlesson_id:)
+        microlesson_client.generate_microlesson(microlesson_id: microlesson_id)
+      end
+
       private
+
+      def microlesson_client
+        MockClient.new
+      end
 
       def client
         if cached_client.nil? || cached_client_cookie != current_cookie
