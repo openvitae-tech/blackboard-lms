@@ -13,8 +13,9 @@ export default class extends Controller {
   async connect() {
     if (this.startUrlValue) {
       const storageKey = `generation_started_${this.startUrlValue}`
-      if (sessionStorage.getItem(storageKey)) return
-      sessionStorage.setItem(storageKey, '1')
+      const existing = sessionStorage.getItem(storageKey)
+      if (existing && (Date.now() - parseInt(existing)) < 60000) return
+      sessionStorage.setItem(storageKey, Date.now().toString())
       // Run API call and phase transitions in parallel
       // Minimum display: 4s uploading + 4s crafting before redirect
       try {

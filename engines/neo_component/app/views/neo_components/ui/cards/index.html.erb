@@ -48,6 +48,176 @@
   </div>
 <% end %>
 
+<%= doc_section_component(title: "Long Course Card — default") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Introduction to Ruby on Rails',
+          banner_url: nil,
+          duration: '2h 30m',
+          modules_count: '8 Lessons',
+          enroll_count: '120 Enrolled',
+          categories: %w[Ruby Backend],
+          rating: '4.5'
+        ) %>
+    <%= long_course_card_component(
+          title: 'Advanced JavaScript Patterns',
+          banner_url: nil,
+          duration: '4h 15m',
+          modules_count: '12 Lessons',
+          enroll_count: '340 Enrolled',
+          categories: %w[JavaScript Frontend],
+          badge: { label: 'Advanced' },
+          progress: 60
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Long Course Card — with description tooltip") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Introduction to Ruby on Rails',
+          banner_url: nil,
+          duration: '2h 30m',
+          modules_count: '8 Lessons',
+          enroll_count: '120 Enrolled',
+          categories: %w[Ruby Backend],
+          rating: '4.5',
+          description: 'Learn the fundamentals of Ruby on Rails, the popular MVC web framework. Covers routing, ActiveRecord, views, and deployment best practices.',
+          highlights: ['Hands-on projects', 'Certificate on completion', 'Lifetime access']
+        ) %>
+    <%= long_course_card_component(
+          title: 'Advanced JavaScript Patterns',
+          banner_url: nil,
+          duration: '4h 15m',
+          modules_count: '12 Lessons',
+          enroll_count: '340 Enrolled',
+          categories: %w[JavaScript Frontend],
+          badge: { label: 'Advanced' },
+          progress: 60,
+          description: 'Deep-dive into closures, prototypes, async patterns, and modern ES2024 features with real-world examples.'
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Long Course Card — with type tag") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Health, Safety & Security in Food and Beverage Service',
+          banner_url: nil,
+          duration: '1hr 10min',
+          modules_count: '8 Lessons',
+          enroll_count: '102 Enrolled',
+          categories: ['F&B Service', 'Housekeeping'],
+          badge: { label: 'Beginner' },
+          rating: '4.5',
+          progress: 53,
+          type_tag: { label: 'Course', bg_color: 'bg-primary-light-200' }
+        ) %>
+    <%= long_course_card_component(
+          title: 'Frontline Onboarding Document Pack',
+          banner_url: nil,
+          duration: '45 min',
+          modules_count: '5 Documents',
+          enroll_count: '88 Enrolled',
+          categories: %w[HR Onboarding],
+          type_tag: { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200' }
+        ) %>
+    <%= long_course_card_component(
+          title: 'Intro to Workplace Safety',
+          banner_url: nil,
+          duration: '12 Mins',
+          modules_count: '3 Lessons',
+          enroll_count: '60 Enrolled',
+          categories: %w[Safety],
+          type_tag: { label: 'Microlesson', bg_color: 'bg-gold-dark' }
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Long Course Card — with checkbox") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Health, Safety & Security in Food and Beverage Service',
+          banner_url: nil,
+          duration: '1hr 10min',
+          modules_count: '8 Lessons',
+          enroll_count: '102 Enrolled',
+          categories: ['F&B Service', 'Housekeeping'],
+          badge: { label: 'Beginner' },
+          rating: '4.5',
+          checkbox: { name: 'course_ids[]', value: '1' }
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Long Course Card — with checkbox and type tag") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Health, Safety & Security in Food and Beverage Service',
+          banner_url: nil,
+          duration: '1hr 10min',
+          modules_count: '8 Lessons',
+          enroll_count: '102 Enrolled',
+          categories: ['F&B Service', 'Housekeeping'],
+          badge: { label: 'Beginner' },
+          rating: '4.5',
+          progress: 53,
+          checkbox: { name: 'course_ids[]', value: '1' },
+          type_tag: { label: 'Course', bg_color: 'bg-primary-light-200' }
+        ) %>
+    <%= long_course_card_component(
+          title: 'Frontline Onboarding Document Pack',
+          banner_url: nil,
+          duration: '45 min',
+          modules_count: '5 Documents',
+          enroll_count: '88 Enrolled',
+          categories: %w[HR Onboarding],
+          checkbox: { name: 'course_ids[]', value: '2' },
+          type_tag: { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200' }
+        ) %>
+    <%= long_course_card_component(
+          title: 'Intro to Workplace Safety',
+          banner_url: nil,
+          duration: '12 Mins',
+          modules_count: '3 Lessons',
+          enroll_count: '60 Enrolled',
+          categories: %w[Safety],
+          checkbox: { name: 'course_ids[]', value: '3' },
+          type_tag: { label: 'Microlesson', bg_color: 'bg-gold-dark' }
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Long Course Card — published corner tag") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Health, Safety & Security in Food and Beverage Service',
+          banner_url: nil,
+          duration: '1hr 10min',
+          modules_count: '8 Lessons',
+          enroll_count: '102 Enrolled',
+          categories: ['F&B Service', 'Housekeeping'],
+          badge: { label: 'Beginner' },
+          rating: '4.5',
+          publish_status: 'published'
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Long Course Card — unpublished corner tag") do %>
+  <div class="flex flex-col gap-4 w-full">
+    <%= long_course_card_component(
+          title: 'Frontline Onboarding Document Pack',
+          banner_url: nil,
+          duration: '45 min',
+          modules_count: '5 Documents',
+          enroll_count: '88 Enrolled',
+          categories: %w[HR Onboarding],
+          publish_status: 'unpublished'
+        ) %>
+  </div>
+<% end %>
+
 <%= doc_section_component(title: "Course Card — default (with duration & enrolment)") do %>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
     <%= course_card_component(

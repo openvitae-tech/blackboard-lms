@@ -16,7 +16,8 @@
 <turbo-frame id="kit-structure" refresh="morph">
 <div class="flex flex-col gap-6 py-3"
      data-controller="structure-polling"
-     data-structure-polling-pending-value="<%= !all_ready %>">
+     data-structure-polling-pending-value="<%= !all_ready %>"
+     data-structure-polling-source-value="<%= params[:source].presence || '' %>">
 
   <%# Page header %>
   <div class="flex items-center gap-2">
@@ -29,26 +30,13 @@
   </div>
 
   <%# Progress banner %>
-  <div class="max-w-2xl mx-auto w-full bg-white border border-secondary-dark rounded-lg overflow-hidden"
-       data-structure-polling-target="banner"
-       style="<%= 'visibility: hidden' if all_ready %>">
-    <div class="flex items-center justify-between p-3">
-      <div class="flex items-center gap-2 min-w-0">
-        <%= video_tag 'gliters-ai.mp4', class: 'w-7 h-7 shrink-0', autoplay: true, loop: true, muted: true, playsinline: true %>
-        <span class="general-text-sm-normal text-letter-color truncate">
-          <% if all_ready %>
-            Kit is ready
-          <% else %>
-            Generating <%= @kit.stage.presence || 'kit components' %><%= @kit.title.present? ? " for #{@kit.title}" : '' %>
-          <% end %>
-        </span>
-      </div>
-      <div class="flex items-center gap-3 flex-shrink-0 pl-3">
-        <span class="general-text-md-medium text-primary"><%= progress_pct %>%</span>
-      </div>
-    </div>
-    <%= progressbar_component(numerator: progress_pct, denominator: 100, full_width: true, animated: true, thin: true) %>
-  </div>
+  <%= render 'content_studio/shared/progress_card',
+        pending:       !all_ready,
+        progress_text: all_ready ? 'Kit is ready' : "Generating #{@kit.stage.presence || 'kit components'}#{@kit.title.present? ? " for #{@kit.title}" : ''}",
+        fill_pct:      progress_pct,
+        completed:     completed,
+        total:         total,
+        html_options: { data: { 'structure-polling-target': 'banner' } } %>
 
   <%# Two-column body %>
   <div class="flex gap-6 items-start">

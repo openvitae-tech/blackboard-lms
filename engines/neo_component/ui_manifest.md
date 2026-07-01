@@ -324,9 +324,18 @@ long_course_card_component(
   badge: nil,              # nil or Hash with :label, optional :bg_color, :text_color
   description: nil,
   highlights: [],
-  checkbox: false          # false to hide; or a Hash of check_box_tag options (truthy non-Hash raises ArgumentError)
+  type_tag: nil,           # nil or Hash with :label, :bg_color, optional :text_color — inline pill on desktop, footer bar on mobile
+                           #   :text_color defaults to text-grey-dark when omitted
+  publish_status: nil,     # nil | 'published' | 'unpublished'
+                           #   nil — no indicator rendered
+                           #   'published'   — corner diamond (top-right) with eye icon, blue background (bg-primary-light-200)
+                           #   'unpublished' — corner diamond with eye icon, gold background (bg-gold)
+                           #   Any other value raises ArgumentError
+  checkbox: false          # false to hide; or a Hash of input_checkbox_component html_options (truthy non-Hash raises ArgumentError)
                            #   Hash keys: :name (field name), :value, :checked (Boolean), :id,
-                           #   plus any other HTML attributes (e.g. data-*, class overrides).
+                           #   plus data-* attributes and other HTML attributes.
+                           #   NOTE: :class is NOT supported — input_checkbox_component unconditionally
+                           #   sets class: 'hidden peer' and will silently overwrite any :class passed.
                            #   The checkbox is rendered absolute top-right (top-4 right-4) and
                            #   its click event is stopped from bubbling so it does not trigger
                            #   a parent link/card click handler.
