@@ -29,7 +29,7 @@ class CoursesController < ApplicationController
       statuses = Array(params[:status]).map(&:to_s) & SearchContext::VALID_STATUSES
       @courses = Course.where(learning_partner_id: current_user.learning_partner_id)
                        .where.not(neo_ai_course_id: nil)
-                       .then { |s| apply_status_filter(s, statuses) }
+                       .then { |s| Courses::FilterService.filter_by_statuses(statuses, s) }
                        .includes(:tags, banner_attachment: :blob)
                        .order(created_at: :desc)
     end
@@ -274,11 +274,5 @@ class CoursesController < ApplicationController
     SearchContext.new(context: SearchContext::HOME_PAGE,
                       type:,
                       tags:)
-  end
-
-  def apply_status_filter(scope, statuses)
-    return scope if statuses.empty? || statuses.size == SearchContext::VALID_STATUSES.size
-
-    statuses.include?('published') ? scope.published : scope.where(is_published: false)
   end
 end

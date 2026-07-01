@@ -30,6 +30,12 @@ module Courses
       @result = SearchResult.new(course_scope, search_context)
     end
 
+    def self.filter_by_statuses(statuses, scope)
+      return scope if statuses.empty? || statuses.size == SearchContext::VALID_STATUSES.size
+
+      statuses.include?('published') ? scope.published : scope.where(is_published: false)
+    end
+
     private
 
     def filter_by_tags(tags, courses)
@@ -60,9 +66,7 @@ module Courses
     end
 
     def filter_by_statuses(statuses, scope)
-      return scope if statuses.empty? || statuses.size == SearchContext::VALID_STATUSES.size
-
-      statuses.include?('published') ? scope.published : scope.where(is_published: false)
+      self.class.filter_by_statuses(statuses, scope)
     end
 
     def filter_by_matching_term(scope, search_context)
