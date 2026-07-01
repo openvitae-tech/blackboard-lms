@@ -89,7 +89,7 @@ module ContentStudio
       link_to(card, course_structure_path(id: course.id), class: 'block')
     end
 
-    def studio_kit_card(kit)
+    def studio_kit_card(kit, source = nil)
       card = course_card_component(
         title: kit.title.presence || 'Untitled Kit',
         banner_url: kit.thumbnail_url.presence,
@@ -98,7 +98,7 @@ module ContentStudio
         categories: [],
         type_tag: { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200', text_color: 'text-letter-color' }
       )
-      link_to(card, kit_structure_path(id: kit.id), class: 'block')
+      link_to(card, kit_structure_path(id: kit.id, source: source), class: 'block')
     end
 
     def lesson_status_label(status)

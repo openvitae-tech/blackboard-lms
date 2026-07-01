@@ -50,7 +50,7 @@ module ContentStudio
 
         kit_id = ApiClient.create_classroom_kit(files: file_urls, components: components, title: title)
         Rails.cache.write("kit_title_#{kit_id}", title, expires_in: 90.days) if title.present?
-        render json: { redirect_url: kit_structure_url(id: kit_id) }
+        render json: { redirect_url: kit_structure_url(id: kit_id, source: 'generation') }
       rescue Faraday::Error => e
         Rails.logger.error("[ContentStudio] kit start_generation failed: #{e.message}")
         render json: { redirect_url: generating_classroom_kit_url(id: :pending, state: 'error') },
@@ -63,7 +63,7 @@ module ContentStudio
 
         case status
         when 'COMPLETED'
-          render json: { status: 'complete', redirect_url: kit_structure_url(id: params[:id]) }
+          render json: { status: 'complete', redirect_url: kit_structure_url(id: params[:id], source: 'generation') }
         when 'FAILED'
           render json: { status: 'error', redirect_url: generating_classroom_kit_url(id: params[:id], state: 'error') }
         else
