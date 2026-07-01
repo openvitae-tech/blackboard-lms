@@ -73,7 +73,7 @@ module ContentStudio
       end
     end
 
-    def studio_course_card(course, status = nil)
+    def studio_course_card(course, tab = nil)
       card = course_card_component(
         title: course.title,
         banner_url: course.thumbnail_url.presence,
@@ -86,10 +86,10 @@ module ContentStudio
         badge: studio_badge(course.level),
         type_tag: { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-letter-color' }
       )
-      link_to(card, course_structure_path(id: course.id, tab: status), class: 'block')
+      link_to(card, course_structure_path(id: course.id, tab: tab), class: 'block')
     end
 
-    def studio_kit_card(kit, source = nil)
+    def studio_kit_card(kit, tab = nil)
       card = course_card_component(
         title: kit.title.presence || 'Untitled Kit',
         banner_url: kit.thumbnail_url.presence,
@@ -98,7 +98,7 @@ module ContentStudio
         categories: [],
         type_tag: { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200', text_color: 'text-letter-color' }
       )
-      link_to(card, kit_structure_path(id: kit.id, tab: source, source: source), class: 'block')
+      link_to(card, kit_structure_path(id: kit.id, tab: tab, source: tab), class: 'block')
     end
 
     def lesson_status_label(status)
