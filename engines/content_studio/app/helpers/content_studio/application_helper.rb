@@ -98,8 +98,7 @@ module ContentStudio
         categories: [],
         type_tag: { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200', text_color: 'text-letter-color' }
       )
-
-      link_to(card, kit_structure_path(id: kit.id, tab: source), class: 'block')
+      link_to(card, kit_structure_path(id: kit.id, tab: source, source: source), class: 'block')
     end
 
     def lesson_status_label(status)
