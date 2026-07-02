@@ -22,17 +22,18 @@ class CoursesController < ApplicationController
     @type = params[:type]
     if current_user.is_admin?
       search_context = SearchContext.new(context: :home_page, tags: params[:tags], term: params[:term],
-                                         type: params[:type])
+                                         statuses: params[:status], type: params[:type])
       @courses = Courses::FilterService.new(current_user, search_context).filter.records
                                        .includes(:tags, banner_attachment: :blob)
-      @courses = @courses.page(filter_params[:page])
     else
+      statuses = Array(params[:status]).map(&:to_s) & SearchContext::VALID_STATUSES
       @courses = Course.where(learning_partner_id: current_user.learning_partner_id)
                        .where.not(neo_ai_course_id: nil)
+                       .then { |s| Courses::FilterService.filter_by_statuses(statuses, s) }
                        .includes(:tags, banner_attachment: :blob)
                        .order(created_at: :desc)
-                       .page(filter_params[:page])
     end
+    @courses = @courses.page(filter_params[:page])
     @tags = Tag.load_tags
   end
 
