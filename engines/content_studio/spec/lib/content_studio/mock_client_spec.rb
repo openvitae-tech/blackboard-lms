@@ -53,6 +53,31 @@ RSpec.describe ContentStudio::MockClient do
     end
   end
 
+  describe 'failure path (fail_ prompt prefix)' do
+    let(:microlesson_id) do
+      client.create_microlesson(prompt: 'fail_test', document_urls: [], template_id: '1', logo_url: nil)
+    end
+
+    it 'eventually reaches FAILED status' do
+      result = nil
+      7.times { result = client.get_microlesson(microlesson_id) }
+      expect(result.status).to eq('FAILED')
+    end
+
+    it 'stays in FAILED on further polls' do
+      8.times { client.get_microlesson(microlesson_id) }
+      result = client.get_microlesson(microlesson_id)
+      expect(result.status).to eq('FAILED')
+    end
+
+    it 'returns a Microlesson with only id and status set' do
+      result = nil
+      7.times { result = client.get_microlesson(microlesson_id) }
+      expect(result.video_url).to be_nil
+      expect(result.title).to be_nil
+    end
+  end
+
   describe '#replan_microlesson' do
     let(:microlesson_id) do
       client.create_microlesson(prompt: 'original', document_urls: [], template_id: '1', logo_url: nil)

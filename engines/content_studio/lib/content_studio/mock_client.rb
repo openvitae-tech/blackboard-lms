@@ -5,12 +5,17 @@ module ContentStudio
   # Used during development and testing before the real NeoAI endpoint is available.
   # Stores microlesson state in a class-level hash so successive get_microlesson
   # calls simulate the PLANNING → PLANNED → GENERATING → COMPLETED state machine.
+  #
+  # Failure path: pass a prompt beginning with "fail_" to create_microlesson and
+  # the sequence will resolve to FAILED instead of COMPLETED, making the FAILED
+  # branch in build_microlesson reachable for UI/spec testing.
   class MockClient
     MOCK_MICROLESSONS = {}.freeze
 
     # Advance through states on each poll: first two calls return PLANNING,
     # then PLANNED (with title/description), then two calls GENERATING, then COMPLETED.
     POLL_SEQUENCE = %w[PLANNING PLANNING PLANNED PLANNED GENERATING GENERATING COMPLETED].freeze
+    FAIL_SEQUENCE = %w[PLANNING PLANNING PLANNED PLANNED GENERATING GENERATING FAILED].freeze
 
     class << self
       def store
@@ -24,17 +29,18 @@ module ContentStudio
 
     def create_microlesson(prompt:, document_urls: [], template_id: nil, logo_url: nil) # rubocop:disable Lint/UnusedMethodArgument
       id = "mock-ml-#{SecureRandom.hex(6)}"
-      self.class.store[id] = { poll_index: 0, prompt: prompt }
+      self.class.store[id] = { poll_index: 0, prompt: prompt, fail: prompt.to_s.start_with?('fail_') }
       id
     end
 
     def get_microlesson(microlesson_id)
       entry = self.class.store[microlesson_id] || { poll_index: 0 }
       index = entry[:poll_index].to_i
-      status = POLL_SEQUENCE[index] || 'COMPLETED'
+      sequence = entry[:fail] ? FAIL_SEQUENCE : POLL_SEQUENCE
+      status = sequence[index] || sequence.last
 
-      # Advance the poll index (capped at last entry so it stays COMPLETED)
-      self.class.store[microlesson_id] = entry.merge(poll_index: [index + 1, POLL_SEQUENCE.length - 1].min)
+      # Advance the poll index (capped at last entry so it stays in terminal state)
+      self.class.store[microlesson_id] = entry.merge(poll_index: [index + 1, sequence.length - 1].min)
 
       build_microlesson(microlesson_id, status)
     end
