@@ -125,4 +125,15 @@ module ContentStudio
     :download_url,
     keyword_init: true
   )
+
+  Microlesson = Struct.new(
+    :id,
+    :title,
+    :description,
+    :status,          # PLANNING | PLANNED | GENERATING | COMPLETED | FAILED
+    :video_url,
+    :thumbnail_url,
+    :duration,        # seconds
+    keyword_init: true
+  )
 end
