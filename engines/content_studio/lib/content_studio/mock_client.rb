@@ -48,8 +48,10 @@ module ContentStudio
 
     def replan_microlesson(microlesson_id:, prompt: nil, document_urls: nil) # rubocop:disable Lint/UnusedMethodArgument
       entry = self.class.store[microlesson_id] || {}
-      # Reset back to PLANNING so the wizard re-polls from the start
-      self.class.store[microlesson_id] = entry.merge(poll_index: 0, prompt: prompt)
+      # Reset back to PLANNING; only overwrite prompt/fail when a new prompt is given
+      updates = { poll_index: 0 }
+      updates.merge!(prompt: prompt, fail: prompt.to_s.start_with?('fail_')) if prompt
+      self.class.store[microlesson_id] = entry.merge(updates)
       nil
     end
 

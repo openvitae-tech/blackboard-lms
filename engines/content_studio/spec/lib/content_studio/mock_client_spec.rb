@@ -88,11 +88,28 @@ RSpec.describe ContentStudio::MockClient do
     end
 
     it 'resets the microlesson back to PLANNING' do
-      # Advance state a few times
       3.times { client.get_microlesson(microlesson_id) }
       client.replan_microlesson(microlesson_id: microlesson_id, prompt: 'revised')
       result = client.get_microlesson(microlesson_id)
       expect(result.status).to eq('PLANNING')
+    end
+
+    it 'preserves the existing prompt when no new prompt is given' do
+      3.times { client.get_microlesson(microlesson_id) }
+      client.replan_microlesson(microlesson_id: microlesson_id)
+      expect(described_class.store[microlesson_id][:prompt]).to eq('original')
+    end
+
+    it 'preserves the fail flag when no new prompt is given' do
+      fail_id = client.create_microlesson(prompt: 'fail_test', document_urls: [], template_id: '1', logo_url: nil)
+      client.replan_microlesson(microlesson_id: fail_id)
+      expect(described_class.store[fail_id][:fail]).to be true
+    end
+
+    it 'updates the prompt and fail flag when a new prompt is given' do
+      client.replan_microlesson(microlesson_id: microlesson_id, prompt: 'fail_revised')
+      expect(described_class.store[microlesson_id][:prompt]).to eq('fail_revised')
+      expect(described_class.store[microlesson_id][:fail]).to be true
     end
   end
 
