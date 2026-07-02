@@ -5,7 +5,7 @@ require_relative '../../../rails_helper'
 RSpec.describe 'content_studio/creations/new', type: :view do
   before do
     view.singleton_class.include ContentStudio::Engine.routes.url_helpers
-    allow(APP_CONFIG).to receive_messages(classroom_kit_enabled?: false, microlesson_enabled?: false)
+    allow(APP_CONFIG).to receive_messages(classroom_kit_enabled?: false, microlesson_enabled?: true)
     render
   end
 
@@ -27,8 +27,10 @@ RSpec.describe 'content_studio/creations/new', type: :view do
     expect(rendered).to include('trainer-led offline pack')
   end
 
-  it 'renders the Microlesson card' do
+  it 'renders the Microlesson card enabled with a data-url' do
     expect(rendered).to include('Microlesson')
+    expect(rendered).to have_selector('input[type="radio"][value="microlesson"]:not([disabled])')
+    expect(rendered).to have_selector('[data-url*="microlessons"]')
   end
 
   it 'renders the Online Course radio input as enabled' do
