@@ -51,8 +51,8 @@
       <%# Left: Upload your logo %>
       <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-3 flex-1 min-w-0">
         <div class="flex flex-col gap-1">
-          <p class="main-text-md-semibold text-letter-color">Upload your logo</p>
-          <p class="general-text-xs-normal text-letter-color-light">Appears throughout the video.</p>
+          <p class="main-text-lg-semibold text-letter-color">Upload your logo</p>
+          <p class="general-text-sm-normal text-letter-color-light">Appears throughout the video.</p>
         </div>
         <%= file_selector_component(
           form: form,
@@ -68,7 +68,7 @@
       <div class="bg-white-light border border-line-colour-light rounded-xl p-5 flex flex-col gap-3 w-80 shrink-0 self-stretch">
         <div class="flex flex-col gap-1">
           <p class="main-text-md-semibold text-letter-color">Background style</p>
-          <p class="general-text-xs-normal text-letter-color-light">How your presenter's environment will look.</p>
+          <p class="general-text-sm-normal text-letter-color-light">How your presenter's environment will look.</p>
         </div>
 
         <div class="flex flex-col gap-5">
@@ -79,8 +79,8 @@
           ].each do |opt| %>
             <label class="bg-white border border-line-colour rounded-lg p-3 flex items-center justify-between cursor-pointer">
               <div class="flex gap-1 items-center">
-                <span class="general-text-sm-medium text-letter-color-medium"><%= opt[:label] %></span>
-                <span class="general-text-xs-normal text-letter-color-light"><%= opt[:subtext] %></span>
+                <span class="general-text-md-medium text-letter-color-medium"><%= opt[:label] %></span>
+                <span class="general-text-sm-normal text-letter-color-light"><%= opt[:subtext] %></span>
               </div>
               <%= form.radio_button :background_style, opt[:value],
                     class: 'w-5 h-5 accent-primary cursor-pointer' %>
