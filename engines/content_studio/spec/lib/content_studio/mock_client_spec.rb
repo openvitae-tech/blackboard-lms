@@ -30,6 +30,10 @@ RSpec.describe ContentStudio::MockClient do
       expect(result).to be_a(ContentStudio::Microlesson)
     end
 
+    it 'raises Faraday::ResourceNotFound for an unknown id' do
+      expect { client.get_microlesson('unknown-id') }.to raise_error(Faraday::ResourceNotFound)
+    end
+
     it 'starts in PLANNING status' do
       result = client.get_microlesson(microlesson_id)
       expect(result.status).to eq('PLANNING')

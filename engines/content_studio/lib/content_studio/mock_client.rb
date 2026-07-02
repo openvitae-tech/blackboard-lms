@@ -34,7 +34,8 @@ module ContentStudio
     end
 
     def get_microlesson(microlesson_id)
-      entry = self.class.store[microlesson_id] || { poll_index: 0 }
+      entry = self.class.store[microlesson_id] or
+        raise Faraday::ResourceNotFound, "MockClient: microlesson #{microlesson_id} not found"
       index = entry[:poll_index].to_i
       sequence = entry[:fail] ? FAIL_SEQUENCE : POLL_SEQUENCE
       status = sequence[index] || sequence.last
