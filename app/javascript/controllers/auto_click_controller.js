@@ -2,12 +2,12 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["tabItem"];
+  static values = { index: { type: Number, default: 0 } };
 
   connect() {
     requestAnimationFrame(() => {
-      if (this.hasTabItemTarget) {
-        this.tabItemTarget.click()
-      }
-    })    
+      const target = this.tabItemTargets[this.indexValue] ?? this.tabItemTargets[0];
+      if (target) target.click();
+    });
   }
 }
