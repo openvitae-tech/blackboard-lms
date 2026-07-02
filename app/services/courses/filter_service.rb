@@ -82,16 +82,16 @@ module Courses
 
     def base_course_scope(user, search_context)
       if search_context.search_enrolled_courses?
-        user.courses
+        user.courses.courses_only
       elsif search_context.search_incomplete_courses?
         completed_courses_ids = user.enrollments.completed.pluck(:course_id)
-        user.courses.where.not(id: completed_courses_ids).order(:id)
+        user.courses.courses_only.where.not(id: completed_courses_ids).order(:id)
       elsif search_context.search_complete_courses?
-        user.courses.where(id: user.enrollments.completed.select(:course_id)).order(:id)
+        user.courses.courses_only.where(id: user.enrollments.completed.select(:course_id)).order(:id)
       elsif search_context.search_unenrolled_courses?
-        Course.where.not(id: Enrollment.where(user_id: user.id).select(:course_id))
+        Course.courses_only.where.not(id: Enrollment.where(user_id: user.id).select(:course_id))
       else
-        Course.all
+        Course.courses_only
       end
     end
 

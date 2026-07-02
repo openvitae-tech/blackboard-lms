@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
                                        .includes(:tags, banner_attachment: :blob)
       @courses = @courses.page(filter_params[:page])
     else
-      @courses = Course.where(learning_partner_id: current_user.learning_partner_id)
+      @courses = Course.courses_only.where(learning_partner_id: current_user.learning_partner_id)
                        .where.not(neo_ai_course_id: nil)
                        .includes(:tags, banner_attachment: :blob)
                        .order(created_at: :desc)
