@@ -5,8 +5,8 @@
     <%= wizard_steps_component(
       steps: [
         { icon_name: 'chat-bubble-bottom-center-text', label: 'Prompt' },
-        { icon_name: 'camera',                         label: 'Configure Video' },
-        { icon_name: 'numbered-list',                  label: 'Script Review' }
+        { icon_name: 'video-camera',                   label: 'Configure Video' },
+        { icon_name: 'document-text-outline',                  label: 'Script Review' }
       ],
       current_step: 0
     ) %>
@@ -14,7 +14,7 @@
 
   <%= form_with url: microlessons_path, method: :post,
                 class: 'flex flex-col gap-7',
-                data: { controller: 'char-counter' } do |form| %>
+                data: { controller: 'char-counter microlesson-prompt' } do |form| %>
 
     <%# Card %>
     <div class="bg-white border border-line-colour-light rounded-xl p-8 flex flex-col gap-7">
@@ -25,7 +25,14 @@
         name: :title,
         label: 'Microlesson title',
         placeholder: 'e.g. KYC Quick Refresher — Aadhaar verification',
-        size: 'md'
+        size: 'md',
+        html_options: {
+          value: @title,
+          data: {
+            microlesson_prompt_target: 'title',
+            action: 'input->microlesson-prompt#updateSubmit'
+          }
+        }
       ) %>
 
       <%# Prompt textarea %>
@@ -40,9 +47,11 @@
           support_text: "0 / 500 · aim for 40–80 words",
           html_options: {
             maxlength: 500,
+            value: @prompt,
             data: {
-              action: 'input->char-counter#update',
-              char_counter_target: 'input'
+              action: 'input->char-counter#update input->microlesson-prompt#updateSubmit',
+              char_counter_target: 'input',
+              microlesson_prompt_target: 'prompt'
             }
           }
         ) %>
@@ -55,7 +64,7 @@
       <%= link_to root_path do %>
         <%= button_component(text: 'Cancel', type: 'outline', colorscheme: 'primary') %>
       <% end %>
-      <%= form.button class: 'flex-1' do %>
+      <%= form.button class: 'flex-1', data: { microlesson_prompt_target: 'submit' } do %>
         <%= button_component(
           text: 'Continue to Video style',
           type: 'solid',

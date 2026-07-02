@@ -30,6 +30,10 @@ RSpec.describe 'ContentStudio::Microlessons::Wizard', type: :request do
       expect(response.body).to include('Continue to Video style')
     end
 
+    it 'renders the video-camera icon for the Configure Video step' do
+      expect(response.body).to include('m15.75 10.5 4.72-4.72')
+    end
+
     it 'renders the Cancel button' do
       expect(response.body).to include('Cancel')
     end
@@ -47,6 +51,10 @@ RSpec.describe 'ContentStudio::Microlessons::Wizard', type: :request do
 
     it 'renders the Configure Video step label' do
       expect(response.body).to include('Configure Video')
+    end
+
+    it 'renders the video-camera icon for the Configure Video step' do
+      expect(response.body).to include('m15.75 10.5 4.72-4.72')
     end
 
     it 'renders the Choose a video template section' do
@@ -81,6 +89,38 @@ RSpec.describe 'ContentStudio::Microlessons::Wizard', type: :request do
 
     it 'redirects to configure step' do
       expect(response).to redirect_to('/content_studio/microlessons/pending/configure')
+    end
+  end
+
+  describe 'GET /content_studio/microlessons/new after submitting the Prompt step' do
+    before do
+      post '/content_studio/microlessons',
+           params: { title: 'KYC Refresher', prompt: 'Explain KYC verification steps.' }
+      get '/content_studio/microlessons/new'
+    end
+
+    it 'preserves the previously entered title' do
+      expect(response.body).to include('value="KYC Refresher"')
+    end
+
+    it 'preserves the previously entered prompt' do
+      expect(response.body).to include('Explain KYC verification steps.')
+    end
+  end
+
+  describe 'GET /content_studio/microlessons/new?fresh=true' do
+    before do
+      post '/content_studio/microlessons',
+           params: { title: 'KYC Refresher', prompt: 'Explain KYC verification steps.' }
+      get '/content_studio/microlessons/new', params: { fresh: true }
+    end
+
+    it 'does not preserve the previously entered title' do
+      expect(response.body).not_to include('value="KYC Refresher"')
+    end
+
+    it 'does not preserve the previously entered prompt' do
+      expect(response.body).not_to include('Explain KYC verification steps.')
     end
   end
 end

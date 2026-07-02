@@ -5,7 +5,11 @@ module ContentStudio
     class WizardController < ApplicationController
       include WizardUploadConcern
 
-      def new; end
+      def new
+        clear_ml_wizard_session if params[:fresh]
+        @title  = session[:ml_wizard_title]
+        @prompt = session[:ml_wizard_prompt]
+      end
 
       def create
         session[:ml_wizard_title]  = params[:title].presence
