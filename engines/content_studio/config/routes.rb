@@ -19,6 +19,10 @@ ContentStudio::Engine.routes.draw do
   get  'classroom-kits/:id/generating',        to: 'classroom_kits/wizard#generating',
                                                as: :generating_classroom_kit
   post 'classroom-kits/start_generation',      to: 'classroom_kits/wizard#start_generation', as: :start_kit_generation
+  get   'microlessons/new',            to: 'microlessons/wizard#new',          as: :new_microlesson
+  post  'microlessons',                to: 'microlessons/wizard#create',       as: :microlessons
+  get   'microlessons/:id/configure',  to: 'microlessons/wizard#configure',    as: :configure_microlesson
+  patch 'microlessons/:id/configure',  to: 'microlessons/wizard#update_config'
   get 'courses/new', to: 'courses/wizard#new', as: :new_course
   post 'courses', to: 'courses/wizard#create', as: :wizard_courses
   get 'courses/:id/configure_video', to: 'courses/wizard#configure_video', as: :configure_video
