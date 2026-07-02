@@ -89,9 +89,10 @@ class SearchContext
     {
       term: @term,
       tags: @tags,
+      status: @statuses,
       context: @context,
       type: @type
-    }.filter { |_k, v| !v.empty? }.to_query
+    }.filter { |_k, v| v.respond_to?(:empty?) ? !v.empty? : v.present? }.to_query
   end
 
   private
