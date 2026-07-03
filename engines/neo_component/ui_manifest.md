@@ -426,6 +426,7 @@ scene_script_component(
   previewable: false,      # show an expand icon on the thumbnail that opens a video preview modal
   approve_url: nil,        # background POST target for the Approve action
   regenerate_url: nil,     # background POST target for the Regenerate action
+  spinner_url: nil,        # override the processing-state spinner asset (any image path or URL)
   html_options: {}
 )
 ```
@@ -443,6 +444,8 @@ Whether the thumbnail column renders is derived from the props, not the `state` 
 **Edit mode** is ephemeral client-side state, not server-rendered. Clicking the script textarea in the `generated` state (or the `enterEdit` Stimulus action) reveals Cancel/Regenerate buttons in place of Approve, makes the textarea editable, and dispatches a `scene:edit-entered` document event carrying `{ source: <the card element> }`. Every other `scene_script_component` on the page listens for this event and disables itself. Cancel (reverting the script) or Regenerate dispatches `scene:edit-exited`, which re-enables the siblings.
 
 Approve and Regenerate each fire a background `fetch` POST (JSON body `{ script }`, `X-CSRF-Token` from the page's `meta[name="csrf-token"]`) to `approve_url`/`regenerate_url` and optimistically switch the card to a local spinner thumbnail. The component does not poll — the parent page is responsible for re-rendering scenes with updated props once a video finishes generating.
+
+The processing-state spinner defaults to a gif bundled with NeoComponent (`engines/neo_component/app/assets/images/scene-script-processing.gif`) — pass `spinner_url:` to use a different asset (a local `image_path('...')` from the host app, or any URL) instead. The resolved URL is used both for the initial server render and for the client-side optimistic transition after Approve/Regenerate, so they always match.
 
 **Example:**
 ```ruby

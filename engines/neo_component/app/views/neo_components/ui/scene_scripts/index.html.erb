@@ -11,7 +11,7 @@
   </div>
 <% end %>
 
-<%= doc_section_component(title: "Scene Script — processing (video generating)") do %>
+<%= doc_section_component(title: "Scene Script — processing (video generating, default bundled spinner)") do %>
   <div class="max-w-3xl">
     <%= scene_script_component(
           scene_number: 1,
@@ -19,6 +19,19 @@
           title: 'Setting up: where money sleeps',
           script: 'Lorem ipsum dolor sit amet consectetur. Libero condimentum feugiat at egestas tempus.',
           state: :processing
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: "Scene Script — processing (custom spinner_url override)") do %>
+  <div class="max-w-3xl">
+    <%= scene_script_component(
+          scene_number: 2,
+          total_scenes: 4,
+          title: 'The compounding effect',
+          script: 'Lorem ipsum dolor sit amet consectetur. Libero condimentum feugiat at egestas tempus.',
+          state: :processing,
+          spinner_url: 'https://placehold.co/32x32.gif'
         ) %>
   </div>
 <% end %>
