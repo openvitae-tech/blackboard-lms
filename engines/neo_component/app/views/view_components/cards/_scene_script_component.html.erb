@@ -71,11 +71,11 @@
             name: "scene_script_#{scene_number}",
             placeholder: '',
             value: script,
-            rows: 4,
             disabled: state == :processing,
             html_options: {
               readonly: show_thumbnail && state != :processing,
-              data: { scene_script_target: 'textarea' }
+              data: { scene_script_target: 'textarea' },
+              style: 'height: 100px; resize: none;'
             }
           ) %>
     <% end %>
