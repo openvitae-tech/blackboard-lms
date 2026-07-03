@@ -1,0 +1,98 @@
+<%= content_tag :div, **wrapper_html_options do %>
+  <div class="flex items-center gap-2 w-full">
+    <div class="flex flex-1 items-center gap-2 min-w-0">
+      <%= chip_component(text: "Scene #{scene_number} of #{total_scenes}", colorscheme: 'primary') %>
+      <p class="main-text-md-semibold text-letter-color truncate"><%= title %></p>
+    </div>
+
+    <% if show_header_action %>
+      <span class="flex items-center justify-center" title="AI-generated script">
+        <%= icon('sparkle', css: 'h-4 w-4 text-slate-grey-50') %>
+      </span>
+      <span data-scene-script-target="approveAction">
+        <%= button_component(
+              text: 'Approve',
+              type: 'solid',
+              colorscheme: 'secondary',
+              size: 'sm',
+              html_options: { data: { action: 'click->scene-script#approve' } }
+            ) %>
+      </span>
+    <% end %>
+
+    <span class="hidden flex items-center gap-2" data-scene-script-target="editActions">
+      <%= button_component(
+            text: 'Cancel',
+            type: 'outline',
+            colorscheme: 'primary',
+            size: 'sm',
+            icon_name: 'x-mark',
+            icon_position: 'right',
+            html_options: { data: { action: 'click->scene-script#cancel' } }
+          ) %>
+      <%= button_component(
+            text: 'Regenerate',
+            type: 'solid',
+            colorscheme: 'primary',
+            size: 'sm',
+            icon_name: 'arrow-path',
+            icon_position: 'right',
+            html_options: { data: { action: 'click->scene-script#regenerate' } }
+          ) %>
+    </span>
+  </div>
+
+  <div class="flex gap-4 items-start w-full">
+    <% if show_thumbnail %>
+      <div class="relative w-[187px] h-[100px] shrink-0 rounded-lg overflow-hidden border border-line-colour-light bg-white"
+           data-scene-script-target="thumbnail">
+        <% if state == :processing %>
+          <div class="flex items-center justify-center w-full h-full">
+            <div class="h-8 w-8 animate-spin rounded-full border-4 border-primary-light-100 border-t-primary"></div>
+          </div>
+        <% elsif thumbnail_url.present? %>
+          <%= image_tag thumbnail_url, class: 'w-full h-full object-cover' %>
+          <% if previewable %>
+            <button type="button"
+                    class="absolute bottom-2 right-2 flex items-center justify-center w-7 h-7 rounded-full bg-white border border-letter-color opacity-70 hover:opacity-100"
+                    data-action="click->scene-script#openPreview"
+                    aria-label="Preview video">
+              <%= icon('arrows-pointing-out', css: 'h-4 w-4 text-letter-color') %>
+            </button>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= content_tag :div,
+          class: "flex-1 min-w-0 #{'cursor-pointer' if state == :generated}",
+          data: (state == :generated ? { action: 'click->scene-script#enterEdit' } : {}) do %>
+      <%= textarea_component(
+            name: "scene_script_#{scene_number}",
+            placeholder: '',
+            value: script,
+            rows: 4,
+            disabled: state == :processing,
+            html_options: {
+              readonly: show_thumbnail && state != :processing,
+              data: { scene_script_target: 'textarea' }
+            }
+          ) %>
+    <% end %>
+  </div>
+
+  <% if show_thumbnail && previewable && video_url.present? %>
+    <div class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-black bg-opacity-60"
+         data-scene-script-target="previewModal">
+      <div class="relative bg-white rounded-lg p-4 max-w-3xl w-full mx-4">
+        <button type="button"
+                class="absolute top-2 right-2"
+                data-action="click->scene-script#closePreview"
+                aria-label="Close preview">
+          <%= icon('x-circle', css: 'h-6 w-6 text-letter-color') %>
+        </button>
+        <video class="w-full rounded" controls data-scene-script-target="previewVideo" src="<%= video_url %>"></video>
+      </div>
+    </div>
+  <% end %>
+<% end %>

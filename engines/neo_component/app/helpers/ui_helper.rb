@@ -20,6 +20,7 @@ module UiHelper
   include ViewComponent::Card::CertificateCardComponent
   include ViewComponent::Card::LongProgramCardComponent
   include ViewComponent::Card::ContentTypeCardComponent
+  include ViewComponent::Card::SceneScriptComponent
   include ViewComponent::CourseSelectComponent
   include ViewComponent::MemberListComponent
   include ViewComponent::NotificationBarComponent
