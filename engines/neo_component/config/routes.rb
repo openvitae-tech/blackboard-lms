@@ -31,5 +31,6 @@ NeoComponents::Engine.routes.draw do
     get :carousels, to: 'carousels#index'
     get :cards, to: 'cards#index'
     get :wizard_steps, to: 'wizard_steps#index'
+    get :script_review_cards, to: 'script_review_cards#index'
   end
 end

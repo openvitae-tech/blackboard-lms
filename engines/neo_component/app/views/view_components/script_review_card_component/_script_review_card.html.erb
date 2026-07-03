@@ -1,0 +1,73 @@
+<div class="<%= component.card_class %>">
+
+  <%# Header row: scene chip + title on left, action buttons on right %>
+  <div class="flex items-center justify-between gap-3">
+
+    <%# Left: scene chip + title %>
+    <div class="flex items-center gap-2 flex-1 min-w-0">
+      <%= chip_component(
+            text: "Scene #{component.scene_number} of #{component.scene_total}",
+            colorscheme: component.disabled? ? 'primary_lite' : 'primary'
+          ) %>
+      <p class="<%= component.title_class %> truncate"><%= component.title %></p>
+    </div>
+
+    <%# Right: action buttons (shrink-0 so they never compress) %>
+    <div class="flex items-center gap-2 shrink-0">
+      <% if component.show_edit_buttons? %>
+        <%= button_component(text: 'Cancel', type: 'outline', colorscheme: 'primary', size: 'sm',
+                             icon_name: 'x-mark', icon_position: 'right') %>
+        <%= button_component(text: 'Regenerate', type: 'solid', colorscheme: 'primary', size: 'sm',
+                             icon_name: 'arrow-uturn-left', icon_position: 'right') %>
+      <% elsif component.show_approve_button? %>
+        <button type="button"
+                class="flex items-center justify-center w-8 h-8 rounded-lg text-letter-color-light hover:bg-white-light">
+          <%= icon('arrow-uturn-left', css: 'w-4 h-4') %>
+        </button>
+        <%= button_component(text: 'Approve', type: 'solid', colorscheme: 'secondary', size: 'sm') %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <%# Body: optional thumbnail + script textarea %>
+  <div class="flex gap-4 items-start">
+
+    <% if component.show_thumbnail? %>
+      <div class="relative shrink-0 w-[187px] h-[100px] rounded-lg border border-line-colour-light overflow-hidden bg-white">
+        <% if component.processing? %>
+          <%# Video generation gif %>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <img src="<%= asset_path('content_studio/videogenaration.gif') %>"
+                 alt="Generating video"
+                 class="w-8 h-8 object-contain">
+          </div>
+        <% elsif component.thumbnail_url.present? %>
+          <img src="<%= component.thumbnail_url %>" alt="Scene thumbnail"
+               class="absolute inset-0 w-full h-full object-cover<%= component.disabled? ? ' opacity-50' : '' %>">
+          <% unless component.disabled? %>
+            <button type="button"
+                    class="absolute bottom-1.5 right-1.5 bg-white border border-letter-color rounded-full p-1.5 opacity-70 hover:opacity-100">
+              <%= icon('pencil', css: 'w-4 h-4') %>
+            </button>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# Script textarea %>
+    <div class="flex-1 min-w-0">
+      <%= textarea_component(
+            name: :script,
+            placeholder: 'Scene script…',
+            value: component.script,
+            rows: 4,
+            size: 'md',
+            disabled: component.textarea_disabled?,
+            html_options: { style: 'height: 100px; resize: none;' }
+          ) %>
+    </div>
+
+  </div>
+
+</div>

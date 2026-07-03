@@ -35,4 +35,5 @@ module UiHelper
   include ViewComponent::ProfileIconComponent
   include ViewComponent::AccordionComponent
   include ViewComponent::WizardStepsComponent
+  include ViewComponent::ScriptReviewCardComponent
 end

@@ -1,0 +1,74 @@
+<%= doc_section_component(title: 'Script Review Card — Default (pending approval)') do %>
+  <div class="max-w-3xl flex flex-col gap-4 w-full">
+    <%= script_review_card_component(
+          scene_number: 1,
+          scene_total: 4,
+          title: 'Setting up: where money sleeps',
+          script: 'Lorem ipsum dolor sit amet consectetur. Libero condimentum feugiat at egestas tempus. Lorem sem amet ac luctus consectetur accumsan.',
+          variant: 'default'
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: 'Script Review Card — Edit (user is editing script)') do %>
+  <div class="max-w-3xl flex flex-col gap-4 w-full">
+    <%= script_review_card_component(
+          scene_number: 2,
+          scene_total: 4,
+          title: 'The three red flags to watch for',
+          script: 'Lorem ipsum dolor sit amet consectetur. Libero condimentum feugiat at egestas tempus.',
+          variant: 'edit'
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: 'Script Review Card — Generated (video thumbnail ready)') do %>
+  <div class="max-w-3xl flex flex-col gap-4 w-full">
+    <%= script_review_card_component(
+          scene_number: 3,
+          scene_total: 4,
+          title: 'How to escalate when the photo does not match',
+          script: 'Lorem ipsum dolor sit amet consectetur. Libero condimentum feugiat at egestas tempus. Lorem sem amet ac luctus consectetur accumsan.',
+          variant: 'generated',
+          thumbnail_url: 'https://placehold.co/187x96'
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: 'Script Review Card — Processing (video is generating)') do %>
+  <div class="max-w-3xl flex flex-col gap-4 w-full">
+    <%= script_review_card_component(
+          scene_number: 1,
+          scene_total: 4,
+          title: 'Setting up: where money sleeps',
+          script: 'Lorem ipsum dolor sit amet consectetur. Libero condimentum feugiat at egestas tempus.',
+          variant: 'processing',
+          thumbnail_url: 'https://placehold.co/187x96'
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: 'Script Review Card — Disabled Default (not yet active)') do %>
+  <div class="max-w-3xl flex flex-col gap-4 w-full">
+    <%= script_review_card_component(
+          scene_number: 4,
+          scene_total: 4,
+          title: 'Summary and next steps',
+          script: 'Lorem ipsum dolor sit amet consectetur. Libero condimentum feugiat at egestas tempus.',
+          variant: 'disabled_default'
+        ) %>
+  </div>
+<% end %>
+
+<%= doc_section_component(title: 'Script Review Card — Disabled Generated (done, not editable)') do %>
+  <div class="max-w-3xl flex flex-col gap-4 w-full">
+    <%= script_review_card_component(
+          scene_number: 3,
+          scene_total: 4,
+          title: 'How to escalate when the photo does not match',
+          script: 'Lorem ipsum dolor sit amet consectetur. Libero condimentum feugiat at egestas tempus.',
+          variant: 'disabled_generated',
+          thumbnail_url: 'https://placehold.co/187x96'
+        ) %>
+  </div>
+<% end %>

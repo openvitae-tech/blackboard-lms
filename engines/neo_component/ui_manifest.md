@@ -554,6 +554,43 @@ wizard_steps_component(
 
 ---
 
+## Script Review Card
+
+### `script_review_card_component`
+```ruby
+script_review_card_component(
+  scene_number:,        # Integer — e.g. 1
+  scene_total:,         # Integer — e.g. 4
+  title:,               # String — scene title
+  script:,              # String — script body text
+  variant: 'default',   # 'default' | 'edit' | 'generated' | 'processing' | 'disabled_default' | 'disabled_generated'
+  thumbnail_url: nil    # String URL — shown for 'generated', 'processing', 'disabled_generated' variants
+)
+```
+Renders a single scene card for the Script Review wizard step.
+
+| Variant | Description |
+|---------|-------------|
+| `default` | Editable script text, green Approve button + regenerate icon in header |
+| `edit` | Card has blue border-2, Cancel + Regenerate buttons, textarea has blue border |
+| `generated` | Thumbnail shown with edit-icon overlay, no action buttons |
+| `processing` | Thumbnail shows spinner, textarea disabled (video is generating) |
+| `disabled_default` | Greyed out, no thumbnail — not yet the active scene |
+| `disabled_generated` | Greyed out with dimmed thumbnail — scene done but not editable |
+
+**Example:**
+```ruby
+script_review_card_component(
+  scene_number: 1,
+  scene_total: 4,
+  title: 'Setting up: where money sleeps',
+  script: 'Lorem ipsum dolor sit amet…',
+  variant: 'default'
+)
+```
+
+---
+
 ## Accordion
 
 ### `accordion_component`

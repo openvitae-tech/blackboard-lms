@@ -6,5 +6,6 @@
 //= link content_studio/application.css
 //= link upload.gif
 //= link hourglass.gif
+//= link content_studio/videogenaration.gif
 //= link 404-error.gif
 //= link_tree ../../../engines/content_studio/app/javascript/content_studio/controllers .js
