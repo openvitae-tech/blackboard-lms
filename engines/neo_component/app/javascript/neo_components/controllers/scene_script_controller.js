@@ -83,11 +83,15 @@ export default class extends Controller {
   }
 
   approve() {
+    if (!this.approveUrlValue) return;
+
     this.post(this.approveUrlValue, { script: this.hasTextareaTarget ? this.textareaTarget.value : undefined });
     this.showProcessing();
   }
 
   regenerate() {
+    if (!this.regenerateUrlValue) return;
+
     this.post(this.regenerateUrlValue, { script: this.hasTextareaTarget ? this.textareaTarget.value : undefined });
     this.exitEdit();
     this.showProcessing();
