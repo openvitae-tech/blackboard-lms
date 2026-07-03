@@ -59,13 +59,13 @@ module ViewComponent
         classes << 'opacity-40 pointer-events-none' if state == :disabled
         classes << html_options[:class]
 
-        data = {
+        data = (html_options[:data] || {}).merge(
           controller: 'scene-script',
           scene_script_approve_url_value: approve_url,
           scene_script_regenerate_url_value: regenerate_url,
           scene_script_spinner_url_value: spinner_url,
           scene_script_disabled_value: state == :disabled
-        }.merge(html_options[:data] || {})
+        )
 
         html_options.except(:class, :data).merge(class: classes.compact.join(' '), data:)
       end

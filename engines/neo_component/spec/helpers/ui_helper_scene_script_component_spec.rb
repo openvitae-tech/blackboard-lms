@@ -186,6 +186,21 @@ RSpec.describe UiHelper, type: :helper do
         root = doc.at_css('[data-controller="scene-script"]')
         expect(root['data-testid']).to eq('scene-1')
       end
+
+      it 'does not let a caller-supplied data[:controller] override the Stimulus wiring' do
+        doc = render_scene(html_options: { data: { controller: 'something-else' } })
+        expect(doc.at_css('[data-controller="scene-script"]')).to be_present
+        expect(doc.at_css('[data-controller="something-else"]')).to be_nil
+      end
+
+      it 'does not let a caller-supplied data value key override the resolved approve_url' do
+        doc = render_scene(
+          approve_url: '/real-approve',
+          html_options: { data: { scene_script_approve_url_value: '/fake-approve' } }
+        )
+        root = doc.at_css('[data-controller="scene-script"]')
+        expect(root['data-scene-script-approve-url-value']).to eq('/real-approve')
+      end
     end
   end
 end
