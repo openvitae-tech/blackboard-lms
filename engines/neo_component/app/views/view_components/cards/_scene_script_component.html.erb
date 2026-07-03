@@ -48,7 +48,7 @@
            data-scene-script-target="thumbnail">
         <% if state == :processing %>
           <div class="flex items-center justify-center w-full h-full">
-            <%= image_tag spinner_url, class: 'h-8 w-8 object-contain', alt: 'Generating video' %>
+            <%= image_tag spinner_url, class: 'h-16 w-16 object-contain', alt: 'Generating video' %>
           </div>
         <% elsif thumbnail_url.present? %>
           <%= image_tag thumbnail_url, class: 'w-full h-full object-cover' %>

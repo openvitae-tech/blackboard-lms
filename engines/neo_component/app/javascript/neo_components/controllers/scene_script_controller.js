@@ -101,7 +101,7 @@ export default class extends Controller {
 
     if (this.hasApproveActionTarget) this.approveActionTarget.classList.add("hidden");
 
-    const spinnerHtml = `<div class="flex items-center justify-center w-full h-full"><img src="${this.spinnerUrlValue}" class="h-8 w-8 object-contain" alt="Generating video"></div>`;
+    const spinnerHtml = `<div class="flex items-center justify-center w-full h-full"><img src="${this.spinnerUrlValue}" class="h-16 w-16 object-contain" alt="Generating video"></div>`;
 
     if (this.hasThumbnailTarget) {
       this.thumbnailTarget.innerHTML = spinnerHtml;
