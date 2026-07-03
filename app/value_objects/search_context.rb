@@ -19,7 +19,9 @@ class SearchContext
   COMPLETE = :complete
   VALID_TYPES = [ANY, ENROLLED, UNENROLLED, INCOMPLETE, COMPLETE].freeze
 
-  attr_reader :term, :tags, :context, :team, :user, :type, :program
+  VALID_STATUSES = %w[published unpublished].freeze
+
+  attr_reader :term, :tags, :statuses, :context, :team, :user, :type, :program
 
   validates :context,
             inclusion: { in: VALID_CONTEXTS,
@@ -33,9 +35,10 @@ class SearchContext
     end
   end
 
-  def initialize(context:, term: '', tags: [], type: nil, options: {}) # rubocop:disable Metrics/CyclomaticComplexity
+  def initialize(context:, term: '', tags: [], statuses: [], type: nil, options: {}) # rubocop:disable Metrics/CyclomaticComplexity
     @term = sanitize_parameter(term, '')
     @tags = sanitize_parameter(tags, [])
+    @statuses = (Array(statuses).map(&:to_s) & VALID_STATUSES)
     @context = sanitize_parameter(context)&.to_sym
     @type = sanitize_parameter(type, ANY).to_sym
 
@@ -86,9 +89,10 @@ class SearchContext
     {
       term: @term,
       tags: @tags,
+      status: @statuses,
       context: @context,
       type: @type
-    }.filter { |_k, v| !v.empty? }.to_query
+    }.filter { |_k, v| v.respond_to?(:empty?) ? !v.empty? : v.present? }.to_query
   end
 
   private
