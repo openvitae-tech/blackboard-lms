@@ -23,6 +23,9 @@ ContentStudio::Engine.routes.draw do
   post  'microlessons',                to: 'microlessons/wizard#create',       as: :microlessons
   get   'microlessons/:id/configure',  to: 'microlessons/wizard#configure',    as: :configure_microlesson
   patch 'microlessons/:id/configure',  to: 'microlessons/wizard#update_config'
+  get   'microlessons/:id/generating',   to: 'microlessons/wizard#generating',       as: :generating_microlesson
+  get   'microlessons/:id/status',       to: 'microlessons/wizard#status',           as: :microlesson_status
+  post  'microlessons/start_generation', to: 'microlessons/wizard#start_generation', as: :start_microlesson_generation
   get 'courses/new', to: 'courses/wizard#new', as: :new_course
   post 'courses', to: 'courses/wizard#create', as: :wizard_courses
   get 'courses/:id/configure_video', to: 'courses/wizard#configure_video', as: :configure_video
