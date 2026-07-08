@@ -124,6 +124,11 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('[data-action="click->scene-script#openPreview"]')).to be_nil
       end
 
+      it 'omits the expand icon when previewable is true but video_url is absent' do
+        doc = render_scene(state: :generated, thumbnail_url: '/thumb.jpg', previewable: true)
+        expect(doc.at_css('[data-action="click->scene-script#openPreview"]')).to be_nil
+      end
+
       it 'shows the expand icon and preview modal when previewable is true' do
         doc = render_scene(
           state: :generated, thumbnail_url: '/thumb.jpg', previewable: true, video_url: '/video.mp4'

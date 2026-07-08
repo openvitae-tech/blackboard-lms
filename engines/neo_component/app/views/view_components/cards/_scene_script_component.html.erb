@@ -63,7 +63,7 @@
         </div>
       <% elsif thumbnail_url.present? %>
         <%= image_tag thumbnail_url, class: 'w-full h-full object-cover' %>
-        <% if previewable %>
+        <% if previewable && video_url.present? %>
           <button type="button"
                   class="absolute bottom-2 right-2 flex items-center justify-center w-7 h-7 rounded-full bg-white border border-letter-color opacity-70 hover:opacity-100"
                   data-action="click->scene-script#openPreview"
