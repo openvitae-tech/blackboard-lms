@@ -37,6 +37,11 @@ module ContentStudio
         client.list_templates
       end
 
+      def create_microlesson(prompt:, document_urls: [], template_id: nil, logo_url: nil, bg_type: 'video')
+        client.create_microlesson(prompt: prompt, document_urls: document_urls,
+                                  template_id: template_id, logo_url: logo_url, bg_type: bg_type)
+      end
+
       def course_metadata # rubocop:disable Rails/Delegate
         client.course_metadata
       end
