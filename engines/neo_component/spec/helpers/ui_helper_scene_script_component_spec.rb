@@ -53,9 +53,11 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('[data-scene-script-target="approveAction"]')).to be_present
       end
 
-      it 'renders no thumbnail' do
+      it 'renders the thumbnail wrapper hidden, ready for the JS optimistic transition to fill it in' do
         doc = render_scene(state: :default)
-        expect(doc.at_css('[data-scene-script-target="thumbnail"]')).to be_nil
+        thumbnail = doc.at_css('[data-scene-script-target="thumbnail"]')
+        expect(thumbnail).to be_present
+        expect(thumbnail['class']).to include('hidden')
       end
 
       it 'leaves the textarea editable' do
@@ -147,9 +149,11 @@ RSpec.describe UiHelper, type: :helper do
         expect(root['data-scene-script-disabled-value']).to eq('true')
       end
 
-      it 'renders no thumbnail when thumbnail_url is absent' do
+      it 'renders the thumbnail wrapper hidden when thumbnail_url is absent' do
         doc = render_scene(state: :disabled)
-        expect(doc.at_css('[data-scene-script-target="thumbnail"]')).to be_nil
+        thumbnail = doc.at_css('[data-scene-script-target="thumbnail"]')
+        expect(thumbnail).to be_present
+        expect(thumbnail['class']).to include('hidden')
       end
 
       it 'renders a muted thumbnail when thumbnail_url is present' do

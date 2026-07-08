@@ -2,7 +2,6 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = [
-    "body",
     "textarea",
     "approveAction",
     "editActions",
@@ -110,17 +109,9 @@ export default class extends Controller {
 
     if (this.hasApproveActionTarget) this.approveActionTarget.classList.add("hidden");
 
-    const spinnerHtml = `<div class="flex items-center justify-center w-full h-full"><img src="${this.spinnerUrlValue}" class="h-16 w-16 object-contain" alt="Generating video"></div>`;
-
     if (this.hasThumbnailTarget) {
-      this.thumbnailTarget.innerHTML = spinnerHtml;
-    } else if (this.hasBodyTarget) {
-      const box = document.createElement("div");
-      box.className =
-        "relative w-[187px] h-[100px] shrink-0 rounded-lg overflow-hidden border border-line-colour-light bg-white";
-      box.setAttribute("data-scene-script-target", "thumbnail");
-      box.innerHTML = spinnerHtml;
-      this.bodyTarget.prepend(box);
+      this.thumbnailTarget.classList.remove("hidden");
+      this.thumbnailTarget.innerHTML = `<div class="flex items-center justify-center w-full h-full"><img src="${this.spinnerUrlValue}" class="h-16 w-16 object-contain" alt="Generating video"></div>`;
     }
   }
 
