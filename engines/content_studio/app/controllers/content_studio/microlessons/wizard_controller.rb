@@ -35,7 +35,6 @@ module ContentStudio
         template_id = session[:ml_wizard_template_id]
         logo_url    = session[:ml_wizard_logo_url]
         bg_type     = session[:ml_wizard_bg_type] || 'video'
-        clear_ml_wizard_session
 
         Rails.logger.info('[ContentStudio] microlesson start_generation')
 
@@ -46,6 +45,7 @@ module ContentStudio
           logo_url: logo_url,
           bg_type: bg_type
         )
+        clear_ml_wizard_session
         Rails.cache.write("ml_title_#{microlesson_id}", title, expires_in: 90.days) if title.present?
         render json: { redirect_url: generating_microlesson_url(id: microlesson_id, state: 'success') }
       rescue Faraday::Error => e
