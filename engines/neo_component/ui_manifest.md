@@ -413,6 +413,55 @@ content_type_card_component(
 )
 ```
 
+### `scene_script_component`
+```ruby
+scene_script_component(
+  scene_number:,           # 1-based position of this scene within the lesson
+  total_scenes:,           # total number of scenes in the lesson
+  title:,                  # scene title
+  script:,                 # AI-generated script text, shown/edited in the textarea
+  state:,                  # :default | :processing | :generated | :disabled
+  thumbnail_url: nil,      # video frame image; ignored (replaced by a spinner) while state: :processing
+  video_url: nil,          # source for the preview-modal <video> tag
+  previewable: false,      # show an expand icon on the thumbnail that opens a video preview modal
+  approve_url: nil,        # background POST target for the Approve action
+  regenerate_url: nil,     # background POST target for the Regenerate action
+  html_options: {}
+)
+```
+
+One instance is rendered per scene in a lesson. A lesson page renders several of these side by side.
+
+**States:**
+- **`default`** — script ready, no video yet. Textarea is directly editable. Approve button visible.
+- **`processing`** — video generation in progress (after Approve or Regenerate). Thumbnail shows a spinner; textarea is disabled.
+- **`generated`** — video ready. Thumbnail shows the video frame; textarea is read-only and clickable to enter Edit mode.
+- **`disabled`** — muted, non-interactive (`opacity-40 pointer-events-none`). Used when another scene is in Edit mode; the component's own Stimulus controller sets this automatically on sibling cards — the `:disabled` state value is for server-rendered initial state only.
+
+Whether the thumbnail column renders is derived from the props, not the `state` name directly: it shows whenever `state: :processing` or `thumbnail_url` is present. This lets `state: :disabled` correctly reproduce either the "no video yet" or "video already generated" muted look depending on whether `thumbnail_url` was passed.
+
+**Edit mode** is ephemeral client-side state, not server-rendered. Clicking the script textarea in the `generated` state (or the `enterEdit` Stimulus action) reveals Cancel/Regenerate buttons in place of Approve, makes the textarea editable, and dispatches a `scene:edit-entered` document event carrying `{ source: <the card element> }`. Every other `scene_script_component` on the page listens for this event and disables itself. Cancel (reverting the script) or Regenerate dispatches `scene:edit-exited`, which re-enables the siblings.
+
+Approve and Regenerate are real `button_to` submits (POSTing `script` as a form param, with Rails' standard CSRF protection) to `approve_url`/`regenerate_url`. The current textarea value is synced into the form's hidden `script` field on submit, so edits made in Edit mode are included even though the field lives outside the form's markup. Clicking either button also optimistically switches the card to a local spinner thumbnail immediately, without waiting for the response — if `approve_url`/`regenerate_url` isn't given, the button renders disabled instead. The component does not poll and has no built-in error UI — if the request fails, that's surfaced out-of-band (e.g. a flash message set by the Rails controller, shown the next time the parent page re-renders scenes), not by this component reverting its optimistic state.
+
+The processing-state spinner always uses a gif bundled with NeoComponent (`engines/neo_component/app/assets/images/scene-script-processing.gif`) — this is not caller-configurable, so the resolved asset URL used for the initial server render and for the client-side optimistic transition after Approve/Regenerate always matches without any untrusted input reaching the client-side spinner markup.
+
+**Example:**
+```ruby
+scene_script_component(
+  scene_number: 1,
+  total_scenes: 4,
+  title: 'Setting up: where money sleeps',
+  script: scene.script,
+  state: scene.video.attached? ? :generated : :default,
+  thumbnail_url: scene.video.attached? ? scene.thumbnail_url : nil,
+  video_url: scene.video.attached? ? scene.video_url : nil,
+  previewable: true,
+  approve_url: approve_lesson_scene_path(scene),
+  regenerate_url: regenerate_lesson_scene_path(scene)
+)
+```
+
 ---
 
 ## Navigation

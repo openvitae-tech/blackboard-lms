@@ -30,6 +30,8 @@ NeoComponents::Engine.routes.draw do
     get :accordions, to: 'accordions#index'
     get :carousels, to: 'carousels#index'
     get :cards, to: 'cards#index'
+    get :scene_scripts, to: 'scene_scripts#index'
+    post 'scene_scripts/noop', to: 'scene_scripts#noop'
     get :wizard_steps, to: 'wizard_steps#index'
   end
 end
