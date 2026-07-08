@@ -8,12 +8,15 @@ module NeoComponents
       Pathname.new(File.expand_path('../..', __dir__))
     end
 
-    # Register Sprockets asset paths (icons, stylesheets, and javascript)
+    # Register Sprockets asset paths (icons, images, stylesheets, and javascript)
     initializer 'neo_components.assets' do |app|
+      images_path = Engine.gem_root.join('app/assets/images')
       app.config.assets.paths << Engine.gem_root.join('app/assets/stylesheets')
       app.config.assets.paths << Engine.gem_root.join('app/assets/icons')
+      app.config.assets.paths << images_path
       app.config.assets.paths << Engine.gem_root.join('app/javascript')
       app.config.assets.precompile += %w[icons.css]
+      app.config.assets.precompile += Dir[images_path.join('*')].map { |f| File.basename(f) }
       # Declare all Stimulus controllers as precompilable so importmap can resolve their URLs
       controllers_glob = Engine.gem_root.join('app/javascript/neo_components/controllers/*.js')
       app.config.assets.precompile += Dir[controllers_glob].map do |f|
