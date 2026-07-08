@@ -162,6 +162,16 @@ RSpec.describe UiHelper, type: :helper do
         doc = render_scene(state: :disabled, thumbnail_url: '/thumb.jpg')
         expect(doc.at_css('[data-scene-script-target="thumbnail"] img')).to be_present
       end
+
+      it 'makes the textarea readonly even without a thumbnail_url' do
+        doc = render_scene(state: :disabled)
+        expect(doc.at_css('textarea')['readonly']).to eq('readonly')
+      end
+
+      it 'does not show the Approve action even without a thumbnail_url' do
+        doc = render_scene(state: :disabled)
+        expect(doc.at_css('[data-scene-script-target="approveAction"]')).to be_nil
+      end
     end
 
     describe 'edit actions' do
@@ -171,6 +181,53 @@ RSpec.describe UiHelper, type: :helper do
         expect(edit_actions['class']).to include('hidden')
         expect(edit_actions.text).to include('Cancel')
         expect(edit_actions.text).to include('Regenerate')
+      end
+    end
+
+    describe 'Approve/Regenerate submission' do
+      it 'renders Approve as a real form POST to approve_url' do
+        doc = render_scene(approve_url: '/scenes/1/approve')
+        form = doc.at_css('[data-scene-script-target="approveAction"] form')
+        expect(form['action']).to eq('/scenes/1/approve')
+        expect(form['method']).to eq('post')
+        expect(form.at_css('button[type="submit"]')).to be_present
+      end
+
+      it 'seeds the Approve form with a hidden script field' do
+        doc = render_scene(approve_url: '/scenes/1/approve', script: 'Hello world')
+        hidden = doc.at_css('[data-scene-script-target="approveAction"] input[name="script"]')
+        expect(hidden['value']).to eq('Hello world')
+      end
+
+      it 'wires syncScript on the Approve form so live edits are captured on submit' do
+        doc = render_scene(approve_url: '/scenes/1/approve')
+        form = doc.at_css('[data-scene-script-target="approveAction"] form')
+        expect(form['data-action']).to eq('submit->scene-script#syncScript')
+      end
+
+      it 'disables the Approve submit button when approve_url is absent' do
+        doc = render_scene(approve_url: nil)
+        button = doc.at_css('[data-scene-script-target="approveAction"] button[type="submit"]')
+        expect(button['disabled']).to eq('disabled')
+      end
+
+      it 'renders Regenerate as a real form POST to regenerate_url' do
+        doc = render_scene(regenerate_url: '/scenes/1/regenerate')
+        form = doc.at_css('[data-scene-script-target="editActions"] form')
+        expect(form['action']).to eq('/scenes/1/regenerate')
+        expect(form['method']).to eq('post')
+      end
+
+      it 'seeds the Regenerate form with a hidden script field' do
+        doc = render_scene(regenerate_url: '/scenes/1/regenerate', script: 'Hello world')
+        hidden = doc.at_css('[data-scene-script-target="editActions"] input[name="script"]')
+        expect(hidden['value']).to eq('Hello world')
+      end
+
+      it 'disables the Regenerate submit button when regenerate_url is absent' do
+        doc = render_scene(regenerate_url: nil)
+        button = doc.at_css('[data-scene-script-target="editActions"] button[type="submit"]')
+        expect(button['disabled']).to eq('disabled')
       end
     end
 

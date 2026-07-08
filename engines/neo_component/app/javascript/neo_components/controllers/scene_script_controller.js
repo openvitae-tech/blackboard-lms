@@ -83,18 +83,23 @@ export default class extends Controller {
   }
 
   approve() {
-    if (!this.approveUrlValue) return;
+    if (this.disabledValue || !this.approveUrlValue) return;
 
-    this.post(this.approveUrlValue, { script: this.hasTextareaTarget ? this.textareaTarget.value : undefined });
     this.showProcessing();
   }
 
   regenerate() {
-    if (!this.regenerateUrlValue) return;
+    if (this.disabledValue || !this.regenerateUrlValue) return;
 
-    this.post(this.regenerateUrlValue, { script: this.hasTextareaTarget ? this.textareaTarget.value : undefined });
     this.exitEdit();
     this.showProcessing();
+  }
+
+  syncScript(event) {
+    if (!this.hasTextareaTarget) return;
+
+    const input = event.target.querySelector('input[name="script"]');
+    if (input) input.value = this.textareaTarget.value;
   }
 
   showProcessing() {
@@ -117,22 +122,6 @@ export default class extends Controller {
       box.innerHTML = spinnerHtml;
       this.bodyTarget.prepend(box);
     }
-  }
-
-  post(url, body = {}) {
-    if (!url) return;
-
-    const token = document.querySelector('meta[name="csrf-token"]')?.content;
-
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": token,
-        Accept: "application/json",
-      },
-      body: JSON.stringify(body),
-    }).catch(() => {});
   }
 
   openPreview() {

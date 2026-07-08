@@ -39,7 +39,7 @@ module ViewComponent
           regenerate_url:,
           spinner_url:,
           show_thumbnail:,
-          show_header_action: !show_thumbnail,
+          show_header_action: state == :default,
           wrapper_html_options: scene_script_wrapper_html_options(
             state, approve_url, regenerate_url, spinner_url, html_options
           )

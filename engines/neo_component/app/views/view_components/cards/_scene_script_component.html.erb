@@ -10,13 +10,19 @@
         <%= icon('sparkle', css: 'h-4 w-4 text-slate-grey-50') %>
       </span>
       <span data-scene-script-target="approveAction">
-        <%= button_component(
-              text: 'Approve',
-              type: 'solid',
-              colorscheme: 'secondary',
-              size: 'sm',
-              html_options: { data: { action: 'click->scene-script#approve' } }
-            ) %>
+        <%= button_to approve_url.presence || '#', method: :post,
+              disabled: approve_url.blank?,
+              params: { script: script },
+              form: { data: { action: 'submit->scene-script#syncScript' } } do %>
+          <%= button_component(
+                text: 'Approve',
+                type: 'solid',
+                colorscheme: 'secondary',
+                size: 'sm',
+                disabled: approve_url.blank?,
+                html_options: { data: { action: 'click->scene-script#approve' } }
+              ) %>
+        <% end %>
       </span>
     <% end %>
 
@@ -30,15 +36,21 @@
             icon_position: 'right',
             html_options: { data: { action: 'click->scene-script#cancel' } }
           ) %>
-      <%= button_component(
-            text: 'Regenerate',
-            type: 'solid',
-            colorscheme: 'primary',
-            size: 'sm',
-            icon_name: 'arrow-path',
-            icon_position: 'right',
-            html_options: { data: { action: 'click->scene-script#regenerate' } }
-          ) %>
+      <%= button_to regenerate_url.presence || '#', method: :post,
+            disabled: regenerate_url.blank?,
+            params: { script: script },
+            form: { data: { action: 'submit->scene-script#syncScript' } } do %>
+        <%= button_component(
+              text: 'Regenerate',
+              type: 'solid',
+              colorscheme: 'primary',
+              size: 'sm',
+              icon_name: 'arrow-path',
+              icon_position: 'right',
+              disabled: regenerate_url.blank?,
+              html_options: { data: { action: 'click->scene-script#regenerate' } }
+            ) %>
+      <% end %>
     </span>
   </div>
 
@@ -73,7 +85,7 @@
             value: script,
             disabled: state == :processing,
             html_options: {
-              readonly: show_thumbnail && state != :processing,
+              readonly: state != :default,
               data: { scene_script_target: 'textarea' },
               style: 'height: 100px; resize: none;'
             }
