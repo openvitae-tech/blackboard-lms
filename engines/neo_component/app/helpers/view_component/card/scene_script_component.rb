@@ -17,14 +17,13 @@ module ViewComponent
         previewable: false,
         approve_url: nil,
         regenerate_url: nil,
-        spinner_url: nil,
         html_options: {}
       )
         state = state&.to_sym
         validate_scene_script_state!(state)
 
         show_thumbnail = state == :processing || thumbnail_url.present?
-        spinner_url = spinner_url.presence || image_path(DEFAULT_SPINNER_ASSET)
+        spinner_url = image_path(DEFAULT_SPINNER_ASSET)
 
         render partial: 'view_components/cards/scene_script_component', locals: {
           scene_number:,

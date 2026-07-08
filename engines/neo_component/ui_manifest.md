@@ -426,7 +426,6 @@ scene_script_component(
   previewable: false,      # show an expand icon on the thumbnail that opens a video preview modal
   approve_url: nil,        # background POST target for the Approve action
   regenerate_url: nil,     # background POST target for the Regenerate action
-  spinner_url: nil,        # override the processing-state spinner asset (any image path or URL)
   html_options: {}
 )
 ```
@@ -445,7 +444,7 @@ Whether the thumbnail column renders is derived from the props, not the `state` 
 
 Approve and Regenerate are real `button_to` submits (POSTing `script` as a form param, with Rails' standard CSRF protection) to `approve_url`/`regenerate_url`. The current textarea value is synced into the form's hidden `script` field on submit, so edits made in Edit mode are included even though the field lives outside the form's markup. Clicking either button also optimistically switches the card to a local spinner thumbnail immediately, without waiting for the response — if `approve_url`/`regenerate_url` isn't given, the button renders disabled instead. The component does not poll and has no built-in error UI — if the request fails, that's surfaced out-of-band (e.g. a flash message set by the Rails controller, shown the next time the parent page re-renders scenes), not by this component reverting its optimistic state.
 
-The processing-state spinner defaults to a gif bundled with NeoComponent (`engines/neo_component/app/assets/images/scene-script-processing.gif`) — pass `spinner_url:` to use a different asset (a local `image_path('...')` from the host app, or any URL) instead. The resolved URL is used both for the initial server render and for the client-side optimistic transition after Approve/Regenerate, so they always match.
+The processing-state spinner always uses a gif bundled with NeoComponent (`engines/neo_component/app/assets/images/scene-script-processing.gif`) — this is not caller-configurable, so the resolved asset URL used for the initial server render and for the client-side optimistic transition after Approve/Regenerate always matches without any untrusted input reaching the client-side spinner markup.
 
 **Example:**
 ```ruby

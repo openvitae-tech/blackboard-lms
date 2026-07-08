@@ -73,23 +73,17 @@ RSpec.describe UiHelper, type: :helper do
     end
 
     describe 'processing state' do
-      it 'renders the bundled default spinner gif when spinner_url is not given' do
+      it 'renders the bundled default spinner gif' do
         doc = render_scene(state: :processing)
         thumbnail = doc.at_css('[data-scene-script-target="thumbnail"]')
         expect(thumbnail).to be_present
         expect(thumbnail.at_css('img')['src']).to include('scene-script-processing')
       end
 
-      it 'uses a caller-supplied spinner_url instead of the default' do
-        doc = render_scene(state: :processing, spinner_url: '/custom-spinner.gif')
-        thumbnail = doc.at_css('[data-scene-script-target="thumbnail"]')
-        expect(thumbnail.at_css('img')['src']).to eq('/custom-spinner.gif')
-      end
-
       it 'wires the resolved spinner_url onto the Stimulus controller so the JS optimistic transition matches' do
-        doc = render_scene(state: :default, spinner_url: '/custom-spinner.gif')
+        doc = render_scene(state: :default)
         root = doc.at_css('[data-controller="scene-script"]')
-        expect(root['data-scene-script-spinner-url-value']).to eq('/custom-spinner.gif')
+        expect(root['data-scene-script-spinner-url-value']).to include('scene-script-processing')
       end
 
       it 'disables the textarea' do
