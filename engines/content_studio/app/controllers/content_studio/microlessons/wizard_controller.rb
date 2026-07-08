@@ -23,6 +23,7 @@ module ContentStudio
       rescue StandardError => e
         Rails.logger.error("[ContentStudio] microlesson configure failed: #{e.message}")
         @templates = []
+        flash.now[:alert] = I18n.t('content_studio.microlesson.templates_unavailable')
       end
 
       def update_config

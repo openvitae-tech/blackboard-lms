@@ -50,6 +50,7 @@ en:
           expired: "The lesson video could not be downloaded. The link may have expired — please try again."
     microlesson:
       create_failed: "Something went wrong. Please try again."
+      templates_unavailable: "Video templates couldn't be loaded. You can still continue."
     classroom_kits:
       structure:
         save:
