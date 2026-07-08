@@ -46,6 +46,7 @@ module.exports = {
         "slate-grey-light":"#D1D3D4",
         "white":"#FFFFFF",
         "white-light":"#FAFAFA",
+        "grey-dark":"#4D4D4D",
         "primary-light-200":"#AAC9EC",
         "secondary-light-200":"#B8CB6C",
         "gold-dark":"#EEC062",

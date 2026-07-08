@@ -2,17 +2,36 @@ import { Controller } from "@hotwired/stimulus"
 
 const POLL_INTERVAL_MS = 5000
 
-const BANNER_HIDE_DELAY_MS = 1500
-
 export default class extends Controller {
   static values = {
     pending: Boolean,
+    source: { type: String, default: '' },
     thumbnailUrl: { type: String, default: '' }
   }
 
   static targets = ['banner']
 
   connect() {
+    this._startedPending = this.pendingValue
+    this._storageKey = `kit-was-pending-${window.location.pathname}`
+
+    if (this.hasBannerTarget) {
+      const source = this.sourceValue
+      if (source === 'completed') {
+        this.bannerTarget.style.display = 'none'
+      } else if (this._startedPending) {
+        sessionStorage.setItem(this._storageKey, source || 'generation')
+      } else {
+        const prevSource = sessionStorage.getItem(this._storageKey)
+        if (prevSource) {
+          // Frame reloaded after reaching 100%
+          this._showBanner(prevSource)
+          // in_progress: stays visible until next page refresh
+        } else {
+          this.bannerTarget.style.display = 'none'
+        }
+      }
+    }
     this._dragging = false
     this._onDragStart = () => {
       this._dragging = true
@@ -39,6 +58,7 @@ export default class extends Controller {
 
   disconnect() {
     clearTimeout(this.timer)
+    clearTimeout(this.hideTimer)
     window.removeEventListener('module-select:drag-start', this._onDragStart)
     window.removeEventListener('module-select:drag-end', this._onDragEnd)
     document.removeEventListener('turbo:before-visit', this._onBeforeVisit)
@@ -48,10 +68,8 @@ export default class extends Controller {
 
   pendingValueChanged(pending, previousPending) {
     if (pending || previousPending === undefined || !this.hasBannerTarget) return
-    clearTimeout(this._bannerHideTimer)
-    this._bannerHideTimer = setTimeout(() => {
-      this.bannerTarget.style.visibility = 'hidden'
-    }, BANNER_HIDE_DELAY_MS)
+    if (!this._startedPending || this.sourceValue === 'completed') return
+    this._showBanner(this.sourceValue)
   }
 
   thumbnailUrlValueChanged(url) {
@@ -66,6 +84,14 @@ export default class extends Controller {
     img.src = url
     img.classList.replace('object-contain', 'object-cover')
     img.dataset.loadedUrl = url
+  }
+
+  _showBanner(source) {
+    sessionStorage.removeItem(this._storageKey)
+    this.bannerTarget.style.display = ''
+    if (source === 'generation') {
+      this.hideTimer = setTimeout(() => { this.bannerTarget.style.display = 'none' }, 1000)
+    }
   }
 
   _schedulePoll() {

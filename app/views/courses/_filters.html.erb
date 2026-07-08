@@ -8,6 +8,26 @@
   <%= form_with url: local_assigns.fetch(:filter_url) { courses_path }, method: :get, local: true,class:"h-full flex flex-col justify-between", data: {action: "submit->courses#formSubmit"} do |form| %>
     <div class="overflow-y-auto max-h-[calc(100vh-220px)] py-2 ">
       <span class="main-text-sm-normal cursor-pointer flex justify-end px-8 text-primary" data-action="click->courses#clearFilters">Clear filter</span>
+      <% if local_assigns.fetch(:show_status_filter, false) %>
+        <div class="flex flex-col border-b border-line-colour px-8">
+          <h3 class="main-text-lg-medium text-primary py-1">Status</h3>
+          <ul class="flex flex-col">
+            <% [['Published', 'published'], ['Unpublished', 'unpublished']].each do |label, value| %>
+              <li class="py-2 flex items-center">
+                <%= input_checkbox_component(
+                      name: 'status[]',
+                      label: label,
+                      value: value,
+                      html_options: {
+                        checked: Array(params[:status]).include?(value),
+                        data: { courses_target: 'checkbox' }
+                      }
+                    ) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
       <div class="flex flex-col border-b border-line-colour px-8">
         <h3 class="main-text-lg-medium text-primary py-1">Levels</h3>
         <ul class="flex flex-col">

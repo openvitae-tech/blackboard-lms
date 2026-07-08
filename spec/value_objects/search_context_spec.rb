@@ -119,6 +119,39 @@ RSpec.describe SearchContext do
     end
   end
 
+  describe '#to_query_str' do
+    it 'includes statuses when present' do
+      ctx = SearchContext.new(
+        context: SearchContext::HOME_PAGE,
+        statuses: ['published'],
+        type: SearchContext::ANY
+      )
+
+      expect(CGI.parse(ctx.to_query_str)['status[]']).to eq(['published'])
+    end
+
+    it 'omits status key when statuses is empty' do
+      ctx = SearchContext.new(
+        context: SearchContext::HOME_PAGE,
+        type: SearchContext::ANY
+      )
+
+      expect(ctx.to_query_str).not_to include('status')
+    end
+
+    it 'omits blank term and empty tags' do
+      ctx = SearchContext.new(
+        context: SearchContext::HOME_PAGE,
+        term: '',
+        tags: [],
+        type: SearchContext::ANY
+      )
+
+      expect(ctx.to_query_str).not_to include('term')
+      expect(ctx.to_query_str).not_to include('tags')
+    end
+  end
+
   describe 'Sanitize the tags and term' do
     it 'sanitizes the tags' do
       ctx = SearchContext.new(
