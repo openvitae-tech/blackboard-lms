@@ -10,8 +10,8 @@ export default class extends Controller {
   }
 
   updateSubmit() {
-    const hasTitle = this.hasTitleTarget ? this.titleTarget.value.trim().length > 0 : true
-    const hasPrompt = this.hasPromptTarget ? this.promptTarget.value.trim().length > 0 : true
+    const hasTitle = this.hasTitleTarget ? this.titleTarget.value.trim().length > 0 : false
+    const hasPrompt = this.hasPromptTarget ? this.promptTarget.value.trim().length > 0 : false
     const enabled = hasTitle && hasPrompt
 
     this.submitTarget.disabled = !enabled

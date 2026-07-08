@@ -108,6 +108,49 @@ RSpec.describe 'ContentStudio::Microlessons::Wizard', type: :request do
     end
   end
 
+  describe 'PATCH /content_studio/microlessons/:id/configure' do
+    let(:microlesson_id) { 'ml-abc123' }
+
+    context 'when API call succeeds' do
+      before do
+        post '/content_studio/microlessons',
+             params: { title: 'KYC Refresher', prompt: 'Explain KYC verification steps.' }
+        allow(ContentStudio::ApiClient).to receive(:create_microlesson).and_return(microlesson_id)
+        patch '/content_studio/microlessons/pending/configure',
+              params: { template_id: 'tpl-1', background_style: 'video' }
+      end
+
+      it 'redirects to the configure step with the new microlesson id' do
+        expect(response).to redirect_to("/content_studio/microlessons/#{microlesson_id}/configure?state=planning")
+      end
+
+      it 'clears the wizard session on success' do
+        get '/content_studio/microlessons/new'
+        expect(response.body).not_to include('Explain KYC verification steps.')
+      end
+    end
+
+    context 'when API call fails' do
+      before do
+        post '/content_studio/microlessons',
+             params: { title: 'KYC Refresher', prompt: 'Explain KYC verification steps.' }
+        allow(ContentStudio::ApiClient).to receive(:create_microlesson)
+          .and_raise(StandardError, 'connection error')
+        patch '/content_studio/microlessons/pending/configure',
+              params: { template_id: 'tpl-1', background_style: 'video' }
+      end
+
+      it 'redirects back to new microlesson path' do
+        expect(response).to redirect_to('/content_studio/microlessons/new')
+      end
+
+      it 'preserves the prompt in session so the user does not lose their work' do
+        follow_redirect!
+        expect(response.body).to include('Explain KYC verification steps.')
+      end
+    end
+  end
+
   describe 'GET /content_studio/microlessons/new?fresh=true' do
     before do
       post '/content_studio/microlessons',

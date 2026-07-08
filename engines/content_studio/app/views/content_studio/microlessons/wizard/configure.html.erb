@@ -71,20 +71,14 @@
           <p class="general-text-sm-normal text-letter-color-light">How your presenter's environment will look.</p>
         </div>
 
-        <div class="flex flex-col gap-5">
+        <div class="flex flex-col gap-3">
           <% [
-            { value: 'image', label: 'Image', subtext: '(A static scene)' },
-            { value: 'video', label: 'Video', subtext: '(Motion & animated)' },
-            { value: 'plain', label: 'Plain', subtext: '(Solid colour only)' }
+            { value: 'image', label: 'Image (A static scene)' },
+            { value: 'video', label: 'Video (Motion & animated)' },
+            { value: 'plain', label: 'Plain (Solid colour only)' }
           ].each do |opt| %>
-            <label class="bg-white border border-line-colour rounded-lg p-3 flex items-center justify-between cursor-pointer">
-              <div class="flex gap-1 items-center">
-                <span class="general-text-md-medium text-letter-color-medium"><%= opt[:label] %></span>
-                <span class="general-text-sm-normal text-letter-color-light"><%= opt[:subtext] %></span>
-              </div>
-              <%= form.radio_button :background_style, opt[:value],
-                    class: 'w-5 h-5 accent-primary cursor-pointer' %>
-            </label>
+            <%= input_radio_component(form: form, name: :background_style,
+                                      label: opt[:label], value: opt[:value]) %>
           <% end %>
         </div>
       </div>

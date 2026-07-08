@@ -44,7 +44,6 @@
           placeholder: "e.g. Explain to a new frontline teller how to verify a customer's Aadhaar card during KYC — what to check, three red flags, and how to escalate when the photo doesn't match.",
           rows: 5,
           size: 'lg',
-          support_text: "0 / 500 · aim for 40–80 words",
           html_options: {
             maxlength: 500,
             value: @prompt,
@@ -55,6 +54,9 @@
             }
           }
         ) %>
+        <p class="general-text-xs-normal text-letter-color-light">
+          <span data-char-counter-target="count">0</span> / 500 · aim for 40–80 words
+        </p>
       </div>
 
     </div>
