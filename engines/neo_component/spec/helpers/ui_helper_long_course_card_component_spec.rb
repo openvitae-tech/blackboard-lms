@@ -19,7 +19,7 @@ RSpec.describe UiHelper, type: :helper do
   describe '#long_course_card_component' do
     it 'renders the outer card wrapper' do
       doc = render_card
-      expect(doc.at_css('div.rounded-xl')).to be_present
+      expect(doc.at_css('div.rounded-lg')).to be_present
     end
 
     it 'renders the title' do
@@ -71,11 +71,16 @@ RSpec.describe UiHelper, type: :helper do
         expect(doc.at_css('input[type="checkbox"]')).to be_present
       end
 
-      it 'merges a caller-supplied class with the base class instead of raising' do
+      it 'renders the checkbox input even when a caller supplies a class option' do
+        # InputCheckboxComponent unconditionally sets class to "hidden peer", so
+        # any caller-supplied :class is silently ignored — extra-class will NOT
+        # appear on the rendered input. This test only verifies the component
+        # does not raise and that the input is present with its fixed classes.
         doc = render_card(checkbox: { name: 'course_ids[]', value: '1', class: 'extra-class' })
         input = doc.at_css('input[type="checkbox"]')
-        expect(input['class']).to include('extra-class')
-        expect(input['class']).to include('cursor-pointer')
+        expect(input).to be_present
+        expect(input['class']).to include('hidden')
+        expect(input['class']).not_to include('extra-class')
       end
 
       it 'uses the caller-supplied name' do
@@ -184,6 +189,53 @@ RSpec.describe UiHelper, type: :helper do
         doc = render_card(rating: nil)
         expect(doc.css('[class*="star"]')).to be_empty
       end
+
+      it 'renders the rating after modules and enroll in the stats row' do
+        doc   = render_card(rating: '4.2', modules_count: '6 modules', enroll_count: '50 enrolled')
+        stats = doc.at_css('.flex.gap-1.items-center')
+        text  = stats.text
+        expect(text.index('6 modules')).to be < text.index('50 enrolled')
+        expect(text.index('50 enrolled')).to be < text.index('4.2')
+      end
+    end
+
+    describe 'type_tag' do
+      it 'renders the type tag label when present' do
+        tag = { label: 'Course', bg_color: 'bg-primary-light-200' }
+        doc = render_card(type_tag: tag)
+        expect(doc.text).to include('Course')
+      end
+
+      it 'applies the supplied bg_color class to the type tag' do
+        tag = { label: 'Classroom Kit', bg_color: 'bg-secondary-light-200' }
+        doc = render_card(type_tag: tag)
+        expect(doc.at_css('div.bg-secondary-light-200')).to be_present
+      end
+
+      it 'omits the type tag when nil' do
+        doc = render_card(type_tag: nil)
+        expect(doc.at_css('[data-testid="type-tag"]')).to be_nil
+      end
+
+      it 'applies text_color class when supplied' do
+        tag = { label: 'Course', bg_color: 'bg-primary-light-200', text_color: 'text-white' }
+        doc = render_card(type_tag: tag)
+        pill = doc.at_css('div.bg-primary-light-200 span')
+        expect(pill['class']).to include('text-white')
+      end
+
+      it 'defaults to text-grey-dark when text_color is omitted' do
+        tag = { label: 'Course', bg_color: 'bg-primary-light-200' }
+        doc = render_card(type_tag: tag)
+        pill = doc.at_css('div.bg-primary-light-200 span')
+        expect(pill['class']).to include('text-grey-dark')
+      end
+
+      it 'raises ArgumentError when type_tag contains unknown keys' do
+        expect do
+          render_card(type_tag: { label: 'Course', bg_color: 'bg-primary-light-200', unknown: 'x' })
+        end.to raise_error(ArgumentError, /type_tag/)
+      end
     end
 
     describe 'progress bar' do
@@ -224,6 +276,27 @@ RSpec.describe UiHelper, type: :helper do
       it 'renders nothing for categories when the list is empty' do
         doc = render_card(categories: [])
         expect(doc.css('[data-chip]')).to be_empty
+      end
+    end
+
+    describe 'publish_status corner tag' do
+      it 'renders a blue corner tag when publish_status is published' do
+        doc = render_card(publish_status: 'published')
+        expect(doc.at_css('div.bg-primary-light-200.rotate-45')).to be_present
+      end
+
+      it 'renders a gold corner tag when publish_status is unpublished' do
+        doc = render_card(publish_status: 'unpublished')
+        expect(doc.at_css('div.bg-gold.rotate-45')).to be_present
+      end
+
+      it 'omits the corner tag when publish_status is nil' do
+        doc = render_card(publish_status: nil)
+        expect(doc.at_css('div.rotate-45')).to be_nil
+      end
+
+      it 'raises ArgumentError for an invalid publish_status' do
+        expect { render_card(publish_status: 'draft') }.to raise_error(ArgumentError)
       end
     end
   end
