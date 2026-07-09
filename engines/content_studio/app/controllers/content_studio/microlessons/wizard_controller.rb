@@ -23,9 +23,9 @@ module ContentStudio
       end
 
       def update_config
-        session[:ml_wizard_logo_url]    = upload_logo(params[:logo])
-        session[:ml_wizard_template_id] = params[:template_id].presence
-        session[:ml_wizard_bg_type]     = map_bg_type(params[:background_style])
+        session[:ml_wizard_logo_url]          = upload_logo(params[:logo])
+        session[:ml_wizard_template_id]       = params[:template_id].presence
+        session[:ml_wizard_background_style]  = map_bg_type(params[:background_style])
         redirect_to generating_microlesson_path(id: :pending)
       end
 
@@ -34,7 +34,7 @@ module ContentStudio
         description = session[:ml_wizard_prompt]
         template_id = session[:ml_wizard_template_id]
         logo_url    = session[:ml_wizard_logo_url]
-        bg_type     = session[:ml_wizard_bg_type] || 'video'
+        bg_type     = session[:ml_wizard_background_style] || 'video'
 
         Rails.logger.info('[ContentStudio] microlesson start_generation')
 
@@ -58,7 +58,7 @@ module ContentStudio
         @state = params[:state] || 'pending'
       end
 
-      def status
+      def generation_status
         data      = ApiClient.get_microlesson(params[:id])
         ml_status = data['status']&.upcase
 
@@ -74,7 +74,7 @@ module ContentStudio
           render json: { status: 'pending', stage: stage }
         end
       rescue StandardError => e
-        Rails.logger.error("[ContentStudio] microlesson status failed: #{e.message}")
+        Rails.logger.error("[ContentStudio] microlesson generation_status failed: #{e.message}")
         render json: { status: 'error',
                        redirect_url: generating_microlesson_url(id: params[:id], state: 'error') },
                status: :unprocessable_content
@@ -107,7 +107,7 @@ module ContentStudio
         session.delete(:ml_wizard_prompt)
         session.delete(:ml_wizard_template_id)
         session.delete(:ml_wizard_logo_url)
-        session.delete(:ml_wizard_bg_type)
+        session.delete(:ml_wizard_background_style)
       end
     end
   end
