@@ -27,6 +27,12 @@ ContentStudio::Engine.routes.draw do
   get 'microlessons/:id/generation_status',
       to: 'microlessons/wizard#generation_status',
       as: :microlesson_generation_status
+  get 'microlessons/:id/script_review',
+      to: 'microlessons/wizard#script_review',
+      as: :script_review_microlesson
+  post 'microlessons/:id/scenes/approve',
+       to: 'microlessons/wizard#approve_scene',
+       as: :approve_microlesson_scene
   post 'microlessons/start_generation', to: 'microlessons/wizard#start_generation', as: :start_microlesson_generation
   get 'courses/new', to: 'courses/wizard#new', as: :new_course
   post 'courses', to: 'courses/wizard#create', as: :wizard_courses

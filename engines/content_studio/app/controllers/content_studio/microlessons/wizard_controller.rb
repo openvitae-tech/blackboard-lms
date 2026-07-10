@@ -5,6 +5,29 @@ module ContentStudio
     class WizardController < ApplicationController
       include WizardUploadConcern
 
+      MOCK_SCENES = [
+        {
+          'title' => 'Setting the Scene',
+          'narration' => 'Every great story starts with a moment of stillness — a breath before ' \
+                         'the plunge. In this opening scene, we establish the world and invite the audience in.'
+        },
+        {
+          'title' => 'The Challenge Appears',
+          'narration' => 'Conflict is the engine of learning. Here we introduce the core problem ' \
+                         'your audience will need to solve, making the stakes clear and the path forward uncertain.'
+        },
+        {
+          'title' => 'Exploring the Solution',
+          'narration' => 'Armed with curiosity, we unpack the tools and thinking needed to move ' \
+                         'forward. Each step is deliberate, each idea builds on the last.'
+        },
+        {
+          'title' => 'Putting It Together',
+          'narration' => 'The pieces fall into place. In this closing scene we consolidate the ' \
+                         'journey — summarising key insights and leaving the learner with a clear takeaway.'
+        }
+      ].freeze
+
       def new
         clear_ml_wizard_session if params[:fresh]
         @title  = session[:ml_wizard_title]
@@ -47,8 +70,8 @@ module ContentStudio
         )
         clear_ml_wizard_session
         Rails.cache.write("ml_title_#{microlesson_id}", title, expires_in: 90.days) if title.present?
-        render json: { redirect_url: generating_microlesson_url(id: microlesson_id, state: 'success') }
-      rescue Faraday::Error => e
+        render json: { redirect_url: script_review_microlesson_url(microlesson_id) }
+      rescue StandardError => e
         Rails.logger.error("[ContentStudio] microlesson start_generation failed: #{e.message}")
         render json: { redirect_url: generating_microlesson_url(id: :pending, state: 'error') },
                status: :unprocessable_content
@@ -56,6 +79,18 @@ module ContentStudio
 
       def generating
         @state = params[:state] || 'pending'
+      end
+
+      def approve_scene
+        head :no_content
+      end
+
+      def script_review
+        @microlesson_id = params[:id]
+        scenes = fetch_micro_scenes(@microlesson_id)
+        @scenes = scenes.map.with_index(1) do |s, i|
+          { number: i, total: scenes.size, title: s['title'], narration: s['narration'] }
+        end
       end
 
       def generation_status
@@ -81,6 +116,14 @@ module ContentStudio
       end
 
       private
+
+      def fetch_micro_scenes(microlesson_id)
+        data = ApiClient.get_microlesson(microlesson_id)
+        data['micro_scenes'].presence || MOCK_SCENES
+      rescue StandardError => e
+        Rails.logger.warn("[ContentStudio] get_microlesson failed, using mock scenes: #{e.message}")
+        MOCK_SCENES
+      end
 
       # Maps Neo AI stage to a label that keeps the Stimulus controller
       # in the correct phase. Stages containing 'craft' stay in uploadPhase;

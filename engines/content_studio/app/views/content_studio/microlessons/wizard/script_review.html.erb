@@ -1,0 +1,85 @@
+<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full"
+     data-controller="script-review">
+
+  <%# Wizard steps %>
+  <div class="flex justify-center py-6">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'chat-bubble-bottom-center-text', label: 'Prompt' },
+        { icon_name: 'video-camera',                   label: 'Configure Video' },
+        { icon_name: 'document-text-outline',          label: 'Script Review' }
+      ],
+      current_step: 2
+    ) %>
+  </div>
+
+  <%# Skip banner %>
+  <div class="bg-white border border-primary-light-200 rounded-xl px-5 py-3">
+    <div class="flex items-center justify-between gap-4 w-full">
+      <div class="flex flex-1 items-center gap-3 min-w-0">
+        <div class="flex items-center justify-center w-9 h-9 shrink-0 bg-white-light rounded-lg">
+          <%= icon('document-text-outline', css: 'w-6 h-6 text-primary') %>
+        </div>
+        <div class="flex flex-col gap-0.5 min-w-0">
+          <p class="main-text-md-semibold text-letter-color">In a hurry? Skip Script review and start Video generation now</p>
+          <p class="general-text-sm-normal text-letter-color-light">If you trust the AI's scripts, skip review and the video generation will start and take about 15 – 30 mins.</p>
+        </div>
+      </div>
+      <div class="shrink-0">
+        <%= button_component(
+          text: 'Skip & Continue',
+          type: 'outline',
+          size: 'md',
+          colorscheme: 'primary',
+          icon_name: 'arrow-right',
+          icon_position: 'right'
+        ) %>
+      </div>
+    </div>
+  </div>
+
+  <%# Scene script cards %>
+  <div class="flex flex-col gap-6">
+    <% @scenes.each do |scene| %>
+      <%= scene_script_component(
+        scene_number: scene[:number],
+        total_scenes: scene[:total],
+        title:        scene[:title],
+        script:       scene[:narration],
+        state:        :default,
+        approve_url:  approve_microlesson_scene_path(@microlesson_id)
+      ) %>
+    <% end %>
+  </div>
+
+  <%# Footer %>
+  <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-line-colour-light">
+    <div class="flex items-center justify-between px-16 py-6 max-w-screen-xl mx-auto">
+      <div class="shrink-0">
+        <%= button_component(
+          text: 'Cancel Creation',
+          type: 'outline',
+          size: 'md',
+          colorscheme: 'danger',
+          icon_name: 'x-mark',
+          icon_position: 'left'
+        ) %>
+      </div>
+      <div class="shrink-0 opacity-50 cursor-not-allowed pointer-events-none"
+           data-script-review-target="confirmWrapper">
+        <%= button_component(
+          text: 'Confirm & Continue',
+          type: 'solid',
+          size: 'md',
+          colorscheme: 'primary',
+          icon_name: 'arrow-right',
+          icon_position: 'right'
+        ) %>
+      </div>
+    </div>
+  </div>
+
+  <%# Spacer so content isn't hidden behind fixed footer %>
+  <div class="h-24"></div>
+
+</div>
