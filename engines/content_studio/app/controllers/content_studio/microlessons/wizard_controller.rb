@@ -55,6 +55,13 @@ module ContentStudio
       def start_generation
         title       = session[:ml_wizard_title]
         description = session[:ml_wizard_prompt]
+
+        unless title.present? && description.present?
+          render json: { redirect_url: new_microlesson_url },
+                 status: :unprocessable_content
+          return
+        end
+
         template_id = session[:ml_wizard_template_id]
         logo_url    = session[:ml_wizard_logo_url]
         bg_type     = session[:ml_wizard_background_style] || 'video'
