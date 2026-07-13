@@ -126,8 +126,10 @@ module ContentStudio
 
       def fetch_micro_scenes(microlesson_id)
         data = ApiClient.get_microlesson(microlesson_id)
-        data['micro_scenes'].presence || MOCK_SCENES
+        data['micro_scenes'].presence || (Rails.env.production? ? raise('micro_scenes missing') : MOCK_SCENES)
       rescue StandardError => e
+        raise if Rails.env.production?
+
         Rails.logger.warn("[ContentStudio] get_microlesson failed, using mock scenes: #{e.message}")
         MOCK_SCENES
       end
