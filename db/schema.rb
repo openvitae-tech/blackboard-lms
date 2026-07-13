@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_18_062854) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_30_094148) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -153,6 +153,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_18_062854) do
     t.string "visibility", null: false
     t.string "neo_ai_course_id"
     t.bigint "learning_partner_id"
+    t.string "kind", default: "course", null: false
+    t.index ["kind"], name: "index_courses_on_kind"
     t.index ["learning_partner_id"], name: "index_courses_on_learning_partner_id"
     t.index ["neo_ai_course_id"], name: "index_courses_on_neo_ai_course_id", unique: true
   end

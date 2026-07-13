@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
                                        .includes(:tags, banner_attachment: :blob)
     else
       statuses = Array(params[:status]).map(&:to_s) & SearchContext::VALID_STATUSES
-      @courses = Course.where(learning_partner_id: current_user.learning_partner_id)
+      @courses = Course.courses_only.where(learning_partner_id: current_user.learning_partner_id)
                        .where.not(neo_ai_course_id: nil)
                        .then { |s| Courses::FilterService.filter_by_statuses(statuses, s) }
                        .includes(:tags, banner_attachment: :blob)
