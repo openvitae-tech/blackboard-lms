@@ -83,6 +83,7 @@
                 <span class="general-text-sm-normal text-letter-color-light"><%= opt[:subtext] %></span>
               </div>
               <%= form.radio_button :background_style, opt[:value],
+                    checked: opt[:value] == 'video',
                     class: 'w-5 h-5 accent-primary cursor-pointer' %>
             </label>
           <% end %>
