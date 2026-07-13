@@ -19,6 +19,21 @@ ContentStudio::Engine.routes.draw do
   get  'classroom-kits/:id/generating',        to: 'classroom_kits/wizard#generating',
                                                as: :generating_classroom_kit
   post 'classroom-kits/start_generation',      to: 'classroom_kits/wizard#start_generation', as: :start_kit_generation
+  get   'microlessons/new',            to: 'microlessons/wizard#new',          as: :new_microlesson
+  post  'microlessons',                to: 'microlessons/wizard#create',       as: :microlessons
+  get   'microlessons/:id/configure',  to: 'microlessons/wizard#configure',    as: :configure_microlesson
+  patch 'microlessons/:id/configure',  to: 'microlessons/wizard#update_config'
+  get   'microlessons/:id/generating', to: 'microlessons/wizard#generating', as: :generating_microlesson
+  get 'microlessons/:id/generation_status',
+      to: 'microlessons/wizard#generation_status',
+      as: :microlesson_generation_status
+  get 'microlessons/:id/script_review',
+      to: 'microlessons/wizard#script_review',
+      as: :script_review_microlesson
+  post 'microlessons/:id/scenes/approve',
+       to: 'microlessons/wizard#approve_scene',
+       as: :approve_microlesson_scene
+  post 'microlessons/start_generation', to: 'microlessons/wizard#start_generation', as: :start_microlesson_generation
   get 'courses/new', to: 'courses/wizard#new', as: :new_course
   post 'courses', to: 'courses/wizard#create', as: :wizard_courses
   get 'courses/:id/configure_video', to: 'courses/wizard#configure_video', as: :configure_video

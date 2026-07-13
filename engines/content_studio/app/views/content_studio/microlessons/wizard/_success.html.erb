@@ -1,0 +1,15 @@
+<div class="flex flex-col items-center gap-6 py-16">
+  <%= image_tag 'all_set_illustration.gif', class: 'w-40 h-40 object-contain', alt: 'Success' %>
+  <div class="flex flex-col items-center gap-2 text-center">
+    <p class="heading-2xl text-letter-color">Your microlesson is ready!</p>
+    <p class="main-text-md-medium text-letter-color-light max-w-lg">
+      Your video has been generated successfully. You can now publish it and assign it to your learners.
+    </p>
+  </div>
+  <div class="flex gap-3 mt-2">
+    <%= link_to root_path do %>
+      <%= button_component(text: 'Go to My Content', type: 'solid', colorscheme: 'primary',
+                           icon_name: 'arrow-right', icon_position: 'right') %>
+    <% end %>
+  </div>
+</div>

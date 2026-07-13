@@ -1,0 +1,20 @@
+<div class="flex flex-col items-center gap-5 py-16">
+  <%= image_tag '404-error.gif', class: 'w-[150px] h-[150px] object-contain', alt: 'Error' %>
+  <div class="flex flex-col items-center gap-3 text-center">
+    <p class="heading-2xl text-danger-dark">We couldn't create your Microlesson</p>
+    <p class="main-text-md-medium text-letter-color max-w-lg">
+      Something interrupted the process. Please try again — if the problem persists,
+      contact support.
+    </p>
+  </div>
+  <div class="flex gap-3 mt-2">
+    <%= link_to root_path do %>
+      <%= button_component(text: 'Cancel', type: 'outline', colorscheme: 'primary',
+                           icon_name: 'x-mark', icon_position: 'left') %>
+    <% end %>
+    <%= link_to new_microlesson_path do %>
+      <%= button_component(text: 'Retry Creation', type: 'outline', colorscheme: 'primary',
+                           icon_name: 'arrow-uturn-right', icon_position: 'left') %>
+    <% end %>
+  </div>
+</div>

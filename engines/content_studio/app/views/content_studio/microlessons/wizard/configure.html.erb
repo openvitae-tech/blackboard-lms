@@ -1,0 +1,113 @@
+<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full"
+     data-controller="template-selector">
+
+  <%# Wizard steps %>
+  <div class="flex justify-center py-6">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'chat-bubble-bottom-center-text', label: 'Prompt' },
+        { icon_name: 'video-camera',                   label: 'Configure Video' },
+        { icon_name: 'document-text-outline',                  label: 'Script Review' }
+      ],
+      current_step: 1
+    ) %>
+  </div>
+
+  <%= form_with url: configure_microlesson_path(id: @microlesson_id), method: :patch,
+                multipart: true, class: 'flex flex-col gap-6' do |form| %>
+
+    <%# Card 1: Choose a video template %>
+    <div class="bg-white border border-line-colour-light rounded-2xl pt-4 pb-5 px-5 flex flex-col gap-5">
+
+      <%# Header row %>
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex flex-col gap-1 flex-1 min-w-0">
+          <p class="main-text-lg-semibold text-letter-color">
+            Choose a video template
+            <span class="text-danger general-text-sm-medium">*</span>
+          </p>
+          <p class="general-text-xs-normal text-letter-color-light">
+            Pick the presenter style and layout. Your logo and content will be added on top.
+          </p>
+        </div>
+        <div class="shrink-0">
+          <%= button_component(text: 'View all', type: 'outline', size: 'sm',
+                               icon_name: 'arrow-right', icon_position: 'right') %>
+        </div>
+      </div>
+
+      <%# Template carousel %>
+      <% if @templates.any? %>
+        <% template_cards = @templates.each_with_index.map { |t, i| template_card(t, selected: i.zero?) } %>
+        <%= carousel_component(cards: template_cards) %>
+      <% else %>
+        <p class="general-text-sm-normal text-letter-color-light">No templates available.</p>
+      <% end %>
+    </div>
+
+    <%# Bottom row: Logo upload + Background style %>
+    <div class="flex gap-6 items-start">
+
+      <%# Left: Upload your logo %>
+      <div class="bg-white border border-line-colour-light rounded-xl p-5 flex flex-col gap-3 flex-1 min-w-0">
+        <div class="flex flex-col gap-1">
+          <p class="main-text-lg-semibold text-letter-color">Upload your logo</p>
+          <p class="general-text-sm-normal text-letter-color-light">Appears throughout the video.</p>
+        </div>
+        <%= file_selector_component(
+          form: form,
+          name: :logo,
+          type: 'image',
+          accept: '.png,.jpeg,.jpg,.svg',
+          support_text: 'File types: png, jpeg, jpg, svg',
+          support_text_two: 'File size: up to 5 mb'
+        ) %>
+      </div>
+
+      <%# Right: Background style %>
+      <div class="bg-white-light border border-line-colour-light rounded-xl p-5 flex flex-col gap-3 w-80 shrink-0 self-stretch">
+        <div class="flex flex-col gap-1">
+          <p class="main-text-md-semibold text-letter-color">Background style</p>
+          <p class="general-text-sm-normal text-letter-color-light">How your presenter's environment will look.</p>
+        </div>
+
+        <div class="flex flex-col gap-5">
+          <% [
+            { value: 'image', label: 'Image', subtext: '(A static scene)' },
+            { value: 'video', label: 'Video', subtext: '(Motion & animated)' },
+            { value: 'plain', label: 'Plain', subtext: '(Solid colour only)' }
+          ].each do |opt| %>
+            <label class="bg-white border border-line-colour rounded-lg p-3 flex items-center justify-between cursor-pointer">
+              <div class="flex gap-1 items-center">
+                <span class="general-text-md-medium text-letter-color-medium"><%= opt[:label] %></span>
+                <span class="general-text-sm-normal text-letter-color-light"><%= opt[:subtext] %></span>
+              </div>
+              <%= form.radio_button :background_style, opt[:value],
+                    checked: opt[:value] == 'video',
+                    class: 'w-5 h-5 accent-primary cursor-pointer' %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+
+    <%# Footer %>
+    <div class="flex gap-3">
+      <%= link_to new_microlesson_path do %>
+        <%= button_component(text: 'Back', type: 'outline', colorscheme: 'primary') %>
+      <% end %>
+      <%= form.button class: 'flex-1', type: 'submit' do %>
+        <%= button_component(
+          text: 'Continue to script review',
+          type: 'solid',
+          colorscheme: 'primary',
+          icon_name: 'arrow-right',
+          icon_position: 'right',
+          html_options: { class: 'w-full' }
+        ) %>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>
