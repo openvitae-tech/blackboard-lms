@@ -69,14 +69,16 @@
       </div>
       <div class="shrink-0 opacity-50 cursor-not-allowed pointer-events-none"
            data-script-review-target="confirmWrapper">
-        <%= button_component(
-          text: 'Confirm & Continue',
-          type: 'solid',
-          size: 'md',
-          colorscheme: 'primary',
-          icon_name: 'arrow-right',
-          icon_position: 'right'
-        ) %>
+        <%= link_to microlesson_structure_path(@microlesson_id) do %>
+          <%= button_component(
+            text: 'Confirm & Continue',
+            type: 'solid',
+            size: 'md',
+            colorscheme: 'primary',
+            icon_name: 'arrow-right',
+            icon_position: 'right'
+          ) %>
+        <% end %>
       </div>
     </div>
   </div>

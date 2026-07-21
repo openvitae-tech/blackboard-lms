@@ -4,29 +4,7 @@ module ContentStudio
   module Microlessons
     class WizardController < ApplicationController
       include WizardUploadConcern
-
-      MOCK_SCENES = [
-        {
-          'title' => 'Setting the Scene',
-          'narration' => 'Every great story starts with a moment of stillness — a breath before ' \
-                         'the plunge. In this opening scene, we establish the world and invite the audience in.'
-        },
-        {
-          'title' => 'The Challenge Appears',
-          'narration' => 'Conflict is the engine of learning. Here we introduce the core problem ' \
-                         'your audience will need to solve, making the stakes clear and the path forward uncertain.'
-        },
-        {
-          'title' => 'Exploring the Solution',
-          'narration' => 'Armed with curiosity, we unpack the tools and thinking needed to move ' \
-                         'forward. Each step is deliberate, each idea builds on the last.'
-        },
-        {
-          'title' => 'Putting It Together',
-          'narration' => 'The pieces fall into place. In this closing scene we consolidate the ' \
-                         'journey — summarising key insights and leaving the learner with a clear takeaway.'
-        }
-      ].freeze
+      include MicrolessonScenesConcern
 
       def new
         clear_ml_wizard_session if params[:fresh]
@@ -123,16 +101,6 @@ module ContentStudio
       end
 
       private
-
-      def fetch_micro_scenes(microlesson_id)
-        data = ApiClient.get_microlesson(microlesson_id)
-        data['micro_scenes'].presence || (Rails.env.production? ? raise('micro_scenes missing') : MOCK_SCENES)
-      rescue StandardError => e
-        raise if Rails.env.production?
-
-        Rails.logger.warn("[ContentStudio] get_microlesson failed, using mock scenes: #{e.message}")
-        MOCK_SCENES
-      end
 
       # Maps Neo AI stage to a label that keeps the Stimulus controller
       # in the correct phase. Stages containing 'craft' stay in uploadPhase;

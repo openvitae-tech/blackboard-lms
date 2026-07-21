@@ -30,6 +30,9 @@ ContentStudio::Engine.routes.draw do
   get 'microlessons/:id/script_review',
       to: 'microlessons/wizard#script_review',
       as: :script_review_microlesson
+  get 'microlessons/:id/structure',
+      to: 'microlessons/structure#show',
+      as: :microlesson_structure
   post 'microlessons/:id/scenes/approve',
        to: 'microlessons/wizard#approve_scene',
        as: :approve_microlesson_scene
