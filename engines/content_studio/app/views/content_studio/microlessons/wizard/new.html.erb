@@ -1,0 +1,80 @@
+<div class="flex flex-col gap-4 py-3 max-w-4xl mx-auto w-full">
+
+  <%# Wizard steps %>
+  <div class="flex justify-center py-6">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'chat-bubble-bottom-center-text', label: 'Prompt' },
+        { icon_name: 'video-camera',                   label: 'Configure Video' },
+        { icon_name: 'document-text-outline',                  label: 'Script Review' }
+      ],
+      current_step: 0
+    ) %>
+  </div>
+
+  <%= form_with url: microlessons_path, method: :post,
+                class: 'flex flex-col gap-7',
+                data: { controller: 'char-counter microlesson-prompt' } do |form| %>
+
+    <%# Card %>
+    <div class="bg-white border border-line-colour-light rounded-xl p-8 flex flex-col gap-7">
+
+      <%# Title field %>
+      <%= input_text_component(
+        form: form,
+        name: :title,
+        label: 'Microlesson title',
+        placeholder: 'e.g. KYC Quick Refresher — Aadhaar verification',
+        size: 'md',
+        html_options: {
+          value: @title,
+          data: {
+            microlesson_prompt_target: 'title',
+            action: 'input->microlesson-prompt#updateSubmit'
+          }
+        }
+      ) %>
+
+      <%# Prompt textarea %>
+      <div class="flex flex-col gap-1">
+        <%= textarea_component(
+          form: form,
+          name: :prompt,
+          label: 'What should this microlesson teach?',
+          placeholder: "e.g. Explain to a new frontline teller how to verify a customer's Aadhaar card during KYC — what to check, three red flags, and how to escalate when the photo doesn't match.",
+          rows: 5,
+          size: 'lg',
+          support_text: "0 / 500 · aim for 40–80 words",
+          html_options: {
+            maxlength: 500,
+            value: @prompt,
+            data: {
+              action: 'input->char-counter#update input->microlesson-prompt#updateSubmit',
+              char_counter_target: 'input',
+              microlesson_prompt_target: 'prompt'
+            }
+          }
+        ) %>
+      </div>
+
+    </div>
+
+    <%# Footer %>
+    <div class="flex gap-3">
+      <%= link_to root_path do %>
+        <%= button_component(text: 'Cancel', type: 'outline', colorscheme: 'primary') %>
+      <% end %>
+      <%= form.button class: 'flex-1', data: { microlesson_prompt_target: 'submit' } do %>
+        <%= button_component(
+          text: 'Continue to Video style',
+          type: 'solid',
+          colorscheme: 'primary',
+          icon_name: 'arrow-right',
+          icon_position: 'right',
+          html_options: { class: 'w-full' }
+        ) %>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>
