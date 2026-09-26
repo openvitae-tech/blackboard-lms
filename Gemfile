@@ -47,7 +47,7 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'bootsnap', require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.14'
 
 gem 'devise', '~> 5.0.4'
 
@@ -127,7 +127,7 @@ gem 'rails-html-sanitizer', '1.6.1'
 
 gem 'scorm-package', '~> 0.1.2', require: 'scorm_package'
 
-gem 'caxlsx', '~> 3.4'
+gem 'caxlsx', '~> 4.5'
 gem 'combine_pdf'
 gem 'grover'
 gem 'net-imap', '0.5.15'
