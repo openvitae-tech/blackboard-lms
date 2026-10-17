@@ -1,171 +1,237 @@
-# README
+<div align="center">
 
-## About
+# Blackboard LMS
 
-Blackboard-lms is a LMS platform tailored to meet the training demands of the hotel and hospitality industry. Blackboard-lms is an open-source project developed using the Ruby On Rails framework.
+**An open-source learning management system built for the hotel and hospitality industry.**
 
-## Running in local
+[![Ruby on Rails CI](https://github.com/openvitae-tech/blackboard-lms/actions/workflows/rubyonrails.yml/badge.svg)](https://github.com/openvitae-tech/blackboard-lms/actions/workflows/rubyonrails.yml)
+![Ruby](https://img.shields.io/badge/ruby-4.0.6-CC342D?logo=ruby&logoColor=white)
+![Rails](https://img.shields.io/badge/rails-8.0-D30001?logo=rubyonrails&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/postgresql-15-4169E1?logo=postgresql&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-Clone the repo and install the dependencies as follows
+[Features](#features) · [Architecture](#architecture) · [Getting Started](#getting-started) · [Testing](#testing) · [Contributing](#contributing)
 
-### Install postgresql database version 15.x
+</div>
 
-You can either to the [PostgreSQL documentation](https://www.postgresql.org/) or use package manager of your OS to install postgres. On macOs you can use [Postgress.app](https://postgresapp.com/) for easy setup.
+---
 
+## Overview
 
-#### Running using docker
+Blackboard LMS helps hospitality organisations train their staff at scale. Administrators build courses, organise learners into teams, track progress and issue certificates, all from one Ruby on Rails application.
+
+## Features
+
+- **Course authoring:** courses, modules and lessons, with video, local content and SCORM package support
+- **Assessments:** quizzes, question banks and assessments to measure learner progress
+- **Programs:** group courses into structured learning paths
+- **Teams and enrollments:** enroll individuals or whole teams and manage access per learning partner
+- **Certificates:** customisable certificate templates issued on course completion
+- **Reporting:** dashboards and exportable reports (Excel and PDF)
+- **Content Studio:** a separate content creation engine, toggled per learning partner
+- **AI assistance:** LLM-powered features via [RubyLLM](https://rubyllm.com/)
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | Ruby on Rails 8, Ruby 4.0.6 |
+| Frontend | Hotwire (Turbo and Stimulus), Tailwind CSS, Flowbite, import maps |
+| Database | PostgreSQL 15 |
+| Background jobs | Sidekiq with sidekiq-cron, backed by Redis 7 |
+| Auth | Devise (authentication), Pundit (authorization) |
+| Storage | Active Storage with AWS S3 |
+| Media | ImageMagick, FFmpeg |
+| Monitoring | Sentry, New Relic |
+| Testing | RSpec, FactoryBot, Capybara, Selenium |
+
+## Architecture
+
+This repository is a monorepo containing three projects:
+
+| Project | Path | Purpose |
+|---------|------|---------|
+| **BlackboardLMS** | [`app/`](app) | Host Rails application: the production LMS |
+| **NeoComponent** | [`engines/neo_component/`](engines/neo_component) | UI component library (Rails engine) |
+| **Content Studio** | [`engines/content_studio/`](engines/content_studio) | Portable content creation engine (Rails engine) |
+
+```
+blackboard-lms/
+├── app/                  # Host application (controllers, models, policies, services, queries)
+├── config/               # Rails config, routes, tailwind.config.js
+├── db/                   # Migrations, schema and seeds
+├── engines/
+│   ├── neo_component/    # UI components, see ui_manifest.md for the catalogue
+│   └── content_studio/   # Content Studio engine with its own dummy app for specs
+├── spec/                 # RSpec suite for the host application
+└── CLAUDE.md             # Architecture rules and conventions for AI agents
+```
+
+Content Studio never touches host models directly. All data goes through `ContentStudio::ApiClient`, which calls the host application's internal API:
+
+```
+Content Studio views → ContentStudio::ApiClient → Api::Internal controllers → ActiveRecord models
+```
+
+All UI in both the host app and Content Studio is built with **NeoComponent** helpers. Colours are defined only in `config/tailwind.config.js`.
+
+## Getting Started
+
+### Prerequisites
+
+| Dependency | Version |
+|------------|---------|
+| Ruby | 4.0.6 (see [`.ruby-version`](.ruby-version)) |
+| Node.js | 22.x |
+| PostgreSQL | 15.x |
+| Redis | 7.x |
+| ImageMagick | latest |
+| FFmpeg | latest |
+
+<details>
+<summary><strong>Installing the prerequisites</strong></summary>
+
+#### Ruby
+
+Install Ruby with a version manager such as [rbenv](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/), then install Bundler:
 
 ```bash
-sudo docker run -d --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres  -e POSTGRES_DB=blackboard_development -p 5432:5432 postgres:15.4-bookworm
+gem install bundler
 ```
 
+#### Node.js
 
-### Install redis server
-
-You can refer to [this](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/) and install redis. Start the redis server in your local machine
-
-
-#### Running using docker
+Use [nvm](https://github.com/nvm-sh/nvm) or the [official installer](https://nodejs.org/):
 
 ```bash
-sudo docker run -d --name redis -p 6379:6379 redis:7.2.6-alpine
-```
-
-### Install ruby 3.3.0
-
-The first step is to install ruby. In order to install ruby use rbenv or rvm so that you can easily manage the different ruby versions.
-
-Using rbenv or rvm is a personal preference. To use rbenv go to [rbenv](https://github.com/rbenv/rbenv) and for rvm you can go [here](https://rvm.io/)
-
-After installing ruby clone the repo and then you can follow the steps below to setup the application.
-
-### Install bundler
-
-```
-$ gem install bundler
-```
-
-### install imagemagick
-##### OSX
-```bash
-$ brew install imagemagick
-```
-##### Ubuntu
-```
-$ sudo apt install imagemagick
-```
-
-### Install ffmpeg
-##### OSX
-```
-$ brew install ffmpeg
-```
-##### Ubuntu
-```
-$ sudo apt install ffmpeg
-```
-
-### Set your favourite editor to edit credential file
-```bash
-$ export EDITOR="code --wait" 
-
-# or
-
-$ export EDITOR="vim --wait"
-```
-
-Copy the contents of config/credentials.yml.enc.example file and generate your master key and edit the credential file
-```bash
-$ rails credentials:edit
-```
-Replace the editor content with the copied content, edit and save then close the file.
-
-
-### Install Node.js 22.x
-
-Install Node.js using [nvm](https://github.com/nvm-sh/nvm) or the [official installer](https://nodejs.org/).
-
-```bash
-# Using nvm
 nvm install 22
 nvm use 22
 ```
 
-### Install npm dependencies
+#### PostgreSQL and Redis
+
+Install them natively ([PostgreSQL](https://www.postgresql.org/download/), [Postgres.app](https://postgresapp.com/) on macOS, [Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)) or run them with Docker:
 
 ```bash
-npm install
+docker run -d --name postgresql \
+  -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=blackboard_development \
+  -p 5432:5432 postgres:15.4-bookworm
+
+docker run -d --name redis -p 6379:6379 redis:7.2.6-alpine
 ```
 
-This installs `postcss-import` and other front-end build dependencies required for the Tailwind CSS compilation step.
-
-### Setup git hooks
-You can either install [husky](https://typicode.github.io/husky/get-started.html) or use the git command below to setup the git precommits hooks
+#### ImageMagick and FFmpeg
 
 ```bash
-git config core.hooksPath .husky
+# macOS
+brew install imagemagick ffmpeg
+
+# Ubuntu / Debian
+sudo apt install imagemagick ffmpeg
 ```
 
-To install Rails dependencies and seed the database by running:
+</details>
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/openvitae-tech/blackboard-lms.git
+   cd blackboard-lms
+   ```
+
+2. **Install front-end dependencies** (needed for the Tailwind CSS build)
+
+   ```bash
+   npm install
+   ```
+
+3. **Set up credentials**
+
+   Choose the editor Rails should open, then edit the credentials file. Paste in the contents of `config/credentials.yml.enc.example`, fill in your values, then save and close the file.
+
+   ```bash
+   export EDITOR="code --wait"   # or: export EDITOR="vim"
+   bin/rails credentials:edit
+   ```
+
+4. **Enable git hooks**
+
+   ```bash
+   git config core.hooksPath .husky
+   ```
+
+5. **Install gems, prepare the database and load seed data**
+
+   ```bash
+   bin/setup
+   ```
+
+   > [!WARNING]
+   > `bin/setup` drops and recreates the development database. Do not run it if you have local data you want to keep.
+
+6. **Start the application**
+
+   ```bash
+   bin/dev
+   ```
+
+   This starts the Rails server, the Tailwind watcher and Sidekiq (see [`Procfile.dev`](Procfile.dev)). Open <http://localhost:3000> in your browser.
+
+### Running with Docker
 
 ```bash
-./bin/setup
-```
-Start the server by executing following command.
-
-```bash
-bin/dev
+docker compose build
+docker compose up
 ```
 
-## Repository Structure
-
-This is a monorepo containing three interconnected projects:
-
-| Project | Path | Purpose |
-|---------|------|---------|
-| **BlackboardLMS** | `app/` | Host Rails application |
-| **NeoComponent** | `engines/neo_component/` | UI component library (Rails engine) |
-| **Content Studio** | `engines/content_studio/` | Portable content creation engine _(upcoming)_ |
-
-## Working on NeoComponent
-
-NeoComponent is a local Rails engine inside this repo at `engines/neo_component/`. Changes to it are picked up immediately — no separate gem install or local override needed.
-
-```bash
-# Run NeoComponent specs
-bundle exec rspec engines/neo_component
-
-# Run full suite including all engines
-bundle exec rspec
-```
+Docker Compose runs the app in a dedicated `docker` Rails environment, together with PostgreSQL, Redis and a Sidekiq worker. Generate a master key for that environment and set `RAILS_MASTER_KEY` in `docker-compose.yml` before you start it.
 
 ## Testing
-Make sure you have setup the test environment as mentioned in the earlier section
 
-You might need to create the db first before running the tests This usually happens while running `./bin/setup`. But incase the db is not created run the following command to create the database.
-
-```bash
-$ bundle exec rails db:create -e test
-```
+Create the test database if `bin/setup` has not already done so:
 
 ```bash
-$ bundle exec rspec
-$ bundle exec rspec -f d                 # view test descriptions
-$ bundle exec rspec -f d --tag focus     # view test descriptions and run only focussed sections, usefull for debugging
+bin/rails db:create RAILS_ENV=test
 ```
 
-Note: prefix `bundle exec` if you are unable to run it using `rspec`
+Run the suites:
 
-You can run `guard` to keep running the tests during TDD.
-
+```bash
+bundle exec rspec                         # full suite, including engines
+bundle exec rspec engines/neo_component   # NeoComponent only
+bundle exec rspec engines/content_studio  # Content Studio only
+bundle exec rspec -f d --tag focus        # only specs tagged :focus, with descriptions
 ```
-$ guard
+
+For continuous testing during TDD:
+
+```bash
+bundle exec guard
 ```
 
-## Running using docker
+### Code Quality
 
-Install docker in your local and then build and run the application locally as follows
+```bash
+bundle exec rubocop        # linting, including custom cops
+bundle exec brakeman       # static security analysis
+bundle exec bundler-audit  # known vulnerabilities in dependencies
+```
 
-You can build the containers using `docker compose build` command
+CI runs RSpec, RuboCop, Brakeman and bundler-audit on every push and pull request to `main`. RSpec and RuboCop must pass before a PR can be merged.
 
-`docker compose up` to run the application using docker in local. Docker compose up run the application in a new environment called `docker`. Therefore you need to do some additional setup like generating a master key and setting the RAILS_MASTER_KEY in Dockerfile for the docker environment.
+## Contributing
+
+Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow, and [CLAUDE.md](CLAUDE.md) for the architecture rules and coding conventions every change must follow.
+
+1. Branch from an up-to-date `main` using the `task/<short-description>` naming convention.
+2. Write specs for your change. Content Studio changes need both view and system specs.
+3. Make sure `bundle exec rspec` and `bundle exec rubocop` both pass.
+4. Open a pull request into `main`. Include visual diffs for any NeoComponent changes.
+
+## License
+
+Blackboard LMS is released under the [MIT License](LICENSE).
+Copyright © 2024 Openvitae Technologies Private Limited.
