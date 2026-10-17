@@ -2,13 +2,15 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.0'
+ruby '4.0.6'
 
+gem 'cgi'
 gem 'connection_pool', '~> 2.5'
+gem 'csv'
 gem 'neo_components', path: 'engines/neo_component'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '8.0.5'
+gem 'rails', '8.0.5.1'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -123,11 +125,11 @@ gem 'sidekiq-failures'
 gem 'sidekiq-unique-jobs'
 
 gem 'rack-cors', require: 'rack/cors'
-gem 'rails-html-sanitizer', '1.6.1'
+gem 'rails-html-sanitizer', '1.7.1'
 
 gem 'scorm-package', '~> 0.1.2', require: 'scorm_package'
 
-gem 'caxlsx', '~> 3.4'
+gem 'caxlsx', '~> 4.5'
 gem 'combine_pdf'
 gem 'grover'
 gem 'net-imap', '0.5.15'

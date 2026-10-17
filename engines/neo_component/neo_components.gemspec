@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'importmap-rails', '~> 2.0'
   spec.add_dependency 'nokogiri', '~> 1.0'
+  spec.add_dependency 'ostruct'
   spec.add_dependency 'rails', '>= 7.0', '< 9'
   spec.add_dependency 'sprockets-rails', '~> 3.0'
   spec.metadata['rubygems_mfa_required'] = 'true'
