@@ -1,0 +1,9 @@
+<div class="bg-white border border-secondary-dark rounded-lg overflow-hidden px-2 py-1 w-[325px] shrink-0">
+  <div class="flex items-center justify-between gap-2">
+    <div class="flex flex-1 items-center gap-2 min-w-0">
+      <%= image_tag 'image-ai.gif', class: 'w-7 h-7 shrink-0', alt: '' %>
+      <span class="general-text-sm-normal text-letter-color truncate">Generation in Progress</span>
+    </div>
+    <span class="general-text-md-medium text-primary"><%= percent_complete %>%</span>
+  </div>
+</div>

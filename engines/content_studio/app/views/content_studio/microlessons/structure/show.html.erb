@@ -1,0 +1,155 @@
+<% pending = @percent_complete < 100 %>
+<turbo-frame id="microlesson-structure" refresh="morph">
+<div class="flex flex-col gap-6 py-3 pb-24 max-w-6xl mx-auto w-full"
+     data-controller="structure-polling scene-player"
+     data-structure-polling-pending-value="<%= pending %>">
+
+  <%# Header %>
+  <div class="flex items-center justify-between gap-4">
+    <div class="flex items-center gap-2 min-w-0">
+      <%= link_to root_path, data: { turbo: false } do %>
+        <span class="flex items-center justify-center w-7 h-7 rounded-full bg-white border border-primary-light-100 shrink-0">
+          <%= icon 'arrow-left', css: 'w-4 h-4 text-primary' %>
+        </span>
+      <% end %>
+      <span class="main-text-lg-semibold text-letter-color truncate"><%= @title %></span>
+    </div>
+    <% if pending %>
+      <%= render 'generation_badge', percent_complete: @percent_complete %>
+    <% end %>
+  </div>
+
+  <div class="flex gap-6 items-start">
+
+    <%# Left: video player + scene cards %>
+    <div class="flex flex-1 flex-col gap-5 min-w-0">
+
+      <%# Video player — permanent so playback survives the background generation-progress refresh %>
+      <div id="microlesson-video-panel" data-turbo-permanent
+           class="group bg-letter-color rounded-xl overflow-hidden h-64 relative shrink-0 w-full">
+        <video class="w-full h-full object-contain hidden"
+               data-scene-player-target="video"
+               data-action="ended->scene-player#ended timeupdate->scene-player#timeUpdate loadedmetadata->scene-player#metadataLoaded play->scene-player#onPlay pause->scene-player#onPause"
+               preload="metadata"></video>
+
+        <div class="absolute bottom-0 inset-x-0 px-4 pb-3 pt-10 bg-gradient-to-t from-black/80 to-transparent flex flex-col gap-2 group-hover:opacity-100 transition-opacity duration-500 hidden"
+             data-scene-player-target="controlBar">
+          <div class="flex items-center gap-2">
+            <span class="text-white text-xs font-bold w-8 shrink-0 tabular-nums" data-scene-player-target="currentTime">0:00</span>
+            <div class="flex-1 relative h-1 bg-white/30 rounded-full cursor-pointer"
+                 data-scene-player-target="progressTrack" data-action="click->scene-player#seek">
+              <div class="h-full bg-white rounded-full relative pointer-events-none"
+                   data-scene-player-target="progressFill" style="width: 0%">
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full shadow"></div>
+              </div>
+            </div>
+            <span class="text-white text-xs font-bold w-8 shrink-0 text-right tabular-nums" data-scene-player-target="duration">0:00</span>
+          </div>
+          <div class="flex items-center justify-center gap-5">
+            <button type="button" class="flex items-center justify-center text-white"
+                    data-scene-player-target="prevButton" data-action="click->scene-player#prev">
+              <%= icon 'skip-start', css: 'w-6 h-6' %>
+            </button>
+            <button type="button" class="flex items-center justify-center text-white"
+                    data-action="click->scene-player#togglePlay">
+              <span data-scene-player-target="playIcon"><%= icon 'play-circle-solid', css: 'w-8 h-8' %></span>
+              <span class="hidden" data-scene-player-target="pauseIcon"><%= icon 'pause-circle-solid', css: 'w-8 h-8' %></span>
+            </button>
+            <button type="button" class="flex items-center justify-center text-white"
+                    data-scene-player-target="nextButton" data-action="click->scene-player#next">
+              <%= icon 'skip-end', css: 'w-6 h-6' %>
+            </button>
+          </div>
+        </div>
+
+        <div class="absolute inset-0" data-scene-player-target="placeholder">
+          <div class="w-full h-full flex items-center justify-center">
+            <%= image_tag 'video_film.gif', alt: 'No video available' %>
+          </div>
+        </div>
+      </div>
+
+      <%# Scene cards %>
+      <div class="flex flex-col gap-5">
+        <% @scenes.each do |scene| %>
+          <% generated = scene[:video_url].present? %>
+          <%# Generated cards are marked turbo-permanent so entering the edit state (or an open
+              preview) survives the background generation-progress refresh — only still-processing
+              cards need to keep morphing so they can pick up the completed state. %>
+          <%= scene_script_component(
+            scene_number: scene[:number],
+            total_scenes: scene[:total],
+            title: scene[:title],
+            script: scene[:narration],
+            state: generated ? :generated : :processing,
+            thumbnail_url: scene[:thumbnail_url],
+            video_url: scene[:video_url],
+            previewable: true,
+            html_options: {
+              id: generated ? "microlesson-scene-#{scene[:number]}" : nil,
+              data: {
+                turbo_permanent: (true if generated),
+                scene_player_target: 'item',
+                scene_index: scene[:number] - 1,
+                video_url: scene[:video_url],
+                narration: scene[:narration],
+                scene_status: scene[:status],
+                action: 'click->scene-player#select'
+              }.compact
+            }.compact
+          ) %>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Right: Microlesson summary %>
+    <div class="flex flex-col gap-5 w-[325px] shrink-0 h-[480px]">
+      <div class="bg-primary-light-50 border-2 border-line-colour-light rounded-xl p-5 flex flex-col gap-5">
+        <span class="main-text-md-semibold text-letter-color">Microlesson summary</span>
+
+        <div class="flex flex-col gap-3">
+          <p class="main-text-sm-medium text-letter-color"><%= @title %></p>
+          <div class="flex items-center gap-1">
+            <%= icon 'clock', css: 'w-4 h-4 text-letter-color' %>
+            <span class="general-text-sm-normal text-letter-color"><%= format_duration(@duration_seconds) %></span>
+          </div>
+        </div>
+
+        <%# Thumbnail %>
+        <div class="bg-white-light rounded-lg p-3 flex flex-col gap-3">
+          <span class="main-text-sm-medium text-letter-color">Thumbnail</span>
+          <% thumb = @thumbnail_url.presence %>
+          <div class="relative border border-line-colour rounded-lg overflow-hidden h-40">
+            <%= image_tag thumb || image_path('image-ai.gif'),
+                          class: "w-full h-full #{thumb ? 'object-cover' : 'object-contain'}",
+                          alt: 'Microlesson thumbnail' %>
+            <button type="button" class="absolute bottom-3 right-3 bg-white border border-letter-color rounded-full p-1.5 opacity-70">
+              <%= icon 'pencil', css: 'w-4 h-4' %>
+            </button>
+          </div>
+        </div>
+
+        <%# Language %>
+        <div class="flex items-center justify-between">
+          <span class="general-text-md-normal text-letter-color-light">Language :</span>
+          <div class="bg-white flex items-center gap-2 px-4 py-2 rounded-lg shadow-[1px_2px_4px_0px_rgba(0,0,0,0.1)]">
+            <%= icon 'chevron-down', css: 'w-4 h-4 text-letter-color-light' %>
+            <span class="main-text-sm-medium text-letter-color-light">English</span>
+          </div>
+        </div>
+
+        <%# Discard / Save %>
+        <div class="flex gap-3">
+          <div class="flex-1">
+            <%= button_component(text: 'Discard', type: 'outline', colorscheme: 'danger', html_options: { class: 'w-full' }) %>
+          </div>
+          <div class="flex-1">
+            <%= button_component(text: 'Save', type: 'solid', colorscheme: 'secondary', html_options: { class: 'w-full' }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</turbo-frame>

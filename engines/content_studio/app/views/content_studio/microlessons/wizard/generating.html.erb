@@ -1,0 +1,27 @@
+<div class="flex flex-col gap-6 py-3 max-w-4xl mx-auto w-full">
+
+  <%# Wizard steps %>
+  <div class="flex justify-center py-6">
+    <%= wizard_steps_component(
+      steps: [
+        { icon_name: 'chat-bubble-bottom-center-text', label: 'Prompt' },
+        { icon_name: 'video-camera',                   label: 'Configure Video' },
+        { icon_name: 'document-text-outline',          label: 'Script Review' }
+      ],
+      current_step: 2
+    ) %>
+  </div>
+
+  <% if @state == 'error' %>
+    <%= render 'error' %>
+  <% elsif @state == 'success' %>
+    <%= render 'success' %>
+  <% else %>
+    <div data-controller="generation-polling"
+         data-generation-polling-start-url-value="<%= start_microlesson_generation_path %>">
+      <%= render 'uploading' %>
+      <%= render 'crafting' %>
+    </div>
+  <% end %>
+
+</div>

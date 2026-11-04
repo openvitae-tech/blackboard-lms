@@ -47,6 +47,30 @@ module ContentStudio
       end
     end
 
+    def avatar_card(avatar, selected: false)
+      border_class = selected ? 'border-2 border-primary' : 'border border-line-colour'
+      content_tag(:label, class: 'cursor-pointer flex flex-col items-center gap-2',
+                          data: { action: 'click->avatar-selector#select' }) do
+        radio = tag.input(type: 'radio', name: 'avatar_id', value: avatar.id,
+                          class: 'sr-only',
+                          data: { avatar_selector_target: 'radio' },
+                          checked: selected)
+        img = if avatar.image_url.present?
+                image_tag(avatar.image_url, alt: avatar.name,
+                                            class: 'w-full h-full object-cover rounded-full')
+              else
+                content_tag(:div, avatar.name.first.upcase,
+                            class: 'w-full h-full rounded-full bg-primary-light-50 ' \
+                                   'flex items-center justify-center main-text-lg-semibold text-primary')
+              end
+        card = content_tag(:div, img,
+                           class: "w-20 h-20 rounded-full overflow-hidden #{border_class}",
+                           data: { avatar_selector_target: 'card' })
+        name = content_tag(:p, avatar.name, class: 'general-text-xs-normal text-letter-color text-center')
+        radio + card + name
+      end
+    end
+
     def template_card(template, selected: false)
       border_class = selected ? 'border-2 border-primary' : 'border border-line-colour'
       content_tag(:label,

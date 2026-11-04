@@ -72,6 +72,19 @@ module NeoAi
       JSON.parse(response.body)
     end
 
+    def create_microlesson(title:, description:, template_id: nil, logo_url: nil, bg_type: 'video')
+      body = { title: title, description: description, bg_type: bg_type }
+      body[:template_id] = template_id if template_id.present?
+      body[:logo_url]    = logo_url    if logo_url.present?
+      response = microlesson_post('/microlesson/create-microlesson', body)
+      JSON.parse(response.body)
+    end
+
+    def get_microlesson(microlesson_id)
+      response = microlesson_get("/microlesson/#{microlesson_id}")
+      JSON.parse(response.body)
+    end
+
     def regenerate_scene(scene_id, course_id:, lesson_id:, narration:)
       post('/course/regenerate-scene',
            { scene_id: scene_id, course_id: course_id, lesson_id: lesson_id, narration: narration })
@@ -153,6 +166,17 @@ module NeoAi
     end
 
     def kit_get(path)
+      build_connection.get("#{API_PREFIX}#{path}", { partner_id: partner_id })
+    end
+
+    def microlesson_post(path, body, no_video: false)
+      build_connection.post("#{API_PREFIX}#{path}", body) do |req|
+        req.params[:partner_id] = partner_id
+        req.headers['no-video'] = 'true' if no_video
+      end
+    end
+
+    def microlesson_get(path)
       build_connection.get("#{API_PREFIX}#{path}", { partner_id: partner_id })
     end
 

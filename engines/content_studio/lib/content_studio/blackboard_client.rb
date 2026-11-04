@@ -115,6 +115,19 @@ module ContentStudio
       connection.post("#{BASE_PATH}/courses/#{course_id}/lessons/#{lesson_id}/regenerate")
     end
 
+    def create_microlesson(title:, description:, template_id: nil, logo_url: nil, bg_type: 'video')
+      body = { title: title, description: description, bg_type: bg_type }
+      body[:template_id] = template_id if template_id.present?
+      body[:logo_url]    = logo_url    if logo_url.present?
+      response = connection.post("#{BASE_PATH}/microlessons", body)
+      JSON.parse(response.body)['microlesson_id']
+    end
+
+    def get_microlesson(microlesson_id)
+      response = connection.get("#{BASE_PATH}/microlessons/#{microlesson_id}")
+      JSON.parse(response.body)
+    end
+
     def create_classroom_kit(files:, components:, title: nil)
       response = connection.post("#{BASE_PATH}/classroom_kits", { files: files, components: components, title: title })
       JSON.parse(response.body)['kit_id']
